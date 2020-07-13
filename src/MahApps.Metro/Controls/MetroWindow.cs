@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -460,6 +464,7 @@ namespace MahApps.Metro.Controls
             {
                 return false;
             }
+
             return value;
         }
 
@@ -891,10 +896,7 @@ namespace MahApps.Metro.Controls
         /// <param name="thisElement">The element which will be focused again.</param>
         public void StoreFocus([CanBeNull] IInputElement thisElement = null)
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this));
-                }));
+            Dispatcher.BeginInvoke(new Action(() => { restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); }));
         }
 
         internal void RestoreFocus()
@@ -1124,7 +1126,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-
         private static void UpdateLogicalChilds(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var window = dependencyObject as MetroWindow;
@@ -1132,11 +1133,13 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             var oldChild = e.OldValue as FrameworkElement;
             if (oldChild != null)
             {
                 window.RemoveLogicalChild(oldChild);
             }
+
             var newChild = e.NewValue as FrameworkElement;
             if (newChild != null)
             {
@@ -1248,8 +1251,8 @@ namespace MahApps.Metro.Controls
             get
             {
                 var value = typeof(Window)
-                    .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(this, new object[0]);
+                            .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
+                            .GetValue(this, new object[0]);
                 return (IntPtr)value;
             }
         }
@@ -1264,6 +1267,7 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             var thumbContentControl = this.titleBar as IMetroThumb;
             if (thumbContentControl != null)
             {
@@ -1272,6 +1276,7 @@ namespace MahApps.Metro.Controls
                 thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             if (this.flyoutModalDragMoveThumb != null)
             {
                 this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -1279,10 +1284,12 @@ namespace MahApps.Metro.Controls
                 this.flyoutModalDragMoveThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
             }
+
             this.SizeChanged -= this.MetroWindow_SizeChanged;
         }
 
@@ -1304,6 +1311,7 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             var thumbContentControl = this.titleBar as IMetroThumb;
             if (thumbContentControl != null)
             {
@@ -1312,6 +1320,7 @@ namespace MahApps.Metro.Controls
                 thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             if (this.flyoutModalDragMoveThumb != null)
             {
                 this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -1379,6 +1388,7 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(thumb));
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
@@ -1487,7 +1497,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
         /// <param name="name">The name of the template child.</param>
-        internal T GetPart<T>(string name) where T : class
+        internal T GetPart<T>(string name)
+            where T : class
         {
             return GetTemplateChild(name) as T;
         }
@@ -1527,8 +1538,10 @@ namespace MahApps.Metro.Controls
 
         public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs
         {
-            internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source): base(rEvent, source)
-            { }
+            internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source)
+                : base(rEvent, source)
+            {
+            }
 
             public Flyout ChangedFlyout { get; internal set; }
         }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -18,14 +22,15 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MultiFrameImageModeProperty = DependencyProperty.Register(
             nameof(MultiFrameImageMode), typeof(MultiFrameImageMode), typeof(MultiFrameImage), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public MultiFrameImageMode MultiFrameImageMode {
+        public MultiFrameImageMode MultiFrameImageMode
+        {
             get { return (MultiFrameImageMode)GetValue(MultiFrameImageModeProperty); }
             set { SetValue(MultiFrameImageModeProperty, value); }
         }
 
         private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var multiFrameImage = (MultiFrameImage) d;
+            var multiFrameImage = (MultiFrameImage)d;
             multiFrameImage.UpdateFrameList();
         }
 
@@ -54,7 +59,7 @@ namespace MahApps.Metro.Controls
                     .GroupBy(f => f.PixelWidth * f.PixelHeight)
                     .OrderBy(g => g.Key)
                     .Select(g => g.OrderByDescending(f => f.Format.BitsPerPixel).First())
-                    );
+            );
         }
 
         protected override void OnRender(DrawingContext dc)
@@ -65,7 +70,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            switch (MultiFrameImageMode) {
+            switch (MultiFrameImageMode)
+            {
                 case MultiFrameImageMode.ScaleDownLargerFrame:
                     var minSize = Math.Max(RenderSize.Width, RenderSize.Height);
                     var minFrame = _frames.FirstOrDefault(f => f.Width >= minSize && f.Height >= minSize) ?? _frames.Last();
@@ -74,7 +80,7 @@ namespace MahApps.Metro.Controls
                 case MultiFrameImageMode.NoScaleSmallerFrame:
                     var maxSize = Math.Min(RenderSize.Width, RenderSize.Height);
                     var maxFrame = _frames.LastOrDefault(f => f.Width <= maxSize && f.Height <= maxSize) ?? _frames.First();
-                    dc.DrawImage(maxFrame, new Rect((RenderSize.Width-maxFrame.Width)/2, (RenderSize.Height - maxFrame.Height) / 2, maxFrame.Width, maxFrame.Height));
+                    dc.DrawImage(maxFrame, new Rect((RenderSize.Width - maxFrame.Width) / 2, (RenderSize.Height - maxFrame.Height) / 2, maxFrame.Width, maxFrame.Height));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -82,7 +88,8 @@ namespace MahApps.Metro.Controls
         }
     }
 
-    public enum MultiFrameImageMode {
+    public enum MultiFrameImageMode
+    {
         ScaleDownLargerFrame,
         NoScaleSmallerFrame,
     }

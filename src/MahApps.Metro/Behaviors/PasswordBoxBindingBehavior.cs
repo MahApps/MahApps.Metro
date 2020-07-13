@@ -1,8 +1,6 @@
-﻿//	--------------------------------------------------------------------
-//		Obtained from: WPFSmartLibrary
-//		For more information see : http://wpfsmartlibrary.codeplex.com/
-//		(by DotNetMastermind)
-//	--------------------------------------------------------------------
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.ComponentModel;
@@ -51,6 +49,7 @@ namespace MahApps.Metro.Behaviors
                 {
                     targetPasswordBox.Password = (string)e.NewValue;
                 }
+
                 targetPasswordBox.PasswordChanged += PasswordBoxPasswordChanged;
             }
         }
@@ -150,9 +149,11 @@ namespace MahApps.Metro.Behaviors
                 {
                     selection.Changed -= this.PasswordBoxSelectionChanged;
                 }
+
                 this.AssociatedObject.Loaded -= this.PasswordBoxLoaded;
                 this.AssociatedObject.PasswordChanged -= PasswordBoxPasswordChanged;
             }
+
             base.OnDetaching();
         }
 

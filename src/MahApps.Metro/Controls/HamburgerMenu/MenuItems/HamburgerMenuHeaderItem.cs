@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Windows;
 
 namespace MahApps.Metro.Controls
 {
@@ -14,15 +18,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string Label
         {
-            get
-            {
-                return (string)GetValue(LabelProperty);
-            }
+            get { return (string)GetValue(LabelProperty); }
 
-            set
-            {
-                SetValue(LabelProperty, value);
-            }
+            set { SetValue(LabelProperty, value); }
         }
 
         protected override Freezable CreateInstanceCore()

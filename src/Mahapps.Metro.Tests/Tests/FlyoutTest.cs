@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -175,9 +179,7 @@ namespace MahApps.Metro.Tests
 
             bool eventRaised = false;
 
-            window.RightFlyout.IsOpenChanged += (sender, args) => {
-                eventRaised = true;
-            };
+            window.RightFlyout.IsOpenChanged += (sender, args) => { eventRaised = true; };
 
             window.RightFlyout.IsOpen = true;
 
@@ -193,11 +195,12 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            var ex = Record.Exception(() => {
-                                    var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
-                                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
-                                    Assert.NotNull(flyoutOnGrid);
-                                });
+            var ex = Record.Exception(() =>
+                {
+                    var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
+                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
+                    Assert.NotNull(flyoutOnGrid);
+                });
             Assert.Null(ex);
         }
 

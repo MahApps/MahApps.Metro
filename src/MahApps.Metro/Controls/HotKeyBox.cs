@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -8,7 +12,8 @@ using ControlzEx.Native;
 using ControlzEx.Standard;
 using MahApps.Metro.ValueBoxes;
 
-namespace MahApps.Metro.Controls {
+namespace MahApps.Metro.Controls
+{
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
     public class HotKeyBox : Control
     {
@@ -20,7 +25,7 @@ namespace MahApps.Metro.Controls {
 
         public HotKey HotKey
         {
-            get { return (HotKey) GetValue(HotKeyProperty); }
+            get { return (HotKey)GetValue(HotKeyProperty); }
             set { SetValue(HotKeyProperty, value); }
         }
 
@@ -35,7 +40,7 @@ namespace MahApps.Metro.Controls {
 
         public bool AreModifierKeysRequired
         {
-            get { return (bool) GetValue(AreModifierKeysRequiredProperty); }
+            get { return (bool)GetValue(AreModifierKeysRequiredProperty); }
             set { SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -46,7 +51,7 @@ namespace MahApps.Metro.Controls {
 
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
+            get { return (string)GetValue(TextProperty); }
             private set { SetValue(TextPropertyKey, value); }
         }
 
@@ -173,18 +178,22 @@ namespace MahApps.Metro.Controls {
             {
                 modifier |= ModifierKeys.Control;
             }
+
             if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
             {
                 modifier |= ModifierKeys.Alt;
             }
+
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 modifier |= ModifierKeys.Shift;
             }
+
             if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
             {
                 modifier |= ModifierKeys.Windows;
             }
+
             return modifier;
         }
 
@@ -218,14 +227,14 @@ namespace MahApps.Metro.Controls {
 
         public override bool Equals(object obj)
         {
-            return obj is HotKey && Equals((HotKey) obj);
+            return obj is HotKey && Equals((HotKey)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((int) _key*397) ^ (int) _modifierKeys;
+                return ((int)_key * 397) ^ (int)_modifierKeys;
             }
         }
 
@@ -243,20 +252,24 @@ namespace MahApps.Metro.Controls {
                 sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_MENU));
                 sb.Append("+");
             }
+
             if ((_modifierKeys & ModifierKeys.Control) == ModifierKeys.Control)
             {
                 sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_CONTROL));
                 sb.Append("+");
             }
+
             if ((_modifierKeys & ModifierKeys.Shift) == ModifierKeys.Shift)
             {
                 sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_SHIFT));
                 sb.Append("+");
             }
+
             if ((_modifierKeys & ModifierKeys.Windows) == ModifierKeys.Windows)
             {
                 sb.Append("Windows+");
             }
+
             sb.Append(GetLocalizedKeyString(_key));
             return sb.ToString();
         }

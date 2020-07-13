@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -60,6 +64,7 @@ namespace MahApps.Metro.Controls
                     internalIndex = index;
                     break;
                 }
+
                 widthToScroll += ((PivotItem)Items[index]).ActualWidth;
             }
 
@@ -96,6 +101,7 @@ namespace MahApps.Metro.Controls
                 scroller.ScrollChanged += scroller_ScrollChanged;
                 scroller.PreviewMouseWheel += scroller_MouseWheel;
             }
+
             if (headers != null)
             {
                 headers.SelectionChanged += headers_SelectionChanged;
@@ -130,8 +136,10 @@ namespace MahApps.Metro.Controls
 
                         RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
                     }
+
                     break;
                 }
+
                 position += widthOfItem;
             }
         }

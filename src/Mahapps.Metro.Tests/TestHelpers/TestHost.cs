@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Threading;
 using System.Windows;
 
 namespace MahApps.Metro.Tests.TestHelpers
@@ -38,7 +42,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             appThread = new Thread(StartDispatcher);
             appThread.SetApartmentState(ApartmentState.STA);
             appThread.Start();
-            
+
             gate.WaitOne();
         }
 
@@ -51,7 +55,6 @@ namespace MahApps.Metro.Tests.TestHelpers
                     var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
-                    
                 };
             app.Startup += async (sender, args) =>
                 {

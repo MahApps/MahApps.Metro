@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 using System;
 
 namespace MahApps.Metro.Controls
@@ -17,7 +21,8 @@ namespace MahApps.Metro.Controls
             Raise(eventToRaise, sender, EventArgs.Empty);
         }
 
-        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, T args) where T : EventArgs
+        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, T args)
+            where T : EventArgs
         {
             if (eventToRaise != null)
             {
@@ -25,9 +30,11 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public delegate T GetEventArgs<T>() where T : EventArgs;
+        public delegate T GetEventArgs<T>()
+            where T : EventArgs;
 
-        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, GetEventArgs<T> getEventArgs) where T : EventArgs
+        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, GetEventArgs<T> getEventArgs)
+            where T : EventArgs
         {
             if (eventToRaise != null)
             {

@@ -1,30 +1,6 @@
-﻿// Copyright (c) 2017 Ratish Philip 
-//
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal 
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is 
-// furnished to do so, subject to the following conditions: 
-// 
-// 
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software. 
-// 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE. 
-//
-// This file is part of the WPFSpark project: https://github.com/ratishphilip/wpfspark
-//
-// WPFSpark v1.3.1
-// 
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Windows;
@@ -54,11 +30,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// BorderThickness Dependency Property
         /// </summary>
-        public static readonly DependencyProperty BorderThicknessProperty =
-            DependencyProperty.Register(nameof(BorderThickness), typeof(Thickness), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(new Thickness(),
-                                              FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
-                                              OnValidateThickness);
+        public static readonly DependencyProperty BorderThicknessProperty
+            = DependencyProperty.Register(nameof(BorderThickness),
+                                          typeof(Thickness),
+                                          typeof(ClipBorder),
+                                          new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
+                                          OnValidateThickness);
 
         /// <summary>
         /// Gets or sets the BorderThickness property. This dependency property 
@@ -66,8 +43,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Thickness BorderThickness
         {
-            get { return (Thickness)GetValue(BorderThicknessProperty); }
-            set { SetValue(BorderThicknessProperty, value); }
+            get => (Thickness)this.GetValue(BorderThicknessProperty);
+            set => this.SetValue(BorderThicknessProperty, value);
         }
 
         /// <summary>
@@ -98,11 +75,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Padding Dependency Property
         /// </summary>
-        public static readonly DependencyProperty PaddingProperty =
-            DependencyProperty.Register(nameof(Padding), typeof(Thickness), typeof(ClipBorder),
-                                        new FrameworkPropertyMetadata(new Thickness(),
-                                              FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender), 
-                                        OnValidateThickness);
+        public static readonly DependencyProperty PaddingProperty
+            = DependencyProperty.Register(nameof(Padding),
+                                          typeof(Thickness),
+                                          typeof(ClipBorder),
+                                          new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
+                                          OnValidateThickness);
 
         /// <summary>
         /// Gets or sets the Padding property. This dependency property 
@@ -110,8 +88,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Thickness Padding
         {
-            get { return (Thickness)GetValue(PaddingProperty); }
-            set { SetValue(PaddingProperty, value); }
+            get => (Thickness)this.GetValue(PaddingProperty);
+            set => this.SetValue(PaddingProperty, value);
         }
 
         //      /// <summary>
@@ -131,11 +109,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// CornerRadius Dependency Property
         /// </summary>
-        public static readonly DependencyProperty CornerRadiusProperty =
-            DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(new CornerRadius(),
-                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender), 
-                OnValidateCornerRadius);
+        public static readonly DependencyProperty CornerRadiusProperty
+            = DependencyProperty.Register(nameof(CornerRadius),
+                                          typeof(CornerRadius),
+                                          typeof(ClipBorder),
+                                          new FrameworkPropertyMetadata(new CornerRadius(), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
+                                          OnValidateCornerRadius);
 
         /// <summary>
         /// Gets or sets the CornerRadius property. This dependency property 
@@ -143,8 +122,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public CornerRadius CornerRadius
         {
-            get { return (CornerRadius)GetValue(CornerRadiusProperty); }
-            set { SetValue(CornerRadiusProperty, value); }
+            get => (CornerRadius)this.GetValue(CornerRadiusProperty);
+            set => this.SetValue(CornerRadiusProperty, value);
         }
 
         /// <summary>
@@ -175,10 +154,11 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// BorderBrush Dependency Property
         /// </summary>
-        public static readonly DependencyProperty BorderBrushProperty =
-            DependencyProperty.Register(nameof(BorderBrush), typeof(Brush), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(null,
-                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+        public static readonly DependencyProperty BorderBrushProperty
+            = DependencyProperty.Register(nameof(BorderBrush),
+                                          typeof(Brush),
+                                          typeof(ClipBorder),
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
 
         /// <summary>
         /// Gets or sets the BorderBrush property. This dependency property 
@@ -186,8 +166,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush BorderBrush
         {
-            get { return (Brush)GetValue(BorderBrushProperty); }
-            set { SetValue(BorderBrushProperty, value); }
+            get => (Brush)this.GetValue(BorderBrushProperty);
+            set => this.SetValue(BorderBrushProperty, value);
         }
 
         #endregion
@@ -197,10 +177,11 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Background Dependency Property
         /// </summary>
-        public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register(nameof(Background), typeof(Brush), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(null,
-                    FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+        public static readonly DependencyProperty BackgroundProperty
+            = DependencyProperty.Register(nameof(Background),
+                                          typeof(Brush),
+                                          typeof(ClipBorder),
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
 
         /// <summary>
         /// Gets or sets the Background property. This dependency property 
@@ -208,8 +189,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush Background
         {
-            get { return (Brush)GetValue(BackgroundProperty); }
-            set { SetValue(BackgroundProperty, value); }
+            get => (Brush)this.GetValue(BackgroundProperty);
+            set => this.SetValue(BackgroundProperty, value);
         }
 
         #endregion
@@ -219,9 +200,11 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// OptimizeClipRendering Dependency Property
         /// </summary>
-        public static readonly DependencyProperty OptimizeClipRenderingProperty =
-            DependencyProperty.Register(nameof(OptimizeClipRendering), typeof(bool), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty OptimizeClipRenderingProperty
+            = DependencyProperty.Register(nameof(OptimizeClipRendering),
+                                          typeof(bool),
+                                          typeof(ClipBorder),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Gets or sets the OptimizeClipRendering property. This dependency property 
@@ -235,8 +218,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool OptimizeClipRendering
         {
-            get { return (bool)GetValue(OptimizeClipRenderingProperty); }
-            set { SetValue(OptimizeClipRenderingProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(OptimizeClipRenderingProperty);
+            set => this.SetValue(OptimizeClipRenderingProperty, BooleanBoxes.Box(value));
         }
 
         #endregion
@@ -256,13 +239,13 @@ namespace MahApps.Metro.Controls
         /// <returns>The Decorator's desired size.</returns>
         protected override Size MeasureOverride(Size constraint)
         {
-            var child = Child;
+            var child = this.Child;
             var desiredSize = new Size();
-            var borders = BorderThickness;
+            var borders = this.BorderThickness;
 
             // Compute the total size required
             var borderSize = borders.CollapseThickness();
-            var paddingSize = Padding.CollapseThickness();
+            var paddingSize = this.Padding.CollapseThickness();
 
             // Does the ClipBorder have a child?
             if (child != null)
@@ -272,8 +255,7 @@ namespace MahApps.Metro.Controls
 
                 // Remove size of border only from child's reference size.
                 var childConstraint = new Size(Math.Max(0.0, constraint.Width - combined.Width),
-                                                Math.Max(0.0, constraint.Height - combined.Height));
-
+                                               Math.Max(0.0, constraint.Height - combined.Height));
 
                 child.Measure(childConstraint);
                 var childSize = child.DesiredSize;
@@ -300,11 +282,11 @@ namespace MahApps.Metro.Controls
         /// <returns>The actual ink area of the element, typically the same as finalSize</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            var borders = BorderThickness;
+            var borders = this.BorderThickness;
             var boundRect = new Rect(finalSize);
             var innerRect = boundRect.Deflate(borders);
-            var corners = CornerRadius;
-            var padding = Padding;
+            var corners = this.CornerRadius;
+            var padding = this.Padding;
             var childRect = innerRect.Deflate(padding);
 
             //  calculate border rendering geometry
@@ -317,13 +299,14 @@ namespace MahApps.Metro.Controls
                 {
                     GenerateGeometry(ctx, boundRect, outerBorderInfo);
                 }
+
                 // Freeze the geometry for better perfomance
                 borderGeometry.Freeze();
-                _borderGeometryCache = borderGeometry;
+                this._borderGeometryCache = borderGeometry;
             }
             else
             {
-                _borderGeometryCache = null;
+                this._borderGeometryCache = null;
             }
 
             //  calculate background rendering geometry
@@ -336,17 +319,18 @@ namespace MahApps.Metro.Controls
                 {
                     GenerateGeometry(ctx, innerRect, innerBorderInfo);
                 }
+
                 // Freeze the geometry for better perfomance
                 backgroundGeometry.Freeze();
-                _backgroundGeometryCache = backgroundGeometry;
+                this._backgroundGeometryCache = backgroundGeometry;
             }
             else
             {
-                _backgroundGeometryCache = null;
+                this._backgroundGeometryCache = null;
             }
 
             //  Arrange the Child and set its clip
-            var child = Child;
+            var child = this.Child;
             if (child != null)
             {
                 child.Arrange(childRect);
@@ -357,6 +341,7 @@ namespace MahApps.Metro.Controls
                 {
                     GenerateGeometry(ctx, new Rect(0, 0, childRect.Width, childRect.Height), childBorderInfo);
                 }
+
                 // Freeze the geometry for better perfomance
                 clipGeometry.Freeze();
                 // Apply the clip to the Child
@@ -372,12 +357,12 @@ namespace MahApps.Metro.Controls
         /// <param name="dc">Drawing Context</param>
         protected override void OnRender(DrawingContext dc)
         {
-            var borders = BorderThickness;
-            var borderBrush = BorderBrush;
-            var bgBrush = Background;
-            var borderGeometry = _borderGeometryCache;
-            var backgroundGeometry = _backgroundGeometryCache;
-            var optimizeClipRendering = OptimizeClipRendering;
+            var borders = this.BorderThickness;
+            var borderBrush = this.BorderBrush;
+            var bgBrush = this.Background;
+            var borderGeometry = this._borderGeometryCache;
+            var backgroundGeometry = this._backgroundGeometryCache;
+            var optimizeClipRendering = this.OptimizeClipRendering;
 
             // First check if the user wants optimized rendering of the clipped Child
             if (optimizeClipRendering)
@@ -420,7 +405,7 @@ namespace MahApps.Metro.Controls
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
                     var borderOutlineGeometry = Geometry.Combine(borderOutlinePath, backgroundOutlinePath,
-                        GeometryCombineMode.Exclude, null);
+                                                                 GeometryCombineMode.Exclude, null);
 
                     dc.DrawGeometry(bgBrush, null, borderGeometry);
                     dc.DrawGeometry(borderBrush, null, borderOutlineGeometry);
@@ -436,7 +421,7 @@ namespace MahApps.Metro.Controls
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
                     var borderOutlineGeometry = Geometry.Combine(borderOutlinePath, backgroundOutlinePath,
-                        GeometryCombineMode.Exclude, null);
+                                                                 GeometryCombineMode.Exclude, null);
 
                     dc.DrawGeometry(borderBrush, null, borderOutlineGeometry);
                     dc.DrawGeometry(bgBrush, null, backgroundGeometry);
@@ -453,7 +438,7 @@ namespace MahApps.Metro.Controls
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
                     var borderOutlineGeometry = Geometry.Combine(borderOutlinePath, backgroundOutlinePath,
-                        GeometryCombineMode.Exclude, null);
+                                                                 GeometryCombineMode.Exclude, null);
 
                     dc.DrawGeometry(borderBrush, null, borderOutlineGeometry);
                 }
@@ -632,57 +617,60 @@ namespace MahApps.Metro.Controls
                 {
                     if (corners.TopLeft.IsZero())
                     {
-                        LeftTop = TopLeft = 0.0;
+                        this.LeftTop = this.TopLeft = 0.0;
                     }
                     else
                     {
-                        LeftTop = corners.TopLeft + left;
-                        TopLeft = corners.TopLeft + top;
+                        this.LeftTop = corners.TopLeft + left;
+                        this.TopLeft = corners.TopLeft + top;
                     }
+
                     if (corners.TopRight.IsZero())
                     {
-                        TopRight = RightTop = 0.0;
+                        this.TopRight = this.RightTop = 0.0;
                     }
                     else
                     {
-                        TopRight = corners.TopRight + top;
-                        RightTop = corners.TopRight + right;
+                        this.TopRight = corners.TopRight + top;
+                        this.RightTop = corners.TopRight + right;
                     }
+
                     if (corners.BottomRight.IsZero())
                     {
-                        RightBottom = BottomRight = 0.0;
+                        this.RightBottom = this.BottomRight = 0.0;
                     }
                     else
                     {
-                        RightBottom = corners.BottomRight + right;
-                        BottomRight = corners.BottomRight + bottom;
+                        this.RightBottom = corners.BottomRight + right;
+                        this.BottomRight = corners.BottomRight + bottom;
                     }
+
                     if (corners.BottomLeft.IsZero())
                     {
-                        BottomLeft = LeftBottom = 0.0;
+                        this.BottomLeft = this.LeftBottom = 0.0;
                     }
                     else
                     {
-                        BottomLeft = corners.BottomLeft + bottom;
-                        LeftBottom = corners.BottomLeft + left;
+                        this.BottomLeft = corners.BottomLeft + bottom;
+                        this.LeftBottom = corners.BottomLeft + left;
                     }
                 }
                 else
                 {
-                    LeftTop = Math.Max(0.0, corners.TopLeft - left);
-                    TopLeft = Math.Max(0.0, corners.TopLeft - top);
-                    TopRight = Math.Max(0.0, corners.TopRight - top);
-                    RightTop = Math.Max(0.0, corners.TopRight - right);
-                    RightBottom = Math.Max(0.0, corners.BottomRight - right);
-                    BottomRight = Math.Max(0.0, corners.BottomRight - bottom);
-                    BottomLeft = Math.Max(0.0, corners.BottomLeft - bottom);
-                    LeftBottom = Math.Max(0.0, corners.BottomLeft - left);
+                    this.LeftTop = Math.Max(0.0, corners.TopLeft - left);
+                    this.TopLeft = Math.Max(0.0, corners.TopLeft - top);
+                    this.TopRight = Math.Max(0.0, corners.TopRight - top);
+                    this.RightTop = Math.Max(0.0, corners.TopRight - right);
+                    this.RightBottom = Math.Max(0.0, corners.BottomRight - right);
+                    this.BottomRight = Math.Max(0.0, corners.BottomRight - bottom);
+                    this.BottomLeft = Math.Max(0.0, corners.BottomLeft - bottom);
+                    this.LeftBottom = Math.Max(0.0, corners.BottomLeft - left);
                 }
             }
 
             #endregion
         }
 
-        #endregion 
+        #endregion
     }
 }

@@ -1,9 +1,13 @@
-﻿namespace MahApps.Metro.Converters
-{
-    using System;
-    using System.Globalization;
-    using System.Windows.Data;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
+using System;
+using System.Globalization;
+using System.Windows.Data;
+
+namespace MahApps.Metro.Converters
+{
     /// <summary>
     /// Converts a double representing either hour/minute/second to the corresponding angle.
     /// </summary>
@@ -18,6 +22,7 @@
             {
                 return 0;
             }
+
             if (value is DateTime)
             {
                 var dateTime = (DateTime)value;
@@ -39,6 +44,7 @@
             {
                 return 360 / TotalParts * (int)value;
             }
+
             return 360 / TotalParts * (double)value;
         }
 

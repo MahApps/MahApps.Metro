@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -5,12 +9,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using ControlzEx.Theming;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-    using JetBrains.Annotations;
-
     public static class DialogManager
     {
         /// <summary>
@@ -26,58 +29,58 @@ namespace MahApps.Metro.Controls.Dialogs
             window.Dispatcher.VerifyAccess();
             settings = settings ?? new LoginDialogSettings();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-            {
-                return (Task<LoginDialogData>)window.Dispatcher.Invoke(new Func<Task<LoginDialogData>>(() =>
                 {
-                    //create the dialog control
-                    LoginDialog dialog = new LoginDialog(window, settings)
-                    {
-                        Title = title,
-                        Message = message
-                    };
-
-                    SetDialogFontSizes(settings, dialog);
-
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-
-                    return dialog.WaitForLoadAsync().ContinueWith(x =>
-                    {
-                        if (DialogOpened != null)
+                    return (Task<LoginDialogData>)window.Dispatcher.Invoke(new Func<Task<LoginDialogData>>(() =>
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
-                        }
+                            //create the dialog control
+                            LoginDialog dialog = new LoginDialog(window, settings)
+                                                 {
+                                                     Title = title,
+                                                     Message = message
+                                                 };
 
-                        return dialog.WaitForButtonPressAsync().ContinueWith(y =>
-                        {
-                            //once a button as been clicked, begin removing the dialog.
+                            SetDialogFontSizes(settings, dialog);
 
-                            dialog.OnClose();
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
 
-                            if (DialogClosed != null)
-                            {
-                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
-                            }
-
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
-                            return closingTask.ContinueWith(a =>
-                            {
-                                return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
                                 {
-                                    window.SizeChanged -= sizeHandler;
+                                    if (DialogOpened != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                                    }
 
-                                    window.RemoveDialog(dialog);
+                                    return dialog.WaitForButtonPressAsync().ContinueWith(y =>
+                                        {
+                                            //once a button as been clicked, begin removing the dialog.
 
-                                    return HandleOverlayOnHide(settings, window);
-                                    //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                                            dialog.OnClose();
 
-                                }))).ContinueWith(y3 => y).Unwrap();
-                            });
-                        }).Unwrap();
-                    }).Unwrap().Unwrap();
-                }));
-            }).Unwrap();
+                                            if (DialogClosed != null)
+                                            {
+                                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                                            }
+
+                                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
+                                            return closingTask.ContinueWith(a =>
+                                                {
+                                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                                        {
+                                                            window.SizeChanged -= sizeHandler;
+
+                                                            window.RemoveDialog(dialog);
+
+                                                            return HandleOverlayOnHide(settings, window);
+                                                            //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                                                        }))).ContinueWith(y3 => y).Unwrap();
+                                                });
+                                        }).Unwrap();
+                                }).Unwrap().Unwrap();
+                        }));
+                }).Unwrap();
         }
+
         /// <summary>
         /// Creates a InputDialog inside of the current window.
         /// </summary>
@@ -91,56 +94,56 @@ namespace MahApps.Metro.Controls.Dialogs
             window.Dispatcher.VerifyAccess();
             settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-            {
-                return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
                 {
-                    //create the dialog control
-                    var dialog = new InputDialog(window, settings)
-                    {
-                        Title = title,
-                        Message = message,
-                        Input = settings.DefaultText,
-                    };
-
-                    SetDialogFontSizes(settings, dialog);
-
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-
-                    return dialog.WaitForLoadAsync().ContinueWith(x =>
-                    {
-                        if (DialogOpened != null)
+                    return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
-                        }
+                            //create the dialog control
+                            var dialog = new InputDialog(window, settings)
+                                         {
+                                             Title = title,
+                                             Message = message,
+                                             Input = settings.DefaultText,
+                                         };
 
-                        return dialog.WaitForButtonPressAsync().ContinueWith(y =>
-                        {
-                            //once a button as been clicked, begin removing the dialog.
+                            SetDialogFontSizes(settings, dialog);
 
-                            dialog.OnClose();
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
 
-                            if (DialogClosed != null)
-                            {
-                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
-                            }
-
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
-                            return closingTask.ContinueWith(a =>
-                            {
-                                return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
                                 {
-                                    window.SizeChanged -= sizeHandler;
+                                    if (DialogOpened != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                                    }
 
-                                    window.RemoveDialog(dialog);
+                                    return dialog.WaitForButtonPressAsync().ContinueWith(y =>
+                                        {
+                                            //once a button as been clicked, begin removing the dialog.
 
-                                    return HandleOverlayOnHide(settings, window);
-                                }))).ContinueWith(y3 => y).Unwrap();
-                            });
-                        }).Unwrap();
-                    }).Unwrap().Unwrap();
-                }));
-            }).Unwrap();
+                                            dialog.OnClose();
+
+                                            if (DialogClosed != null)
+                                            {
+                                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                                            }
+
+                                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
+                                            return closingTask.ContinueWith(a =>
+                                                {
+                                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                                        {
+                                                            window.SizeChanged -= sizeHandler;
+
+                                                            window.RemoveDialog(dialog);
+
+                                                            return HandleOverlayOnHide(settings, window);
+                                                        }))).ContinueWith(y3 => y).Unwrap();
+                                                });
+                                        }).Unwrap();
+                                }).Unwrap().Unwrap();
+                        }));
+                }).Unwrap();
         }
 
         /// <summary>
@@ -157,56 +160,56 @@ namespace MahApps.Metro.Controls.Dialogs
             window.Dispatcher.VerifyAccess();
             settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-            {
-                return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                 {
-                    //create the dialog control
-                    var dialog = new MessageDialog(window, settings)
-                    {
-                        Message = message,
-                        Title = title,
-                        ButtonStyle = style
-                    };
-
-                    SetDialogFontSizes(settings, dialog);
-
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-
-                    return dialog.WaitForLoadAsync().ContinueWith(x =>
-                    {
-                        if (DialogOpened != null)
+                    return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
-                        }
+                            //create the dialog control
+                            var dialog = new MessageDialog(window, settings)
+                                         {
+                                             Message = message,
+                                             Title = title,
+                                             ButtonStyle = style
+                                         };
 
-                        return dialog.WaitForButtonPressAsync().ContinueWith(y =>
-                        {
-                            //once a button as been clicked, begin removing the dialog.
+                            SetDialogFontSizes(settings, dialog);
 
-                            dialog.OnClose();
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
 
-                            if (DialogClosed != null)
-                            {
-                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
-                            }
-
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
-                            return closingTask.ContinueWith(a =>
-                            {
-                                return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
                                 {
-                                    window.SizeChanged -= sizeHandler;
+                                    if (DialogOpened != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                                    }
 
-                                    window.RemoveDialog(dialog);
+                                    return dialog.WaitForButtonPressAsync().ContinueWith(y =>
+                                        {
+                                            //once a button as been clicked, begin removing the dialog.
 
-                                    return HandleOverlayOnHide(settings, window);
-                                }))).ContinueWith(y3 => y).Unwrap();
-                            });
-                        }).Unwrap();
-                    }).Unwrap().Unwrap();
-                }));
-            }).Unwrap();
+                                            dialog.OnClose();
+
+                                            if (DialogClosed != null)
+                                            {
+                                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                                            }
+
+                                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
+                                            return closingTask.ContinueWith(a =>
+                                                {
+                                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                                        {
+                                                            window.SizeChanged -= sizeHandler;
+
+                                                            window.RemoveDialog(dialog);
+
+                                                            return HandleOverlayOnHide(settings, window);
+                                                        }))).ContinueWith(y3 => y).Unwrap();
+                                                });
+                                        }).Unwrap();
+                                }).Unwrap().Unwrap();
+                        }));
+                }).Unwrap();
         }
 
         /// <summary>
@@ -223,54 +226,54 @@ namespace MahApps.Metro.Controls.Dialogs
             window.Dispatcher.VerifyAccess();
             settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-            {
-                return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                 {
-                    //create the dialog control
-                    var dialog = new ProgressDialog(window, settings)
-                    {
-                        Title = title,
-                        Message = message,
-                        IsCancelable = isCancelable
-                    };
-
-                    SetDialogFontSizes(settings, dialog);
-
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-
-                    return dialog.WaitForLoadAsync().ContinueWith(x =>
-                    {
-                        if (DialogOpened != null)
+                    return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
-                        }
+                            //create the dialog control
+                            var dialog = new ProgressDialog(window, settings)
+                                         {
+                                             Title = title,
+                                             Message = message,
+                                             IsCancelable = isCancelable
+                                         };
 
-                        return new ProgressDialogController(dialog, () =>
-                        {
-                            dialog.OnClose();
+                            SetDialogFontSizes(settings, dialog);
 
-                            if (DialogClosed != null)
-                            {
-                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
-                            }
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
 
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
-                            return closingTask.ContinueWith(a =>
-                            {
-                                return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
                                 {
-                                    window.SizeChanged -= sizeHandler;
+                                    if (DialogOpened != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                                    }
 
-                                    window.RemoveDialog(dialog);
+                                    return new ProgressDialogController(dialog, () =>
+                                        {
+                                            dialog.OnClose();
 
-                                    return HandleOverlayOnHide(settings, window);
-                                }));
-                            }).Unwrap();
-                        });
-                    });
-                })));
-            }).Unwrap();
+                                            if (DialogClosed != null)
+                                            {
+                                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                                            }
+
+                                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
+                                            return closingTask.ContinueWith(a =>
+                                                {
+                                                    return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                                        {
+                                                            window.SizeChanged -= sizeHandler;
+
+                                                            window.RemoveDialog(dialog);
+
+                                                            return HandleOverlayOnHide(settings, window);
+                                                        }));
+                                                }).Unwrap();
+                                        });
+                                });
+                        })));
+                }).Unwrap();
         }
 
         private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
@@ -353,11 +356,13 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new ArgumentNullException(nameof(window));
             }
+
             window.Dispatcher.VerifyAccess();
             if (dialog == null)
             {
                 throw new ArgumentNullException(nameof(dialog));
             }
+
             if (window.metroActiveDialogContainer.Children.Contains(dialog) || window.metroInactiveDialogContainer.Children.Contains(dialog))
             {
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
@@ -366,25 +371,25 @@ namespace MahApps.Metro.Controls.Dialogs
             settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-            {
-                return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                 {
-                    SetDialogFontSizes(settings, dialog);
-
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-
-                    return dialog.WaitForLoadAsync().ContinueWith(x =>
-                    {
-                        dialog.OnShown();
-
-                        if (DialogOpened != null)
+                    return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
-                        }
-                    });
-                }));
-            }).Unwrap();
+                            SetDialogFontSizes(settings, dialog);
+
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
+
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
+                                {
+                                    dialog.OnShown();
+
+                                    if (DialogOpened != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                                    }
+                                });
+                        }));
+                }).Unwrap();
         }
 
         /// <summary>
@@ -395,36 +400,38 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="window">The owning window of the dialog.</param>
         /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task with the dialog representing the operation.</returns>
-        public static Task<TDialog> ShowMetroDialogAsync<TDialog>([NotNull] this MetroWindow window, [CanBeNull] MetroDialogSettings settings = null) where TDialog : BaseMetroDialog
+        public static Task<TDialog> ShowMetroDialogAsync<TDialog>([NotNull] this MetroWindow window, [CanBeNull] MetroDialogSettings settings = null)
+            where TDialog : BaseMetroDialog
         {
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
+
             window.Dispatcher.VerifyAccess();
 
             var dialog = (TDialog)Activator.CreateInstance(typeof(TDialog), window, settings);
 
             return HandleOverlayOnShow(dialog.DialogSettings, window).ContinueWith(z =>
-            {
-                return (Task<TDialog>)window.Dispatcher.Invoke(new Func<Task<TDialog>>(() =>
                 {
-                    SetDialogFontSizes(dialog.DialogSettings, dialog);
-
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-
-                    return dialog.WaitForLoadAsync().ContinueWith(x =>
-                    {
-                        dialog.OnShown();
-
-                        if (DialogOpened != null)
+                    return (Task<TDialog>)window.Dispatcher.Invoke(new Func<Task<TDialog>>(() =>
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
-                        }
-                    }).ContinueWith(x => dialog);
-                }));
-            }).Unwrap();
+                            SetDialogFontSizes(dialog.DialogSettings, dialog);
+
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
+
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
+                                {
+                                    dialog.OnShown();
+
+                                    if (DialogOpened != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                                    }
+                                }).ContinueWith(x => dialog);
+                        }));
+                }).Unwrap();
         }
 
         /// <summary>
@@ -452,35 +459,36 @@ namespace MahApps.Metro.Controls.Dialogs
 
             Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(dialog.WaitForCloseAsync));
             return closingTask.ContinueWith(a =>
-            {
-                if (DialogClosed != null)
                 {
-                    window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
-                }
+                    if (DialogClosed != null)
+                    {
+                        window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                    }
 
-                return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
-                {
-                    window.RemoveDialog(dialog);
+                    return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                        {
+                            window.RemoveDialog(dialog);
 
-                    settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
-                    return HandleOverlayOnHide(settings, window);
-                }));
-            }).Unwrap();
+                            settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+                            return HandleOverlayOnHide(settings, window);
+                        }));
+                }).Unwrap();
         }
 
         /// <summary>
         /// Gets the current shown dialog in async way.
         /// </summary>
         /// <param name="window">The dialog owner.</param>
-        public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window) where TDialog : BaseMetroDialog
+        public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window)
+            where TDialog : BaseMetroDialog
         {
             window.Dispatcher.VerifyAccess();
             var t = new TaskCompletionSource<TDialog>();
             window.Dispatcher.Invoke((Action)(() =>
-            {
-                TDialog dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
-                t.TrySetResult(dialog);
-            }));
+                {
+                    TDialog dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
+                    t.TrySetResult(dialog);
+                }));
             return t.Task;
         }
 
@@ -491,10 +499,10 @@ namespace MahApps.Metro.Controls.Dialogs
             dialog.MaxHeight = window.ActualHeight;
 
             SizeChangedEventHandler sizeHandler = (sender, args) =>
-            {
-                dialog.MinHeight = window.ActualHeight / 4.0;
-                dialog.MaxHeight = window.ActualHeight;
-            };
+                {
+                    dialog.MinHeight = window.ActualHeight / 4.0;
+                    dialog.MaxHeight = window.ActualHeight;
+                };
 
             window.SizeChanged += sizeHandler;
 
@@ -551,7 +559,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
         /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
         /// <returns>The given dialog.</returns>
-        public static TDialog ShowDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
+        public static TDialog ShowDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null)
+            where TDialog : BaseMetroDialog
         {
             var win = SetupExternalDialogWindow(dialog, windowOwner);
 
@@ -570,7 +579,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
         /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
         /// <returns>The given dialog.</returns>
-        public static TDialog ShowModalDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
+        public static TDialog ShowModalDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null)
+            where TDialog : BaseMetroDialog
         {
             var win = SetupExternalDialogWindow(dialog, windowOwner);
 
@@ -731,10 +741,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             //create the dialog control
             LoginDialog dialog = new LoginDialog(win, settings)
-            {
-                Title = title,
-                Message = message
-            };
+                                 {
+                                     Title = title,
+                                     Message = message
+                                 };
 
             SetDialogFontSizes(settings, dialog);
 
@@ -742,10 +752,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             LoginDialogData result = null;
             dialog.WaitForButtonPressAsync().ContinueWith(task =>
-            {
-                result = task.Result;
-                win.Invoke(win.Close);
-            });
+                {
+                    result = task.Result;
+                    win.Invoke(win.Close);
+                });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -769,11 +779,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             //create the dialog control
             var dialog = new InputDialog(win, settings)
-            {
-                Message = message,
-                Title = title,
-                Input = settings.DefaultText
-            };
+                         {
+                             Message = message,
+                             Title = title,
+                             Input = settings.DefaultText
+                         };
 
             SetDialogFontSizes(settings, dialog);
 
@@ -781,10 +791,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             string result = null;
             dialog.WaitForButtonPressAsync().ContinueWith(task =>
-            {
-                result = task.Result;
-                win.Invoke(win.Close);
-            });
+                {
+                    result = task.Result;
+                    win.Invoke(win.Close);
+                });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -809,11 +819,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             //create the dialog control
             var dialog = new MessageDialog(win, settings)
-            {
-                Message = message,
-                Title = title,
-                ButtonStyle = style
-            };
+                         {
+                             Message = message,
+                             Title = title,
+                             ButtonStyle = style
+                         };
 
             SetDialogFontSizes(settings, dialog);
 
@@ -821,10 +831,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             MessageDialogResult result = MessageDialogResult.Affirmative;
             dialog.WaitForButtonPressAsync().ContinueWith(task =>
-            {
-                result = task.Result;
-                win.Invoke(win.Close);
-            });
+                {
+                    result = task.Result;
+                    win.Invoke(win.Close);
+                });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -838,14 +848,17 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return;
             }
+
             if (!double.IsNaN(settings.DialogTitleFontSize))
             {
                 dialog.DialogTitleFontSize = settings.DialogTitleFontSize;
             }
+
             if (!double.IsNaN(settings.DialogMessageFontSize))
             {
                 dialog.DialogMessageFontSize = settings.DialogMessageFontSize;
             }
+
             if (!double.IsNaN(settings.DialogButtonFontSize))
             {
                 dialog.DialogButtonFontSize = settings.DialogButtonFontSize;
@@ -853,6 +866,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         public static event EventHandler<DialogStateChangedEventArgs> DialogOpened;
+
         public static event EventHandler<DialogStateChangedEventArgs> DialogClosed;
     }
 }

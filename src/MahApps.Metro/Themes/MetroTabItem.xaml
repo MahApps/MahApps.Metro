@@ -231,8 +231,6 @@
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
-
-
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />

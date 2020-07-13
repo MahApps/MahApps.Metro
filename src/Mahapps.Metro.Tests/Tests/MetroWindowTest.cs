@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -88,10 +92,11 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => {
-                                                                                         w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
-                                                                                         w.ShowTitleBar = false;
-                                                                                     });
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w =>
+                {
+                    w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
+                    w.ShowTitleBar = false;
+                });
             var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
@@ -126,7 +131,6 @@ namespace MahApps.Metro.Tests
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
         }
-
 
         private Button GetButton(MetroWindow window, string buttonName)
         {

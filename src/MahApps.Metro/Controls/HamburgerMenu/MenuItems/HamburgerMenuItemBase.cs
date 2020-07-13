@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Windows;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -20,15 +24,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object Tag
         {
-            get
-            {
-                return this.GetValue(TagProperty);
-            }
+            get { return this.GetValue(TagProperty); }
 
-            set
-            {
-                this.SetValue(TagProperty, value);
-            }
+            set { this.SetValue(TagProperty, value); }
         }
 
         /// <summary>
@@ -39,15 +37,9 @@ namespace MahApps.Metro.Controls
         /// </returns>
         public bool IsVisible
         {
-            get
-            {
-                return (bool)this.GetValue(IsVisibleProperty);
-            }
+            get { return (bool)this.GetValue(IsVisibleProperty); }
 
-            set
-            {
-                this.SetValue(IsVisibleProperty, BooleanBoxes.Box(value));
-            }
+            set { this.SetValue(IsVisibleProperty, BooleanBoxes.Box(value)); }
         }
 
         protected override Freezable CreateInstanceCore()

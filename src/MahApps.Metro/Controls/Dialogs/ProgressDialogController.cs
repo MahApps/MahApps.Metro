@@ -1,10 +1,14 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+
 namespace MahApps.Metro.Controls.Dialogs
 {
-    using System;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Media;
-
     /// <summary>
     /// A class for manipulating an open ProgressDialog.
     /// </summary>
@@ -86,6 +90,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         throw new ArgumentOutOfRangeException(nameof(value));
                     }
+
                     this.WrappedDialog.ProgressValue = value;
                 };
             this.WrappedDialog.Invoke(action);
@@ -148,6 +153,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         throw new InvalidOperationException("Dialog isn't visible to close");
                     }
+
                     this.WrappedDialog.Dispatcher.VerifyAccess();
                     this.WrappedDialog.PART_NegativeButton.Click -= this.PART_NegativeButton_Click;
                 };
@@ -156,10 +162,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return this.CloseCallback()
                        .ContinueWith(_ => this.WrappedDialog.Invoke(() =>
-                                                                        {
-                                                                            this.IsOpen = false;
-                                                                            this.Closed?.Invoke(this, EventArgs.Empty);
-                                                                        }));
+                           {
+                               this.IsOpen = false;
+                               this.Closed?.Invoke(this, EventArgs.Empty);
+                           }));
         }
     }
 }

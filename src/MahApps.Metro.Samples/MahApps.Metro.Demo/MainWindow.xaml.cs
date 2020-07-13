@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
@@ -106,6 +110,7 @@ namespace MetroDemo
                 flyoutDemo = new FlyoutDemo();
                 flyoutDemo.Closed += (o, args) => flyoutDemo = null;
             }
+
             flyoutDemo.Launch();
         }
 
@@ -121,6 +126,7 @@ namespace MetroDemo
         }
 
         private Window cleanWindowDemo;
+
         private void LauchCleanDemo(object sender, RoutedEventArgs e)
         {
             if (cleanWindowDemo == null)
@@ -128,6 +134,7 @@ namespace MetroDemo
                 cleanWindowDemo = new CleanWindowDemo();
                 cleanWindowDemo.Closed += (o, args) => cleanWindowDemo = null;
             }
+
             if (cleanWindowDemo.IsVisible)
                 cleanWindowDemo.Hide();
             else
@@ -149,40 +156,43 @@ namespace MetroDemo
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
             // The package is only used by the demo and not a dependency of the library!
             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Hi",
-                NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel",
-                ColorScheme = MetroDialogOptions.ColorScheme,
-                DialogButtonFontSize = 20D
-            };
+                             {
+                                 AffirmativeButtonText = "Hi",
+                                 NegativeButtonText = "Go away!",
+                                 FirstAuxiliaryButtonText = "Cancel",
+                                 ColorScheme = MetroDialogOptions.ColorScheme,
+                                 DialogButtonFontSize = 20D
+                             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!",
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+                                                                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
-                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
-                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative
+                                                ? mySettings.AffirmativeButtonText
+                                                : mySettings.NegativeButtonText +
+                                                  Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
-
 
         private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
         {
             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Hi",
-                NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel",
-                MaximumBodyHeight = 100,
-                ColorScheme = MetroDialogOptions.ColorScheme
-            };
+                             {
+                                 AffirmativeButtonText = "Hi",
+                                 NegativeButtonText = "Go away!",
+                                 FirstAuxiliaryButtonText = "Cancel",
+                                 MaximumBodyHeight = 100,
+                                 ColorScheme = MetroDialogOptions.ColorScheme
+                             };
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc","def","ghi", "jkl","mno","pqr","stu","vwx","yz"),
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"),
+                                                                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
-                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
-                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative
+                                                ? mySettings.AffirmativeButtonText
+                                                : mySettings.NegativeButtonText +
+                                                  Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
 
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
@@ -278,12 +288,12 @@ namespace MetroDemo
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             var mySettings = new MetroDialogSettings()
-            {
-                NegativeButtonText = "Close now",
-                AnimateShow = false,
-                AnimateHide = false,
-                ColorScheme = this.MetroDialogOptions.ColorScheme
-            };
+                             {
+                                 NegativeButtonText = "Close now",
+                                 AnimateShow = false,
+                                 AnimateHide = false,
+                                 ColorScheme = this.MetroDialogOptions.ColorScheme
+                             };
 
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
             controller.SetIndeterminate();
@@ -332,9 +342,9 @@ namespace MetroDemo
         private async void ShowInputDialogCustomButtonSizes(object sender, RoutedEventArgs e)
         {
             var settings = new MetroDialogSettings
-            {
-                DialogButtonFontSize = 30D
-            };
+                           {
+                               DialogButtonFontSize = 30D
+                           };
             var result = await this.ShowInputAsync("Hello!", "What is your name?", settings);
 
             if (result == null) //user pressed cancel
@@ -345,7 +355,7 @@ namespace MetroDemo
 
         private async void ShowLoginDialog(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps"});
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps" });
             if (result == null)
             {
                 //User pressed cancel
@@ -359,7 +369,6 @@ namespace MetroDemo
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
-
         }
 
         private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
@@ -424,9 +433,11 @@ namespace MetroDemo
 
         private MetroWindow GetTestWindow()
         {
-            if (testWindow != null) {
+            if (testWindow != null)
+            {
                 testWindow.Close();
             }
+
             testWindow = new MetroWindow() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner, Title = "Another Test...", Width = 500, Height = 300 };
             testWindow.Closed += (o, args) => testWindow = null;
             return testWindow;
@@ -493,19 +504,21 @@ namespace MetroDemo
         private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
         {
             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Hi",
-                NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel",
-                ColorScheme = MetroDialogOptions.ColorScheme
-            };
+                             {
+                                 AffirmativeButtonText = "Hi",
+                                 NegativeButtonText = "Go away!",
+                                 FirstAuxiliaryButtonText = "Cancel",
+                                 ColorScheme = MetroDialogOptions.ColorScheme
+                             };
 
             MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+                                                                       MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
-                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
-                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative
+                                                  ? mySettings.AffirmativeButtonText
+                                                  : mySettings.NegativeButtonText +
+                                                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
     }
 }

@@ -322,7 +322,6 @@
             </StackPanel>
         </GroupBox>
 
-
         <GroupBox Grid.Row="0"
                   Grid.Column="3"
                   Margin="4 2"
