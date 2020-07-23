@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Markup;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Converters
 {
@@ -41,12 +42,9 @@ namespace MahApps.Metro.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values == null || values.Length < 2)
-            {
-                return Binding.DoNothing;
-            }
-
-            return DoConvert(values[0], values[1], this.Operation);
+            return values is null
+                ? Binding.DoNothing
+                : DoConvert(values.ElementAtOrDefault(0), values.ElementAtOrDefault(1), this.Operation);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -59,10 +57,10 @@ namespace MahApps.Metro.Converters
             return targetTypes.Select(t => Binding.DoNothing).ToArray();
         }
 
-        private static object DoConvert(object firstValue, object secondValue, MathOperation operation)
+        private static object DoConvert([CanBeNull] object firstValue, [CanBeNull] object secondValue, MathOperation operation)
         {
-            if (firstValue == null
-                || secondValue == null
+            if (firstValue is null
+                || secondValue is null
                 || firstValue == DependencyProperty.UnsetValue
                 || secondValue == DependencyProperty.UnsetValue
                 || firstValue == DBNull.Value
@@ -78,21 +76,27 @@ namespace MahApps.Metro.Converters
 
                 switch (operation)
                 {
-                    case MathOperation.Add:
-                        return value1 + value2;
+                    case MathOperation.Add: return value1 + value2;
                     case MathOperation.Divide:
-                        return value1 / value2;
-                    case MathOperation.Multiply:
-                        return value1 * value2;
-                    case MathOperation.Subtract:
-                        return value1 - value2;
-                    default:
-                        return Binding.DoNothing;
+                    {
+                        if (value2 > 0)
+                        {
+                            return value1 / value2;
+                        }
+                        else
+                        {
+                            Trace.TraceWarning($"Second value can not be used by division, because it's '0' (value1={value1}, value2={value2})");
+                            return Binding.DoNothing;
+                        }
+                    }
+                    case MathOperation.Multiply: return value1 * value2;
+                    case MathOperation.Subtract: return value1 - value2;
+                    default: return Binding.DoNothing;
                 }
             }
             catch (Exception e)
             {
-                Trace.TraceError($"Error while converting: value1={firstValue} value2={secondValue} operation={operation} exception: {e}");
+                Trace.TraceError($"Error while math operation: operation={operation}, value1={firstValue}, value2={secondValue} => exception: {e}");
                 return Binding.DoNothing;
             }
         }
@@ -105,38 +109,26 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathAddConverter))]
     public sealed class MathAddConverter : MarkupMultiConverter
     {
-        private static MathAddConverter _instance;
-        private readonly MathConverter theMathConverter = new MathConverter() { Operation = MathOperation.Add };
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static MathAddConverter()
-        {
-        }
+        private static readonly MathConverter MathConverter = new MathConverter() { Operation = MathOperation.Add };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(values, targetType, parameter, culture);
+            return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(value, targetType, parameter, culture);
+            return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetTypes, parameter, culture);
+            return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetType, parameter, culture);
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return _instance ?? (_instance = new MathAddConverter());
+            return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
     }
 
@@ -147,38 +139,26 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathSubtractConverter))]
     public sealed class MathSubtractConverter : MarkupMultiConverter
     {
-        private static MathSubtractConverter _instance;
-        private readonly MathConverter theMathConverter = new MathConverter() { Operation = MathOperation.Subtract };
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static MathSubtractConverter()
-        {
-        }
+        private static readonly MathConverter MathConverter = new MathConverter() { Operation = MathOperation.Subtract };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(values, targetType, parameter, culture);
+            return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(value, targetType, parameter, culture);
+            return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetTypes, parameter, culture);
+            return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetType, parameter, culture);
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return _instance ?? (_instance = new MathSubtractConverter());
+            return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
     }
 
@@ -189,38 +169,26 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathMultiplyConverter))]
     public sealed class MathMultiplyConverter : MarkupMultiConverter
     {
-        private static MathMultiplyConverter _instance;
-        private readonly MathConverter theMathConverter = new MathConverter() { Operation = MathOperation.Multiply };
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static MathMultiplyConverter()
-        {
-        }
+        private static readonly MathConverter MathConverter = new MathConverter() { Operation = MathOperation.Multiply };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(values, targetType, parameter, culture);
+            return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(value, targetType, parameter, culture);
+            return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetTypes, parameter, culture);
+            return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetType, parameter, culture);
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return _instance ?? (_instance = new MathMultiplyConverter());
+            return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
     }
 
@@ -231,38 +199,26 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathDivideConverter))]
     public sealed class MathDivideConverter : MarkupMultiConverter
     {
-        private static MathDivideConverter _instance;
-        private readonly MathConverter theMathConverter = new MathConverter() { Operation = MathOperation.Divide };
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static MathDivideConverter()
-        {
-        }
+        private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Divide };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(values, targetType, parameter, culture);
+            return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.Convert(value, targetType, parameter, culture);
+            return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetTypes, parameter, culture);
+            return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return this.theMathConverter.ConvertBack(value, targetType, parameter, culture);
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return _instance ?? (_instance = new MathDivideConverter());
+            return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
     }
 }
