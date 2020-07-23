@@ -31,6 +31,7 @@ namespace MahApps.Metro.Converters
     /// If it is used for multi binding then the first and second binding will be used as operands with the selected operation.
     /// This class cannot be inherited.
     /// </summary>
+    [ValueConversion(typeof(object), typeof(object))]
     public sealed class MathConverter : IValueConverter, IMultiValueConverter
     {
         public MathOperation Operation { get; set; }
@@ -49,12 +50,12 @@ namespace MahApps.Metro.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Binding.DoNothing;
+            return DependencyProperty.UnsetValue;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return targetTypes.Select(t => Binding.DoNothing).ToArray();
+            return targetTypes.Select(t => DependencyProperty.UnsetValue).ToArray();
         }
 
         private static object DoConvert([CanBeNull] object firstValue, [CanBeNull] object secondValue, MathOperation operation)
