@@ -110,7 +110,7 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathAddConverter))]
     public sealed class MathAddConverter : MarkupMultiConverter
     {
-        private static readonly MathConverter MathConverter = new MathConverter() { Operation = MathOperation.Add };
+        private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Add };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -140,7 +140,7 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathSubtractConverter))]
     public sealed class MathSubtractConverter : MarkupMultiConverter
     {
-        private static readonly MathConverter MathConverter = new MathConverter() { Operation = MathOperation.Subtract };
+        private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Subtract };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -170,7 +170,7 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MathMultiplyConverter))]
     public sealed class MathMultiplyConverter : MarkupMultiConverter
     {
-        private static readonly MathConverter MathConverter = new MathConverter() { Operation = MathOperation.Multiply };
+        private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Multiply };
 
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
