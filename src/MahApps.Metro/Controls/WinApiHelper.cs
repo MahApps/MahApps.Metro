@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -34,6 +36,83 @@ namespace MahApps.Metro.Controls
             }
 
             return default;
+        }
+#pragma warning restore 618
+
+        /// <summary> Gets the text associated with the given window handle. </summary>
+        /// <param name="window"> The window to act on. </param>
+        /// <returns> The window text. </returns>
+#pragma warning disable 618
+        internal static string GetWindowText(this Window window)
+        {
+            if (window != null
+                && PresentationSource.FromVisual(window) is HwndSource source
+                && source.IsDisposed == false
+                && source.RootVisual is null == false
+                && source.Handle != IntPtr.Zero)
+            {
+                int size = NativeMethods.GetWindowTextLength(source.Handle);
+                if (size == 0)
+                {
+                    var lastError = Win32Error.GetLastError();
+                    if (lastError != Win32Error.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(lastError.Error);
+                    }
+
+                    return string.Empty;
+                }
+
+                var builder = new StringBuilder(size + 1);
+                var finalLength = NativeMethods.GetWindowText(source.Handle, builder, builder.Capacity);
+                if (finalLength == 0)
+                {
+                    var lastError = Win32Error.GetLastError();
+                    if (lastError != Win32Error.ERROR_SUCCESS)
+                    {
+                        throw new Win32Exception(lastError.Error);
+                    }
+
+                    return string.Empty;
+                }
+
+                return builder.ToString();
+            }
+
+            return default;
+        }
+
+        /// <summary> Gets the text associated with the given window handle. </summary>
+        /// <param name="window"> The window to act on. </param>
+        /// <returns> The window text. </returns>
+        internal static Rect GetWindowBoundingRectangle(this Window window)
+        {
+            Rect bounds = new Rect(0, 0, 0, 0);
+
+            if (window != null
+                && PresentationSource.FromVisual(window) is HwndSource source
+                && source.IsDisposed == false
+                && source.RootVisual is null == false
+                && source.Handle != IntPtr.Zero)
+            {
+                RECT rc = new RECT(0, 0, 0, 0);
+
+                try
+                {
+                    rc = NativeMethods.GetWindowRect(source.Handle);
+                }
+                // Allow empty catch statements.
+#pragma warning disable 56502
+                catch (Win32Exception)
+                {
+                }
+                // Disallow empty catch statements.
+#pragma warning restore 56502
+
+                bounds = new Rect(rc.Left, rc.Top, rc.Width, rc.Height);
+            }
+
+            return bounds;
         }
 #pragma warning restore 618
     }

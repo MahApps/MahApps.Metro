@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -21,6 +22,7 @@ using ControlzEx.Native;
 using ControlzEx.Standard;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.ValueBoxes;
@@ -1246,13 +1248,20 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected IntPtr CriticalHandle
+        /// <summary>
+        /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new MetroWindowAutomationPeer(this);
+        }
+
+        protected internal IntPtr CriticalHandle
         {
             get
             {
-                var value = typeof(Window)
-                            .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
-                            .GetValue(this, new object[0]);
+                this.VerifyAccess();
+                var value = typeof(Window).GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(this, new object[0]) ?? IntPtr.Zero;
                 return (IntPtr)value;
             }
         }
