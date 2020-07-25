@@ -22,16 +22,18 @@ namespace MahApps.Metro.Controls
 #pragma warning disable 618
         public static Size GetMonitorWorkSize(this Visual visual)
         {
-            // Try to get the monitor from where the owner stays and use the working area for window size properties
-            if (visual != null && PresentationSource.FromVisual(visual) is HwndSource source)
+            if (visual is null == false
+                && PresentationSource.FromVisual(visual) is HwndSource source
+                && source.IsDisposed == false
+                && source.RootVisual is null == false
+                && source.Handle != IntPtr.Zero)
             {
+                // Try to get the monitor from where the owner stays and use the working area for window size properties
                 var monitor = NativeMethods.MonitorFromWindow(source.Handle, MonitorOptions.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
                 {
-                    MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
-                    var rcWorkArea = monitorInfo.rcWork;
-
-                    return new Size(rcWorkArea.Width, rcWorkArea.Height);
+                    var monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
+                    return new Size(monitorInfo.rcWork.Width, monitorInfo.rcWork.Height);
                 }
             }
 
@@ -45,7 +47,7 @@ namespace MahApps.Metro.Controls
 #pragma warning disable 618
         internal static string GetWindowText(this Window window)
         {
-            if (window != null
+            if (window is null == false
                 && PresentationSource.FromVisual(window) is HwndSource source
                 && source.IsDisposed == false
                 && source.RootVisual is null == false
@@ -89,7 +91,7 @@ namespace MahApps.Metro.Controls
         {
             Rect bounds = new Rect(0, 0, 0, 0);
 
-            if (window != null
+            if (window is null == false
                 && PresentationSource.FromVisual(window) is HwndSource source
                 && source.IsDisposed == false
                 && source.RootVisual is null == false
