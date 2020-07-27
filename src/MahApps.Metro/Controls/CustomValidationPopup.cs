@@ -78,7 +78,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey CanShowPropertyKey
+        private static readonly DependencyPropertyKey CanShowPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(CanShow),
                                                   typeof(bool),
                                                   typeof(CustomValidationPopup),

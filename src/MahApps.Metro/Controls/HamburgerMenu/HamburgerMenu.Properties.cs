@@ -537,7 +537,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="ItemFocusVisualStyle"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey ItemFocusVisualStylePropertyKey
+        private static readonly DependencyPropertyKey ItemFocusVisualStylePropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(ItemFocusVisualStyle),
                                                   typeof(Style),
                                                   typeof(HamburgerMenu),
@@ -553,7 +553,7 @@ namespace MahApps.Metro.Controls
         public Style ItemFocusVisualStyle
         {
             get => (Style)this.GetValue(ItemFocusVisualStyleProperty);
-            private set => this.SetValue(ItemFocusVisualStylePropertyKey, value);
+            protected set => this.SetValue(ItemFocusVisualStylePropertyKey, value);
         }
 
         /// <summary>

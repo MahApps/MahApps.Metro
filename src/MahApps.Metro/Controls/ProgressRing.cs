@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
     public class ProgressRing : Control
     {
         /// <summary>Identifies the <see cref="BindableWidth"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey BindableWidthPropertyKey
+        private static readonly DependencyPropertyKey BindableWidthPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(BindableWidth),
                                                   typeof(double),
                                                   typeof(ProgressRing),
@@ -59,7 +59,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="MaxSideLength"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey MaxSideLengthPropertyKey
+        private static readonly DependencyPropertyKey MaxSideLengthPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(MaxSideLength),
                                                   typeof(double),
                                                   typeof(ProgressRing),
@@ -75,7 +75,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="EllipseDiameter"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey EllipseDiameterPropertyKey
+        private static readonly DependencyPropertyKey EllipseDiameterPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(EllipseDiameter),
                                                   typeof(double),
                                                   typeof(ProgressRing),
@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="EllipseOffset"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey EllipseOffsetPropertyKey
+        private static readonly DependencyPropertyKey EllipseOffsetPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(EllipseOffset),
                                                   typeof(Thickness),
                                                   typeof(ProgressRing),

@@ -99,7 +99,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="IsTransitioning"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey IsTransitioningPropertyKey
+        private static readonly DependencyPropertyKey IsTransitioningPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(IsTransitioning),
                                                   typeof(bool),
                                                   typeof(MetroContentControl),

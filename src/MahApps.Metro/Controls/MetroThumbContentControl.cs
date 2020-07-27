@@ -74,7 +74,7 @@ namespace MahApps.Metro.Controls
             remove { this.RemoveHandler(DragCompletedEvent, value); }
         }
 
-        public static readonly DependencyPropertyKey IsDraggingPropertyKey
+        private static readonly DependencyPropertyKey IsDraggingPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(IsDragging),
                                                   typeof(bool),
                                                   typeof(MetroThumbContentControl),

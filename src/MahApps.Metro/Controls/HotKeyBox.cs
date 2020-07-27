@@ -52,7 +52,7 @@ namespace MahApps.Metro.Controls
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
-            private set { SetValue(TextPropertyKey, value); }
+            protected set { SetValue(TextPropertyKey, value); }
         }
 
         private TextBox _textBox;

@@ -69,7 +69,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register(nameof(ShowDialogsOverTitleBar), typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
+        internal static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register(nameof(IsMaxRestoreButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register(nameof(IsCloseButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
-        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        internal static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
@@ -411,7 +411,7 @@ namespace MahApps.Metro.Controls
         public bool IsAnyDialogOpen
         {
             get { return (bool)GetValue(IsAnyDialogOpenProperty); }
-            private set { SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value)); }
+            protected set { SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -554,7 +554,7 @@ namespace MahApps.Metro.Controls
         public bool IsCloseButtonEnabledWithDialog
         {
             get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
-            private set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value)); }
+            protected set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
