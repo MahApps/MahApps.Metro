@@ -6,13 +6,14 @@ using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using JetBrains.Annotations;
+using MahApps.Metro.Controls;
 
-namespace MahApps.Metro.Controls
+namespace MahApps.Metro.Automation.Peers
 {
     public class ToggleSwitchAutomationPeer : FrameworkElementAutomationPeer, IToggleProvider
     {
-        /// <summary>Initializes a new instance of the <see cref="T:MahApps.Metro.Controls.ToggleSwitchAutomationPeer" /> class.</summary>
-        /// <param name="owner">The <see cref="T:MahApps.Metro.Controls.ToggleSwitch" /> associated with this <see cref="T:MahApps.Metro.Controls.ToggleSwitchAutomationPeer" />.</param>
+        /// <summary>Initializes a new instance of the <see cref="T:MahApps.Metro.Automation.Peers.ToggleSwitchAutomationPeer" /> class.</summary>
+        /// <param name="owner">The <see cref="T:MahApps.Metro.Controls.ToggleSwitch" /> associated with this <see cref="T:MahApps.Metro.Automation.Peers.ToggleSwitchAutomationPeer" />.</param>
         public ToggleSwitchAutomationPeer([NotNull] ToggleSwitch owner)
             : base(owner)
         {

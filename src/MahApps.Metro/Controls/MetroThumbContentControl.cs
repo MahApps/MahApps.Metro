@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls

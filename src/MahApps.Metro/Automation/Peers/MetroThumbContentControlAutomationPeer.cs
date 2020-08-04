@@ -5,7 +5,7 @@
 using System.Windows;
 using System.Windows.Automation.Peers;
 
-namespace MahApps.Metro.Controls
+namespace MahApps.Metro.Automation.Peers
 {
     /// <summary>
     /// The MetroThumbContentControlAutomationPeer class exposes the <see cref="T:MahApps.Metro.Controls.MetroThumbContentControl" /> type to UI Automation.

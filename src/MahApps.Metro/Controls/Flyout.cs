@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ControlzEx;
 using ControlzEx.Theming;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls

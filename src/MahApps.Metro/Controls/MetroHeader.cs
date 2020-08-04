@@ -5,6 +5,7 @@
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {

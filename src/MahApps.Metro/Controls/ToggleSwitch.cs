@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls

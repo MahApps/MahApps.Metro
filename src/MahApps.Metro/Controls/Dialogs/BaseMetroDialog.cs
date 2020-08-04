@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls.Dialogs
 {

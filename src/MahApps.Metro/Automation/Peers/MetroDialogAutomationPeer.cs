@@ -3,8 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Peers;
+using MahApps.Metro.Controls.Dialogs;
 
-namespace MahApps.Metro.Controls.Dialogs
+namespace MahApps.Metro.Automation.Peers
 {
     public class MetroDialogAutomationPeer : FrameworkElementAutomationPeer
     {
@@ -38,7 +39,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (string.IsNullOrEmpty(nameCore))
             {
-                nameCore = GetClassNameCore();
+                nameCore = this.GetClassNameCore();
             }
 
             return nameCore;

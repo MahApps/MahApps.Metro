@@ -5,7 +5,7 @@
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 
-namespace MahApps.Metro.Controls
+namespace MahApps.Metro.Automation.Peers
 {
     /// <summary>
     /// The MetroHeaderAutomationPeer class exposes the <see cref="T:MahApps.Metro.Controls.MetroHeader" /> type to UI Automation.
