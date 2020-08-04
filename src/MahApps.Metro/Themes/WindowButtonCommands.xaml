@@ -8,6 +8,8 @@
     <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
+                    AutomationProperties.AutomationId="Minimize"
+                    AutomationProperties.Name="Minimize"
                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
@@ -30,6 +32,8 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Max"
+                    AutomationProperties.AutomationId="MaximizeRestore"
+                    AutomationProperties.Name="Maximize"
                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
@@ -56,6 +60,8 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Close"
+                    AutomationProperties.AutomationId="Close"
+                    AutomationProperties.Name="Close"
                     Command="{x:Static SystemCommands.CloseWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
@@ -99,6 +105,7 @@
                 <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />
             </MultiDataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                <Setter TargetName="PART_Max" Property="AutomationProperties.Name" Value="Restore" />
                 <Setter TargetName="PART_Max" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 <Setter TargetName="PART_MaxPath" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
@@ -120,6 +127,8 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
                     Width="46"
+                    AutomationProperties.AutomationId="Minimize"
+                    AutomationProperties.Name="Minimize"
                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
@@ -150,6 +159,8 @@
             </Button>
             <Button x:Name="PART_Max"
                     Width="46"
+                    AutomationProperties.AutomationId="MaximizeRestore"
+                    AutomationProperties.Name="Maximize"
                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
@@ -182,6 +193,8 @@
             </Button>
             <Button x:Name="PART_Close"
                     Width="46"
+                    AutomationProperties.AutomationId="Close"
+                    AutomationProperties.Name="Close"
                     Command="{x:Static SystemCommands.CloseWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
@@ -218,6 +231,7 @@
                 <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />
             </MultiDataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                <Setter TargetName="PART_Max" Property="AutomationProperties.Name" Value="Restore" />
                 <Setter TargetName="PART_Max" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 <Setter TargetName="PART_MaxPath" Property="Data" Value="M1,4.56L1,14.56 11,14.56 11,4.56z M4,1L4,3.56 12,3.56 12,11 14,11 14,1z M3,0L15,0 15,12 12,12 12,15.56 0,15.56 0,3.56 3,3.56z" />
