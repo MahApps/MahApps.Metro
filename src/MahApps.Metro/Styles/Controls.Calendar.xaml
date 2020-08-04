@@ -561,4 +561,10 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
     </Style>
 
+    <Style x:Key="MahApps.Styles.Calendar.DateTimePicker"
+           BasedOn="{StaticResource MahApps.Styles.Calendar.Base}"
+           TargetType="{x:Type Calendar}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
+    </Style>
+
 </ResourceDictionary>

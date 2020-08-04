@@ -273,17 +273,15 @@
                                                 PlacementTarget="{Binding ElementName=PART_Root}"
                                                 PopupAnimation="Fade"
                                                 StaysOpen="False">
-                                <Border x:Name="PART_PopupContainer"
+                                <Border x:Name="PART_PopupBorder"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Background}"
                                         BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                                         BorderThickness="1">
-                                    <StackPanel x:Name="StackPanel" Background="{DynamicResource MahApps.Brushes.Control.Background}">
-                                        <Calendar x:Name="PART_Calendar"
-                                                  Margin="2 0"
-                                                  BorderBrush="Transparent"
-                                                  FontFamily="{TemplateBinding FontFamily}"
-                                                  FontSize="{TemplateBinding FontSize}"
-                                                  SelectionMode="SingleDate"
-                                                  Visibility="Collapsed" />
+                                    <StackPanel x:Name="PART_PopupContainer" Background="Transparent">
+                                        <ContentPresenter x:Name="PART_Calendar"
+                                                          Margin="2 0"
+                                                          Focusable="False"
+                                                          Visibility="Collapsed" />
                                         <Grid VerticalAlignment="Center">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -406,7 +404,6 @@
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
-
                                 </Border>
                             </controlzex:PopupEx>
                         </Grid>
@@ -470,8 +467,6 @@
                         </Trigger>
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="StackPanel" Property="Orientation" Value="{Binding Path=Orientation, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <!--<Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />-->
                         </Trigger>
 
                         <Trigger Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}">
@@ -516,6 +511,7 @@
     </Style>
 
     <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase}" TargetType="{x:Type Controls:DateTimePicker}">
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker}" />
         <Setter Property="Controls:TextBoxHelper.Watermark" Value="Select a date" />
         <Setter Property="IsTodayHighlighted" Value="True" />
     </Style>
