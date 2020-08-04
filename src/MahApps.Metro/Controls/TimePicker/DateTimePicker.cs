@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using MahApps.Metro.ValueBoxes;
 
@@ -18,10 +19,16 @@ namespace MahApps.Metro.Controls
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
     /// </summary>
-    [TemplatePart(Name = ElementCalendar, Type = typeof(Calendar))]
+    [TemplatePart(Name = PART_PopupContainer, Type = typeof(StackPanel))]
+    [TemplatePart(Name = PART_Calendar, Type = typeof(ContentPresenter))]
+    [StyleTypedProperty(Property = nameof(CalendarStyle), StyleTargetType = typeof(Calendar))]
     public class DateTimePicker : TimePickerBase
     {
-        private const string ElementCalendar = "PART_Calendar";
+        private const string PART_PopupContainer = "PART_PopupContainer";
+        private const string PART_Calendar = "PART_Calendar";
+
+        private FrameworkElement popupContainer;
+        private ContentPresenter popupCalendarPresenter;
         private Calendar calendar;
 
         /// <summary>Identifies the <see cref="DisplayDateEnd"/> dependency property.</summary>
@@ -129,10 +136,37 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(OrientationProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CalendarStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty CalendarStyleProperty
+            = DependencyProperty.Register(nameof(CalendarStyle),
+                                          typeof(Style),
+                                          typeof(DateTimePicker));
+
+        /// <summary>
+        /// Gets or sets the style that is used when rendering the calendar.
+        /// </summary>
+        public Style CalendarStyle
+        {
+            get => (Style)this.GetValue(CalendarStyleProperty);
+            set => this.SetValue(CalendarStyleProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the days that are not selectable.
+        /// </summary>
+        public CalendarBlackoutDatesCollection BlackoutDates => this.calendar.BlackoutDates;
+
         static DateTimePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             IsClockVisibleProperty.OverrideMetadata(typeof(DateTimePicker), new PropertyMetadata(OnClockVisibilityChanged));
+        }
+
+        public DateTimePicker()
+        {
+            this.InitializeCalendar();
+
+            this.SetCurrentValue(DisplayDateProperty, DateTime.Today);
         }
 
         /// <inheritdoc />
@@ -155,35 +189,51 @@ namespace MahApps.Metro.Controls
                 });
         }
 
+        private void InitializeCalendar()
+        {
+            this.calendar = new Calendar();
+
+            this.calendar.PreviewKeyDown += this.CalendarPreviewKeyDown;
+            this.calendar.DisplayDateChanged += this.CalendarDisplayDateChanged;
+            this.calendar.SelectedDatesChanged += this.CalendarSelectedDateChanged;
+            this.calendar.PreviewMouseUp += CalendarPreviewMouseUp;
+
+            this.calendar.HorizontalAlignment = HorizontalAlignment.Left;
+            this.calendar.VerticalAlignment = VerticalAlignment.Top;
+
+            this.calendar.SelectionMode = CalendarSelectionMode.SingleDate;
+            this.calendar.SetBinding(ForegroundProperty, this.GetBinding(ForegroundProperty));
+            this.calendar.SetBinding(StyleProperty, this.GetBinding(CalendarStyleProperty));
+            this.calendar.SetBinding(Calendar.IsTodayHighlightedProperty, this.GetBinding(IsTodayHighlightedProperty));
+            this.calendar.SetBinding(Calendar.FirstDayOfWeekProperty, this.GetBinding(FirstDayOfWeekProperty));
+            this.calendar.SetBinding(Calendar.SelectedDateProperty, this.GetBinding(SelectedDateTimeProperty, BindingMode.OneWay));
+            this.calendar.SetBinding(Calendar.DisplayDateProperty, this.GetBinding(DisplayDateProperty));
+            this.calendar.SetBinding(Calendar.DisplayDateStartProperty, this.GetBinding(DisplayDateStartProperty));
+            this.calendar.SetBinding(Calendar.DisplayDateEndProperty, this.GetBinding(DisplayDateEndProperty));
+            this.calendar.SetBinding(FontFamilyProperty, this.GetBinding(FontFamilyProperty));
+            this.calendar.SetBinding(FontSizeProperty, this.GetBinding(FontSizeProperty));
+            this.calendar.SetBinding(FlowDirectionProperty, this.GetBinding(FlowDirectionProperty));
+
+            RenderOptions.SetClearTypeHint(this.calendar, ClearTypeHint.Enabled);
+        }
+
         /// <inheritdoc />
         public override void OnApplyTemplate()
         {
-            if (this.calendar != null)
+            if (!(this.popupCalendarPresenter is null))
             {
-                this.calendar.PreviewKeyDown -= this.CalendarPreviewKeyDown;
-                this.calendar.DisplayDateChanged -= this.CalendarDisplayDateChanged;
-                this.calendar.SelectedDatesChanged -= this.CalendarSelectedDateChanged;
-                this.calendar.PreviewMouseUp -= CalendarPreviewMouseUp;
+                this.popupCalendarPresenter.Content = null;
             }
 
             base.OnApplyTemplate();
 
-            this.calendar = this.GetTemplateChild(ElementCalendar) as Calendar;
+            this.popupContainer = this.GetTemplateChild(PART_PopupContainer) as StackPanel;
+            this.popupContainer?.SetBinding(StackPanel.OrientationProperty, this.GetBinding(OrientationProperty));
 
-            if (this.calendar != null)
+            this.popupCalendarPresenter = this.GetTemplateChild(PART_Calendar) as ContentPresenter;
+            if (!(this.popupCalendarPresenter is null))
             {
-                this.calendar.PreviewKeyDown += this.CalendarPreviewKeyDown;
-                this.calendar.DisplayDateChanged += this.CalendarDisplayDateChanged;
-                this.calendar.SelectedDatesChanged += this.CalendarSelectedDateChanged;
-                this.calendar.PreviewMouseUp += CalendarPreviewMouseUp;
-
-                this.calendar.SetBinding(Calendar.SelectedDateProperty, this.GetBinding(SelectedDateTimeProperty, BindingMode.OneWay));
-                this.calendar.SetBinding(Calendar.DisplayDateProperty, this.GetBinding(DisplayDateProperty));
-                this.calendar.SetBinding(Calendar.DisplayDateStartProperty, this.GetBinding(DisplayDateStartProperty));
-                this.calendar.SetBinding(Calendar.DisplayDateEndProperty, this.GetBinding(DisplayDateEndProperty));
-                this.calendar.SetBinding(Calendar.FirstDayOfWeekProperty, this.GetBinding(FirstDayOfWeekProperty));
-                this.calendar.SetBinding(Calendar.IsTodayHighlightedProperty, this.GetBinding(IsTodayHighlightedProperty));
-                this.calendar.SetBinding(FlowDirectionProperty, this.GetBinding(FlowDirectionProperty));
+                this.popupCalendarPresenter.Content = this.calendar;
             }
         }
 
