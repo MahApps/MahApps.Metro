@@ -1,4 +1,8 @@
-﻿using Caliburn.Micro;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using Caliburn.Micro;
 using MahApps.Metro.Controls;
 
 namespace Caliburn.Metro.Demo.ViewModels
@@ -19,6 +23,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.header = value;
                 this.NotifyOfPropertyChange(() => this.Header);
             }
@@ -33,6 +38,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.isOpen = value;
                 this.NotifyOfPropertyChange(() => this.IsOpen);
             }
@@ -47,6 +53,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.position = value;
                 this.NotifyOfPropertyChange(() => this.Position);
             }
@@ -61,6 +68,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.theme = value;
                 this.NotifyOfPropertyChange(() => this.Theme);
             }

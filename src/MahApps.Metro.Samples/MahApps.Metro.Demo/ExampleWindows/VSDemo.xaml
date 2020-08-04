@@ -223,18 +223,34 @@
                         <ListBox Margin="50" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBoxItem>
                                 <StackPanel>
-                                    <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rocket 1</TextBlock>
-                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">Status: IO</TextBlock>
-                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">Fire rate: 2ms</TextBlock>
-                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">Ammo: 455/455</TextBlock>
+                                    <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Rocket 1
+                                    </TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Status: IO
+                                    </TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Fire rate: 2ms
+                                    </TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Ammo: 455/455
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                             <ListBoxItem>
                                 <StackPanel>
-                                    <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rocket 2</TextBlock>
-                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">Status: Damaged</TextBlock>
-                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">Fire rate: 100ms</TextBlock>
-                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">Ammo: 50/156</TextBlock>
+                                    <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Rocket 2
+                                    </TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Status: Damaged
+                                    </TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Fire rate: 100ms
+                                    </TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                        Ammo: 50/156
+                                    </TextBlock>
                                 </StackPanel>
                             </ListBoxItem>
                         </ListBox>
@@ -301,74 +317,146 @@
                     <ListBox Margin="50">
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="60" Foreground="{StaticResource MahApps.Brushes.Foreground}">James T. Kirk</TextBlock>
-                                <TextBlock FontSize="35" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Captain</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Commanding Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="60" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    James T. Kirk
+                                </TextBlock>
+                                <TextBlock FontSize="35" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Captain
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Commanding Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="50" Foreground="{StaticResource MahApps.Brushes.Foreground}">Spock</TextBlock>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Commander</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Executive (First)</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                                <TextBlock FontSize="50" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Spock
+                                </TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Commander
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Executive (First)
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">
+                                    Current action: Out for duty
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">Leonard McCoy</TextBlock>
-                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lt. Commander</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Chief Medical Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Leonard McCoy
+                                </TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lt. Commander
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Chief Medical Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">Montgomery Scott</TextBlock>
-                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lt. Commander</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Chief Engineer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Montgomery Scott
+                                </TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lt. Commander
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Chief Engineer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">
+                                    Current action: Out for duty
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Hikaru Sulu</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lieutenant</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Helm Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Hikaru Sulu
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lieutenant
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Helm Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Nyota Uhura</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lieutenant</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Communications Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Nyota Uhura
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lieutenant
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Communications Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Pavel Chekov</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Ensign</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Navigator</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Pavel Chekov
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Ensign
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Navigator
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Christine Chapel</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Enlisted Nurse</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Nurse</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Christine Chapel
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Enlisted Nurse
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Nurse
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Janice Rand</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Enlisted Yeoman</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Yeoman</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Janice Rand
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Enlisted Yeoman
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Yeoman
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                     </ListBox>
@@ -382,74 +470,146 @@
                         </ListBox.ItemsPanel>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="60" Foreground="{StaticResource MahApps.Brushes.Foreground}">James T. Kirk</TextBlock>
-                                <TextBlock FontSize="35" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Captain</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Commanding Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="60" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    James T. Kirk
+                                </TextBlock>
+                                <TextBlock FontSize="35" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Captain
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Commanding Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="50" Foreground="{StaticResource MahApps.Brushes.Foreground}">Spock</TextBlock>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Commander</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Executive (First)</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                                <TextBlock FontSize="50" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Spock
+                                </TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Commander
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Executive (First)
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">
+                                    Current action: Out for duty
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">Leonard McCoy</TextBlock>
-                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lt. Commander</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Chief Medical Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Leonard McCoy
+                                </TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lt. Commander
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Chief Medical Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">Montgomery Scott</TextBlock>
-                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lt. Commander</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Chief Engineer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                                <TextBlock FontSize="40" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Montgomery Scott
+                                </TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lt. Commander
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Chief Engineer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">
+                                    Current action: Out for duty
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Hikaru Sulu</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lieutenant</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Helm Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Hikaru Sulu
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lieutenant
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Helm Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Nyota Uhura</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Lieutenant</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Communications Officer</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Nyota Uhura
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Lieutenant
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Communications Officer
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Pavel Chekov</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Ensign</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Navigator</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Pavel Chekov
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Ensign
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Navigator
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Christine Chapel</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Enlisted Nurse</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Nurse</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Christine Chapel
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Enlisted Nurse
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Nurse
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                         <ListBoxItem>
                             <StackPanel>
-                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">Janice Rand</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Rank: Enlisted Yeoman</TextBlock>
-                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">Position: Yeoman</TextBlock>
-                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Janice Rand
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Rank: Enlisted Yeoman
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource MahApps.Brushes.Foreground}">
+                                    Position: Yeoman
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">
+                                    Current action: Sleeping
+                                </TextBlock>
                             </StackPanel>
                         </ListBoxItem>
                     </ListBox>

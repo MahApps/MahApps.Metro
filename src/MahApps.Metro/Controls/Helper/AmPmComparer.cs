@@ -1,7 +1,11 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Collections.Generic;
+
 namespace MahApps.Metro.Controls
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Represents an hour comparison operation that ensures that 12 is smaller than 1.
     /// This ensures that in the <see cref="TimePickerBase"/> control the first hour that is selectable is 12 (AM/PM). 

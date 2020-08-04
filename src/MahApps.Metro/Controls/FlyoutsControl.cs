@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,7 +89,7 @@ namespace MahApps.Metro.Controls
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
-            ((Flyout) element).CleanUp(this);
+            ((Flyout)element).CleanUp(this);
             base.ClearContainerForItemOverride(element, item);
         }
 
@@ -138,7 +142,8 @@ namespace MahApps.Metro.Controls
 
         private IEnumerable<Flyout> GetFlyouts(IEnumerable items)
         {
-            return from object item in items select this.GetFlyout(item);
+            return from object item in items
+                   select this.GetFlyout(item);
         }
 
         private void ReorderZIndices(Flyout lastChanged)

@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 using System.Diagnostics;
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
@@ -13,7 +17,7 @@ namespace MahApps.Metro.Behaviors
                                                   typeof(StylizedBehaviorCollection),
                                                   typeof(StylizedBehaviors),
                                                   new FrameworkPropertyMetadata(null, OnPropertyChanged));
-        
+
         [Category(AppName.MahApps)]
         public static StylizedBehaviorCollection GetBehaviors(DependencyObject uie)
         {
@@ -24,7 +28,7 @@ namespace MahApps.Metro.Behaviors
         {
             uie.SetValue(BehaviorsProperty, value);
         }
-        
+
         private static void OnPropertyChanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
         {
             var uie = dpo as FrameworkElement;
@@ -74,6 +78,7 @@ namespace MahApps.Metro.Behaviors
             {
                 uie.Unloaded += FrameworkElementUnloaded;
             }
+
             uie.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
@@ -90,10 +95,13 @@ namespace MahApps.Metro.Behaviors
             {
                 return;
             }
+
             BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
-            foreach (var behavior in itemBehaviors) {
+            foreach (var behavior in itemBehaviors)
+            {
                 behavior.Detach();
             }
+
             uie.Loaded += FrameworkElementLoaded;
         }
 
@@ -104,6 +112,7 @@ namespace MahApps.Metro.Behaviors
             {
                 return;
             }
+
             uie.Loaded -= FrameworkElementLoaded;
             BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
             foreach (var behavior in itemBehaviors)

@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Windows;
 using System.Windows.Controls;
 using ControlzEx;
 using MahApps.Metro.ValueBoxes;
@@ -32,7 +36,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="ParentWindowCommands"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey ParentWindowCommandsPropertyKey =
+        private static readonly DependencyPropertyKey ParentWindowCommandsPropertyKey =
             DependencyProperty.RegisterReadOnly(nameof(ParentWindowCommands),
                                                 typeof(WindowCommands),
                                                 typeof(WindowCommandsItem),

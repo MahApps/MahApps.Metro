@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -8,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -243,7 +248,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            this.HandleThemeChange();
+            this.Invoke(this.HandleThemeChange);
         }
 
         private static object TryGetResource(ControlzEx.Theming.Theme theme, string key)

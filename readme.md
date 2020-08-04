@@ -9,13 +9,6 @@
   <p>
     Supporting .NET Framework (4.5+) and .NET Core (3.0 and 3.1)
   </p>
-  <a href="https://gitter.im/MahApps/MahApps.Metro">
-    <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
-  </a>
-  <a href="https://twitter.com/punker76">
-    <img src="https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square">
-  </a>
-  <br />
   <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">
   </a>
@@ -32,14 +25,14 @@
     <img src="https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square">
   </a>
   <br />
-  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/master">
-    <img alt="masterstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/master.svg?style=flat-square&&label=master">
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/main">
+    <img alt="main status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/master.svg?style=flat-square&&label=main">
   </a>
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
-    <img alt="devstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=develop">
+    <img alt="dev status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=develop">
   </a>
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
-    <img alt="devtests" src="https://img.shields.io/appveyor/tests/punker76/mahapps-metro/develop.svg?style=flat-square">
+    <img alt="dev tests" src="https://img.shields.io/appveyor/tests/punker76/mahapps-metro/develop.svg?style=flat-square">
   </a>
   <br />
   <a href="https://github.com/MahApps/MahApps.Metro/issues">
@@ -67,36 +60,55 @@
 - [Visual Studio Templates](https://github.com/MahApps/MahApps.Metro/wiki/Visual-Studio-Templates)
 - [Wiki](https://github.com/MahApps/MahApps.Metro/wiki)
 
-## Something missing?
+## Get in touch
 
-If you're looking for another awesome libraries which are compatible with MahApps, check them out:
+[![Follow @punker76](https://img.shields.io/badge/Twitter-Follow%20%40punker76-blue.svg?style=flat-square)](https://twitter.com/intent/follow?screen_name=punker76)
 
-- [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) Google Material Design in XAML & WPF, for C# & VB.Net [http://materialdesigninxaml.net](http://materialdesigninxaml.net)
-- [MahApps.Metro.SimpleChildWindow](https://github.com/punker76/MahApps.Metro.SimpleChildWindow) A simple child window for MahApps.Metro
-- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
-- [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)
+[![Join the chat at https://gitter.im/MahApps/MahApps.Metro](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
 
-## Tools
+## License
+
+Copyright © .NET Foundation, Jan Karger, Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
+
+MahApps.Metro is provided as-is under the MIT license. For more information see [LICENSE](./LICENSE).
+
+## Code of Conduct
+
+This project has adopted the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/)
+to clarify expected behavior in our community.
+For more information see the [.NET Foundation Code of Conduct](http://www.dotnetfoundation.org/code-of-conduct).
+
+## Contribution License Agreement
+
+By signing the [CLA](https://cla.dotnetfoundation.org/MahApps/MahApps.Metro), the community is free to use your contribution to .NET Foundation projects.
+
+## .NET Foundation
+
+This project is supported by the [.NET Foundation](http://www.dotnetfoundation.org).
+
+## Thanks
 
 We use these awesome tools to build and develop MahApps.Metro.
 
+A big thank you has to go to [JetBrains](https://www.jetbrains.com) who provide an [Open Source License](https://www.jetbrains.com/support/community/#section=open-source) for [ReSharper](https://www.jetbrains.com/resharper/) that helps us with the development of MahApps.Metro.
+
 <div>
   <a href="https://cakebuild.net/">
-    <img alt="cakebuild.net" width="128" heigth="128" vspace="20" hspace="20" src="./docs/cake-medium.png">
+    <img alt="cakebuild.net" width="72" heigth="72" vspace="20" hspace="20" src="./docs/cake-medium.png">
   </a>
   <a href="https://www.jetbrains.com/resharper/">
-    <img alt="R#" width="128" heigth="128" vspace="20" hspace="20" src="./docs/icon_ReSharper.png">
+    <img alt="R#" width="72" heigth="72" vspace="20" hspace="20" src="./docs/icon_ReSharper.png">
   </a>
   <a href="https://www.appveyor.com/">
-    <img alt="appveyor" width="128" heigth="128" vspace="20" hspace="20" src="./docs/Appveyor_logo.svg">
+    <img alt="appveyor" width="72" heigth="72" vspace="20" hspace="20" src="./docs/Appveyor_logo.svg">
   </a>
 </div>
 
 ## Contributors
 
-This project exists thanks to all the people who contribute. 
+Thanks to all the great people who have already contributed to the project! 
 
-<a href="https://github.com/MahApps/MahApps.Metro/graphs/contributors"><img src="https://opencollective.com/mahappsmetro/contributors.svg?width=890&button=false" /></a>
+[![Contributors](https://opencollective.com/mahappsmetro/contributors.svg?width=900&button=false)](https://github.com/MahApps/MahApps.Metro/graphs/contributors)
 
 ## Sponsoring
 
@@ -108,20 +120,9 @@ The core team members, MahApps.Metro contributors and contributors in the ecosys
 
 Does your company use MahApps.Metro?  Ask your manager or marketing team if your company would be interested in supporting our project.  Support will allow the maintainers to dedicate more time for maintenance and new features for everyone.  Also, your company's logo can be shown [on GitHub](https://github.com/MahApps/MahApps.Metro#readme) and on [our site](https://mahapps.com) - who doesn't want a little extra exposure?
 
-# :pray: All OpenCollective (archived) Backers :heart:
+# :pray: All OpenCollective Backers (archived) :heart:
 
 [![Backers](https://opencollective.com/mahappsmetro/backers.svg?button=false)](https://opencollective.com/mahappsmetro#section-contributors)
-
-## Why charge/sponsor for open source?
-
- * [Open-Source Maintainers are Jerks! | Nick Randolph & Geoffrey Huntley](https://vimeo.com/296579853)
- * [FOSS is free as in toilet | Geoffroy Couprie](http://unhandledexpression.com/general/2018/11/27/foss-is-free-as-in-toilet.html)
- * [How to Charge for your Open Source | Mike Perham](https://www.mikeperham.com/2015/11/23/how-to-charge-for-your-open-source/)
- * [Sustain OSS: The Report](https://sustainoss.org/assets/pdf/SustainOSS-west-2017-report.pdf)
- * [Open Source Maintainers Owe You Nothing | Mike McQuaid](https://mikemcquaid.com/2018/03/19/open-source-maintainers-owe-you-nothing/)
- * [Who should fund open source projects? | Jane Elizabeth](https://jaxenter.com/who-funds-open-source-projects-133222.html)
- * [Apply at OSS Inc today| Ryan Chenkie](https://twitter.com/ryanchenkie/status/1067801413974032385)
- * [The Ethics of Unpaid Labor and the OSS Community | Ashe Dryden](https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community)
 
 ## MahApps Examples
 
@@ -145,9 +146,14 @@ Does your company use MahApps.Metro?  Ask your manager or marketing team if your
 * [Xamarin Inspector](https://docs.microsoft.com/en-us/xamarin/tools/inspector/) Visualize and debug your live app
 * [Xamarin Workbooks](https://docs.microsoft.com/en-us/xamarin/tools/workbooks/) Workbooks is an interactive programming environment that’s perfect for experimentation, learning, and documentation: an educational tool for learning the myriad of .NET platforms, APIs, and libraries. [Source](https://github.com/Microsoft/workbooks)
 
-## Hall-of-fame
+## Something missing?
 
-[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/0)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/0)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/1)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/1)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/2)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/2)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/3)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/3)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/4)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/4)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/5)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/5)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/6)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/6)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/7)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/7)
+If you're looking for another awesome libraries which are compatible with MahApps, check them out:
+
+- [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) Google Material Design in XAML & WPF, for C# & VB.Net [http://materialdesigninxaml.net](http://materialdesigninxaml.net)
+- [MahApps.Metro.SimpleChildWindow](https://github.com/punker76/MahApps.Metro.SimpleChildWindow) A simple child window for MahApps.Metro
+- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
+- [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)
 
 ## Screenshots
 
@@ -170,7 +176,3 @@ Does your company use MahApps.Metro?  Ask your manager or marketing team if your
 <img alt="screenshot18" src="./docs/mahapps_v1.6.0.gif">
 
 </div>
-
-## Licence
-
-[MIT License (MIT)](./LICENSE)

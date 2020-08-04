@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Windows;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -18,15 +22,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ImageSource Thumbnail
         {
-            get
-            {
-                return (ImageSource)GetValue(ThumbnailProperty);
-            }
+            get { return (ImageSource)GetValue(ThumbnailProperty); }
 
-            set
-            {
-                SetValue(ThumbnailProperty, value);
-            }
+            set { SetValue(ThumbnailProperty, value); }
         }
 
         protected override Freezable CreateInstanceCore()

@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 using System;
 using System.Globalization;
 using System.Linq;
@@ -34,7 +38,7 @@ namespace MahApps.Metro.Converters
         /// <returns></returns>
         private Color IdealTextColor(Color bg)
         {
-            const int nThreshold = 86;//105;
+            const int nThreshold = 86; //105;
             var bgDelta = System.Convert.ToInt32((bg.R * 0.299) + (bg.G * 0.587) + (bg.B * 0.114));
             var foreColor = (255 - bgDelta < nThreshold) ? Colors.Black : Colors.White;
             return foreColor;
@@ -49,6 +53,7 @@ namespace MahApps.Metro.Converters
                 foreGroundBrush.Freeze();
                 return foreGroundBrush;
             }
+
             return Brushes.White;
         }
 
@@ -65,6 +70,7 @@ namespace MahApps.Metro.Converters
             {
                 return titleBrush;
             }
+
             return Convert(bgBrush, targetType, parameter, culture);
         }
 

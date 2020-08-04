@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 using ControlzEx.Native;
 using ControlzEx.Standard;
 using System;
@@ -74,7 +78,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey CanShowPropertyKey
+        private static readonly DependencyPropertyKey CanShowPropertyKey
             = DependencyProperty.RegisterReadOnly(nameof(CanShow),
                                                   typeof(bool),
                                                   typeof(CustomValidationPopup),

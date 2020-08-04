@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -30,7 +34,7 @@ namespace MahApps.Metro.Converters
             var whichButton = parameter as string;
             if (values != null && !string.IsNullOrEmpty(whichButton))
             {
-                var showButton = values.Length > 0 && (bool) values[0];
+                var showButton = values.Length > 0 && (bool)values[0];
                 var useNoneWindowStyle = values.Length > 1 && (bool)values[1];
                 var windowResizeMode = values.Length > 2 ? (ResizeMode)values[2] : ResizeMode.CanResize;
 
@@ -48,6 +52,7 @@ namespace MahApps.Metro.Converters
                         {
                             return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                         }
+
                         return Visibility.Collapsed;
                     case ResizeMode.CanResize:
                     case ResizeMode.CanResizeWithGrip:
@@ -55,6 +60,7 @@ namespace MahApps.Metro.Converters
                         return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
             }
+
             return Visibility.Visible;
         }
 

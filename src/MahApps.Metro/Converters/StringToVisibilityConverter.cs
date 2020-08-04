@@ -1,8 +1,6 @@
-﻿//	--------------------------------------------------------------------
-//		Obtained from: WPFSmartLibrary
-//		For more information see : http://wpfsmartlibrary.codeplex.com/
-//		(by DotNetMastermind)
-//	--------------------------------------------------------------------
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Globalization;
@@ -16,8 +14,8 @@ namespace MahApps.Metro.Converters
     ///     Converts a String into a Visibility enumeration (and back)
     ///     The FalseEquivalent can be declared with the "FalseEquivalent" property
     /// </summary>
-    [ValueConversion(typeof (string), typeof (Visibility))]
-    [MarkupExtensionReturnType(typeof (StringToVisibilityConverter))]
+    [ValueConversion(typeof(string), typeof(Visibility))]
+    [MarkupExtensionReturnType(typeof(StringToVisibilityConverter))]
     public class StringToVisibilityConverter : MarkupExtension, IValueConverter
     {
         /// <summary>
@@ -44,10 +42,10 @@ namespace MahApps.Metro.Converters
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             return new StringToVisibilityConverter
-            {
-                FalseEquivalent = FalseEquivalent,
-                OppositeStringValue = OppositeStringValue
-            };
+                   {
+                       FalseEquivalent = FalseEquivalent,
+                       OppositeStringValue = OppositeStringValue
+                   };
         }
 
         #endregion
@@ -56,14 +54,16 @@ namespace MahApps.Metro.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((value == null || value is string) && targetType == typeof (Visibility))
+            if ((value == null || value is string) && targetType == typeof(Visibility))
             {
                 if (OppositeStringValue)
                 {
                     return string.IsNullOrEmpty((string)value) ? Visibility.Visible : FalseEquivalent;
                 }
+
                 return string.IsNullOrEmpty((string)value) ? FalseEquivalent : Visibility.Visible;
             }
+
             return value;
         }
 
@@ -73,10 +73,12 @@ namespace MahApps.Metro.Converters
             {
                 if (OppositeStringValue)
                 {
-                    return ((Visibility) value == Visibility.Visible) ? String.Empty : "visible";
+                    return ((Visibility)value == Visibility.Visible) ? String.Empty : "visible";
                 }
-                return ((Visibility) value == Visibility.Visible) ? "visible" : String.Empty;
+
+                return ((Visibility)value == Visibility.Visible) ? "visible" : String.Empty;
             }
+
             return value;
         }
 

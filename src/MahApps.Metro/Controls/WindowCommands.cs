@@ -1,13 +1,19 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using ControlzEx;
 using ControlzEx.Theming;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -164,7 +170,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="ParentWindow"/> dependency property.</summary>
-        public static readonly DependencyPropertyKey ParentWindowPropertyKey =
+        internal static readonly DependencyPropertyKey ParentWindowPropertyKey =
             DependencyProperty.RegisterReadOnly(nameof(ParentWindow),
                                                 typeof(Window),
                                                 typeof(WindowCommands),
@@ -353,6 +359,14 @@ namespace MahApps.Metro.Controls
                 var window = this.TryFindParent<Window>();
                 this.SetValue(ParentWindowPropertyKey, window);
             }
+        }
+
+        /// <summary>
+        /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new WindowCommandsAutomationPeer(this);
         }
     }
 }

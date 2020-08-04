@@ -1,30 +1,6 @@
-﻿// Copyright (c) 2017 Ratish Philip 
-//
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal 
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is 
-// furnished to do so, subject to the following conditions: 
-// 
-// 
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software. 
-// 
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE. 
-//
-// This file is part of the WPFSpark project: https://github.com/ratishphilip/wpfspark
-//
-// WPFSpark v1.3.1
-// 
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Runtime.InteropServices;
@@ -42,7 +18,7 @@ namespace MahApps.Metro.Controls
 
         // Const values 
         // Smallest double value such that 1.0+DBL_EPSILON != 1.0
-        internal const double DBL_EPSILON = 2.2204460492503131e-016; 
+        internal const double DBL_EPSILON = 2.2204460492503131e-016;
         // Number close to zero, where float.MinValue is -float.MaxValue
         internal const float FLT_MIN = 1.175494351e-38F;
 
@@ -187,7 +163,7 @@ namespace MahApps.Metro.Controls
             [FieldOffset(0)]
             internal UInt64 UintValue;
         }
-        
+
         /// <summary>
         /// Faster check for NaN ( faster than double.IsNaN() )
         /// IEEE 754 : If the argument is any value in the range 0x7ff0000000000001L through 0x7fffffffffffffffL 
@@ -198,9 +174,9 @@ namespace MahApps.Metro.Controls
         public static bool IsNaN(double value)
         {
             var t = new NanUnion
-            {
-                DoubleValue = value
-            };
+                    {
+                        DoubleValue = value
+                    };
 
             var exp = t.UintValue & 0xfff0000000000000;
             var man = t.UintValue & 0x000fffffffffffff;
@@ -237,6 +213,7 @@ namespace MahApps.Metro.Controls
 
             return newValue;
         }
+
         #endregion
 
         #region Thickness
@@ -262,14 +239,14 @@ namespace MahApps.Metro.Controls
             if (!allowNaN)
             {
                 if (IsNaN(thick.Left) || IsNaN(thick.Right)
-                    || IsNaN(thick.Top) || IsNaN(thick.Bottom))
+                                      || IsNaN(thick.Top) || IsNaN(thick.Bottom))
                     return false;
             }
 
             if (!allowPositiveInfinity)
             {
                 if (Double.IsPositiveInfinity(thick.Left) || Double.IsPositiveInfinity(thick.Right)
-                    || Double.IsPositiveInfinity(thick.Top) || Double.IsPositiveInfinity(thick.Bottom))
+                                                          || Double.IsPositiveInfinity(thick.Top) || Double.IsPositiveInfinity(thick.Bottom))
                 {
                     return false;
                 }
@@ -278,7 +255,7 @@ namespace MahApps.Metro.Controls
             if (!allowNegativeInfinity)
             {
                 if (Double.IsNegativeInfinity(thick.Left) || Double.IsNegativeInfinity(thick.Right)
-                    || Double.IsNegativeInfinity(thick.Top) || Double.IsNegativeInfinity(thick.Bottom))
+                                                          || Double.IsNegativeInfinity(thick.Top) || Double.IsNegativeInfinity(thick.Bottom))
                 {
                     return false;
                 }
@@ -305,9 +282,9 @@ namespace MahApps.Metro.Controls
         public static bool IsZero(this Thickness thick)
         {
             return thick.Left.IsZero()
-                    && thick.Top.IsZero()
-                    && thick.Right.IsZero()
-                    && thick.Bottom.IsZero();
+                   && thick.Top.IsZero()
+                   && thick.Right.IsZero()
+                   && thick.Bottom.IsZero();
         }
 
         /// <summary>
@@ -318,8 +295,8 @@ namespace MahApps.Metro.Controls
         public static bool IsUniform(this Thickness thick)
         {
             return thick.Left.IsCloseTo(thick.Top)
-                    && thick.Left.IsCloseTo(thick.Right)
-                    && thick.Left.IsCloseTo(thick.Bottom);
+                   && thick.Left.IsCloseTo(thick.Right)
+                   && thick.Left.IsCloseTo(thick.Bottom);
         }
 
         #endregion
@@ -415,9 +392,9 @@ namespace MahApps.Metro.Controls
         public static Rect Deflate(this Rect rect, Thickness thick)
         {
             return new Rect(rect.Left + thick.Left,
-                rect.Top + thick.Top,
-                Math.Max(0.0, rect.Width - thick.Left - thick.Right),
-                Math.Max(0.0, rect.Height - thick.Top - thick.Bottom));
+                            rect.Top + thick.Top,
+                            Math.Max(0.0, rect.Width - thick.Left - thick.Right),
+                            Math.Max(0.0, rect.Height - thick.Top - thick.Bottom));
         }
 
         /// <summary>
@@ -429,9 +406,9 @@ namespace MahApps.Metro.Controls
         public static Rect Inflate(this Rect rect, Thickness thick)
         {
             return new Rect(rect.Left - thick.Left,
-                rect.Top - thick.Top,
-                Math.Max(0.0, rect.Width + thick.Left + thick.Right),
-                Math.Max(0.0, rect.Height + thick.Top + thick.Bottom));
+                            rect.Top - thick.Top,
+                            Math.Max(0.0, rect.Width + thick.Left + thick.Right),
+                            Math.Max(0.0, rect.Height + thick.Top + thick.Bottom));
         }
 
         #endregion
@@ -479,12 +456,12 @@ namespace MahApps.Metro.Controls
             if ((linGradBrushA != null) && (linGradBrushB != null))
             {
                 var result = (linGradBrushA.ColorInterpolationMode == linGradBrushB.ColorInterpolationMode)
-                               && (linGradBrushA.EndPoint == linGradBrushB.EndPoint)
-                               && (linGradBrushA.MappingMode == linGradBrushB.MappingMode)
-                               && linGradBrushA.Opacity.IsCloseTo(linGradBrushB.Opacity)
-                               && (linGradBrushA.StartPoint == linGradBrushB.StartPoint)
-                               && (linGradBrushA.SpreadMethod == linGradBrushB.SpreadMethod)
-                               && (linGradBrushA.GradientStops.Count == linGradBrushB.GradientStops.Count);
+                             && (linGradBrushA.EndPoint == linGradBrushB.EndPoint)
+                             && (linGradBrushA.MappingMode == linGradBrushB.MappingMode)
+                             && linGradBrushA.Opacity.IsCloseTo(linGradBrushB.Opacity)
+                             && (linGradBrushA.StartPoint == linGradBrushB.StartPoint)
+                             && (linGradBrushA.SpreadMethod == linGradBrushB.SpreadMethod)
+                             && (linGradBrushA.GradientStops.Count == linGradBrushB.GradientStops.Count);
                 if (!result)
                     return false;
 
@@ -536,15 +513,15 @@ namespace MahApps.Metro.Controls
             if ((imgBrushA != null) && (imgBrushB != null))
             {
                 var result = (imgBrushA.AlignmentX == imgBrushB.AlignmentX)
-                              && (imgBrushA.AlignmentY == imgBrushB.AlignmentY)
-                              && imgBrushA.Opacity.IsCloseTo(imgBrushB.Opacity)
-                              && (imgBrushA.Stretch == imgBrushB.Stretch)
-                              && (imgBrushA.TileMode == imgBrushB.TileMode)
-                              && (imgBrushA.Viewbox == imgBrushB.Viewbox)
-                              && (imgBrushA.ViewboxUnits == imgBrushB.ViewboxUnits)
-                              && (imgBrushA.Viewport == imgBrushB.Viewport)
-                              && (imgBrushA.ViewportUnits == imgBrushB.ViewportUnits)
-                              && (imgBrushA.ImageSource == imgBrushB.ImageSource);
+                             && (imgBrushA.AlignmentY == imgBrushB.AlignmentY)
+                             && imgBrushA.Opacity.IsCloseTo(imgBrushB.Opacity)
+                             && (imgBrushA.Stretch == imgBrushB.Stretch)
+                             && (imgBrushA.TileMode == imgBrushB.TileMode)
+                             && (imgBrushA.Viewbox == imgBrushB.Viewbox)
+                             && (imgBrushA.ViewboxUnits == imgBrushB.ViewboxUnits)
+                             && (imgBrushA.Viewport == imgBrushB.Viewport)
+                             && (imgBrushA.ViewportUnits == imgBrushB.ViewportUnits)
+                             && (imgBrushA.ImageSource == imgBrushB.ImageSource);
 
                 return result;
             }

@@ -78,7 +78,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-
         <Label Grid.Row="0"
                Grid.Column="0"
                Grid.ColumnSpan="3"

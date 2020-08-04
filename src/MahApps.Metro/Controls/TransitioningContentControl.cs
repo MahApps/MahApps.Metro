@@ -1,7 +1,6 @@
-// (c) Copyright Microsoft Corporation.
-// This source is subject to the Microsoft Public License (Ms-PL).
-// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
-// All other rights reserved.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.ObjectModel;
@@ -253,7 +252,6 @@ namespace MahApps.Metro.Controls
             if (oldContent != newContent)
             {
                 this.StartTransition(oldContent, newContent);
-
             }
         }
 

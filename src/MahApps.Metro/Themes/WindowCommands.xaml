@@ -185,6 +185,7 @@
     <ControlTemplate x:Key="MahApps.Templates.WindowCommands" TargetType="Controls:WindowCommands">
         <DockPanel>
             <ToggleButton x:Name="PART_ToggleButton"
+                          AutomationProperties.Name="OverflowToggleButton"
                           ClickMode="Press"
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
                           Foreground="{TemplateBinding Foreground}"

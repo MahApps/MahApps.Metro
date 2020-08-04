@@ -1,10 +1,16 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,6 +23,7 @@ using ControlzEx.Native;
 using ControlzEx.Standard;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.ValueBoxes;
@@ -63,7 +70,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register(nameof(ShowDialogsOverTitleBar), typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
+        internal static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
@@ -78,7 +85,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register(nameof(IsMaxRestoreButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register(nameof(IsCloseButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
-        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        internal static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
@@ -123,8 +130,30 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register(nameof(IconTemplate), typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register(nameof(TitleTemplate), typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register(nameof(LeftWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
-        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register(nameof(RightWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register(nameof(LeftWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, OnLeftWindowCommandsPropertyChanged));
+
+        private static void OnLeftWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is WindowCommands windowCommands)
+            {
+                AutomationProperties.SetName(windowCommands, nameof(LeftWindowCommands));
+            }
+
+            UpdateLogicalChilds(d, e);
+        }
+
+        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register(nameof(RightWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, OnRightWindowCommandsPropertyChanged));
+
+        private static void OnRightWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is WindowCommands windowCommands)
+            {
+                AutomationProperties.SetName(windowCommands, nameof(RightWindowCommands));
+            }
+
+            UpdateLogicalChilds(d, e);
+        }
+
         public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register(nameof(WindowButtonCommands), typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
 
         public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(LeftWindowCommandsOverlayBehavior), typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
@@ -405,7 +434,7 @@ namespace MahApps.Metro.Controls
         public bool IsAnyDialogOpen
         {
             get { return (bool)GetValue(IsAnyDialogOpenProperty); }
-            private set { SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value)); }
+            protected set { SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -460,6 +489,7 @@ namespace MahApps.Metro.Controls
             {
                 return false;
             }
+
             return value;
         }
 
@@ -547,7 +577,7 @@ namespace MahApps.Metro.Controls
         public bool IsCloseButtonEnabledWithDialog
         {
             get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
-            private set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value)); }
+            protected set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -891,10 +921,7 @@ namespace MahApps.Metro.Controls
         /// <param name="thisElement">The element which will be focused again.</param>
         public void StoreFocus([CanBeNull] IInputElement thisElement = null)
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this));
-                }));
+            Dispatcher.BeginInvoke(new Action(() => { restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); }));
         }
 
         internal void RestoreFocus()
@@ -1064,31 +1091,31 @@ namespace MahApps.Metro.Controls
 
         private void ThemeManagerOnIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            if (e.NewTheme != null)
-            {
-                var flyouts = this.Flyouts.GetFlyouts().ToList();
-                // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
-                // e.g if the FlyoutsControl is hosted in a UserControl
-                var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
-                if (allChildFlyouts.Any())
+            this.Invoke(() =>
                 {
-                    flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
-                }
+                    var flyouts = this.Flyouts.GetFlyouts().ToList();
+                    // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
+                    // e.g if the FlyoutsControl is hosted in a UserControl
+                    var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
+                    if (allChildFlyouts.Any())
+                    {
+                        flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
+                    }
 
-                if (!flyouts.Any())
-                {
-                    // we must update the window command brushes!!!
-                    this.ResetAllWindowCommandsBrush();
-                    return;
-                }
+                    if (!flyouts.Any())
+                    {
+                        // we must update the window command brushes!!!
+                        this.ResetAllWindowCommandsBrush();
+                        return;
+                    }
 
-                foreach (var flyout in flyouts)
-                {
-                    flyout.ChangeFlyoutTheme(e.NewTheme);
-                }
-                
-                this.HandleWindowCommandsForFlyouts(flyouts);
-            }
+                    foreach (var flyout in flyouts)
+                    {
+                        flyout.ChangeFlyoutTheme(e.NewTheme);
+                    }
+
+                    this.HandleWindowCommandsForFlyouts(flyouts);
+                });
         }
 
         private void FlyoutsPreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -1124,7 +1151,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-
         private static void UpdateLogicalChilds(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var window = dependencyObject as MetroWindow;
@@ -1132,11 +1158,13 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             var oldChild = e.OldValue as FrameworkElement;
             if (oldChild != null)
             {
                 window.RemoveLogicalChild(oldChild);
             }
+
             var newChild = e.NewValue as FrameworkElement;
             if (newChild != null)
             {
@@ -1243,13 +1271,20 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected IntPtr CriticalHandle
+        /// <summary>
+        /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new MetroWindowAutomationPeer(this);
+        }
+
+        protected internal IntPtr CriticalHandle
         {
             get
             {
-                var value = typeof(Window)
-                    .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(this, new object[0]);
+                this.VerifyAccess();
+                var value = typeof(Window).GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(this, new object[0]) ?? IntPtr.Zero;
                 return (IntPtr)value;
             }
         }
@@ -1264,6 +1299,7 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             var thumbContentControl = this.titleBar as IMetroThumb;
             if (thumbContentControl != null)
             {
@@ -1272,6 +1308,7 @@ namespace MahApps.Metro.Controls
                 thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             if (this.flyoutModalDragMoveThumb != null)
             {
                 this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -1279,10 +1316,12 @@ namespace MahApps.Metro.Controls
                 this.flyoutModalDragMoveThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
             }
+
             this.SizeChanged -= this.MetroWindow_SizeChanged;
         }
 
@@ -1304,6 +1343,7 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             var thumbContentControl = this.titleBar as IMetroThumb;
             if (thumbContentControl != null)
             {
@@ -1312,6 +1352,7 @@ namespace MahApps.Metro.Controls
                 thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             if (this.flyoutModalDragMoveThumb != null)
             {
                 this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -1379,6 +1420,7 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(thumb));
             }
+
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
@@ -1487,7 +1529,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
         /// <param name="name">The name of the template child.</param>
-        internal T GetPart<T>(string name) where T : class
+        internal T GetPart<T>(string name)
+            where T : class
         {
             return GetTemplateChild(name) as T;
         }
@@ -1527,8 +1570,10 @@ namespace MahApps.Metro.Controls
 
         public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs
         {
-            internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source): base(rEvent, source)
-            { }
+            internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source)
+                : base(rEvent, source)
+            {
+            }
 
             public Flyout ChangedFlyout { get; internal set; }
         }

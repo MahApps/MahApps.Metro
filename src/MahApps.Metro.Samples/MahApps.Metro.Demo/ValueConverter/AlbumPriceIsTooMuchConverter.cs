@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -20,6 +24,7 @@ namespace MetroDemo.ValueConverter
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -39,8 +44,8 @@ namespace MetroDemo.ValueConverter
             {
                 return new ValidationResult(false, $"The price {album.Price} of the album '{album.Title}' by '{album.Artist.Name}' is too much!");
             }
+
             return ValidationResult.ValidResult;
         }
     }
-
 }

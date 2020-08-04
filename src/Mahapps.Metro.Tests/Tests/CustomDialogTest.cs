@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -17,7 +21,7 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
             var vm = new TheViewModel();
-            var dialog = (CustomDialog) window.Resources["CustomDialog"];
+            var dialog = (CustomDialog)window.Resources["CustomDialog"];
 
             await window.ShowMetroDialogAsync(dialog);
 

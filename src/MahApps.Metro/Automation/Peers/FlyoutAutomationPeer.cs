@@ -1,6 +1,11 @@
-﻿using System.Windows.Automation.Peers;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-namespace MahApps.Metro.Controls
+using System.Windows.Automation.Peers;
+using MahApps.Metro.Controls;
+
+namespace MahApps.Metro.Automation.Peers
 {
     public class FlyoutAutomationPeer : FrameworkElementAutomationPeer
     {
@@ -34,7 +39,7 @@ namespace MahApps.Metro.Controls
 
             if (string.IsNullOrEmpty(nameCore))
             {
-                nameCore = GetClassNameCore();
+                nameCore = this.GetClassNameCore();
             }
 
             return nameCore;

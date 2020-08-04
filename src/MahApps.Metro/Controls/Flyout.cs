@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
 using System;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -9,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ControlzEx;
 using ControlzEx.Theming;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -28,7 +33,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly RoutedEvent IsOpenChangedEvent =
             EventManager.RegisterRoutedEvent(nameof(IsOpenChanged), RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(Flyout));
+                                             typeof(RoutedEventHandler), typeof(Flyout));
 
         public event RoutedEventHandler IsOpenChanged
         {
@@ -41,7 +46,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly RoutedEvent OpeningFinishedEvent =
             EventManager.RegisterRoutedEvent(nameof(OpeningFinished), RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(Flyout));
+                                             typeof(RoutedEventHandler), typeof(Flyout));
 
         public event RoutedEventHandler OpeningFinished
         {
@@ -54,7 +59,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly RoutedEvent ClosingFinishedEvent =
             EventManager.RegisterRoutedEvent(nameof(ClosingFinished), RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(Flyout));
+                                             typeof(RoutedEventHandler), typeof(Flyout));
 
         public event RoutedEventHandler ClosingFinished
         {
@@ -66,13 +71,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register(nameof(IsPinned), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register(nameof(AnimateOnPositionChange), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, AnimateOpacityChanged));
+        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnAnimateOpacityPropertyChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached(nameof(CloseCommand), typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register(nameof(CloseCommandParameter), typeof(object), typeof(Flyout), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, OnThemePropertyChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register(nameof(ExternalCloseButton), typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register(nameof(CloseButtonVisibility), typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register(nameof(CloseButtonIsCancel), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
@@ -84,6 +89,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty AutoCloseIntervalProperty = DependencyProperty.Register(nameof(AutoCloseInterval), typeof(long), typeof(Flyout), new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
 
         internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
+
         internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
 
         public bool AreAnimationsEnabled
@@ -375,6 +381,7 @@ namespace MahApps.Metro.Controls
                     var accentColor = (Color)resources["MahApps.Colors.Accent"];
                     fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
                 }
+
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["MahApps.Colors.Highlight"] = fromColor;
@@ -418,6 +425,7 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             if (!this.AnimateOpacity)
             {
                 this.fadeOutFrame.Value = 1;
@@ -518,22 +526,23 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action autoCloseEnabledChangedAction = () => {
-                if (e.NewValue != e.OldValue)
+            Action autoCloseEnabledChangedAction = () =>
                 {
-                    if ((bool)e.NewValue)
+                    if (e.NewValue != e.OldValue)
                     {
-                        if (flyout.IsOpen)
+                        if ((bool)e.NewValue)
                         {
-                            flyout.StartAutoCloseTimer();
+                            if (flyout.IsOpen)
+                            {
+                                flyout.StartAutoCloseTimer();
+                            }
+                        }
+                        else
+                        {
+                            flyout.StopAutoCloseTimer();
                         }
                     }
-                    else
-                    {
-                        flyout.StopAutoCloseTimer();
-                    }
-                }
-            };
+                };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseEnabledChangedAction);
         }
@@ -542,16 +551,17 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action autoCloseIntervalChangedAction = () => {
-                if (e.NewValue != e.OldValue)
+            Action autoCloseIntervalChangedAction = () =>
                 {
-                    flyout.InitializeAutoCloseTimer();
-                    if (flyout.IsAutoCloseEnabled && flyout.IsOpen)
+                    if (e.NewValue != e.OldValue)
                     {
-                        flyout.StartAutoCloseTimer();
+                        flyout.InitializeAutoCloseTimer();
+                        if (flyout.IsAutoCloseEnabled && flyout.IsOpen)
+                        {
+                            flyout.StartAutoCloseTimer();
+                        }
                     }
-                }
-            };
+                };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseIntervalChangedAction);
         }
@@ -627,16 +637,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout)dependencyObject;
-            flyout.UpdateFlyoutTheme();
+            (dependencyObject as Flyout)?.UpdateFlyoutTheme();
         }
 
-        private static void AnimateOpacityChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnAnimateOpacityPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout)dependencyObject;
-            flyout.UpdateOpacityChange();
+            (dependencyObject as Flyout)?.UpdateOpacityChange();
         }
 
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -756,6 +764,7 @@ namespace MahApps.Metro.Controls
                 thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+
             this.parentWindow = null;
         }
 
@@ -766,6 +775,7 @@ namespace MahApps.Metro.Controls
             {
                 MetroWindow.DoWindowTitleThumbOnPreviewMouseLeftButtonUp(window, e);
             }
+
             this.dragStartedMousePos = null;
         }
 
@@ -825,14 +835,14 @@ namespace MahApps.Metro.Controls
             switch (position)
             {
                 default:
-                    this.HorizontalAlignment = this.Margin.Right <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Left : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch;//HorizontalAlignment.Left;
+                    this.HorizontalAlignment = this.Margin.Right <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Left : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch; //HorizontalAlignment.Left;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
                     this.hideFrame.Value = -this.flyoutRoot.ActualWidth - this.Margin.Left;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(-this.flyoutRoot.ActualWidth, 0);
                     break;
                 case Position.Right:
-                    this.HorizontalAlignment = this.Margin.Left <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Right : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch;//HorizontalAlignment.Right;
+                    this.HorizontalAlignment = this.Margin.Left <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Right : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch; //HorizontalAlignment.Right;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
                     this.hideFrame.Value = this.flyoutRoot.ActualWidth + this.Margin.Right;
                     if (resetShowFrame)
@@ -840,14 +850,14 @@ namespace MahApps.Metro.Controls
                     break;
                 case Position.Top:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = this.Margin.Bottom <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Top : this.VerticalContentAlignment) : VerticalAlignment.Stretch;//VerticalAlignment.Top;
+                    this.VerticalAlignment = this.Margin.Bottom <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Top : this.VerticalContentAlignment) : VerticalAlignment.Stretch; //VerticalAlignment.Top;
                     this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1 - this.Margin.Top;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, -this.flyoutRoot.ActualHeight - 1);
                     break;
                 case Position.Bottom:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = this.Margin.Top <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Bottom : this.VerticalContentAlignment) : VerticalAlignment.Stretch;//VerticalAlignment.Bottom;
+                    this.VerticalAlignment = this.Margin.Top <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Bottom : this.VerticalContentAlignment) : VerticalAlignment.Stretch; //VerticalAlignment.Bottom;
                     this.hideFrameY.Value = this.flyoutRoot.ActualHeight + this.Margin.Bottom;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, this.flyoutRoot.ActualHeight);
