@@ -21,16 +21,18 @@
             IsEnabled="True" />
 </mah:Badged> ]]> 
         </ctrls:DemoView.ExampleXaml>
-        <mah:Badged x:Name="badge" Badge="1"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Stretch"
-                    Margin="20">
-            <Button Margin="5" xml:space="preserve"
+        <mah:Badged x:Name="badge"
+                    Margin="20"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
+                    Badge="1">
+            <Button Margin="5"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    xml:space="preserve"
                     Click="Button_Click"
-                    MouseRightButtonUp="Button_MouseRightButtonUp"
-                    IsEnabled="True" >Click to increase
+                    IsEnabled="True"
+                    MouseRightButtonUp="Button_MouseRightButtonUp">Click to increase
 Rightclick to clear</Button>
         </mah:Badged>
     </ctrls:DemoView>

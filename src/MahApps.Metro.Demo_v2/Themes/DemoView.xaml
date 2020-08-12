@@ -39,19 +39,19 @@
                                 Height="48"
                                 Background="{DynamicResource MahApps.HamburgerMenu.Pane.Background}">
                             <DockPanel>
-                                <Button Content="{iconPacks:BoxIcons Kind=RegularLinkExternal}"
-                                        Width="40"
+                                <Button Width="40"
                                         Height="40"
                                         BorderThickness="0"
                                         Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=NavigateToOnlineDocs}"
                                         CommandParameter="{TemplateBinding HyperlinkOnlineDocs}"
+                                        Content="{iconPacks:BoxIcons Kind=RegularLinkExternal}"
                                         DockPanel.Dock="Right"
                                         Foreground="White"
-                                        ToolTip="{TemplateBinding HyperlinkOnlineDocs}"
-                                        Style="{StaticResource MahApps.Styles.Button.WindowCommands}" />
-                                <ContentControl Content="{TemplateBinding Header}"
-                                                Margin="5,0"
+                                        Style="{StaticResource MahApps.Styles.Button.WindowCommands}"
+                                        ToolTip="{TemplateBinding HyperlinkOnlineDocs}" />
+                                <ContentControl Margin="5 0"
                                                 VerticalAlignment="Center"
+                                                Content="{TemplateBinding Header}"
                                                 ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                 ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                                 DockPanel.Dock="Left"
@@ -65,7 +65,7 @@
                         <ItemsControl x:Name="PART_PropertiesList"
                                       Grid.Row="1"
                                       Grid.Column="0"
-                                      Margin="5,5,0,5"
+                                      Margin="5 5 0 5"
                                       Grid.IsSharedSizeScope="True"
                                       ItemsSource="{Binding Source={StaticResource MahAppsDemo.CollectionViewSource.DemoProperties}}"
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True">
@@ -85,8 +85,8 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                        <Expander Header="{Binding}"
-                                                                  Margin="0,0,5,5"
+                                                        <Expander Margin="0 0 5 5"
+                                                                  Header="{Binding}"
                                                                   IsExpanded="True">
                                                             <ItemsPresenter />
                                                         </Expander>
@@ -104,13 +104,13 @@
                                             <ColumnDefinition Width="Auto" SharedSizeGroup="Col01" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <ContentControl Content="{Binding PropertyName}"
-                                                        Grid.Column="0"
-                                                        VerticalAlignment="Center" />
-                                        <ContentControl Content="{Binding}"
-                                                        Grid.Column="1"
+                                        <ContentControl Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        Content="{Binding PropertyName}" />
+                                        <ContentControl Grid.Column="1"
                                                         Margin="5"
-                                                        VerticalAlignment="Center">
+                                                        VerticalAlignment="Center"
+                                                        Content="{Binding}">
                                             <ContentControl.ContentTemplateSelector>
                                                 <local:DemoViewPropertyTemplateSelector FallbackTemplate="{StaticResource MahDemo.DataTemplates.PropertyPresenter.String}" />
                                             </ContentControl.ContentTemplateSelector>
