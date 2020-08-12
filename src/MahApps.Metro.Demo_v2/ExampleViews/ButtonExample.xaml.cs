@@ -1,19 +1,12 @@
-﻿using MahApps.Demo.Controls;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using MahApps.Demo.Controls;
 using MahApps.Metro.Demo_v2;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MahApps.Demo.ExampleViews
 {
@@ -24,21 +17,21 @@ namespace MahApps.Demo.ExampleViews
     {
         public ButtonExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            demoView.DemoProperties.Add(new DemoViewProperty(Button.ContentProperty, button));
-            demoView.DemoProperties.Add(new DemoViewProperty(Button.HorizontalAlignmentProperty, button));
-            demoView.DemoProperties.Add(new DemoViewProperty(Button.VerticalAlignmentProperty, button));
-            demoView.DemoProperties.Add(new DemoViewProperty(Button.WidthProperty, button));
-            demoView.DemoProperties.Add(new DemoViewProperty(Button.HeightProperty, button));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(ContentProperty, this.button));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(HorizontalAlignmentProperty, this.button));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(VerticalAlignmentProperty, this.button));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(WidthProperty, this.button));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(HeightProperty, this.button));
 
-            var styleProperty = new DemoViewProperty(Button.StyleProperty, button);
+            var styleProperty = new DemoViewProperty(StyleProperty, this.button);
             styleProperty.ItemSource = new Dictionary<string, Style>()
-            {
-                {"MahApps.Styles.Button", App.Current.Resources["MahApps.Styles.Button"] as Style},
-                {"MahApps.Styles.Button.Circle", App.Current.Resources["MahApps.Styles.Button.Circle"] as Style}
-            };
-            demoView.DemoProperties.Add(styleProperty);
+                                       {
+                                           { "MahApps.Styles.Button", Application.Current.Resources["MahApps.Styles.Button"] as Style },
+                                           { "MahApps.Styles.Button.Circle", Application.Current.Resources["MahApps.Styles.Button.Circle"] as Style }
+                                       };
+            this.demoView.DemoProperties.Add(styleProperty);
         }
     }
 }

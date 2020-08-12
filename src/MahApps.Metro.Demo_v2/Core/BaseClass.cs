@@ -1,10 +1,11 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MahApps.Demo.Core
 {
@@ -17,7 +18,7 @@ namespace MahApps.Demo.Core
 
         public void RaisePropertyChanged(string PropertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
         #endregion INotifyPropertyChanged
@@ -26,7 +27,7 @@ namespace MahApps.Demo.Core
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        public bool HasErrors => _errorsByPropertyName.Count > 0;
+        public bool HasErrors => this._errorsByPropertyName.Count > 0;
 
         private readonly Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
 
@@ -38,41 +39,40 @@ namespace MahApps.Demo.Core
             }
             else
             {
-                return _errorsByPropertyName.ContainsKey(propertyName)
-                        ? _errorsByPropertyName[propertyName]
-                        : null;
+                return this._errorsByPropertyName.ContainsKey(propertyName)
+                    ? this._errorsByPropertyName[propertyName]
+                    : null;
             }
         }
 
         public bool GetHasError(string PropertyName)
         {
-            return _errorsByPropertyName.ContainsKey(PropertyName);
+            return this._errorsByPropertyName.ContainsKey(PropertyName);
         }
 
         public void AddError(string propertyName, string error)
         {
-            if (!_errorsByPropertyName.ContainsKey(propertyName))
-                _errorsByPropertyName[propertyName] = new List<string>();
+            if (!this._errorsByPropertyName.ContainsKey(propertyName)) this._errorsByPropertyName[propertyName] = new List<string>();
 
-            if (!_errorsByPropertyName[propertyName].Contains(error))
+            if (!this._errorsByPropertyName[propertyName].Contains(error))
             {
-                _errorsByPropertyName[propertyName].Add(error);
-                OnErrorsChanged(propertyName);
+                this._errorsByPropertyName[propertyName].Add(error);
+                this.OnErrorsChanged(propertyName);
             }
         }
 
         public void ClearErrors(string propertyName)
         {
-            if (_errorsByPropertyName.ContainsKey(propertyName))
+            if (this._errorsByPropertyName.ContainsKey(propertyName))
             {
-                _errorsByPropertyName.Remove(propertyName);
-                OnErrorsChanged(propertyName);
+                this._errorsByPropertyName.Remove(propertyName);
+                this.OnErrorsChanged(propertyName);
             }
         }
 
         public void OnErrorsChanged(string propertyName)
         {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
         #endregion INotifyDataErrorInfo

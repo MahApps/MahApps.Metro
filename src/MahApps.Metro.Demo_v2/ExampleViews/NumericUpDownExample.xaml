@@ -10,8 +10,8 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
     <ctrls:DemoView x:Name="demoView"
-                    HyperlinkOnlineDocs="https://mahapps.com/docs/controls/numericupdown"
-                    xml:space="preserve">
+                    xml:space="preserve"
+                    HyperlinkOnlineDocs="https://mahapps.com/docs/controls/numericupdown">
         <ctrls:DemoView.ExampleXaml> <![CDATA[<mah:NumericUpDown 
         Margin="5"
         HorizontalAlignment="Stretch"

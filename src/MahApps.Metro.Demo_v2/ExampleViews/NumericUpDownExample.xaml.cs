@@ -1,19 +1,10 @@
-﻿using MahApps.Demo.Controls;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using MahApps.Demo.Controls;
 using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MahApps.Demo.ExampleViews
 {
@@ -24,22 +15,21 @@ namespace MahApps.Demo.ExampleViews
     {
         public NumericUpDownExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.ValueProperty, numericUpDown, "NumericUpDown"));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.NumericInputModeProperty, numericUpDown));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.WidthProperty, numericUpDown));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.HeightProperty, numericUpDown));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.HorizontalAlignmentProperty, numericUpDown));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.VerticalAlignmentProperty, numericUpDown));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.StringFormatProperty, numericUpDown, "NumericUpDown"));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.IntervalProperty, numericUpDown, "NumericUpDown"));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptArrowKeysProperty, numericUpDown, "NumericUpDown"));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptManualEnterProperty, numericUpDown, "NumericUpDown"));
-            demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptMouseWheelProperty, numericUpDown, "NumericUpDown"));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.ValueProperty, this.numericUpDown, "NumericUpDown"));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.NumericInputModeProperty, this.numericUpDown));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(WidthProperty, this.numericUpDown));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(HeightProperty, this.numericUpDown));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(HorizontalAlignmentProperty, this.numericUpDown));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(VerticalAlignmentProperty, this.numericUpDown));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.StringFormatProperty, this.numericUpDown, "NumericUpDown"));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.IntervalProperty, this.numericUpDown, "NumericUpDown"));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptArrowKeysProperty, this.numericUpDown, "NumericUpDown"));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptManualEnterProperty, this.numericUpDown, "NumericUpDown"));
+            this.demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptMouseWheelProperty, this.numericUpDown, "NumericUpDown"));
 
-            demoView.DemoProperties.Add(new DemoViewProperty(TextBoxHelper.ClearTextButtonProperty, numericUpDown, "Attached"));
-
+            this.demoView.DemoProperties.Add(new DemoViewProperty(TextBoxHelper.ClearTextButtonProperty, this.numericUpDown, "Attached"));
         }
     }
 }

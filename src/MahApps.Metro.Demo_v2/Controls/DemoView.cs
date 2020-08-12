@@ -1,12 +1,11 @@
-﻿using ICSharpCode.AvalonEdit;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using ICSharpCode.AvalonEdit;
 using MahApps.Demo.Core;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -22,12 +21,10 @@ namespace MahApps.Demo.Controls
 
         /// <summary>Identifies the <see cref="HyperlinkOnlineDocs"/> dependency property.</summary>
         public static readonly DependencyProperty HyperlinkOnlineDocsProperty = DependencyProperty.Register(nameof(HyperlinkOnlineDocs), typeof(string), typeof(DemoView), new PropertyMetadata(null));
-        
-
 
         public DemoView()
         {
-            DemoProperties.CollectionChanged += DemoProperties_CollectionChanged;
+            this.DemoProperties.CollectionChanged += this.DemoProperties_CollectionChanged;
         }
 
         public ObservableCollection<DemoViewProperty> DemoProperties { get; } = new ObservableCollection<DemoViewProperty>();
@@ -38,43 +35,42 @@ namespace MahApps.Demo.Controls
             {
                 foreach (DemoViewProperty item in e.NewItems)
                 {
-                    item.PropertyChanged += DemoProperties_ItemPropertyChanged;
+                    item.PropertyChanged += this.DemoProperties_ItemPropertyChanged;
                 }
             }
+
             if (e.OldItems != null)
             {
                 foreach (DemoViewProperty item in e.OldItems)
                 {
-                    item.PropertyChanged -= DemoProperties_ItemPropertyChanged;
+                    item.PropertyChanged -= this.DemoProperties_ItemPropertyChanged;
                 }
             }
         }
 
         private void DemoProperties_ItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            SetExampleXaml();
+            this.SetExampleXaml();
         }
-
-        
 
         public string ExampleXaml
         {
-            get { return (string)GetValue(ExampleXamlProperty); }
-            set { SetValue(ExampleXamlProperty, value); }
+            get => (string)this.GetValue(ExampleXamlProperty);
+            set => this.SetValue(ExampleXamlProperty, value);
         }
 
         private void SetExampleXaml()
         {
-            if (PART_AvalonEdit != null)
+            if (this.PART_AvalonEdit != null)
             {
-                var exampleText = ExampleXaml;
+                var exampleText = this.ExampleXaml;
 
-                foreach (var item in DemoProperties)
+                foreach (var item in this.DemoProperties)
                 {
                     exampleText = exampleText.Replace($"[{item.PropertyName}]", item.GetExampleXamlContent());
                 }
 
-                PART_AvalonEdit.Text = exampleText;
+                this.PART_AvalonEdit.Text = exampleText;
             }
         }
 
@@ -88,8 +84,8 @@ namespace MahApps.Demo.Controls
 
         public string HyperlinkOnlineDocs
         {
-            get { return (string)GetValue(HyperlinkOnlineDocsProperty); }
-            set { SetValue(HyperlinkOnlineDocsProperty, value); }
+            get => (string)this.GetValue(HyperlinkOnlineDocsProperty);
+            set => this.SetValue(HyperlinkOnlineDocsProperty, value);
         }
 
         public SimpleCommand NavigateToOnlineDocs { get; } = new SimpleCommand(
@@ -100,9 +96,8 @@ namespace MahApps.Demo.Controls
         {
             base.OnApplyTemplate();
 
-            PART_AvalonEdit = GetTemplateChild(nameof(PART_AvalonEdit)) as TextEditor;
-            SetExampleXaml();
+            this.PART_AvalonEdit = this.GetTemplateChild(nameof(this.PART_AvalonEdit)) as TextEditor;
+            this.SetExampleXaml();
         }
-
     }
 }

@@ -9,7 +9,9 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Boolean" DataType="{x:Type ctrls:DemoViewProperty}">
-        <mah:ToggleSwitch OnContent="True" OffContent="False" IsOn="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <mah:ToggleSwitch IsOn="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          OffContent="False"
+                          OnContent="True" />
     </DataTemplate>
 
     <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.String" DataType="{x:Type ctrls:DemoViewProperty}">
@@ -23,11 +25,11 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Styles" DataType="{x:Type ctrls:DemoViewProperty}">
-        <ComboBox IsEditable="False"
+        <ComboBox DisplayMemberPath="Key"
+                  IsEditable="False"
                   ItemsSource="{Binding ItemSource}"
-                  SelectedValue="{Binding Value, Mode=TwoWay}" 
-                  SelectedValuePath="Value"
-                  DisplayMemberPath="Key" />
+                  SelectedValue="{Binding Value, Mode=TwoWay}"
+                  SelectedValuePath="Value" />
     </DataTemplate>
-    
+
 </ResourceDictionary>

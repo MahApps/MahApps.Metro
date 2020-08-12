@@ -1,11 +1,11 @@
-﻿using MahApps.Metro.Demo_v2;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using MahApps.Metro.Demo_v2;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
@@ -14,11 +14,12 @@ namespace MahApps.Demo.Controls
     public class DemoViewProperty : DependencyObject, INotifyPropertyChanged
     {
         #region PropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string PropertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -31,34 +32,33 @@ namespace MahApps.Demo.Controls
 
         #endregion
 
-
         #region Constructors
 
         public DemoViewProperty()
         {
-            GetExampleXamlContent = GetExampleXamlContent_Default;
+            this.GetExampleXamlContent = this.GetExampleXamlContent_Default;
         }
 
-        public DemoViewProperty(DependencyProperty dependencyProperty, DependencyObject bindingTarget, string groupName = null, DataTemplate dataTemplate = null) : this()
+        public DemoViewProperty(DependencyProperty dependencyProperty, DependencyObject bindingTarget, string groupName = null, DataTemplate dataTemplate = null)
+            : this()
         {
-            SetCurrentValue(PropertyNameProperty, GetDefaultPropertyName(dependencyProperty));
+            this.SetCurrentValue(PropertyNameProperty, this.GetDefaultPropertyName(dependencyProperty));
 
-            SetCurrentValue(GroupNameProperty, groupName ?? GetDefaultGroupName());
+            this.SetCurrentValue(GroupNameProperty, groupName ?? this.GetDefaultGroupName());
 
-            SetCurrentValue(DataTemplateProperty, dataTemplate ?? GetDefaultDataTemplate(dependencyProperty));
+            this.SetCurrentValue(DataTemplateProperty, dataTemplate ?? this.GetDefaultDataTemplate(dependencyProperty));
 
             // Create Binding to the Control
             var binding = new Binding()
-            { 
-                Path = new PropertyPath(dependencyProperty),
-                Source = bindingTarget,
-                Mode = BindingMode.TwoWay
-            };
-            BindingOperations.SetBinding(this, DemoViewProperty.ValueProperty, binding);
-
+                          {
+                              Path = new PropertyPath(dependencyProperty),
+                              Source = bindingTarget,
+                              Mode = BindingMode.TwoWay
+                          };
+            BindingOperations.SetBinding(this, ValueProperty, binding);
         }
-        #endregion
 
+        #endregion
 
         /// <summary>Identifies the <see cref="PropertyName"/> dependency property.</summary>
         public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.Register(nameof(PropertyName), typeof(string), typeof(DemoViewProperty), new PropertyMetadata(null));
@@ -75,15 +75,13 @@ namespace MahApps.Demo.Controls
         /// <summary>Identifies the <see cref="GroupName"/> dependency property.</summary>
         public static readonly DependencyProperty GroupNameProperty = DependencyProperty.Register(nameof(GroupName), typeof(string), typeof(DemoViewProperty), new PropertyMetadata(null));
 
-
-
         /// <summary>
         /// Gets or Sets the PropertyName
         /// </summary>
         public string PropertyName
         {
-            get { return (string)GetValue(PropertyNameProperty); }
-            set { SetValue(PropertyNameProperty, value); }
+            get => (string)this.GetValue(PropertyNameProperty);
+            set => this.SetValue(PropertyNameProperty, value);
         }
 
         private string GetDefaultPropertyName(DependencyProperty dependencyProperty)
@@ -96,38 +94,36 @@ namespace MahApps.Demo.Controls
             {
                 return $"{dependencyProperty.OwnerType.Name}.{dependencyProperty.Name}";
             }
-
         }
-        
+
         /// <summary>
         /// Gets or Sets the Value
         /// </summary>
         public object Value
         {
-            get { return (object)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get => (object)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
-
 
         /// <summary>
         /// Gets or Sets the GroupName
         /// </summary>
         public string GroupName
         {
-            get { return (string)GetValue(GroupNameProperty); }
-            set { SetValue(GroupNameProperty, value); }
+            get => (string)this.GetValue(GroupNameProperty);
+            set => this.SetValue(GroupNameProperty, value);
         }
 
         private string GetDefaultGroupName()
         {
-            if (string.IsNullOrWhiteSpace(PropertyName)) 
+            if (string.IsNullOrWhiteSpace(this.PropertyName))
                 return null;
 
             switch (this.PropertyName)
             {
-                case string _ when PropertyName.EndsWith("Alignment"):
-                case string _ when PropertyName.EndsWith("Height"):
-                case string _ when PropertyName.EndsWith("Width"):
+                case string _ when this.PropertyName.EndsWith("Alignment"):
+                case string _ when this.PropertyName.EndsWith("Height"):
+                case string _ when this.PropertyName.EndsWith("Width"):
                     return "Layout";
 
                 default:
@@ -140,8 +136,8 @@ namespace MahApps.Demo.Controls
         /// </summary>
         public DataTemplate DataTemplate
         {
-            get { return (DataTemplate)GetValue(DataTemplateProperty); }
-            set { SetValue(DataTemplateProperty, value); }
+            get => (DataTemplate)this.GetValue(DataTemplateProperty);
+            set => this.SetValue(DataTemplateProperty, value);
         }
 
         private DataTemplate GetDefaultDataTemplate(DependencyProperty dependencyProperty)
@@ -162,27 +158,27 @@ namespace MahApps.Demo.Controls
                 dependencyProperty.PropertyType.IsAssignableFrom(typeof(double)) ||
                 dependencyProperty.PropertyType.IsAssignableFrom(typeof(decimal)))
             {
-                return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Numeric"] as DataTemplate;
+                return Application.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Numeric"] as DataTemplate;
             }
 
             if (dependencyProperty.PropertyType.IsAssignableFrom(typeof(string)))
             {
-                return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.String"] as DataTemplate;
+                return Application.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.String"] as DataTemplate;
             }
 
             if (dependencyProperty.PropertyType == typeof(bool))
             {
-                return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Boolean"] as DataTemplate;
+                return Application.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Boolean"] as DataTemplate;
             }
 
             if (dependencyProperty.PropertyType.IsEnum)
             {
-                return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Enum"] as DataTemplate;
+                return Application.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Enum"] as DataTemplate;
             }
 
             if (dependencyProperty.PropertyType.IsAssignableFrom(typeof(Style)))
             {
-                return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Styles"] as DataTemplate;
+                return Application.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Styles"] as DataTemplate;
             }
 
             return null;
@@ -193,19 +189,19 @@ namespace MahApps.Demo.Controls
         /// </summary>
         public IEnumerable ItemSource
         {
-            get { return (IEnumerable)GetValue(ItemSourceProperty); }
-            set { SetValue(ItemSourceProperty, value); }
+            get => (IEnumerable)this.GetValue(ItemSourceProperty);
+            set => this.SetValue(ItemSourceProperty, value);
         }
 
-
         #region XAML Replace Value
+
         public Func<string> GetExampleXamlContent { get; set; }
 
         private string GetExampleXamlContent_Default()
         {
-            return Value?.ToString();
+            return this.Value?.ToString();
         }
-        #endregion
 
+        #endregion
     }
 }

@@ -20,10 +20,10 @@
         IsEnabled="True" /> ]]> 
         </ctrls:DemoView.ExampleXaml>
         <Button x:Name="button"
-                Content="Click Me"
                 Margin="5"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
+                Content="Click Me"
                 IsEnabled="True" />
     </ctrls:DemoView>
 </UserControl>
