@@ -5,7 +5,6 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metroDemo="clr-namespace:MetroDemo"
              d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
@@ -51,8 +50,6 @@
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
-            <materialDesignConverters:BrushRoundConverter x:Key="BrushRoundConverter" />
-
             <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple"
                    BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
                    TargetType="{x:Type ListBoxItem}">
@@ -82,7 +79,7 @@
                                                            Content="{TemplateBinding Content}"
                                                            ContentTemplate="{TemplateBinding ContentTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           Feedback="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                                           Feedback="{DynamicResource MahApps.Brushes.Gray.MouseOver}"
                                                            Focusable="False"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
@@ -138,8 +135,8 @@
                 <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
                 <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
-                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
-                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray.SemiTransparent}" />
+                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray.SemiTransparent}" />
                 <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
             </Style>

@@ -8,19 +8,21 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
+
     <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="4.3.*" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" privateAssets="all" includeAssets="build" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" PrivateAssets="All" IIncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
     </ItemGroup>
+
     <!-- Items include -->
     <ItemGroup>
         <EmbeddedResource Include="**\*.Template.xaml" />

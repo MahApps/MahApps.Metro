@@ -28,7 +28,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="4.*" />
+        <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <None Include="app.manifest" />
