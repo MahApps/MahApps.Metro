@@ -1,0 +1,7 @@
+﻿<FileList>
+    <File Reference="MahApps.Metro.dll">
+        <ToolboxItems VSCategory="MahApps.Metro" BlendCategory="MahApps.Metro">
+            <Item Type="MahApps.Metro.Controls.Badged" />
+        </ToolboxItems>
+    </File>
+</FileList>
