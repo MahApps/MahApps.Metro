@@ -1,0 +1,38 @@
+﻿<FileList>
+    <File Reference="MahApps.Metro.dll">
+        <ToolboxItems VSCategory="MahApps.Metro" BlendCategory="MahApps.Metro">
+            <Item Type="MahApps.Metro.Controls.Badged" />
+            <Item Type="MahApps.Metro.Controls.ClipBorder" />
+            <Item Type="MahApps.Metro.Controls.ContentControlEx" />
+            <Item Type="MahApps.Metro.Controls.DateTimePicker" />
+            <Item Type="MahApps.Metro.Controls.DropDownButton" />
+            <Item Type="MahApps.Metro.Controls.FlipView" />
+            <Item Type="MahApps.Metro.Controls.FlyoutsControl" />
+            <Item Type="MahApps.Metro.Controls.FontIcon" />
+            <Item Type="MahApps.Metro.Controls.HamburgerMenu" />
+            <Item Type="MahApps.Metro.Controls.HotKeyBox" />
+            <Item Type="MahApps.Metro.Controls.MetroAnimatedSingleRowTabControl" />
+            <Item Type="MahApps.Metro.Controls.MetroAnimatedTabControl" />
+            <Item Type="MahApps.Metro.Controls.MetroContentControl" />
+            <Item Type="MahApps.Metro.Controls.MetroHeader" />
+            <Item Type="MahApps.Metro.Controls.MetroProgressBar" />
+            <Item Type="MahApps.Metro.Controls.MetroTabControl" />
+            <Item Type="MahApps.Metro.Controls.MetroThumbContentControl" />
+            <Item Type="MahApps.Metro.Controls.MultiFrameImage" />
+            <Item Type="MahApps.Metro.Controls.NumericUpDown" />
+            <Item Type="MahApps.Metro.Controls.Pivot" />
+            <Item Type="MahApps.Metro.Controls.Planerator" />
+            <Item Type="MahApps.Metro.Controls.ProgressRing" />
+            <Item Type="MahApps.Metro.Controls.RangeSlider" />
+            <Item Type="MahApps.Metro.Controls.RevealImage" />
+            <Item Type="MahApps.Metro.Controls.SplitButton" />
+            <Item Type="MahApps.Metro.Controls.SplitView" />
+            <Item Type="MahApps.Metro.Controls.Tile" />
+            <Item Type="MahApps.Metro.Controls.TimePicker" />
+            <Item Type="MahApps.Metro.Controls.ToggleSwitch" />
+            <Item Type="MahApps.Metro.Controls.TransitioningContentControl" />
+            <Item Type="MahApps.Metro.Controls.WindowButtonCommands" />
+            <Item Type="MahApps.Metro.Controls.WindowCommands" />
+        </ToolboxItems>
+    </File>
+</FileList>

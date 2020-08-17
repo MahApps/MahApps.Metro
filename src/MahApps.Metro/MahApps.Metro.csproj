@@ -29,6 +29,10 @@
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
+    </ItemGroup>
+
     <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
         <PropertyGroup>
             <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
