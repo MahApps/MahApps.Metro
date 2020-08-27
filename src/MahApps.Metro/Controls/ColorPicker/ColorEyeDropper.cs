@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -86,33 +88,28 @@ namespace MahApps.Metro.Controls
                 toolTip.IsOpen = true;
             }
 
-            SetPreviewAsync();
+            SetPreview();
             
         }
 
         private void ColorEyeDropper_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            SetPreviewAsync();
-        }
-
-        private async void SetPreviewAsync()
-        {
-            var mousePos = await Task.FromResult(EyeDropperHelper.GetCursorPosition());
-            var previewImage = await Task.FromResult(EyeDropperHelper.CaptureRegion(new Int32Rect(mousePos.X - PreviewImageOuterPixelCount, mousePos.Y - PreviewImageOuterPixelCount, 2 * PreviewImageOuterPixelCount + 1, 2 * PreviewImageOuterPixelCount + 1)));
-            var previewColor = await Task.FromResult(EyeDropperHelper.GetPixelColor(mousePos));
-
-            SetCurrentValue(PreviewImageSourceProperty, previewImage);
-            SetCurrentValue(PreviewBrushProperty, new SolidColorBrush(previewColor));
+            SetPreview();
         }
 
         private void SetPreview()
         {
-            var mousePos = EyeDropperHelper.GetCursorPosition();
-            var previewImage = EyeDropperHelper.CaptureRegion(new Int32Rect(mousePos.X - PreviewImageOuterPixelCount, mousePos.Y - PreviewImageOuterPixelCount, 2 * PreviewImageOuterPixelCount + 1, 2 * PreviewImageOuterPixelCount + 1));
-            var previewColor = EyeDropperHelper.GetPixelColor(mousePos);
+            var action = new Action(() =>
+            {
+                var mousePos = EyeDropperHelper.GetCursorPosition();
+                var previewImage = EyeDropperHelper.CaptureRegion(new Int32Rect(mousePos.X - PreviewImageOuterPixelCount, mousePos.Y - PreviewImageOuterPixelCount, 2 * PreviewImageOuterPixelCount + 1, 2 * PreviewImageOuterPixelCount + 1));
+                var previewColor = EyeDropperHelper.GetPixelColor(mousePos);
 
-            SetCurrentValue(PreviewImageSourceProperty, previewImage);
-            SetCurrentValue(PreviewBrushProperty, new SolidColorBrush(previewColor));
+                SetCurrentValue(PreviewImageSourceProperty, previewImage);
+                SetCurrentValue(PreviewBrushProperty, new SolidColorBrush(previewColor));
+            });
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Background, action);
         }
 
         #region Overrides
