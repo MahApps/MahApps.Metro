@@ -128,6 +128,7 @@ namespace MahApps.Metro.Controls
             SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
             SyncColumnProperty(this, numericUpDown, MaximumProperty, NumericUpDown.MaximumProperty);
             SyncColumnProperty(this, numericUpDown, NumericInputModeProperty, NumericUpDown.NumericInputModeProperty);
+            SyncColumnProperty(this, numericUpDown, DecimalPointCorrectionProperty, NumericUpDown.DecimalPointCorrectionProperty);
             SyncColumnProperty(this, numericUpDown, IntervalProperty, NumericUpDown.IntervalProperty);
             SyncColumnProperty(this, numericUpDown, DelayProperty, NumericUpDown.DelayProperty);
             SyncColumnProperty(this, numericUpDown, SpeedupProperty, NumericUpDown.SpeedupProperty);
@@ -291,6 +292,22 @@ namespace MahApps.Metro.Controls
         {
             get { return (NumericInput)this.GetValue(NumericInputModeProperty); }
             set { this.SetValue(NumericInputModeProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="DecimalPointCorrection"/> dependency property.</summary>
+        public static readonly DependencyProperty DecimalPointCorrectionProperty
+            = DependencyProperty.Register(nameof(DecimalPointCorrection),
+                                          typeof(DecimalPointCorrectionMode),
+                                          typeof(DataGridNumericUpDownColumn),
+                                          new PropertyMetadata(default(DecimalPointCorrectionMode)));
+
+        /// <summary>
+        /// Gets or sets the decimal-point correction mode. The default is <see cref="DecimalPointCorrectionMode.Inherits"/>
+        /// </summary>
+        public DecimalPointCorrectionMode DecimalPointCorrection
+        {
+            get => (DecimalPointCorrectionMode)this.GetValue(DecimalPointCorrectionProperty);
+            set => this.SetValue(DecimalPointCorrectionProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Interval"/> dependency property.</summary>
@@ -565,6 +582,9 @@ namespace MahApps.Metro.Controls
                         break;
                     case nameof(this.NumericInputMode):
                         SyncColumnProperty(this, numericUpDown, NumericInputModeProperty, NumericUpDown.NumericInputModeProperty);
+                        break;
+                    case nameof(this.DecimalPointCorrection):
+                        SyncColumnProperty(this, numericUpDown, DecimalPointCorrectionProperty, NumericUpDown.DecimalPointCorrectionProperty);
                         break;
                     case nameof(this.Interval):
                         SyncColumnProperty(this, numericUpDown, IntervalProperty, NumericUpDown.IntervalProperty);
