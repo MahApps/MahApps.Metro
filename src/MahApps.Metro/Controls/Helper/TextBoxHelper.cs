@@ -892,6 +892,24 @@ namespace MahApps.Metro.Controls
             var commandParameter = GetButtonCommandParameter(parent) ?? parent;
             if (command != null && command.CanExecute(commandParameter))
             {
+                if (parent is TextBox textBox)
+                {
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                }
+                else if (parent is PasswordBox passwordBox)
+                {
+                    passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                }
+                else if (parent is ComboBox comboBox)
+                {
+                    if (comboBox.IsEditable)
+                    {
+                        comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
+                    }
+
+                    comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                }
+
                 command.Execute(commandParameter);
             }
 
