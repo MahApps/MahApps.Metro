@@ -896,14 +896,6 @@ namespace MahApps.Metro.Controls
                 {
                     textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 }
-                else if (parent is PasswordBox passwordBox)
-                {
-                    passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
-                }
-                else if (parent is ComboBox comboBox && comboBox.IsEditable)
-                {
-                    comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
-                }
 
                 command.Execute(commandParameter);
             }
