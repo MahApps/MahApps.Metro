@@ -900,14 +900,9 @@ namespace MahApps.Metro.Controls
                 {
                     passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
                 }
-                else if (parent is ComboBox comboBox)
+                else if (parent is ComboBox comboBox && comboBox.IsEditable)
                 {
-                    if (comboBox.IsEditable)
-                    {
-                        comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
-                    }
-
-                    comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                 }
 
                 command.Execute(commandParameter);
