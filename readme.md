@@ -4,7 +4,7 @@
   </a>
   <h1>MahApps.Metro</h1>
   <p>
-    A toolkit for creating modern WPF applications. Lots of goodness out-of-the box.
+    A toolkit for creating modern WPF Applications. Lots of goodness out-of-the box.
   </p>
   <p>
     Supporting .NET Framework (4.5+) and .NET Core (3.0 and 3.1)
