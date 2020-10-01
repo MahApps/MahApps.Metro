@@ -16,13 +16,14 @@
                 <ControlTemplate TargetType="{x:Type mah:ColorEyeDropper}">
 
 
-                    <Button Content="{TemplateBinding Content}"
-                            Width="{TemplateBinding Width}"
+                    <Button Width="{TemplateBinding Width}"
                             Height="{TemplateBinding Height}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" />
 
                     <ControlTemplate.Triggers>
@@ -30,7 +31,9 @@
                             <Setter Property="ContentTemplate">
                                 <Setter.Value>
                                     <DataTemplate>
-                                        <Viewbox Stretch="Uniform" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}">
+                                        <Viewbox Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}"
+                                                 Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}"
+                                                 Stretch="Uniform">
                                             <Canvas Width="24" Height="24">
                                                 <Path Data="M19.35,11.72L17.22,13.85L15.81,12.43L8.1,20.14L3.5,22L2,20.5L3.86,15.9L11.57,8.19L10.15,6.78L12.28,4.65L19.35,11.72M16.76,3C17.93,1.83 19.83,1.83 21,3C22.17,4.17 22.17,6.07 21,7.24L19.08,9.16L14.84,4.92L16.76,3M5.56,17.03L4.5,19.5L6.97,18.44L14.4,11L13,9.6L5.56,17.03Z" Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                                             </Canvas>
@@ -96,10 +99,10 @@
                                  Stroke="{DynamicResource MahApps.Brushes.GrayNormal}"
                                  StrokeThickness="1" />
 
-                        <TextBlock Text="{Binding PreviewBrush}"
-                                   Grid.Row="1"
+                        <TextBlock Grid.Row="1"
                                    Grid.Column="1"
-                                   Margin="5" />
+                                   Margin="5"
+                                   Text="{Binding PreviewBrush}" />
                     </Grid>
                 </ToolTip>
             </Setter.Value>
@@ -107,4 +110,9 @@
 
     </Style>
 
+    <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas"
+           BasedOn="{StaticResource {x:Type mah:ColorEyeDropper}}"
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+    </Style>
 </ResourceDictionary>
