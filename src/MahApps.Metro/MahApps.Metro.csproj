@@ -28,6 +28,12 @@
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="Assets\Eyedropper.cur" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Assets\Eyedropper.cur" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
