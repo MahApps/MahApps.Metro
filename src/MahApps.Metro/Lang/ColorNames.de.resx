@@ -118,444 +118,444 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AliceBlue" xml:space="preserve">
-    <value>Alice Blue</value>
+    <value>Aliceblau</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>Bernstein</value>
   </data>
   <data name="AntiqueWhite" xml:space="preserve">
-    <value>Antique White</value>
+    <value>Antikweiß</value>
   </data>
   <data name="Aqua" xml:space="preserve">
-    <value>Aqua</value>
+    <value>Wasser</value>
   </data>
   <data name="Aquamarine" xml:space="preserve">
-    <value>Aquamarine</value>
+    <value>Aquamarin</value>
   </data>
   <data name="Azure" xml:space="preserve">
-    <value>Azure</value>
+    <value>Azur</value>
   </data>
   <data name="Beige" xml:space="preserve">
     <value>Beige</value>
   </data>
   <data name="Bisque" xml:space="preserve">
-    <value>Bisque</value>
+    <value>Bisquit</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Schwarz</value>
   </data>
   <data name="BlanchedAlmond" xml:space="preserve">
-    <value>Blanched Almond</value>
+    <value>Mandelweiß</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Blau</value>
   </data>
   <data name="BlueViolet" xml:space="preserve">
-    <value>Blue Violet</value>
+    <value>blauviolett</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>Braun</value>
   </data>
   <data name="BurlyWood" xml:space="preserve">
-    <value>Burly Wood</value>
+    <value>Burlywood</value>
   </data>
   <data name="CadetBlue" xml:space="preserve">
-    <value>Cadet Blue</value>
+    <value>Kadettenblau</value>
   </data>
   <data name="Chartreuse" xml:space="preserve">
-    <value>Chartreuse</value>
+    <value>Likörgrün</value>
   </data>
   <data name="Chocolate" xml:space="preserve">
-    <value>Chocolate</value>
+    <value>Schokolade</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>Kobaltblau</value>
   </data>
   <data name="Coral" xml:space="preserve">
-    <value>Coral</value>
+    <value>Korallenrot</value>
   </data>
   <data name="CornflowerBlue" xml:space="preserve">
-    <value>Cornflower Blue</value>
+    <value>Kornblumenblau</value>
   </data>
   <data name="Cornsilk" xml:space="preserve">
-    <value>Cornsilk</value>
+    <value>Kornseide</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>Purpur</value>
   </data>
   <data name="Cyan" xml:space="preserve">
     <value>Cyan</value>
   </data>
   <data name="DarkBlue" xml:space="preserve">
-    <value>Dark Blue</value>
+    <value>Dunkelblau</value>
   </data>
   <data name="DarkCyan" xml:space="preserve">
-    <value>Dark Cyan</value>
+    <value>Dunkelcyan</value>
   </data>
   <data name="DarkGoldenrod" xml:space="preserve">
-    <value>Dark Goldenrod</value>
+    <value>Dunkel-Goldrute</value>
   </data>
   <data name="DarkGray" xml:space="preserve">
-    <value>Dark Gray</value>
+    <value>Dunkelgrau</value>
   </data>
   <data name="DarkGreen" xml:space="preserve">
-    <value>Dark Green</value>
+    <value>Dunkelgrün</value>
   </data>
   <data name="DarkKhaki" xml:space="preserve">
-    <value>Dark Khaki</value>
+    <value>Dunkelkhaki</value>
   </data>
   <data name="DarkMagenta" xml:space="preserve">
-    <value>Dark Magenta</value>
+    <value>Dunkelmagenta</value>
   </data>
   <data name="DarkOliveGreen" xml:space="preserve">
-    <value>Dark Olive Green</value>
+    <value>Dunkelolivgrün</value>
   </data>
   <data name="DarkOrange" xml:space="preserve">
-    <value>Dark Orange</value>
+    <value>Dunkelorange</value>
   </data>
   <data name="DarkOrchid" xml:space="preserve">
-    <value>Dark Orchid</value>
+    <value>Dunkel-Orchidee</value>
   </data>
   <data name="DarkRed" xml:space="preserve">
-    <value>Dark Red</value>
+    <value>Dunkelrot</value>
   </data>
   <data name="DarkSalmon" xml:space="preserve">
-    <value>Dark Salmon</value>
+    <value>Dunkel-Lachsrosa</value>
   </data>
   <data name="DarkSeaGreen" xml:space="preserve">
-    <value>Dark Sea Green</value>
+    <value>Dunkel-Seegrün</value>
   </data>
   <data name="DarkSlateBlue" xml:space="preserve">
-    <value>Dark Slate Blue</value>
+    <value>Dunkel-Schieferblau</value>
   </data>
   <data name="DarkSlateGray" xml:space="preserve">
-    <value>Dark Slate Gray</value>
+    <value>Dunkel-Schiefergrau</value>
   </data>
   <data name="DarkTurquoise" xml:space="preserve">
-    <value>Dark Turquoise</value>
+    <value>Dunkeltürkis</value>
   </data>
   <data name="DarkViolet" xml:space="preserve">
-    <value>Dark Violet</value>
+    <value>Dunkelviolett</value>
   </data>
   <data name="DeepPink" xml:space="preserve">
-    <value>Deep Pink</value>
+    <value>Dunkelrosa</value>
   </data>
   <data name="DeepSkyBlue" xml:space="preserve">
-    <value>Deep Sky Blue</value>
+    <value>Dunkelhimmelblau</value>
   </data>
   <data name="DimGray" xml:space="preserve">
-    <value>Dim Gray</value>
+    <value>Blaßgrau</value>
   </data>
   <data name="DodgerBlue" xml:space="preserve">
-    <value>Dodger Blue</value>
+    <value>Persenningblau</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>Smaragdgrün</value>
   </data>
   <data name="Firebrick" xml:space="preserve">
-    <value>Firebrick</value>
+    <value>Schamottestein</value>
   </data>
   <data name="FloralWhite" xml:space="preserve">
-    <value>Floral White</value>
+    <value>Blütenweiß</value>
   </data>
   <data name="ForestGreen" xml:space="preserve">
-    <value>Forest Green</value>
+    <value>Waldgrün</value>
   </data>
   <data name="Fuchsia" xml:space="preserve">
-    <value>Fuchsia</value>
+    <value>Fuchsie</value>
   </data>
   <data name="Gainsboro" xml:space="preserve">
     <value>Gainsboro</value>
   </data>
   <data name="GhostWhite" xml:space="preserve">
-    <value>Ghost White</value>
+    <value>Geisterweiß</value>
   </data>
   <data name="Gold" xml:space="preserve">
     <value>Gold</value>
   </data>
   <data name="Goldenrod" xml:space="preserve">
-    <value>Goldenrod</value>
+    <value>Goldrute</value>
   </data>
   <data name="Gray" xml:space="preserve">
-    <value>Gray</value>
+    <value>Grau</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>Grün</value>
   </data>
   <data name="GreenYellow" xml:space="preserve">
-    <value>Green Yellow</value>
+    <value>Grün-Gelb</value>
   </data>
   <data name="Honeydew" xml:space="preserve">
-    <value>Honeydew</value>
+    <value>Honigtau</value>
   </data>
   <data name="HotPink" xml:space="preserve">
-    <value>Hot Pink</value>
+    <value>Knallrosa</value>
   </data>
   <data name="IndianRed" xml:space="preserve">
-    <value>Indian Red</value>
+    <value>Indischrot</value>
   </data>
   <data name="Indigo" xml:space="preserve">
     <value>Indigo</value>
   </data>
   <data name="Ivory" xml:space="preserve">
-    <value>Ivory</value>
+    <value>Elfenbein</value>
   </data>
   <data name="Khaki" xml:space="preserve">
     <value>Khaki</value>
   </data>
   <data name="Lavender" xml:space="preserve">
-    <value>Lavender</value>
+    <value>Lavendel</value>
   </data>
   <data name="LavenderBlush" xml:space="preserve">
-    <value>Lavender Blush</value>
+    <value>Lavendelhauch</value>
   </data>
   <data name="LawnGreen" xml:space="preserve">
-    <value>Lawn Green</value>
+    <value>Grasgrün</value>
   </data>
   <data name="LemonChiffon" xml:space="preserve">
-    <value>Lemon Chiffon</value>
+    <value>Zitronenchiffron</value>
   </data>
   <data name="LightBlue" xml:space="preserve">
-    <value>Light Blue</value>
+    <value>Hellblau</value>
   </data>
   <data name="LightCoral" xml:space="preserve">
-    <value>LightCoral</value>
+    <value>Hellkorall</value>
   </data>
   <data name="LightCyan" xml:space="preserve">
-    <value>Light Cyan</value>
+    <value>Hellcyan</value>
   </data>
   <data name="LightGoldenrodYellow" xml:space="preserve">
-    <value>Light Goldenrod Yellow</value>
+    <value>Hellgoldrute</value>
   </data>
   <data name="LightGray" xml:space="preserve">
-    <value>Light Gray</value>
+    <value>Hellgrau</value>
   </data>
   <data name="LightGreen" xml:space="preserve">
-    <value>Light Green</value>
+    <value>Hellgrün</value>
   </data>
   <data name="LightPink" xml:space="preserve">
-    <value>Light Pink</value>
+    <value>Hellrosa</value>
   </data>
   <data name="LightSalmon" xml:space="preserve">
-    <value>Light Salmon</value>
+    <value>Helllachsrosa</value>
   </data>
   <data name="LightSeaGreen" xml:space="preserve">
-    <value>Light Sea Green</value>
+    <value>Hellmeergrün</value>
   </data>
   <data name="LightSkyBlue" xml:space="preserve">
-    <value>Light Sky Blue</value>
+    <value>Hellhimmelblau</value>
   </data>
   <data name="LightSlateGray" xml:space="preserve">
-    <value>Light Slate Gray</value>
+    <value>Hellschiefergrau</value>
   </data>
   <data name="LightSteelBlue" xml:space="preserve">
-    <value>Light Steel Blue</value>
+    <value>Hellstahlblau</value>
   </data>
   <data name="LightYellow" xml:space="preserve">
-    <value>Light Yellow</value>
+    <value>Hellgelb</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>Limette</value>
   </data>
   <data name="LimeGreen" xml:space="preserve">
-    <value>Lime Green</value>
+    <value>Limonengrün</value>
   </data>
   <data name="Linen" xml:space="preserve">
-    <value>Linen</value>
+    <value>Leinen</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
   </data>
   <data name="Maroon" xml:space="preserve">
-    <value>Maroon</value>
+    <value>Kastanienbraun</value>
   </data>
   <data name="Mauve" xml:space="preserve">
-    <value>Mauve</value>
+    <value>Malve</value>
   </data>
   <data name="MediumAquamarine" xml:space="preserve">
-    <value>Medium Aquamarine</value>
+    <value>Mittelaquamarinblau</value>
   </data>
   <data name="MediumBlue" xml:space="preserve">
-    <value>Medium Blue</value>
+    <value>Mittelblau</value>
   </data>
   <data name="MediumOrchid" xml:space="preserve">
-    <value>Medium Orchid</value>
+    <value>Mittelorchidee</value>
   </data>
   <data name="MediumPurple" xml:space="preserve">
-    <value>Medium Purple</value>
+    <value>Mittellila</value>
   </data>
   <data name="MediumSeaGreen" xml:space="preserve">
-    <value>Medium Sea Green</value>
+    <value>Mittelseegrün</value>
   </data>
   <data name="MediumSlateBlue" xml:space="preserve">
-    <value>Medium Slate Blue</value>
+    <value>Mittelschieferblau</value>
   </data>
   <data name="MediumSpringGreen" xml:space="preserve">
-    <value>Medium Spring Green</value>
+    <value>Mittelfrühlingsgrün</value>
   </data>
   <data name="MediumTurquoise" xml:space="preserve">
-    <value>Medium Turquoise</value>
+    <value>Mitteltürkis</value>
   </data>
   <data name="MediumVioletRed" xml:space="preserve">
-    <value>Medium Violet Red</value>
+    <value>Mittelviolettrot</value>
   </data>
   <data name="MidnightBlue" xml:space="preserve">
-    <value>Midnight Blue</value>
+    <value>Mitternachtsblau</value>
   </data>
   <data name="MintCream" xml:space="preserve">
-    <value>Mint Cream</value>
+    <value>Pfefferminzcreme</value>
   </data>
   <data name="MistyRose" xml:space="preserve">
-    <value>Misty Rose</value>
+    <value>Blaßrosa</value>
   </data>
   <data name="Moccasin" xml:space="preserve">
-    <value>Moccasin</value>
+    <value>Mokassin</value>
   </data>
   <data name="NavajoWhite" xml:space="preserve">
-    <value>Navajo White</value>
+    <value>Navajo-Weiß</value>
   </data>
   <data name="Navy" xml:space="preserve">
     <value>Navy</value>
   </data>
   <data name="OldLace" xml:space="preserve">
-    <value>Old Lace</value>
+    <value>Alte Spitze</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>Oliv</value>
   </data>
   <data name="OliveDrab" xml:space="preserve">
-    <value>Olive Drab</value>
+    <value>Olivegrau</value>
   </data>
   <data name="Orange" xml:space="preserve">
     <value>Orange</value>
   </data>
   <data name="OrangeRed" xml:space="preserve">
-    <value>Orange Red</value>
+    <value>Orangerot</value>
   </data>
   <data name="Orchid" xml:space="preserve">
-    <value>Orchid</value>
+    <value>Orchidee</value>
   </data>
   <data name="PaleGoldenrod" xml:space="preserve">
-    <value>Pale Goldenrod</value>
+    <value>Blass-Goldrute</value>
   </data>
   <data name="PaleGreen" xml:space="preserve">
-    <value>Pale Green</value>
+    <value>Blassgrün</value>
   </data>
   <data name="PaleTurquoise" xml:space="preserve">
-    <value>Pale Turquoise</value>
+    <value>Blasstürkis</value>
   </data>
   <data name="PaleVioletRed" xml:space="preserve">
-    <value>Pale Violet Red</value>
+    <value>Blassviolettrot</value>
   </data>
   <data name="PapayaWhip" xml:space="preserve">
-    <value>Papaya Whip</value>
+    <value>Papaya-Creme</value>
   </data>
   <data name="PeachPuff" xml:space="preserve">
-    <value>Peach Puff</value>
+    <value>Pfirsich</value>
   </data>
   <data name="Peru" xml:space="preserve">
     <value>Peru</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>Pink</value>
+    <value>Rosa</value>
   </data>
   <data name="Plum" xml:space="preserve">
-    <value>Plum</value>
+    <value>Pflaume</value>
   </data>
   <data name="PowderBlue" xml:space="preserve">
-    <value>Powder Blue</value>
+    <value>Pulverblau</value>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>Purple</value>
+    <value>Lila</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Red</value>
+    <value>Rot</value>
   </data>
   <data name="RosyBrown" xml:space="preserve">
-    <value>Rosy Brown</value>
+    <value>Rosigbraun</value>
   </data>
   <data name="RoyalBlue" xml:space="preserve">
-    <value>Royal Blue</value>
+    <value>Königsblau</value>
   </data>
   <data name="SaddleBrown" xml:space="preserve">
-    <value>Saddle Brown</value>
+    <value>Sattelbraun</value>
   </data>
   <data name="Salmon" xml:space="preserve">
-    <value>Salmon</value>
+    <value>Lachsrosa</value>
   </data>
   <data name="SandyBrown" xml:space="preserve">
-    <value>Sandy Brown</value>
+    <value>Sandbraun</value>
   </data>
   <data name="SeaGreen" xml:space="preserve">
-    <value>Sea Green</value>
+    <value>Meergrün</value>
   </data>
   <data name="SeaShell" xml:space="preserve">
-    <value>Sea Shell</value>
+    <value>Muschelweiß</value>
   </data>
   <data name="Sienna" xml:space="preserve">
     <value>Sienna</value>
   </data>
   <data name="Silver" xml:space="preserve">
-    <value>Silver</value>
+    <value>Silber</value>
   </data>
   <data name="SkyBlue" xml:space="preserve">
-    <value>Sky Blue</value>
+    <value>Himmelblau</value>
   </data>
   <data name="SlateBlue" xml:space="preserve">
-    <value>Slate Blue</value>
+    <value>Schieferblau</value>
   </data>
   <data name="SlateGray" xml:space="preserve">
-    <value>Slate Gray</value>
+    <value>Schiefergrau</value>
   </data>
   <data name="Snow" xml:space="preserve">
-    <value>Snow</value>
+    <value>Schneeweiß</value>
   </data>
   <data name="SpringGreen" xml:space="preserve">
-    <value>Spring Green</value>
+    <value>Frühlingsgrün</value>
   </data>
   <data name="Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Stahl</value>
   </data>
   <data name="SteelBlue" xml:space="preserve">
-    <value>Steel Blue</value>
+    <value>Stahlblau</value>
   </data>
   <data name="Tan" xml:space="preserve">
-    <value>Tan</value>
+    <value>Hautfarben</value>
   </data>
   <data name="Taupe" xml:space="preserve">
-    <value>Taupe</value>
+    <value>Graubraun</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>Krickentengrün</value>
   </data>
   <data name="Thistle" xml:space="preserve">
-    <value>Thistle</value>
+    <value>Distel</value>
   </data>
   <data name="Tomato" xml:space="preserve">
-    <value>Tomato</value>
+    <value>Tomate</value>
   </data>
   <data name="Transparent" xml:space="preserve">
     <value>Transparent</value>
   </data>
   <data name="Turquoise" xml:space="preserve">
-    <value>Turquoise</value>
+    <value>Türkis</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>Violet</value>
+    <value>Violett</value>
   </data>
   <data name="Wheat" xml:space="preserve">
-    <value>Wheat</value>
+    <value>Weizen</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Weiß</value>
   </data>
   <data name="WhiteSmoke" xml:space="preserve">
-    <value>White Smoke</value>
+    <value>Rauch</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Gelb</value>
   </data>
   <data name="YellowGreen" xml:space="preserve">
-    <value>Yellow Green</value>
+    <value>Gelbgrün</value>
   </data>
 </root>
