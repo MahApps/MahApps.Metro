@@ -41,6 +41,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorEyeDropper.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorCanvas.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPalette.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <theming:MahAppsLibraryThemeProvider x:Key="{x:Static theming:MahAppsLibraryThemeProvider.DefaultInstance}" />

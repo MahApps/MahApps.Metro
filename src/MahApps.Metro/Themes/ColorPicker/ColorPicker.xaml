@@ -1,0 +1,503 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:controlzex="urn:controlzex"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib" >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <sys:Double x:Key="MahApps.Sizes.ColorListBox.ItemWidth">16</sys:Double>
+    <sys:Double x:Key="MahApps.Sizes.ColorListBox.ItemHeight">16</sys:Double>
+
+    <Converters:ColorToNameConverter x:Key="ColorToNameConverter" />
+
+    <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorAndName">
+        <Grid Visibility="{Binding Converter={Converters:NotNullToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Mode=OneWay}"
+                    Background="{DynamicResource MahApps.Brushes.Checkerd.Small}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
+                    BorderThickness="1">
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{Binding TargetNullValue=Transparent}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+
+            <TextBlock Text="{Binding Converter={StaticResource ColorToNameConverter}}"
+                       Grid.Column="1"
+                       Margin="2,0,0,0" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorOnly">
+        <Border Grid.Column="0"
+                Visibility="{Binding Converter={Converters:NotNullToVisibilityConverter}}"
+                Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="{DynamicResource MahApps.Brushes.Checkerd.Small}"
+                BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
+                BorderThickness="1">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Border>
+    </DataTemplate>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ColorPickerDropDown" TargetType="{x:Type ToggleButton}">
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid x:Name="ToggleButtonRootGrid" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="TextColumn" Width="*" />
+                            <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                            <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="PART_ClearText"
+                                Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                Grid.Column="1"
+                                Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:ColorPicker}}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                Focusable="False"
+                                FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                Foreground="{TemplateBinding Foreground}"
+                                IsTabStop="False"
+                                Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:ColorPicker}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                        <Grid x:Name="BtnArrowBackground"
+                              Grid.Column="2"
+                              Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                              Background="Transparent">
+                            <Path x:Name="Arrow"
+                                  Width="8"
+                                  Height="4"
+                                  HorizontalAlignment="Center"
+                                  Data="{DynamicResource ComboBoxDownArrowGeometry}"
+                                  Fill="{DynamicResource MahApps.Brushes.Gray1}"
+                                  IsHitTestVisible="false"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  Stretch="Uniform" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True">
+                            <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </DataTrigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                            <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown" TargetType="mah:ColorPalette">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ColorPicker" TargetType="{x:Type mah:ColorPicker}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ComboBoxBorderThemeThickness}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.Focus}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.MouseOver}" />
+        <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
+        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="SelectedColorTemplate" Value="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}" />
+        <Setter Property="DropDownWidth" Value="500" />
+        <Setter Property="DropDownHeight" Value="400" />
+        <Setter Property="AvailableColorPaletteHeader" Value="Available Colors" />
+        <Setter Property="IsAvailableColorPaletteVisible" Value="True" />
+        <Setter Property="AvailableColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.WpfColorsPalette}" />
+        <Setter Property="AvailableColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
+        <Setter Property="StandardColorPaletteHeader" Value="Standard Colors" />
+        <Setter Property="IsStandardColorPaletteVisible" Value="True" />
+        <Setter Property="StandardColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.StandardColorsPalette}" />
+        <Setter Property="StandardColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
+        <Setter Property="CustomColorPalette01Header" Value="Custom Colors" />
+        <Setter Property="IsCustomColorPalette01Visible" Value="False" />
+        <Setter Property="CustomColorPalette02Style" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
+        <Setter Property="CustomColorPalette02Header" Value="Custom Colors 2" />
+        <Setter Property="IsCustomColorPalette02Visible" Value="False" />
+        <Setter Property="CustomColorPalette02Style" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
+        <Setter Property="RecentColorPaletteHeader" Value="Recent Colors" />
+        <Setter Property="IsRecentColorPaletteVisible" Value="True" />
+        <Setter Property="AddToRecentColorsTrigger" Value="ColorPickerClosed" />
+        <Setter Property="mah:BuildInColorPalettes.MaximumRecentColorsCount" Value="18" />
+        <Setter Property="RecentColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.RecentColors}" />
+        <Setter Property="RecentColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
+        <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="IsAdvancedTabVisible" Value="True" />
+        <Setter Property="IsColorPalettesTabVisible" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:ColorPicker}">
+                    <Grid>
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition x:Name="ToggleButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition x:Name="ButtonRow" Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <ToggleButton x:Name="PART_DropDownToggle"
+                                          Grid.RowSpan="2"
+                                          Grid.ColumnSpan="3"
+                                          Margin="0"
+                                          VerticalAlignment="Stretch"
+                                          mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                          mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                          mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                          mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                          mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                          mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                          mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          KeyboardNavigation.IsTabStop="False"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Style="{DynamicResource MahApps.Styles.ToggleButton.ColorPickerDropDown}" />
+
+                            <Grid x:Name="ContentSite"
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Margin="1,0">
+                                <ContentPresenter Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, ValidatesOnExceptions=True}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  ContentTemplate="{TemplateBinding SelectedColorTemplate}"
+                                                  IsHitTestVisible="False"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+
+                            <TextBlock x:Name="PART_Message"
+                                       Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                       Grid.Row="1"
+                                       Grid.Column="0"
+                                       Margin="4,0"
+                                       Padding="{TemplateBinding Padding}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
+                                       TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                       Visibility="Collapsed" />
+
+                            <ContentControl x:Name="PART_FloatingMessageContainer"
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="4,0"
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
+                                <ContentControl.Height>
+                                    <MultiBinding Converter="{Converters:MathMultiplyConverter}">
+                                        <Binding ElementName="PART_FloatingMessage"
+                                                 Mode="OneWay"
+                                                 Path="ActualHeight" />
+                                        <Binding ElementName="PART_FloatingMessageContainer"
+                                                 Mode="OneWay"
+                                                 Path="Opacity" />
+                                    </MultiBinding>
+                                </ContentControl.Height>
+                                <TextBlock x:Name="PART_FloatingMessage"
+                                           Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
+                                           TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="FloatingMessageTransform">
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{Converters:MathSubtractConverter}">
+                                                    <Binding ElementName="PART_FloatingMessage"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                    <Binding ElementName="PART_FloatingMessageContainer"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </ContentControl>
+                        </Grid>
+
+                        <Border x:Name="DisabledVisualElement"
+                                Grid.ColumnSpan="3"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                IsHitTestVisible="False"
+                                Opacity="0.6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Visibility="Collapsed" />
+
+                        <!--  AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme  -->
+                        <controlzex:PopupEx x:Name="PART_Popup"
+                                            AllowsTransparency="True"
+                                            Focusable="False"
+                                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Placement="Bottom"
+                                            PlacementTarget="{Binding ElementName=PART_DropDownToggle}"
+                                            PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
+                                            StaysOpen="False">
+                            <Grid Width="{TemplateBinding DropDownWidth}"
+                                  Height="{TemplateBinding DropDownHeight}"
+                                  MinWidth="{TemplateBinding MinWidth}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="PopupBorder"
+                                        Height="Auto"
+                                        HorizontalAlignment="Stretch"
+                                        Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
+                                        BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                    <TabControl x:Name="PART_PopupTabControl" Style="{TemplateBinding TabControlStyle}"
+                                                ItemContainerStyle="{TemplateBinding TabItemStyle}" >
+                                        <TabItem Header="{TemplateBinding ColorPalettesTabHeader}"
+                                                 x:Name="PART_ColorPalettesTab"
+                                                 HeaderTemplate="{TemplateBinding ColorPalettesTabHeaderTemplate}"
+                                                 Visibility="{TemplateBinding IsColorPalettesTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <ScrollViewer CanContentScroll="False"
+                                                          HorizontalScrollBarVisibility="Disabled"
+                                                          VerticalScrollBarVisibility="Auto">
+                                                <VirtualizingStackPanel>
+                                                    <mah:ColorPalette x:Name="PART_ColorPaletteStandard"
+                                                                      Header="{TemplateBinding StandardColorPaletteHeader}"
+                                                                      ItemsSource="{TemplateBinding StandardColorPaletteItemsSource}"
+                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
+                                                                      Style="{TemplateBinding StandardColorPaletteStyle}"
+                                                                      Visibility="{TemplateBinding IsStandardColorPaletteVisible,
+                                                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                                                    <mah:ColorPalette x:Name="PART_ColorPaletteAvailable"
+                                                                      Header="{TemplateBinding AvailableColorPaletteHeader}"
+                                                                      ItemsSource="{TemplateBinding AvailableColorPaletteItemsSource}"
+                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
+                                                                      Style="{TemplateBinding AvailableColorPaletteStyle}"
+                                                                      Visibility="{TemplateBinding IsAvailableColorPaletteVisible,
+                                                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                                                    <mah:ColorPalette x:Name="PART_ColorPaletteCustom01"
+                                                                      Header="{TemplateBinding CustomColorPalette01Header}"
+                                                                      ItemsSource="{TemplateBinding CustomColorPalette01ItemsSource}"
+                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
+                                                                      Style="{TemplateBinding CustomColorPalette01Style}"
+                                                                      Visibility="{TemplateBinding IsCustomColorPalette01Visible,
+                                                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                                                    <mah:ColorPalette x:Name="PART_ColorPaletteCustom02"
+                                                                      Header="{TemplateBinding CustomColorPalette02Header}"
+                                                                      ItemsSource="{TemplateBinding CustomColorPalette02ItemsSource}"
+                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
+                                                                      Style="{TemplateBinding CustomColorPalette02Style}"
+                                                                      Visibility="{TemplateBinding IsCustomColorPalette02Visible,
+                                                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                                                    <mah:ColorPalette x:Name="PART_ColorPaletteRecent"
+                                                                      Header="{TemplateBinding RecentColorPaletteHeader}"
+                                                                      ItemsSource="{TemplateBinding RecentColorPaletteItemsSource}"
+                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
+                                                                      Style="{TemplateBinding RecentColorPaletteStyle}"
+                                                                      Visibility="{TemplateBinding IsRecentColorPaletteVisible,
+                                                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                </VirtualizingStackPanel>
+                                            </ScrollViewer>
+
+                                        </TabItem>
+                                        <TabItem Header="{TemplateBinding AdvancedTabHeader}"
+                                                 x:Name="PART_AdvancedTab"
+                                                 HeaderTemplate="{TemplateBinding AdvancedTabHeaderTemplate}"
+                                                 Visibility="{TemplateBinding IsAdvancedTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                            <ScrollViewer>
+                                                <mah:ColorCanvas mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
+                                                                 mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                                                 mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                                                 mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                                                 mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                                                 mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                                                 mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                                                 mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                                                 mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                                                 mah:TextBoxHelper.ButtonsAlignment="{TemplateBinding mah:TextBoxHelper.ButtonsAlignment}"
+                                                                 mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
+                                                                 mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                                                 mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                                                 mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                                                 mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
+                                                                 ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                 LabelAlphaChannel="{TemplateBinding LabelAlphaChannel}"
+                                                                 LabelBlueChannel="{TemplateBinding LabelBlueChannel}"
+                                                                 LabelColorName="{TemplateBinding LabelColorName}"
+                                                                 LabelColorPreview="{TemplateBinding LabelColorPreview}"
+                                                                 LabelGreenChannel="{TemplateBinding LabelGreenChannel}"
+                                                                 LabelHueChannel="{TemplateBinding LabelHueChannel}"
+                                                                 LabelRedChannel="{TemplateBinding LabelRedChannel}"
+                                                                 LabelSaturationChannel="{TemplateBinding LabelSaturationChannel}"
+                                                                 LabelValueChannel="{TemplateBinding LabelValueChannel}"
+                                                                 SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
+                                            </ScrollViewer>
+                                        </TabItem>
+                                    </TabControl>
+                                </Border>
+                            </Grid>
+                        </controlzex:PopupEx>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                                <VisualState x:Name="FocusedDropDown">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PopupBorder"
+                                                                       Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                       Duration="00:00:00">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedColor}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_Message" Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedColor, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocusWithin}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedColor, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(mah:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedColor, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ClearTextButton)}" Value="False">
+                            <Setter TargetName="ContentSite" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
+                        </DataTrigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DisabledVisualElement" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+</ResourceDictionary>

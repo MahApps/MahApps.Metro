@@ -55,33 +55,24 @@ namespace MahApps.Metro.Controls
         }
 
 
-        internal async Task<bool> FocusSelectedItem()
+        internal bool FocusSelectedItem()
         {
-            var func = new Func<bool>(() =>
+            ListBoxItem listBoxItem = null;
+            if (SelectedIndex >= 0)
             {
-                ListBoxItem listBoxItem = null;
-                if (SelectedIndex >= 0)
-                {
-                    listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromIndex(SelectedIndex);
-                }
-                else if (Items.Count > 0)
-                {
-                    listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromItem(Items[0]);
-                }
+                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromIndex(SelectedIndex);
+            }
+            else if (Items.Count > 0)
+            {
+                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromItem(Items[0]);
+            }
 
-                if (!(listBoxItem is null))
-                {
-                    listBoxItem.Focus();
-                    return true;
-                }
-                return false;
-            });
-
-            var op = Dispatcher.BeginInvoke(DispatcherPriority.Background, func);
-
-            await op;
-
-            return (bool)op.Result;
+            if (!(listBoxItem is null))
+            {
+                listBoxItem.Focus();
+                return true;
+            }
+            return false;
         }
     }
 }

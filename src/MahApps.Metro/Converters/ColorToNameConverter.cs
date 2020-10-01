@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -12,7 +10,7 @@ using System.Windows.Media;
 namespace MahApps.Metro.Converters
 {
     [MarkupExtensionReturnType(typeof(ColorToNameConverter))]
-    [ValueConversion(typeof(Color), typeof(string))]
+    [ValueConversion(typeof(Color?), typeof(string))]
     public class ColorToNameConverter :  MarkupMultiConverter
     {
         ColorToNameConverter _instance;
@@ -22,7 +20,7 @@ namespace MahApps.Metro.Converters
         /// </summary>
         /// <param name="value">Needed: The <see cref="Color"/>. </param>
         /// <param name="targetType"></param>
-        /// <param name="parameter">Optional: A <see cref="Dictionary{Color?, string}"/></param>
+        /// <param name="parameter">Optional: A <see cref="Dictionary{TKey, TValue}"/></param>
         /// <param name="culture"></param>
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -34,7 +32,7 @@ namespace MahApps.Metro.Converters
         /// <summary>
         /// Converts a given <see cref="Color"/> to its Name
         /// </summary>
-        /// <param name="values">Needed: The <see cref="Color"/>. Optional: A <see cref="Dictionary{Color?, string}"/></param>
+        /// <param name="values">Needed: The <see cref="Color"/>. Optional: A <see cref="Dictionary{TKey, TValue}"/></param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
@@ -53,7 +51,7 @@ namespace MahApps.Metro.Converters
         /// </summary>
         /// <param name="value">The name of the <see cref="Color"/></param>
         /// <param name="targetType"></param>
-        /// <param name="parameter">Optional: A <see cref="Dictionary{Color?, string}"/></param>
+        /// <param name="parameter">Optional: A <see cref="Dictionary{TKey, TValue}"/></param>
         /// <param name="culture"></param>
         /// <returns><see cref="Color"/></returns>
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -85,7 +83,7 @@ namespace MahApps.Metro.Converters
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _instance ?? (_instance = new ColorToNameConverter());
+            return _instance ??= new ColorToNameConverter();
         }
     }
 }
