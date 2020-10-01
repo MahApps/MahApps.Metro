@@ -33,6 +33,21 @@
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Lang\ColorNames.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ColorNames.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Lang\ColorNames.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ColorNames.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
     <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
         <PropertyGroup>
             <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
