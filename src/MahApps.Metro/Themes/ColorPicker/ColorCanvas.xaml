@@ -78,7 +78,7 @@
         </Path>
     </DataTemplate>
 
-    <Style TargetType="{x:Type mah:ColorCanvas}">
+    <Style TargetType="{x:Type mah:ColorCanvas}" x:Key="MahApps.Styles.ColorCanvas">
 
         <Setter Property="Template">
             <Setter.Value>

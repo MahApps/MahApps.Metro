@@ -324,40 +324,40 @@
                                                 <VirtualizingStackPanel>
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteStandard"
                                                                       Header="{TemplateBinding StandardColorPaletteHeader}"
+                                                                      HeaderTemplate="{TemplateBinding StandardColorPaletteHeaderTemplate}"
                                                                       ItemsSource="{TemplateBinding StandardColorPaletteItemsSource}"
-                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
                                                                       Style="{TemplateBinding StandardColorPaletteStyle}"
                                                                       Visibility="{TemplateBinding IsStandardColorPaletteVisible,
                                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteAvailable"
                                                                       Header="{TemplateBinding AvailableColorPaletteHeader}"
+                                                                      HeaderTemplate="{TemplateBinding AvailableColorPaletteHeaderTemplate}"
                                                                       ItemsSource="{TemplateBinding AvailableColorPaletteItemsSource}"
-                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
                                                                       Style="{TemplateBinding AvailableColorPaletteStyle}"
                                                                       Visibility="{TemplateBinding IsAvailableColorPaletteVisible,
                                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteCustom01"
                                                                       Header="{TemplateBinding CustomColorPalette01Header}"
+                                                                      HeaderTemplate="{TemplateBinding CustomColorPalette01HeaderTemplate}"
                                                                       ItemsSource="{TemplateBinding CustomColorPalette01ItemsSource}"
-                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
                                                                       Style="{TemplateBinding CustomColorPalette01Style}"
                                                                       Visibility="{TemplateBinding IsCustomColorPalette01Visible,
                                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteCustom02"
                                                                       Header="{TemplateBinding CustomColorPalette02Header}"
+                                                                      HeaderTemplate="{TemplateBinding CustomColorPalette02HeaderTemplate}"
                                                                       ItemsSource="{TemplateBinding CustomColorPalette02ItemsSource}"
-                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
                                                                       Style="{TemplateBinding CustomColorPalette02Style}"
                                                                       Visibility="{TemplateBinding IsCustomColorPalette02Visible,
                                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteRecent"
                                                                       Header="{TemplateBinding RecentColorPaletteHeader}"
+                                                                      HeaderTemplate="{TemplateBinding RecentColorPaletteHeaderTemplate}"
                                                                       ItemsSource="{TemplateBinding RecentColorPaletteItemsSource}"
-                                                                      SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Mode=TwoWay}"
                                                                       Style="{TemplateBinding RecentColorPaletteStyle}"
                                                                       Visibility="{TemplateBinding IsRecentColorPaletteVisible,
                                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}" />

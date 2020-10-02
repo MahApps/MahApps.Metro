@@ -1,30 +1,86 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controlzEx="urn:controlzex"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <Cursor x:Key="MahApps.Cursors.EyeDropper">../Assets/Eyedropper.cur</Cursor>
+    <Cursor x:Key="MahApps.Cursors.EyeDropper">../../Assets/Eyedropper.cur</Cursor>
 
-    <Style TargetType="{x:Type mah:ColorEyeDropper}">
+    <Style TargetType="{x:Type mah:ColorEyeDropper}" x:Key="MahApps.Styles.ColorEyeDropper">
 
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="EyeDropperCursor" Value="{StaticResource MahApps.Cursors.EyeDropper}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorEyeDropper}">
+                    <Grid>
+                        <Button Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}">
+                            <Button.ToolTip>
+                                <ToolTip x:Name="PART_PreviewToolTip"
+                                         Placement="Relative"
+                                         PlacementTarget="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                         StaysOpen="True"
+                                         MinWidth="110"
+                                         Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
 
 
-                    <Button Width="{TemplateBinding Width}"
-                            Height="{TemplateBinding Height}"
-                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                        <Border Grid.Row="0"
+                                                Grid.ColumnSpan="2"
+                                                HorizontalAlignment="Center"
+                                                BorderBrush="{DynamicResource MahApps.Brushes.Gray}"
+                                                BorderThickness="1">
+                                            <Grid>
+                                                <Image x:Name="PART_PreviewImage"
+                                                       Width="50"
+                                                       Height="50"
+                                                       RenderOptions.BitmapScalingMode="NearestNeighbor" />
+
+                                                <Path Stroke="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=PreviewBrush, Converter={x:Static conv:BackgroundToForegroundConverter.Instance}}" StrokeThickness="1">
+                                                    <Path.Data>
+                                                        <PathGeometry options:Freeze="true" Figures=" m 0 25 20 0  m 5 5 0 20  m 5 -25 20 0  m -25 -25 0 20 m -5 0 H20 H30 V30 H20 z" />
+                                                    </Path.Data>
+                                                </Path>
+
+                                            </Grid>
+                                        </Border>
+
+                                        <Ellipse x:Name="PART_EllipsePreviewBrush"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 Width="{DynamicResource MahApps.Font.Size.Content}"
+                                                 Height="{DynamicResource MahApps.Font.Size.Content}"
+                                                 Margin="5"
+                                                 Fill="{TemplateBinding PreviewBrush}"
+                                                 Stroke="{DynamicResource MahApps.Brushes.Gray}"
+                                                 StrokeThickness="1" />
+
+                                        <TextBlock Grid.Row="1"
+                                                   Grid.Column="1"
+                                                   Margin="5"
+                                                   Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=PreviewBrush}" />
+                                    </Grid>
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                    </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="Content" Value="{x:Null}">
@@ -42,76 +98,16 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
-        <Setter Property="ToolTip">
-            <Setter.Value>
-                <ToolTip controlzEx:ToolTipAssist.AutoMove="True"
-                         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget}"
-                         Placement="Mouse"
-                         StaysOpen="True">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Border Grid.Row="0"
-                                Grid.ColumnSpan="2"
-                                HorizontalAlignment="Center"
-                                BorderBrush="{DynamicResource MahApps.Brushes.GrayNormal}"
-                                BorderThickness="1">
-                            <Grid>
-                                <Image Width="50"
-                                       Height="50"
-                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                       Source="{Binding PreviewImageSource, IsAsync=True}" />
-
-                                <Path StrokeThickness="1">
-                                    <Path.Stroke>
-                                        <MultiBinding Converter="{x:Static conv:BackgroundToForegroundConverter.Instance}">
-                                            <Binding Mode="OneWay" Path="PreviewBrush" />
-                                        </MultiBinding>
-                                    </Path.Stroke>
-                                    <Path.Data>
-                                        <PathGeometry options:Freeze="true" Figures=" m 0 25 20 0  m 5 5 0 20  m 5 -25 20 0  m -25 -25 0 20 m -5 0 H20 H30 V30 H20 z" />
-                                    </Path.Data>
-                                </Path>
-
-                            </Grid>
-                        </Border>
-
-                        <Ellipse Grid.Row="1"
-                                 Grid.Column="0"
-                                 Width="{DynamicResource MahApps.Font.Size.Content}"
-                                 Height="{DynamicResource MahApps.Font.Size.Content}"
-                                 Margin="5"
-                                 Fill="{Binding PreviewBrush}"
-                                 Stroke="{DynamicResource MahApps.Brushes.GrayNormal}"
-                                 StrokeThickness="1" />
-
-                        <TextBlock Grid.Row="1"
-                                   Grid.Column="1"
-                                   Margin="5"
-                                   Text="{Binding PreviewBrush}" />
-                    </Grid>
-                </ToolTip>
-            </Setter.Value>
-        </Setter>
-
     </Style>
 
     <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas"
-           BasedOn="{StaticResource {x:Type mah:ColorEyeDropper}}"
+           BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}"
            TargetType="{x:Type mah:ColorEyeDropper}">
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
     </Style>

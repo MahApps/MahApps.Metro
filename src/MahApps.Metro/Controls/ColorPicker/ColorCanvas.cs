@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -21,24 +19,16 @@ namespace MahApps.Metro.Controls
 
         private void PART_SaturationValueBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var action = new Action(() =>
-            {
-                this.PART_SaturationValueBox.ReleaseMouseCapture();
-                this.PART_SaturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
-            });
-            Dispatcher.BeginInvoke(DispatcherPriority.Background, action);
+            this.PART_SaturationValueBox.ReleaseMouseCapture();
+            this.PART_SaturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
         }
 
         private void PART_SaturationValueBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var action = new Action(() =>
-            {
-                Mouse.Capture(this.PART_SaturationValueBox);
-                this.PART_SaturationValueBox.MouseMove += this.PART_SaturationValueBox_MouseMove;
+            Mouse.Capture(this.PART_SaturationValueBox);
+            this.PART_SaturationValueBox.MouseMove += this.PART_SaturationValueBox_MouseMove;
 
-                this.PART_SaturationValueBox_UpdateValues(e.GetPosition(this.PART_SaturationValueBox));
-            });
-            Dispatcher.BeginInvoke(DispatcherPriority.Background, action);
+            this.PART_SaturationValueBox_UpdateValues(e.GetPosition(this.PART_SaturationValueBox));
         }
 
         private void PART_SaturationValueBox_MouseMove(object sender, MouseEventArgs e)
@@ -51,24 +41,20 @@ namespace MahApps.Metro.Controls
 
         private void PART_SaturationValueBox_UpdateValues(Point position)
         {
-            var action = new Action(() =>
-            {
-                if (this.PART_SaturationValueBox.ActualWidth < 1 || this.PART_SaturationValueBox.ActualHeight < 1)
-                    return;
+            if (this.PART_SaturationValueBox.ActualWidth < 1 || this.PART_SaturationValueBox.ActualHeight < 1)
+                return;
 
-                var s = position.X / this.PART_SaturationValueBox.ActualWidth;
-                var v = 1 - (position.Y / this.PART_SaturationValueBox.ActualHeight);
+            var s = position.X / this.PART_SaturationValueBox.ActualWidth;
+            var v = 1 - (position.Y / this.PART_SaturationValueBox.ActualHeight);
 
-                if (s > 1) s = 1;
-                if (v > 1) v = 1;
+            if (s > 1) s = 1;
+            if (v > 1) v = 1;
 
-                if (s < 0) s = 0;
-                if (v < 0) v = 0;
+            if (s < 0) s = 0;
+            if (v < 0) v = 0;
 
-                this.SetCurrentValue(SaturationProperty, s);
-                this.SetCurrentValue(ValueProperty, v);
-            });
-            Dispatcher.BeginInvoke(DispatcherPriority.Background, action);
+            this.SetCurrentValue(SaturationProperty, s);
+            this.SetCurrentValue(ValueProperty, v);
         }
 
         #region Overrides

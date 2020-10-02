@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls
                 DeleteDC(memoryDc);
                 ReleaseDC(desktophWnd, desktopDc);
             }
-
+            result.Freeze();
             return result;
         }
 

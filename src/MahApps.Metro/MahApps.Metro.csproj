@@ -32,7 +32,7 @@
       <None Remove="Assets\Eyedropper.cur" />
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Include="Assets\Eyedropper.cur" />
+      <Resource Include="Assets\Eyedropper.cur" />
     </ItemGroup>
 
     <ItemGroup>

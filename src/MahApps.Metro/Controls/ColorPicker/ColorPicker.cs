@@ -149,6 +149,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(MaxDropDownWidthProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or Sets the SelectedColorTemplate
+        /// </summary>
         public DataTemplate SelectedColorTemplate
         {
             get { return (DataTemplate)GetValue(SelectedColorTemplateProperty); }
@@ -172,26 +175,51 @@ namespace MahApps.Metro.Controls
             PART_ColorPaletteAvailable = this.GetTemplateChild(nameof(PART_ColorPaletteAvailable)) as ColorPalette;
             PART_ColorPaletteCustom01 = this.GetTemplateChild(nameof(PART_ColorPaletteCustom01)) as ColorPalette;
             PART_ColorPaletteCustom02 = this.GetTemplateChild(nameof(PART_ColorPaletteCustom02)) as ColorPalette;
-            PART_ColorPaletteRecent = this.GetTemplateChild(nameof(PART_ColorPaletteCustom02)) as ColorPalette;
+            PART_ColorPaletteRecent = this.GetTemplateChild(nameof(PART_ColorPaletteRecent)) as ColorPalette;
 
             PART_PopupTabControl = this.GetTemplateChild(nameof(PART_PopupTabControl)) as TabControl;
             PART_ColorPalettesTab = this.GetTemplateChild(nameof(PART_ColorPalettesTab)) as TabItem;
             PART_AdvancedTab = this.GetTemplateChild(nameof(PART_AdvancedTab)) as TabItem;
+
+            if (PART_ColorPaletteStandard != null) PART_ColorPaletteStandard.SelectionChanged += ColorPalette_SelectionChanged;
+            if (PART_ColorPaletteAvailable != null) PART_ColorPaletteAvailable.SelectionChanged += ColorPalette_SelectionChanged;
+            if (PART_ColorPaletteCustom01 != null) PART_ColorPaletteCustom01.SelectionChanged += ColorPalette_SelectionChanged;
+            if (PART_ColorPaletteCustom02 != null) PART_ColorPaletteCustom02.SelectionChanged += ColorPalette_SelectionChanged;
+            if (PART_ColorPaletteRecent != null) PART_ColorPaletteRecent.SelectionChanged += ColorPalette_SelectionChanged;
 
             base.OnApplyTemplate();
 
             ValidateTabItems();
         }
 
-
         internal override void OnSelectedColorChanged(Color? OldValue, Color? NewValue)
         {
             base.OnSelectedColorChanged(NewValue, OldValue);
+
+            // Set color is Updating again
+            ColorIsUpdating = true;
+
+            if (PART_ColorPaletteAvailable != null) PART_ColorPaletteAvailable.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            if (PART_ColorPaletteStandard != null) PART_ColorPaletteStandard.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            if (PART_ColorPaletteCustom01 != null) PART_ColorPaletteCustom01.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            if (PART_ColorPaletteCustom02 != null) PART_ColorPaletteCustom02.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            if (PART_ColorPaletteRecent != null) PART_ColorPaletteRecent.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+
 
             if (this.AddToRecentColorsTrigger == AddToRecentColorsTrigger.SelectedColorChanged && SelectedColor.HasValue)
             {
                 BuildInColorPalettes.AddColorToRecentColors(NewValue, RecentColorPaletteItemsSource);
                 BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(this), RecentColorPaletteItemsSource as ObservableCollection<Color?>);
+            }
+
+            ColorIsUpdating = false;
+        }
+
+        private void ColorPalette_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ColorPalette colorPalette && !ColorIsUpdating)
+            {
+                SelectedColor = colorPalette.SelectedItem as Color?;
             }
         }
 
@@ -333,6 +361,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty AvailableColorPaletteHeaderProperty =
             DependencyProperty.Register(nameof(AvailableColorPaletteHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Available"));
 
+        /// <summary>Identifies the <see cref="AvailableColorPaletteHeaderTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty AvailableColorPaletteHeaderTemplateProperty =
+            DependencyProperty.Register(nameof(AvailableColorPaletteHeaderTemplate), typeof(object), typeof(ColorPicker), new PropertyMetadata(null));
+
         /// <summary>Identifies the <see cref="AvailableColorPaletteItemsSource"/> dependency property.</summary>
         public static readonly DependencyProperty AvailableColorPaletteItemsSourceProperty =
             DependencyProperty.Register(nameof(AvailableColorPaletteItemsSource), typeof(IEnumerable), typeof(ColorPicker), new PropertyMetadata(null));
@@ -380,9 +412,11 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="CustomColorPalette02Style"/> dependency property.</summary>
         public static readonly DependencyProperty CustomColorPalette02StyleProperty =
             DependencyProperty.Register(nameof(CustomColorPalette02Style), typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
+       
         /// <summary>Identifies the <see cref="IsRecentColorPaletteVisible"/> dependency property.</summary>
         public static readonly DependencyProperty IsRecentColorPaletteVisibleProperty =
             DependencyProperty.Register(nameof(IsRecentColorPaletteVisible), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true));
+        
         /// <summary>Identifies the <see cref="RecentColorPaletteHeader"/> dependency property.</summary>
         public static readonly DependencyProperty RecentColorPaletteHeaderProperty =
             DependencyProperty.Register(nameof(RecentColorPaletteHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Recent"));
@@ -405,7 +439,11 @@ namespace MahApps.Metro.Controls
 
         /// <summary>Identifies the <see cref="StandardColorPaletteHeader"/> dependency property.</summary>
         public static readonly DependencyProperty StandardColorPaletteHeaderProperty =
-                            DependencyProperty.Register(nameof(StandardColorPaletteHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Standard"));
+            DependencyProperty.Register(nameof(StandardColorPaletteHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Standard"));
+
+        /// <summary>Identifies the <see cref="StandardColorPaletteHeaderTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty StandardColorPaletteHeaderTemplateProperty =
+            DependencyProperty.Register(nameof(StandardColorPaletteHeaderTemplate), typeof(object), typeof(ColorPicker), new PropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="StandardColorPaletteItemsSource"/> dependency property.</summary>
         public static readonly DependencyProperty StandardColorPaletteItemsSourceProperty =
@@ -431,6 +469,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)GetValue(AvailableColorPaletteHeaderProperty); }
             set { SetValue(AvailableColorPaletteHeaderProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the available color palettes HeaderTemplate (1/2)
+        /// </summary>
+        public DataTemplate AvailableColorPaletteHeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(AvailableColorPaletteHeaderTemplateProperty); }
+            set { SetValue(AvailableColorPaletteHeaderTemplateProperty, value); }
         }
 
         /// <summary>
@@ -603,6 +650,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)GetValue(StandardColorPaletteHeaderProperty); }
             set { SetValue(StandardColorPaletteHeaderProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the strandard color palettes Header 
+        /// </summary>
+        public object StandardColorPaletteHeaderTemplate
+        {
+            get { return (object)GetValue(StandardColorPaletteHeaderTemplateProperty); }
+            set { SetValue(StandardColorPaletteHeaderTemplateProperty, value); }
         }
 
         /// <summary>

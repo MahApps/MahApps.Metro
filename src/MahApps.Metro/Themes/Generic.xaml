@@ -62,5 +62,11 @@
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type Controls:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type Controls:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type Controls:FlipView}" />
+    <!--#region ColorPicker -->
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorCanvas}" TargetType="{x:Type Controls:ColorCanvas}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}" TargetType="{x:Type Controls:ColorEyeDropper}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette}" TargetType="{x:Type Controls:ColorPalette}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type Controls:ColorPicker}" />
+    <!--#endregion-->
 
 </ResourceDictionary>

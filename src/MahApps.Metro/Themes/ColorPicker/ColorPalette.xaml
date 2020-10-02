@@ -15,7 +15,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
         <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
@@ -171,6 +171,4 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type mah:ColorPalette}" BasedOn="{StaticResource MahApps.Styles.ColorPalette}" />
-    
 </ResourceDictionary>
