@@ -3,7 +3,7 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:controlzex="urn:controlzex"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib" >
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -32,21 +32,21 @@
                 </Rectangle>
             </Border>
 
-            <TextBlock Text="{Binding Converter={StaticResource ColorToNameConverter}}"
-                       Grid.Column="1"
-                       Margin="2,0,0,0" />
+            <TextBlock Grid.Column="1"
+                       Margin="2,0,0,0"
+                       Text="{Binding Converter={StaticResource ColorToNameConverter}}" />
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorOnly">
         <Border Grid.Column="0"
-                Visibility="{Binding Converter={Converters:NotNullToVisibilityConverter}}"
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="{DynamicResource MahApps.Brushes.Checkerd.Small}"
                 BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
-                BorderThickness="1">
+                BorderThickness="1"
+                Visibility="{Binding Converter={Converters:NotNullToVisibilityConverter}}">
             <Rectangle>
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding}" />
@@ -70,10 +70,10 @@
                         </Grid.ColumnDefinitions>
 
                         <Button x:Name="PART_ClearText"
-                                Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                 Grid.Column="1"
                                 Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                                 mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:ColorPicker}}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                 ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                 Focusable="False"
                                 FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
@@ -119,10 +119,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown" TargetType="mah:ColorPalette">
-        <Setter Property="Margin" Value="5" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ColorPicker" TargetType="{x:Type mah:ColorPicker}">
@@ -171,6 +167,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="IsAdvancedTabVisible" Value="True" />
         <Setter Property="IsColorPalettesTabVisible" Value="True" />
+        <Setter Property="TabControlStyle" Value="{DynamicResource MahApps.Styles.TabControl.ColorPicker}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorPicker}">
@@ -217,17 +214,16 @@
                                   Grid.Row="1"
                                   Grid.Column="0"
                                   Margin="1,0">
-                                <ContentPresenter Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, ValidatesOnExceptions=True}"
-                                                  Margin="{TemplateBinding Padding}"
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, ValidatesOnExceptions=True}"
                                                   ContentTemplate="{TemplateBinding SelectedColorTemplate}"
                                                   IsHitTestVisible="False"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
 
                             <TextBlock x:Name="PART_Message"
-                                       Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                        Grid.Row="1"
                                        Grid.Column="0"
                                        Margin="4,0"
@@ -236,6 +232,7 @@
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
+                                       Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
                                        Visibility="Collapsed" />
@@ -256,11 +253,11 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
-                                           Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
+                                           Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}">
                                     <TextBlock.RenderTransform>
@@ -312,12 +309,14 @@
                                         BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
                                         BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <TabControl x:Name="PART_PopupTabControl" Style="{TemplateBinding TabControlStyle}"
-                                                ItemContainerStyle="{TemplateBinding TabItemStyle}" >
-                                        <TabItem Header="{TemplateBinding ColorPalettesTabHeader}"
-                                                 x:Name="PART_ColorPalettesTab"
+                                    <TabControl x:Name="PART_PopupTabControl"
+                                                ItemContainerStyle="{TemplateBinding TabItemStyle}"
+                                                Style="{TemplateBinding TabControlStyle}">
+                                        <TabItem x:Name="PART_ColorPalettesTab"
+                                                 Header="{TemplateBinding ColorPalettesTabHeader}"
                                                  HeaderTemplate="{TemplateBinding ColorPalettesTabHeaderTemplate}"
-                                                 Visibility="{TemplateBinding IsColorPalettesTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                 Visibility="{TemplateBinding IsColorPalettesTabVisible,
+                                                                              Converter={StaticResource BooleanToVisibilityConverter}}">
                                             <ScrollViewer CanContentScroll="False"
                                                           HorizontalScrollBarVisibility="Disabled"
                                                           VerticalScrollBarVisibility="Auto">
@@ -365,10 +364,11 @@
                                             </ScrollViewer>
 
                                         </TabItem>
-                                        <TabItem Header="{TemplateBinding AdvancedTabHeader}"
-                                                 x:Name="PART_AdvancedTab"
+                                        <TabItem x:Name="PART_AdvancedTab"
+                                                 Header="{TemplateBinding AdvancedTabHeader}"
                                                  HeaderTemplate="{TemplateBinding AdvancedTabHeaderTemplate}"
-                                                 Visibility="{TemplateBinding IsAdvancedTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                 Visibility="{TemplateBinding IsAdvancedTabVisible,
+                                                                              Converter={StaticResource BooleanToVisibilityConverter}}">
                                             <ScrollViewer>
                                                 <mah:ColorCanvas mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                                                  mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"

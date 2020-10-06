@@ -285,8 +285,11 @@ namespace MahApps.Metro.Controls
 
                     if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
                     {
+                        // We Update something so we need to flag this
+                        colorPicker.ColorIsUpdating = true;
                         BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource);
                         BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker), colorPicker.RecentColorPaletteItemsSource);
+                        colorPicker.ColorIsUpdating = false;
                     }
                 }
             }

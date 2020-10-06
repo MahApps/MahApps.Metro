@@ -896,4 +896,9 @@
         <Setter Property="mah:TabControlHelper.Transition" Value="Left" />
     </Style>
 
+
+    <Style x:Key="MahApps.Styles.TabControl.ColorPicker" TargetType="TabControl" BasedOn="{StaticResource MahApps.Styles.TabControl}">
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ColorPicker.TabItemHeader}" />
+    </Style>
+    
 </ResourceDictionary>

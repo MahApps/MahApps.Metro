@@ -185,7 +185,7 @@
                                     <Border Grid.Row="0"
                                             Grid.Column="1"
                                             Margin="5,0,0,0"
-                                            Background="{StaticResource MahApps.Brushes.Checkerd}"
+                                            Background="{DynamicResource MahApps.Brushes.Checkerd}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                             BorderThickness="1">
                                         <Rectangle>
@@ -233,7 +233,7 @@
                                                               Content="{TemplateBinding LabelRedChannel}" />
                                             <Slider Grid.Row="0"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -256,7 +256,7 @@
                                                               Content="{TemplateBinding LabelGreenChannel}" />
                                             <Slider Grid.Row="1"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -279,7 +279,7 @@
                                                               Content="{TemplateBinding LabelBlueChannel}" />
                                             <Slider Grid.Row="2"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -318,14 +318,14 @@
                                                               Content="{TemplateBinding LabelHueChannel}" />
                                             <Slider Grid.Row="0"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.Hue}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.Hue}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue, UpdateSourceTrigger=PropertyChanged}" />
                                             <mah:NumericUpDown Grid.Row="0"
                                                                Grid.Column="2"
                                                                Margin="2"
                                                                Maximum="360"
                                                                Minimum="0"
-                                                               StringFormat="0 °"
+                                                               StringFormat="0.# °"
                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
 
                                             <!--  S  -->
@@ -335,7 +335,7 @@
                                                               Content="{TemplateBinding LabelSaturationChannel}" />
                                             <Slider Grid.Row="1"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.SV}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -360,7 +360,7 @@
                                                               Content="{TemplateBinding LabelValueChannel}" />
                                             <Slider Grid.Row="2"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.SV}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -396,7 +396,7 @@
                                                               Content="{TemplateBinding LabelAlphaChannel}" />
                                             <Slider Grid.Row="0"
                                                     Grid.Column="1"
-                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">

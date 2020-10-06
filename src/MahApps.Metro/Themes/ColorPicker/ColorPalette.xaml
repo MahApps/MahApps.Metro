@@ -126,10 +126,10 @@
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="ItemTemplate" Value="{StaticResource MahApps.Templates.ColorPaletteItem}" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.ColorPaletteItem}" />
+        <Setter Property="ItemTemplate" Value="{DynamicResource MahApps.Templates.ColorPaletteItem}" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.ListBoxItem.ColorPaletteItem}" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
