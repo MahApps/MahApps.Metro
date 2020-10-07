@@ -60,7 +60,6 @@ namespace MahApps.Metro.Controls
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan.TimeOfDay);
             }
-
             else
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, null);
