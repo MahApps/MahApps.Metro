@@ -57,6 +57,8 @@ namespace MahApps.Metro.Converters
 
                     case "amax":
                         return Color.FromArgb(255, color.R, color.G, color.B);
+                    default:
+                        throw new InvalidOperationException($"Unexpected value {nameof(parameter)} = {parameter}");
                 }
             }
             throw new InvalidOperationException("Unable to convert the given input");

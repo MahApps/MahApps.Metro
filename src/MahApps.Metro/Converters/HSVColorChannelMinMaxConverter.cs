@@ -46,6 +46,8 @@ namespace MahApps.Metro.Converters
 
                     case "svmax":
                         return (new HSVColor(hsv.Hue, 1, 1)).ToColor();
+                    default:
+                        throw new InvalidOperationException($"Unexpected value {nameof(parameter)} = {parameter}");
                 }
             }
             throw new InvalidOperationException("Unable to convert the given input");

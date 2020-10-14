@@ -18,7 +18,7 @@ namespace MetroDemo.ExampleViews
     /// <summary>
     /// Interaction logic for ColorPickerExample.xaml
     /// </summary>
-    public partial class ColorPickerExample
+    public partial class ColorPickerExample : UserControl
     {
         public ColorPickerExample()
         {

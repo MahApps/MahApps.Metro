@@ -80,7 +80,10 @@ namespace MahApps.Metro.Controls
             try
             {
                 // if we don't have a string, we cannot have any Color
-                if (string.IsNullOrWhiteSpace(ColorName)) return null;
+                if (string.IsNullOrWhiteSpace(ColorName))
+                {
+                    return null;
+                }
 
                 if (colorNamesDictionary is null)
                 {
