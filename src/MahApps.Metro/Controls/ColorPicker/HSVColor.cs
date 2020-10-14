@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls
     /// 
     /// For more information visit: https://en.wikipedia.org/wiki/HSL_and_HSV
     /// </summary>
-    public struct HSVColor
+    public struct HSVColor : IEquatable<HSVColor>
     {
         /// <summary>
         /// Gets the Alpha channel.
@@ -132,6 +132,11 @@ namespace MahApps.Metro.Controls
         {
             var k = (n + Hue / 60d) % 6;
             return (byte)Math.Round((Value - Value * Saturation * Math.Max(0, Math.Min(k, Math.Min(4 - k, 1)))) * 255);
+        }
+
+        public bool Equals(HSVColor other)
+        {
+            return Hue == other.Hue && A.IsCloseTo(other.A) && Saturation.IsCloseTo(other.Saturation) && Value.IsCloseTo(other.Value);
         }
     }
 }

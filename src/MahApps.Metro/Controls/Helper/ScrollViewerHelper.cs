@@ -410,15 +410,18 @@ namespace MahApps.Metro.Controls
         public static void OnBubbleUpScrollEventToParentScrollviewerPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!(sender is ScrollViewer viewer))
+            {
                 throw new ArgumentException("The dependency property can only be attached to a ScrollViewer", "sender");
-
+            }
 
             if ((bool)e.NewValue == true)
+            {
                 viewer.PreviewMouseWheel += HandlePreviewMouseWheel;
-
+            }
             else if ((bool)e.NewValue == false)
+            {
                 viewer.PreviewMouseWheel -= HandlePreviewMouseWheel;
-
+            }
         }
         
         private static readonly List<MouseWheelEventArgs> _reentrantList = new List<MouseWheelEventArgs>();

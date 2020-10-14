@@ -20,12 +20,19 @@ namespace MahApps.Metro.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null) return Binding.DoNothing;
-            if (parameter is null) throw new ArgumentNullException(nameof(parameter));
+            if (value is null)
+            {
+                return Binding.DoNothing;
+            }
+
+            if (parameter is null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
 
             if (value is Color color && parameter is string channel)
             {
-                switch (channel.ToLower())
+                switch (channel.ToLowerInvariant())
                 {
                     case "rmin":
                         return Color.FromRgb(0, color.G, color.B);
@@ -50,9 +57,6 @@ namespace MahApps.Metro.Converters
 
                     case "amax":
                         return Color.FromArgb(255, color.R, color.G, color.B);
-
-                    default:
-                        break;
                 }
             }
             throw new InvalidOperationException("Unable to convert the given input");

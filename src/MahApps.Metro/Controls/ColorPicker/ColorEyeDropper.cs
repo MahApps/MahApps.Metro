@@ -52,14 +52,6 @@ namespace MahApps.Metro.Controls
             get { return (Brush)GetValue(PreviewBrushProperty); }
         }
 
-        ///// <summary>
-        ///// Gets the preview image while the cursor is moving
-        ///// </summary>
-        //public BitmapSource PreviewImageSource
-        //{
-        //    get { return (BitmapSource)GetValue(PreviewImageSourceProperty); }
-        //}
-
         /// <summary>
         /// Gets or Sets the number of additional pixel in the preview image
         /// </summary>

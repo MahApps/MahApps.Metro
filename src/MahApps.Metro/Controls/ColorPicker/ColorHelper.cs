@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls
         /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
         /// <returns>the Color if successfull, else null</returns>
-        public static Color? ColorFromString(string ColorName, Dictionary<Color?, string> colorNamesDictionary = null)
+        public static Color? ColorFromString(string ColorName, Dictionary<Color?, string> colorNamesDictionary)
         {
             Color? result = null;
 
@@ -82,7 +82,10 @@ namespace MahApps.Metro.Controls
                 // if we don't have a string, we cannot have any Color
                 if (string.IsNullOrWhiteSpace(ColorName)) return null;
 
-                if (colorNamesDictionary is null) colorNamesDictionary = ColorNamesDictionary;
+                if (colorNamesDictionary is null)
+                {
+                    colorNamesDictionary = ColorNamesDictionary;
+                }
 
                 if (! ColorName.StartsWith("#"))
                 {
@@ -104,6 +107,18 @@ namespace MahApps.Metro.Controls
             return result;
         }
 
+        /// <summary>
+        /// This function tries to convert a given string into a Color in the following order:
+        ///    1. If the string starts with '#' the function tries to get the color from the hex-code
+        ///    2. else the function tries to find the color in the default <see cref="ColorNamesDictionary"/>
+        ///    3. If 1. + 2. were not successfull the function adds a '#' sign and tries 1. + 2. again
+        /// </summary>
+        /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
+        /// <returns>the Color if successfull, else null</returns>
+        public static Color? ColorFromString(string ColorName)
+        {
+            return ColorFromString(ColorName, null);
+        }
 
         /// <summary>
         /// A Dictionary with localized Color Names
@@ -117,9 +132,12 @@ namespace MahApps.Metro.Controls
         /// <param name="color">color</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string GetColorName(Color? color, Dictionary<Color?, string> colorNamesDictionary = null)
+        public static string GetColorName(Color? color, Dictionary<Color?, string> colorNamesDictionary)
         {
-            if (color is null) return null;
+            if (color is null)
+            {
+                return null;
+            }
 
             if (colorNamesDictionary is null)
             {
@@ -129,5 +147,14 @@ namespace MahApps.Metro.Controls
             return colorNamesDictionary.TryGetValue(color, out string name) ? $"{name} ({color})" : $"{color}";
         }
 
+        /// <summary>
+        /// Searches for the localized name of a given <paramref name="color"/> by using the default <see cref="ColorNamesDictionary"/>
+        /// </summary>
+        /// <param name="color">color</param>
+        /// <returns>the local color name or null if the given color doesn't have a name</returns>
+        public static string GetColorName(Color? color)
+        {
+            return GetColorName(color, null);
+        }
     }
 }

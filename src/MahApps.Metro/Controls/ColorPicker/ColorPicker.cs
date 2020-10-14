@@ -181,11 +181,30 @@ namespace MahApps.Metro.Controls
             PART_ColorPalettesTab = this.GetTemplateChild(nameof(PART_ColorPalettesTab)) as TabItem;
             PART_AdvancedTab = this.GetTemplateChild(nameof(PART_AdvancedTab)) as TabItem;
 
-            if (PART_ColorPaletteStandard != null) PART_ColorPaletteStandard.SelectionChanged += ColorPalette_SelectionChanged;
-            if (PART_ColorPaletteAvailable != null) PART_ColorPaletteAvailable.SelectionChanged += ColorPalette_SelectionChanged;
-            if (PART_ColorPaletteCustom01 != null) PART_ColorPaletteCustom01.SelectionChanged += ColorPalette_SelectionChanged;
-            if (PART_ColorPaletteCustom02 != null) PART_ColorPaletteCustom02.SelectionChanged += ColorPalette_SelectionChanged;
-            if (PART_ColorPaletteRecent != null) PART_ColorPaletteRecent.SelectionChanged += ColorPalette_SelectionChanged;
+            if (PART_ColorPaletteStandard != null)
+            {
+                PART_ColorPaletteStandard.SelectionChanged += ColorPalette_SelectionChanged;
+            }
+
+            if (PART_ColorPaletteAvailable != null)
+            {
+                PART_ColorPaletteAvailable.SelectionChanged += ColorPalette_SelectionChanged;
+            }
+
+            if (PART_ColorPaletteCustom01 != null)
+            {
+                PART_ColorPaletteCustom01.SelectionChanged += ColorPalette_SelectionChanged;
+            }
+
+            if (PART_ColorPaletteCustom02 != null)
+            {
+                PART_ColorPaletteCustom02.SelectionChanged += ColorPalette_SelectionChanged;
+            }
+
+            if (PART_ColorPaletteRecent != null)
+            {
+                PART_ColorPaletteRecent.SelectionChanged += ColorPalette_SelectionChanged;
+            }
 
             base.OnApplyTemplate();
 
@@ -199,12 +218,30 @@ namespace MahApps.Metro.Controls
             // Set color is Updating again
             ColorIsUpdating = true;
 
-            if (PART_ColorPaletteAvailable != null) PART_ColorPaletteAvailable.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
-            if (PART_ColorPaletteStandard != null) PART_ColorPaletteStandard.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
-            if (PART_ColorPaletteCustom01 != null) PART_ColorPaletteCustom01.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
-            if (PART_ColorPaletteCustom02 != null) PART_ColorPaletteCustom02.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
-            if (PART_ColorPaletteRecent != null) PART_ColorPaletteRecent.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            if (PART_ColorPaletteAvailable != null)
+            {
+                PART_ColorPaletteAvailable.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            }
 
+            if (PART_ColorPaletteStandard != null)
+            {
+                PART_ColorPaletteStandard.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            }
+
+            if (PART_ColorPaletteCustom01 != null)
+            {
+                PART_ColorPaletteCustom01.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            }
+
+            if (PART_ColorPaletteCustom02 != null)
+            {
+                PART_ColorPaletteCustom02.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            }
+
+            if (PART_ColorPaletteRecent != null)
+            {
+                PART_ColorPaletteRecent.SetCurrentValue(ColorPalette.SelectedValueProperty, NewValue);
+            }
 
             if (this.AddToRecentColorsTrigger == AddToRecentColorsTrigger.SelectedColorChanged && SelectedColor.HasValue)
             {
@@ -239,31 +276,29 @@ namespace MahApps.Metro.Controls
 
                         Mouse.Capture(colorPicker, CaptureMode.SubTree);
 
-                        bool isFocused = false;
-
                         colorPicker.ValidateTabItems();
 
                         if (colorPicker.PART_PopupTabControl.SelectedItem == colorPicker.PART_ColorPalettesTab)
                         {
-                            if (!isFocused && colorPicker.IsStandardColorPaletteVisible && colorPicker.PART_ColorPaletteStandard != null)
+                            if (colorPicker.IsStandardColorPaletteVisible && colorPicker.PART_ColorPaletteStandard != null)
                             {
-                                isFocused = colorPicker.PART_ColorPaletteStandard.FocusSelectedItem();
+                                colorPicker.PART_ColorPaletteStandard.FocusSelectedItem();
                             }
-                            else if (!isFocused && colorPicker.IsAvailableColorPaletteVisible && colorPicker.PART_ColorPaletteAvailable != null)
+                            else if (colorPicker.IsAvailableColorPaletteVisible && colorPicker.PART_ColorPaletteAvailable != null)
                             {
-                                isFocused = colorPicker.PART_ColorPaletteAvailable.FocusSelectedItem();
+                                colorPicker.PART_ColorPaletteAvailable.FocusSelectedItem();
                             }
-                            else if (!isFocused && colorPicker.IsCustomColorPalette01Visible && colorPicker.PART_ColorPaletteCustom01 != null)
+                            else if (colorPicker.IsCustomColorPalette01Visible && colorPicker.PART_ColorPaletteCustom01 != null)
                             {
-                                isFocused = colorPicker.PART_ColorPaletteCustom01.FocusSelectedItem();
+                                colorPicker.PART_ColorPaletteCustom01.FocusSelectedItem();
                             }
-                            else if (!isFocused && colorPicker.IsCustomColorPalette02Visible && colorPicker.PART_ColorPaletteCustom02 != null)
+                            else if (colorPicker.IsCustomColorPalette02Visible && colorPicker.PART_ColorPaletteCustom02 != null)
                             {
-                                isFocused = colorPicker.PART_ColorPaletteCustom02.FocusSelectedItem();
+                               colorPicker.PART_ColorPaletteCustom02.FocusSelectedItem();
                             }
-                            else if (!isFocused && colorPicker.IsRecentColorPaletteVisible && colorPicker.PART_ColorPaletteRecent != null)
+                            else if (colorPicker.IsRecentColorPaletteVisible && colorPicker.PART_ColorPaletteRecent != null)
                             {
-                                isFocused = colorPicker.PART_ColorPaletteRecent.FocusSelectedItem();
+                                colorPicker.PART_ColorPaletteRecent.FocusSelectedItem();
                             }
                         }
                         else if (colorPicker.PART_PopupTabControl.SelectedItem == colorPicker.PART_AdvancedTab)

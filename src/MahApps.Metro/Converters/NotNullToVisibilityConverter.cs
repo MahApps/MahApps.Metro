@@ -22,8 +22,7 @@ namespace MahApps.Metro.Converters
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (_instance == null) _instance = new NotNullToVisibilityConverter();
-            return _instance;
+            return _instance ??= new NotNullToVisibilityConverter();
         }
     }
 }

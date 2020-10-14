@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
     public class ColorPickerBase : Control
     {
         #region private Members
-        protected bool ColorIsUpdating = false;
+        protected bool ColorIsUpdating;
         protected bool UpdateHsvValues = true;
         #endregion
 
@@ -157,7 +157,9 @@ namespace MahApps.Metro.Controls
         {
             // don't do a second update
             if (ColorIsUpdating)
+            {
                 return;
+            }
 
             ColorIsUpdating = true;
 

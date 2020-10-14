@@ -42,16 +42,32 @@ namespace MahApps.Metro.Controls
         private void PART_SaturationValueBox_UpdateValues(Point position)
         {
             if (this.PART_SaturationValueBox.ActualWidth < 1 || this.PART_SaturationValueBox.ActualHeight < 1)
+            {
                 return;
+            }
 
             var s = position.X / this.PART_SaturationValueBox.ActualWidth;
             var v = 1 - (position.Y / this.PART_SaturationValueBox.ActualHeight);
 
-            if (s > 1) s = 1;
-            if (v > 1) v = 1;
+            if (s > 1)
+            {
+                s = 1;
+            }
 
-            if (s < 0) s = 0;
-            if (v < 0) v = 0;
+            if (v > 1)
+            {
+                v = 1;
+            }
+
+            if (s < 0)
+            {
+                s = 0;
+            }
+
+            if (v < 0)
+            {
+                v = 0;
+            }
 
             this.SetCurrentValue(SaturationProperty, s);
             this.SetCurrentValue(ValueProperty, v);

@@ -18,12 +18,19 @@ namespace MahApps.Metro.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null) throw new ArgumentNullException(nameof(value));
-            if (parameter is null) throw new ArgumentNullException(nameof(parameter));
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            if (parameter is null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
 
             if (value is HSVColor hsv && parameter is string channel)
             {
-                switch (channel.ToLower())
+                switch (channel.ToLowerInvariant())
                 {
                     case "smin":
                         return (new HSVColor(hsv.Hue, 0, hsv.Value)).ToColor();
@@ -39,8 +46,6 @@ namespace MahApps.Metro.Converters
 
                     case "svmax":
                         return (new HSVColor(hsv.Hue, 1, 1)).ToColor();
-                    default:
-                        break;
                 }
             }
             throw new InvalidOperationException("Unable to convert the given input");

@@ -1,18 +1,9 @@
 ﻿// taken from https://codedocu.de/Details?d=1091&a=9&f=129&l=0&v=d&t=WPF,-C
 
-using ControlzEx.Standard;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -98,10 +89,16 @@ namespace MahApps.Metro.Controls
 
         // From Stackoverflow: https://stackoverflow.com/questions/1316681/getting-mouse-position-in-c-sharp
         [StructLayout(LayoutKind.Sequential)]
-        internal struct PointInter
+        internal struct PointInter : IEquatable<PointInter>
         {
             public int X;
             public int Y;
+
+            public bool Equals(PointInter other)
+            {
+                return X == other.X && Y == other.Y;
+            }
+
             public static explicit operator Point(PointInter point) => new Point(point.X, point.Y);
         }
 
@@ -111,8 +108,7 @@ namespace MahApps.Metro.Controls
         // For your convenience
         internal static PointInter GetCursorPosition()
         {
-            PointInter lpPoint;
-            GetCursorPos(out lpPoint);
+            GetCursorPos(out PointInter lpPoint);
             return lpPoint;
         }
 
