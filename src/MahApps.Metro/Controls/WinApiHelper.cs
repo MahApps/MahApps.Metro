@@ -53,31 +53,8 @@ namespace MahApps.Metro.Controls
                 && source.RootVisual is null == false
                 && source.Handle != IntPtr.Zero)
             {
-                int size = NativeMethods.GetWindowTextLength(source.Handle);
-                if (size == 0)
-                {
-                    var lastError = Win32Error.GetLastError();
-                    if (lastError != Win32Error.ERROR_SUCCESS)
-                    {
-                        throw new Win32Exception(lastError.Error);
-                    }
-
-                    return string.Empty;
-                }
-
-                var builder = new StringBuilder(size + 1);
-                var finalLength = NativeMethods.GetWindowText(source.Handle, builder, builder.Capacity);
-                if (finalLength == 0)
-                {
-                    var lastError = Win32Error.GetLastError();
-                    if (lastError != Win32Error.ERROR_SUCCESS)
-                    {
-                        throw new Win32Exception(lastError.Error);
-                    }
-
-                    return string.Empty;
-                }
-
+                var builder = new StringBuilder(512);
+                NativeMethods.GetWindowText(source.Handle, builder, builder.Capacity);
                 return builder.ToString();
             }
 
