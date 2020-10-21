@@ -104,6 +104,7 @@
                                         <Condition Property="IsMouseOver" Value="True" />
                                         <Condition Property="IsSelected" Value="True" />
                                     </MultiTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
                                 </MultiTrigger>
                                 <MultiTrigger>
@@ -111,6 +112,7 @@
                                         <Condition Property="IsMouseOver" Value="True" />
                                         <Condition Property="IsSelected" Value="False" />
                                     </MultiTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
                                 </MultiTrigger>
 
@@ -137,6 +139,7 @@
                 <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
                 <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray.SemiTransparent}" />
                 <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray.SemiTransparent}" />
+                <Setter Property="mah:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
             </Style>

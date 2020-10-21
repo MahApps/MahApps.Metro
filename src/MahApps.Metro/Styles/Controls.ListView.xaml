@@ -159,7 +159,9 @@
         <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Controls:ItemHelper.HoverForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
         <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -192,57 +194,60 @@
                             <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_RowPresenter" Property="Visibility" Value="Collapsed" />
                         </Trigger>
-
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                        </MultiTrigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
-                        </MultiTrigger>
-
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <MultiTrigger.Setters>
-                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
-                                <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-                            </MultiTrigger.Setters>
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="Selector.IsSelectionActive" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsSelected" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
+                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--  Gives the impression that items cannot be selected on the ListView  -->
