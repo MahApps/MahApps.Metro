@@ -198,6 +198,37 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets the foreground brush which will be used for an mouse hovered and selected item.
+        /// </summary>
+        public static readonly DependencyProperty HoverSelectedForegroundBrushProperty
+            = DependencyProperty.RegisterAttached("HoverSelectedForegroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the foreground brush which will be used for an mouse hovered and selected item.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush GetHoverSelectedForegroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(HoverSelectedForegroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the foreground brush which will be used for an mouse hovered and selected item.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetHoverSelectedForegroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(HoverSelectedForegroundBrushProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets the background brush which will be used for selected disabled items.
         /// </summary>
         public static readonly DependencyProperty DisabledSelectedBackgroundBrushProperty
