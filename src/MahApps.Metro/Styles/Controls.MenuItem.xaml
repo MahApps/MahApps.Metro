@@ -265,15 +265,7 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
-                <Setter TargetName="LayoutRoot" Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect BlurRadius="4"
-                                          Direction="315"
-                                          Opacity="0.3"
-                                          ShadowDepth="2"
-                                          Color="{DynamicResource MahApps.Colors.MenuShadow}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
                 <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
@@ -429,15 +421,7 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
-                <Setter TargetName="LayoutRoot" Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect BlurRadius="4"
-                                          Direction="315"
-                                          Opacity="0.3"
-                                          ShadowDepth="2"
-                                          Color="{DynamicResource MahApps.Colors.MenuShadow}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
                 <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">

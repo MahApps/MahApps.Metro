@@ -44,15 +44,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasDropShadow" Value="True">
                             <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
-                            <Setter TargetName="LayoutRoot" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect BlurRadius="4"
-                                                      Direction="315"
-                                                      Opacity="0.3"
-                                                      ShadowDepth="2"
-                                                      Color="{DynamicResource MahApps.Colors.MenuShadow}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
                             <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
                         </Trigger>
                     </ControlTemplate.Triggers>

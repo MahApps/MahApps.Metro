@@ -6,14 +6,6 @@
                      EasingMode="EaseInOut"
                      Exponent="2" />
 
-    <DropShadowEffect x:Key="MahApps.DropShadowEffect.WaitingForData"
-                      x:Shared="False"
-                      BlurRadius="10"
-                      Opacity="0"
-                      ShadowDepth="0"
-                      Color="{DynamicResource MahApps.Colors.ThemeForeground}"
-                      po:Freeze="True" />
-
     <Storyboard x:Key="MahApps.Storyboard.EnterGotFocus" po:Freeze="True">
         <DoubleAnimation Storyboard.TargetName="PART_Message"
                          Storyboard.TargetProperty="Opacity"
