@@ -247,8 +247,8 @@
                 <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
             <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
                 <Setter Property="ResizeBorderThickness" Value="0" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
             </Trigger>
             <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
@@ -528,8 +528,8 @@
                 <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
             <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
                 <Setter Property="ResizeBorderThickness" Value="0" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
             </Trigger>
             <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
