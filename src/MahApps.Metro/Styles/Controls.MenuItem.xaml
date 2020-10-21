@@ -57,6 +57,7 @@
             </Trigger>
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Padding" Value="2 6 2 6" />
+                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -232,8 +233,8 @@
                    IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                    Placement="Bottom"
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-                   VerticalOffset="-1">
-                <Grid>
+                   VerticalOffset="-2">
+                <Grid x:Name="SubMenuRoot">
                     <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
                     <ContentControl x:Name="SubMenuBorder"
                                     IsTabStop="False"
@@ -273,8 +274,7 @@
                                           Color="{DynamicResource MahApps.Colors.MenuShadow}" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
-                <Setter TargetName="SubMenuBorder" Property="Margin" Value="0 0 6 6" />
+                <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.SelectionStroke}" />
@@ -388,32 +388,34 @@
                       Data="{StaticResource RightArrow}"
                       Fill="{DynamicResource MahApps.Brushes.RightArrowFill}" />
             </Grid>
-            <Popup x:Name="PART_Popup"
-                   AllowsTransparency="True"
-                   Focusable="False"
-                   HorizontalOffset="-2"
-                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                   Placement="Right"
-                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
-                   VerticalOffset="-3">
-                <Grid>
-                    <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
-                    <ContentControl x:Name="SubMenuBorder"
-                                    IsTabStop="False"
-                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                        <ScrollViewer x:Name="SubMenuScrollViewer"
-                                      CanContentScroll="True"
-                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                            <ItemsPresenter x:Name="ItemsPresenter"
-                                            Margin="0"
-                                            Grid.IsSharedSizeScope="True"
-                                            KeyboardNavigation.DirectionalNavigation="Cycle"
-                                            KeyboardNavigation.TabNavigation="Cycle"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </ContentControl>
-                </Grid>
-            </Popup>
+            <Grid Margin="2 0 1 0">
+                <Popup x:Name="PART_Popup"
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       HorizontalOffset="-1"
+                       IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                       Placement="Right"
+                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                       VerticalOffset="-3">
+                    <Grid x:Name="SubMenuRoot">
+                        <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
+                        <ContentControl x:Name="SubMenuBorder"
+                                        IsTabStop="False"
+                                        Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ScrollViewer x:Name="SubMenuScrollViewer"
+                                          CanContentScroll="True"
+                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                Margin="0"
+                                                Grid.IsSharedSizeScope="True"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </ContentControl>
+                    </Grid>
+                </Popup>
+            </Grid>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsSuspendingPopupAnimation" Value="True">
@@ -436,8 +438,7 @@
                                           Color="{DynamicResource MahApps.Colors.MenuShadow}" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
-                <Setter TargetName="SubMenuBorder" Property="Margin" Value="0 0 6 6" />
+                <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />
