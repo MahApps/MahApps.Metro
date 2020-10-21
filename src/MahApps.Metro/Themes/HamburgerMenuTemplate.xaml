@@ -197,6 +197,7 @@
     <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem"
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerBase}"
            TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Controls:ItemHelper.HoverForegroundBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
@@ -254,6 +255,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
