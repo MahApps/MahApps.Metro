@@ -12,16 +12,17 @@
                                  Culture="pt-BR"
                                  SelectedDateTime="08/31/2016 14:00:01" />
         <controls:DateTimePicker x:Name="TheDateTimeFormatPicker"
-                                 Culture="it-it"
+                                 Culture="it-IT"
                                  SelectedDateTime="08/31/2016 14:00:01" />
         <controls:TimePicker x:Name="TheTimePickerDe"
-                             Culture="de-de"
+                             Culture="de-DE"
                              SelectedDateTime="14:00:01" />
         <controls:TimePicker x:Name="TheTimePickerUs"
-                             Culture="en-us"
+                             Culture="en-US"
                              SelectedDateTime="14:00:01" />
         <controls:TimePicker x:Name="TheTimePickerCsCz"
                              Culture="cs-CZ"
                              SelectedDateTime="22:23:24" />
+        <controls:TimePicker x:Name="EmptyTimePicker" />
     </StackPanel>
 </controls:MetroWindow>

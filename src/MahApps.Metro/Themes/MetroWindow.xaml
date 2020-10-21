@@ -246,6 +246,10 @@
             <Trigger Property="GlowBrush" Value="{x:Null}">
                 <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
+            <Trigger Property="ResizeMode" Value="NoResize">
+                <Setter Property="ResizeBorderThickness" Value="0" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+            </Trigger>
             <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -519,6 +523,14 @@
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
+            <!--  HitTest visibility  -->
+            <Trigger Property="GlowBrush" Value="{x:Null}">
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="NoResize">
+                <Setter Property="ResizeBorderThickness" Value="0" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+            </Trigger>
             <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>

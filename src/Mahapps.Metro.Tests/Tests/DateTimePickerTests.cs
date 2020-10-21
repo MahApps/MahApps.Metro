@@ -2,9 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
@@ -90,18 +92,38 @@ namespace MahApps.Metro.Tests
                     Assert.Equal("it-IT", window.TheDateTimeFormatPicker.Culture.IetfLanguageTag);
                     Assert.False(window.TheDateTimeFormatPicker.IsMilitaryTime);
 
+                    var datePickerTextBox = window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty);
+
                     window.TheDateTimeFormatPicker.SelectedTimeFormat = TimePickerFormat.Short;
-                    Assert.Equal("31/08/2016 14:00", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+                    Assert.Equal("31/08/2016 14:00", datePickerTextBox.Text);
 
                     window.TheDateTimeFormatPicker.SelectedTimeFormat = TimePickerFormat.Long;
-                    Assert.Equal("31/08/2016 14:00:01", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+                    Assert.Equal("31/08/2016 14:00:01", datePickerTextBox.Text);
 
                     window.TheDateTimeFormatPicker.SelectedDateFormat = DatePickerFormat.Long;
-                    Assert.Equal("mercoledì 31 agosto 2016 14:00:01", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+                    Assert.Equal("mercoledì 31 agosto 2016 14:00:01", datePickerTextBox.Text);
 
                     window.TheDateTimeFormatPicker.SelectedTimeFormat = TimePickerFormat.Short;
-                    Assert.Equal("mercoledì 31 agosto 2016 14:00", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+                    Assert.Equal("mercoledì 31 agosto 2016 14:00", datePickerTextBox.Text);
                 });
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task MilitaryTimeShouldBeConvertedToDateTime()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>(
+                w => { w.EmptyTimePicker.Focus(); }
+            );
+
+            var timePicker = window.EmptyTimePicker;
+            var datePickerTextBox = timePicker.FindChild<DatePickerTextBox>(string.Empty);
+
+            datePickerTextBox.Text = "2:42:12 PM";
+            datePickerTextBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+
+            Assert.Equal(default(DateTime) + new TimeSpan(14, 42, 12), timePicker.SelectedDateTime);
         }
     }
 }

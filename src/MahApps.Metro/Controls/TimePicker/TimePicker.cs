@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -51,9 +52,13 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (TimeSpan.TryParse(this.textBox.Text, this.SpecificCultureInfo, out var timeSpan))
+            const DateTimeStyles dateTimeParseStyle = DateTimeStyles.AllowWhiteSpaces
+                                                      & DateTimeStyles.AssumeLocal
+                                                      & DateTimeStyles.NoCurrentDateDefault;
+
+            if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, dateTimeParseStyle, out var timeSpan))
             {
-                this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan);
+                this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan.TimeOfDay);
             }
             else
             {

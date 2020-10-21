@@ -15,8 +15,8 @@
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
-        <PackageReference Include="ExposedObject" Version="1.2.*" PrivateAssets="All" />
+        <PackageReference Include="ExposedObject" Version="1.2.*" PrivateAssets="All" Condition=" $(TargetFramework.StartsWith('net45')) or $(TargetFramework.StartsWith('net46')) " />
+        <PackageReference Include="ExposedObject" Version="2.*" PrivateAssets="All" Condition=" !$(TargetFramework.StartsWith('net45')) and !$(TargetFramework.StartsWith('net46'))  " />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />

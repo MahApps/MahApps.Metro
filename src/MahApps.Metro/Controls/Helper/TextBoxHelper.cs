@@ -892,6 +892,11 @@ namespace MahApps.Metro.Controls
             var commandParameter = GetButtonCommandParameter(parent) ?? parent;
             if (command != null && command.CanExecute(commandParameter))
             {
+                if (parent is TextBox textBox)
+                {
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                }
+
                 command.Execute(commandParameter);
             }
 

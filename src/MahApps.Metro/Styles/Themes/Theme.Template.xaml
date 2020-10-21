@@ -184,8 +184,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border" Color="{{MahApps.Colors.ContextMenu.Border}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border" Color="{{MahApps.Colors.SubMenu.Border}}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionFill" Color="{{MahApps.Colors.MenuItem.SelectionFill}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionStroke" Color="{{MahApps.Colors.MenuItem.SelectionStroke}}" options:Freeze="True" />

@@ -24,19 +24,23 @@ namespace MahApps.Metro.Tests.TestHelpers
                              ShowInTaskbar = false
                          };
 
-            changeAddiotionalProperties?.Invoke(window);
+            void OnLoaded(object sender, RoutedEventArgs e)
+            {
+                window.Loaded -= OnLoaded;
+                changeAddiotionalProperties?.Invoke(window);
+            }
+
+            window.Loaded += OnLoaded;
 
             var completionSource = new TaskCompletionSource<T>();
 
-            EventHandler handler = null;
+            void OnActivated(object sender, EventArgs args)
+            {
+                window.Activated -= OnActivated;
+                completionSource.SetResult(window);
+            }
 
-            handler = (sender, args) =>
-                {
-                    window.Activated -= handler;
-                    completionSource.SetResult(window);
-                };
-
-            window.Activated += handler;
+            window.Activated += OnActivated;
 
             window.Show();
 

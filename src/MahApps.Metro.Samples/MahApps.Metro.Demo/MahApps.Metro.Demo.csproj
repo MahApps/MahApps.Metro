@@ -24,14 +24,16 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
-        <PackageReference Include="MaterialDesignThemes" Version="2.*" />
-        <PackageReference Include="MaterialDesignColors" Version="1.*" />
+        <PackageReference Include="MaterialDesignThemes" Version="3.0.*" Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " />
+        <PackageReference Include="MaterialDesignThemes" Version="3.*" Condition=" '$(TargetFramework)' != 'netcoreapp3.0' " />
+        <PackageReference Include="MaterialDesignColors" Version="1.2.2" Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " />
+        <PackageReference Include="MaterialDesignColors" Version="1.*" Condition=" '$(TargetFramework)' != 'netcoreapp3.0' " />
         <PackageReference Include="NHotkey.Wpf" Version="2.*" />
         <PackageReference Include="Fody" Version="6.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="4.*" />
+        <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <None Include="app.manifest" />
