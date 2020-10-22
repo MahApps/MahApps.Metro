@@ -186,7 +186,7 @@ namespace MahApps.Metro.Controls
             this.flyout = adornedElement.TryFindParent<Flyout>();
             if (this.flyout != null)
             {
-                canShow = canShow && !this.flyout.AreAnimationsEnabled;
+                canShow = canShow && (!this.flyout.AreAnimationsEnabled || this.flyout.IsShown);
                 this.flyout.OpeningFinished += this.Flyout_OpeningFinished;
                 this.flyout.IsOpenChanged += this.Flyout_IsOpenChanged;
                 this.flyout.ClosingFinished += this.Flyout_ClosingFinished;
