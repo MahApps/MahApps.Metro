@@ -23,12 +23,27 @@
                     <ListBox Margin="2"
                              Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
+                             AlternationCount="2"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
                              ItemsSource="{Binding Artists}"
                              SelectedIndex="0"
                              SelectionMode="Extended"
-                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Controls:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="Coral" />
+                                <Setter Property="Controls:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="Black" />
+                                <Setter Property="Controls:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="DarkOliveGreen" />
+                                <Setter Property="Controls:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="White" />
+                                <Style.Triggers>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
                     <ListBox Margin="2"
                              Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              BorderThickness="1"
