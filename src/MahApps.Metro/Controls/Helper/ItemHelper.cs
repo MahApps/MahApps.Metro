@@ -5,6 +5,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -381,6 +382,296 @@ namespace MahApps.Metro.Controls
         public static void SetDisabledForegroundBrush(UIElement element, Brush value)
         {
             element.SetValue(DisabledForegroundBrushProperty, value);
+        }
+
+        private static readonly DependencyPropertyKey IsMouseLeftButtonPressedPropertyKey
+            = DependencyProperty.RegisterAttachedReadOnly("IsMouseLeftButtonPressed",
+                                                          typeof(bool),
+                                                          typeof(ItemHelper),
+                                                          new PropertyMetadata(false));
+
+        public static readonly DependencyProperty IsMouseLeftButtonPressedProperty = IsMouseLeftButtonPressedPropertyKey.DependencyProperty;
+
+        public static bool GetIsMouseLeftButtonPressed(UIElement element)
+        {
+            return (bool)element.GetValue(IsMouseLeftButtonPressedProperty);
+        }
+
+        /// <summary>
+        /// Gets or sets the background brush which will be used when an item is pressed by the left mouse button.
+        /// </summary>
+        public static readonly DependencyProperty MouseLeftButtonPressedBackgroundBrushProperty
+            = DependencyProperty.RegisterAttached("MouseLeftButtonPressedBackgroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush),
+                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                                OnMouseLeftButtonPressedBackgroundBrushPropertyChanged));
+
+        private static void OnMouseLeftButtonPressedBackgroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement element && e.OldValue != e.NewValue)
+            {
+                element.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
+                element.PreviewMouseLeftButtonUp -= OnPreviewMouseLeftButtonUp;
+                element.MouseEnter -= OnLeftMouseEnter;
+                element.MouseLeave -= OnLeftMouseLeave;
+
+                if (e.NewValue is Brush || GetMouseLeftButtonPressedForegroundBrush(element) != null)
+                {
+                    element.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+                    element.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
+                    element.MouseEnter += OnLeftMouseEnter;
+                    element.MouseLeave += OnLeftMouseLeave;
+                }
+            }
+        }
+
+        private static void OnLeftMouseEnter(object sender, MouseEventArgs e)
+        {
+            var element = (UIElement)sender;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, true);
+            }
+        }
+
+        private static void OnLeftMouseLeave(object sender, MouseEventArgs e)
+        {
+            var element = (UIElement)sender;
+            if (e.LeftButton == MouseButtonState.Pressed && GetIsMouseLeftButtonPressed(element))
+            {
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, false);
+            }
+        }
+
+        private static void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var element = (UIElement)sender;
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, true);
+            }
+        }
+
+        private static void OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var element = (UIElement)sender;
+            if (GetIsMouseLeftButtonPressed(element))
+            {
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets the background brush which will be used when an item is pressed by the left mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush GetMouseLeftButtonPressedBackgroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(MouseLeftButtonPressedBackgroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the background brush which will be used when an item is pressed by the left mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetMouseLeftButtonPressedBackgroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(MouseLeftButtonPressedBackgroundBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the foreground brush which will be used when an item is pressed by the left mouse button.
+        /// </summary>
+        public static readonly DependencyProperty MouseLeftButtonPressedForegroundBrushProperty
+            = DependencyProperty.RegisterAttached("MouseLeftButtonPressedForegroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush),
+                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                                OnMouseLeftButtonPressedForegroundBrushPropertyChanged));
+
+        private static void OnMouseLeftButtonPressedForegroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement element && e.OldValue != e.NewValue)
+            {
+                element.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
+                element.PreviewMouseLeftButtonUp -= OnPreviewMouseLeftButtonUp;
+                element.MouseEnter -= OnLeftMouseEnter;
+                element.MouseLeave -= OnLeftMouseLeave;
+
+                if (e.NewValue is Brush || GetMouseLeftButtonPressedBackgroundBrush(element) != null)
+                {
+                    element.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+                    element.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
+                    element.MouseEnter += OnLeftMouseEnter;
+                    element.MouseLeave += OnLeftMouseLeave;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the foreground brush which will be used when an item is pressed by the left mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush GetMouseLeftButtonPressedForegroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(MouseLeftButtonPressedForegroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the foreground brush which will be used when an item is pressed by the left mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetMouseLeftButtonPressedForegroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(MouseLeftButtonPressedForegroundBrushProperty, value);
+        }
+
+        private static readonly DependencyPropertyKey IsMouseRightButtonPressedPropertyKey
+            = DependencyProperty.RegisterAttachedReadOnly("IsMouseRightButtonPressed",
+                                                          typeof(bool),
+                                                          typeof(ItemHelper),
+                                                          new PropertyMetadata(false));
+
+        public static readonly DependencyProperty IsMouseRightButtonPressedProperty = IsMouseRightButtonPressedPropertyKey.DependencyProperty;
+
+        public static bool GetIsMouseRightButtonPressed(UIElement element)
+        {
+            return (bool)element.GetValue(IsMouseRightButtonPressedProperty);
+        }
+
+        /// <summary>
+        /// Gets or sets the background brush which will be used when an item is pressed by the right mouse button.
+        /// </summary>
+        public static readonly DependencyProperty MouseRightButtonPressedBackgroundBrushProperty
+            = DependencyProperty.RegisterAttached("MouseRightButtonPressedBackgroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush),
+                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                                OnMouseRightButtonPressedBackgroundBrushPropertyChanged));
+
+        private static void OnMouseRightButtonPressedBackgroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement element && e.OldValue != e.NewValue)
+            {
+                element.PreviewMouseRightButtonDown -= OnPreviewMouseRightButtonDown;
+                element.PreviewMouseRightButtonUp -= OnPreviewMouseRightButtonUp;
+
+                if (e.NewValue is Brush || GetMouseRightButtonPressedForegroundBrush(element) != null)
+                {
+                    element.PreviewMouseRightButtonDown += OnPreviewMouseRightButtonDown;
+                    element.PreviewMouseRightButtonUp += OnPreviewMouseRightButtonUp;
+                }
+            }
+        }
+
+        private static void OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var element = (UIElement)sender;
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                if (element is TreeViewItem)
+                {
+                    Mouse.Capture(element, CaptureMode.SubTree);
+                }
+                else
+                {
+                    Mouse.Capture(element);
+                }
+
+                element.SetValue(IsMouseRightButtonPressedPropertyKey, true);
+            }
+        }
+
+        private static void OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var element = (UIElement)sender;
+            if (GetIsMouseRightButtonPressed(element))
+            {
+                Mouse.Capture(null);
+                element.SetValue(IsMouseRightButtonPressedPropertyKey, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets the background brush which will be used when an item is pressed by the right mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush GetMouseRightButtonPressedBackgroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(MouseRightButtonPressedBackgroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the background brush which will be used when an item is pressed by the right mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetMouseRightButtonPressedBackgroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(MouseRightButtonPressedBackgroundBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the foreground brush which will be used when an item is pressed by the right mouse button.
+        /// </summary>
+        public static readonly DependencyProperty MouseRightButtonPressedForegroundBrushProperty
+            = DependencyProperty.RegisterAttached("MouseRightButtonPressedForegroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush),
+                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                                OnMouseRightButtonPressedForegroundBrushPropertyChanged));
+
+        private static void OnMouseRightButtonPressedForegroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement element && e.OldValue != e.NewValue)
+            {
+                element.PreviewMouseRightButtonDown -= OnPreviewMouseRightButtonDown;
+                element.PreviewMouseRightButtonUp -= OnPreviewMouseRightButtonUp;
+
+                if (e.NewValue is Brush || GetMouseRightButtonPressedBackgroundBrush(element) != null)
+                {
+                    element.PreviewMouseRightButtonDown += OnPreviewMouseRightButtonDown;
+                    element.PreviewMouseRightButtonUp += OnPreviewMouseRightButtonUp;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the foreground brush which will be used when an item is pressed by the right mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush GetMouseRightButtonPressedForegroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(MouseRightButtonPressedForegroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the foreground brush which will be used when an item is pressed by the right mouse button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetMouseRightButtonPressedForegroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(MouseRightButtonPressedForegroundBrushProperty, value);
         }
     }
 }
