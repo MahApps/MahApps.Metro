@@ -47,7 +47,7 @@ namespace MahApps.Metro.Behaviors
             window.Closed += this.AssociatedObject_Closed;
 
             // This operation must be thread safe
-            Application.Current?.Invoke(() => Application.Current.SessionEnding += this.CurrentApplicationSessionEnding);
+            Application.Current?.BeginInvoke(() => Application.Current.SessionEnding += this.CurrentApplicationSessionEnding); 
         }
 
         private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -93,7 +93,7 @@ namespace MahApps.Metro.Behaviors
             window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
 
             // This operation must be thread safe
-            Application.Current?.Invoke(() => Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding);
+            Application.Current?.BeginInvoke(() => Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding);
         }
 
 #pragma warning disable 618
