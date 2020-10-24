@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -438,14 +439,44 @@ namespace MahApps.Metro.Controls
                 this.button.Click += this.ButtonClick;
             }
 
-            this.contextMenu = this.GetTemplateChild("PART_Menu") as ContextMenu;
+            this.GroupStyle.CollectionChanged -= this.OnGroupStyleCollectionChanged;
 
-            if (this.contextMenu != null && this.Items != null && this.ItemsSource == null)
+            this.contextMenu = this.GetTemplateChild("PART_Menu") as ContextMenu;
+            if (this.contextMenu != null)
             {
-                foreach (var newItem in this.Items)
+                foreach (var groupStyle in this.GroupStyle)
                 {
-                    this.TryRemoveVisualFromOldTree(newItem);
-                    this.contextMenu.Items.Add(newItem);
+                    this.contextMenu.GroupStyle.Add(groupStyle);
+                }
+
+                this.GroupStyle.CollectionChanged += this.OnGroupStyleCollectionChanged;
+
+                if (this.Items != null && this.ItemsSource == null)
+                {
+                    foreach (var newItem in this.Items)
+                    {
+                        this.TryRemoveVisualFromOldTree(newItem);
+                        this.contextMenu.Items.Add(newItem);
+                    }
+                }
+            }
+        }
+
+        private void OnGroupStyleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (var groupStyle in e.OldItems.OfType<GroupStyle>())
+                {
+                    this.contextMenu.GroupStyle.Remove(groupStyle);
+                }
+            }
+
+            if (e.NewItems != null)
+            {
+                foreach (var groupStyle in e.NewItems.OfType<GroupStyle>())
+                {
+                    this.contextMenu.GroupStyle.Add(groupStyle);
                 }
             }
         }

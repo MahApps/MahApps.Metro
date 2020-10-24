@@ -114,6 +114,7 @@
                                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                  ItemsPanel="{TemplateBinding ItemsPanel}"
                                                  ItemsSource="{TemplateBinding ItemsSource}"
+                                                 GroupStyleSelector="{TemplateBinding GroupStyleSelector}"
                                                  Placement="Bottom"
                                                  StaysOpen="False"
                                                  Style="{TemplateBinding MenuStyle}"
