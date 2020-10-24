@@ -125,10 +125,10 @@
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -140,7 +140,7 @@
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
@@ -158,19 +158,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
 
@@ -485,10 +485,10 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -498,10 +498,10 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterHasText}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitHasText}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -513,10 +513,10 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -549,7 +549,7 @@
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
@@ -627,13 +627,57 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
-                            <ContentPresenter x:Name="contentPresenter"
+                            <ContentPresenter x:Name="ContentPresenter"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -642,49 +686,6 @@
             <Trigger Property="IsVisible" Value="True">
                 <Setter Property="RenderOptions.ClearTypeHint" Value="{Binding Path=(RenderOptions.ClearTypeHint), FallbackValue=Auto, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Selector}}}" />
             </Trigger>
-
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsSelected" Value="True" />
-                    <Condition Property="Selector.IsSelectionActive" Value="True" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
-            </MultiTrigger>
-
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True" />
-                    <Condition Property="IsSelected" Value="True" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
-            </MultiTrigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True" />
-                    <Condition Property="IsSelected" Value="False" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
-            </MultiTrigger>
-
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsEnabled" Value="False" />
-                    <Condition Property="IsSelected" Value="True" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
-            </MultiTrigger>
         </Style.Triggers>
     </Style>
 

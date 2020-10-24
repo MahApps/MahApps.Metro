@@ -69,7 +69,28 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(nameof(Position), typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register(nameof(IsPinned), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
+
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+
+        /// <summary>Identifies the <see cref="IsShown"/> dependency property.</summary>
+        private static readonly DependencyPropertyKey IsShownPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(IsShown),
+                                                  typeof(bool),
+                                                  typeof(Flyout),
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>Identifies the <see cref="IsShown"/> dependency property.</summary>
+        public static readonly DependencyProperty IsShownProperty = IsShownPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether the Flyout is completely shown (after IsOpen was set to true).
+        /// </summary>
+        public bool IsShown
+        {
+            get => (bool)this.GetValue(IsShownProperty);
+            protected set => this.SetValue(IsShownPropertyKey, BooleanBoxes.Box(value));
+        }
+
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register(nameof(AnimateOnPositionChange), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
         public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnAnimateOpacityPropertyChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
@@ -482,6 +503,7 @@ namespace MahApps.Metro.Controls
                                 }
 
                                 flyout.StopAutoCloseTimer();
+                                flyout.SetValue(IsShownPropertyKey, BooleanBoxes.FalseBox);
                                 if (flyout.hideStoryboard != null)
                                 {
                                     flyout.hideStoryboard.Completed += flyout.HideStoryboardCompleted;
@@ -509,6 +531,7 @@ namespace MahApps.Metro.Controls
                             else
                             {
                                 flyout.StopAutoCloseTimer();
+                                flyout.SetValue(IsShownPropertyKey, BooleanBoxes.FalseBox);
                                 flyout.Hide();
                             }
 
@@ -616,6 +639,7 @@ namespace MahApps.Metro.Controls
 
         private void Shown()
         {
+            this.SetValue(IsShownPropertyKey, BooleanBoxes.TrueBox);
             this.RaiseEvent(new RoutedEventArgs(OpeningFinishedEvent));
         }
 
