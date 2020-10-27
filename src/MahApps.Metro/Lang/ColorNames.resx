@@ -120,9 +120,6 @@
   <data name="AliceBlue" xml:space="preserve">
     <value>Alice Blue</value>
   </data>
-  <data name="Amber" xml:space="preserve">
-    <value>Amber</value>
-  </data>
   <data name="AntiqueWhite" xml:space="preserve">
     <value>Antique White</value>
   </data>
@@ -168,9 +165,6 @@
   <data name="Chocolate" xml:space="preserve">
     <value>Chocolate</value>
   </data>
-  <data name="Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
-  </data>
   <data name="Coral" xml:space="preserve">
     <value>Coral</value>
   </data>
@@ -182,9 +176,6 @@
   </data>
   <data name="Crimson" xml:space="preserve">
     <value>Crimson</value>
-  </data>
-  <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
   </data>
   <data name="DarkBlue" xml:space="preserve">
     <value>Dark Blue</value>
@@ -248,9 +239,6 @@
   </data>
   <data name="DodgerBlue" xml:space="preserve">
     <value>Dodger Blue</value>
-  </data>
-  <data name="Emerald" xml:space="preserve">
-    <value>Emerald</value>
   </data>
   <data name="Firebrick" xml:space="preserve">
     <value>Firebrick</value>
@@ -363,14 +351,8 @@
   <data name="Linen" xml:space="preserve">
     <value>Linen</value>
   </data>
-  <data name="Magenta" xml:space="preserve">
-    <value>Magenta</value>
-  </data>
   <data name="Maroon" xml:space="preserve">
     <value>Maroon</value>
-  </data>
-  <data name="Mauve" xml:space="preserve">
-    <value>Mauve</value>
   </data>
   <data name="MediumAquamarine" xml:space="preserve">
     <value>Medium Aquamarine</value>
@@ -513,17 +495,11 @@
   <data name="SpringGreen" xml:space="preserve">
     <value>Spring Green</value>
   </data>
-  <data name="Steel" xml:space="preserve">
-    <value>Steel</value>
-  </data>
   <data name="SteelBlue" xml:space="preserve">
     <value>Steel Blue</value>
   </data>
   <data name="Tan" xml:space="preserve">
     <value>Tan</value>
-  </data>
-  <data name="Taupe" xml:space="preserve">
-    <value>Taupe</value>
   </data>
   <data name="Teal" xml:space="preserve">
     <value>Teal</value>

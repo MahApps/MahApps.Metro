@@ -120,9 +120,6 @@
   <data name="AliceBlue" xml:space="preserve">
     <value>Aliceblau</value>
   </data>
-  <data name="Amber" xml:space="preserve">
-    <value>Bernstein</value>
-  </data>
   <data name="AntiqueWhite" xml:space="preserve">
     <value>Antikweiß</value>
   </data>
@@ -168,9 +165,6 @@
   <data name="Chocolate" xml:space="preserve">
     <value>Schokolade</value>
   </data>
-  <data name="Cobalt" xml:space="preserve">
-    <value>Kobaltblau</value>
-  </data>
   <data name="Coral" xml:space="preserve">
     <value>Korallenrot</value>
   </data>
@@ -182,9 +176,6 @@
   </data>
   <data name="Crimson" xml:space="preserve">
     <value>Purpur</value>
-  </data>
-  <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
   </data>
   <data name="DarkBlue" xml:space="preserve">
     <value>Dunkelblau</value>
@@ -248,9 +239,6 @@
   </data>
   <data name="DodgerBlue" xml:space="preserve">
     <value>Persenningblau</value>
-  </data>
-  <data name="Emerald" xml:space="preserve">
-    <value>Smaragdgrün</value>
   </data>
   <data name="Firebrick" xml:space="preserve">
     <value>Schamottestein</value>
@@ -363,14 +351,8 @@
   <data name="Linen" xml:space="preserve">
     <value>Leinen</value>
   </data>
-  <data name="Magenta" xml:space="preserve">
-    <value>Magenta</value>
-  </data>
   <data name="Maroon" xml:space="preserve">
     <value>Kastanienbraun</value>
-  </data>
-  <data name="Mauve" xml:space="preserve">
-    <value>Malve</value>
   </data>
   <data name="MediumAquamarine" xml:space="preserve">
     <value>Mittelaquamarinblau</value>
@@ -513,17 +495,11 @@
   <data name="SpringGreen" xml:space="preserve">
     <value>Frühlingsgrün</value>
   </data>
-  <data name="Steel" xml:space="preserve">
-    <value>Stahl</value>
-  </data>
   <data name="SteelBlue" xml:space="preserve">
     <value>Stahlblau</value>
   </data>
   <data name="Tan" xml:space="preserve">
     <value>Hautfarben</value>
-  </data>
-  <data name="Taupe" xml:space="preserve">
-    <value>Graubraun</value>
   </data>
   <data name="Teal" xml:space="preserve">
     <value>Krickentengrün</value>

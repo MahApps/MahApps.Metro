@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
@@ -32,7 +33,7 @@ namespace MahApps.Metro.Controls
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine(entry.Key.ToString() + " is not a valid color-key");
+                    Debug.WriteLine(entry.Key.ToString() + " is not a valid color-key");
                 }
             }            
         }
