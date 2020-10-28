@@ -175,10 +175,10 @@
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ShowFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.HideFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -220,19 +220,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
 
@@ -243,7 +243,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.WaitingForData}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.WaitingForData}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
@@ -406,10 +406,10 @@
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ShowFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.HideFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -455,19 +455,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
 
@@ -478,7 +478,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.WaitingForData}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.WaitingForData}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
@@ -698,10 +698,10 @@
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ShowFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.HideFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -743,19 +743,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -907,10 +907,10 @@
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ShowFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.HideFloatingMessage}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
@@ -947,19 +947,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.EnterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MahApps.Storyboard.ExitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>

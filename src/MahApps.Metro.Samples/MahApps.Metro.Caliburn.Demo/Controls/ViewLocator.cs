@@ -23,6 +23,7 @@ namespace Caliburn.Metro.Demo.Controls
         }
 
         public UIElement GetOrCreateViewType(Type viewType)
+
         {
             var cached = IoC.GetAllInstances(viewType).OfType<UIElement>().FirstOrDefault();
             if (cached != null)
@@ -38,13 +39,11 @@ namespace Caliburn.Metro.Demo.Controls
 
             var newInstance = (UIElement)Activator.CreateInstance(viewType);
 
-            var window = newInstance as Window;
-            if (window != null)
-            {
-                window.Resources.MergedDictionaries.Add(this.themeManager.GetThemeResources());
-            }
-
             Micro.ViewLocator.InitializeComponent(newInstance);
+
+            // alternative way to use the MahApps resources
+            // (newInstance as Window)?.Resources.MergedDictionaries.Add(themeManager.GetThemeResources());
+
             return newInstance;
         }
     }
