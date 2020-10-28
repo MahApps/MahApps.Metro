@@ -55,6 +55,9 @@ namespace Caliburn.Metro.Demo.Controls
         [Export(typeof(StartupTask))]
         public void ApplyViewLocatorOverride()
         {
+            var themeManager = this.serviceLocator.GetInstance<IThemeManager>();
+            Application.Current.Resources.MergedDictionaries.Add(themeManager.GetThemeResources());
+
             var viewLocator = this.serviceLocator.GetInstance<IViewLocator>();
             Micro.ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
         }
