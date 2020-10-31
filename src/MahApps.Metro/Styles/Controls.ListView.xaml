@@ -172,12 +172,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid>
+                    <Grid x:Name="RootGrid"
+                          Background="Transparent"
+                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
                             <GridViewRowPresenter x:Name="PART_RowPresenter"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -188,7 +191,7 @@
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               Visibility="Collapsed" />
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
                             <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible" />
@@ -246,6 +249,7 @@
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
                             <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
                             <Setter TargetName="PART_RowPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
