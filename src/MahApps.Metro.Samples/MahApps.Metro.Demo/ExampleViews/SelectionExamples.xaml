@@ -46,13 +46,24 @@
                     </ListBox>
                     <ListBox Margin="2"
                              Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                             AlternationCount="2"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
                              IsEnabled="False"
                              ItemsSource="{Binding Artists}"
                              SelectedIndex="0"
                              SelectionMode="Extended"
-                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                                <Style.Triggers>
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
 
                     <ListBox Margin="2" SelectedIndex="0">
                         <ListBoxItem Content="Item 1" />
