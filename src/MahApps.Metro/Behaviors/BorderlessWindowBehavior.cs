@@ -40,10 +40,10 @@ namespace MahApps.Metro.Behaviors
         {
             if (sender is MetroWindow window)
             {
+                window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
+
                 if (window.ResizeMode != ResizeMode.NoResize)
                 {
-                    //window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
-                    window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
                     window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
                 }
             }
