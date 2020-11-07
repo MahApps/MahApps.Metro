@@ -1,10 +1,10 @@
-﻿<Dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog"
+﻿<dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                         xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                         xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                         xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                          Cursor="Wait">
-    <Dialogs:BaseMetroDialog.Content>
+    <dialogs:BaseMetroDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -12,9 +12,9 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                        Margin="0 5 0 0"
-                       FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap" />
 
             <StackPanel Grid.Row="1"
@@ -23,21 +23,21 @@
                         Orientation="Horizontal">
                 <Button x:Name="PART_NegativeButton"
                         Margin="5 0 0 0"
-                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Cursor="Arrow"
-                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>
-    </Dialogs:BaseMetroDialog.Content>
-    <Dialogs:BaseMetroDialog.DialogBottom>
-        <Controls:MetroProgressBar x:Name="PART_ProgressBar"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Bottom"
-                                   Panel.ZIndex="5"
-                                   Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                                   Maximum="1.0"
-                                   Minimum="0.0" />
-    </Dialogs:BaseMetroDialog.DialogBottom>
-</Dialogs:BaseMetroDialog>
+    </dialogs:BaseMetroDialog.Content>
+    <dialogs:BaseMetroDialog.DialogBottom>
+        <mah:MetroProgressBar x:Name="PART_ProgressBar"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Bottom"
+                              Panel.ZIndex="5"
+                              Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                              Maximum="1.0"
+                              Minimum="0.0" />
+    </dialogs:BaseMetroDialog.DialogBottom>
+</dialogs:BaseMetroDialog>

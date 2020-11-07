@@ -1,13 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib"
-                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    mc:Ignorable="po">
 
-    <System:Double x:Key="MahApps.Sizes.ScrollBar.Height">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.ScrollBar.Width">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</System:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Height">14</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Width">14</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</system:Double>
 
     <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbMouseOver" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -150,7 +152,7 @@
                                   Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar}" />
+                    <mah:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeIncrease"
@@ -187,7 +189,7 @@
                    Grid.Row="1"
                    IsDirectionReversed="True">
                 <Track.Resources>
-                    <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">50</System:Double>
+                    <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">50</system:Double>
                 </Track.Resources>
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeDecrease"
@@ -195,7 +197,7 @@
                                   Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar}" />
+                    <mah:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeIncrease"
@@ -235,7 +237,6 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ScrollViewer" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -278,7 +279,7 @@
                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
+                        <Trigger Property="mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
                             <Setter TargetName="PART_HorizontalScrollBar" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_ScrollContentPresenter" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_VerticalScrollBar" Property="Grid.Column" Value="0" />
@@ -289,6 +290,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="False" />
     </Style>
 
 </ResourceDictionary>

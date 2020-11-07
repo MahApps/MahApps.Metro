@@ -1,38 +1,37 @@
-﻿<controls:Flyout x:Class="MetroDemo.ExampleWindows.ShowcaseFlyout"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:actions="clr-namespace:MahApps.Metro.Actions;assembly=MahApps.Metro"
-                 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:metroDemo="clr-namespace:MetroDemo"
-                 xmlns:system="clr-namespace:System;assembly=mscorlib"
-                 x:Name="ThisView"
-                 Width="500"
-                 d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
-                 d:DesignHeight="300"
-                 d:DesignWidth="400"
-                 CloseCommand="{Binding CloseCmd}"
-                 Header="{Binding}"
-                 Position="Right"
-                 Theme="Dark"
-                 mc:Ignorable="d">
+﻿<mah:Flyout x:Class="MetroDemo.ExampleWindows.ShowcaseFlyout"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+            xmlns:local="clr-namespace:MetroDemo"
+            xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:system="clr-namespace:System;assembly=mscorlib"
+            x:Name="ThisView"
+            Width="500"
+            d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+            d:DesignHeight="300"
+            d:DesignWidth="400"
+            CloseCommand="{Binding CloseCmd}"
+            Header="{Binding}"
+            Position="Right"
+            Theme="Dark"
+            mc:Ignorable="d">
 
-    <controls:Flyout.Resources>
+    <mah:Flyout.Resources>
         <ResourceDictionary>
             <ObjectDataProvider x:Key="FlyoutThemeEnumValues"
                                 MethodName="GetValues"
-                                ObjectType="{x:Type controls:FlyoutTheme}">
+                                ObjectType="{x:Type mah:FlyoutTheme}">
                 <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="controls:FlyoutTheme" />
+                    <x:Type TypeName="mah:FlyoutTheme" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
         </ResourceDictionary>
-    </controls:Flyout.Resources>
+    </mah:Flyout.Resources>
 
-    <controls:Flyout.HeaderTemplate>
-        <DataTemplate DataType="{x:Type metroDemo:MainWindowViewModel}">
+    <mah:Flyout.HeaderTemplate>
+        <DataTemplate DataType="{x:Type local:MainWindowViewModel}">
             <DockPanel x:Name="dpHeader"
                        VerticalAlignment="Center"
                        LastChildFill="True">
@@ -44,29 +43,29 @@
                         DockPanel.Dock="Left"
                         FontFamily="Segoe UI Symbol"
                         FontSize="16"
-                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=Foreground}"
-                        IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=CloseButtonIsCancel}"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=Foreground}"
+                        IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonIsCancel}"
                         Style="{DynamicResource MahApps.Styles.Button.Circle}"
-                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=CloseButtonVisibility}">
+                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonVisibility}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <actions:CloseFlyoutAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=CloseCommand, Mode=OneWay}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}" />
+                            <mah:CloseFlyoutAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=CloseCommand, Mode=OneWay}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ContentControl Width="20"
                                     Height="20"
                                     Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
-                                    FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=FlowDirection}"
+                                    FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=FlowDirection}"
                                     Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                 </Button>
                 <TextBlock x:Name="PART_BackHeaderText"
                            Margin="15 0 0 0"
                            VerticalAlignment="Center"
                            Text="{Binding Title, Mode=OneWay}"
-                           Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=TitleVisibility}" />
+                           Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=TitleVisibility}" />
             </DockPanel>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}}" Value="Left">
+                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Left">
                     <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
                     <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                         <Setter.Value>
@@ -76,14 +75,14 @@
                     <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
                     <Setter TargetName="PART_BackHeaderText" Property="TextAlignment" Value="Right" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}}" Value="Top">
+                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Top">
                     <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                         <Setter.Value>
                             <RotateTransform Angle="-90" />
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}}" Value="Bottom">
+                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Bottom">
                     <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                         <Setter.Value>
                             <RotateTransform Angle="90" />
@@ -92,7 +91,7 @@
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
-    </controls:Flyout.HeaderTemplate>
+    </mah:Flyout.HeaderTemplate>
 
     <ScrollViewer>
         <StackPanel Margin="2" Orientation="Vertical">
@@ -125,26 +124,26 @@
                           Margin="2"
                           Content="Can close Flyout"
                           IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <controls:ToggleSwitch Grid.Row="2"
-                                       Grid.Column="1"
-                                       Margin="2"
-                                       Header="Flyout closing"
-                                       IsOn="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                       OffContent="Disabled"
-                                       OnContent="Allowed" />
-                <controls:ToggleSwitch Grid.Row="3"
-                                       Grid.Column="1"
-                                       Margin="2"
-                                       Header="Flyout closing"
-                                       IsOn="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                       OffContent="Disabled"
-                                       OnContent="Allowed" />
+                <mah:ToggleSwitch Grid.Row="2"
+                                  Grid.Column="1"
+                                  Margin="2"
+                                  Header="Flyout closing"
+                                  IsOn="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  OffContent="Disabled"
+                                  OnContent="Allowed" />
+                <mah:ToggleSwitch Grid.Row="3"
+                                  Grid.Column="1"
+                                  Margin="2"
+                                  Header="Flyout closing"
+                                  IsOn="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  OffContent="Disabled"
+                                  OnContent="Allowed" />
 
             </Grid>
 
-            <controls:MetroAnimatedTabControl Height="300"
-                                              Margin="2"
-                                              controls:TabControlHelper.Underlined="TabPanel">
+            <mah:MetroAnimatedTabControl Height="300"
+                                         Margin="2"
+                                         mah:TabControlHelper.Underlined="TabPanel">
                 <TabItem Header="Artists">
                     <ListView Margin="2"
                               BorderThickness="0"
@@ -171,7 +170,7 @@
                     <StackPanel Orientation="Vertical">
                         <Slider x:Name="TheSlider"
                                 Margin="4"
-                                controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                mah:SliderHelper.EnableMouseWheel="MouseHover"
                                 LargeChange="10"
                                 Maximum="100"
                                 Minimum="0"
@@ -189,9 +188,9 @@
                                    FontSize="48"
                                    Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat={}{0:N0}}" />
                         <TextBox Margin="2"
-                                 controls:TextBoxHelper.Watermark="TextBox 01"
+                                 mah:TextBoxHelper.Watermark="TextBox 01"
                                  Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat='{}Slider value is {0:N0}'}" />
-                        <TextBox Margin="2" controls:TextBoxHelper.Watermark="TextBox 02" />
+                        <TextBox Margin="2" mah:TextBoxHelper.Watermark="TextBox 02" />
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Calendar">
@@ -205,7 +204,7 @@
                                   SelectionMode="MultipleRange" />
                     </StackPanel>
                 </TabItem>
-            </controls:MetroAnimatedTabControl>
+            </mah:MetroAnimatedTabControl>
         </StackPanel>
     </ScrollViewer>
-</controls:Flyout>
+</mah:Flyout>

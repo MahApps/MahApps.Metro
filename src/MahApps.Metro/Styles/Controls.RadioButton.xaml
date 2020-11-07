@@ -1,46 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  ********************************** RadioButton Style **********************************  -->
     <Style x:Key="MahApps.Styles.RadioButton" TargetType="RadioButton">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
-        <Setter Property="Controls:RadioButtonHelper.BackgroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.BackgroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.BackgroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.BorderBrushDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.BorderBrushPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.BorderBrushPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFill" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFillDisabled" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFillPointerOver" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFillPressed" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStroke" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStrokeDisabled" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStrokePointerOver" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStrokePressed" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:RadioButtonHelper.ForegroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.ForegroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.ForegroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFillDisabled" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFillPointerOver" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFillPressed" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStroke" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStrokeDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStrokePointerOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStrokePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFillDisabled" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFillPointerOver" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFillPressed" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStroke" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStrokeDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStrokePointerOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStrokePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
-        <Setter Property="Controls:RadioButtonHelper.RadioSize" Value="18" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
@@ -58,7 +24,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Grid.ColumnDefinitions>
@@ -69,26 +35,26 @@
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
                                 <Ellipse x:Name="OuterEllipse"
-                                         Width="{TemplateBinding Controls:RadioButtonHelper.RadioSize}"
-                                         Height="{TemplateBinding Controls:RadioButtonHelper.RadioSize}"
-                                         Fill="{TemplateBinding Controls:RadioButtonHelper.OuterEllipseFill}"
-                                         Stroke="{TemplateBinding Controls:RadioButtonHelper.OuterEllipseStroke}"
-                                         StrokeThickness="{TemplateBinding Controls:RadioButtonHelper.RadioStrokeThickness}"
+                                         Width="{TemplateBinding mah:RadioButtonHelper.RadioSize}"
+                                         Height="{TemplateBinding mah:RadioButtonHelper.RadioSize}"
+                                         Fill="{TemplateBinding mah:RadioButtonHelper.OuterEllipseFill}"
+                                         Stroke="{TemplateBinding mah:RadioButtonHelper.OuterEllipseStroke}"
+                                         StrokeThickness="{TemplateBinding mah:RadioButtonHelper.RadioStrokeThickness}"
                                          UseLayoutRounding="False" />
                                 <Ellipse x:Name="CheckOuterEllipse"
-                                         Width="{TemplateBinding Controls:RadioButtonHelper.RadioSize}"
-                                         Height="{TemplateBinding Controls:RadioButtonHelper.RadioSize}"
-                                         Fill="{TemplateBinding Controls:RadioButtonHelper.OuterEllipseCheckedFill}"
+                                         Width="{TemplateBinding mah:RadioButtonHelper.RadioSize}"
+                                         Height="{TemplateBinding mah:RadioButtonHelper.RadioSize}"
+                                         Fill="{TemplateBinding mah:RadioButtonHelper.OuterEllipseCheckedFill}"
                                          Opacity="0"
-                                         Stroke="{TemplateBinding Controls:RadioButtonHelper.OuterEllipseCheckedStroke}"
-                                         StrokeThickness="{TemplateBinding Controls:RadioButtonHelper.RadioStrokeThickness}"
+                                         Stroke="{TemplateBinding mah:RadioButtonHelper.OuterEllipseCheckedStroke}"
+                                         StrokeThickness="{TemplateBinding mah:RadioButtonHelper.RadioStrokeThickness}"
                                          UseLayoutRounding="False" />
                                 <Ellipse x:Name="CheckGlyph"
-                                         Width="{TemplateBinding Controls:RadioButtonHelper.RadioCheckSize}"
-                                         Height="{TemplateBinding Controls:RadioButtonHelper.RadioCheckSize}"
-                                         Fill="{TemplateBinding Controls:RadioButtonHelper.CheckGlyphFill}"
+                                         Width="{TemplateBinding mah:RadioButtonHelper.RadioCheckSize}"
+                                         Height="{TemplateBinding mah:RadioButtonHelper.RadioCheckSize}"
+                                         Fill="{TemplateBinding mah:RadioButtonHelper.CheckGlyphFill}"
                                          Opacity="0"
-                                         Stroke="{TemplateBinding Controls:RadioButtonHelper.CheckGlyphStroke}"
+                                         Stroke="{TemplateBinding mah:RadioButtonHelper.CheckGlyphStroke}"
                                          UseLayoutRounding="False" />
                             </Grid>
                             <ContentPresenter x:Name="ContentPresenter"
@@ -97,7 +63,7 @@
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               Focusable="False"
-                                              RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               TextElement.Foreground="{TemplateBinding Foreground}" />
                         </Grid>
@@ -126,40 +92,40 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="CheckGlyph" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.CheckGlyphFillPointerOver)}" />
-                            <Setter TargetName="CheckGlyph" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.CheckGlyphStrokePointerOver)}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseCheckedFillPointerOver)}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseCheckedStrokePointerOver)}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.ForegroundPointerOver)}" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseFillPointerOver)}" />
-                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseStrokePointerOver)}" />
-                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.BackgroundPointerOver)}" />
-                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.BorderBrushPointerOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.CheckGlyphFillPointerOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.CheckGlyphStrokePointerOver)}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseCheckedFillPointerOver)}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseCheckedStrokePointerOver)}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.ForegroundPointerOver)}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseFillPointerOver)}" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseStrokePointerOver)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.BackgroundPointerOver)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.BorderBrushPointerOver)}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="CheckGlyph" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.CheckGlyphFillPressed)}" />
-                            <Setter TargetName="CheckGlyph" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.CheckGlyphStrokePressed)}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseCheckedFillPressed)}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseCheckedStrokePressed)}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.ForegroundPressed)}" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseFillPressed)}" />
-                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseStrokePressed)}" />
-                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.BackgroundPressed)}" />
-                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.BorderBrushPressed)}" />
+                            <Setter TargetName="CheckGlyph" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.CheckGlyphFillPressed)}" />
+                            <Setter TargetName="CheckGlyph" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.CheckGlyphStrokePressed)}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseCheckedFillPressed)}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseCheckedStrokePressed)}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.ForegroundPressed)}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseFillPressed)}" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseStrokePressed)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.BackgroundPressed)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.BorderBrushPressed)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="CheckGlyph" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.CheckGlyphFillDisabled)}" />
-                            <Setter TargetName="CheckGlyph" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.CheckGlyphStrokeDisabled)}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseCheckedFillDisabled)}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseCheckedStrokeDisabled)}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.ForegroundDisabled)}" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseFillDisabled)}" />
-                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.OuterEllipseStrokeDisabled)}" />
-                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.BackgroundDisabled)}" />
-                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:RadioButtonHelper.BorderBrushDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.CheckGlyphFillDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.CheckGlyphStrokeDisabled)}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseCheckedFillDisabled)}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseCheckedStrokeDisabled)}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.ForegroundDisabled)}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseFillDisabled)}" />
+                            <Setter TargetName="OuterEllipse" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.OuterEllipseStrokeDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.BackgroundDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:RadioButtonHelper.BorderBrushDisabled)}" />
                         </Trigger>
 
-                        <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+                        <Trigger Property="mah:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
                             <Setter TargetName="ContentPresenter" Property="Grid.Column" Value="0" />
                             <Setter TargetName="LeftCol" Property="Width" Value="*" />
                             <Setter TargetName="Radio" Property="Grid.Column" Value="1" />
@@ -170,63 +136,97 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="mah:RadioButtonHelper.BackgroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.BackgroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.BackgroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPressed}" />
+        <Setter Property="mah:RadioButtonHelper.BorderBrushDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.BorderBrushPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.BorderBrushPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPressed}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFill" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFillDisabled" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFillPointerOver" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFillPressed" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStroke" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStrokeDisabled" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStrokePointerOver" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStrokePressed" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="mah:RadioButtonHelper.ForegroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.ForegroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.ForegroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPressed}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFillDisabled" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFillPointerOver" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFillPressed" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStroke" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStrokeDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStrokePointerOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStrokePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFillDisabled" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFillPointerOver" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFillPressed" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStroke" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokeDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePointerOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="mah:RadioButtonHelper.RadioSize" Value="18" />
         <Style.Triggers>
-            <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+            <Trigger Property="mah:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
                 <Setter Property="HorizontalContentAlignment" Value="Right" />
                 <Setter Property="Padding" Value="0 0 6 0" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <sys:Double x:Key="RadioButtonBorderThemeThickness">2</sys:Double>
+    <system:Double x:Key="RadioButtonBorderThemeThickness">2</system:Double>
 
     <Style x:Key="MahApps.Styles.RadioButton.Win10"
            BasedOn="{StaticResource MahApps.Styles.RadioButton}"
            TargetType="RadioButton">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrush}" />
-        <Setter Property="Controls:RadioButtonHelper.BackgroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.BackgroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.BackgroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.BorderBrushDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.BorderBrushPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.BorderBrushPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFill" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFill}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFillDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFillDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFillPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFillPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphFillPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFillPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStroke" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStroke}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStrokeDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStrokePointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.CheckGlyphStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStrokePressed}" />
-        <Setter Property="Controls:RadioButtonHelper.ForegroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.ForegroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.ForegroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFill" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFill}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFillDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFillDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFillPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedFillPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStroke" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStroke}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokeDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseCheckedStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePressed}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFill" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFill}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFillDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFillDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFillPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFillPointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseFillPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFillPressed}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStroke" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStroke}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokeDisabled}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokePointerOver}" />
-        <Setter Property="Controls:RadioButtonHelper.OuterEllipseStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokePressed}" />
-        <Setter Property="Controls:RadioButtonHelper.RadioSize" Value="20" />
-        <Setter Property="Controls:RadioButtonHelper.RadioStrokeThickness" Value="{DynamicResource RadioButtonBorderThemeThickness}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="120" />
         <Setter Property="Padding" Value="8 0 0 0" />
+        <Setter Property="mah:RadioButtonHelper.BackgroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.BackgroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.BackgroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPressed}" />
+        <Setter Property="mah:RadioButtonHelper.BorderBrushDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.BorderBrushPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.BorderBrushPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPressed}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFill" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFill}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFillDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFillDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFillPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFillPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphFillPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphFillPressed}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStroke" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStroke}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStrokeDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStrokePointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.CheckGlyphStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.CheckGlyphStrokePressed}" />
+        <Setter Property="mah:RadioButtonHelper.ForegroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.ForegroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.ForegroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPressed}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFill" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFill}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFillDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFillDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFillPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedFillPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPressed}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStroke" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStroke}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokeDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseCheckedStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePressed}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFill" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFill}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFillDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFillDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFillPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFillPointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseFillPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseFillPressed}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStroke" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStroke}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokeDisabled}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokePointerOver}" />
+        <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokePressed}" />
+        <Setter Property="mah:RadioButtonHelper.RadioSize" Value="20" />
+        <Setter Property="mah:RadioButtonHelper.RadioStrokeThickness" Value="{DynamicResource RadioButtonBorderThemeThickness}" />
         <Style.Triggers>
-            <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+            <Trigger Property="mah:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
                 <Setter Property="HorizontalContentAlignment" Value="Right" />
                 <Setter Property="Padding" Value="0 0 8 0" />
             </Trigger>

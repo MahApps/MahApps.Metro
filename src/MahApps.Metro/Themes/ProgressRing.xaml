@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="Controls:ProgressRing">
+    <Style TargetType="mah:ProgressRing">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Height" Value="60" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -11,7 +11,7 @@
         <Setter Property="MinWidth" Value="20" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Controls:ProgressRing">
+                <ControlTemplate TargetType="mah:ProgressRing">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">

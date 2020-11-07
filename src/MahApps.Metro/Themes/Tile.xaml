@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="Controls:Tile">
+    <Style TargetType="mah:Tile">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{x:Null}" />
         <Setter Property="CountFontSize" Value="28" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="Height" Value="140" />
@@ -14,7 +13,7 @@
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Controls:Tile">
+                <ControlTemplate TargetType="mah:Tile">
                     <Grid>
                         <Border x:Name="PART_Border"
                                 Background="{TemplateBinding Background}"
@@ -42,7 +41,7 @@
                             </Grid>
                         </Border>
                         <Border x:Name="PART_HoverBorder"
-                                BorderBrush="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
+                                BorderBrush="{TemplateBinding mah:ControlsHelper.MouseOverBorderBrush}"
                                 BorderThickness="2"
                                 Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -50,7 +49,7 @@
                     <ControlTemplate.Triggers>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver, Mode=OneWay}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_HoverBorder" Property="Opacity" Value="0.6" />
@@ -72,6 +71,7 @@
         <Setter Property="TitleFontSize" Value="16" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Width" Value="140" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{x:Null}" />
     </Style>
 
 </ResourceDictionary>

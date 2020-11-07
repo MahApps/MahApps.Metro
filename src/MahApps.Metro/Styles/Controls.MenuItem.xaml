@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
 
@@ -62,27 +62,27 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="{x:Static controls:Spelling.SuggestionMenuItemStyleKey}"
+    <Style x:Key="{x:Static mah:Spelling.SuggestionMenuItemStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.MenuItem}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=CommandParameter}" />
     </Style>
 
-    <Style x:Key="{x:Static controls:Spelling.IgnoreAllMenuItemStyleKey}"
+    <Style x:Key="{x:Static mah:Spelling.IgnoreAllMenuItemStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.MenuItem}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Header" Value="Ignore All" />
     </Style>
 
-    <Style x:Key="{x:Static controls:Spelling.NoSuggestionsMenuItemStyleKey}"
+    <Style x:Key="{x:Static mah:Spelling.NoSuggestionsMenuItemStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.MenuItem}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Header" Value="(no spelling suggestions)" />
         <Setter Property="IsEnabled" Value="False" />
     </Style>
 
-    <Style x:Key="{x:Static controls:Spelling.SeparatorStyleKey}"
+    <Style x:Key="{x:Static mah:Spelling.SeparatorStyleKey}"
            BasedOn="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}"
            TargetType="{x:Type Separator}" />
 

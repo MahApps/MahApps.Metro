@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.SelectionExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -21,8 +21,8 @@
                           VerticalScrollBarVisibility="Disabled">
                 <UniformGrid Columns="2" Rows="2">
                     <ListBox Margin="2"
-                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
-                             Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
+                             mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                             mah:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                              AlternationCount="2"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
@@ -32,10 +32,10 @@
                              Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
                         <ListBox.ItemContainerStyle>
                             <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
-                                <Setter Property="Controls:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="Coral" />
-                                <Setter Property="Controls:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="Black" />
-                                <Setter Property="Controls:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="DarkOliveGreen" />
-                                <Setter Property="Controls:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="White" />
+                                <Setter Property="mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="Coral" />
+                                <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="Black" />
+                                <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="DarkOliveGreen" />
+                                <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="White" />
                                 <Style.Triggers>
                                     <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                                         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
@@ -45,7 +45,7 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
                     <ListBox Margin="2"
-                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                             mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              AlternationCount="2"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
@@ -222,8 +222,8 @@
                           VerticalScrollBarVisibility="Auto">
                 <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
                     <ComboBox Width="200"
-                              Controls:TextBoxHelper.ClearTextButton="True"
-                              Controls:TextBoxHelper.Watermark="Please select an item..."
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              mah:TextBoxHelper.Watermark="Please select an item..."
                               BorderThickness="4"
                               SelectedIndex="0">
                         <ComboBox.ContextMenu>
@@ -239,8 +239,8 @@
 
                     <ComboBox Width="200"
                               Margin="{StaticResource ControlMargin}"
-                              Controls:TextBoxHelper.ClearTextButton="True"
-                              Controls:TextBoxHelper.Watermark="Please select an item..."
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              mah:TextBoxHelper.Watermark="Please select an item..."
                               SelectedIndex="0">
                         <ComboBox.ContextMenu>
                             <ContextMenu>
@@ -269,9 +269,9 @@
 
                     <ComboBox Width="200"
                               Margin="{StaticResource ControlMargin}"
-                              Controls:TextBoxHelper.ClearTextButton="True"
-                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                              Controls:TextBoxHelper.Watermark="Please select an item..."
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              mah:TextBoxHelper.UseFloatingWatermark="True"
+                              mah:TextBoxHelper.Watermark="Please select an item..."
                               SelectedIndex="0">
                         <ComboBox.ContextMenu>
                             <ContextMenu>
@@ -286,9 +286,9 @@
 
                     <ComboBox Width="200"
                               Margin="{StaticResource ControlMargin}"
-                              Controls:TextBoxHelper.ClearTextButton="True"
-                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                              Controls:TextBoxHelper.Watermark="Editable..."
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              mah:TextBoxHelper.UseFloatingWatermark="True"
+                              mah:TextBoxHelper.Watermark="Editable..."
                               IsEditable="True"
                               SelectedIndex="0">
                         <ComboBox.ContextMenu>
@@ -301,14 +301,14 @@
                     </ComboBox>
 
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             Controls:TextBoxHelper.ClearTextButton="True"
-                             Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Editable TextBox..." />
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.UseFloatingWatermark="True"
+                             mah:TextBoxHelper.Watermark="Editable TextBox..." />
 
                     <ComboBox Width="200"
                               Margin="{StaticResource ControlMargin}"
-                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                              Controls:TextBoxHelper.Watermark="Autocompletion"
+                              mah:TextBoxHelper.UseFloatingWatermark="True"
+                              mah:TextBoxHelper.Watermark="Autocompletion"
                               DisplayMemberPath="Title"
                               IsEditable="True"
                               ItemsSource="{Binding Albums}"
@@ -319,7 +319,7 @@
                     <ComboBox x:Name="groupingComboBox"
                               Width="200"
                               Margin="{StaticResource ControlMargin}"
-                              Controls:TextBoxHelper.Watermark="Autocompletion with grouping"
+                              mah:TextBoxHelper.Watermark="Autocompletion with grouping"
                               DisplayMemberPath="Title"
                               IsEditable="True"
                               IsEnabled="True"
@@ -348,7 +348,7 @@
                     </ComboBox>
                     <ComboBox Width="200"
                               Margin="0 10 0 0"
-                              Controls:TextBoxHelper.Watermark="Autocompletion"
+                              mah:TextBoxHelper.Watermark="Autocompletion"
                               DisplayMemberPath="Title"
                               IsEditable="True"
                               IsEnabled="False"

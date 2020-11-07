@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <!--  Tooltip Style  -->
     <Style x:Key="MahApps.Styles.ToolTip" TargetType="ToolTip">
@@ -24,16 +24,16 @@
                             <Storyboard x:Key="Visible State" />
                             <Storyboard x:Key="Normal State" />
                         </Border.Resources>
-                        <controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Margin="{TemplateBinding Padding}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   FontSize="{TemplateBinding FontSize}"
-                                                   Foreground="{TemplateBinding Foreground}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>

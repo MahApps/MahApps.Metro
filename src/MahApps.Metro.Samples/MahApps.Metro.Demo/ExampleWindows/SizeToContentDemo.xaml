@@ -1,12 +1,12 @@
-﻿<controls:MetroWindow x:Class="MetroDemo.ExampleWindows.SizeToContentDemo"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                      Title="SizeToContent Demo"
-                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
-                      SizeToContent="WidthAndHeight"
-                      WindowStartupLocation="CenterOwner">
+﻿<mah:MetroWindow x:Class="MetroDemo.ExampleWindows.SizeToContentDemo"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="SizeToContent Demo"
+                 GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+                 SizeToContent="WidthAndHeight"
+                 WindowStartupLocation="CenterOwner">
     <Grid Width="50"
           Height="50"
           Background="Firebrick">
@@ -30,4 +30,4 @@
     <!--        <PasswordBox  Margin="4" controls:TextBoxHelper.Watermark="Password" controls:TextBoxHelper.UseFloatingWatermark="True"></PasswordBox>-->
     <!--    </StackPanel>-->
 
-</controls:MetroWindow>
+</mah:MetroWindow>

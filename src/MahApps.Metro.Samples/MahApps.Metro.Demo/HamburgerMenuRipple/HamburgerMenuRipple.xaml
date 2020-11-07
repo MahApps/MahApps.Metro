@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:MetroDemo"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:metroDemo="clr-namespace:MetroDemo"
-             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -270,12 +270,12 @@
                     <mah:HamburgerMenuItemCollection>
                         <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Home}" Label="Home">
                             <mah:HamburgerMenuIconItem.Tag>
-                                <metroDemo:HomeView />
+                                <local:HomeView />
                             </mah:HamburgerMenuIconItem.Tag>
                         </mah:HamburgerMenuIconItem>
                         <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountCircle}" Label="Private">
                             <mah:HamburgerMenuIconItem.Tag>
-                                <metroDemo:PrivateView />
+                                <local:PrivateView />
                             </mah:HamburgerMenuIconItem.Tag>
                         </mah:HamburgerMenuIconItem>
                         <mah:HamburgerMenuIconItem Icon="{iconPacks:Octicons Kind=Briefcase}" Label="Briefcase">
@@ -299,7 +299,7 @@
                     <mah:HamburgerMenuItemCollection>
                         <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Cog}" Label="Settings">
                             <mah:HamburgerMenuIconItem.Tag>
-                                <metroDemo:SettingsView />
+                                <local:SettingsView />
                             </mah:HamburgerMenuIconItem.Tag>
                         </mah:HamburgerMenuIconItem>
                     </mah:HamburgerMenuItemCollection>

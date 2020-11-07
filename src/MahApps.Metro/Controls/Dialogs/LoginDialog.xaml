@@ -1,9 +1,9 @@
-﻿<Dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.LoginDialog"
+﻿<dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.LoginDialog"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                         xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviors"
-                         xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                         xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
+                         xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
+                         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                         xmlns:mah="clr-namespace:MahApps.Metro.Controls">
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="20" />
@@ -14,51 +14,51 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                    Margin="0 5 0 0"
-                   FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                   Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   Text="{Binding Message, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                    TextWrapping="Wrap" />
         <TextBox x:Name="PART_TextBox"
                  Grid.Row="1"
                  Margin="0 5 0 0"
-                 Controls:TextBoxHelper.SelectAllOnFocus="True"
-                 Controls:TextBoxHelper.Watermark="{Binding UsernameWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 Controls:VisibilityHelper.IsCollapsed="{Binding ShouldHideUsername, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 CharacterCasing="{Binding UsernameCharacterCasing, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 Text="{Binding Username, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 mah:TextBoxHelper.SelectAllOnFocus="True"
+                 mah:TextBoxHelper.Watermark="{Binding UsernameWatermark, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 mah:VisibilityHelper.IsCollapsed="{Binding ShouldHideUsername, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 CharacterCasing="{Binding UsernameCharacterCasing, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Username, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  TextWrapping="Wrap" />
         <PasswordBox x:Name="PART_TextBox2"
                      Grid.Row="2"
                      Margin="0 5 0 0"
-                     Behaviors:PasswordBoxBindingBehavior.Password="{Binding Password, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                     Controls:TextBoxHelper.SelectAllOnFocus="True"
-                     Controls:TextBoxHelper.Watermark="{Binding PasswordWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                     FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                     Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+                     behaviors:PasswordBoxBindingBehavior.Password="{Binding Password, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                     mah:TextBoxHelper.SelectAllOnFocus="True"
+                     mah:TextBoxHelper.Watermark="{Binding PasswordWatermark, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                     FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                     Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <CheckBox x:Name="PART_RememberCheckBox"
                   Grid.Row="3"
                   Margin="0 5 0 0"
-                  Content="{Binding RememberCheckBoxText, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                  FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                  IsChecked="{Binding RememberCheckBoxChecked, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                  Visibility="{Binding RememberCheckBoxVisibility, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+                  Content="{Binding RememberCheckBoxText, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                  FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                  IsChecked="{Binding RememberCheckBoxChecked, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                  Visibility="{Binding RememberCheckBoxVisibility, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Grid.Row="4"
                     MinHeight="85"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="PART_AffirmativeButton"
                     Margin="0 0 5 0"
-                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
             <Button x:Name="PART_NegativeButton"
                     Margin="5 0 5 0"
-                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}"
-                    Visibility="{Binding NegativeButtonButtonVisibility, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+                    Visibility="{Binding NegativeButtonButtonVisibility, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </Grid>
-</Dialogs:BaseMetroDialog>
+</dialogs:BaseMetroDialog>

@@ -1,13 +1,12 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.HamburgerMenuDefault"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:MetroDemo"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:metroDemo="clr-namespace:MetroDemo"
-             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
@@ -262,7 +261,7 @@
                                                              Transition="Default">
                                 <mah:TransitioningContentControl.Resources>
                                     <DataTemplate DataType="{x:Type mah:HamburgerMenuGlyphItem}">
-                                        <Image Source="{Binding Glyph, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                        <Image Source="{Binding Glyph, Mode=OneWay, Converter={mah:NullToUnsetValueConverter}}" />
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
                                         <ContentControl Content="{Binding Tag, Mode=OneWay}"
