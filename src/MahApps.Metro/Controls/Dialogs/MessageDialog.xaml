@@ -1,10 +1,10 @@
-﻿<Dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog"
+﻿<dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                         xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
-    <Dialogs:BaseMetroDialog.CommandBindings>
+                         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
+    <dialogs:BaseMetroDialog.CommandBindings>
         <CommandBinding Command="Copy" Executed="OnKeyCopyExecuted" />
-    </Dialogs:BaseMetroDialog.CommandBindings>
+    </dialogs:BaseMetroDialog.CommandBindings>
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -17,9 +17,9 @@
                       VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="PART_MessageTextBlock"
                        Margin="0 5 0 0"
-                       FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap" />
         </ScrollViewer>
 
@@ -29,26 +29,26 @@
                     Orientation="Horizontal">
             <Button x:Name="PART_AffirmativeButton"
                     Margin="0 0 5 0"
-                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
             <Button x:Name="PART_NegativeButton"
                     Margin="5 0 5 0"
-                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
             <Button x:Name="PART_FirstAuxiliaryButton"
                     Margin="5 0 5 0"
-                    Content="{Binding FirstAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding FirstAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}"
                     Visibility="Collapsed" />
             <Button x:Name="PART_SecondAuxiliaryButton"
                     Margin="5 0 0 0"
-                    Content="{Binding SecondAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding SecondAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs}"
                     Visibility="Collapsed" />
         </StackPanel>
     </Grid>
-</Dialogs:BaseMetroDialog>
+</dialogs:BaseMetroDialog>

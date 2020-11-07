@@ -1,13 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Keep the VisualTree in Memory when changing tabs  -->
-    <ControlTemplate x:Key="MahApps.Templates.MetroTabControl.KeepVisualTreeInMemory" TargetType="{x:Type Controls:MetroTabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroTabControl.KeepVisualTreeInMemory" TargetType="{x:Type mah:MetroTabControl}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="ColumnDefinition0" />
@@ -22,13 +22,13 @@
                   Grid.Column="0"
                   Margin="{TemplateBinding TabStripMargin}"
                   Panel.ZIndex="1">
-                <Controls:Underline x:Name="Underline"
-                                    Background="Transparent"
-                                    BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                    LineThickness="1"
-                                    Placement="Bottom"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    Visibility="Collapsed" />
+                <mah:Underline x:Name="Underline"
+                               Background="Transparent"
+                               BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
+                               LineThickness="1"
+                               Placement="Bottom"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                               Visibility="Collapsed" />
                 <TabPanel x:Name="HeaderPanel"
                           IsItemsHost="true"
                           KeyboardNavigation.TabIndex="1" />
@@ -48,7 +48,7 @@
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+            <Trigger Property="mah:TabControlHelper.Underlined" Value="TabPanel">
                 <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Bottom">
@@ -84,7 +84,7 @@
     </ControlTemplate>
 
     <!--  Do not keep the VisualTree in Memory when changing tabs  -->
-    <ControlTemplate x:Key="MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemory" TargetType="{x:Type Controls:MetroTabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemory" TargetType="{x:Type mah:MetroTabControl}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="ColumnDefinition0" />
@@ -99,13 +99,13 @@
                   Grid.Column="0"
                   Margin="{TemplateBinding TabStripMargin}"
                   Panel.ZIndex="1">
-                <Controls:Underline x:Name="Underline"
-                                    Background="Transparent"
-                                    BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                    LineThickness="1"
-                                    Placement="Bottom"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    Visibility="Collapsed" />
+                <mah:Underline x:Name="Underline"
+                               Background="Transparent"
+                               BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
+                               LineThickness="1"
+                               Placement="Bottom"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                               Visibility="Collapsed" />
                 <TabPanel x:Name="HeaderPanel"
                           IsItemsHost="true"
                           KeyboardNavigation.TabIndex="1" />
@@ -126,7 +126,7 @@
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+            <Trigger Property="mah:TabControlHelper.Underlined" Value="TabPanel">
                 <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Bottom">
@@ -161,9 +161,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="{x:Type Controls:MetroTabControl}"
+    <Style x:Key="{x:Type mah:MetroTabControl}"
            BasedOn="{StaticResource MahApps.Styles.TabControl}"
-           TargetType="{x:Type Controls:MetroTabControl}">
+           TargetType="{x:Type mah:MetroTabControl}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemory}" />
         <Style.Triggers>
             <Trigger Property="KeepVisualTreeInMemoryWhenChangingTabs" Value="True">

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <DataTemplate x:Key="MahApps.Templates.PivotHeader">
         <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
@@ -42,11 +42,11 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style TargetType="{x:Type Controls:Pivot}">
+    <Style TargetType="{x:Type mah:Pivot}">
         <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.PivotHeader}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:Pivot}">
+                <ControlTemplate TargetType="{x:Type mah:Pivot}">
                     <Grid x:Name="root">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -54,14 +54,14 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0"
-                                          Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
+                                          Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type mah:Pivot}}}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <ListView x:Name="PART_Headers"
                                   Grid.Row="1"
                                   Background="{x:Null}"
                                   BorderBrush="{x:Null}"
                                   ItemContainerStyle="{StaticResource MahApps.Styles.ListViewItem.Pivot}"
-                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
+                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type mah:Pivot}}}"
                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                   Style="{x:Null}">
@@ -71,7 +71,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="{x:Type Controls:PivotItem}">
+                                <DataTemplate DataType="{x:Type mah:PivotItem}">
                                     <TextBlock Margin="0 0 25 0"
                                                FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                                                FontSize="{DynamicResource SubMahApps.Sizes.HeaderFont}"
@@ -87,7 +87,7 @@
                                       VerticalScrollBarVisibility="Disabled">
                             <ItemsControl x:Name="itemscontrol"
                                           Margin="0 0 250 0"
-                                          ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
+                                          ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type mah:Pivot}}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal" />
@@ -96,8 +96,8 @@
                             </ItemsControl>
                         </ScrollViewer>
 
-                        <Controls:ScrollViewerOffsetMediator x:Name="PART_Mediator" ScrollViewer="{Binding ElementName=PART_Scroll}">
-                            <Controls:ScrollViewerOffsetMediator.Resources>
+                        <mah:ScrollViewerOffsetMediator x:Name="PART_Mediator" ScrollViewer="{Binding ElementName=PART_Scroll}">
+                            <mah:ScrollViewerOffsetMediator.Resources>
                                 <Storyboard x:Key="Storyboard1">
                                     <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Mediator" Storyboard.TargetProperty="HorizontalOffset">
                                         <EasingDoubleKeyFrame x:Name="edkf"
@@ -110,18 +110,18 @@
                                     </DoubleAnimationUsingKeyFrames>
                                 </Storyboard>
 
-                            </Controls:ScrollViewerOffsetMediator.Resources>
-                        </Controls:ScrollViewerOffsetMediator>
+                            </mah:ScrollViewerOffsetMediator.Resources>
+                        </mah:ScrollViewerOffsetMediator>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type Controls:PivotItem}">
+    <Style TargetType="{x:Type mah:PivotItem}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:PivotItem}">
+                <ControlTemplate TargetType="{x:Type mah:PivotItem}">
                     <ContentPresenter />
                 </ControlTemplate>
             </Setter.Value>

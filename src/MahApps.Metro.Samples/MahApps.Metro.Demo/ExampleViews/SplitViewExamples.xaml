@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.SplitViewExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:metroDemo="clr-namespace:MetroDemo"
-             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -17,7 +17,7 @@
 
             <SolidColorBrush x:Key="SplitViewBackgroundBrush" Opacity="1" Color="{StaticResource SystemBaseMediumColor}" />
 
-            <Style TargetType="{x:Type controls:SplitView}">
+            <Style TargetType="{x:Type mah:SplitView}">
                 <Setter Property="CompactPaneLength" Value="48" />
                 <Setter Property="DisplayMode" Value="CompactOverlay" />
                 <Setter Property="IsPaneOpen" Value="False" />
@@ -28,37 +28,37 @@
             <!--  #Templates  -->
             <ControlTemplate x:Key="ConfigDataTemplate">
                 <ControlTemplate.Resources>
-                    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="controls:MetroHeader" />
+                    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
                 </ControlTemplate.Resources>
-                <StackPanel d:DataContext="{d:DesignInstance controls:SplitView}" Grid.IsSharedSizeScope="True">
+                <StackPanel d:DataContext="{d:DesignInstance mah:SplitView}" Grid.IsSharedSizeScope="True">
 
-                    <controls:MetroHeader Header="IsOpen">
-                        <controls:ToggleSwitch Margin="2" IsOn="{Binding IsPaneOpen}" />
-                    </controls:MetroHeader>
+                    <mah:MetroHeader Header="IsOpen">
+                        <mah:ToggleSwitch Margin="2" IsOn="{Binding IsPaneOpen}" />
+                    </mah:MetroHeader>
 
-                    <controls:MetroHeader Header="DisplayMode">
+                    <mah:MetroHeader Header="DisplayMode">
                         <ComboBox Margin="2" SelectedValue="{Binding DisplayMode}">
-                            <controls:SplitViewDisplayMode>Inline</controls:SplitViewDisplayMode>
-                            <controls:SplitViewDisplayMode>Overlay</controls:SplitViewDisplayMode>
-                            <controls:SplitViewDisplayMode>CompactInline</controls:SplitViewDisplayMode>
-                            <controls:SplitViewDisplayMode>CompactOverlay</controls:SplitViewDisplayMode>
+                            <mah:SplitViewDisplayMode>Inline</mah:SplitViewDisplayMode>
+                            <mah:SplitViewDisplayMode>Overlay</mah:SplitViewDisplayMode>
+                            <mah:SplitViewDisplayMode>CompactInline</mah:SplitViewDisplayMode>
+                            <mah:SplitViewDisplayMode>CompactOverlay</mah:SplitViewDisplayMode>
                         </ComboBox>
-                    </controls:MetroHeader>
+                    </mah:MetroHeader>
 
-                    <controls:MetroHeader Header="CanResizeOpenPane">
-                        <controls:ToggleSwitch Margin="2" IsOn="{Binding CanResizeOpenPane}" />
-                    </controls:MetroHeader>
+                    <mah:MetroHeader Header="CanResizeOpenPane">
+                        <mah:ToggleSwitch Margin="2" IsOn="{Binding CanResizeOpenPane}" />
+                    </mah:MetroHeader>
 
-                    <controls:MetroHeader Header="PanePlacement">
+                    <mah:MetroHeader Header="PanePlacement">
                         <ComboBox Margin="2" SelectedValue="{Binding PanePlacement}">
-                            <controls:SplitViewPanePlacement>Left</controls:SplitViewPanePlacement>
-                            <controls:SplitViewPanePlacement>Right</controls:SplitViewPanePlacement>
+                            <mah:SplitViewPanePlacement>Left</mah:SplitViewPanePlacement>
+                            <mah:SplitViewPanePlacement>Right</mah:SplitViewPanePlacement>
                         </ComboBox>
-                    </controls:MetroHeader>
+                    </mah:MetroHeader>
 
-                    <controls:MetroHeader Header="CancelClose">
-                        <controls:ToggleSwitch Margin="2" IsOn="{Binding Tag, Mode=TwoWay}" />
-                    </controls:MetroHeader>
+                    <mah:MetroHeader Header="CancelClose">
+                        <mah:ToggleSwitch Margin="2" IsOn="{Binding Tag, Mode=TwoWay}" />
+                    </mah:MetroHeader>
 
                 </StackPanel>
             </ControlTemplate>
@@ -95,16 +95,16 @@
                       Grid.Column="1"
                       ResizeBehavior="PreviousAndNext" />
 
-        <controls:SplitView x:Name="SimpleSplitview"
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            Margin="5"
-                            DisplayMode="Inline"
-                            IsPaneOpen="True"
-                            OpenPaneLength="150"
-                            PaneBackground="Red"
-                            PaneClosing="Splitview_PaneClosing">
-            <controls:SplitView.Pane>
+        <mah:SplitView x:Name="SimpleSplitview"
+                       Grid.Row="1"
+                       Grid.Column="2"
+                       Margin="5"
+                       DisplayMode="Inline"
+                       IsPaneOpen="True"
+                       OpenPaneLength="150"
+                       PaneBackground="Red"
+                       PaneClosing="Splitview_PaneClosing">
+            <mah:SplitView.Pane>
                 <Grid Margin="48 0 0 0" Background="LightGreen">
                     <TextBlock Margin="10"
                                HorizontalAlignment="Center"
@@ -114,7 +114,7 @@
                                Text="Pane content area"
                                TextWrapping="Wrap" />
                 </Grid>
-            </controls:SplitView.Pane>
+            </mah:SplitView.Pane>
 
             <Grid Background="CornflowerBlue">
                 <TextBlock Margin="20"
@@ -126,6 +126,6 @@
                            TextWrapping="Wrap" />
             </Grid>
 
-        </controls:SplitView>
+        </mah:SplitView>
     </Grid>
 </UserControl>

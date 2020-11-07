@@ -1,12 +1,12 @@
-﻿<controls:MetroWindow x:Class="MahApps.Metro.Tests.ButtonWindow"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      d:DesignHeight="300"
-                      d:DesignWidth="300"
-                      mc:Ignorable="d">
+﻿<mah:MetroWindow x:Class="MahApps.Metro.Tests.ButtonWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 d:DesignHeight="300"
+                 d:DesignWidth="300"
+                 mc:Ignorable="d">
     <StackPanel x:Name="TheStackPanel">
         <StackPanel.Resources>
             <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues"
@@ -21,11 +21,11 @@
         <Button Name="SquareButton"
                 Content="SomeText"
                 Style="{DynamicResource MahApps.Styles.Button.Square}" />
-        <controls:DropDownButton x:Name="TheDropDownButton"
-                                 Content="DropDownButton"
-                                 ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}" />
-        <controls:SplitButton x:Name="TheSplitButton"
-                              ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}"
-                              SelectedIndex="0" />
+        <mah:DropDownButton x:Name="TheDropDownButton"
+                            Content="DropDownButton"
+                            ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}" />
+        <mah:SplitButton x:Name="TheSplitButton"
+                         ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}"
+                         SelectedIndex="0" />
     </StackPanel>
-</controls:MetroWindow>
+</mah:MetroWindow>

@@ -1,15 +1,14 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.OtherExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/shared"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mx="clr-namespace:MetroDemo.Markup"
              xmlns:vc="clr-namespace:MetroDemo.ValueConverter"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -18,7 +17,7 @@
         <ResourceDictionary>
 
             <!--  better results for this examples  -->
-            <Style BasedOn="{StaticResource {x:Type Controls:TransitioningContentControl}}" TargetType="{x:Type Controls:TransitioningContentControl}">
+            <Style BasedOn="{StaticResource {x:Type mah:TransitioningContentControl}}" TargetType="{x:Type mah:TransitioningContentControl}">
                 <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
@@ -44,17 +43,17 @@
 
         <StackPanel Grid.Column="0">
             <Label Content="Transitions" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Controls:TransitioningContentControl x:Name="transitioning"
-                                                  Width="250"
-                                                  Height="50"
-                                                  Margin="0 10 0 0"
-                                                  Transition="Down" />
-            <Controls:TransitioningContentControl x:Name="customTransitioning"
-                                                  Width="250"
-                                                  Height="50"
-                                                  Margin="0 10 0 0"
-                                                  Transition="Custom">
-                <Controls:TransitioningContentControl.CustomVisualStates>
+            <mah:TransitioningContentControl x:Name="transitioning"
+                                             Width="250"
+                                             Height="50"
+                                             Margin="0 10 0 0"
+                                             Transition="Down" />
+            <mah:TransitioningContentControl x:Name="customTransitioning"
+                                             Width="250"
+                                             Height="50"
+                                             Margin="0 10 0 0"
+                                             Transition="Custom">
+                <mah:TransitioningContentControl.CustomVisualStates>
                     <VisualState x:Name="CustomTransition">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
@@ -71,15 +70,15 @@
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
-                </Controls:TransitioningContentControl.CustomVisualStates>
-            </Controls:TransitioningContentControl>
-            <Controls:TransitioningContentControl x:Name="SecondcustomTransitioning"
-                                                  Width="250"
-                                                  Height="50"
-                                                  Margin="0 10 0 0"
-                                                  CustomVisualStatesName="SecondCustomTransition"
-                                                  Transition="Custom">
-                <Controls:TransitioningContentControl.CustomVisualStates>
+                </mah:TransitioningContentControl.CustomVisualStates>
+            </mah:TransitioningContentControl>
+            <mah:TransitioningContentControl x:Name="SecondcustomTransitioning"
+                                             Width="250"
+                                             Height="50"
+                                             Margin="0 10 0 0"
+                                             CustomVisualStatesName="SecondCustomTransition"
+                                             Transition="Custom">
+                <mah:TransitioningContentControl.CustomVisualStates>
                     <VisualState x:Name="SecondCustomTransition">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
@@ -101,8 +100,8 @@
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
-                </Controls:TransitioningContentControl.CustomVisualStates>
-            </Controls:TransitioningContentControl>
+                </mah:TransitioningContentControl.CustomVisualStates>
+            </mah:TransitioningContentControl>
         </StackPanel>
 
         <StackPanel Grid.Row="0"
@@ -155,15 +154,15 @@
                           Grid.Row="2"
                           Grid.Column="1"
                           Grid.ColumnSpan="1"
-                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Controls:NavigationButtonsPosition}}, Mode=OneTime}"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:NavigationButtonsPosition}}, Mode=OneTime}"
                           SelectedValue="{Binding ElementName=FlipView1st, Path=NavigationButtonsPosition, FallbackValue=Inside, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
-            <Controls:FlipView x:Name="FlipView1st"
-                               Height="200"
-                               Margin="0 0 5 0"
-                               Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                               SelectionChanged="FlipView_SelectionChanged">
-                <Controls:FlipView.Items>
+            <mah:FlipView x:Name="FlipView1st"
+                          Height="200"
+                          Margin="0 0 5 0"
+                          Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                          SelectionChanged="FlipView_SelectionChanged">
+                <mah:FlipView.Items>
                     <Grid Background="#2E8DEF">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
@@ -185,17 +184,17 @@
                                                   VerticalAlignment="Center"
                                                   Kind="ChessHorse" />
                     </Grid>
-                </Controls:FlipView.Items>
-            </Controls:FlipView>
+                </mah:FlipView.Items>
+            </mah:FlipView>
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView1st, Mode=OneWay}"
                         Orientation="Horizontal">
-                <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                        ButtonsAlignment="Left"
-                                        Interval="1"
-                                        Maximum="{Binding Path=Items.Count, Mode=OneWay}"
-                                        Minimum="1"
-                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
+                <mah:NumericUpDown mah:TextBoxHelper.SelectAllOnFocus="True"
+                                   ButtonsAlignment="Left"
+                                   Interval="1"
+                                   Maximum="{Binding Path=Items.Count, Mode=OneWay}"
+                                   Minimum="1"
+                                   Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
                 <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">
                     <Run Text="/" />
                     <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
@@ -203,28 +202,28 @@
             </StackPanel>
 
             <Separator Margin="0 5" />
-            <Controls:FlipView x:Name="FlipView2nd"
-                               Height="300"
-                               Margin="0 0 5 0"
-                               BannerText="Databound Items"
-                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
-                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
-                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
-                               ItemTemplate="{StaticResource ImageDataTemplate}"
-                               ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
-                               MouseHoverBorderEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
-                               NavigationButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}"
-                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
+            <mah:FlipView x:Name="FlipView2nd"
+                          Height="300"
+                          Margin="0 0 5 0"
+                          BannerText="Databound Items"
+                          CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                          IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
+                          IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                          ItemTemplate="{StaticResource ImageDataTemplate}"
+                          ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
+                          MouseHoverBorderEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                          NavigationButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}"
+                          Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">
-                <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                        ButtonsAlignment="Opposite"
-                                        Interval="1"
-                                        Maximum="{Binding Path=Items.Count, Mode=OneWay}"
-                                        Minimum="1"
-                                        SwitchUpDownButtons="True"
-                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
+                <mah:NumericUpDown mah:TextBoxHelper.SelectAllOnFocus="True"
+                                   ButtonsAlignment="Opposite"
+                                   Interval="1"
+                                   Maximum="{Binding Path=Items.Count, Mode=OneWay}"
+                                   Minimum="1"
+                                   SwitchUpDownButtons="True"
+                                   Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
             </StackPanel>
         </StackPanel>
 

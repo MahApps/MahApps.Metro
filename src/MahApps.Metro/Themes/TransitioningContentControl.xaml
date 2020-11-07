@@ -1,18 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="Controls:TransitioningContentControl">
+    <Style TargetType="mah:TransitioningContentControl">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Controls:TransitioningContentControl">
+                <ControlTemplate TargetType="mah:TransitioningContentControl">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}">
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}">
                         <Grid>
                             <ContentPresenter x:Name="PreviousContentPresentationSite"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

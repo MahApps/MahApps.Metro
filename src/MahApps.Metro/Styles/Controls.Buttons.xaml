@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <converters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
@@ -31,25 +31,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Controls:ClipBorder x:Name="Border"
-                                         Margin="0"
-                                         Background="{TemplateBinding Background}"
-                                         BorderBrush="{TemplateBinding BorderBrush}"
-                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                         CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </Controls:ClipBorder>
+                    <mah:ClipBorder x:Name="Border"
+                                    Margin="0"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </mah:ClipBorder>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -79,25 +79,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Controls:ClipBorder x:Name="Border"
-                                         Margin="0"
-                                         Background="{TemplateBinding Background}"
-                                         BorderBrush="{TemplateBinding BorderBrush}"
-                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                         CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </Controls:ClipBorder>
+                    <mah:ClipBorder x:Name="Border"
+                                    Margin="0"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </mah:ClipBorder>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -185,7 +185,7 @@
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -243,7 +243,7 @@
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                               Opacity="0.75"
-                              RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
@@ -279,17 +279,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid Background="{TemplateBinding Background}">
-                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -387,11 +387,6 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
-        <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderThickness" Value="2" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
         <Setter Property="FontWeight" Value="Bold" />
@@ -403,42 +398,42 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Controls:ClipBorder x:Name="Border"
-                                             Background="{TemplateBinding Background}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ClipBorder x:Name="DisabledVisualElement"
-                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             IsHitTestVisible="False"
-                                             Opacity="0"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Margin="{TemplateBinding BorderThickness}"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding BorderThickness}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderThickness), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderThickness), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.7" />
@@ -448,13 +443,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="2" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Square" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Lower" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
@@ -465,30 +464,30 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Controls:ClipBorder x:Name="Background"
-                                             Background="{TemplateBinding Background}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ClipBorder x:Name="DisabledVisualElement"
-                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             IsHitTestVisible="False"
-                                             Opacity="0"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="Background"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       Content="{TemplateBinding Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -529,6 +528,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Lower" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Square.Accent"
@@ -540,33 +540,33 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Controls:ClipBorder x:Name="Background"
-                                             Background="{TemplateBinding Background}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ClipBorder x:Name="DisabledVisualElement"
-                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             IsHitTestVisible="False"
-                                             Opacity="0"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="Background"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Rectangle x:Name="MouseOverRectangle"
                                        Fill="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Background.MouseOver}"
                                        Opacity="0" />
-                            <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       Content="{TemplateBinding Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -619,29 +619,29 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid Background="{TemplateBinding Background}">
-                        <Controls:ClipBorder x:Name="Background"
-                                             Background="{x:Null}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ClipBorder x:Name="DisabledVisualElement"
-                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             IsHitTestVisible="False"
-                                             Opacity="0"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="Background"
+                                        Background="{x:Null}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -707,7 +707,7 @@
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -766,9 +766,6 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
         <Setter Property="FontWeight" Value="Bold" />
@@ -780,40 +777,40 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
-                        <Controls:ClipBorder x:Name="Border"
-                                             Background="{TemplateBinding Background}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ClipBorder x:Name="DisabledVisualElement"
-                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             IsHitTestVisible="False"
-                                             Opacity="0"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Margin="{TemplateBinding BorderThickness}"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding BorderThickness}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Border" Property="BorderThickness" Value="2" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
                             <Setter TargetName="Border" Property="BorderThickness" Value="2" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -824,6 +821,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
@@ -863,12 +863,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Controls:ClipBorder x:Name="Border"
-                                             Background="{TemplateBinding Background}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
@@ -877,19 +877,19 @@
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                            Opacity="0" />
-                                <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                           Padding="{TemplateBinding Padding}"
-                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                           Content="{TemplateBinding Content}"
-                                                           ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                                      Padding="{TemplateBinding Padding}"
+                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
-                        </Controls:ClipBorder>
+                        </mah:ClipBorder>
 
                         <Rectangle x:Name="FocusVisualWhite"
                                    IsHitTestVisible="False"
@@ -973,12 +973,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Controls:ClipBorder x:Name="Border"
-                                             Background="{TemplateBinding Background}"
-                                             BorderBrush="{TemplateBinding BorderBrush}"
-                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
@@ -987,19 +987,19 @@
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="White"
                                            Opacity="0" />
-                                <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                           Padding="{TemplateBinding Padding}"
-                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                           Content="{TemplateBinding Content}"
-                                                           ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                                      Padding="{TemplateBinding Padding}"
+                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
-                        </Controls:ClipBorder>
+                        </mah:ClipBorder>
 
                         <Rectangle x:Name="FocusVisualWhite"
                                    IsHitTestVisible="False"
@@ -1083,18 +1083,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Controls:ClipBorder x:Name="Border"
-                                         Background="{TemplateBinding Background}"
-                                         BorderBrush="{TemplateBinding BorderBrush}"
-                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                         CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <mah:ClipBorder x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}" />
-                    </Controls:ClipBorder>
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}" />
+                    </mah:ClipBorder>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />

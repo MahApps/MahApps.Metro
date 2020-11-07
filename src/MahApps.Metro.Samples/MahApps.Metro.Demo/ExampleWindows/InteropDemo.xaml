@@ -1,13 +1,13 @@
-﻿<controls:MetroWindow x:Class="MetroDemo.ExampleWindows.InteropDemo"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-                      Title="Interop Demo"
-                      Width="800"
-                      Height="800"
-                      ResizeMode="CanResizeWithGrip"
-                      WindowTransitionsEnabled="False">
+﻿<mah:MetroWindow x:Class="MetroDemo.ExampleWindows.InteropDemo"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+                 Title="Interop Demo"
+                 Width="800"
+                 Height="800"
+                 ResizeMode="CanResizeWithGrip"
+                 WindowTransitionsEnabled="False">
 
     <Grid>
         <Border Margin="10"
@@ -39,4 +39,4 @@
                        Text="Hello Airspace" />
         </Border>-->
     </Grid>
-</controls:MetroWindow>
+</mah:MetroWindow>

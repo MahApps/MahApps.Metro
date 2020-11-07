@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.StatusBarItem" TargetType="{x:Type StatusBarItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
@@ -74,14 +74,14 @@
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding Path=WindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                <Setter Property="Background" Value="{Binding Path=WindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}}" />
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                <Setter Property="Background" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}}" />
             </MultiDataTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />

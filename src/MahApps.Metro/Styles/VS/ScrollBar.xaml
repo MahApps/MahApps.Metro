@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
@@ -93,7 +93,7 @@
                     <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
+                    <mah:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
@@ -124,7 +124,7 @@
                     <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
+                    <mah:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
