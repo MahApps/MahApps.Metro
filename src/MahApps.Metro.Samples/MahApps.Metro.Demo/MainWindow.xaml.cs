@@ -438,7 +438,14 @@ namespace MetroDemo
                 testWindow.Close();
             }
 
-            testWindow = new MetroWindow() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner, Title = "Another Test...", Width = 500, Height = 300 };
+            testWindow = new MetroWindow()
+                         {
+                             Owner = this,
+                             WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                             Title = "Another Test...",
+                             Width = 500,
+                             Height = 300
+                         };
             testWindow.Closed += (o, args) => testWindow = null;
             return testWindow;
         }
