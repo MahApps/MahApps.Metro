@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Styles.ContentControlEx" TargetType="{x:Type controls:ContentControlEx}">
+    <Style x:Key="MahApps.Styles.ContentControlEx" TargetType="{x:Type mah:ContentControlEx}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -11,8 +11,8 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:ContentControlEx}">
-                    <Grid Background="Transparent">
+                <ControlTemplate TargetType="{x:Type mah:ContentControlEx}">
+                    <Grid Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -45,6 +45,6 @@
 
     <Style x:Key="MahApps.Styles.MetroThumbContentControl"
            BasedOn="{StaticResource MahApps.Styles.ContentControlEx}"
-           TargetType="{x:Type controls:MetroThumbContentControl}" />
+           TargetType="{x:Type mah:MetroThumbContentControl}" />
 
 </ResourceDictionary>

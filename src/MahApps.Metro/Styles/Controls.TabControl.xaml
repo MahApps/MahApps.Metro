@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
-                    xmlns:conv="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -265,7 +265,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static conv:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Top" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -276,7 +276,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static conv:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Bottom" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -287,7 +287,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static conv:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Left" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -298,7 +298,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static conv:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Right" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />

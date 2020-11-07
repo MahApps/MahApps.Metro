@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:actions="clr-namespace:MahApps.Metro.Actions"
-                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <DataTemplate x:Key="MahApps.Templates.Flyout.Header" x:Shared="False">
         <DockPanel x:Name="dpHeader"
@@ -14,19 +14,19 @@
                     Margin="2 4 2 2"
                     VerticalAlignment="Bottom"
                     DockPanel.Dock="Left"
-                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
-                    IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}"
+                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=Foreground}"
+                    IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonIsCancel}"
                     Style="{DynamicResource MahApps.Styles.Button.Circle}"
-                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonVisibility}">
+                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonVisibility}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <actions:CloseFlyoutAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}" />
+                        <actions:CloseFlyoutAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=CloseCommand, Mode=OneWay}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <ContentControl Width="20"
                                 Height="20"
                                 Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
-                                FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=FlowDirection}"
+                                FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=FlowDirection}"
                                 Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
             </Button>
             <ContentControl x:Name="PART_BackHeaderText"
@@ -35,10 +35,10 @@
                             Content="{Binding}"
                             Focusable="False"
                             IsTabStop="False"
-                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=TitleVisibility}" />
+                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=TitleVisibility}" />
         </DockPanel>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Left">
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Left">
                 <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
@@ -48,14 +48,14 @@
                 <Setter TargetName="PART_BackHeaderText" Property="HorizontalAlignment" Value="Right" />
                 <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Top">
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Top">
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="-90" />
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Bottom">
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Bottom">
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="90" />
@@ -65,7 +65,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <ControlTemplate x:Key="MahApps.Templates.Flyout" TargetType="{x:Type Controls:Flyout}">
+    <ControlTemplate x:Key="MahApps.Templates.Flyout" TargetType="{x:Type mah:Flyout}">
         <Border x:Name="PART_Root"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -75,19 +75,19 @@
             </Border.RenderTransform>
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
-                    <Controls:MetroThumbContentControl x:Name="PART_Header"
-                                                       Padding="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
-                                                       Content="{TemplateBinding Header}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       DockPanel.Dock="Top"
-                                                       FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
-                                                       FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
-                                                       FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
-                                                       FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <mah:MetroThumbContentControl x:Name="PART_Header"
+                                                  Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                                  Content="{TemplateBinding Header}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                  DockPanel.Dock="Top"
+                                                  FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
+                                                  FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
+                                                  FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
+                                                  FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content"
                                       ContentSource="Content"
                                       DockPanel.Dock="Bottom" />
@@ -218,11 +218,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.Flyout" TargetType="{x:Type Controls:Flyout}">
+    <Style x:Key="MahApps.Styles.Flyout" TargetType="{x:Type mah:Flyout}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Flyout.Background}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Flyout.Header}" />
-        <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Flyout.Foreground}" />
         <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.Flyout.Header}" />
@@ -233,12 +231,14 @@
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Flyout}" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Flyout.Header}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="10" />
         <Style.Triggers>
             <Trigger Property="Position" Value="Right">
-                <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10 25 10 10" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="10 25 10 10" />
             </Trigger>
             <Trigger Property="Position" Value="Left">
-                <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10 25 10 10" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="10 25 10 10" />
             </Trigger>
         </Style.Triggers>
     </Style>

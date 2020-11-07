@@ -1,16 +1,15 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.DateExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
-             xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:behaviors="clr-namespace:MetroDemo.Behaviors"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
              mc:Ignorable="d">
@@ -34,46 +33,46 @@
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
                             HorizontalContentAlignment="Stretch"
-                            Controls:TextBoxHelper.ClearTextButton="True"
-                            Controls:TextBoxHelper.UseFloatingWatermark="True"
-                            Controls:TextBoxHelper.Watermark="Please select a date"
-                            Controls:TextBoxHelper.WatermarkAlignment="Right" />
+                            mah:TextBoxHelper.ClearTextButton="True"
+                            mah:TextBoxHelper.UseFloatingWatermark="True"
+                            mah:TextBoxHelper.Watermark="Please select a date"
+                            mah:TextBoxHelper.WatermarkAlignment="Right" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            Controls:ControlsHelper.IsReadOnly="True"
-                            Controls:TextBoxHelper.ClearTextButton="True"
+                            mah:ControlsHelper.IsReadOnly="True"
+                            mah:TextBoxHelper.ClearTextButton="True"
                             SelectedDate="{x:Static system:DateTime.Now}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd}"
-                            Controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                            Controls:TextBoxHelper.Watermark="" />
+                            mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd}"
+                            mah:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                            mah:TextBoxHelper.Watermark="" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            Controls:TextBoxHelper.ButtonsAlignment="Left"
-                            Controls:TextBoxHelper.ClearTextButton="True"
-                            Controls:TextBoxHelper.Watermark="{x:Null}" />
+                            mah:TextBoxHelper.ButtonsAlignment="Left"
+                            mah:TextBoxHelper.ClearTextButton="True"
+                            mah:TextBoxHelper.Watermark="{x:Null}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
                             IsEnabled="False" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            Controls:TextBoxHelper.AutoWatermark="True"
+                            mah:TextBoxHelper.AutoWatermark="True"
                             SelectedDate="{Binding DatePickerDate}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            Controls:TextBoxHelper.Watermark="Select a date"
+                            mah:TextBoxHelper.Watermark="Select a date"
                             FontSize="22"
                             SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
-                    <Controls:TextBoxHelper.ButtonWidth>
-                        <Binding Converter="{x:Static Converters:FontSizeOffsetConverter.Instance}"
+                    <mah:TextBoxHelper.ButtonWidth>
+                        <Binding Converter="{x:Static mah:FontSizeOffsetConverter.Instance}"
                                  Path="FontSize"
                                  RelativeSource="{RelativeSource Self}">
                             <Binding.ConverterParameter>
                                 <system:Double>5</system:Double>
                             </Binding.ConverterParameter>
                         </Binding>
-                    </Controls:TextBoxHelper.ButtonWidth>
+                    </mah:TextBoxHelper.ButtonWidth>
                 </DatePicker>
             </StackPanel>
 
@@ -99,11 +98,11 @@
             <StackPanel Grid.Column="2" Margin="{StaticResource ColumnMargin}">
                 <Label Content="DateTime/Time picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <Controls:DateTimePicker Margin="{StaticResource ControlMargin}">
+                <mah:DateTimePicker Margin="{StaticResource ControlMargin}">
                     <i:Interaction.Behaviors>
                         <behaviors:DateTimeNowBehavior />
                     </i:Interaction.Behaviors>
-                </Controls:DateTimePicker>
+                </mah:DateTimePicker>
 
                 <GroupBox Margin="{StaticResource ControlMargin}" Header="Try it yourself">
                     <StackPanel>
@@ -160,14 +159,14 @@
                                       Grid.Row="1"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static Controls:TimePartVisibility.All}">
+                                      SelectedItem="{x:Static mah:TimePartVisibility.All}">
                                 <ComboBox.ItemsSource>
-                                    <x:Array Type="Controls:TimePartVisibility">
-                                        <Controls:TimePartVisibility>All</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>HourMinute</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>Hour</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>Minute</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>Second</Controls:TimePartVisibility>
+                                    <x:Array Type="mah:TimePartVisibility">
+                                        <mah:TimePartVisibility>All</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>HourMinute</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>Hour</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>Minute</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>Second</mah:TimePartVisibility>
                                     </x:Array>
                                 </ComboBox.ItemsSource>
                             </ComboBox>
@@ -180,14 +179,14 @@
                                       Grid.Row="2"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static Controls:TimePartVisibility.All}">
+                                      SelectedItem="{x:Static mah:TimePartVisibility.All}">
                                 <ComboBox.ItemsSource>
-                                    <x:Array Type="Controls:TimePartVisibility">
-                                        <Controls:TimePartVisibility>All</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>HourMinute</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>Hour</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>Minute</Controls:TimePartVisibility>
-                                        <Controls:TimePartVisibility>Second</Controls:TimePartVisibility>
+                                    <x:Array Type="mah:TimePartVisibility">
+                                        <mah:TimePartVisibility>All</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>HourMinute</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>Hour</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>Minute</mah:TimePartVisibility>
+                                        <mah:TimePartVisibility>Second</mah:TimePartVisibility>
                                     </x:Array>
                                 </ComboBox.ItemsSource>
                             </ComboBox>
@@ -217,11 +216,11 @@
                                       Grid.Row="4"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static Controls:TimePickerFormat.Long}">
+                                      SelectedItem="{x:Static mah:TimePickerFormat.Long}">
                                 <ComboBox.ItemsSource>
-                                    <x:Array Type="Controls:TimePickerFormat">
-                                        <Controls:TimePickerFormat>Long</Controls:TimePickerFormat>
-                                        <Controls:TimePickerFormat>Short</Controls:TimePickerFormat>
+                                    <x:Array Type="mah:TimePickerFormat">
+                                        <mah:TimePickerFormat>Long</mah:TimePickerFormat>
+                                        <mah:TimePickerFormat>Short</mah:TimePickerFormat>
                                     </x:Array>
                                 </ComboBox.ItemsSource>
                             </ComboBox>
@@ -234,7 +233,7 @@
                                       Grid.Row="5"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      Controls:TextBoxHelper.ClearTextButton="True"
+                                      mah:TextBoxHelper.ClearTextButton="True"
                                       ItemsSource="{Binding CultureInfos, Mode=OneWay}"
                                       SelectedItem="{Binding CurrentCulture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemTemplate>
@@ -254,18 +253,18 @@
                             </ComboBox>
                         </Grid>
 
-                        <Controls:DateTimePicker Margin="{StaticResource ControlMargin}"
-                                                 Controls:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
-                                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                                 Culture="{Binding CurrentCulture, Mode=OneWay}"
-                                                 HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                 IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
-                                                 IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                 Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                 SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
-                                                 SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
+                        <mah:DateTimePicker Margin="{StaticResource ControlMargin}"
+                                            mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
+                                            mah:TextBoxHelper.UseFloatingWatermark="True"
+                                            Culture="{Binding CurrentCulture, Mode=OneWay}"
+                                            HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                            IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
+                                            IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                            IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                            Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                            PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                            SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
+                                            SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
 
                     </StackPanel>
                 </GroupBox>
@@ -273,38 +272,38 @@
                 <GroupBox Margin="{StaticResource ControlMargin}" Header="Current time">
                     <AdornerDecorator>
                         <StackPanel>
-                            <Controls:DateTimePicker x:Name="DateTimePicker"
-                                                     Margin="{StaticResource ControlMargin}"
-                                                     Controls:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
-                                                     Culture="{Binding CurrentCulture, Mode=OneWay}"
-                                                     HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                     IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
-                                                     IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
-                                                     IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                     Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                     SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
-                                                     SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
+                            <mah:DateTimePicker x:Name="DateTimePicker"
+                                                Margin="{StaticResource ControlMargin}"
+                                                mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
+                                                Culture="{Binding CurrentCulture, Mode=OneWay}"
+                                                HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                                IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
+                                                IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                                IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                                Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                                PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
+                                                SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
                                 <i:Interaction.Behaviors>
                                     <behaviors:DateTimeNowBehavior />
                                 </i:Interaction.Behaviors>
-                            </Controls:DateTimePicker>
+                            </mah:DateTimePicker>
 
-                            <Controls:TimePicker Margin="{StaticResource ControlMargin}"
-                                                 Controls:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
-                                                 Culture="{Binding CurrentCulture, Mode=OneWay}"
-                                                 HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                 IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
-                                                 IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                 SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
-                                                 SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
+                            <mah:TimePicker Margin="{StaticResource ControlMargin}"
+                                            mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
+                                            Culture="{Binding CurrentCulture, Mode=OneWay}"
+                                            HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                            IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                            IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                            PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                            SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
+                                            SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
 
-                            <Controls:TimePicker Margin="{StaticResource ControlMargin}"
-                                                 Controls:TextBoxHelper.AutoWatermark="True"
-                                                 PickerVisibility="HourMinute"
-                                                 SelectedDateTime="{Binding TimePickerDate, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                                                 SelectedTimeFormat="Short" />
+                            <mah:TimePicker Margin="{StaticResource ControlMargin}"
+                                            mah:TextBoxHelper.AutoWatermark="True"
+                                            PickerVisibility="HourMinute"
+                                            SelectedDateTime="{Binding TimePickerDate, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                            SelectedTimeFormat="Short" />
                         </StackPanel>
                     </AdornerDecorator>
                 </GroupBox>

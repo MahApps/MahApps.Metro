@@ -1,18 +1,18 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.Sliders"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
              mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
+            <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
@@ -29,7 +29,7 @@
 
     <StackPanel Margin="10" Orientation="Vertical">
 
-        <Controls:MetroHeader Margin="0 0 0 10" Header="Slider Win10 (default) style">
+        <mah:MetroHeader Margin="0 0 0 10" Header="Slider Win10 (default) style">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -41,8 +41,8 @@
                             Orientation="Horizontal">
                     <Slider Height="150"
                             Margin="4"
-                            Controls:SliderHelper.ChangeValueBy="LargeChange"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.ChangeValueBy="LargeChange"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="TopLeft"
                             LargeChange="10"
                             Maximum="100"
@@ -52,7 +52,7 @@
                             Value="40" />
                     <Slider Height="150"
                             Margin="4"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="BottomRight"
                             LargeChange="10"
                             Maximum="100"
@@ -121,8 +121,8 @@
                             Orientation="Vertical">
                     <Slider Width="200"
                             Margin="4"
-                            Controls:SliderHelper.ChangeValueBy="LargeChange"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.ChangeValueBy="LargeChange"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="TopLeft"
                             LargeChange="10"
                             Maximum="100"
@@ -132,7 +132,7 @@
                             Value="40" />
                     <Slider Width="200"
                             Margin="4"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="BottomRight"
                             LargeChange="10"
                             Maximum="100"
@@ -196,9 +196,9 @@
                             Value="40" />
                 </StackPanel>
             </Grid>
-        </Controls:MetroHeader>
+        </mah:MetroHeader>
 
-        <Controls:MetroHeader Margin="0 0 0 10" Header="Slider Metro (legacy) style">
+        <mah:MetroHeader Margin="0 0 0 10" Header="Slider Metro (legacy) style">
             <Grid>
                 <Grid.Resources>
                     <Style BasedOn="{StaticResource MahApps.Styles.Slider}" TargetType="{x:Type Slider}" />
@@ -213,8 +213,8 @@
                             Orientation="Horizontal">
                     <Slider Height="150"
                             Margin="4"
-                            Controls:SliderHelper.ChangeValueBy="LargeChange"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.ChangeValueBy="LargeChange"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="TopLeft"
                             LargeChange="10"
                             Maximum="100"
@@ -224,7 +224,7 @@
                             Value="40" />
                     <Slider Height="150"
                             Margin="4"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="BottomRight"
                             LargeChange="10"
                             Maximum="100"
@@ -293,8 +293,8 @@
                             Orientation="Vertical">
                     <Slider Width="200"
                             Margin="4"
-                            Controls:SliderHelper.ChangeValueBy="LargeChange"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.ChangeValueBy="LargeChange"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="TopLeft"
                             LargeChange="10"
                             Maximum="100"
@@ -304,7 +304,7 @@
                             Value="40" />
                     <Slider Width="200"
                             Margin="4"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="BottomRight"
                             LargeChange="10"
                             Maximum="100"
@@ -368,9 +368,9 @@
                             Value="40" />
                 </StackPanel>
             </Grid>
-        </Controls:MetroHeader>
+        </mah:MetroHeader>
 
-        <Controls:MetroHeader Margin="0 0 0 10" Header="RangeSlider Win10 (default) style">
+        <mah:MetroHeader Margin="0 0 0 10" Header="RangeSlider Win10 (default) style">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -380,107 +380,107 @@
                 <StackPanel Grid.Column="0"
                             Margin="10 0"
                             Orientation="Horizontal">
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          Controls:SliderHelper.ChangeValueBy="LargeChange"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="TopLeft"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="BottomRight"
-                                          LargeChange="10"
-                                          LowerValue="50"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickPlacement="TopLeft"
-                                          Ticks="20 25 30 50 70 75 80"
-                                          UpperValue="50" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          IsSelectionRangeEnabled="True"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SelectionEnd="80"
-                                          SelectionStart="20"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          IsEnabled="False"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="BottomRight"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="Both"
-                                          UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     mah:SliderHelper.ChangeValueBy="LargeChange"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="TopLeft"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="BottomRight"
+                                     LargeChange="10"
+                                     LowerValue="50"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickPlacement="TopLeft"
+                                     Ticks="20 25 30 50 70 75 80"
+                                     UpperValue="50" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     IsSelectionRangeEnabled="True"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SelectionEnd="80"
+                                     SelectionStart="20"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     IsEnabled="False"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="BottomRight"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="Both"
+                                     UpperValue="40" />
                 </StackPanel>
                 <!--  horizontal  -->
                 <StackPanel Grid.Column="1"
                             Margin="10 0"
                             Orientation="Vertical">
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          Controls:SliderHelper.ChangeValueBy="LargeChange"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="TopLeft"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          UpperValue="60">
-                        <Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
-                            <DataTemplate DataType="Controls:RangeSliderAutoTooltipValues">
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     mah:SliderHelper.ChangeValueBy="LargeChange"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="TopLeft"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     UpperValue="60">
+                        <mah:RangeSlider.AutoToolTipRangeValuesTemplate>
+                            <DataTemplate DataType="mah:RangeSliderAutoTooltipValues">
                                 <UniformGrid Columns="2" Rows="2">
                                     <TextBlock HorizontalAlignment="Right" Text="From:" />
                                     <TextBlock HorizontalAlignment="Right" Text="{Binding LowerValue, StringFormat='{}{0:N2}'}" />
@@ -488,86 +488,86 @@
                                     <TextBlock HorizontalAlignment="Right" Text="{Binding UpperValue, StringFormat='{}{0:N2}'}" />
                                 </UniformGrid>
                             </DataTemplate>
-                        </Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
-                    </Controls:RangeSlider>
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="BottomRight"
-                                          LargeChange="10"
-                                          LowerValue="50"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickPlacement="TopLeft"
-                                          Ticks="20 25 30 50 70 75 80"
-                                          UpperValue="50" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          IsSelectionRangeEnabled="True"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SelectionEnd="80"
-                                          SelectionStart="20"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          IsEnabled="False"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="BottomRight"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="Both"
-                                          UpperValue="40" />
+                        </mah:RangeSlider.AutoToolTipRangeValuesTemplate>
+                    </mah:RangeSlider>
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="BottomRight"
+                                     LargeChange="10"
+                                     LowerValue="50"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickPlacement="TopLeft"
+                                     Ticks="20 25 30 50 70 75 80"
+                                     UpperValue="50" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     IsSelectionRangeEnabled="True"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SelectionEnd="80"
+                                     SelectionStart="20"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     IsEnabled="False"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="BottomRight"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="Both"
+                                     UpperValue="40" />
                 </StackPanel>
             </Grid>
-        </Controls:MetroHeader>
+        </mah:MetroHeader>
 
-        <Controls:MetroHeader Margin="0 0 0 10" Header="RangeSlider Metro (legacy) style">
+        <mah:MetroHeader Margin="0 0 0 10" Header="RangeSlider Metro (legacy) style">
             <Grid>
                 <Grid.Resources>
-                    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider}" TargetType="{x:Type Controls:RangeSlider}" />
+                    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider}" TargetType="{x:Type mah:RangeSlider}" />
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -577,180 +577,180 @@
                 <StackPanel Grid.Column="0"
                             Margin="10 0"
                             Orientation="Horizontal">
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          Controls:SliderHelper.ChangeValueBy="LargeChange"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="TopLeft"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="BottomRight"
-                                          LargeChange="10"
-                                          LowerValue="50"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickPlacement="TopLeft"
-                                          Ticks="20 25 30 50 70 75 80"
-                                          UpperValue="50" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          IsSelectionRangeEnabled="True"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SelectionEnd="80"
-                                          SelectionStart="20"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          IsEnabled="False"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="BottomRight"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Height="150"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Vertical"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="Both"
-                                          UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     mah:SliderHelper.ChangeValueBy="LargeChange"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="TopLeft"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="BottomRight"
+                                     LargeChange="10"
+                                     LowerValue="50"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickPlacement="TopLeft"
+                                     Ticks="20 25 30 50 70 75 80"
+                                     UpperValue="50" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     IsSelectionRangeEnabled="True"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SelectionEnd="80"
+                                     SelectionStart="20"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     IsEnabled="False"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="BottomRight"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Height="150"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Vertical"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="Both"
+                                     UpperValue="40" />
                 </StackPanel>
                 <!--  horizontal  -->
                 <StackPanel Grid.Column="1"
                             Margin="10 0"
                             Orientation="Vertical">
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          Controls:SliderHelper.ChangeValueBy="LargeChange"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="TopLeft"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                                          AutoToolTipPlacement="BottomRight"
-                                          LargeChange="10"
-                                          LowerValue="50"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickPlacement="TopLeft"
-                                          Ticks="20 25 30 50 70 75 80"
-                                          UpperValue="50" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          IsSelectionRangeEnabled="True"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SelectionEnd="80"
-                                          SelectionStart="20"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          IsEnabled="False"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          TickFrequency="5"
-                                          TickPlacement="TopLeft"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="BottomRight"
-                                          UpperValue="40" />
-                    <Controls:RangeSlider Width="200"
-                                          Margin="4"
-                                          LargeChange="10"
-                                          LowerValue="40"
-                                          Maximum="100"
-                                          Minimum="0"
-                                          Orientation="Horizontal"
-                                          SmallChange="1"
-                                          TickFrequency="5"
-                                          TickPlacement="Both"
-                                          UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     mah:SliderHelper.ChangeValueBy="LargeChange"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="TopLeft"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     mah:SliderHelper.EnableMouseWheel="MouseHover"
+                                     AutoToolTipPlacement="BottomRight"
+                                     LargeChange="10"
+                                     LowerValue="50"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickPlacement="TopLeft"
+                                     Ticks="20 25 30 50 70 75 80"
+                                     UpperValue="50" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     IsSelectionRangeEnabled="True"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SelectionEnd="80"
+                                     SelectionStart="20"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     IsEnabled="False"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     TickFrequency="5"
+                                     TickPlacement="TopLeft"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="BottomRight"
+                                     UpperValue="40" />
+                    <mah:RangeSlider Width="200"
+                                     Margin="4"
+                                     LargeChange="10"
+                                     LowerValue="40"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Orientation="Horizontal"
+                                     SmallChange="1"
+                                     TickFrequency="5"
+                                     TickPlacement="Both"
+                                     UpperValue="40" />
                 </StackPanel>
             </Grid>
-        </Controls:MetroHeader>
+        </mah:MetroHeader>
 
-        <Controls:MetroHeader Margin="0 0 0 10" Header="Slider Flat style">
+        <mah:MetroHeader Margin="0 0 0 10" Header="Slider Flat style">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -762,8 +762,8 @@
                             Orientation="Horizontal">
                     <Slider Height="150"
                             Margin="4"
-                            Controls:SliderHelper.ChangeValueBy="LargeChange"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.ChangeValueBy="LargeChange"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="TopLeft"
                             LargeChange="10"
                             Maximum="100"
@@ -774,7 +774,7 @@
                             Value="40" />
                     <Slider Height="150"
                             Margin="4"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="BottomRight"
                             LargeChange="10"
                             Maximum="100"
@@ -849,8 +849,8 @@
                             Orientation="Vertical">
                     <Slider Width="200"
                             Margin="4"
-                            Controls:SliderHelper.ChangeValueBy="LargeChange"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.ChangeValueBy="LargeChange"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="TopLeft"
                             LargeChange="10"
                             Maximum="100"
@@ -861,7 +861,7 @@
                             Value="40" />
                     <Slider Width="200"
                             Margin="4"
-                            Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                            mah:SliderHelper.EnableMouseWheel="MouseHover"
                             AutoToolTipPlacement="BottomRight"
                             LargeChange="10"
                             Maximum="100"
@@ -931,7 +931,7 @@
                             Value="40" />
                 </StackPanel>
             </Grid>
-        </Controls:MetroHeader>
+        </mah:MetroHeader>
 
     </StackPanel>
 

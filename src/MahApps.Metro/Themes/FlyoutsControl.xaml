@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Controls:FlyoutsControl}">
+    <Style TargetType="{x:Type mah:FlyoutsControl}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ItemsPanel">

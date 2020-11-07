@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
@@ -37,19 +37,19 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding controls:ControlsHelper.CornerRadius}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -103,19 +103,19 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding controls:ControlsHelper.CornerRadius}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding controls:ControlsHelper.RecognizesAccessKey}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

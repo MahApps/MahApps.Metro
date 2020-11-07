@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <FontFamily x:Key="MahApps.Fonts.Family.SymbolTheme">Segoe MDL2 Assets,/MahApps.Metro;component/Assets/#Segoe MDL2 Assets</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.Button">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
@@ -10,28 +10,28 @@
     <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
-    <System:Double x:Key="MahApps.Font.Size.Header">40</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.SubHeader">29.333</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Window.Title">16</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Default">14</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Content">12</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Button.Flat">14</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.TabItem">26.67</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Button">10</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.FloatingWatermark">10</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Button.ClearText">16</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Tooltip">12</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Menu">14</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.ContextMenu">14</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.StatusBar">12</System:Double>
+    <system:Double x:Key="MahApps.Font.Size.Header">40</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.SubHeader">29.333</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Window.Title">16</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Default">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Content">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Button.Flat">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.TabItem">26.67</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Button">10</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.FloatingWatermark">10</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Button.ClearText">16</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Tooltip">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Menu">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.ContextMenu">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.StatusBar">12</system:Double>
 
-    <System:Double x:Key="MahApps.Font.Size.Dialog.Title">26</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Dialog.Message">15</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.Dialog.Button">12</System:Double>
+    <system:Double x:Key="MahApps.Font.Size.Dialog.Title">26</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Dialog.Message">15</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Dialog.Button">12</system:Double>
 
-    <System:Double x:Key="MahApps.Font.Size.Flyout.Header">20</System:Double>
+    <system:Double x:Key="MahApps.Font.Size.Flyout.Header">20</system:Double>
 
-    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch">14</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">14</System:Double>
+    <system:Double x:Key="MahApps.Font.Size.ToggleSwitch">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">14</system:Double>
 
 </ResourceDictionary>

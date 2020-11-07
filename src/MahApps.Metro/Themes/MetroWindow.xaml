@@ -71,19 +71,21 @@
                                VerticalAlignment="Top"
                                Focusable="False">
                         <!--  the left window commands  -->
-                        <ContentPresenter x:Name="PART_LeftWindowCommands"
-                                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          VerticalAlignment="Top"
-                                          Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          DockPanel.Dock="Left"
-                                          Focusable="False" />
+                        <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
+                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                VerticalAlignment="Top"
+                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                DockPanel.Dock="Left"
+                                                Focusable="False" />
                         <!--  the right window commands  -->
-                        <ContentPresenter x:Name="PART_RightWindowCommands"
-                                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          VerticalAlignment="Top"
-                                          Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          DockPanel.Dock="Right"
-                                          Focusable="False" />
+                        <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
+                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                VerticalAlignment="Top"
+                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                DockPanel.Dock="Right"
+                                                Focusable="False" />
                         <!--  the title bar  -->
                         <mah:MetroThumbContentControl x:Name="PART_TitleBar"
                                                       Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -108,15 +110,16 @@
                     </DockPanel>
 
                     <!--  the window button commands  -->
-                    <ContentPresenter x:Name="PART_WindowButtonCommands"
-                                      Grid.Row="1"
-                                      Grid.RowSpan="2"
-                                      Grid.Column="3"
-                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      VerticalAlignment="Top"
-                                      Panel.ZIndex="1"
-                                      Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Focusable="False" />
+                    <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="3"
+                                            Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            VerticalAlignment="Top"
+                                            Panel.ZIndex="1"
+                                            controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            Focusable="False" />
 
                     <!--  the main window content  -->
                     <mah:MetroContentControl x:Name="PART_Content"
@@ -128,7 +131,10 @@
                                              OnlyLoadTransition="True"
                                              TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
                                              UseLayoutRounding="True">
-                        <ContentPresenter Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}" UseLayoutRounding="False" />
+                        <mah:ContentPresenterEx x:Name="PART_ContentPresenter"
+                                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}"
+                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                UseLayoutRounding="False" />
                     </mah:MetroContentControl>
 
                     <!--  disables the main content when a modal flyout is shown  -->
@@ -244,11 +250,19 @@
             </MultiTrigger>
             <!--  HitTest visibility  -->
             <Trigger Property="GlowBrush" Value="{x:Null}">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
             </Trigger>
             <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter Property="ResizeBorderThickness" Value="0" />
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_TitleBar" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
             <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
@@ -354,33 +368,36 @@
                                Panel.ZIndex="1"
                                Focusable="False">
                         <!--  the left window commands  -->
-                        <ContentPresenter x:Name="PART_LeftWindowCommands"
-                                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          VerticalAlignment="Top"
-                                          Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          DockPanel.Dock="Left"
-                                          Focusable="False" />
+                        <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
+                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                VerticalAlignment="Top"
+                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                DockPanel.Dock="Left"
+                                                Focusable="False" />
                         <!--  the right window commands  -->
-                        <ContentPresenter x:Name="PART_RightWindowCommands"
-                                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          VerticalAlignment="Top"
-                                          Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          DockPanel.Dock="Right"
-                                          Focusable="False" />
+                        <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
+                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                VerticalAlignment="Top"
+                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                DockPanel.Dock="Right"
+                                                Focusable="False" />
                         <!--  the fake title bar  -->
                         <Grid />
                     </DockPanel>
 
                     <!--  the window button commands  -->
-                    <ContentPresenter x:Name="PART_WindowButtonCommands"
-                                      Grid.Row="1"
-                                      Grid.RowSpan="2"
-                                      Grid.Column="3"
-                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      VerticalAlignment="Top"
-                                      Panel.ZIndex="1"
-                                      Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Focusable="False" />
+                    <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="3"
+                                            Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            VerticalAlignment="Top"
+                                            Panel.ZIndex="1"
+                                            controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            Focusable="False" />
 
                     <!--  the main window content  -->
                     <mah:MetroContentControl x:Name="PART_Content"
@@ -392,7 +409,10 @@
                                              OnlyLoadTransition="True"
                                              TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
                                              UseLayoutRounding="True">
-                        <ContentPresenter Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}" UseLayoutRounding="False" />
+                        <mah:ContentPresenterEx x:Name="PART_ContentPresenter"
+                                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}"
+                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                UseLayoutRounding="False" />
                     </mah:MetroContentControl>
 
                     <!--  disables the main content when a modal flyout is shown  -->
@@ -525,11 +545,19 @@
             </MultiTrigger>
             <!--  HitTest visibility  -->
             <Trigger Property="GlowBrush" Value="{x:Null}">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
             </Trigger>
             <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter Property="ResizeBorderThickness" Value="0" />
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
+                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_TitleBar" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
             <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>

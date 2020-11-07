@@ -4,6 +4,8 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using ControlzEx.Windows.Shell;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -46,6 +48,21 @@ namespace MahApps.Metro.Controls
         static ContentControlEx()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ContentControlEx), new FrameworkPropertyMetadata(typeof(ContentControlEx)));
+        }
+
+        protected override void OnContentChanged(object oldContent, object newContent)
+        {
+            if (oldContent is IInputElement && oldContent is DependencyObject oldInputElement)
+            {
+                BindingOperations.ClearBinding(oldInputElement, WindowChrome.IsHitTestVisibleInChromeProperty);
+            }
+
+            base.OnContentChanged(oldContent, newContent);
+
+            if (newContent is IInputElement && newContent is DependencyObject newInputElement)
+            {
+                BindingOperations.SetBinding(newInputElement, WindowChrome.IsHitTestVisibleInChromeProperty, new Binding { Path = new PropertyPath(WindowChrome.IsHitTestVisibleInChromeProperty), Source = this });
+            }
         }
     }
 }
