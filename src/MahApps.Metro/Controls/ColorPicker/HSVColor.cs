@@ -17,23 +17,22 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the Alpha channel.
         /// </summary>
-        public double A { get; private set; }
+        public double A { get; }
 
         /// <summary>
         /// Gets the Hue channel.
         /// </summary>
-        public double Hue { get; private set; }
+        public double Hue { get; }
 
         /// <summary>
         /// Gets the Saturation channel
         /// </summary>
-        public double Saturation { get; private set; }
+        public double Saturation { get; }
 
         /// <summary>
         /// Gets the Value channel
         /// </summary>
-        public double Value { get; private set; }
-
+        public double Value { get; }
 
         /// <summary>
         /// Creates a new HSV Color from a given <see cref="Color"/>
@@ -41,10 +40,10 @@ namespace MahApps.Metro.Controls
         /// <param name="color">The <see cref="Color"/> to convert</param>
         public HSVColor(Color color)
         {
-            A = color.A / 255d;
-            Hue = 0;
-            Saturation = 0;
-            Value = 0;
+            this.A = color.A / 255d;
+            this.Hue = 0;
+            this.Saturation = 0;
+            this.Value = 0;
 
             var max = Math.Max(color.R, Math.Max(color.G, color.B));
             var min = Math.Min(color.R, Math.Min(color.G, color.B));
@@ -58,34 +57,34 @@ namespace MahApps.Metro.Controls
             }
             else if (max == color.R)
             {
-                Hue = 60 * ((double)(color.G - color.B) / delta % 6);
+                this.Hue = 60 * ((double)(color.G - color.B) / delta % 6);
             }
             else if (max == color.G)
             {
-                Hue = 60 * (2 + (double)(color.B - color.R) / delta);
+                this.Hue = 60 * (2 + (double)(color.B - color.R) / delta);
             }
             else if (max == color.B)
             {
-                Hue = 60 * (4 + (double)(color.R - color.G) / delta);
+                this.Hue = 60 * (4 + (double)(color.R - color.G) / delta);
             }
 
-            if (Hue < 0)
+            if (this.Hue < 0)
             {
-                Hue += 360;
+                this.Hue += 360;
             }
 
             // S 
             if (max == 0)
             {
-                Saturation = 0;
+                this.Saturation = 0;
             }
             else
             {
-                Saturation = (double)delta / max;
+                this.Saturation = (double)delta / max;
             }
 
             // V
-            Value = max / 255d;
+            this.Value = max / 255d;
         }
 
         /// <summary>
@@ -96,10 +95,10 @@ namespace MahApps.Metro.Controls
         /// <param name="value"><see cref="Value"/> channel [0;1]</param>
         public HSVColor(double hue, double saturation, double value)
         {
-            A = 1;
-            Hue = hue;
-            Saturation = saturation;
-            Value = value;
+            this.A = 1;
+            this.Hue = hue;
+            this.Saturation = saturation;
+            this.Value = value;
         }
 
         /// <summary>
@@ -111,10 +110,10 @@ namespace MahApps.Metro.Controls
         /// <param name="value"><see cref="Value"/> channel [0;1]</param>
         public HSVColor(double a, double hue, double saturation, double value)
         {
-            A = a;
-            Hue = hue;
-            Saturation = saturation;
-            Value = value;
+            this.A = a;
+            this.Hue = hue;
+            this.Saturation = saturation;
+            this.Value = value;
         }
 
         /// <summary>
@@ -122,19 +121,19 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <returns><see cref="Color"/></returns>
         public Color ToColor()
-        {             
-            return Color.FromArgb((byte)Math.Round(A * 255), GetColorComponent(5), GetColorComponent(3), GetColorComponent(1));
+        {
+            return Color.FromArgb((byte)Math.Round(this.A * 255), this.GetColorComponent(5), this.GetColorComponent(3), this.GetColorComponent(1));
         }
 
-        byte GetColorComponent (int n)
+        private byte GetColorComponent(int n)
         {
-            var k = (n + Hue / 60d) % 6;
-            return (byte)Math.Round((Value - Value * Saturation * Math.Max(0, Math.Min(k, Math.Min(4 - k, 1)))) * 255);
+            var k = (n + this.Hue / 60d) % 6;
+            return (byte)Math.Round((this.Value - this.Value * this.Saturation * Math.Max(0, Math.Min(k, Math.Min(4 - k, 1)))) * 255);
         }
 
         public bool Equals(HSVColor other)
         {
-            return Hue.IsCloseTo(other.Hue) && A.IsCloseTo(other.A) && Saturation.IsCloseTo(other.Saturation) && Value.IsCloseTo(other.Value);
+            return this.Hue.IsCloseTo(other.Hue) && this.A.IsCloseTo(other.A) && this.Saturation.IsCloseTo(other.Saturation) && this.Value.IsCloseTo(other.Value);
         }
     }
 }

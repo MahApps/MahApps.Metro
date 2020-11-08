@@ -48,7 +48,6 @@ namespace MahApps.Metro.Controls
         static extern IntPtr SelectObject(IntPtr hdc, IntPtr hObject);
 
         const int SRCCOPY = 0x00CC0020;
-
         const int CAPTUREBLT = 0x40000000;
 
         public static BitmapSource CaptureRegion(Int32Rect region)
@@ -115,7 +114,7 @@ namespace MahApps.Metro.Controls
             return lpPoint;
         }
 
-        static public Color GetPixelColor(PointInter point)
+        public static Color GetPixelColor(PointInter point)
         {
             IntPtr hdc = GetDC(IntPtr.Zero);
             uint pixel = GetPixel(hdc, point.X, point.Y);
