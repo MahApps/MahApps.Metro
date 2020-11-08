@@ -12,61 +12,55 @@ using System.Windows.Media.Imaging;
 
 namespace MahApps.Metro.Controls
 {
-    static class EyeDropperHelper
+    internal static class EyeDropperHelper
     {
         [DllImport("gdi32.dll")]
-        static extern bool BitBlt(IntPtr hdcDest, int nxDest, int nyDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
+        private static extern bool BitBlt(IntPtr hdcDest, int nxDest, int nyDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
 
         [DllImport("gdi32.dll")]
-        static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int nHeight);
+        private static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int nHeight);
 
         [DllImport("gdi32.dll")]
-        static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+        private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 
         [DllImport("gdi32.dll")]
-        static extern IntPtr DeleteDC(IntPtr hdc);
+        private static extern IntPtr DeleteDC(IntPtr hdc);
 
         [DllImport("gdi32.dll")]
-        static extern IntPtr DeleteObject(IntPtr hObject);
+        private static extern IntPtr DeleteObject(IntPtr hObject);
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetDesktopWindow();
+        private static extern IntPtr GetDesktopWindow();
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetWindowDC(IntPtr hWnd);
+        private static extern IntPtr GetWindowDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDc);
+        private static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDc);
 
         [DllImport("user32.dll")]
-        static extern IntPtr GetDC(IntPtr hwnd);
+        private static extern IntPtr GetDC(IntPtr hwnd);
 
         [DllImport("gdi32.dll")]
-        static extern uint GetPixel(IntPtr hdc, int nXPos, int nYPos);
+        private static extern uint GetPixel(IntPtr hdc, int nXPos, int nYPos);
 
         [DllImport("gdi32.dll")]
-        static extern IntPtr SelectObject(IntPtr hdc, IntPtr hObject);
+        private static extern IntPtr SelectObject(IntPtr hdc, IntPtr hObject);
 
-        const int SRCCOPY = 0x00CC0020;
-        const int CAPTUREBLT = 0x40000000;
+        private const int SRCCOPY = 0x00CC0020;
+        private const int CAPTUREBLT = 0x40000000;
 
         public static BitmapSource CaptureRegion(Int32Rect region)
         {
-            IntPtr desktophWnd;
-            IntPtr desktopDc;
-            IntPtr memoryDc;
-            IntPtr bitmap;
-            IntPtr oldBitmap;
-            bool success;
             BitmapSource result;
 
-            desktophWnd = GetDesktopWindow();
-            desktopDc = GetWindowDC(desktophWnd);
-            memoryDc = CreateCompatibleDC(desktopDc);
-            bitmap = CreateCompatibleBitmap(desktopDc, region.Width, region.Height);
-            oldBitmap = SelectObject(memoryDc, bitmap);
+            IntPtr desktophWnd = GetDesktopWindow();
+            IntPtr desktopDc = GetWindowDC(desktophWnd);
+            IntPtr memoryDc = CreateCompatibleDC(desktopDc);
+            IntPtr bitmap = CreateCompatibleBitmap(desktopDc, region.Width, region.Height);
+            IntPtr oldBitmap = SelectObject(memoryDc, bitmap);
 
-            success = BitBlt(memoryDc, 0, 0, region.Width, region.Height, desktopDc, region.X, region.Y, SRCCOPY | CAPTUREBLT);
+            bool success = BitBlt(memoryDc, 0, 0, region.Width, region.Height, desktopDc, region.X, region.Y, SRCCOPY | CAPTUREBLT);
 
             try
             {
@@ -89,35 +83,10 @@ namespace MahApps.Metro.Controls
             return result;
         }
 
-        // From Stackoverflow: https://stackoverflow.com/questions/1316681/getting-mouse-position-in-c-sharp
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct PointInter : IEquatable<PointInter>
-        {
-            public int X;
-            public int Y;
-
-            public bool Equals(PointInter other)
-            {
-                return X == other.X && Y == other.Y;
-            }
-
-            public static explicit operator Point(PointInter point) => new Point(point.X, point.Y);
-        }
-
-        [DllImport("user32.dll")]
-        static extern bool GetCursorPos(out PointInter lpPoint);
-
-        // For your convenience
-        internal static PointInter GetCursorPosition()
-        {
-            GetCursorPos(out PointInter lpPoint);
-            return lpPoint;
-        }
-
-        public static Color GetPixelColor(PointInter point)
+        public static Color GetPixelColor(Point point)
         {
             IntPtr hdc = GetDC(IntPtr.Zero);
-            uint pixel = GetPixel(hdc, point.X, point.Y);
+            uint pixel = GetPixel(hdc, (int)Math.Round(point.X), (int)Math.Round(point.Y));
             ReleaseDC(IntPtr.Zero, hdc);
             Color color = Color.FromRgb((byte)(pixel & 0x000000FF),
                                         (byte)((pixel & 0x0000FF00) >> 8),

@@ -10,7 +10,6 @@
 
     <Style x:Key="MahApps.Styles.ColorEyeDropper" TargetType="{x:Type mah:ColorEyeDropper}">
         <Setter Property="EyeDropperCursor" Value="{StaticResource MahApps.Cursors.EyeDropper}" />
-
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorEyeDropper}">
@@ -103,9 +102,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
-
     </Style>
 
     <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas"
@@ -113,4 +110,5 @@
            TargetType="{x:Type mah:ColorEyeDropper}">
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
     </Style>
+
 </ResourceDictionary>
