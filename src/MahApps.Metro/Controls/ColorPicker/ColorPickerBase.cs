@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -11,14 +15,17 @@ namespace MahApps.Metro.Controls
     public class ColorPickerBase : Control
     {
         #region private Members
+
         protected bool ColorIsUpdating;
         protected bool UpdateHsvValues = true;
+
         #endregion
 
         #region Dependcy Properties
+
         /// <summary>Identifies the <see cref="SelectedColor"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color?), typeof(ColorPickerBase), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChanged));
-        
+
         /// <summary>Identifies the <see cref="DefaultColor"/> dependency property.</summary>
         public static readonly DependencyProperty DefaultColorProperty = DependencyProperty.Register(nameof(DefaultColor), typeof(Color?), typeof(ColorPickerBase), new FrameworkPropertyMetadata(null, ColorChanged));
 
@@ -29,32 +36,30 @@ namespace MahApps.Metro.Controls
 
         /// <summary>Identifies the <see cref="ColorName"/> dependency property.</summary>
         public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register(nameof(ColorName), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged));
-        
+
         /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
         public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color?, string>), typeof(ColorPickerBase), new PropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="A"/> dependency property.</summary>
         public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)255, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
-        
+
         /// <summary>Identifies the <see cref="R"/> dependency property.</summary>
         public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
-        
+
         /// <summary>Identifies the <see cref="G"/> dependency property.</summary>
         public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
-        
+
         /// <summary>Identifies the <see cref="B"/> dependency property.</summary>
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
 
         /// <summary>Identifies the <see cref="Hue"/> dependency property.</summary>
         public static readonly DependencyProperty HueProperty = DependencyProperty.Register(nameof(Hue), typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
-        
+
         /// <summary>Identifies the <see cref="Saturation"/> dependency property.</summary>
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(nameof(Saturation), typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
-        
+
         /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
-
-
 
         /// <summary>Identifies the <see cref="LabelAlphaChannel"/> dependency property.</summary>
         public static readonly DependencyProperty LabelAlphaChannelProperty = DependencyProperty.Register(nameof(LabelAlphaChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("A"));
@@ -95,7 +100,7 @@ namespace MahApps.Metro.Controls
             get { return (Color?)this.GetValue(SelectedColorProperty); }
             set { this.SetValue(SelectedColorProperty, value); }
         }
-        
+
         /// <summary>
         /// Gets or Sets the selected <see cref="Color"/>
         /// </summary>
@@ -105,7 +110,6 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(DefaultColorProperty, value); }
         }
 
-
         /// <summary>
         /// Gets the <see cref="SelectedColor"/> as <see cref="HSVColor"/>. This property is read only.
         /// </summary>
@@ -113,7 +117,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (HSVColor)GetValue(SelectedHSVColorProperty); }
         }
-
 
         /// <summary>
         /// Gets or sets the ColorName
@@ -124,7 +127,6 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ColorNameProperty, value); }
         }
 
-
         /// <summary>
         /// Gets or sets a <see cref="Dictionary{TKey, TValue}"/> for looking up the ColorName
         /// </summary>
@@ -134,16 +136,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(ColorNamesDictionaryProperty, value); }
         }
 
-
         #endregion
 
         #region Color changed
+
         /// <summary>Identifies the <see cref="SelectedColorChanged"/> routed event.</summary>
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
-                                                                        nameof(SelectedColorChanged),
-                                                                        RoutingStrategy.Bubble,
-                                                                        typeof(RoutedPropertyChangedEventHandler<Color?>),
-                                                                        typeof(ColorPickerBase));
+            nameof(SelectedColorChanged),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<Color?>),
+            typeof(ColorPickerBase));
 
         private static void ColorChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -194,7 +196,6 @@ namespace MahApps.Metro.Controls
             RaiseEvent(new RoutedPropertyChangedEventArgs<Color?>(OldValue, NewValue, SelectedColorChangedEvent));
         }
 
-
         private static void ColorNameChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (dependencyObject is ColorPickerBase colorPicker)
@@ -225,10 +226,11 @@ namespace MahApps.Metro.Controls
             add { AddHandler(SelectedColorChangedEvent, value); }
             remove { RemoveHandler(SelectedColorChangedEvent, value); }
         }
+
         #endregion
 
-
         #region ARGB
+
         /// <summary>
         /// Gets or Sets the Alpha-Channel
         /// </summary>
@@ -276,6 +278,7 @@ namespace MahApps.Metro.Controls
         #endregion
 
         #region HSV
+
         /// <summary>
         /// Gets or Sets the Hue-Channel
         /// </summary>
@@ -314,6 +317,7 @@ namespace MahApps.Metro.Controls
                 colorPicker.UpdateHsvValues = true;
             }
         }
+
         #endregion
 
         #region Labels
@@ -354,8 +358,6 @@ namespace MahApps.Metro.Controls
             set { SetValue(LabelBlueChannelProperty, value); }
         }
 
-
-
         /// <summary>
         /// Gets or Sets the Preview-Label in the GUI
         /// </summary>
@@ -364,7 +366,6 @@ namespace MahApps.Metro.Controls
             get { return (object)GetValue(LabelColorPreviewProperty); }
             set { SetValue(LabelColorPreviewProperty, value); }
         }
-
 
         /// <summary>
         /// Gets or Sets the Hue-Label in the GUI
@@ -401,8 +402,7 @@ namespace MahApps.Metro.Controls
             get { return (object)GetValue(LabelColorNameProperty); }
             set { SetValue(LabelColorNameProperty, value); }
         }
-        
-        #endregion
 
+        #endregion
     }
 }

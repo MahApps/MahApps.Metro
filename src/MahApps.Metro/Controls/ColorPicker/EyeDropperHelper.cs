@@ -1,4 +1,6 @@
-﻿// taken from https://codedocu.de/Details?d=1091&a=9&f=129&l=0&v=d&t=WPF,-C
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.ComponentModel;
@@ -41,6 +43,7 @@ namespace MahApps.Metro.Controls
 
         [DllImport("gdi32.dll")]
         static extern uint GetPixel(IntPtr hdc, int nXPos, int nYPos);
+
         [DllImport("gdi32.dll")]
         static extern IntPtr SelectObject(IntPtr hdc, IntPtr hObject);
 
@@ -82,10 +85,10 @@ namespace MahApps.Metro.Controls
                 DeleteDC(memoryDc);
                 ReleaseDC(desktophWnd, desktopDc);
             }
+
             result.Freeze();
             return result;
         }
-
 
         // From Stackoverflow: https://stackoverflow.com/questions/1316681/getting-mouse-position-in-c-sharp
         [StructLayout(LayoutKind.Sequential)]
@@ -111,7 +114,6 @@ namespace MahApps.Metro.Controls
             GetCursorPos(out PointInter lpPoint);
             return lpPoint;
         }
-
 
         static public Color GetPixelColor(PointInter point)
         {

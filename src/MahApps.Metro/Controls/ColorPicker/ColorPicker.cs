@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -31,20 +35,20 @@ namespace MahApps.Metro.Controls
     {
         /// <summary>Identifies the <see cref="DropDownClosed"/> routed event.</summary>
         public static readonly RoutedEvent DropDownClosedEvent = EventManager.RegisterRoutedEvent(
-                                                                nameof(DropDownClosed),
-                                                                RoutingStrategy.Bubble,
-                                                                typeof(EventHandler<EventArgs>),
-                                                                typeof(ColorPicker));
+            nameof(DropDownClosed),
+            RoutingStrategy.Bubble,
+            typeof(EventHandler<EventArgs>),
+            typeof(ColorPicker));
 
         /// <summary>Identifies the <see cref="DropDownHeight"/> dependency property.</summary>
         public static readonly DependencyProperty DropDownHeightProperty = DependencyProperty.Register(nameof(DropDownHeight), typeof(double), typeof(ColorPicker), new PropertyMetadata(300d));
 
         /// <summary>Identifies the <see cref="DropDownOpened"/> routed event.</summary>
         public static readonly RoutedEvent DropDownOpenedEvent = EventManager.RegisterRoutedEvent(
-                                                                        nameof(DropDownOpened),
-                                                                        RoutingStrategy.Bubble,
-                                                                        typeof(EventHandler<EventArgs>),
-                                                                        typeof(ColorPicker));
+            nameof(DropDownOpened),
+            RoutingStrategy.Bubble,
+            typeof(EventHandler<EventArgs>),
+            typeof(ColorPicker));
 
         /// <summary>Identifies the <see cref="DropDownWidth"/> dependency property.</summary>
         public static readonly DependencyProperty DropDownWidthProperty = DependencyProperty.Register(nameof(DropDownWidth), typeof(double), typeof(ColorPicker), new PropertyMetadata(300d));
@@ -157,7 +161,7 @@ namespace MahApps.Metro.Controls
             get { return (DataTemplate)GetValue(SelectedColorTemplateProperty); }
             set { SetValue(SelectedColorTemplateProperty, value); }
         }
-        
+
         /// <summary>
         /// Gets or sets when to add the <see cref="ColorPickerBase.SelectedColor"/> to the <see cref="RecentColorPaletteItemsSource"/>
         /// </summary>
@@ -268,44 +272,42 @@ namespace MahApps.Metro.Controls
                 {
                     colorPicker.RaiseEvent(new RoutedEventArgs(DropDownOpenedEvent));
 
-                    
-
                     var action = new Action(() =>
-                    {
-                        colorPicker.Focus();
-
-                        Mouse.Capture(colorPicker, CaptureMode.SubTree);
-
-                        colorPicker.ValidateTabItems();
-
-                        if (colorPicker.PART_PopupTabControl.SelectedItem == colorPicker.PART_ColorPalettesTab)
                         {
-                            if (colorPicker.IsStandardColorPaletteVisible && colorPicker.PART_ColorPaletteStandard != null)
+                            colorPicker.Focus();
+
+                            Mouse.Capture(colorPicker, CaptureMode.SubTree);
+
+                            colorPicker.ValidateTabItems();
+
+                            if (colorPicker.PART_PopupTabControl.SelectedItem == colorPicker.PART_ColorPalettesTab)
                             {
-                                colorPicker.PART_ColorPaletteStandard.FocusSelectedItem();
+                                if (colorPicker.IsStandardColorPaletteVisible && colorPicker.PART_ColorPaletteStandard != null)
+                                {
+                                    colorPicker.PART_ColorPaletteStandard.FocusSelectedItem();
+                                }
+                                else if (colorPicker.IsAvailableColorPaletteVisible && colorPicker.PART_ColorPaletteAvailable != null)
+                                {
+                                    colorPicker.PART_ColorPaletteAvailable.FocusSelectedItem();
+                                }
+                                else if (colorPicker.IsCustomColorPalette01Visible && colorPicker.PART_ColorPaletteCustom01 != null)
+                                {
+                                    colorPicker.PART_ColorPaletteCustom01.FocusSelectedItem();
+                                }
+                                else if (colorPicker.IsCustomColorPalette02Visible && colorPicker.PART_ColorPaletteCustom02 != null)
+                                {
+                                    colorPicker.PART_ColorPaletteCustom02.FocusSelectedItem();
+                                }
+                                else if (colorPicker.IsRecentColorPaletteVisible && colorPicker.PART_ColorPaletteRecent != null)
+                                {
+                                    colorPicker.PART_ColorPaletteRecent.FocusSelectedItem();
+                                }
                             }
-                            else if (colorPicker.IsAvailableColorPaletteVisible && colorPicker.PART_ColorPaletteAvailable != null)
+                            else if (colorPicker.PART_PopupTabControl.SelectedItem == colorPicker.PART_AdvancedTab)
                             {
-                                colorPicker.PART_ColorPaletteAvailable.FocusSelectedItem();
+                                colorPicker.PART_AdvancedTab.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                             }
-                            else if (colorPicker.IsCustomColorPalette01Visible && colorPicker.PART_ColorPaletteCustom01 != null)
-                            {
-                                colorPicker.PART_ColorPaletteCustom01.FocusSelectedItem();
-                            }
-                            else if (colorPicker.IsCustomColorPalette02Visible && colorPicker.PART_ColorPaletteCustom02 != null)
-                            {
-                               colorPicker.PART_ColorPaletteCustom02.FocusSelectedItem();
-                            }
-                            else if (colorPicker.IsRecentColorPaletteVisible && colorPicker.PART_ColorPaletteRecent != null)
-                            {
-                                colorPicker.PART_ColorPaletteRecent.FocusSelectedItem();
-                            }
-                        }
-                        else if (colorPicker.PART_PopupTabControl.SelectedItem == colorPicker.PART_AdvancedTab)
-                        {
-                            colorPicker.PART_AdvancedTab.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
-                        }
-                    });
+                        });
 
                     colorPicker.Dispatcher.BeginInvoke(DispatcherPriority.Send, action);
                 }
@@ -372,7 +374,7 @@ namespace MahApps.Metro.Controls
                 colorPicker.Focus();
             }
 
-            e.Handled = true;   // Always handle so that parents won't take focus away
+            e.Handled = true; // Always handle so that parents won't take focus away
 
             if (Mouse.Captured == colorPicker && e.OriginalSource == colorPicker)
             {
@@ -387,7 +389,6 @@ namespace MahApps.Metro.Controls
                 SetCurrentValue(IsDropDownOpenProperty, false);
             }
         }
-        
 
         #region ColorPalettes
 
@@ -450,11 +451,11 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="CustomColorPalette02Style"/> dependency property.</summary>
         public static readonly DependencyProperty CustomColorPalette02StyleProperty =
             DependencyProperty.Register(nameof(CustomColorPalette02Style), typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
-       
+
         /// <summary>Identifies the <see cref="IsRecentColorPaletteVisible"/> dependency property.</summary>
         public static readonly DependencyProperty IsRecentColorPaletteVisibleProperty =
             DependencyProperty.Register(nameof(IsRecentColorPaletteVisible), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true));
-        
+
         /// <summary>Identifies the <see cref="RecentColorPaletteHeader"/> dependency property.</summary>
         public static readonly DependencyProperty RecentColorPaletteHeaderProperty =
             DependencyProperty.Register(nameof(RecentColorPaletteHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Recent"));
@@ -535,7 +536,6 @@ namespace MahApps.Metro.Controls
             get { return (Style)GetValue(AvailableColorPaletteStyleProperty); }
             set { SetValue(AvailableColorPaletteStyleProperty, value); }
         }
-
 
         /// <summary>
         /// Gets or sets if the custom color palette is visible (1/2)
@@ -727,7 +727,6 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="TabItemStyle"/> dependency property.</summary>
         public static readonly DependencyProperty TabItemStyleProperty = DependencyProperty.Register(nameof(TabItemStyle), typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
 
-
         /// <summary>
         /// Gets or Sets the <see cref="Style"/> for the <see cref="TabControl"/>
         /// </summary>
@@ -745,7 +744,6 @@ namespace MahApps.Metro.Controls
             get { return (Style)GetValue(TabItemStyleProperty); }
             set { SetValue(TabItemStyleProperty, value); }
         }
-
 
         /// <summary>Identifies the <see cref="ColorPalettesTabHeader"/> dependency property.</summary>
         public static readonly DependencyProperty ColorPalettesTabHeaderProperty = DependencyProperty.Register(nameof(ColorPalettesTabHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Palettes"));
@@ -783,7 +781,6 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsColorPalettesTabVisibleProperty, value); }
         }
 
-
         /// <summary>Identifies the <see cref="AdvancedTabHeader"/> dependency property.</summary>
         public static readonly DependencyProperty AdvancedTabHeaderProperty = DependencyProperty.Register(nameof(AdvancedTabHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Advanced"));
 
@@ -819,7 +816,6 @@ namespace MahApps.Metro.Controls
             get { return (bool)GetValue(IsAdvancedTabVisibleProperty); }
             set { SetValue(IsAdvancedTabVisibleProperty, value); }
         }
-
 
         private static void OnTabItemVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
