@@ -897,8 +897,10 @@
     </Style>
 
 
-    <Style x:Key="MahApps.Styles.TabControl.ColorPicker" TargetType="TabControl" BasedOn="{StaticResource MahApps.Styles.TabControl}">
+    <Style x:Key="MahApps.Styles.TabControl.ColorPicker"
+           BasedOn="{StaticResource MahApps.Styles.TabControl}"
+           TargetType="TabControl">
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ColorPicker.TabItemHeader}" />
     </Style>
-    
+
 </ResourceDictionary>

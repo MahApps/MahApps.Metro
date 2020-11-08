@@ -9,7 +9,7 @@
              mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <GroupBox Margin="5,5,5,0" Header="Eye Dropper">
+            <GroupBox Margin="5 5 5 0" Header="Eye Dropper">
                 <mah:ColorEyeDropper Height="Auto"
                                      HorizontalContentAlignment="Center"
                                      mah:ControlsHelper.CornerRadius="3"
@@ -23,15 +23,15 @@
                 </mah:ColorEyeDropper>
             </GroupBox>
 
-            <GroupBox Margin="5,5,5,0" Header="Color Canvas">
-                <mah:ColorCanvas x:Name="ColorCanvasExample" SelectedColor="Blue"/>
+            <GroupBox Margin="5 5 5 0" Header="Color Canvas">
+                <mah:ColorCanvas x:Name="ColorCanvasExample" SelectedColor="Blue" />
             </GroupBox>
 
             <GroupBox Margin="5" Header="Color Picker">
                 <mah:ColorPicker mah:TextBoxHelper.AutoWatermark="True"
+                                 mah:TextBoxHelper.ClearTextButton="True"
                                  mah:TextBoxHelper.UseFloatingWatermark="True"
                                  mah:TextBoxHelper.Watermark="Select a color"
-                                 mah:TextBoxHelper.ClearTextButton="True"
                                  SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" />
             </GroupBox>
         </StackPanel>

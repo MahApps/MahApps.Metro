@@ -329,11 +329,11 @@
                     <exampleViews:ColorExample DataContext="{Binding}" />
                 </ScrollViewer>
             </TabItem>
-            
+
             <TabItem Header="ColorPicker">
                 <exampleViews:ColorPickerExample />
             </TabItem>
-            
+
             <TabItem Header="others">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"

@@ -1,17 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorComponentSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
-    <Converters:ColorChannelMinMaxConverter x:Key="ColorChannelMinMaxConverter" />
-    <Converters:HSVColorChannelMinMaxConverter x:Key="HSVColorChannelMinMaxConverter" />
-    <Converters:InvertBoolConverter x:Key="InvertBoolConverter" />
-    <Converters:ColorToNameConverter x:Key="ColorToNameConverter" />
+    <converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
+    <converters:ColorChannelMinMaxConverter x:Key="ColorChannelMinMaxConverter" />
+    <converters:HSVColorChannelMinMaxConverter x:Key="HSVColorChannelMinMaxConverter" />
+    <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
+    <converters:ColorToNameConverter x:Key="ColorToNameConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <DrawingBrush x:Key="MahApps.Brushes.Checkerd"
@@ -78,7 +78,7 @@
         </Path>
     </DataTemplate>
 
-    <Style TargetType="{x:Type mah:ColorCanvas}" x:Key="MahApps.Styles.ColorCanvas">
+    <Style x:Key="MahApps.Styles.ColorCanvas" TargetType="{x:Type mah:ColorCanvas}">
 
         <Setter Property="Template">
             <Setter.Value>
@@ -143,26 +143,26 @@
                                         <!--  Fade  -->
                                         <Rectangle Grid.RowSpan="2"
                                                    Width="3"
-                                                   Margin="-1.5,0"
+                                                   Margin="-1.5 0"
                                                    HorizontalAlignment="Right"
                                                    VerticalAlignment="Stretch"
                                                    Fill="White" />
                                         <Rectangle Grid.ColumnSpan="2"
                                                    Height="3"
-                                                   Margin="0,-1.5"
+                                                   Margin="0 -1.5"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Bottom"
                                                    Fill="White" />
 
                                         <Rectangle Grid.RowSpan="2"
                                                    Width="1"
-                                                   Margin="-0.5,0"
+                                                   Margin="-0.5 0"
                                                    HorizontalAlignment="Right"
                                                    VerticalAlignment="Stretch"
                                                    Fill="Black" />
                                         <Rectangle Grid.ColumnSpan="2"
                                                    Height="1"
-                                                   Margin="0,-0.5"
+                                                   Margin="0 -0.5"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Bottom"
                                                    Fill="Black" />
@@ -171,20 +171,20 @@
                                 </Border>
 
                                 <!--  Selected Color Preview  -->
-                                <Grid Grid.Row="1" Margin="5,0,5,5">
+                                <Grid Grid.Row="1" Margin="5 0 5 5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <ContentPresenter Margin="2,0,0,5"
+                                    <ContentPresenter Margin="2 0 0 5"
                                                       VerticalAlignment="Center"
                                                       Content="{TemplateBinding LabelColorPreview}" />
 
 
                                     <Border Grid.Row="0"
                                             Grid.Column="1"
-                                            Margin="5,0,0,0"
+                                            Margin="5 0 0 0"
                                             Background="{DynamicResource MahApps.Brushes.Checkerd}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                             BorderThickness="1">
@@ -198,7 +198,7 @@
                                     <ContentControl x:Name="PART_NoColorPreview"
                                                     Grid.Row="0"
                                                     Grid.Column="1"
-                                                    Margin="5,0,0,0"
+                                                    Margin="5 0 0 0"
                                                     ContentTemplate="{DynamicResource MahApps.DataTemplates.ColorPicker.NoColor}"
                                                     Visibility="Collapsed" />
 
@@ -206,7 +206,7 @@
 
                                 <!--  Sliders for Values  -->
                                 <ScrollViewer Grid.Column="1"
-                                              Margin="0,5,5,5"
+                                              Margin="0 5 5 5"
                                               Grid.IsSharedSizeScope="True"
                                               HorizontalScrollBarVisibility="Auto"
                                               VerticalScrollBarVisibility="Auto">
@@ -296,7 +296,7 @@
                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
                                         </Grid>
 
-                                        <Grid Margin="0,10,0,0">
+                                        <Grid Margin="0 10 0 0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"
                                                                   MinWidth="{DynamicResource MahApps.Font.Size.Content}"
@@ -380,7 +380,7 @@
 
                                         </Grid>
 
-                                        <Grid Margin="0,10,0,0">
+                                        <Grid Margin="0 10 0 0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"
                                                                   MinWidth="{DynamicResource MahApps.Font.Size.Content}"
@@ -420,7 +420,7 @@
 
                                 <Grid Grid.Row="2"
                                       Grid.Column="2"
-                                      Margin="0,0,5,5"
+                                      Margin="0 0 5 5"
                                       VerticalAlignment="Top">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
@@ -434,7 +434,7 @@
                                                       Content="{TemplateBinding LabelColorName}" />
 
                                     <TextBox Grid.Column="1"
-                                             Margin="2,0,0,0"
+                                             Margin="2 0 0 0"
                                              mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                              mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                              mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
@@ -457,9 +457,9 @@
                                     <mah:ColorEyeDropper x:Name="PART_PickColorFromScreen"
                                                          Grid.Column="2"
                                                          Height="auto"
-                                                         Margin="2,0,0,0"
-                                                         Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorConvas}"
-                                                         SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}" />
+                                                         Margin="2 0 0 0"
+                                                         SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
+                                                         Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorConvas}" />
                                 </Grid>
                             </Grid>
                         </Border>
