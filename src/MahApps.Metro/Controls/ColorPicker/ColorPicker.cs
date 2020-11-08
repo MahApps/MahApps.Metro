@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -249,8 +248,7 @@ namespace MahApps.Metro.Controls
 
             if (this.AddToRecentColorsTrigger == AddToRecentColorsTrigger.SelectedColorChanged && SelectedColor.HasValue)
             {
-                BuildInColorPalettes.AddColorToRecentColors(NewValue, RecentColorPaletteItemsSource);
-                BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(this), RecentColorPaletteItemsSource as ObservableCollection<Color?>);
+                BuildInColorPalettes.AddColorToRecentColors(NewValue, RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(this));
             }
 
             ColorIsUpdating = false;
@@ -324,8 +322,7 @@ namespace MahApps.Metro.Controls
                     {
                         // We Update something so we need to flag this
                         colorPicker.ColorIsUpdating = true;
-                        BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource);
-                        BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker), colorPicker.RecentColorPaletteItemsSource);
+                        BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker));
                         colorPicker.ColorIsUpdating = false;
                     }
                 }

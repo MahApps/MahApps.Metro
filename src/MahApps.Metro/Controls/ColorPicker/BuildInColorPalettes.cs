@@ -12,8 +12,7 @@ namespace MahApps.Metro.Controls
 {
     public static class BuildInColorPalettes
     {
-        #region Build in Palettes
-        public static Color[] StandardColorsPalette { get; } = new []
+        public static Color[] StandardColorsPalette { get; } =
             {
                 Colors.Transparent,
                 Colors.White,
@@ -37,16 +36,17 @@ namespace MahApps.Metro.Controls
             };
 
         public static ObservableCollection<Color> WpfColorsPalette { get; } = new ObservableCollection<Color>(
-            typeof(Colors).GetProperties().Where(x => x.PropertyType == typeof(Color))
+            typeof(Colors)
+                .GetProperties()
+                .Where(x => x.PropertyType == typeof(Color))
                 .Select(x => (Color)x.GetValue(null))
                 .OrderBy(c => new HSVColor(c).Hue)
                 .ThenBy(c => new HSVColor(c).Saturation)
                 .ThenByDescending(c => new HSVColor(c).Value));
 
-
         public static ObservableCollection<Color?> RecentColors { get; } = new ObservableCollection<Color?>();
 
-        public static void AddColorToRecentColors(Color? color, IEnumerable recentColors)
+        public static void AddColorToRecentColors(Color? color, IEnumerable recentColors, int maxCount)
         {
             if (recentColors is ObservableCollection<Color?> collection)
             {
@@ -57,16 +57,20 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    collection.Insert(0, color);
+                    if (collection.Count < maxCount)
+                    {
+                        collection.Insert(0, color);
+                    }
                 }
             }
-            
         }
-        #endregion
 
-        #region ReduceRecentColors
-
-        public static readonly DependencyProperty MaximumRecentColorsCountProperty = DependencyProperty.RegisterAttached("MaximumRecentColorsCount", typeof(int), typeof(BuildInColorPalettes), new PropertyMetadata(10));
+        public static readonly DependencyProperty MaximumRecentColorsCountProperty
+            = DependencyProperty.RegisterAttached(
+                "MaximumRecentColorsCount",
+                typeof(int),
+                typeof(BuildInColorPalettes),
+                new PropertyMetadata(10));
 
         /// <summary>Helper for getting <see cref="MaximumRecentColorsCountProperty"/> from <paramref name="obj"/>.</summary>
         /// <param name="obj"><see cref="DependencyObject"/> to read <see cref="MaximumRecentColorsCountProperty"/> from.</param>
@@ -85,18 +89,5 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(MaximumRecentColorsCountProperty, value);
         }
-
-
-        public static void ReduceRecentColors(int MaxCount, IEnumerable recentColors)
-        {
-            if (recentColors is ObservableCollection<Color?> collection)
-            {
-                while (collection.Count > MaxCount)
-                {
-                    collection.RemoveAt(MaxCount);
-                }
-            }
-        }
-        #endregion
     }
 }
