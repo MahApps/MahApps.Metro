@@ -3,64 +3,65 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace MahApps.Metro.Converters
 {
-
+    /// <summary>
+    /// Channel type for ColorChannelMinMaxConverter to pass in in as parameter.
+    /// </summary>
+    public enum ColorChannelType
+    {
+        RMin,
+        RMax,
+        GMin,
+        GMax,
+        BMin,
+        BMax,
+        AMin,
+        AMax
+    }
 
     /// <summary>
     /// Converts a given Color to a new Color with the specified Channel turned to the Min or Max Value
     /// </summary>
     [ValueConversion(typeof(Color), typeof(Color))]
-    public class ColorChannelMinMaxConverter : IValueConverter
+    public sealed class ColorChannelMinMaxConverter : IValueConverter
     {
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
+        static ColorChannelMinMaxConverter()
+        {
+        }
+
+        /// <summary> Gets the default instance </summary>
+        public static ColorChannelMinMaxConverter Default { get; } = new ColorChannelMinMaxConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null)
+            if (value is Color color && parameter is ColorChannelType channel)
             {
-                return Binding.DoNothing;
-            }
-
-            if (parameter is null)
-            {
-                throw new ArgumentNullException(nameof(parameter));
-            }
-
-            if (value is Color color && parameter is string channel)
-            {
-                switch (channel.ToLowerInvariant())
+                switch (channel)
                 {
-                    case "rmin":
-                        return Color.FromRgb(0, color.G, color.B);
-
-                    case "rmax":
-                        return Color.FromRgb(255, color.G, color.B);
-
-                    case "gmin":
-                        return Color.FromRgb(color.R, 0, color.B);
-
-                    case "gmax":
-                        return Color.FromRgb(color.R, 255, color.B);
-
-                    case "bmin":
-                        return Color.FromRgb(color.R, color.G, 0);
-
-                    case "bmax":
-                        return Color.FromRgb(color.R, color.G, 255);
-
-                    case "amin":
-                        return Color.FromArgb(0, color.R, color.G, color.B);
-
-                    case "amax":
-                        return Color.FromArgb(255, color.R, color.G, color.B);
+                    case ColorChannelType.RMin: return Color.FromRgb(0, color.G, color.B);
+                    case ColorChannelType.RMax: return Color.FromRgb(255, color.G, color.B);
+                    case ColorChannelType.GMin: return Color.FromRgb(color.R, 0, color.B);
+                    case ColorChannelType.GMax: return Color.FromRgb(color.R, 255, color.B);
+                    case ColorChannelType.BMin: return Color.FromRgb(color.R, color.G, 0);
+                    case ColorChannelType.BMax: return Color.FromRgb(color.R, color.G, 255);
+                    case ColorChannelType.AMin: return Color.FromArgb(0, color.R, color.G, color.B);
+                    case ColorChannelType.AMax: return Color.FromArgb(255, color.R, color.G, color.B);
                     default:
-                        throw new InvalidOperationException($"Unexpected value {nameof(parameter)} = {parameter}");
+                    {
+                        Trace.TraceWarning($"Unexpected value {nameof(parameter)} = {channel}");
+                        return Binding.DoNothing;
+                    }
                 }
             }
-            throw new InvalidOperationException("Unable to convert the given input");
+
+            return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

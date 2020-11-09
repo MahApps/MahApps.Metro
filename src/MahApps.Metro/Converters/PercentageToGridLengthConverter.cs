@@ -9,23 +9,31 @@ using System.Windows.Data;
 
 namespace MahApps.Metro.Converters
 {
-    public class PercentageToGridLengthConverter : IValueConverter
+    [ValueConversion(typeof(double), typeof(GridLength))]
+    public sealed class PercentageToGridLengthConverter : IValueConverter
     {
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
+        static PercentageToGridLengthConverter()
+        {
+        }
+
+        /// <summary> Gets the default instance </summary>
+        public static PercentageToGridLengthConverter Default { get; } = new PercentageToGridLengthConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
-            bool inverse = (parameter as string)?.ToLowerInvariant() == "true";
-
-            if (value is double)
+            if (value is double percent)
             {
+                var inverse = parameter as string == bool.TrueString;
                 if (inverse)
                 {
-                    value = 1 - (double)value;
+                    percent = 1 - percent;
                 }
-                return new GridLength((double)value, GridUnitType.Star);
+
+                return new GridLength(percent, GridUnitType.Star);
             }
 
-            throw new NotImplementedException();
+            return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

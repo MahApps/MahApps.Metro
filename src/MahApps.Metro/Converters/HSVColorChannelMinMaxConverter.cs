@@ -4,53 +4,56 @@
 
 using MahApps.Metro.Controls;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Converters
 {
+    public enum HSVColorChannelType
+    {
+        SMin,
+        SMax,
+        VMin,
+        VMax,
+        SVMax
+    }
+
     /// <summary>
     /// Converts a given Color to a new Color with the specified Channel turned to the Min or Max Value
     /// </summary>
     [ValueConversion(typeof(HSVColor), typeof(Color))]
-    public class HSVColorChannelMinMaxConverter : IValueConverter
+    public sealed class HSVColorChannelMinMaxConverter : IValueConverter
     {
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
+        static HSVColorChannelMinMaxConverter()
+        {
+        }
+
+        /// <summary> Gets the default instance </summary>
+        public static HSVColorChannelMinMaxConverter Default { get; } = new HSVColorChannelMinMaxConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null)
+            if (value is HSVColor hsv && parameter is HSVColorChannelType channel)
             {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            if (parameter is null)
-            {
-                throw new ArgumentNullException(nameof(parameter));
-            }
-
-            if (value is HSVColor hsv && parameter is string channel)
-            {
-                switch (channel.ToLowerInvariant())
+                switch (channel)
                 {
-                    case "smin":
-                        return (new HSVColor(hsv.Hue, 0, hsv.Value)).ToColor();
-
-                    case "smax":
-                        return (new HSVColor(hsv.Hue, 1, hsv.Value)).ToColor();
-
-                    case "vmin":
-                        return (new HSVColor(hsv.Hue, hsv.Saturation, 0)).ToColor();
-
-                    case "vmax":
-                        return (new HSVColor(hsv.Hue, hsv.Saturation, 1)).ToColor();
-
-                    case "svmax":
-                        return (new HSVColor(hsv.Hue, 1, 1)).ToColor();
+                    case HSVColorChannelType.SMin: return new HSVColor(hsv.Hue, 0, hsv.Value).ToColor();
+                    case HSVColorChannelType.SMax: return new HSVColor(hsv.Hue, 1, hsv.Value).ToColor();
+                    case HSVColorChannelType.VMin: return new HSVColor(hsv.Hue, hsv.Saturation, 0).ToColor();
+                    case HSVColorChannelType.VMax: return new HSVColor(hsv.Hue, hsv.Saturation, 1).ToColor();
+                    case HSVColorChannelType.SVMax: return new HSVColor(hsv.Hue, 1, 1).ToColor();
                     default:
-                        throw new InvalidOperationException($"Unexpected value {nameof(parameter)} = {parameter}");
+                    {
+                        Trace.TraceWarning($"Unexpected value {nameof(parameter)} = {channel}");
+                        return Binding.DoNothing;
+                    }
                 }
             }
-            throw new InvalidOperationException("Unable to convert the given input");
+
+            return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
