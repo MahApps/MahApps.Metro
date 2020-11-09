@@ -152,6 +152,7 @@
            BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}"
            TargetType="{x:Type mah:ColorEyeDropper}">
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="1" />
     </Style>
 
 </ResourceDictionary>
