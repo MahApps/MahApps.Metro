@@ -16,7 +16,7 @@
                     <Border BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                             BorderThickness="1"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid Background="{DynamicResource MahApps.Brushes.Checkerd.Small}">
+                        <Grid Background="{DynamicResource MahApps.Brushes.Tile.Small}">
                             <Grid Background="{TemplateBinding Background}" />
                             <Track x:Name="PART_Track">
                                 <Track.DecreaseRepeatButton>

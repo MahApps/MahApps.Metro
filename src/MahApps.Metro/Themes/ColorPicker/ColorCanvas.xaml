@@ -13,7 +13,7 @@
     <converters:ColorToNameConverter x:Key="ColorToNameConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <DrawingBrush x:Key="MahApps.Brushes.Checkerd"
+    <DrawingBrush x:Key="MahApps.Brushes.Tile"
                   TileMode="Tile"
                   Viewport="0,0,20,20"
                   ViewportUnits="Absolute">
@@ -36,7 +36,7 @@
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
-    <DrawingBrush x:Key="MahApps.Brushes.Checkerd.Small"
+    <DrawingBrush x:Key="MahApps.Brushes.Tile.Small"
                   TileMode="Tile"
                   Viewport="0,0,10,10"
                   ViewportUnits="Absolute">
@@ -60,7 +60,6 @@
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
-
     <DataTemplate x:Key="MahApps.DataTemplates.ColorPicker.NoColor">
         <Path Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
               SnapsToDevicePixels="True"
@@ -78,7 +77,6 @@
     </DataTemplate>
 
     <Style x:Key="MahApps.Styles.ColorCanvas" TargetType="{x:Type mah:ColorCanvas}">
-
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorCanvas}">
@@ -184,7 +182,7 @@
                                     <Border Grid.Row="0"
                                             Grid.Column="1"
                                             Margin="5 0 0 0"
-                                            Background="{DynamicResource MahApps.Brushes.Checkerd}"
+                                            Background="{DynamicResource MahApps.Brushes.Tile}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                             BorderThickness="1">
                                         <Rectangle>
@@ -455,10 +453,9 @@
 
                                     <mah:ColorEyeDropper x:Name="PART_PickColorFromScreen"
                                                          Grid.Column="2"
-                                                         Height="auto"
                                                          Margin="2 0 0 0"
                                                          SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
-                                                         Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorConvas}" />
+                                                         Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}" />
                                 </Grid>
                             </Grid>
                         </Border>
