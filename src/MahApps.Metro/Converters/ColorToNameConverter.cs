@@ -5,6 +5,7 @@
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
@@ -15,10 +16,8 @@ namespace MahApps.Metro.Converters
 {
     [MarkupExtensionReturnType(typeof(ColorToNameConverter))]
     [ValueConversion(typeof(Color?), typeof(string))]
-    public class ColorToNameConverter :  MarkupMultiConverter
+    public class ColorToNameConverter : MarkupMultiConverter
     {
-        ColorToNameConverter _instance;
-
         /// <summary>
         /// Converts a given <see cref="Color"/> to its Name
         /// </summary>
@@ -30,7 +29,6 @@ namespace MahApps.Metro.Converters
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ColorHelper.GetColorName(value as Color?, parameter as Dictionary<Color?, string>);
-
         }
 
         /// <summary>
@@ -43,12 +41,11 @@ namespace MahApps.Metro.Converters
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            Color? color = values.FirstOrDefault(x => x?.GetType() == typeof(Color)) as Color?;
-            Dictionary<Color?, string> colorNamesDictionary = values.FirstOrDefault(x => x?.GetType() == typeof(Dictionary<Color?, string>)) as Dictionary<Color?, string>;
+            var color = values?.FirstOrDefault(x => x?.GetType() == typeof(Color)) as Color?;
+            var colorNamesDictionary = values?.FirstOrDefault(x => x?.GetType() == typeof(Dictionary<Color?, string>)) as Dictionary<Color?, string>;
 
             return ColorHelper.GetColorName(color, colorNamesDictionary);
         }
-
 
         /// <summary>
         /// Converts a given <see cref="string"/> back to a <see cref="Color"/>
@@ -66,10 +63,10 @@ namespace MahApps.Metro.Converters
             }
             else
             {
-                throw new InvalidCastException("Unable to convert the provided value to System.Windows.Media.Color");
+                Trace.TraceError($"Unable to convert the provided value '{value}' to System.Windows.Media.Color");
+                return Binding.DoNothing;
             }
         }
-
 
         /// <summary>
         /// The ConvertBack-Method is not available inside a <see cref="MultiBinding"/>. Use a <see cref="Binding"/> with the optional <see cref="Binding.ConverterParameter"/> instead.
@@ -83,11 +80,6 @@ namespace MahApps.Metro.Converters
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return _instance ??= new ColorToNameConverter();
         }
     }
 }

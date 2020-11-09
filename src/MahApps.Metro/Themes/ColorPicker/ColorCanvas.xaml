@@ -10,8 +10,6 @@
     <converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
     <converters:ColorChannelMinMaxConverter x:Key="ColorChannelMinMaxConverter" />
     <converters:HSVColorChannelMinMaxConverter x:Key="HSVColorChannelMinMaxConverter" />
-    <converters:ColorToNameConverter x:Key="ColorToNameConverter" />
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <DrawingBrush x:Key="MahApps.Brushes.Tile"
                   TileMode="Tile"
