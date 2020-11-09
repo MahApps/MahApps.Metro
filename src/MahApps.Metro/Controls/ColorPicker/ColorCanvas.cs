@@ -9,7 +9,7 @@ using System.Windows.Input;
 namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = "PART_SaturationValueBox", Type = typeof(Control))]
-    [TemplatePart(Name = "PART_PickColorFromScreen", Type = typeof(ColorEyeDropper))]
+    [TemplatePart(Name = "PART_ColorEyeDropper", Type = typeof(ColorEyeDropper))]
     public class ColorCanvas : ColorPickerBase
     {
         static ColorCanvas()

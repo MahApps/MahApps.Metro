@@ -26,20 +26,24 @@ namespace MahApps.Metro.Controls
             ColorNamesDictionary = new Dictionary<Color?, string>();
 
             var rm = new ResourceManager(typeof(ColorNames));
-            ResourceSet resourceSet =rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            ResourceSet resourceSet = rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+
             foreach (var entry in resourceSet.OfType<DictionaryEntry>())
             {
                 try
                 {
-                    var color = (Color)ColorConverter.ConvertFromString(entry.Key.ToString());
-                    ColorNamesDictionary.Add(color, entry.Value.ToString());
+                    if (ColorConverter.ConvertFromString(entry.Key.ToString()) is Color color)
+                    {
+                        ColorNamesDictionary.Add(color, entry.Value.ToString());
+                    }
                 }
                 catch (Exception)
                 {
-                    Debug.WriteLine(entry.Key.ToString() + " is not a valid color-key");
+                    Trace.TraceError($"{entry.Key} is not a valid color key!");
                 }
-            }            
+            }
         }
+
         #endregion
 
         /// <summary>
@@ -58,13 +62,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Creats an Int32 into a Color
+        /// Creates an Int32 into a Color
         /// </summary>
-        /// <param name="ColorNumber">the Int32 representation of the color</param>
+        /// <param name="colorNumber">the Int32 representation of the color</param>
         /// <returns>Color</returns>
-        public static Color ColorFromInt32 (int ColorNumber)
+        public static Color ColorFromInt32(int colorNumber)
         {
-            var bytes = BitConverter.GetBytes(ColorNumber);
+            var bytes = BitConverter.GetBytes(colorNumber);
             return Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
         }
 
@@ -72,42 +76,37 @@ namespace MahApps.Metro.Controls
         /// This function tries to convert a given string into a Color in the following order:
         ///    1. If the string starts with '#' the function tries to get the color from the hex-code
         ///    2. else the function tries to find the color in the color names Dictionary
-        ///    3. If 1. + 2. were not successfull the function adds a '#' sign and tries 1. + 2. again
+        ///    3. If 1. + 2. were not successful the function adds a '#' sign and tries 1. + 2. again
         /// </summary>
-        /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
+        /// <param name="colorName">The localized name of the color, the hex-code of the color or the internal color name</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
-        /// <returns>the Color if successfull, else null</returns>
-        public static Color? ColorFromString(string ColorName, Dictionary<Color?, string> colorNamesDictionary)
+        /// <returns>the Color if successful, else null</returns>
+        public static Color? ColorFromString(string colorName, Dictionary<Color?, string> colorNamesDictionary)
         {
             Color? result = null;
 
             try
             {
                 // if we don't have a string, we cannot have any Color
-                if (string.IsNullOrWhiteSpace(ColorName))
+                if (string.IsNullOrWhiteSpace(colorName))
                 {
                     return null;
                 }
 
-                if (colorNamesDictionary is null)
+                colorNamesDictionary ??= ColorNamesDictionary;
+
+                if (!colorName.StartsWith("#"))
                 {
-                    colorNamesDictionary = ColorNamesDictionary;
+                    result = colorNamesDictionary?.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
                 }
 
-                if (! ColorName.StartsWith("#"))
-                {
-                    result = colorNamesDictionary?.FirstOrDefault(x => string.Equals(x.Value, ColorName, StringComparison.OrdinalIgnoreCase)).Key;
-                }
-                if (!result.HasValue)
-                {
-                    result = ColorConverter.ConvertFromString(ColorName) as Color?;
-                }
+                result ??= ColorConverter.ConvertFromString(colorName) as Color?;
             }
             catch (FormatException)
             {
-                if (!result.HasValue && !ColorName.StartsWith("#"))
+                if (colorName != null && !result.HasValue && !colorName.StartsWith("#"))
                 {
-                    result = ColorFromString("#" + ColorName);
+                    result = ColorFromString("#" + colorName);
                 }
             }
 
@@ -118,20 +117,19 @@ namespace MahApps.Metro.Controls
         /// This function tries to convert a given string into a Color in the following order:
         ///    1. If the string starts with '#' the function tries to get the color from the hex-code
         ///    2. else the function tries to find the color in the default <see cref="ColorNamesDictionary"/>
-        ///    3. If 1. + 2. were not successfull the function adds a '#' sign and tries 1. + 2. again
+        ///    3. If 1. + 2. were not successful the function adds a '#' sign and tries 1. + 2. again
         /// </summary>
-        /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
-        /// <returns>the Color if successfull, else null</returns>
-        public static Color? ColorFromString(string ColorName)
+        /// <param name="colorName">The localized name of the color, the hex-code of the color or the internal color name</param>
+        /// <returns>the Color if successful, else null</returns>
+        public static Color? ColorFromString(string colorName)
         {
-            return ColorFromString(ColorName, null);
+            return ColorFromString(colorName, null);
         }
 
         /// <summary>
         /// A Dictionary with localized Color Names
         /// </summary>
         public static Dictionary<Color?, string> ColorNamesDictionary { get; set; }
-
 
         /// <summary>
         /// Searches for the localized name of a given <paramref name="color"/>
@@ -146,10 +144,7 @@ namespace MahApps.Metro.Controls
                 return null;
             }
 
-            if (colorNamesDictionary is null)
-            {
-                colorNamesDictionary = ColorNamesDictionary;
-            }
+            colorNamesDictionary ??= ColorNamesDictionary;
 
             return colorNamesDictionary.TryGetValue(color, out string name) ? $"{name} ({color})" : $"{color}";
         }
