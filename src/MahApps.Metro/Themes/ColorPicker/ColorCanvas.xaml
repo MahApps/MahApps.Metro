@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
@@ -10,7 +10,6 @@
     <converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
     <converters:ColorChannelMinMaxConverter x:Key="ColorChannelMinMaxConverter" />
     <converters:HSVColorChannelMinMaxConverter x:Key="HSVColorChannelMinMaxConverter" />
-    <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
     <converters:ColorToNameConverter x:Key="ColorToNameConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
