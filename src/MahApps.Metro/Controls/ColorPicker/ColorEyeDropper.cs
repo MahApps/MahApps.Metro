@@ -5,38 +5,30 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
-    [TemplatePart(Name = nameof(PART_PreviewToolTip), Type = typeof(ToolTip))]
-    [TemplatePart(Name = nameof(PART_PreviewImage), Type = typeof(Image))]
-    public class ColorEyeDropper : ContentControl
+    public class ColorEyeDropper : Button
     {
+        private DispatcherOperation currentTask;
+        internal ColorEyePreviewData previewData = new ColorEyePreviewData();
+        private ToolTip previewToolTip;
+
         static ColorEyeDropper()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorEyeDropper), new FrameworkPropertyMetadata(typeof(ColorEyeDropper)));
         }
 
-        private ToolTip PART_PreviewToolTip;
-        private Image PART_PreviewImage;
-        private DispatcherOperation currentTask;
-
         // Depency Properties
         /// <summary>Identifies the <see cref="SelectedColor"/> dependency property.</summary>
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color?), typeof(ColorEyeDropper), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-        /// <summary>Identifies the <see cref="PreviewImageOuterPixelCount"/> dependency property.</summary>
-        public static readonly DependencyProperty PreviewImageOuterPixelCountProperty = DependencyProperty.Register(nameof(PreviewImageOuterPixelCount), typeof(int), typeof(ColorEyeDropper), new PropertyMetadata(2));
-
-        /// <summary>Identifies the <see cref="EyeDropperCursor"/> dependency property.</summary>
-        public static readonly DependencyProperty EyeDropperCursorProperty = DependencyProperty.Register(nameof(EyeDropperCursor), typeof(Cursor), typeof(ColorEyeDropper), new PropertyMetadata(null));
-
-        /// <summary>Identifies the <see cref="PreviewBrush"/> dependency property.</summary>
-        public static readonly DependencyProperty PreviewBrushProperty = DependencyProperty.Register(nameof(PreviewBrush), typeof(Brush), typeof(ColorEyeDropper), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty SelectedColorProperty
+            = DependencyProperty.Register(nameof(SelectedColor),
+                                          typeof(Color?),
+                                          typeof(ColorEyeDropper),
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Gets the preview image while the cursor is moving
@@ -47,10 +39,12 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(SelectedColorProperty, value);
         }
 
-        /// <summary>
-        /// Gets the preview brush while the cursor is moving
-        /// </summary>
-        public Brush PreviewBrush => (Brush)this.GetValue(PreviewBrushProperty);
+        /// <summary>Identifies the <see cref="PreviewImageOuterPixelCount"/> dependency property.</summary>
+        public static readonly DependencyProperty PreviewImageOuterPixelCountProperty
+            = DependencyProperty.Register(nameof(PreviewImageOuterPixelCount),
+                                          typeof(int),
+                                          typeof(ColorEyeDropper),
+                                          new PropertyMetadata(2));
 
         /// <summary>
         /// Gets or Sets the number of additional pixel in the preview image
@@ -61,6 +55,13 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(PreviewImageOuterPixelCountProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="EyeDropperCursor"/> dependency property.</summary>
+        public static readonly DependencyProperty EyeDropperCursorProperty
+            = DependencyProperty.Register(nameof(EyeDropperCursor),
+                                          typeof(Cursor),
+                                          typeof(ColorEyeDropper),
+                                          new PropertyMetadata(null));
+
         /// <summary>
         /// Gets or Sets the Cursor in Selecting Color Mode
         /// </summary>
@@ -70,8 +71,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(EyeDropperCursorProperty, value);
         }
 
+        public static readonly DependencyProperty PreviewContentTemplateProperty
+            = DependencyProperty.Register(nameof(PreviewContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(ColorEyeDropper),
+                                          new PropertyMetadata(default(DataTemplate)));
+
+        public DataTemplate PreviewContentTemplate
+        {
+            get => (DataTemplate)this.GetValue(PreviewContentTemplateProperty);
+            set => this.SetValue(PreviewContentTemplateProperty, value);
+        }
+
         private void SetPreview(Point mousePos)
         {
+            this.previewToolTip?.Move(mousePos, new Point(16, 16));
+
             if (this.currentTask?.Status == DispatcherOperationStatus.Executing || this.currentTask?.Status == DispatcherOperationStatus.Pending)
             {
                 this.currentTask.Abort();
@@ -79,6 +94,7 @@ namespace MahApps.Metro.Controls
 
             var action = new Action(() =>
                 {
+                    mousePos = this.PointToScreen(mousePos);
                     var outerPixelCount = this.PreviewImageOuterPixelCount;
                     var posX = (int)Math.Round(mousePos.X - outerPixelCount);
                     var posY = (int)Math.Round(mousePos.Y - outerPixelCount);
@@ -87,19 +103,11 @@ namespace MahApps.Metro.Controls
                     var previewBrush = new SolidColorBrush(EyeDropperHelper.GetPixelColor(mousePos));
                     previewBrush.Freeze();
 
-                    this.PART_PreviewImage.Source = previewImage;
-                    this.SetCurrentValue(PreviewBrushProperty, previewBrush);
+                    this.previewData.SetValue(ColorEyePreviewData.PreviewImagePropertyKey, previewImage);
+                    this.previewData.SetValue(ColorEyePreviewData.PreviewBrushPropertyKey, previewBrush);
                 });
 
             this.currentTask = this.Dispatcher.BeginInvoke(DispatcherPriority.Background, action);
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            this.PART_PreviewToolTip = this.GetTemplateChild(nameof(this.PART_PreviewToolTip)) as ToolTip;
-            this.PART_PreviewImage = this.GetTemplateChild(nameof(this.PART_PreviewImage)) as Image;
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -108,16 +116,16 @@ namespace MahApps.Metro.Controls
 
             Mouse.Capture(this);
 
-            if (!(this.PART_PreviewToolTip is null))
+            if (this.previewToolTip is null)
             {
-                this.PART_PreviewToolTip.Visibility = Visibility.Visible;
-                this.PART_PreviewToolTip.IsOpen = true;
+                this.previewToolTip = ColorEyePreview.GetPreviewToolTip(this);
             }
+
+            this.previewToolTip.Show();
 
             this.Cursor = this.EyeDropperCursor;
 
-            var mousePos = this.PointToScreen(e.GetPosition(this));
-            this.SetPreview(mousePos);
+            this.SetPreview(e.GetPosition(this));
         }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
@@ -126,19 +134,11 @@ namespace MahApps.Metro.Controls
 
             Mouse.Capture(null);
 
-            if (!(this.PART_PreviewToolTip is null))
-            {
-                this.PART_PreviewToolTip.IsOpen = false;
-                this.PART_PreviewToolTip.Visibility = Visibility.Collapsed;
-            }
+            this.previewToolTip?.Hide();
 
             this.Cursor = Cursors.Arrow;
 
-            if (!this.IsMouseOver)
-            {
-                var mousePos = this.PointToScreen(e.GetPosition(this));
-                this.SelectedColor = EyeDropperHelper.GetPixelColor(mousePos);
-            }
+            this.SelectedColor = EyeDropperHelper.GetPixelColor(this.PointToScreen(e.GetPosition(this)));
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -147,13 +147,7 @@ namespace MahApps.Metro.Controls
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var mousePos = e.GetPosition(this.PART_PreviewToolTip.PlacementTarget);
-
-                this.PART_PreviewToolTip.Placement = PlacementMode.Relative;
-                this.PART_PreviewToolTip.HorizontalOffset = mousePos.X + 16;
-                this.PART_PreviewToolTip.VerticalOffset = mousePos.Y + 16;
-
-                this.SetPreview(this.PART_PreviewToolTip.PlacementTarget.PointToScreen(mousePos));
+                this.SetPreview(e.GetPosition(this));
             }
         }
     }
