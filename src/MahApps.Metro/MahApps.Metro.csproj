@@ -27,10 +27,21 @@
     <ItemGroup>
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
+        <None Remove="Assets\Eyedropper.cur" />
+        <Resource Include="Assets\Eyedropper.cur" />
+        <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
+        <Compile Update="Lang\ColorNames.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ColorNames.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Update="Lang\ColorNames.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>ColorNames.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">

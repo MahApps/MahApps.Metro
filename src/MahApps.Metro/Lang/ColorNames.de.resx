@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AliceBlue" xml:space="preserve">
+    <value>Aliceblau</value>
+  </data>
+  <data name="AntiqueWhite" xml:space="preserve">
+    <value>Antikweiß</value>
+  </data>
+  <data name="Aqua" xml:space="preserve">
+    <value>Wasser</value>
+  </data>
+  <data name="Aquamarine" xml:space="preserve">
+    <value>Aquamarin</value>
+  </data>
+  <data name="Azure" xml:space="preserve">
+    <value>Azur</value>
+  </data>
+  <data name="Beige" xml:space="preserve">
+    <value>Beige</value>
+  </data>
+  <data name="Bisque" xml:space="preserve">
+    <value>Bisquit</value>
+  </data>
+  <data name="Black" xml:space="preserve">
+    <value>Schwarz</value>
+  </data>
+  <data name="BlanchedAlmond" xml:space="preserve">
+    <value>Mandelweiß</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Blau</value>
+  </data>
+  <data name="BlueViolet" xml:space="preserve">
+    <value>blauviolett</value>
+  </data>
+  <data name="Brown" xml:space="preserve">
+    <value>Braun</value>
+  </data>
+  <data name="BurlyWood" xml:space="preserve">
+    <value>Burlywood</value>
+  </data>
+  <data name="CadetBlue" xml:space="preserve">
+    <value>Kadettenblau</value>
+  </data>
+  <data name="Chartreuse" xml:space="preserve">
+    <value>Likörgrün</value>
+  </data>
+  <data name="Chocolate" xml:space="preserve">
+    <value>Schokolade</value>
+  </data>
+  <data name="Coral" xml:space="preserve">
+    <value>Korallenrot</value>
+  </data>
+  <data name="CornflowerBlue" xml:space="preserve">
+    <value>Kornblumenblau</value>
+  </data>
+  <data name="Cornsilk" xml:space="preserve">
+    <value>Kornseide</value>
+  </data>
+  <data name="Crimson" xml:space="preserve">
+    <value>Purpur</value>
+  </data>
+  <data name="DarkBlue" xml:space="preserve">
+    <value>Dunkelblau</value>
+  </data>
+  <data name="DarkCyan" xml:space="preserve">
+    <value>Dunkelcyan</value>
+  </data>
+  <data name="DarkGoldenrod" xml:space="preserve">
+    <value>Dunkel-Goldrute</value>
+  </data>
+  <data name="DarkGray" xml:space="preserve">
+    <value>Dunkelgrau</value>
+  </data>
+  <data name="DarkGreen" xml:space="preserve">
+    <value>Dunkelgrün</value>
+  </data>
+  <data name="DarkKhaki" xml:space="preserve">
+    <value>Dunkelkhaki</value>
+  </data>
+  <data name="DarkMagenta" xml:space="preserve">
+    <value>Dunkelmagenta</value>
+  </data>
+  <data name="DarkOliveGreen" xml:space="preserve">
+    <value>Dunkelolivgrün</value>
+  </data>
+  <data name="DarkOrange" xml:space="preserve">
+    <value>Dunkelorange</value>
+  </data>
+  <data name="DarkOrchid" xml:space="preserve">
+    <value>Dunkel-Orchidee</value>
+  </data>
+  <data name="DarkRed" xml:space="preserve">
+    <value>Dunkelrot</value>
+  </data>
+  <data name="DarkSalmon" xml:space="preserve">
+    <value>Dunkel-Lachsrosa</value>
+  </data>
+  <data name="DarkSeaGreen" xml:space="preserve">
+    <value>Dunkel-Seegrün</value>
+  </data>
+  <data name="DarkSlateBlue" xml:space="preserve">
+    <value>Dunkel-Schieferblau</value>
+  </data>
+  <data name="DarkSlateGray" xml:space="preserve">
+    <value>Dunkel-Schiefergrau</value>
+  </data>
+  <data name="DarkTurquoise" xml:space="preserve">
+    <value>Dunkeltürkis</value>
+  </data>
+  <data name="DarkViolet" xml:space="preserve">
+    <value>Dunkelviolett</value>
+  </data>
+  <data name="DeepPink" xml:space="preserve">
+    <value>Dunkelrosa</value>
+  </data>
+  <data name="DeepSkyBlue" xml:space="preserve">
+    <value>Dunkelhimmelblau</value>
+  </data>
+  <data name="DimGray" xml:space="preserve">
+    <value>Blaßgrau</value>
+  </data>
+  <data name="DodgerBlue" xml:space="preserve">
+    <value>Persenningblau</value>
+  </data>
+  <data name="Firebrick" xml:space="preserve">
+    <value>Schamottestein</value>
+  </data>
+  <data name="FloralWhite" xml:space="preserve">
+    <value>Blütenweiß</value>
+  </data>
+  <data name="ForestGreen" xml:space="preserve">
+    <value>Waldgrün</value>
+  </data>
+  <data name="Fuchsia" xml:space="preserve">
+    <value>Fuchsie</value>
+  </data>
+  <data name="Gainsboro" xml:space="preserve">
+    <value>Gainsboro</value>
+  </data>
+  <data name="GhostWhite" xml:space="preserve">
+    <value>Geisterweiß</value>
+  </data>
+  <data name="Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Goldenrod" xml:space="preserve">
+    <value>Goldrute</value>
+  </data>
+  <data name="Gray" xml:space="preserve">
+    <value>Grau</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Grün</value>
+  </data>
+  <data name="GreenYellow" xml:space="preserve">
+    <value>Grün-Gelb</value>
+  </data>
+  <data name="Honeydew" xml:space="preserve">
+    <value>Honigtau</value>
+  </data>
+  <data name="HotPink" xml:space="preserve">
+    <value>Knallrosa</value>
+  </data>
+  <data name="IndianRed" xml:space="preserve">
+    <value>Indischrot</value>
+  </data>
+  <data name="Indigo" xml:space="preserve">
+    <value>Indigo</value>
+  </data>
+  <data name="Ivory" xml:space="preserve">
+    <value>Elfenbein</value>
+  </data>
+  <data name="Khaki" xml:space="preserve">
+    <value>Khaki</value>
+  </data>
+  <data name="Lavender" xml:space="preserve">
+    <value>Lavendel</value>
+  </data>
+  <data name="LavenderBlush" xml:space="preserve">
+    <value>Lavendelhauch</value>
+  </data>
+  <data name="LawnGreen" xml:space="preserve">
+    <value>Grasgrün</value>
+  </data>
+  <data name="LemonChiffon" xml:space="preserve">
+    <value>Zitronenchiffron</value>
+  </data>
+  <data name="LightBlue" xml:space="preserve">
+    <value>Hellblau</value>
+  </data>
+  <data name="LightCoral" xml:space="preserve">
+    <value>Hellkorall</value>
+  </data>
+  <data name="LightCyan" xml:space="preserve">
+    <value>Hellcyan</value>
+  </data>
+  <data name="LightGoldenrodYellow" xml:space="preserve">
+    <value>Hellgoldrute</value>
+  </data>
+  <data name="LightGray" xml:space="preserve">
+    <value>Hellgrau</value>
+  </data>
+  <data name="LightGreen" xml:space="preserve">
+    <value>Hellgrün</value>
+  </data>
+  <data name="LightPink" xml:space="preserve">
+    <value>Hellrosa</value>
+  </data>
+  <data name="LightSalmon" xml:space="preserve">
+    <value>Helllachsrosa</value>
+  </data>
+  <data name="LightSeaGreen" xml:space="preserve">
+    <value>Hellmeergrün</value>
+  </data>
+  <data name="LightSkyBlue" xml:space="preserve">
+    <value>Hellhimmelblau</value>
+  </data>
+  <data name="LightSlateGray" xml:space="preserve">
+    <value>Hellschiefergrau</value>
+  </data>
+  <data name="LightSteelBlue" xml:space="preserve">
+    <value>Hellstahlblau</value>
+  </data>
+  <data name="LightYellow" xml:space="preserve">
+    <value>Hellgelb</value>
+  </data>
+  <data name="Lime" xml:space="preserve">
+    <value>Limette</value>
+  </data>
+  <data name="LimeGreen" xml:space="preserve">
+    <value>Limonengrün</value>
+  </data>
+  <data name="Linen" xml:space="preserve">
+    <value>Leinen</value>
+  </data>
+  <data name="Maroon" xml:space="preserve">
+    <value>Kastanienbraun</value>
+  </data>
+  <data name="MediumAquamarine" xml:space="preserve">
+    <value>Mittelaquamarinblau</value>
+  </data>
+  <data name="MediumBlue" xml:space="preserve">
+    <value>Mittelblau</value>
+  </data>
+  <data name="MediumOrchid" xml:space="preserve">
+    <value>Mittelorchidee</value>
+  </data>
+  <data name="MediumPurple" xml:space="preserve">
+    <value>Mittellila</value>
+  </data>
+  <data name="MediumSeaGreen" xml:space="preserve">
+    <value>Mittelseegrün</value>
+  </data>
+  <data name="MediumSlateBlue" xml:space="preserve">
+    <value>Mittelschieferblau</value>
+  </data>
+  <data name="MediumSpringGreen" xml:space="preserve">
+    <value>Mittelfrühlingsgrün</value>
+  </data>
+  <data name="MediumTurquoise" xml:space="preserve">
+    <value>Mitteltürkis</value>
+  </data>
+  <data name="MediumVioletRed" xml:space="preserve">
+    <value>Mittelviolettrot</value>
+  </data>
+  <data name="MidnightBlue" xml:space="preserve">
+    <value>Mitternachtsblau</value>
+  </data>
+  <data name="MintCream" xml:space="preserve">
+    <value>Pfefferminzcreme</value>
+  </data>
+  <data name="MistyRose" xml:space="preserve">
+    <value>Blaßrosa</value>
+  </data>
+  <data name="Moccasin" xml:space="preserve">
+    <value>Mokassin</value>
+  </data>
+  <data name="NavajoWhite" xml:space="preserve">
+    <value>Navajo-Weiß</value>
+  </data>
+  <data name="Navy" xml:space="preserve">
+    <value>Navy</value>
+  </data>
+  <data name="OldLace" xml:space="preserve">
+    <value>Alte Spitze</value>
+  </data>
+  <data name="Olive" xml:space="preserve">
+    <value>Oliv</value>
+  </data>
+  <data name="OliveDrab" xml:space="preserve">
+    <value>Olivegrau</value>
+  </data>
+  <data name="Orange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="OrangeRed" xml:space="preserve">
+    <value>Orangerot</value>
+  </data>
+  <data name="Orchid" xml:space="preserve">
+    <value>Orchidee</value>
+  </data>
+  <data name="PaleGoldenrod" xml:space="preserve">
+    <value>Blass-Goldrute</value>
+  </data>
+  <data name="PaleGreen" xml:space="preserve">
+    <value>Blassgrün</value>
+  </data>
+  <data name="PaleTurquoise" xml:space="preserve">
+    <value>Blasstürkis</value>
+  </data>
+  <data name="PaleVioletRed" xml:space="preserve">
+    <value>Blassviolettrot</value>
+  </data>
+  <data name="PapayaWhip" xml:space="preserve">
+    <value>Papaya-Creme</value>
+  </data>
+  <data name="PeachPuff" xml:space="preserve">
+    <value>Pfirsich</value>
+  </data>
+  <data name="Peru" xml:space="preserve">
+    <value>Peru</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>Rosa</value>
+  </data>
+  <data name="Plum" xml:space="preserve">
+    <value>Pflaume</value>
+  </data>
+  <data name="PowderBlue" xml:space="preserve">
+    <value>Pulverblau</value>
+  </data>
+  <data name="Purple" xml:space="preserve">
+    <value>Lila</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Rot</value>
+  </data>
+  <data name="RosyBrown" xml:space="preserve">
+    <value>Rosigbraun</value>
+  </data>
+  <data name="RoyalBlue" xml:space="preserve">
+    <value>Königsblau</value>
+  </data>
+  <data name="SaddleBrown" xml:space="preserve">
+    <value>Sattelbraun</value>
+  </data>
+  <data name="Salmon" xml:space="preserve">
+    <value>Lachsrosa</value>
+  </data>
+  <data name="SandyBrown" xml:space="preserve">
+    <value>Sandbraun</value>
+  </data>
+  <data name="SeaGreen" xml:space="preserve">
+    <value>Meergrün</value>
+  </data>
+  <data name="SeaShell" xml:space="preserve">
+    <value>Muschelweiß</value>
+  </data>
+  <data name="Sienna" xml:space="preserve">
+    <value>Sienna</value>
+  </data>
+  <data name="Silver" xml:space="preserve">
+    <value>Silber</value>
+  </data>
+  <data name="SkyBlue" xml:space="preserve">
+    <value>Himmelblau</value>
+  </data>
+  <data name="SlateBlue" xml:space="preserve">
+    <value>Schieferblau</value>
+  </data>
+  <data name="SlateGray" xml:space="preserve">
+    <value>Schiefergrau</value>
+  </data>
+  <data name="Snow" xml:space="preserve">
+    <value>Schneeweiß</value>
+  </data>
+  <data name="SpringGreen" xml:space="preserve">
+    <value>Frühlingsgrün</value>
+  </data>
+  <data name="SteelBlue" xml:space="preserve">
+    <value>Stahlblau</value>
+  </data>
+  <data name="Tan" xml:space="preserve">
+    <value>Hautfarben</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>Krickentengrün</value>
+  </data>
+  <data name="Thistle" xml:space="preserve">
+    <value>Distel</value>
+  </data>
+  <data name="Tomato" xml:space="preserve">
+    <value>Tomate</value>
+  </data>
+  <data name="Transparent" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="Turquoise" xml:space="preserve">
+    <value>Türkis</value>
+  </data>
+  <data name="Violet" xml:space="preserve">
+    <value>Violett</value>
+  </data>
+  <data name="Wheat" xml:space="preserve">
+    <value>Weizen</value>
+  </data>
+  <data name="White" xml:space="preserve">
+    <value>Weiß</value>
+  </data>
+  <data name="WhiteSmoke" xml:space="preserve">
+    <value>Rauch</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Gelb</value>
+  </data>
+  <data name="YellowGreen" xml:space="preserve">
+    <value>Gelbgrün</value>
+  </data>
+</root>

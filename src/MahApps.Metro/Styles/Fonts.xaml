@@ -34,4 +34,6 @@
     <system:Double x:Key="MahApps.Font.Size.ToggleSwitch">14</system:Double>
     <system:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">14</system:Double>
 
+    <system:Double x:Key="MahApps.Font.Size.ColorPicker.TabItemHeader">16</system:Double>
+
 </ResourceDictionary>

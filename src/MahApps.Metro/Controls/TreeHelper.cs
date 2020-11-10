@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -263,6 +264,45 @@ namespace MahApps.Metro.Controls
             }
 
             return TryFindParent<T>(element);
+        }
+
+        public static bool IsDescendantOf(this DependencyObject node, DependencyObject reference)
+        {
+            bool success = false;
+
+            DependencyObject curr = node;
+
+            while (curr != null)
+            {
+                if (curr == reference)
+                {
+                    success = true;
+                    break;
+                }
+
+                if (curr is Popup popup)
+                {
+                    curr = popup;
+
+                    if (popup != null)
+                    {
+                        // Try the poup Parent
+                        curr = popup.Parent;
+
+                        // Otherwise fall back to placement target
+                        if (curr == null)
+                        {
+                            curr = popup.PlacementTarget;
+                        }
+                    }
+                }
+                else // Otherwise walk tree
+                {
+                    curr = curr.GetParentObject();
+                }
+            }
+
+            return success;
         }
     }
 }

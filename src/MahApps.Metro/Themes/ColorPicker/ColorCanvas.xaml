@@ -1,0 +1,471 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorComponentSlider.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <DrawingBrush x:Key="MahApps.Brushes.Tile"
+                  TileMode="Tile"
+                  Viewport="0,0,20,20"
+                  ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.ThemeBackground}">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,20,20" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,10,10" />
+                            <RectangleGeometry Rect="10,10,10,10" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="MahApps.Brushes.Tile.Small"
+                  TileMode="Tile"
+                  Viewport="0,0,10,10"
+                  ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.ThemeBackground}">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,10,10" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,5,5" />
+                            <RectangleGeometry Rect="5,5,5,5" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DataTemplate x:Key="MahApps.DataTemplates.ColorPicker.NoColor">
+        <Path Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+              SnapsToDevicePixels="True"
+              Stretch="Fill"
+              Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+              StrokeThickness="1">
+            <Path.Data>
+                <GeometryGroup>
+                    <RectangleGeometry Rect="0,0 1,1" />
+                    <LineGeometry StartPoint="0,0" EndPoint="1,1" />
+                    <LineGeometry StartPoint="0,1" EndPoint="1,0" />
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+    </DataTemplate>
+
+    <Style x:Key="MahApps.Styles.ColorCanvas" TargetType="{x:Type mah:ColorCanvas}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:ColorCanvas}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+
+                        <Grid Grid.IsSharedSizeScope="True" UseLayoutRounding="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"
+                                                  MinWidth="110"
+                                                  MaxWidth="310" />
+                                <ColumnDefinition Width="*"
+                                                  MinWidth="110"
+                                                  MaxWidth="310" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"
+                                               MinHeight="110"
+                                               MaxHeight="310" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  Saturation and Value  -->
+                            <Border x:Name="PART_SaturationValueBox"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="5"
+                                    BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                    BorderThickness="1">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SVMax}}" />
+                                </Border.Background>
+                                <Grid SnapsToDevicePixels="True" UseLayoutRounding="False">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static converters:PercentageToGridLengthConverter.Default}}" />
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static converters:PercentageToGridLengthConverter.Default}, ConverterParameter={x:Static system:Boolean.TrueString}}" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value, Converter={x:Static converters:PercentageToGridLengthConverter.Default}, ConverterParameter={x:Static system:Boolean.TrueString}}" />
+                                        <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value, Converter={x:Static converters:PercentageToGridLengthConverter.Default}}" />
+                                    </Grid.RowDefinitions>
+
+                                    <!--  Gradients to display Saturation and Value  -->
+                                    <Grid.Background>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Offset="0" Color="White" />
+                                            <GradientStop Offset="1" Color="Transparent" />
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <Grid Grid.RowSpan="2" Grid.ColumnSpan="2">
+                                        <Grid.Background>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop Offset="0" Color="#00000000" />
+                                                <GradientStop Offset="1" Color="Black" />
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                    </Grid>
+
+                                    <!--  Fade  -->
+                                    <Rectangle Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Grid.Column="0"
+                                               Width="3"
+                                               Margin="-1.5 0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Stretch"
+                                               Fill="White" />
+                                    <Rectangle Grid.Row="0"
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="2"
+                                               Height="3"
+                                               Margin="0 -1.5"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Bottom"
+                                               Fill="White" />
+
+                                    <Rectangle Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Grid.Column="0"
+                                               Width="1"
+                                               Margin="-0.5 0"
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Stretch"
+                                               Fill="Black" />
+                                    <Rectangle Grid.Row="0"
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="2"
+                                               Height="1"
+                                               Margin="0 -0.5"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Bottom"
+                                               Fill="Black" />
+
+                                </Grid>
+                            </Border>
+
+                            <!--  Selected Color Preview  -->
+                            <Grid Grid.Row="1"
+                                  Grid.Column="0"
+                                  Margin="5 0 5 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding LabelColorPreview}" />
+
+                                <Border Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="5 0 0 0"
+                                        Background="{DynamicResource MahApps.Brushes.Tile}"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                        BorderThickness="1">
+                                    <Rectangle>
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+
+                                <ContentControl x:Name="PART_NoColorPreview"
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Margin="5 0 0 0"
+                                                ContentTemplate="{DynamicResource MahApps.DataTemplates.ColorPicker.NoColor}"
+                                                Visibility="Collapsed" />
+                            </Grid>
+
+                            <!--  Sliders for Values  -->
+                            <ScrollViewer Grid.Row="0"
+                                          Grid.Column="1"
+                                          Margin="0 5 5 5"
+                                          HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Auto">
+                                <StackPanel UseLayoutRounding="True">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="{DynamicResource MahApps.Font.Size.Content}"
+                                                              SharedSizeGroup="Label" />
+                                            <ColumnDefinition Width="*" MinWidth="50" />
+                                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!--  R  -->
+                                        <ContentPresenter Grid.Row="0"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelRedChannel}" />
+                                        <Slider Grid.Row="0"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.RMin}}" />
+                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.RMax}}" />
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                        </Slider>
+                                        <mah:NumericUpDown Grid.Row="0"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Maximum="255"
+                                                           Minimum="0"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
+
+                                        <!--  G  -->
+                                        <ContentPresenter Grid.Row="1"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelGreenChannel}" />
+                                        <Slider Grid.Row="1"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.GMin}}" />
+                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.GMax}}" />
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                        </Slider>
+                                        <mah:NumericUpDown Grid.Row="1"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Maximum="255"
+                                                           Minimum="0"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
+
+                                        <!--  B  -->
+                                        <ContentPresenter Grid.Row="2"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelBlueChannel}" />
+                                        <Slider Grid.Row="2"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.BMin}}" />
+                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.BMax}}" />
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                        </Slider>
+                                        <mah:NumericUpDown Grid.Row="2"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Maximum="255"
+                                                           Minimum="0"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
+                                    </Grid>
+
+                                    <Grid Margin="0 10 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="{DynamicResource MahApps.Font.Size.Content}"
+                                                              SharedSizeGroup="Label" />
+                                            <ColumnDefinition Width="*" MinWidth="50" />
+                                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!--  H  -->
+                                        <ContentPresenter Grid.Row="0"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelHueChannel}" />
+                                        <Slider Grid.Row="0"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.Hue}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue, UpdateSourceTrigger=PropertyChanged}" />
+                                        <mah:NumericUpDown Grid.Row="0"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Maximum="360"
+                                                           Minimum="0"
+                                                           StringFormat="0.# °"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
+
+                                        <!--  S  -->
+                                        <ContentPresenter Grid.Row="1"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelSaturationChannel}" />
+                                        <Slider Grid.Row="1"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SMin}}" />
+                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SMax}}" />
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                        </Slider>
+                                        <mah:NumericUpDown Grid.Row="1"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Interval="0.01"
+                                                           Maximum="1"
+                                                           Minimum="0"
+                                                           StringFormat="p0"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
+
+                                        <!--  Value  -->
+                                        <ContentPresenter Grid.Row="2"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelValueChannel}" />
+                                        <Slider Grid.Row="2"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.VMin}}" />
+                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.VMax}}" />
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                        </Slider>
+                                        <mah:NumericUpDown Grid.Row="2"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Interval="0.01"
+                                                           Maximum="1"
+                                                           Minimum="0"
+                                                           StringFormat="p0"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
+                                    </Grid>
+
+                                    <Grid Margin="0 10 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="{DynamicResource MahApps.Font.Size.Content}"
+                                                              SharedSizeGroup="Label" />
+                                            <ColumnDefinition Width="*" MinWidth="50" />
+                                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  A  -->
+                                        <ContentPresenter Grid.Row="0"
+                                                          Grid.Column="0"
+                                                          VerticalAlignment="Center"
+                                                          Content="{TemplateBinding LabelAlphaChannel}" />
+                                        <Slider Grid.Row="0"
+                                                Grid.Column="1"
+                                                Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}">
+                                            <Slider.Background>
+                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.AMin}}" />
+                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.AMax}}" />
+                                                </LinearGradientBrush>
+                                            </Slider.Background>
+                                        </Slider>
+                                        <mah:NumericUpDown Grid.Row="0"
+                                                           Grid.Column="2"
+                                                           Margin="2"
+                                                           Maximum="255"
+                                                           Minimum="0"
+                                                           Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
+                                    </Grid>
+                                </StackPanel>
+
+                            </ScrollViewer>
+
+                            <!--  HTML String und Name  -->
+
+                            <Grid Grid.Row="1"
+                                  Grid.Column="1"
+                                  Margin="0 0 5 5"
+                                  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter Grid.Column="0"
+                                                  VerticalAlignment="Center"
+                                                  Content="{TemplateBinding LabelColorName}" />
+
+                                <TextBox Grid.Column="1"
+                                         Margin="2 0 0 0"
+                                         mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
+                                         mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                         mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                         mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                         mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                         mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                         mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                         mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                         mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                         mah:TextBoxHelper.ButtonsAlignment="{TemplateBinding mah:TextBoxHelper.ButtonsAlignment}"
+                                         mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
+                                         mah:TextBoxHelper.SelectAllOnFocus="{TemplateBinding mah:TextBoxHelper.SelectAllOnFocus}"
+                                         mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
+                                         mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                         mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                         mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                         mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
+                                         Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}" />
+
+                                <mah:ColorEyeDropper x:Name="PART_ColorEyeDropper"
+                                                     Grid.Column="2"
+                                                     Margin="2 0"
+                                                     SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
+                                                     Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SelectedColor" Value="{x:Null}">
+                            <Setter TargetName="PART_NoColorPreview" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
