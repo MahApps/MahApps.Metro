@@ -142,7 +142,7 @@
         <Setter Property="CustomColorPalette01Header" Value="Custom Colors" />
         <Setter Property="CustomColorPalette02Header" Value="Custom Colors 2" />
         <Setter Property="CustomColorPalette02Style" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
-        <Setter Property="DropDownHeight" Value="350" />
+        <Setter Property="DropDownHeight" Value="360" />
         <Setter Property="DropDownWidth" Value="500" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
