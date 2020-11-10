@@ -12,48 +12,44 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_ColorEyeDropper", Type = typeof(ColorEyeDropper))]
     public class ColorCanvas : ColorPickerBase
     {
+        private FrameworkElement saturationValueBox;
+
         static ColorCanvas()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorCanvas), new FrameworkPropertyMetadata(typeof(ColorCanvas)));
         }
 
-        #region private Members
-
-        FrameworkElement PART_SaturationValueBox;
-
-        #endregion
-
         private void PART_SaturationValueBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.PART_SaturationValueBox.ReleaseMouseCapture();
-            this.PART_SaturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
+            this.saturationValueBox.ReleaseMouseCapture();
+            this.saturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
         }
 
         private void PART_SaturationValueBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Mouse.Capture(this.PART_SaturationValueBox);
-            this.PART_SaturationValueBox.MouseMove += this.PART_SaturationValueBox_MouseMove;
+            Mouse.Capture(this.saturationValueBox);
+            this.saturationValueBox.MouseMove += this.PART_SaturationValueBox_MouseMove;
 
-            this.PART_SaturationValueBox_UpdateValues(e.GetPosition(this.PART_SaturationValueBox));
+            this.UpdateValues(e.GetPosition(this.saturationValueBox));
         }
 
         private void PART_SaturationValueBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                this.PART_SaturationValueBox_UpdateValues(e.GetPosition(this.PART_SaturationValueBox));
+                this.UpdateValues(e.GetPosition(this.saturationValueBox));
             }
         }
 
-        private void PART_SaturationValueBox_UpdateValues(Point position)
+        private void UpdateValues(Point position)
         {
-            if (this.PART_SaturationValueBox.ActualWidth < 1 || this.PART_SaturationValueBox.ActualHeight < 1)
+            if (this.saturationValueBox.ActualWidth < 1 || this.saturationValueBox.ActualHeight < 1)
             {
                 return;
             }
 
-            var s = position.X / this.PART_SaturationValueBox.ActualWidth;
-            var v = 1 - (position.Y / this.PART_SaturationValueBox.ActualHeight);
+            var s = position.X / this.saturationValueBox.ActualWidth;
+            var v = 1 - (position.Y / this.saturationValueBox.ActualHeight);
 
             if (s > 1)
             {
@@ -79,17 +75,16 @@ namespace MahApps.Metro.Controls
             this.SetCurrentValue(ValueProperty, v);
         }
 
-        #region Overrides
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            this.PART_SaturationValueBox = (FrameworkElement)this.GetTemplateChild("PART_SaturationValueBox");
-            this.PART_SaturationValueBox.MouseLeftButtonDown += this.PART_SaturationValueBox_MouseLeftButtonDown;
-            this.PART_SaturationValueBox.MouseLeftButtonUp += this.PART_SaturationValueBox_MouseLeftButtonUp;
+            this.saturationValueBox = (FrameworkElement)this.GetTemplateChild("PART_SaturationValueBox");
+            if (this.saturationValueBox != null)
+            {
+                this.saturationValueBox.MouseLeftButtonDown += this.PART_SaturationValueBox_MouseLeftButtonDown;
+                this.saturationValueBox.MouseLeftButtonUp += this.PART_SaturationValueBox_MouseLeftButtonUp;
+            }
         }
-
-        #endregion
     }
 }

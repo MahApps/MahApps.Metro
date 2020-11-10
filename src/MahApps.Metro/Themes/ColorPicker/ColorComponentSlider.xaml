@@ -4,70 +4,67 @@
 
     <Style x:Key="MahApps.Styles.Slider.ColorComponent" TargetType="{x:Type Slider}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Focusable" Value="True" />
-        <Setter Property="Height" Value="20" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
-        <Setter Property="Margin" Value="5 0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="26" />
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                            BorderThickness="1"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid Background="{DynamicResource MahApps.Brushes.Tile.Small}">
+                    <Grid>
+                        <Border Margin="5 2"
+                                Background="{DynamicResource MahApps.Brushes.Tile.Small}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid Background="{TemplateBinding Background}" />
-                            <Track x:Name="PART_Track">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
-                                                  Foreground="Transparent"
-                                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton x:Name="VerticalTrackIncrease"
-                                                  Command="{x:Static Slider.IncreaseLarge}"
-                                                  Foreground="Transparent"
-                                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <mah:MetroThumb x:Name="VerticalThumb"
-                                                    Width="10"
-                                                    Margin="-5 -1"
-                                                    HorizontalAlignment="Stretch"
-                                                    Background="Transparent"
-                                                    IsTabStop="True"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                        <mah:MetroThumb.Template>
-                                            <ControlTemplate>
-                                                <Grid Background="Transparent">
-                                                    <Rectangle Width="1"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Stretch"
-                                                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                                                    <Path Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                                                          Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                                          StrokeThickness="1">
-                                                        <Path.Data>
-                                                            <PathGeometry Figures="M 0 0 5 8 10 0 Z" FillRule="NonZero" />
-                                                        </Path.Data>
-                                                    </Path>
-                                                    <Path VerticalAlignment="Bottom"
-                                                          Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                                                          Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                                          StrokeThickness="1">
-                                                        <Path.Data>
-                                                            <PathGeometry Figures="M 0 8 5 0 10 8 Z" FillRule="NonZero" />
-                                                        </Path.Data>
-                                                    </Path>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </mah:MetroThumb.Template>
-                                    </mah:MetroThumb>
-                                </Track.Thumb>
-                            </Track>
-                        </Grid>
-                    </Border>
+                        </Border>
+                        <Track x:Name="PART_Track" Margin="{TemplateBinding BorderThickness}">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                              Foreground="Transparent"
+                                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton x:Name="VerticalTrackIncrease"
+                                              Command="{x:Static Slider.IncreaseLarge}"
+                                              Foreground="Transparent"
+                                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <mah:MetroThumb x:Name="VerticalThumb"
+                                                Width="10"
+                                                Margin="0"
+                                                HorizontalAlignment="Stretch"
+                                                Background="Transparent"
+                                                IsTabStop="True"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                    <mah:MetroThumb.Template>
+                                        <ControlTemplate>
+                                            <Grid Width="10" Background="Transparent">
+                                                <Path VerticalAlignment="Top"
+                                                      Data="M 0 0 5 10 10 0 Z"
+                                                      Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                      Stretch="Uniform"
+                                                      Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                                      StrokeThickness="1" />
+                                                <Path VerticalAlignment="Bottom"
+                                                      Data="M 0 10 5 0 10 10 Z"
+                                                      Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                      SnapsToDevicePixels="False"
+                                                      Stretch="Uniform"
+                                                      Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                                      StrokeThickness="1" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </mah:MetroThumb.Template>
+                                </mah:MetroThumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -80,7 +80,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
-                        <Grid Grid.IsSharedSizeScope="True">
+                        <Grid Grid.IsSharedSizeScope="True" UseLayoutRounding="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"
                                                   MinWidth="110"
@@ -208,7 +208,7 @@
                                           Margin="0 5 5 5"
                                           HorizontalScrollBarVisibility="Auto"
                                           VerticalScrollBarVisibility="Auto">
-                                <StackPanel>
+                                <StackPanel UseLayoutRounding="True">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"
@@ -452,7 +452,7 @@
 
                                 <mah:ColorEyeDropper x:Name="PART_ColorEyeDropper"
                                                      Grid.Column="2"
-                                                     Margin="2 0 0 0"
+                                                     Margin="2 0"
                                                      SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
                                                      Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}" />
                             </Grid>
