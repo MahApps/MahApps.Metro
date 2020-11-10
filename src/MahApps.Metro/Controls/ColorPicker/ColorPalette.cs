@@ -18,54 +18,50 @@ namespace MahApps.Metro.Controls
 
         /// <summary>Identifies the <see cref="Header"/> dependency property.</summary>
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(object), typeof(ColorPalette), new PropertyMetadata(null));
-        
-        /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
-        public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color?, string>), typeof(ColorPalette), new PropertyMetadata(null));
-     
-        /// <summary>Identifies the <see cref="HeaderTemplate"/> dependency property.</summary>
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(ColorPalette), new PropertyMetadata(null));
-
 
         /// <summary>
         /// Gets or Sets the Header of this Control
         /// </summary>
         public object Header
         {
-            get { return (object)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get => (object)this.GetValue(HeaderProperty);
+            set => this.SetValue(HeaderProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color?, string>), typeof(ColorPalette), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or Sets the HeaderTemplate of this Control
         /// </summary>
         public DataTemplate HeaderTemplate
         {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
+            get => (DataTemplate)this.GetValue(HeaderTemplateProperty);
+            set => this.SetValue(HeaderTemplateProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="HeaderTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(ColorPalette), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a custom dictionary for color to name. If null, the degault dictionary will be used.
         /// </summary>
         public Dictionary<Color?, string> ColorNamesDictionary
         {
-            get { return (Dictionary<Color?, string>)GetValue(ColorNamesDictionaryProperty); }
-            set { SetValue(ColorNamesDictionaryProperty, value); }
+            get => (Dictionary<Color?, string>)this.GetValue(ColorNamesDictionaryProperty);
+            set => this.SetValue(ColorNamesDictionaryProperty, value);
         }
-
 
         internal bool FocusSelectedItem()
         {
             ListBoxItem listBoxItem = null;
-            if (SelectedIndex >= 0)
+            if (this.SelectedIndex >= 0)
             {
-                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromIndex(SelectedIndex);
+                listBoxItem = (ListBoxItem)this.ItemContainerGenerator.ContainerFromIndex(this.SelectedIndex);
             }
-            else if (Items.Count > 0)
+            else if (this.Items.Count > 0)
             {
-                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromItem(Items[0]);
+                listBoxItem = (ListBoxItem)this.ItemContainerGenerator.ContainerFromItem(this.Items[0]);
             }
 
             if (!(listBoxItem is null))
@@ -73,6 +69,7 @@ namespace MahApps.Metro.Controls
                 listBoxItem.Focus();
                 return true;
             }
+
             return false;
         }
     }
