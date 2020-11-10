@@ -106,7 +106,7 @@
                                 <Border.Background>
                                     <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SVMax}}" />
                                 </Border.Background>
-                                <Grid>
+                                <Grid SnapsToDevicePixels="True" UseLayoutRounding="False">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static converters:PercentageToGridLengthConverter.Default}}" />
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static converters:PercentageToGridLengthConverter.Default}, ConverterParameter={x:Static system:Boolean.TrueString}}" />
