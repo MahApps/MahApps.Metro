@@ -19,57 +19,30 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ColorHelper
     {
-        #region Constructors
-
         static ColorHelper()
         {
             ColorNamesDictionary = new Dictionary<Color?, string>();
 
             var rm = new ResourceManager(typeof(ColorNames));
-            ResourceSet resourceSet = rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            var resourceSet = rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
 
-            foreach (var entry in resourceSet.OfType<DictionaryEntry>())
+            if (resourceSet != null)
             {
-                try
+                foreach (var entry in resourceSet.OfType<DictionaryEntry>())
                 {
-                    if (ColorConverter.ConvertFromString(entry.Key.ToString()) is Color color)
+                    try
                     {
-                        ColorNamesDictionary.Add(color, entry.Value.ToString());
+                        if (ColorConverter.ConvertFromString(entry.Key.ToString()) is Color color)
+                        {
+                            ColorNamesDictionary.Add(color, entry.Value.ToString());
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Trace.TraceError($"{entry.Key} is not a valid color key!");
                     }
                 }
-                catch (Exception)
-                {
-                    Trace.TraceError($"{entry.Key} is not a valid color key!");
-                }
             }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Converts this Color to its Int32-Value
-        /// </summary>
-        /// <param name="color">the color to convert</param>
-        /// <returns>32 bit Integer</returns>
-        public static int ToInt32(this Color color)
-        {
-            byte[] channels = new byte[4];
-            channels[0] = color.B;
-            channels[1] = color.G;
-            channels[2] = color.R;
-            channels[3] = color.A;
-            return BitConverter.ToInt32(channels, 0);
-        }
-
-        /// <summary>
-        /// Creates an Int32 into a Color
-        /// </summary>
-        /// <param name="colorNumber">the Int32 representation of the color</param>
-        /// <returns>Color</returns>
-        public static Color ColorFromInt32(int colorNumber)
-        {
-            var bytes = BitConverter.GetBytes(colorNumber);
-            return Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
         }
 
         /// <summary>
