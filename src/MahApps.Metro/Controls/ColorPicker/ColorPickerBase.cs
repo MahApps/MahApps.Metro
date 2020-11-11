@@ -33,7 +33,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or Sets the selected <see cref="Color"/>
+        /// Gets or sets the selected <see cref="Color"/>
         /// </summary>
         public Color? SelectedColor
         {
@@ -49,7 +49,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(null, OnSelectedColorPropertyChanged));
 
         /// <summary>
-        /// Gets or Sets the selected <see cref="Color"/>
+        /// Gets or sets a default selected <see cref="Color"/>
         /// </summary>
         public Color? DefaultColor
         {
@@ -101,7 +101,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets the ColorName
+        /// Gets or sets the name of the <see cref="SelectedColor"/>.
         /// </summary>
         public string ColorName
         {
@@ -117,7 +117,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets a <see cref="Dictionary{TKey, TValue}"/> for looking up the ColorName
+        /// Gets or sets a <see cref="Dictionary{TKey, TValue}"/> for looking up the <see cref="ColorName"/>
         /// </summary>
         public Dictionary<Color?, string> ColorNamesDictionary
         {
@@ -133,7 +133,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata((byte)255, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChannelChanged));
 
         /// <summary>
-        /// Gets or Sets the Alpha-Channel
+        /// Gets or sets the Alpha-Channel
         /// </summary>
         public byte A
         {
@@ -149,7 +149,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChannelChanged));
 
         /// <summary>
-        /// Gets or Sets the Red-Channel
+        /// Gets or sets the Red-Channel
         /// </summary>
         public byte R
         {
@@ -165,7 +165,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChannelChanged));
 
         /// <summary>
-        /// Gets or Sets the Green-Channel
+        /// Gets or sets the Green-Channel
         /// </summary>
         public byte G
         {
@@ -181,7 +181,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnColorChannelChanged));
 
         /// <summary>
-        /// Gets or Sets the Blue-Channel
+        /// Gets or sets the Blue-Channel
         /// </summary>
         public byte B
         {
@@ -209,7 +209,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or Sets the Hue-Channel
+        /// Gets or sets the Hue-Channel
         /// </summary>
         public double Hue
         {
@@ -225,7 +225,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHSVValuesChanged));
 
         /// <summary>
-        /// Gets or Sets the Saturation-Channel
+        /// Gets or sets the Saturation-Channel
         /// </summary>
         public double Saturation
         {
@@ -241,7 +241,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHSVValuesChanged));
 
         /// <summary>
-        /// Gets or Sets the Value-Channel
+        /// Gets or sets the Value-Channel
         /// </summary>
         public double Value
         {
@@ -257,7 +257,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("A"));
 
         /// <summary>
-        /// Gets or Sets the Alpha-Label in the GUI
+        /// Gets or sets the label for the Alpha-Channel in the UI
         /// </summary>
         public object LabelAlphaChannel
         {
@@ -273,7 +273,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("R"));
 
         /// <summary>
-        /// Gets or Sets the Red-Label in the GUI
+        /// Gets or sets the label for the Red-Channel in the UI
         /// </summary>
         public object LabelRedChannel
         {
@@ -289,7 +289,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("G"));
 
         /// <summary>
-        /// Gets or Sets the Green-Label in the GUI
+        /// Gets or sets the label for the Green-Channel in the UI
         /// </summary>
         public object LabelGreenChannel
         {
@@ -305,7 +305,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("B"));
 
         /// <summary>
-        /// Gets or Sets the Blue-Label in the GUI
+        /// Gets or sets the label for the Blue-Channel in the UI
         /// </summary>
         public object LabelBlueChannel
         {
@@ -321,7 +321,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("Preview"));
 
         /// <summary>
-        /// Gets or Sets the Preview-Label in the GUI
+        /// Gets or sets the label for the Preview in the UI
         /// </summary>
         public object LabelColorPreview
         {
@@ -337,7 +337,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("H"));
 
         /// <summary>
-        /// Gets or Sets the Hue-Label in the GUI
+        /// Gets or sets the label for the Hue-Channel in the UI
         /// </summary>
         public object LabelHueChannel
         {
@@ -353,7 +353,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("S"));
 
         /// <summary>
-        /// Gets or Sets the Saturation-Label in the GUI
+        /// Gets or sets the label for the Saturation-Channel in the UI
         /// </summary>
         public object LabelSaturationChannel
         {
@@ -369,7 +369,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("V"));
 
         /// <summary>
-        /// Gets or Sets the Value-Label in the GUI
+        /// Gets or sets the label for the Value-Channel in the UI
         /// </summary>
         public object LabelValueChannel
         {
@@ -385,7 +385,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("Name"));
 
         /// <summary>
-        /// Gets or Sets the ColorName-Label in the GUI
+        /// Gets or sets the label for the <see cref="ColorName"/> in the UI
         /// </summary>
         public object LabelColorName
         {

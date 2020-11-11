@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -82,7 +82,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(300d));
 
         /// <summary>
-        /// The width of the DropDown
+        /// Gets or sets the height of the DropDown.
         /// </summary>
         public double DropDownHeight
         {
@@ -98,7 +98,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(300d));
 
         /// <summary>
-        /// The width of the DropDown
+        /// Gets or sets the width of the DropDown.
         /// </summary>
         [Bindable(true), Category("Layout")]
         [TypeConverter(typeof(LengthConverter))]
@@ -133,7 +133,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the SelectedColorTemplate
+        /// Gets or sets the <see cref="DataTemplate"/> for the <see cref="ColorPickerBase.SelectedColor"/>
         /// </summary>
         public DataTemplate SelectedColorTemplate
         {
@@ -165,7 +165,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(true));
 
         /// <summary>
-        /// Gets or sets if the available color palette is visible
+        /// Gets or sets the visibility of the available <see cref="ColorPalette"/>.
         /// </summary>
         public bool IsAvailableColorPaletteVisible
         {
@@ -181,7 +181,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata("Available"));
 
         /// <summary>
-        /// Gets or sets if the available color palettes Header
+        /// Gets or sets the <see cref="ColorPalette.Header"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
         public object AvailableColorPaletteHeader
         {
@@ -197,7 +197,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(default(DataTemplate)));
 
         /// <summary>
-        /// Gets or sets the available color palettes HeaderTemplate (1/2)
+        /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
         public DataTemplate AvailableColorPaletteHeaderTemplate
         {
@@ -213,7 +213,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets if the available color palettes ItemSource
+        /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
         public IEnumerable AvailableColorPaletteItemsSource
         {
@@ -229,7 +229,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets if the available color palettes Style
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
         public Style AvailableColorPaletteStyle
         {
@@ -245,7 +245,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets or sets if the custom color palette is visible (1/2)
+        /// Gets or sets the visibility of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
         public bool IsCustomColorPalette01Visible
         {
@@ -261,7 +261,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata("Custom 01"));
 
         /// <summary>
-        /// Gets or sets the custom color palettes Header (1/2)
+        /// Gets or sets the <see cref="ColorPalette.Header"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
         public object CustomColorPalette01Header
         {
@@ -277,7 +277,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the custom color palettes HeaderTemplate (1/2)
+        /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
         public DataTemplate CustomColorPalette01HeaderTemplate
         {
@@ -293,7 +293,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the custom color palettes ItemSource (1/2)
+        /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
         public IEnumerable CustomColorPalette01ItemsSource
         {
@@ -309,7 +309,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the custom color palettes Style (1/2)
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
         public Style CustomColorPalette01Style
         {
@@ -325,7 +325,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets or sets if the custom color palette is visible (2/2)
+        /// Gets or sets the visibility of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
         public bool IsCustomColorPalette02Visible
         {
@@ -341,7 +341,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata("Custom 02"));
 
         /// <summary>
-        /// Gets or sets the custom color palettes Header (2/2)
+        /// Gets or sets the <see cref="ColorPalette.Header"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
         public object CustomColorPalette02Header
         {
@@ -357,7 +357,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the custom color palettes HeaderTemplate (2/2)
+        /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
         public DataTemplate CustomColorPalette02HeaderTemplate
         {
@@ -373,7 +373,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the custom color palettes ItemSource (2/2)
+        /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
         public IEnumerable CustomColorPalette02ItemsSource
         {
@@ -389,7 +389,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the custom color palettes Style (2/2)
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
         public Style CustomColorPalette02Style
         {
@@ -405,7 +405,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(true));
 
         /// <summary>
-        /// Gets or sets if the recent color palette is visible
+        /// Gets or sets the visibility of the recent <see cref="ColorPalette"/>.
         /// </summary>
         public bool IsRecentColorPaletteVisible
         {
@@ -421,7 +421,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata("Recent"));
 
         /// <summary>
-        /// Gets or sets the recent color palettes Header
+        /// Gets or sets the <see cref="ColorPalette.Header"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
         public object RecentColorPaletteHeader
         {
@@ -437,7 +437,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the recent color palettes HeaderTemplate 
+        /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
         public DataTemplate RecentColorPaletteHeaderTemplate
         {
@@ -453,7 +453,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the recent color palettes ItemSource
+        /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
         public IEnumerable RecentColorPaletteItemsSource
         {
@@ -469,7 +469,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the recent color palettes Style
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
         public Style RecentColorPaletteStyle
         {
@@ -485,7 +485,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(true));
 
         /// <summary>
-        /// Gets or sets if the standard color palette is visible
+        /// Gets or sets the visibility of the standard <see cref="ColorPalette"/>.
         /// </summary>
         public bool IsStandardColorPaletteVisible
         {
@@ -501,7 +501,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata("Standard"));
 
         /// <summary>
-        /// Gets or sets the strandard color palettes Header 
+        /// Gets or sets the <see cref="ColorPalette.Header"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
         public object StandardColorPaletteHeader
         {
@@ -517,7 +517,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the strandard color palettes Header 
+        /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
         public object StandardColorPaletteHeaderTemplate
         {
@@ -533,7 +533,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the standard color palettes HeaderTemplate
+        /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
         public IEnumerable StandardColorPaletteItemsSource
         {
@@ -549,7 +549,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the standard color palettes Style
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
         public Style StandardColorPaletteStyle
         {
@@ -565,7 +565,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the <see cref="Style"/> for the <see cref="TabControl"/>
+        /// Gets or sets the <see cref="Style"/> for the <see cref="TabControl"/>.
         /// </summary>
         public Style TabControlStyle
         {
@@ -581,7 +581,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the <see cref="Style"/> for the <see cref="TabItem"/>
+        /// Gets or sets the <see cref="Style"/> for the <see cref="TabItem"/>
         /// </summary>
         public Style TabItemStyle
         {
@@ -597,7 +597,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("Palettes"));
 
         /// <summary>
-        /// Gets or Sets the Header for the <see cref="ColorPalette"/>-Tab
+        /// Gets or sets the <see cref="HeaderedContentControl.Header"/> for the <see cref="ColorPalette"/> <see cref="TabItem"/>.
         /// </summary>
         public object ColorPalettesTabHeader
         {
@@ -613,7 +613,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the HeaderTemplate for the <see cref="ColorPalette"/>-Tab
+        /// Gets or sets the <see cref="HeaderedContentControl.HeaderTemplate"/> for the <see cref="ColorPalette"/> <see cref="TabItem"/>.
         /// </summary>
         public DataTemplate ColorPalettesTabHeaderTemplate
         {
@@ -629,7 +629,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(true, OnIsTabVisiblePropertyChanged));
 
         /// <summary>
-        /// Gets or Sets if the <see cref="ColorPalette"/>-Tab is visible
+        /// Gets or sets the visibility of the <see cref="ColorPalette"/> <see cref="TabItem"/>.
         /// </summary>
         public bool IsColorPalettesTabVisible
         {
@@ -645,7 +645,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata("Advanced"));
 
         /// <summary>
-        /// Gets or Sets the Header for the <see cref="ColorCanvas"/>-Tab
+        /// Gets or sets the <see cref="HeaderedContentControl.Header"/> for the <see cref="ColorCanvas"/> <see cref="TabItem"/>.
         /// </summary>
         public object AdvancedTabHeader
         {
@@ -661,7 +661,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the HeaderTemplate for the <see cref="ColorCanvas"/>-Tab
+        /// Gets or sets the <see cref="HeaderedContentControl.HeaderTemplate"/> for the <see cref="ColorCanvas"/> <see cref="TabItem"/>.
         /// </summary>
         public DataTemplate AdvancedTabHeaderTemplate
         {
@@ -677,7 +677,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(true, OnIsTabVisiblePropertyChanged));
 
         /// <summary>
-        /// Gets or Sets if the <see cref="ColorCanvas"/>-Tab is visible
+        /// Gets or sets the visibility of the <see cref="ColorCanvas"/> <see cref="TabItem"/>.
         /// </summary>
         public bool IsAdvancedTabVisible
         {
