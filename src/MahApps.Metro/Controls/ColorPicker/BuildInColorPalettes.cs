@@ -57,10 +57,12 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    if (collection.Count < maxCount)
+                    if (collection.Count >= maxCount)
                     {
-                        collection.Insert(0, color);
+                        collection.RemoveAt(maxCount - 1);
                     }
+
+                    collection.Insert(0, color);
                 }
             }
         }
