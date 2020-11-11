@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,6 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorEyeDropper), new FrameworkPropertyMetadata(typeof(ColorEyeDropper)));
         }
 
-        // Depency Properties
         /// <summary>Identifies the <see cref="SelectedColor"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedColorProperty
             = DependencyProperty.Register(nameof(SelectedColor),
@@ -31,7 +30,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
-        /// Gets the preview image while the cursor is moving
+        /// Gets or sets the selected <see cref="Color"/>.
         /// </summary>
         public Color? SelectedColor
         {
@@ -47,7 +46,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(2));
 
         /// <summary>
-        /// Gets or Sets the number of additional pixel in the preview image
+        /// Gets or sets the number of additional pixel in the preview image.
         /// </summary>
         public int PreviewImageOuterPixelCount
         {
@@ -63,7 +62,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the Cursor in Selecting Color Mode
+        /// Gets or sets the Cursor for Selecting Color Mode
         /// </summary>
         public Cursor EyeDropperCursor
         {
@@ -71,12 +70,16 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(EyeDropperCursorProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="PreviewContentTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty PreviewContentTemplateProperty
             = DependencyProperty.Register(nameof(PreviewContentTemplate),
                                           typeof(DataTemplate),
                                           typeof(ColorEyeDropper),
                                           new PropertyMetadata(default(DataTemplate)));
 
+        /// <summary>
+        /// Gets or sets the ContentControl.ContentTemplate for the preview.
+        /// </summary>
         public DataTemplate PreviewContentTemplate
         {
             get => (DataTemplate)this.GetValue(PreviewContentTemplateProperty);

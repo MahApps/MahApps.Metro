@@ -33,7 +33,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets the selected <see cref="Color"/>
+        /// Gets or sets the selected <see cref="Color"/>.
         /// </summary>
         public Color? SelectedColor
         {
