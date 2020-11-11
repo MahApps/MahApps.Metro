@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -106,40 +106,6 @@ namespace MahApps.Metro.Controls
         {
             get => (double)this.GetValue(DropDownWidthProperty);
             set => this.SetValue(DropDownWidthProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="MaxDropDownHeight"/> dependency property.</summary>
-        public static readonly DependencyProperty MaxDropDownHeightProperty
-            = DependencyProperty.Register(nameof(MaxDropDownHeight),
-                                          typeof(double),
-                                          typeof(ColorPicker),
-                                          new FrameworkPropertyMetadata(SystemParameters.PrimaryScreenHeight / 3));
-
-        /// <summary>
-        ///     The maximum height of the popup
-        /// </summary>
-        [Bindable(true), Category("Layout")]
-        [TypeConverter(typeof(LengthConverter))]
-        public double MaxDropDownHeight
-        {
-            get => (double)this.GetValue(MaxDropDownHeightProperty);
-            set => this.SetValue(MaxDropDownHeightProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="MaxDropDownWidth"/> dependency property.</summary>
-        public static readonly DependencyProperty MaxDropDownWidthProperty
-            = DependencyProperty.Register(nameof(MaxDropDownWidth),
-                                          typeof(double),
-                                          typeof(ColorPicker),
-                                          new PropertyMetadata(MaxWidthProperty.DefaultMetadata.DefaultValue));
-
-        /// <summary>
-        /// The maximum width of the DropDown
-        /// </summary>
-        public double MaxDropDownWidth
-        {
-            get => (double)this.GetValue(MaxDropDownWidthProperty);
-            set => this.SetValue(MaxDropDownWidthProperty, value);
         }
 
         /// <summary>Identifies the <see cref="IsDropDownOpen"/> dependency property.</summary>
