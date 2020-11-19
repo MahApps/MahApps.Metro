@@ -112,7 +112,7 @@
                                     <TextBlock MaxWidth="250"
                                                Margin="8 4 8 4"
                                                Foreground="{DynamicResource MahApps.Brushes.Text.Validation}"
-                                               Text="{Binding ErrorContent}"
+                                               Text="{Binding ErrorContent, Mode=OneTime}"
                                                TextWrapping="Wrap"
                                                UseLayoutRounding="False" />
                                 </DataTemplate>
