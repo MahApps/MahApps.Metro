@@ -35,6 +35,11 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc />
         public void Attach(DataGrid aDataGrid)
         {
+            if(this.dataGrid != null && !ReferenceEquals(this.dataGrid, aDataGrid))
+            {
+                throw new InvalidOperationException($"Another dataGrid is already attached to this {nameof(DataGridColumnStylesHelperExtension)}");
+            }
+
             this.dataGrid = aDataGrid ?? throw new ArgumentNullException(nameof(aDataGrid));
 
             this.dataGrid.Columns.CollectionChanged -= this.OnColumnsCollectionChanged;
@@ -49,12 +54,19 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc />
         public void Detach()
         {
+            if (this.dataGrid == null)
+            {
+                return; // already detached or not previously attached
+            }
+
             this.dataGrid.Columns.CollectionChanged -= this.OnColumnsCollectionChanged;
 
             foreach (var column in this.dataGrid.Columns)
             {
                 this.ClearColumnStyles(column);
             }
+
+            dataGrid = null;
         }
 
         private void OnColumnsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -204,9 +216,10 @@ namespace MahApps.Metro.Controls
         }
 
         /// <inheritdoc />
+        /// <remarks>Overriding classes should avoid returning 'this' as this would like result in <see cref="InvalidOperationException"/> in the <see cref="Attach"/> method</remarks>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return this;
+            return new DataGridColumnStylesHelperExtension(); 
         }
     }
 }

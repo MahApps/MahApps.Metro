@@ -145,11 +145,11 @@
                                Text="{Binding ElementName=artist, Path=SelectedItem.Name, TargetNullValue=''}" />
                 </mah:MetroTabItem>
                 <mah:MetroTabItem Header="albums">
-                    <!-- setting mah:DataGridHelper.ColumnStylesHelper="{x:Null}" on the DataGrid fixes the memory leak -->
                     <DataGrid x:Name="albums" IsReadOnly="True" 
                               ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
                               Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type models:Album}">
