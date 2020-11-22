@@ -5,6 +5,7 @@
                     mc:Ignorable="po">
 
     <DropShadowEffect x:Key="MahApps.DropShadowEffect.Menu.VisualStudio"
+                      x:Shared="False"
                       ShadowDepth="2"
                       Color="{DynamicResource MahApps.Colors.MenuShadow}"
                       po:Freeze="True" />
