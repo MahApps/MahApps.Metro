@@ -105,7 +105,19 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="Play, Previous, Next, Volume and Seek bar here." />
+            <DockPanel>
+                <TextBlock Text="Play, Previous, Next, Volume and Seek bar here." VerticalAlignment="Center" Margin="4">
+                    <TextBlock.ContextMenu>
+                        <!-- This would cause a memory leak with MahApps.DropShadowEffect.Menu: [x:Shared = True] -->
+                        <ContextMenu HasDropShadow="True">
+                            <MenuItem Header="Some menu option"/>
+                        </ContextMenu>
+                    </TextBlock.ContextMenu>
+                </TextBlock>
+                <!-- This would cause a memory leak with MahApps.DropShadowEffect.WaitingForData: [x:Shared = True] -->
+                <TextBox DockPanel.Dock="Right" Width="120" VerticalAlignment="Center" Margin="4" mah:TextBoxHelper.IsWaitingForData="True"/>
+                <TextBlock Text="Quick search:" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </DockPanel>
         </Grid>
 
         <Grid Grid.Row="1">

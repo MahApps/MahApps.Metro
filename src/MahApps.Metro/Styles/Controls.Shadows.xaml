@@ -5,6 +5,7 @@
                     mc:Ignorable="po">
 
     <DropShadowEffect x:Key="MahApps.DropShadowEffect.Menu"
+                      x:Shared="False"
                       BlurRadius="4"
                       Direction="315"
                       Opacity="0.3"
@@ -21,6 +22,7 @@
                       po:Freeze="True" />
 
     <DropShadowEffect x:Key="DropShadowBrush"
+                      x:Shared="False"
                       BlurRadius="6"
                       Direction="330"
                       Opacity="0.3"
