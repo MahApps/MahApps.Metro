@@ -52,7 +52,7 @@
                                               TextElement.FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
                                               TextElement.FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
                                               TextElement.FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                              TextElement.Foreground="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForeground}"
+                                              TextElement.Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                               Visibility="Collapsed" />
 
                             <Grid Grid.Row="1"
@@ -393,6 +393,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForeground}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource ToggleSwitchTopHeaderMargin}" />
     </Style>
 
