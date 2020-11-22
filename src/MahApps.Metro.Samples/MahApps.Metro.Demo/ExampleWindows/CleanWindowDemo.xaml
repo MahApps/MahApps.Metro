@@ -106,17 +106,26 @@
 
         <Grid Grid.Row="0">
             <DockPanel>
-                <TextBlock Text="Play, Previous, Next, Volume and Seek bar here." VerticalAlignment="Center" Margin="4">
+                <TextBlock Margin="4"
+                           VerticalAlignment="Center"
+                           Text="Play, Previous, Next, Volume and Seek bar here.">
                     <TextBlock.ContextMenu>
-                        <!-- This would cause a memory leak with MahApps.DropShadowEffect.Menu: [x:Shared = True] -->
+                        <!--  This would cause a memory leak with MahApps.DropShadowEffect.Menu: [x:Shared = True]  -->
                         <ContextMenu HasDropShadow="True">
-                            <MenuItem Header="Some menu option"/>
+                            <MenuItem Header="Some menu option" />
                         </ContextMenu>
                     </TextBlock.ContextMenu>
                 </TextBlock>
-                <!-- This would cause a memory leak with MahApps.DropShadowEffect.WaitingForData: [x:Shared = True] -->
-                <TextBox DockPanel.Dock="Right" Width="120" VerticalAlignment="Center" Margin="4" mah:TextBoxHelper.IsWaitingForData="True"/>
-                <TextBlock Text="Quick search:" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <!--  This would cause a memory leak with MahApps.DropShadowEffect.WaitingForData: [x:Shared = True]  -->
+                <TextBox Width="120"
+                         Margin="4"
+                         VerticalAlignment="Center"
+                         mah:TextBoxHelper.IsWaitingForData="True"
+                         DockPanel.Dock="Right" />
+                <TextBlock HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right"
+                           Text="Quick search:" />
             </DockPanel>
         </Grid>
 
@@ -157,9 +166,11 @@
                                Text="{Binding ElementName=artist, Path=SelectedItem.Name, TargetNullValue=''}" />
                 </mah:MetroTabItem>
                 <mah:MetroTabItem Header="albums">
-                    <DataGrid x:Name="albums" IsReadOnly="True" 
+                    <DataGrid x:Name="albums"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
                               ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
-                              Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" AutoGenerateColumns="False">
+                              Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                             <DataGridTemplateColumn>

@@ -302,9 +302,9 @@
                                             PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
                                             StaysOpen="False">
                             <Grid Width="{TemplateBinding DropDownWidth}"
-                                  MinHeight="{TemplateBinding MinHeight}"
+                                  Height="{TemplateBinding DropDownHeight}"
                                   MinWidth="{TemplateBinding MinWidth}"
-                                  Height="{TemplateBinding DropDownHeight}">
+                                  MinHeight="{TemplateBinding MinHeight}">
                                 <Border x:Name="PopupBorder"
                                         Height="Auto"
                                         HorizontalAlignment="Stretch"
