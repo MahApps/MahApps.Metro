@@ -133,12 +133,12 @@
                               Height="0"
                               VerticalAlignment="Bottom"
                               Panel.ZIndex="5"
-                              Background="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                              Background="{TemplateBinding BannerBackground}"
                               Opacity="0.85">
                             <Label x:Name="PART_BannerLabel"
                                    FontFamily="{TemplateBinding FontFamily}"
                                    FontSize="{TemplateBinding FontSize}"
-                                   Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                   Foreground="{TemplateBinding BannerForeground}"
                                    IsTabStop="False" />
                         </Grid>
 
@@ -221,6 +221,8 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.FlipView" TargetType="{x:Type mah:FlipView}">
+        <Setter Property="BannerBackground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="BannerForeground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />

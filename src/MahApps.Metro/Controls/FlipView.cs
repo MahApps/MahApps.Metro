@@ -281,6 +281,38 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(BannerTextProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="BannerBackground"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerBackgroundProperty
+            = DependencyProperty.Register(nameof(BannerBackground),
+                                          typeof(Brush),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a <see cref="T:System.Windows.Media.Brush" /> that is used to fill the banner.
+        /// </summary>
+        public Brush BannerBackground
+        {
+            get => (Brush)this.GetValue(BannerBackgroundProperty);
+            set => this.SetValue(BannerBackgroundProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="BannerForeground"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerForegroundProperty
+            = DependencyProperty.Register(nameof(BannerForeground),
+                                          typeof(Brush),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(SystemColors.ControlTextBrush));
+
+        /// <summary>
+        /// Gets or sets a <see cref="T:System.Windows.Media.Brush" /> that describes the foreground color of the banner label.
+        /// </summary>
+        public Brush BannerForeground
+        {
+            get => (Brush)this.GetValue(BannerForegroundProperty);
+            set => this.SetValue(BannerForegroundProperty, value);
+        }
+
         private const string PART_BackButton = "PART_BackButton";
         private const string PART_BannerGrid = "PART_BannerGrid";
         private const string PART_BannerLabel = "PART_BannerLabel";
