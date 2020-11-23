@@ -313,6 +313,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(BannerForegroundProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="BannerOpacity"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerOpacityProperty
+            = DependencyProperty.Register(nameof(BannerOpacity),
+                                          typeof(double),
+                                          typeof(FlipView),
+                                          new UIPropertyMetadata(1.0));
+
+        /// <summary>
+        /// Gets or sets the opacity factor applied to the entire banner when it is rendered in the user interface (UI).
+        /// </summary>
+        public double BannerOpacity
+        {
+            get => (double)this.GetValue(BannerOpacityProperty);
+            set => this.SetValue(BannerOpacityProperty, value);
+        }
+
         private const string PART_BackButton = "PART_BackButton";
         private const string PART_BannerGrid = "PART_BannerGrid";
         private const string PART_BannerLabel = "PART_BannerLabel";
