@@ -266,18 +266,18 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="BannerText"/> dependency property.</summary>
         public static readonly DependencyProperty BannerTextProperty
             = DependencyProperty.Register(nameof(BannerText),
-                                          typeof(string),
+                                          typeof(object),
                                           typeof(FlipView),
                                           new FrameworkPropertyMetadata("Banner",
                                                                         FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                        (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+                                                                        (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText(e.NewValue))));
 
         /// <summary>
         /// Gets or sets the banner text.
         /// </summary>
-        public string BannerText
+        public object BannerText
         {
-            get => (string)this.GetValue(BannerTextProperty);
+            get => this.GetValue(BannerTextProperty);
             set => this.SetValue(BannerTextProperty, value);
         }
 
@@ -647,7 +647,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ChangeBannerText(string value = null)
+        private void ChangeBannerText(object value = null)
         {
             if (this.IsBannerEnabled)
             {
