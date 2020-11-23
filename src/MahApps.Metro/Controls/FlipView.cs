@@ -33,7 +33,11 @@ namespace MahApps.Metro.Controls
     public class FlipView : Selector
     {
         /// <summary>Identifies the <see cref="MouseHoverBorderBrush"/> dependency property.</summary>
-        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register(nameof(MouseHoverBorderBrush), typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
+        public static readonly DependencyProperty MouseHoverBorderBrushProperty
+            = DependencyProperty.Register(nameof(MouseHoverBorderBrush),
+                                          typeof(Brush),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(Brushes.LightGray));
 
         /// <summary>
         /// Gets or sets the border brush of the mouse hover effect.
@@ -45,7 +49,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="MouseHoverBorderEnabled"/> dependency property.</summary>
-        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register(nameof(MouseHoverBorderEnabled), typeof(bool), typeof(FlipView), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty MouseHoverBorderEnabledProperty
+            = DependencyProperty.Register(nameof(MouseHoverBorderEnabled),
+                                          typeof(bool),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the border for mouse over effect is enabled or not.
@@ -57,7 +65,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="MouseHoverBorderThickness"/> dependency property.</summary>
-        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register(nameof(MouseHoverBorderThickness), typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
+        public static readonly DependencyProperty MouseHoverBorderThicknessProperty
+            = DependencyProperty.Register(nameof(MouseHoverBorderThickness),
+                                          typeof(Thickness),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(new Thickness(4)));
 
         /// <summary>
         /// Gets or sets the border thickness for the border of the mouse hover effect.
@@ -69,7 +81,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="CircularNavigation"/> dependency property.</summary>
-        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register(nameof(CircularNavigation), typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty CircularNavigationProperty
+            = DependencyProperty.Register(nameof(CircularNavigation),
+                                          typeof(bool),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox,
+                                                                        FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                        (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
         /// <summary>
         /// Gets or sets a value indicating whether the navigation is circular, so you get the first after last and the last before first.
@@ -81,7 +99,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="NavigationButtonsPosition"/> dependency property.</summary>
-        public static readonly DependencyProperty NavigationButtonsPositionProperty = DependencyProperty.Register(nameof(NavigationButtonsPosition), typeof(NavigationButtonsPosition), typeof(FlipView), new FrameworkPropertyMetadata(NavigationButtonsPosition.Inside, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty NavigationButtonsPositionProperty
+            = DependencyProperty.Register(nameof(NavigationButtonsPosition),
+                                          typeof(NavigationButtonsPosition),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(NavigationButtonsPosition.Inside,
+                                                                        FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                        (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
         /// <summary>
         /// Gets or sets the position of the navigation buttons.
@@ -91,12 +115,16 @@ namespace MahApps.Metro.Controls
         [DefaultValue(NavigationButtonsPosition.Inside)]
         public NavigationButtonsPosition NavigationButtonsPosition
         {
-            get => (NavigationButtonsPosition)GetValue(NavigationButtonsPositionProperty);
-            set => SetValue(NavigationButtonsPositionProperty, value);
+            get => (NavigationButtonsPosition)this.GetValue(NavigationButtonsPositionProperty);
+            set => this.SetValue(NavigationButtonsPositionProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty OrientationProperty
+            = DependencyProperty.Register(nameof(Orientation),
+                                          typeof(Orientation),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
         /// <summary>
         /// Gets or sets the orientation of the navigation.
@@ -108,7 +136,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="LeftTransition"/> dependency property.</summary>
-        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register(nameof(LeftTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
+        public static readonly DependencyProperty LeftTransitionProperty
+            = DependencyProperty.Register(nameof(LeftTransition),
+                                          typeof(TransitionType),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(TransitionType.LeftReplace));
 
         /// <summary>
         /// Gets or sets the transition of the left navigation.
@@ -120,7 +152,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="RightTransition"/> dependency property.</summary>
-        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register(nameof(RightTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
+        public static readonly DependencyProperty RightTransitionProperty
+            = DependencyProperty.Register(nameof(RightTransition),
+                                          typeof(TransitionType),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(TransitionType.RightReplace));
 
         /// <summary>
         /// Gets or sets the transition of the right navigation.
@@ -132,7 +168,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="UpTransition"/> dependency property.</summary>
-        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register(nameof(UpTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
+        public static readonly DependencyProperty UpTransitionProperty
+            = DependencyProperty.Register(nameof(UpTransition),
+                                          typeof(TransitionType),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(TransitionType.Up));
 
         /// <summary>
         /// Gets or sets the transition of the up navigation.
@@ -144,7 +184,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="DownTransition"/> dependency property.</summary>
-        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register(nameof(DownTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
+        public static readonly DependencyProperty DownTransitionProperty
+            = DependencyProperty.Register(nameof(DownTransition),
+                                          typeof(TransitionType),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(TransitionType.Down));
 
         /// <summary>
         /// Gets or sets the transition of the down navigation.
@@ -156,7 +200,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="IsBannerEnabled"/> dependency property.</summary>
-        public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register(nameof(IsBannerEnabled), typeof(bool), typeof(FlipView), new UIPropertyMetadata(BooleanBoxes.TrueBox, OnIsBannerEnabledPropertyChangedCallback));
+        public static readonly DependencyProperty IsBannerEnabledProperty
+            = DependencyProperty.Register(nameof(IsBannerEnabled),
+                                          typeof(bool),
+                                          typeof(FlipView),
+                                          new UIPropertyMetadata(BooleanBoxes.TrueBox, OnIsBannerEnabledPropertyChangedCallback));
 
         /// <summary>
         /// Gets or sets whether the banner is visible or not.
@@ -200,7 +248,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="IsNavigationEnabled"/> dependency property.</summary>
-        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register(nameof(IsNavigationEnabled), typeof(bool), typeof(FlipView), new PropertyMetadata(BooleanBoxes.TrueBox, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty IsNavigationEnabledProperty
+            = DependencyProperty.Register(nameof(IsNavigationEnabled),
+                                          typeof(bool),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
         /// <summary>
         /// Gets or sets whether the navigation button are visible or not.
@@ -212,7 +264,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="BannerText"/> dependency property.</summary>
-        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register(nameof(BannerText), typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty BannerTextProperty
+            = DependencyProperty.Register(nameof(BannerText),
+                                          typeof(string),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata("Banner",
+                                                                        FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                        (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
 
         /// <summary>
         /// Gets or sets the banner text.
