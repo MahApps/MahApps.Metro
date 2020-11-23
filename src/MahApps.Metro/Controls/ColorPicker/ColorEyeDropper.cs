@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(SelectedColor),
                                           typeof(Color?),
                                           typeof(ColorEyeDropper),
-                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorPropertyChanged));
 
         /// <summary>
         /// Gets or sets the selected <see cref="Color"/>.
@@ -44,6 +44,14 @@ namespace MahApps.Metro.Controls
                                           typeof(int),
                                           typeof(ColorEyeDropper),
                                           new PropertyMetadata(2));
+
+        private static void OnSelectedColorPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is ColorEyeDropper eyeDropper)
+            {
+                eyeDropper.RaiseEvent(new RoutedPropertyChangedEventArgs<Color?>((Color?)e.OldValue, (Color?)e.NewValue, SelectedColorChangedEvent));
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of additional pixel in the preview image.
@@ -152,6 +160,22 @@ namespace MahApps.Metro.Controls
             {
                 this.SetPreview(e.GetPosition(this));
             }
+        }
+
+        /// <summary>Identifies the <see cref="SelectedColorChanged"/> routed event.</summary>
+        public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
+            nameof(SelectedColorChanged),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<Color?>),
+            typeof(ColorEyeDropper));
+
+        /// <summary>
+        ///     Occurs when the <see cref="SelectedColor" /> property is changed.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<Color?> SelectedColorChanged
+        {
+            add => this.AddHandler(SelectedColorChangedEvent, value);
+            remove => this.RemoveHandler(SelectedColorChangedEvent, value);
         }
     }
 }
