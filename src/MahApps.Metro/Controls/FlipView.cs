@@ -283,6 +283,63 @@ namespace MahApps.Metro.Controls
                                           typeof(FlipView),
                                           new FrameworkPropertyMetadata(null));
 
+        /// <summary>Identifies the <see cref="BannerTextTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerTextTemplateProperty
+            = DependencyProperty.Register(nameof(BannerTextTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(FlipView));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the banner's content.
+        /// </summary>
+        public DataTemplate BannerTextTemplate
+        {
+            get => (DataTemplate)this.GetValue(BannerTextTemplateProperty);
+            set => this.SetValue(BannerTextTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="BannerTextTemplateSelector"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerTextTemplateSelectorProperty
+            = DependencyProperty.Register(nameof(BannerTextTemplateSelector),
+                                          typeof(DataTemplateSelector),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+
+        /// <summary>
+        /// Gets or sets a template selector for BannerText property that enables an application writer to provide custom template-selection logic .
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="BannerTextTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public DataTemplateSelector BannerTextTemplateSelector
+        {
+            get => (DataTemplateSelector)this.GetValue(BannerTextTemplateSelectorProperty);
+            set => this.SetValue(BannerTextTemplateSelectorProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="BannerTextStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerTextStringFormatProperty
+            = DependencyProperty.Register(nameof(BannerTextStringFormat),
+                                          typeof(string),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata((string)null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the BannerText property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="BannerTextTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string BannerTextStringFormat
+        {
+            get => (string)this.GetValue(BannerTextStringFormatProperty);
+            set => this.SetValue(BannerTextStringFormatProperty, value);
+        }
+
         /// <summary>
         /// Gets or sets a <see cref="T:System.Windows.Media.Brush" /> that is used to fill the banner.
         /// </summary>

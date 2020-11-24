@@ -119,6 +119,9 @@
                               Background="{TemplateBinding BannerBackground}"
                               Opacity="{TemplateBinding BannerOpacity}">
                             <Label x:Name="PART_BannerLabel"
+                                   ContentTemplate="{TemplateBinding BannerTextTemplate}"
+                                   ContentTemplateSelector="{TemplateBinding BannerTextTemplateSelector}"
+                                   ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
                                    FontFamily="{TemplateBinding FontFamily}"
                                    FontSize="{TemplateBinding FontSize}"
                                    Foreground="{TemplateBinding BannerForeground}"
