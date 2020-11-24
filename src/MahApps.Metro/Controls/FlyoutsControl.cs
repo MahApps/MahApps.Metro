@@ -15,37 +15,46 @@ using MahApps.Metro.ValueBoxes;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// A FlyoutsControl is for displaying flyouts in a MetroWindow.
-    /// <see cref="MetroWindow"/>
+    /// A FlyoutsControl is for displaying flyouts in a <see cref="MetroWindow"/>.
     /// </summary>
     [StyleTypedProperty(Property = nameof(ItemContainerStyle), StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
-        public static readonly DependencyProperty OverrideExternalCloseButtonProperty = DependencyProperty.Register(nameof(OverrideExternalCloseButton), typeof(MouseButton?), typeof(FlyoutsControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty OverrideIsPinnedProperty = DependencyProperty.Register(nameof(OverrideIsPinned), typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(BooleanBoxes.FalseBox));
+        /// <summary>Identifies the <see cref="OverrideExternalCloseButton"/> dependency property.</summary>
+        public static readonly DependencyProperty OverrideExternalCloseButtonProperty
+            = DependencyProperty.Register(nameof(OverrideExternalCloseButton),
+                                          typeof(MouseButton?),
+                                          typeof(FlyoutsControl),
+                                          new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets whether <see cref="MahApps.Metro.Controls.Flyout.ExternalCloseButton"/> is ignored and all flyouts behave as if it was set to the value of this property.
+        /// Gets or sets whether <see cref="Flyout.ExternalCloseButton"/> is ignored and all flyouts behave as if it was set to the value of this property.
         /// </summary>
         public MouseButton? OverrideExternalCloseButton
         {
-            get { return (MouseButton?)GetValue(OverrideExternalCloseButtonProperty); }
-            set { SetValue(OverrideExternalCloseButtonProperty, value); }
+            get => (MouseButton?)this.GetValue(OverrideExternalCloseButtonProperty);
+            set => this.SetValue(OverrideExternalCloseButtonProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="OverrideIsPinned"/> dependency property.</summary>
+        public static readonly DependencyProperty OverrideIsPinnedProperty
+            = DependencyProperty.Register(nameof(OverrideIsPinned),
+                                          typeof(bool),
+                                          typeof(FlyoutsControl),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
         /// <summary>
-        /// Gets/sets whether <see cref="MahApps.Metro.Controls.Flyout.IsPinned"/> is ignored and all flyouts behave as if it was set false.
+        /// Gets or sets whether <see cref="Flyout.IsPinned"/> is ignored and all flyouts behave as if it was set false.
         /// </summary>
         public bool OverrideIsPinned
         {
-            get { return (bool)GetValue(OverrideIsPinnedProperty); }
-            set { SetValue(OverrideIsPinnedProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(OverrideIsPinnedProperty);
+            set => this.SetValue(OverrideIsPinnedProperty, BooleanBoxes.Box(value));
         }
 
         static FlyoutsControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(FlyoutsControl), new FrameworkPropertyMetadata(typeof(FlyoutsControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FlyoutsControl), new FrameworkPropertyMetadata(typeof(FlyoutsControl)));
         }
 
         protected override DependencyObject GetContainerForItemOverride()
@@ -70,18 +79,34 @@ namespace MahApps.Metro.Controls
             if (flyout != null)
             {
                 if (headerTemplate != null)
+                {
                     flyout.SetValue(HeaderedContentControl.HeaderTemplateProperty, (object)headerTemplate);
-                if (headerTemplateSelector != null)
-                    flyout.SetValue(HeaderedContentControl.HeaderTemplateSelectorProperty, (object)headerTemplateSelector);
-                if (headerStringFormat != null)
-                    flyout.SetValue(HeaderedContentControl.HeaderStringFormatProperty, (object)headerStringFormat);
+                }
 
-                if (ItemTemplate != null && null == flyout.ContentTemplate)
-                    flyout.SetValue(HeaderedContentControl.ContentTemplateProperty, (object)ItemTemplate);
-                if (ItemTemplateSelector != null && null == flyout.ContentTemplateSelector)
-                    flyout.SetValue(HeaderedContentControl.ContentTemplateSelectorProperty, (object)ItemTemplateSelector);
-                if (ItemStringFormat != null && null == flyout.ContentStringFormat)
-                    flyout.SetValue(HeaderedContentControl.ContentStringFormatProperty, (object)ItemStringFormat);
+                if (headerTemplateSelector != null)
+                {
+                    flyout.SetValue(HeaderedContentControl.HeaderTemplateSelectorProperty, (object)headerTemplateSelector);
+                }
+
+                if (headerStringFormat != null)
+                {
+                    flyout.SetValue(HeaderedContentControl.HeaderStringFormatProperty, (object)headerStringFormat);
+                }
+
+                if (this.ItemTemplate != null && null == flyout.ContentTemplate)
+                {
+                    flyout.SetValue(ContentControl.ContentTemplateProperty, (object)this.ItemTemplate);
+                }
+
+                if (this.ItemTemplateSelector != null && null == flyout.ContentTemplateSelector)
+                {
+                    flyout.SetValue(ContentControl.ContentTemplateSelectorProperty, (object)this.ItemTemplateSelector);
+                }
+
+                if (this.ItemStringFormat != null && null == flyout.ContentStringFormat)
+                {
+                    flyout.SetValue(ContentControl.ContentStringFormatProperty, (object)this.ItemStringFormat);
+                }
             }
 
             this.AttachHandlers((Flyout)element);
@@ -89,18 +114,18 @@ namespace MahApps.Metro.Controls
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
-            ((Flyout)element).CleanUp(this);
+            (element as Flyout)?.CleanUp();
             base.ClearContainerForItemOverride(element, item);
         }
 
         private void AttachHandlers(Flyout flyout)
         {
             var isOpenNotifier = new PropertyChangeNotifier(flyout, Flyout.IsOpenProperty);
-            isOpenNotifier.ValueChanged += FlyoutStatusChanged;
+            isOpenNotifier.ValueChanged += this.FlyoutStatusChanged;
             flyout.IsOpenPropertyChangeNotifier = isOpenNotifier;
 
             var themeNotifier = new PropertyChangeNotifier(flyout, Flyout.ThemeProperty);
-            themeNotifier.ValueChanged += FlyoutStatusChanged;
+            themeNotifier.ValueChanged += this.FlyoutStatusChanged;
             flyout.ThemePropertyChangeNotifier = themeNotifier;
         }
 
@@ -113,7 +138,7 @@ namespace MahApps.Metro.Controls
 
         internal void HandleFlyoutStatusChange(Flyout flyout, MetroWindow parentWindow)
         {
-            if (flyout == null || parentWindow == null)
+            if (flyout is null || parentWindow is null)
             {
                 return;
             }
@@ -126,8 +151,7 @@ namespace MahApps.Metro.Controls
 
         private Flyout GetFlyout(object item)
         {
-            var flyout = item as Flyout;
-            if (flyout != null)
+            if (item is Flyout flyout)
             {
                 return flyout;
             }
@@ -137,7 +161,7 @@ namespace MahApps.Metro.Controls
 
         internal IEnumerable<Flyout> GetFlyouts()
         {
-            return GetFlyouts(this.Items);
+            return this.GetFlyouts(this.Items);
         }
 
         private IEnumerable<Flyout> GetFlyouts(IEnumerable items)
