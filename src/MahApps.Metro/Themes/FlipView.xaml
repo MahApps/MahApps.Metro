@@ -48,96 +48,95 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
             <Border x:Name="PART_HoverBorder"
+                    Background="Transparent"
                     BorderBrush="Transparent"
                     BorderThickness="{TemplateBinding MouseHoverBorderThickness}"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid Margin="{TemplateBinding Padding}">
-                    <Grid x:Name="ControlGrid" Panel.ZIndex="7">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                        <Button x:Name="PART_BackButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Panel.ZIndex="6"
-                                Content="{TemplateBinding ButtonBackContent}"
-                                ContentStringFormat="{TemplateBinding ButtonBackContentStringFormat}"
-                                ContentTemplate="{TemplateBinding ButtonBackContentTemplate}"
-                                Style="{TemplateBinding NavigationButtonStyle}"
-                                Visibility="Hidden" />
-                        <Button x:Name="PART_ForwardButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Panel.ZIndex="6"
-                                Content="{TemplateBinding ButtonForwardContent}"
-                                ContentStringFormat="{TemplateBinding ButtonForwardContentStringFormat}"
-                                ContentTemplate="{TemplateBinding ButtonForwardContentTemplate}"
-                                Style="{TemplateBinding NavigationButtonStyle}"
-                                Visibility="Hidden" />
+                    <Button x:Name="PART_BackButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonBackContent}"
+                            ContentStringFormat="{TemplateBinding ButtonBackContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonBackContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
+                    <Button x:Name="PART_ForwardButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonForwardContent}"
+                            ContentStringFormat="{TemplateBinding ButtonForwardContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonForwardContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
 
-                        <Button x:Name="PART_UpButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Panel.ZIndex="6"
-                                Content="{TemplateBinding ButtonUpContent}"
-                                ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
-                                ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
-                                Style="{TemplateBinding NavigationButtonStyle}"
-                                Visibility="Hidden" />
-                        <Button x:Name="PART_DownButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Bottom"
-                                Panel.ZIndex="6"
-                                Content="{TemplateBinding ButtonDownContent}"
-                                ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
-                                ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
-                                Style="{TemplateBinding NavigationButtonStyle}"
-                                Visibility="Hidden" />
+                    <Button x:Name="PART_UpButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonUpContent}"
+                            ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
+                    <Button x:Name="PART_DownButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonDownContent}"
+                            ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
 
-                        <Grid x:Name="PART_BannerGrid"
-                              Grid.Row="1"
-                              Grid.Column="1"
-                              Height="0"
-                              VerticalAlignment="Bottom"
-                              Panel.ZIndex="5"
-                              Background="{TemplateBinding BannerBackground}"
-                              Opacity="{TemplateBinding BannerOpacity}">
-                            <Label x:Name="PART_BannerLabel"
-                                   ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
-                                   ContentTemplate="{TemplateBinding BannerTextTemplate}"
-                                   ContentTemplateSelector="{TemplateBinding BannerTextTemplateSelector}"
-                                   FontFamily="{TemplateBinding FontFamily}"
-                                   FontSize="{TemplateBinding FontSize}"
-                                   Foreground="{TemplateBinding BannerForeground}"
-                                   IsTabStop="False" />
-                        </Grid>
-
-                        <mah:TransitioningContentControl x:Name="PART_Presenter"
-                                                         Grid.Row="1"
-                                                         Grid.Column="1"
-                                                         Panel.ZIndex="1"
-                                                         Content="{TemplateBinding SelectedItem}"
-                                                         ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                         ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                         ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                         IsTabStop="False" />
+                    <Grid x:Name="PART_BannerGrid"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Height="0"
+                          VerticalAlignment="Bottom"
+                          Panel.ZIndex="5"
+                          Background="{TemplateBinding BannerBackground}"
+                          Opacity="{TemplateBinding BannerOpacity}">
+                        <Label x:Name="PART_BannerLabel"
+                               ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
+                               ContentTemplate="{TemplateBinding BannerTextTemplate}"
+                               ContentTemplateSelector="{TemplateBinding BannerTextTemplateSelector}"
+                               FontFamily="{TemplateBinding FontFamily}"
+                               FontSize="{TemplateBinding FontSize}"
+                               Foreground="{TemplateBinding BannerForeground}"
+                               IsTabStop="False" />
                     </Grid>
+
+                    <mah:TransitioningContentControl x:Name="PART_Presenter"
+                                                     Grid.Row="1"
+                                                     Grid.Column="1"
+                                                     Panel.ZIndex="1"
+                                                     Content="{TemplateBinding SelectedItem}"
+                                                     ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                     ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                     ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                     IsTabStop="False" />
                 </Grid>
             </Border>
         </Border>
