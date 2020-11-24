@@ -160,30 +160,32 @@
             <mah:FlipView x:Name="FlipView1st"
                           Height="200"
                           Margin="0 0 5 0"
-                          Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                          SelectionChanged="FlipView_SelectionChanged">
+                          Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}">
                 <mah:FlipView.Items>
-                    <Grid Background="#2E8DEF">
+                    <mah:FlipViewItem Background="#2E8DEF"
+                                      BannerText="Cupcakes!"
+                                      BorderBrush="Black"
+                                      BorderThickness="1">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Kind="FoodCupcake" />
-                    </Grid>
-                    <Grid Background="#00A600">
+                    </mah:FlipViewItem>
+                    <mah:FlipViewItem Background="#00A600" BannerText="XBox!">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Kind="Xbox" />
-                    </Grid>
-                    <Grid Background="#BF1E4B">
+                    </mah:FlipViewItem>
+                    <mah:FlipViewItem Background="#BF1E4B" BannerText="Chess!">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Kind="ChessHorse" />
-                    </Grid>
+                    </mah:FlipViewItem>
                 </mah:FlipView.Items>
             </mah:FlipView>
             <StackPanel HorizontalAlignment="Center"

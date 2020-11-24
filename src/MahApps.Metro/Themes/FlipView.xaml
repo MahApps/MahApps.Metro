@@ -12,7 +12,6 @@
         <Setter Property="IsTabStop" Value="True" />
         <Setter Property="Opacity" Value="0.4" />
         <Setter Property="Padding" Value="1" />
-        <Setter Property="Panel.ZIndex" Value="6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -49,109 +48,95 @@
                 BorderThickness="{TemplateBinding BorderThickness}"
                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
             <Border x:Name="PART_HoverBorder"
+                    Background="Transparent"
                     BorderBrush="Transparent"
                     BorderThickness="{TemplateBinding MouseHoverBorderThickness}"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid Margin="{TemplateBinding Padding}">
-                    <Grid x:Name="ControlGrid" Panel.ZIndex="7">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                        <Button x:Name="PART_BackButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
-                                Visibility="Hidden">
-                            <Path Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Width="16"
-                                  Height="18"
-                                  Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z "
-                                  Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                  Stretch="Fill" />
-                        </Button>
-                        <Button x:Name="PART_ForwardButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
-                                Visibility="Hidden">
-                            <Path Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Width="16"
-                                  Height="18"
-                                  Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z "
-                                  Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                  Stretch="Fill" />
-                        </Button>
+                    <Button x:Name="PART_BackButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonBackContent}"
+                            ContentStringFormat="{TemplateBinding ButtonBackContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonBackContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
+                    <Button x:Name="PART_ForwardButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonForwardContent}"
+                            ContentStringFormat="{TemplateBinding ButtonForwardContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonForwardContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
 
-                        <Button x:Name="PART_UpButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
-                                Visibility="Hidden">
-                            <Path Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Width="16"
-                                  Height="18"
-                                  Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z "
-                                  Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                  Stretch="Fill" />
-                        </Button>
-                        <Button x:Name="PART_DownButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Bottom"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
-                                Visibility="Hidden">
-                            <Path Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Width="16"
-                                  Height="18"
-                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
-                                  Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                  Stretch="Fill" />
-                        </Button>
+                    <Button x:Name="PART_UpButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonUpContent}"
+                            ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
+                    <Button x:Name="PART_DownButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Panel.ZIndex="6"
+                            Content="{TemplateBinding ButtonDownContent}"
+                            ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
+                            ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
+                            Style="{TemplateBinding NavigationButtonStyle}"
+                            Visibility="Hidden" />
 
-                        <Grid x:Name="PART_BannerGrid"
-                              Grid.Row="1"
-                              Grid.Column="1"
-                              Height="0"
-                              VerticalAlignment="Bottom"
-                              Panel.ZIndex="5"
-                              Background="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                              Opacity="0.85">
-                            <Label x:Name="PART_BannerLabel"
-                                   FontFamily="{TemplateBinding FontFamily}"
-                                   FontSize="{TemplateBinding FontSize}"
-                                   Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                                   IsTabStop="False" />
-                        </Grid>
-
-                        <mah:TransitioningContentControl x:Name="PART_Presenter"
-                                                         Grid.Row="1"
-                                                         Grid.Column="1"
-                                                         Panel.ZIndex="1"
-                                                         Content="{TemplateBinding SelectedItem}"
-                                                         ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                         ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                         ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                         IsTabStop="False" />
+                    <Grid x:Name="PART_BannerGrid"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Height="0"
+                          VerticalAlignment="Bottom"
+                          Panel.ZIndex="5"
+                          Background="{TemplateBinding BannerBackground}"
+                          Opacity="{TemplateBinding BannerOpacity}">
+                        <Label x:Name="PART_BannerLabel"
+                               ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
+                               ContentTemplate="{TemplateBinding BannerTextTemplate}"
+                               ContentTemplateSelector="{TemplateBinding BannerTextTemplateSelector}"
+                               FontFamily="{TemplateBinding FontFamily}"
+                               FontSize="{TemplateBinding FontSize}"
+                               Foreground="{TemplateBinding BannerForeground}"
+                               IsTabStop="False" />
                     </Grid>
+
+                    <mah:TransitioningContentControl x:Name="PART_Presenter"
+                                                     Grid.Row="1"
+                                                     Grid.Column="1"
+                                                     Panel.ZIndex="1"
+                                                     Content="{TemplateBinding SelectedItem}"
+                                                     ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                     ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                     ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                     IsTabStop="False" />
                 </Grid>
             </Border>
         </Border>
@@ -220,14 +205,120 @@
         </ControlTemplate.Resources>
     </ControlTemplate>
 
+    <Style x:Key="MahApps.Styles.FlipViewItem" TargetType="{x:Type mah:FlipViewItem}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Owner.Foreground, Mode=OneWay}" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="{Binding Path=(RenderOptions.ClearTypeHint), Mode=OneWay, FallbackValue=Auto, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:FlipViewItem}">
+                    <Grid x:Name="RootGrid"
+                          Background="Transparent"
+                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Owner.IsMouseOver, Mode=OneWay}" Value="True" />
+                                <Condition Binding="{Binding NavigationButtonsPosition, FallbackValue={x:Static mah:NavigationButtonsPosition.Inside}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static mah:NavigationButtonsPosition.Inside}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                        </MultiDataTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="mah:ItemHelper.DisabledBackgroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
+        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Owner.Foreground, Mode=OneWay}" />
+        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
+        <Setter Property="mah:ItemHelper.HoverForegroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Owner.Foreground, Mode=OneWay}" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.FlipView" TargetType="{x:Type mah:FlipView}">
+        <Setter Property="BannerBackground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="BannerForeground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="BannerOpacity" Value="0.8" />
+        <Setter Property="ButtonBackContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="16"
+                          Height="18"
+                          Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z "
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                          Stretch="Fill" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonDownContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="18"
+                          Height="16"
+                          Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                          Stretch="Fill" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonForwardContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="16"
+                          Height="18"
+                          Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z "
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                          Stretch="Fill" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonUpContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="18"
+                          Height="16"
+                          Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z "
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                          Stretch="Fill" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="16" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="MinWidth" Value="100" />
+        <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}" />
         <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView}" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>
