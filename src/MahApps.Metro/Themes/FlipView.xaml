@@ -12,7 +12,6 @@
         <Setter Property="IsTabStop" Value="True" />
         <Setter Property="Opacity" Value="0.4" />
         <Setter Property="Padding" Value="1" />
-        <Setter Property="Panel.ZIndex" Value="6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -70,6 +69,7 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
+                                Panel.ZIndex="6"
                                 Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
@@ -85,6 +85,7 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
+                                Panel.ZIndex="6"
                                 Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
@@ -101,6 +102,7 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
+                                Panel.ZIndex="6"
                                 Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
@@ -116,6 +118,7 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
+                                Panel.ZIndex="6"
                                 Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
@@ -220,17 +223,75 @@
         </ControlTemplate.Resources>
     </ControlTemplate>
 
+    <Style x:Key="MahApps.Styles.FlipViewItem" TargetType="{x:Type mah:FlipViewItem}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Owner.Foreground, Mode=OneWay}" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="{Binding Path=(RenderOptions.ClearTypeHint), Mode=OneWay, FallbackValue=Auto, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:FlipViewItem}">
+                    <Grid x:Name="RootGrid"
+                          Background="Transparent"
+                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Owner.IsMouseOver, Mode=OneWay}" Value="True" />
+                                <Condition Binding="{Binding NavigationButtonsPosition, FallbackValue={x:Static mah:NavigationButtonsPosition.Inside}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static mah:NavigationButtonsPosition.Inside}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                        </MultiDataTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="mah:ItemHelper.DisabledBackgroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
+        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Owner.Foreground, Mode=OneWay}" />
+        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
+        <Setter Property="mah:ItemHelper.HoverForegroundBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Owner.Foreground, Mode=OneWay}" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.FlipView" TargetType="{x:Type mah:FlipView}">
         <Setter Property="BannerBackground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="BannerForeground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BannerOpacity" Value="0.8" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="16" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="MinWidth" Value="100" />
         <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView}" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>

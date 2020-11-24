@@ -16,10 +16,6 @@ using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
-    public class FlipViewItem : ContentControl
-    {
-    }
-
     /// <summary>
     /// A control that imitate a slide show with back/forward buttons.
     /// </summary>
@@ -219,11 +215,10 @@ namespace MahApps.Metro.Controls
         {
             var flipView = (FlipView)d;
 
-            void ChangeFlipViewBannerVisibility()
+            void CheckFlipViewBannerVisibility()
             {
                 if ((bool)e.NewValue)
                 {
-                    flipView.ChangeBannerText(flipView.BannerText);
                     flipView.ShowBanner();
                 }
                 else
@@ -234,7 +229,7 @@ namespace MahApps.Metro.Controls
 
             if (flipView.IsLoaded)
             {
-                ChangeFlipViewBannerVisibility();
+                CheckFlipViewBannerVisibility();
             }
             else
             {
@@ -242,7 +237,7 @@ namespace MahApps.Metro.Controls
                 flipView.ExecuteWhenLoaded(() =>
                     {
                         flipView.ApplyTemplate();
-                        ChangeFlipViewBannerVisibility();
+                        CheckFlipViewBannerVisibility();
                     });
             }
         }
@@ -336,23 +331,24 @@ namespace MahApps.Metro.Controls
         private const string PART_ForwardButton = "PART_ForwardButton";
         private const string PART_Presenter = "PART_Presenter";
         private const string PART_UpButton = "PART_UpButton";
-        private bool allowSelectedIndexChangedCallback = true;
-        private Button backButton;
-        private Grid bannerGrid;
-        private Label bannerLabel;
-        private Button downButton;
-        private Button forwardButton;
-        private Storyboard hideBannerStoryboard;
-        private Storyboard hideControlStoryboard;
-        private EventHandler hideControlStoryboardCompletedHandler;
         /// <summary>
         /// To counteract the double Loaded event issue.
         /// </summary>
         private bool loaded;
+        private bool allowSelectedIndexChangedCallback = true;
+        private Grid bannerGrid;
+        private Label bannerLabel;
+        private Button backButton;
+        private Button forwardButton;
+        private Button downButton;
+        private Button upButton;
+        private Storyboard hideBannerStoryboard;
+        private Storyboard hideControlStoryboard;
+        private EventHandler hideControlStoryboardCompletedHandler;
         private TransitioningContentControl presenter;
         private Storyboard showBannerStoryboard;
         private Storyboard showControlStoryboard;
-        private Button upButton;
+        private object savedBannerText;
 
         static FlipView()
         {
@@ -422,20 +418,25 @@ namespace MahApps.Metro.Controls
         public void GoBack()
         {
             this.allowSelectedIndexChangedCallback = false;
-            this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
-            if (this.SelectedIndex > 0)
+            try
             {
-                this.SelectedIndex--;
-            }
-            else
-            {
-                if (this.CircularNavigation)
+                this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+                if (this.SelectedIndex > 0)
                 {
-                    this.SelectedIndex = this.Items.Count - 1;
+                    this.SelectedIndex--;
+                }
+                else
+                {
+                    if (this.CircularNavigation)
+                    {
+                        this.SelectedIndex = this.Items.Count - 1;
+                    }
                 }
             }
-
-            this.allowSelectedIndexChangedCallback = true;
+            finally
+            {
+                this.allowSelectedIndexChangedCallback = true;
+            }
         }
 
         /// <summary>
@@ -444,20 +445,25 @@ namespace MahApps.Metro.Controls
         public void GoForward()
         {
             this.allowSelectedIndexChangedCallback = false;
-            this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
-            if (this.SelectedIndex < this.Items.Count - 1)
+            try
             {
-                this.SelectedIndex++;
-            }
-            else
-            {
-                if (this.CircularNavigation)
+                this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+                if (this.SelectedIndex < this.Items.Count - 1)
                 {
-                    this.SelectedIndex = 0;
+                    this.SelectedIndex++;
+                }
+                else
+                {
+                    if (this.CircularNavigation)
+                    {
+                        this.SelectedIndex = 0;
+                    }
                 }
             }
-
-            this.allowSelectedIndexChangedCallback = true;
+            finally
+            {
+                this.allowSelectedIndexChangedCallback = true;
+            }
         }
 
         /// <summary>
@@ -592,6 +598,16 @@ namespace MahApps.Metro.Controls
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             base.OnSelectionChanged(e);
+
+            var oldItem = e.RemovedItems?.OfType<FlipViewItem>().FirstOrDefault();
+            if (oldItem is null)
+            {
+                this.savedBannerText = this.BannerText;
+            }
+
+            var newItem = e.AddedItems?.OfType<FlipViewItem>().FirstOrDefault();
+            this.SetCurrentValue(BannerTextProperty, newItem is null ? this.savedBannerText : newItem.BannerText);
+
             this.DetectControlButtonsStatus();
         }
 
@@ -817,6 +833,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.IsBannerEnabled)
             {
+                this.ChangeBannerText(this.BannerText);
                 this.bannerGrid?.BeginStoryboard(this.showBannerStoryboard);
             }
         }
