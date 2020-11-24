@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_DownButton, Type = typeof(Button))]
     [TemplatePart(Name = PART_BannerGrid, Type = typeof(Grid))]
     [TemplatePart(Name = PART_BannerLabel, Type = typeof(Label))]
+    [StyleTypedProperty(Property = nameof(NavigationButtonStyle), StyleTargetType = typeof(Button))]
     public class FlipView : Selector
     {
         /// <summary>Identifies the <see cref="MouseHoverBorderBrush"/> dependency property.</summary>
@@ -379,6 +380,22 @@ namespace MahApps.Metro.Controls
         {
             get => (double)this.GetValue(BannerOpacityProperty);
             set => this.SetValue(BannerOpacityProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="NavigationButtonStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty NavigationButtonStyleProperty
+            = DependencyProperty.Register(nameof(NavigationButtonStyle),
+                                          typeof(Style),
+                                          typeof(FlipView),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> for the navigation buttons.
+        /// </summary>
+        public Style NavigationButtonStyle
+        {
+            get => (Style)this.GetValue(NavigationButtonStyleProperty);
+            set => this.SetValue(NavigationButtonStyleProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ButtonBackContent"/> dependency property.</summary>

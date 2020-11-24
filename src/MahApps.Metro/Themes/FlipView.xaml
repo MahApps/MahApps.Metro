@@ -73,7 +73,7 @@
                                 Content="{TemplateBinding ButtonBackContent}"
                                 ContentStringFormat="{TemplateBinding ButtonBackContentStringFormat}"
                                 ContentTemplate="{TemplateBinding ButtonBackContentTemplate}"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
                                 Visibility="Hidden" />
                         <Button x:Name="PART_ForwardButton"
                                 Grid.Row="1"
@@ -84,7 +84,7 @@
                                 Content="{TemplateBinding ButtonForwardContent}"
                                 ContentStringFormat="{TemplateBinding ButtonForwardContentStringFormat}"
                                 ContentTemplate="{TemplateBinding ButtonForwardContentTemplate}"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
                                 Visibility="Hidden" />
 
                         <Button x:Name="PART_UpButton"
@@ -96,7 +96,7 @@
                                 Content="{TemplateBinding ButtonUpContent}"
                                 ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
                                 ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
                                 Visibility="Hidden" />
                         <Button x:Name="PART_DownButton"
                                 Grid.Row="1"
@@ -107,7 +107,7 @@
                                 Content="{TemplateBinding ButtonDownContent}"
                                 ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
                                 ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
-                                Style="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
                                 Visibility="Hidden" />
 
                         <Grid x:Name="PART_BannerGrid"
@@ -119,9 +119,9 @@
                               Background="{TemplateBinding BannerBackground}"
                               Opacity="{TemplateBinding BannerOpacity}">
                             <Label x:Name="PART_BannerLabel"
+                                   ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
                                    ContentTemplate="{TemplateBinding BannerTextTemplate}"
                                    ContentTemplateSelector="{TemplateBinding BannerTextTemplateSelector}"
-                                   ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
                                    FontFamily="{TemplateBinding FontFamily}"
                                    FontSize="{TemplateBinding FontSize}"
                                    Foreground="{TemplateBinding BannerForeground}"
@@ -316,6 +316,7 @@
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="MinWidth" Value="100" />
+        <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}" />
         <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
