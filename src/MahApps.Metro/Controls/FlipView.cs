@@ -324,6 +324,218 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(BannerOpacityProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="ButtonBackContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonBackContentProperty
+            = DependencyProperty.Register(nameof(ButtonBackContent),
+                                          typeof(object),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Back Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object ButtonBackContent
+        {
+            get => this.GetValue(ButtonBackContentProperty);
+            set => this.SetValue(ButtonBackContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonBackContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonBackContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonBackContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(FlipView));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Back button's content.
+        /// </summary>
+        public DataTemplate ButtonBackContentTemplate
+        {
+            get => (DataTemplate)this.GetValue(ButtonBackContentTemplateProperty);
+            set => this.SetValue(ButtonBackContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonBackContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonBackContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonBackContentStringFormat),
+                                          typeof(string),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata((string)null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonBackContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ButtonBackContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string ButtonBackContentStringFormat
+        {
+            get => (string)this.GetValue(ButtonBackContentStringFormatProperty);
+            set => this.SetValue(ButtonBackContentStringFormatProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonForwardContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonForwardContentProperty
+            = DependencyProperty.Register(nameof(ButtonForwardContent),
+                                          typeof(object),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Forward Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object ButtonForwardContent
+        {
+            get => this.GetValue(ButtonForwardContentProperty);
+            set => this.SetValue(ButtonForwardContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonForwardContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonForwardContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonForwardContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(FlipView));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Forward button's content.
+        /// </summary>
+        public DataTemplate ButtonForwardContentTemplate
+        {
+            get => (DataTemplate)this.GetValue(ButtonForwardContentTemplateProperty);
+            set => this.SetValue(ButtonForwardContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonForwardContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonForwardContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonForwardContentStringFormat),
+                                          typeof(string),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata((string)null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonForwardContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ButtonForwardContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string ButtonForwardContentStringFormat
+        {
+            get => (string)this.GetValue(ButtonForwardContentStringFormatProperty);
+            set => this.SetValue(ButtonForwardContentStringFormatProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentProperty
+            = DependencyProperty.Register(nameof(ButtonUpContent),
+                                          typeof(object),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Up Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object ButtonUpContent
+        {
+            get => this.GetValue(ButtonUpContentProperty);
+            set => this.SetValue(ButtonUpContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonUpContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(FlipView));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Up button's content.
+        /// </summary>
+        public DataTemplate ButtonUpContentTemplate
+        {
+            get => (DataTemplate)this.GetValue(ButtonUpContentTemplateProperty);
+            set => this.SetValue(ButtonUpContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonUpContentStringFormat),
+                                          typeof(string),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata((string)null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonUpContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ButtonUpContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string ButtonUpContentStringFormat
+        {
+            get => (string)this.GetValue(ButtonUpContentStringFormatProperty);
+            set => this.SetValue(ButtonUpContentStringFormatProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentProperty
+            = DependencyProperty.Register(nameof(ButtonDownContent),
+                                          typeof(object),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Down Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object ButtonDownContent
+        {
+            get => this.GetValue(ButtonDownContentProperty);
+            set => this.SetValue(ButtonDownContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonDownContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(FlipView));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Down button's content.
+        /// </summary>
+        public DataTemplate ButtonDownContentTemplate
+        {
+            get => (DataTemplate)this.GetValue(ButtonDownContentTemplateProperty);
+            set => this.SetValue(ButtonDownContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonDownContentStringFormat),
+                                          typeof(string),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata((string)null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonDownContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ButtonDownContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string ButtonDownContentStringFormat
+        {
+            get => (string)this.GetValue(ButtonDownContentStringFormatProperty);
+            set => this.SetValue(ButtonDownContentStringFormatProperty, value);
+        }
+
         private const string PART_BackButton = "PART_BackButton";
         private const string PART_BannerGrid = "PART_BannerGrid";
         private const string PART_BannerLabel = "PART_BannerLabel";
