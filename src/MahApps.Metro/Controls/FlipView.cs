@@ -27,6 +27,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_BannerGrid, Type = typeof(Grid))]
     [TemplatePart(Name = PART_BannerLabel, Type = typeof(Label))]
     [StyleTypedProperty(Property = nameof(NavigationButtonStyle), StyleTargetType = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(IndexItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
     public class FlipView : Selector
     {
         /// <summary>Identifies the <see cref="MouseHoverBorderBrush"/> dependency property.</summary>
@@ -75,6 +76,84 @@ namespace MahApps.Metro.Controls
         {
             get => (Thickness)this.GetValue(MouseHoverBorderThicknessProperty);
             set => this.SetValue(MouseHoverBorderThicknessProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ShowIndex"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowIndexProperty
+            = DependencyProperty.Register(nameof(ShowIndex),
+                                          typeof(bool),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the navigation index should be visible.
+        /// </summary>
+        public bool ShowIndex
+        {
+            get => (bool)this.GetValue(ShowIndexProperty);
+            set => this.SetValue(ShowIndexProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IndexItemContainerStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty IndexItemContainerStyleProperty
+            = DependencyProperty.Register(nameof(IndexItemContainerStyle),
+                                          typeof(Style),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets a style for the navigation index items.
+        /// </summary>
+        public Style IndexItemContainerStyle
+        {
+            get => (Style)this.GetValue(IndexItemContainerStyleProperty);
+            set => this.SetValue(IndexItemContainerStyleProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IndexPlacement"/> dependency property.</summary>
+        public static readonly DependencyProperty IndexPlacementProperty
+            = DependencyProperty.Register(nameof(IndexPlacement),
+                                          typeof(NavigationIndexPlacement),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(NavigationIndexPlacement.Bottom, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets a value specifying where the navigation index should be rendered.
+        /// </summary>
+        public NavigationIndexPlacement IndexPlacement
+        {
+            get => (NavigationIndexPlacement)this.GetValue(IndexPlacementProperty);
+            set => this.SetValue(IndexPlacementProperty, value);
+        }
+
+        public static readonly DependencyProperty IndexHorizontalAlignmentProperty
+            = DependencyProperty.Register(nameof(IndexHorizontalAlignment),
+                                          typeof(HorizontalAlignment),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(HorizontalAlignment.Center, FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment characteristics applied to the navigation index.
+        /// </summary>
+        public HorizontalAlignment IndexHorizontalAlignment
+        {
+            get => (HorizontalAlignment)this.GetValue(IndexHorizontalAlignmentProperty);
+            set => this.SetValue(IndexHorizontalAlignmentProperty, (object)value);
+        }
+
+        public static readonly DependencyProperty IndexVerticalAlignmentProperty
+            = DependencyProperty.Register(nameof(IndexVerticalAlignment),
+                                          typeof(VerticalAlignment),
+                                          typeof(FlipView),
+                                          new FrameworkPropertyMetadata(VerticalAlignment.Center, FrameworkPropertyMetadataOptions.AffectsArrange));
+
+        /// <summary>
+        /// Gets or sets the vertical alignment characteristics applied to the navigation index.
+        /// </summary>
+        public VerticalAlignment IndexVerticalAlignment
+        {
+            get => (VerticalAlignment)this.GetValue(IndexVerticalAlignmentProperty);
+            set => this.SetValue(IndexVerticalAlignmentProperty, (object)value);
         }
 
         /// <summary>Identifies the <see cref="CircularNavigation"/> dependency property.</summary>
