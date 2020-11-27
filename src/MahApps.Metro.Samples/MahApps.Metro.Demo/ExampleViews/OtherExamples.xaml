@@ -146,8 +146,8 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
-                           Grid.Column="0"
-                           Content="Navigation Button Orientation" />
+                       Grid.Column="0"
+                       Content="Navigation Button Orientation" />
                 <ComboBox x:Name="Orientation"
                           Grid.Row="0"
                           Grid.Column="1"
@@ -157,8 +157,8 @@
                           SelectedValue="{Binding ElementName=FlipView1st, Path=Orientation, FallbackValue={x:Static Orientation.Horizontal}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="1"
-                           Grid.Column="0"
-                           Content="Navigation Button Position" />
+                       Grid.Column="0"
+                       Content="Navigation Button Position" />
                 <ComboBox x:Name="NaviButtonsPosition"
                           Grid.Row="1"
                           Grid.Column="1"
@@ -168,8 +168,8 @@
                           SelectedValue="{Binding ElementName=FlipView1st, Path=NavigationButtonsPosition, FallbackValue={x:Static mah:NavigationButtonsPosition.Inside}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2"
-                           Grid.Column="0"
-                           Content="Navigation Index Placement" />
+                       Grid.Column="0"
+                       Content="Navigation Index Placement" />
                 <ComboBox x:Name="IndexPlacement"
                           Grid.Row="2"
                           Grid.Column="1"

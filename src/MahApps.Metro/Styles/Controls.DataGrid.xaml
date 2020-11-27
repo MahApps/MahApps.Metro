@@ -59,6 +59,7 @@
            TargetType="{x:Type ComboBox}">
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridCell}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="IsSynchronizedWithCurrentItem" Value="False" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="22" />
         <Setter Property="Padding" Value="4 0" />
@@ -85,6 +86,7 @@
            TargetType="{x:Type ComboBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="IsSynchronizedWithCurrentItem" Value="False" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="22" />
         <Setter Property="Padding" Value="3 4" />
