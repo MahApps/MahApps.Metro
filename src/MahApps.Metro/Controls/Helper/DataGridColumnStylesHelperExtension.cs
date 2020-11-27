@@ -45,6 +45,8 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException($"Another DataGrid is already attached to this {nameof(DataGridColumnStylesHelperExtension)}");
             }
 
+            this.dataGridReference = new WeakReference(dataGrid);
+
             dataGrid.Columns.CollectionChanged -= this.OnColumnsCollectionChanged;
             dataGrid.Columns.CollectionChanged += this.OnColumnsCollectionChanged;
 
@@ -52,8 +54,6 @@ namespace MahApps.Metro.Controls
             {
                 this.BindColumnStyles(column);
             }
-
-            this.dataGridReference = new WeakReference(dataGrid);
         }
 
         /// <inheritdoc />
