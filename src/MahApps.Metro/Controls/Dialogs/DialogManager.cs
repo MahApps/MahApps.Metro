@@ -499,21 +499,7 @@ namespace MahApps.Metro.Controls.Dialogs
             var fixedMinHeight = dialog.MinHeight > 0;
             var fixedMaxHeight = !(dialog.MaxHeight is double.PositiveInfinity) && dialog.MaxHeight > 0;
 
-            if (!fixedMinHeight)
-            {
-                dialog.SetCurrentValue(FrameworkElement.MinHeightProperty, window.ActualHeight / 4.0);
-            }
-
-            if (!fixedMaxHeight)
-            {
-                dialog.SetCurrentValue(FrameworkElement.MaxHeightProperty, window.ActualHeight);
-            }
-            else
-            {
-                dialog.SetCurrentValue(FrameworkElement.MinHeightProperty, Math.Min(dialog.MinHeight, dialog.MaxHeight));
-            }
-
-            void OnWindowSizeChanged(object sender, SizeChangedEventArgs args)
+            void CalculateMinAndMaxHeight()
             {
                 if (!fixedMinHeight)
                 {
@@ -528,6 +514,13 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     dialog.SetCurrentValue(FrameworkElement.MinHeightProperty, Math.Min(dialog.MinHeight, dialog.MaxHeight));
                 }
+            }
+
+            CalculateMinAndMaxHeight();
+
+            void OnWindowSizeChanged(object sender, SizeChangedEventArgs args)
+            {
+                CalculateMinAndMaxHeight();
             }
 
             window.SizeChanged += OnWindowSizeChanged;
