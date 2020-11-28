@@ -495,22 +495,41 @@ namespace MahApps.Metro.Controls.Dialogs
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
         {
             dialog.SetValue(Panel.ZIndexProperty, (int)window.overlayBox.GetValue(Panel.ZIndexProperty) + 1);
-            dialog.MinHeight = window.ActualHeight / 4.0;
-            dialog.MaxHeight = window.ActualHeight;
 
-            SizeChangedEventHandler sizeHandler = (sender, args) =>
+            var fixedMinHeight = dialog.MinHeight > 0;
+            var fixedMaxHeight = !(dialog.MaxHeight is double.PositiveInfinity) && dialog.MaxHeight > 0;
+
+            void CalculateMinAndMaxHeight()
+            {
+                if (!fixedMinHeight)
                 {
-                    dialog.MinHeight = window.ActualHeight / 4.0;
-                    dialog.MaxHeight = window.ActualHeight;
-                };
+                    dialog.SetCurrentValue(FrameworkElement.MinHeightProperty, window.ActualHeight / 4.0);
+                }
 
-            window.SizeChanged += sizeHandler;
+                if (!fixedMaxHeight)
+                {
+                    dialog.SetCurrentValue(FrameworkElement.MaxHeightProperty, window.ActualHeight);
+                }
+                else
+                {
+                    dialog.SetCurrentValue(FrameworkElement.MinHeightProperty, Math.Min(dialog.MinHeight, dialog.MaxHeight));
+                }
+            }
+
+            CalculateMinAndMaxHeight();
+
+            void OnWindowSizeChanged(object sender, SizeChangedEventArgs args)
+            {
+                CalculateMinAndMaxHeight();
+            }
+
+            window.SizeChanged += OnWindowSizeChanged;
 
             window.AddDialog(dialog);
 
             dialog.OnShown();
 
-            return sizeHandler;
+            return OnWindowSizeChanged;
         }
 
         private static void AddDialog(this MetroWindow window, BaseMetroDialog dialog)
