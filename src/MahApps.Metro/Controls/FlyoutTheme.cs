@@ -9,23 +9,31 @@ namespace MahApps.Metro.Controls
     public enum FlyoutTheme
     {
         /// <summary>
-        /// Adapts the Flyout's theme to the theme of its host window.
+        /// Adapts the <see cref="Flyout"/> theme to the theme of the host window or application.
         /// </summary>
         Adapt,
+
         /// <summary>
-        /// Adapts the Flyout's theme to the theme of its host window, but inverted.
+        /// Adapts the <see cref="Flyout"/> theme to the theme of the host window or application, but inverted.
+        /// </summary>
+        /// <remarks>
         /// This theme can only be applied if the host window's theme abides the "Dark" and "Light" affix convention.
         /// (see <see cref="ThemeManager.GetInverseTheme"/> for more infos.
-        /// </summary>
+        /// </remarks>
         Inverse,
+
         /// <summary>
-        /// The dark theme. This is the default theme.
+        /// Use the dark theme for the <see cref="Flyout"/>. This is the default theme.
         /// </summary>
         Dark,
+
+        /// <summary>
+        /// Use the light theme for the <see cref="Flyout"/>.
+        /// </summary>
         Light,
 
         /// <summary>
-        /// The flyouts theme will match the host window's accent color.
+        /// The <see cref="Flyout"/> theme will match the host window's accent color.
         /// </summary>
         Accent
     }

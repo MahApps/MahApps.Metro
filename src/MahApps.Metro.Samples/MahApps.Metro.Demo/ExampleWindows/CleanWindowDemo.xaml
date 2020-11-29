@@ -105,7 +105,28 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock Text="Play, Previous, Next, Volume and Seek bar here." />
+            <DockPanel>
+                <TextBlock Margin="4"
+                           VerticalAlignment="Center"
+                           Text="Play, Previous, Next, Volume and Seek bar here.">
+                    <TextBlock.ContextMenu>
+                        <!--  This would cause a memory leak with MahApps.DropShadowEffect.Menu: [x:Shared = True]  -->
+                        <ContextMenu HasDropShadow="True">
+                            <MenuItem Header="Some menu option" />
+                        </ContextMenu>
+                    </TextBlock.ContextMenu>
+                </TextBlock>
+                <!--  This would cause a memory leak with MahApps.DropShadowEffect.WaitingForData: [x:Shared = True]  -->
+                <TextBox Width="120"
+                         Margin="4"
+                         VerticalAlignment="Center"
+                         mah:TextBoxHelper.IsWaitingForData="True"
+                         DockPanel.Dock="Right" />
+                <TextBlock HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           DockPanel.Dock="Right"
+                           Text="Quick search:" />
+            </DockPanel>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -145,22 +166,29 @@
                                Text="{Binding ElementName=artist, Path=SelectedItem.Name, TargetNullValue=''}" />
                 </mah:MetroTabItem>
                 <mah:MetroTabItem Header="albums">
-                    <ListBox x:Name="albums"
-                             ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
-                             Style="{DynamicResource MahApps.Styles.ListBox.Virtualized}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type models:Album}">
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Mode="OneWay" Path="Title" />
-                                            <Binding Mode="OneWay" Path="Price" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <DataGrid x:Name="albums"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
+                              Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type models:Album}">
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Mode="OneWay" Path="Title" />
+                                                    <Binding Mode="OneWay" Path="Price" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </mah:MetroTabItem>
             </mah:MetroTabControl>
 

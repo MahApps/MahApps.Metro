@@ -5,7 +5,6 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using MahApps.Metro.Controls;
 
 namespace MetroDemo.ExampleViews
 {
@@ -32,23 +31,6 @@ namespace MetroDemo.ExampleViews
             transitioning.Content = new TextBlock { Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true };
             customTransitioning.Content = new TextBlock { Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true };
             SecondcustomTransitioning.Content = new TextBlock { Text = "Second custom transistion! " + dateTime, SnapsToDevicePixels = true };
-        }
-
-        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var flipview = ((FlipView)sender);
-            switch (flipview.SelectedIndex)
-            {
-                case 0:
-                    flipview.BannerText = "Cupcakes!";
-                    break;
-                case 1:
-                    flipview.BannerText = "Xbox!";
-                    break;
-                case 2:
-                    flipview.BannerText = "Chess!";
-                    break;
-            }
         }
     }
 }

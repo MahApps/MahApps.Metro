@@ -10,10 +10,9 @@ namespace MetroDemo.Markup
     /// <summary>
     /// Markup extension for Enum values.
     /// </summary>
-    public class EnumBindingSourceExtension
-        : MarkupExtension
+    public class EnumBindingSourceExtension : MarkupExtension
     {
-        private Type _EnumType;
+        private Type enumType;
 
         /// <summary>
         /// Gets or sets the type of the Enum.
@@ -21,15 +20,22 @@ namespace MetroDemo.Markup
         /// <exception cref="ArgumentException">Value is not an Enum type.</exception>
         public Type EnumType
         {
-            get { return this._EnumType; }
+            get => this.enumType;
             set
             {
-                if (!Object.Equals(value, this.EnumType))
+                if (value != this.enumType)
                 {
-                    if (!Object.Equals(value, null) && !(Nullable.GetUnderlyingType(value) ?? value).IsEnum)
-                        throw new ArgumentException("Type must be an Enum.");
+                    if (null != value)
+                    {
+                        var type = Nullable.GetUnderlyingType(value) ?? value;
 
-                    this._EnumType = value;
+                        if (!type.IsEnum)
+                        {
+                            throw new ArgumentException("Type must be for an Enum.");
+                        }
+                    }
+
+                    this.enumType = value;
                 }
             }
         }
@@ -50,23 +56,23 @@ namespace MetroDemo.Markup
             this.EnumType = enumType;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceProvider">Object that can provide services for the markup extension.</param>
-        /// <returns>The values of the Enum.</returns>
-        /// <exception cref="InvalidOperationException">The type of the Enum is undefined.</exception>
+        /// <inheritdoc />
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Object.Equals(this.EnumType, null))
-                throw new InvalidOperationException("The type of the Enum is undefined.");
+            if (this.EnumType is null)
+            {
+                throw new InvalidOperationException("The EnumType must be specified.");
+            }
 
             var underlyingEnumType = Nullable.GetUnderlyingType(this.EnumType) ?? this.EnumType;
             var enumValues = Enum.GetValues(underlyingEnumType);
-            if (underlyingEnumType.Equals(this.EnumType))
-                return enumValues;
 
-            var nullableEnumValues = Array.CreateInstance(underlyingEnumType, enumValues.Length);
+            if (underlyingEnumType == this.EnumType)
+            {
+                return enumValues;
+            }
+
+            var nullableEnumValues = Array.CreateInstance(underlyingEnumType, enumValues.Length + 1);
             enumValues.CopyTo(nullableEnumValues, 1);
             return nullableEnumValues;
         }

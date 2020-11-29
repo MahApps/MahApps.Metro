@@ -1,0 +1,158 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    mc:Ignorable="po d">
+
+    <Cursor x:Key="MahApps.Cursors.EyeDropper">../../Assets/Eyedropper.cur</Cursor>
+
+    <Style x:Key="MahApps.Styles.ColorEyeDropper"
+           BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="EyeDropperCursor" Value="{StaticResource MahApps.Cursors.EyeDropper}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="Padding" Value="5 6" />
+        <Setter Property="PreviewContentTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type mah:ColorEyePreviewData}">
+                    <Grid MinWidth="110">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                                Grid.ColumnSpan="2"
+                                HorizontalAlignment="Center"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Gray}"
+                                BorderThickness="1">
+                            <Grid>
+                                <Image x:Name="PART_PreviewImage"
+                                       Width="50"
+                                       Height="50"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                       Source="{Binding PreviewImage}" />
+
+                                <Path Stroke="{Binding PreviewBrush, Converter={x:Static converters:BackgroundToForegroundConverter.Instance}}" StrokeThickness="1">
+                                    <Path.Data>
+                                        <PathGeometry Figures=" m 0 25 20 0  m 5 5 0 20  m 5 -25 20 0  m -25 -25 0 20 m -5 0 H20 H30 V30 H20 z" po:Freeze="true" />
+                                    </Path.Data>
+                                </Path>
+
+                            </Grid>
+                        </Border>
+
+                        <Ellipse x:Name="PART_EllipsePreviewBrush"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 Width="{DynamicResource MahApps.Font.Size.Content}"
+                                 Height="{DynamicResource MahApps.Font.Size.Content}"
+                                 Margin="5"
+                                 Fill="{Binding PreviewBrush}"
+                                 Stroke="{DynamicResource MahApps.Brushes.Gray}"
+                                 StrokeThickness="1" />
+
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="5"
+                                   Text="{Binding PreviewBrush}" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <mah:ClipBorder x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding BorderThickness}"
+                                              Padding="{TemplateBinding Padding}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderThickness), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.7" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="2" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
+        <Style.Triggers>
+            <Trigger Property="Content" Value="{x:Null}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Viewbox Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}"
+                                     Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}"
+                                     Stretch="Uniform">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M19.35,11.72L17.22,13.85L15.81,12.43L8.1,20.14L3.5,22L2,20.5L3.86,15.9L11.57,8.19L10.15,6.78L12.28,4.65L19.35,11.72M16.76,3C17.93,1.83 19.83,1.83 21,3C22.17,4.17 22.17,6.07 21,7.24L19.08,9.16L14.84,4.92L16.76,3M5.56,17.03L4.5,19.5L6.97,18.44L14.4,11L13,9.6L5.56,17.03Z" Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                                </Canvas>
+                            </Viewbox>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas"
+           BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}"
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="1" />
+    </Style>
+
+</ResourceDictionary>

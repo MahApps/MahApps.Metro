@@ -19,447 +19,116 @@ using MahApps.Metro.ValueBoxes;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
-    /// <see cref="MetroWindow"/>
-    /// <seealso cref="FlyoutsControl"/>
+    /// A sliding panel control that is hosted in a <see cref="MetroWindow"/> via a <see cref="FlyoutsControl"/>.
     /// </summary>
     [TemplatePart(Name = "PART_Root", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
     public class Flyout : HeaderedContentControl
     {
-        /// <summary>
-        /// An event that is raised when IsOpen changes.
-        /// </summary>
         public static readonly RoutedEvent IsOpenChangedEvent =
-            EventManager.RegisterRoutedEvent(nameof(IsOpenChanged), RoutingStrategy.Bubble,
-                                             typeof(RoutedEventHandler), typeof(Flyout));
+            EventManager.RegisterRoutedEvent(nameof(IsOpenChanged),
+                                             RoutingStrategy.Bubble,
+                                             typeof(RoutedEventHandler),
+                                             typeof(Flyout));
 
+        /// <summary>
+        /// An event that is raised when <see cref="IsOpen"/> property changes.
+        /// </summary>
         public event RoutedEventHandler IsOpenChanged
         {
-            add { this.AddHandler(IsOpenChangedEvent, value); }
-            remove { this.RemoveHandler(IsOpenChangedEvent, value); }
+            add => this.AddHandler(IsOpenChangedEvent, value);
+            remove => this.RemoveHandler(IsOpenChangedEvent, value);
         }
+
+        public static readonly RoutedEvent OpeningFinishedEvent =
+            EventManager.RegisterRoutedEvent(nameof(OpeningFinished),
+                                             RoutingStrategy.Bubble,
+                                             typeof(RoutedEventHandler),
+                                             typeof(Flyout));
 
         /// <summary>
         /// An event that is raised when the opening animation has finished.
         /// </summary>
-        public static readonly RoutedEvent OpeningFinishedEvent =
-            EventManager.RegisterRoutedEvent(nameof(OpeningFinished), RoutingStrategy.Bubble,
-                                             typeof(RoutedEventHandler), typeof(Flyout));
-
         public event RoutedEventHandler OpeningFinished
         {
-            add { this.AddHandler(OpeningFinishedEvent, value); }
-            remove { this.RemoveHandler(OpeningFinishedEvent, value); }
+            add => this.AddHandler(OpeningFinishedEvent, value);
+            remove => this.RemoveHandler(OpeningFinishedEvent, value);
         }
+
+        public static readonly RoutedEvent ClosingFinishedEvent =
+            EventManager.RegisterRoutedEvent(nameof(ClosingFinished),
+                                             RoutingStrategy.Bubble,
+                                             typeof(RoutedEventHandler),
+                                             typeof(Flyout));
 
         /// <summary>
         /// An event that is raised when the closing animation has finished.
         /// </summary>
-        public static readonly RoutedEvent ClosingFinishedEvent =
-            EventManager.RegisterRoutedEvent(nameof(ClosingFinished), RoutingStrategy.Bubble,
-                                             typeof(RoutedEventHandler), typeof(Flyout));
-
         public event RoutedEventHandler ClosingFinished
         {
-            add { this.AddHandler(ClosingFinishedEvent, value); }
-            remove { this.RemoveHandler(ClosingFinishedEvent, value); }
+            add => this.AddHandler(ClosingFinishedEvent, value);
+            remove => this.RemoveHandler(ClosingFinishedEvent, value);
         }
 
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(nameof(Position), typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
-        public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register(nameof(IsPinned), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty PositionProperty =
+            DependencyProperty.Register(nameof(Position),
+                                        typeof(Position),
+                                        typeof(Flyout),
+                                        new PropertyMetadata(Position.Left, OnPositionPropertyChanged));
 
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
-
-        /// <summary>Identifies the <see cref="IsShown"/> dependency property.</summary>
-        private static readonly DependencyPropertyKey IsShownPropertyKey
-            = DependencyProperty.RegisterReadOnly(nameof(IsShown),
-                                                  typeof(bool),
-                                                  typeof(Flyout),
-                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        /// <summary>Identifies the <see cref="IsShown"/> dependency property.</summary>
-        public static readonly DependencyProperty IsShownProperty = IsShownPropertyKey.DependencyProperty;
-
-        /// <summary>
-        /// Gets whether the Flyout is completely shown (after IsOpen was set to true).
-        /// </summary>
-        public bool IsShown
+        private static void OnPositionPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            get => (bool)this.GetValue(IsShownProperty);
-            protected set => this.SetValue(IsShownPropertyKey, BooleanBoxes.Box(value));
-        }
-
-        public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register(nameof(AnimateOnPositionChange), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnAnimateOpacityPropertyChanged));
-        public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached(nameof(CloseCommand), typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
-        public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register(nameof(CloseCommandParameter), typeof(object), typeof(Flyout), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, OnThemePropertyChanged));
-        public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register(nameof(ExternalCloseButton), typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
-        public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register(nameof(CloseButtonVisibility), typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
-        public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register(nameof(CloseButtonIsCancel), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
-        public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register(nameof(TitleVisibility), typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
-        public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register(nameof(AreAnimationsEnabled), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty FocusedElementProperty = DependencyProperty.Register(nameof(FocusedElement), typeof(FrameworkElement), typeof(Flyout), new UIPropertyMetadata(null));
-        public static readonly DependencyProperty AllowFocusElementProperty = DependencyProperty.Register(nameof(AllowFocusElement), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty IsAutoCloseEnabledProperty = DependencyProperty.Register(nameof(IsAutoCloseEnabled), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, IsAutoCloseEnabledChanged));
-        public static readonly DependencyProperty AutoCloseIntervalProperty = DependencyProperty.Register(nameof(AutoCloseInterval), typeof(long), typeof(Flyout), new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
-
-        internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
-
-        internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
-
-        public bool AreAnimationsEnabled
-        {
-            get { return (bool)this.GetValue(AreAnimationsEnabledProperty); }
-            set { this.SetValue(AreAnimationsEnabledProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets if the title is visible in this flyout.
-        /// </summary>
-        public Visibility TitleVisibility
-        {
-            get { return (Visibility)this.GetValue(TitleVisibilityProperty); }
-            set { this.SetValue(TitleVisibilityProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets if the close button is visible in this flyout.
-        /// </summary>
-        public Visibility CloseButtonVisibility
-        {
-            get { return (Visibility)this.GetValue(CloseButtonVisibilityProperty); }
-            set { this.SetValue(CloseButtonVisibilityProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets if the close button is a cancel button in this flyout.
-        /// </summary>
-        public bool CloseButtonIsCancel
-        {
-            get { return (bool)this.GetValue(CloseButtonIsCancelProperty); }
-            set { this.SetValue(CloseButtonIsCancelProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets a command which will be executed if the close button was clicked.
-        /// Note that this won't execute when <see cref="IsOpen"/> is set to <c>false</c>.
-        /// </summary>
-        public ICommand CloseCommand
-        {
-            get { return (ICommand)this.GetValue(CloseCommandProperty); }
-            set { this.SetValue(CloseCommandProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the command parameter which will be passed by the CloseCommand.
-        /// </summary>
-        public object CloseCommandParameter
-        {
-            get { return (object)this.GetValue(CloseCommandParameterProperty); }
-            set { this.SetValue(CloseCommandParameterProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether this flyout is visible.
-        /// </summary>
-        public bool IsOpen
-        {
-            get { return (bool)this.GetValue(IsOpenProperty); }
-            set { this.SetValue(IsOpenProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether this flyout uses the open/close animation when changing the <see cref="Position"/> property. (default is true)
-        /// </summary>
-        public bool AnimateOnPositionChange
-        {
-            get { return (bool)this.GetValue(AnimateOnPositionChangeProperty); }
-            set { this.SetValue(AnimateOnPositionChangeProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether this flyout animates the opacity of the flyout when opening/closing.
-        /// </summary>
-        public bool AnimateOpacity
-        {
-            get { return (bool)this.GetValue(AnimateOpacityProperty); }
-            set { this.SetValue(AnimateOpacityProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether this flyout stays open when the user clicks outside of it.
-        /// </summary>
-        public bool IsPinned
-        {
-            get { return (bool)this.GetValue(IsPinnedProperty); }
-            set { this.SetValue(IsPinnedProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets the mouse button that closes the flyout on an external mouse click.
-        /// </summary>
-        public MouseButton ExternalCloseButton
-        {
-            get { return (MouseButton)this.GetValue(ExternalCloseButtonProperty); }
-            set { this.SetValue(ExternalCloseButtonProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether this flyout is modal.
-        /// </summary>
-        public bool IsModal
-        {
-            get { return (bool)this.GetValue(IsModalProperty); }
-            set { this.SetValue(IsModalProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets/sets this flyout's position in the FlyoutsControl/MetroWindow.
-        /// </summary>
-        public Position Position
-        {
-            get { return (Position)this.GetValue(PositionProperty); }
-            set { this.SetValue(PositionProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the theme of this flyout.
-        /// </summary>
-        public FlyoutTheme Theme
-        {
-            get { return (FlyoutTheme)this.GetValue(ThemeProperty); }
-            set { this.SetValue(ThemeProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the focused element.
-        /// </summary>
-        public FrameworkElement FocusedElement
-        {
-            get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
-            set { this.SetValue(FocusedElementProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the flyout should auto close after AutoCloseInterval has passed.
-        /// </summary>
-        public bool IsAutoCloseEnabled
-        {
-            get { return (bool)this.GetValue(IsAutoCloseEnabledProperty); }
-            set { this.SetValue(IsAutoCloseEnabledProperty, BooleanBoxes.Box(value)); }
-        }
-
-        /// <summary>
-        /// Gets or sets the time in milliseconds when the flyout should auto close.
-        /// </summary>
-        public long AutoCloseInterval
-        {
-            get { return (long)this.GetValue(AutoCloseIntervalProperty); }
-            set { this.SetValue(AutoCloseIntervalProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the flyout should try focus an element.
-        /// </summary>
-        public bool AllowFocusElement
-        {
-            get { return (bool)this.GetValue(AllowFocusElementProperty); }
-            set { this.SetValue(AllowFocusElementProperty, BooleanBoxes.Box(value)); }
-        }
-
-        static Flyout()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(typeof(Flyout)));
-        }
-
-        public Flyout()
-        {
-            this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
-            this.InitializeAutoCloseTimer();
-        }
-
-        protected override AutomationPeer OnCreateAutomationPeer()
-        {
-            return new FlyoutAutomationPeer(this);
-        }
-
-        private void InitializeAutoCloseTimer()
-        {
-            this.StopAutoCloseTimer();
-
-            this.autoCloseTimer = new DispatcherTimer();
-            this.autoCloseTimer.Tick += this.AutoCloseTimerCallback;
-            this.autoCloseTimer.Interval = TimeSpan.FromMilliseconds(this.AutoCloseInterval);
-        }
-
-        private MetroWindow parentWindow;
-
-        private MetroWindow ParentWindow => this.parentWindow ?? (this.parentWindow = this.TryFindParent<MetroWindow>());
-
-        private void UpdateFlyoutTheme()
-        {
-            var flyoutsControl = this.TryFindParent<FlyoutsControl>();
-
-            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            var flyout = (Flyout)dependencyObject;
+            var wasOpen = flyout.IsOpen;
+            if (wasOpen && flyout.AnimateOnPositionChange)
             {
-                this.Visibility = flyoutsControl != null ? Visibility.Collapsed : Visibility.Visible;
-            }
-
-            var window = this.ParentWindow;
-            if (window != null)
-            {
-                var windowTheme = DetectTheme(this);
-
-                if (windowTheme != null)
-                {
-                    this.ChangeFlyoutTheme(windowTheme);
-                }
-
-                // we must certain to get the right foreground for window commands and buttons
-                if (flyoutsControl != null && this.IsOpen)
-                {
-                    flyoutsControl.HandleFlyoutStatusChange(this, window);
-                }
-            }
-        }
-
-        internal void ChangeFlyoutTheme(ControlzEx.Theming.Theme windowTheme)
-        {
-            // Beware: Über-dumb code ahead!
-            switch (this.Theme)
-            {
-                case FlyoutTheme.Accent:
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
-                    this.OverrideFlyoutResources(this.Resources, true);
-                    break;
-
-                case FlyoutTheme.Adapt:
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
-                    this.OverrideFlyoutResources(this.Resources);
-                    break;
-
-                case FlyoutTheme.Inverse:
-                    var inverseTheme = ThemeManager.Current.GetInverseTheme(windowTheme);
-
-                    if (inverseTheme == null)
-                        throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
-                                                            "See ThemeManager.GetInverseAppTheme for more infos");
-
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
-                    this.OverrideFlyoutResources(this.Resources);
-                    break;
-
-                case FlyoutTheme.Dark:
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorDark ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme));
-                    this.OverrideFlyoutResources(this.Resources);
-                    break;
-
-                case FlyoutTheme.Light:
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorLight ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme));
-                    this.OverrideFlyoutResources(this.Resources);
-                    break;
-            }
-        }
-
-        private void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
-        {
-            var fromColorKey = accent ? "MahApps.Colors.Highlight" : "MahApps.Colors.Flyout";
-
-            resources.BeginInit();
-
-            var fromColor = (Color)resources[fromColorKey];
-            resources["MahApps.Colors.ThemeBackground"] = fromColor;
-            resources["MahApps.Colors.Flyout"] = fromColor;
-
-            var newBrush = new SolidColorBrush(fromColor);
-            newBrush.Freeze();
-            resources["MahApps.Brushes.Flyout.Background"] = newBrush;
-            resources["MahApps.Brushes.Control.Background"] = newBrush;
-            resources["MahApps.Brushes.ThemeBackground"] = newBrush;
-            resources["MahApps.Brushes.Window.Background"] = newBrush;
-            resources[SystemColors.WindowBrushKey] = newBrush;
-
-            if (accent)
-            {
-                fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
-                newBrush = new SolidColorBrush(fromColor);
-                newBrush.Freeze();
-                resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
-                resources["MahApps.Brushes.Text"] = newBrush;
-
-                if (resources.Contains("MahApps.Colors.AccentBase"))
-                {
-                    fromColor = (Color)resources["MahApps.Colors.AccentBase"];
-                }
-                else
-                {
-                    var accentColor = (Color)resources["MahApps.Colors.Accent"];
-                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
-                }
-
-                newBrush = new SolidColorBrush(fromColor);
-                newBrush.Freeze();
-                resources["MahApps.Colors.Highlight"] = fromColor;
-                resources["MahApps.Brushes.Highlight"] = newBrush;
-            }
-
-            resources.EndInit();
-        }
-
-        private static ControlzEx.Theming.Theme DetectTheme(Flyout flyout)
-        {
-            if (flyout == null)
-                return null;
-
-            // first look for owner
-            var window = flyout.ParentWindow;
-            var theme = window != null ? ThemeManager.Current.DetectTheme(window) : null;
-            if (theme != null)
-            {
-                return theme;
-            }
-
-            // second try, look for main window and then for current application
-            if (Application.Current != null)
-            {
-                theme = Application.Current.MainWindow is null
-                    ? ThemeManager.Current.DetectTheme(Application.Current)
-                    : ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
-                if (theme != null)
-                {
-                    return theme;
-                }
-            }
-
-            return null;
-        }
-
-        private void UpdateOpacityChange()
-        {
-            if (this.flyoutRoot == null || this.fadeOutFrame == null || System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            {
-                return;
-            }
-
-            if (!this.AnimateOpacity)
-            {
-                this.fadeOutFrame.Value = 1;
-                this.flyoutRoot.Opacity = 1;
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
+                VisualStateManager.GoToState(flyout, "Hide", true);
             }
             else
             {
-                this.fadeOutFrame.Value = 0;
-                if (!this.IsOpen) this.flyoutRoot.Opacity = 0;
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity, false);
+            }
+
+            if (wasOpen && flyout.AnimateOnPositionChange)
+            {
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
+                VisualStateManager.GoToState(flyout, "Show", true);
             }
         }
 
-        private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Gets or sets the position of this <see cref="Flyout"/> inside the <see cref="FlyoutsControl"/>.
+        /// </summary>
+        public Position Position
+        {
+            get => (Position)this.GetValue(PositionProperty);
+            set => this.SetValue(PositionProperty, value);
+        }
+
+        public static readonly DependencyProperty IsPinnedProperty
+            = DependencyProperty.Register(nameof(IsPinned),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether this <see cref="Flyout"/> stays open when the user clicks somewhere outside of it.
+        /// </summary>
+        public bool IsPinned
+        {
+            get => (bool)this.GetValue(IsPinnedProperty);
+            set => this.SetValue(IsPinnedProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty IsOpenProperty
+            = DependencyProperty.Register(nameof(IsOpen),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsOpenPropertyChanged));
+
+        private static void OnIsOpenPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout)dependencyObject;
 
@@ -545,7 +214,239 @@ namespace MahApps.Metro.Controls
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
         }
 
-        private static void IsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Gets or sets whether this <see cref="Flyout"/> should be visible or not.
+        /// </summary>
+        public bool IsOpen
+        {
+            get => (bool)this.GetValue(IsOpenProperty);
+            set => this.SetValue(IsOpenProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsShown"/> dependency property.</summary>
+        private static readonly DependencyPropertyKey IsShownPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(IsShown),
+                                                  typeof(bool),
+                                                  typeof(Flyout),
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>Identifies the <see cref="IsShown"/> dependency property.</summary>
+        public static readonly DependencyProperty IsShownProperty = IsShownPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether the <see cref="Flyout"/> is completely shown (after <see cref="IsOpen"/> was set to true).
+        /// </summary>
+        public bool IsShown
+        {
+            get => (bool)this.GetValue(IsShownProperty);
+            protected set => this.SetValue(IsShownPropertyKey, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty AnimateOnPositionChangeProperty
+            = DependencyProperty.Register(nameof(AnimateOnPositionChange),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether this <see cref="Flyout"/> uses the open/close animation when changing the <see cref="Position"/> property (default is true).
+        /// </summary>
+        public bool AnimateOnPositionChange
+        {
+            get => (bool)this.GetValue(AnimateOnPositionChangeProperty);
+            set => this.SetValue(AnimateOnPositionChangeProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty AnimateOpacityProperty
+            = DependencyProperty.Register(nameof(AnimateOpacity),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, (d, args) => (d as Flyout)?.UpdateOpacityChange()));
+
+        /// <summary>
+        /// Gets or sets whether this <see cref="Flyout"/> animates the opacity when opening/closing the <see cref="Flyout"/>.
+        /// </summary>
+        public bool AnimateOpacity
+        {
+            get => (bool)this.GetValue(AnimateOpacityProperty);
+            set => this.SetValue(AnimateOpacityProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty IsModalProperty
+            = DependencyProperty.Register(nameof(IsModal),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets whether this <see cref="Flyout"/> is modal.
+        /// </summary>
+        public bool IsModal
+        {
+            get => (bool)this.GetValue(IsModalProperty);
+            set => this.SetValue(IsModalProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty CloseCommandProperty
+            = DependencyProperty.RegisterAttached(nameof(CloseCommand),
+                                                  typeof(ICommand),
+                                                  typeof(Flyout),
+                                                  new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a <see cref="ICommand"/> which will be executed if the close button was clicked.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="ICommand"/> won't be executed when <see cref="IsOpen"/> property will be set to false/true.
+        /// </remarks>
+        public ICommand CloseCommand
+        {
+            get => (ICommand)this.GetValue(CloseCommandProperty);
+            set => this.SetValue(CloseCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty CloseCommandParameterProperty
+            = DependencyProperty.Register(nameof(CloseCommandParameter),
+                                          typeof(object),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the parameter for the <see cref="CloseCommand"/>.
+        /// </summary>
+        public object CloseCommandParameter
+        {
+            get => (object)this.GetValue(CloseCommandParameterProperty);
+            set => this.SetValue(CloseCommandParameterProperty, value);
+        }
+
+        public static readonly DependencyProperty ThemeProperty
+            = DependencyProperty.Register(nameof(Theme),
+                                          typeof(FlyoutTheme),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(FlyoutTheme.Dark, (d, args) => (d as Flyout)?.UpdateFlyoutTheme()));
+
+        /// <summary>
+        /// Gets or sets the theme for the <see cref="Flyout"/>.
+        /// </summary>
+        public FlyoutTheme Theme
+        {
+            get => (FlyoutTheme)this.GetValue(ThemeProperty);
+            set => this.SetValue(ThemeProperty, value);
+        }
+
+        public static readonly DependencyProperty ExternalCloseButtonProperty
+            = DependencyProperty.Register(nameof(ExternalCloseButton),
+                                          typeof(MouseButton),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(MouseButton.Left));
+
+        /// <summary>
+        /// Gets or sets the mouse button that closes the <see cref="Flyout"/> when the user clicks somewhere outside of it.
+        /// </summary>
+        public MouseButton ExternalCloseButton
+        {
+            get => (MouseButton)this.GetValue(ExternalCloseButtonProperty);
+            set => this.SetValue(ExternalCloseButtonProperty, value);
+        }
+
+        public static readonly DependencyProperty CloseButtonVisibilityProperty
+            = DependencyProperty.Register(nameof(CloseButtonVisibility),
+                                          typeof(Visibility),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(Visibility.Visible));
+
+        /// <summary>
+        /// Gets or sets the visibility of the close button for this <see cref="Flyout"/>.
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get => (Visibility)this.GetValue(CloseButtonVisibilityProperty);
+            set => this.SetValue(CloseButtonVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty CloseButtonIsCancelProperty
+            = DependencyProperty.Register(nameof(CloseButtonIsCancel),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the close button is a Cancel button. A user can activate the Cancel button by pressing the ESC key.
+        /// </summary>
+        public bool CloseButtonIsCancel
+        {
+            get => (bool)this.GetValue(CloseButtonIsCancelProperty);
+            set => this.SetValue(CloseButtonIsCancelProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty TitleVisibilityProperty
+            = DependencyProperty.Register(nameof(TitleVisibility),
+                                          typeof(Visibility),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(Visibility.Visible));
+
+        /// <summary>
+        /// Gets or sets the visibility of the title.
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get => (Visibility)this.GetValue(TitleVisibilityProperty);
+            set => this.SetValue(TitleVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty AreAnimationsEnabledProperty
+            = DependencyProperty.Register(nameof(AreAnimationsEnabled),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the <see cref="Flyout"/> uses animations for open/close.
+        /// </summary>
+        public bool AreAnimationsEnabled
+        {
+            get => (bool)this.GetValue(AreAnimationsEnabledProperty);
+            set => this.SetValue(AreAnimationsEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty FocusedElementProperty
+            = DependencyProperty.Register(nameof(FocusedElement),
+                                          typeof(FrameworkElement),
+                                          typeof(Flyout),
+                                          new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the focused element.
+        /// </summary>
+        public FrameworkElement FocusedElement
+        {
+            get => (FrameworkElement)this.GetValue(FocusedElementProperty);
+            set => this.SetValue(FocusedElementProperty, value);
+        }
+
+        public static readonly DependencyProperty AllowFocusElementProperty
+            = DependencyProperty.Register(nameof(AllowFocusElement),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="Flyout"/> should try focus an element.
+        /// </summary>
+        public bool AllowFocusElement
+        {
+            get => (bool)this.GetValue(AllowFocusElementProperty);
+            set => this.SetValue(AllowFocusElementProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty IsAutoCloseEnabledProperty
+            = DependencyProperty.Register(nameof(IsAutoCloseEnabled),
+                                          typeof(bool),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnIsAutoCloseEnabledPropertyChanged));
+
+        private static void OnIsAutoCloseEnabledPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout)dependencyObject;
 
@@ -570,6 +471,21 @@ namespace MahApps.Metro.Controls
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseEnabledChangedAction);
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="Flyout"/> should auto close after the <see cref="AutoCloseInterval"/> has passed.
+        /// </summary>
+        public bool IsAutoCloseEnabled
+        {
+            get => (bool)this.GetValue(IsAutoCloseEnabledProperty);
+            set => this.SetValue(IsAutoCloseEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty AutoCloseIntervalProperty
+            = DependencyProperty.Register(nameof(AutoCloseInterval),
+                                          typeof(long),
+                                          typeof(Flyout),
+                                          new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
+
         private static void AutoCloseIntervalChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout)dependencyObject;
@@ -589,10 +505,86 @@ namespace MahApps.Metro.Controls
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseIntervalChangedAction);
         }
 
+        /// <summary>
+        /// Gets or sets the time in milliseconds when the <see cref="Flyout"/> should auto close.
+        /// </summary>
+        public long AutoCloseInterval
+        {
+            get => (long)this.GetValue(AutoCloseIntervalProperty);
+            set => this.SetValue(AutoCloseIntervalProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
+        private static readonly DependencyPropertyKey OwnerPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(Owner),
+                                                typeof(FlyoutsControl),
+                                                typeof(Flyout),
+                                                new PropertyMetadata(null));
+
+        /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
+        public static readonly DependencyProperty OwnerProperty = OwnerPropertyKey.DependencyProperty;
+
+        public FlyoutsControl Owner
+        {
+            get => (FlyoutsControl)this.GetValue(OwnerProperty);
+            protected set => this.SetValue(OwnerPropertyKey, value);
+        }
+
+        private DispatcherTimer autoCloseTimer;
+        private FrameworkElement flyoutRoot;
+        private Storyboard showStoryboard;
+        private Storyboard hideStoryboard;
+        private SplineDoubleKeyFrame hideFrame;
+        private SplineDoubleKeyFrame hideFrameY;
+        private SplineDoubleKeyFrame showFrame;
+        private SplineDoubleKeyFrame showFrameY;
+        private SplineDoubleKeyFrame fadeOutFrame;
+        private FrameworkElement flyoutHeader;
+        private FrameworkElement flyoutContent;
+        private MetroWindow parentWindow;
+
+        private MetroWindow ParentWindow => this.parentWindow ??= this.TryFindParent<MetroWindow>();
+
+        /// <summary>
+        /// <see cref="IsOpen"/> property changed notifier used in <see cref="FlyoutsControl"/>.
+        /// </summary>
+        internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
+
+        /// <summary>
+        /// <see cref="Theme"/> property changed notifier used in <see cref="FlyoutsControl"/>.
+        /// </summary>
+        internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
+
+        static Flyout()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(typeof(Flyout)));
+        }
+
+        public Flyout()
+        {
+            this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
+            this.InitializeAutoCloseTimer();
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new FlyoutAutomationPeer(this);
+        }
+
+        private void InitializeAutoCloseTimer()
+        {
+            this.StopAutoCloseTimer();
+
+            this.autoCloseTimer = new DispatcherTimer();
+            this.autoCloseTimer.Tick += this.AutoCloseTimerCallback;
+            this.autoCloseTimer.Interval = TimeSpan.FromMilliseconds(this.AutoCloseInterval);
+        }
+
         private void StartAutoCloseTimer()
         {
-            //in case it is already running
+            // in case it is already running
             this.StopAutoCloseTimer();
+
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 this.autoCloseTimer.Start();
@@ -601,20 +593,196 @@ namespace MahApps.Metro.Controls
 
         private void StopAutoCloseTimer()
         {
-            if ((this.autoCloseTimer != null) && (this.autoCloseTimer.IsEnabled))
+            if (this.autoCloseTimer != null && this.autoCloseTimer.IsEnabled)
             {
                 this.autoCloseTimer.Stop();
             }
         }
 
-        private void AutoCloseTimerCallback(Object sender, EventArgs e)
+        private void AutoCloseTimerCallback(object sender, EventArgs e)
         {
             this.StopAutoCloseTimer();
 
-            //if the flyout is open and autoclose is still enabled then close the flyout
-            if ((this.IsOpen) && (this.IsAutoCloseEnabled))
+            // if the flyout is open and auto close is still enabled then close the flyout
+            if (this.IsOpen && this.IsAutoCloseEnabled)
             {
-                this.IsOpen = false;
+                this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
+            }
+        }
+
+        private void UpdateFlyoutTheme()
+        {
+            var flyoutsControl = this.Owner ?? this.TryFindParent<FlyoutsControl>();
+
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                this.SetCurrentValue(VisibilityProperty, flyoutsControl != null ? Visibility.Collapsed : Visibility.Visible);
+            }
+
+            var window = this.ParentWindow;
+            if (window != null)
+            {
+                var windowTheme = DetectTheme(this);
+
+                if (windowTheme != null)
+                {
+                    this.ChangeFlyoutTheme(windowTheme);
+                }
+
+                // we must certain to get the right foreground for window commands and buttons
+                if (flyoutsControl != null && this.IsOpen)
+                {
+                    flyoutsControl.HandleFlyoutStatusChange(this, window);
+                }
+            }
+        }
+
+        private static ControlzEx.Theming.Theme DetectTheme(Flyout flyout)
+        {
+            if (flyout is null)
+            {
+                return null;
+            }
+
+            // first look for owner
+            var window = flyout.ParentWindow;
+            var theme = window != null ? ThemeManager.Current.DetectTheme(window) : null;
+            if (theme != null)
+            {
+                return theme;
+            }
+
+            // second try, look for main window and then for current application
+            if (Application.Current != null)
+            {
+                theme = Application.Current.MainWindow is null
+                    ? ThemeManager.Current.DetectTheme(Application.Current)
+                    : ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
+                if (theme != null)
+                {
+                    return theme;
+                }
+            }
+
+            return null;
+        }
+
+        internal void ChangeFlyoutTheme(ControlzEx.Theming.Theme windowTheme)
+        {
+            switch (this.Theme)
+            {
+                case FlyoutTheme.Accent:
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
+                    this.OverrideFlyoutResources(this.Resources, true);
+                    break;
+
+                case FlyoutTheme.Adapt:
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
+                    this.OverrideFlyoutResources(this.Resources);
+                    break;
+
+                case FlyoutTheme.Inverse:
+                    var inverseTheme = ThemeManager.Current.GetInverseTheme(windowTheme);
+                    if (inverseTheme is null)
+                    {
+                        throw new InvalidOperationException("The inverse Flyout theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
+                    }
+
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
+                    this.OverrideFlyoutResources(this.Resources);
+                    break;
+
+                case FlyoutTheme.Dark:
+                    var darkTheme = windowTheme.BaseColorScheme == ThemeManager.BaseColorDark ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme);
+                    if (darkTheme is null)
+                    {
+                        throw new InvalidOperationException("The Dark Flyout theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
+                    }
+
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, darkTheme);
+                    this.OverrideFlyoutResources(this.Resources);
+                    break;
+
+                case FlyoutTheme.Light:
+                    var lightTheme = windowTheme.BaseColorScheme == ThemeManager.BaseColorLight ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme);
+                    if (lightTheme is null)
+                    {
+                        throw new InvalidOperationException("The Light Flyout theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
+                    }
+
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, lightTheme);
+                    this.OverrideFlyoutResources(this.Resources);
+                    break;
+            }
+        }
+
+        protected virtual void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
+        {
+            var fromColorKey = accent ? "MahApps.Colors.Highlight" : "MahApps.Colors.Flyout";
+
+            resources.BeginInit();
+
+            var fromColor = (Color)resources[fromColorKey];
+            resources["MahApps.Colors.ThemeBackground"] = fromColor;
+            resources["MahApps.Colors.Flyout"] = fromColor;
+
+            var newBrush = new SolidColorBrush(fromColor);
+            newBrush.Freeze();
+            resources["MahApps.Brushes.Flyout.Background"] = newBrush;
+            resources["MahApps.Brushes.Control.Background"] = newBrush;
+            resources["MahApps.Brushes.ThemeBackground"] = newBrush;
+            resources["MahApps.Brushes.Window.Background"] = newBrush;
+            resources[SystemColors.WindowBrushKey] = newBrush;
+
+            if (accent)
+            {
+                fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
+                newBrush = new SolidColorBrush(fromColor);
+                newBrush.Freeze();
+                resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
+                resources["MahApps.Brushes.Text"] = newBrush;
+
+                if (resources.Contains("MahApps.Colors.AccentBase"))
+                {
+                    fromColor = (Color)resources["MahApps.Colors.AccentBase"];
+                }
+                else
+                {
+                    var accentColor = (Color)resources["MahApps.Colors.Accent"];
+                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
+                }
+
+                newBrush = new SolidColorBrush(fromColor);
+                newBrush.Freeze();
+                resources["MahApps.Colors.Highlight"] = fromColor;
+                resources["MahApps.Brushes.Highlight"] = newBrush;
+            }
+
+            resources.EndInit();
+        }
+
+        private void UpdateOpacityChange()
+        {
+            if (this.flyoutRoot is null || this.fadeOutFrame is null || System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
+            if (!this.AnimateOpacity)
+            {
+                this.fadeOutFrame.Value = 1;
+                this.flyoutRoot.Opacity = 1;
+            }
+            else
+            {
+                this.fadeOutFrame.Value = 0;
+                if (!this.IsOpen)
+                {
+                    this.flyoutRoot.Opacity = 0;
+                }
             }
         }
 
@@ -654,92 +822,45 @@ namespace MahApps.Metro.Controls
                 {
                     this.FocusedElement.Focus();
                 }
-                else if (this.flyoutContent == null || !this.flyoutContent.MoveFocus(new TraversalRequest(FocusNavigationDirection.First)))
+                else if (this.flyoutContent is null || !this.flyoutContent.MoveFocus(new TraversalRequest(FocusNavigationDirection.First)))
                 {
                     this.flyoutHeader?.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                 }
             }
         }
 
-        private static void OnThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            (dependencyObject as Flyout)?.UpdateFlyoutTheme();
-        }
-
-        private static void OnAnimateOpacityPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            (dependencyObject as Flyout)?.UpdateOpacityChange();
-        }
-
-        private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var flyout = (Flyout)dependencyObject;
-            var wasOpen = flyout.IsOpen;
-            if (wasOpen && flyout.AnimateOnPositionChange)
-            {
-                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
-                VisualStateManager.GoToState(flyout, "Hide", true);
-            }
-            else
-            {
-                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity, false);
-            }
-
-            if (wasOpen && flyout.AnimateOnPositionChange)
-            {
-                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
-                VisualStateManager.GoToState(flyout, "Show", true);
-            }
-        }
-
-        DispatcherTimer autoCloseTimer;
-        FrameworkElement flyoutRoot;
-        Storyboard showStoryboard;
-        Storyboard hideStoryboard;
-        SplineDoubleKeyFrame hideFrame;
-        SplineDoubleKeyFrame hideFrameY;
-        SplineDoubleKeyFrame showFrame;
-        SplineDoubleKeyFrame showFrameY;
-        SplineDoubleKeyFrame fadeOutFrame;
-        FrameworkElement flyoutHeader;
-        FrameworkElement flyoutContent;
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
+            var flyoutsControl = ItemsControl.ItemsControlFromItemContainer(this) as FlyoutsControl ?? this.TryFindParent<FlyoutsControl>();
+            this.SetValue(OwnerPropertyKey, flyoutsControl);
+
             this.flyoutRoot = this.GetTemplateChild("PART_Root") as FrameworkElement;
-            if (this.flyoutRoot == null)
+            if (this.flyoutRoot is null)
             {
                 return;
             }
 
             this.flyoutHeader = this.GetTemplateChild("PART_Header") as FrameworkElement;
             this.flyoutHeader?.ApplyTemplate();
+
             this.flyoutContent = this.GetTemplateChild("PART_Content") as FrameworkElement;
 
-            var thumbContentControl = this.flyoutHeader as IMetroThumb;
-            if (thumbContentControl != null)
+            if (this.flyoutHeader is IMetroThumb thumb)
             {
-                thumbContentControl.DragStarted -= this.WindowTitleThumbOnDragStarted;
-                thumbContentControl.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
-                thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
-                thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                thumb.PreviewMouseLeftButtonUp -= this.HeaderThumbOnPreviewMouseLeftButtonUp;
+                thumb.DragDelta -= this.HeaderThumbMoveOnDragDelta;
+                thumb.MouseDoubleClick -= this.HeaderThumbChangeWindowStateOnMouseDoubleClick;
+                thumb.MouseRightButtonUp -= this.HeaderThumbSystemMenuOnMouseRightButtonUp;
 
-                var flyoutsControl = this.TryFindParent<FlyoutsControl>();
-                if (flyoutsControl != null)
-                {
-                    thumbContentControl.DragStarted += this.WindowTitleThumbOnDragStarted;
-                    thumbContentControl.DragCompleted += this.WindowTitleThumbOnDragCompleted;
-                    thumbContentControl.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                    thumbContentControl.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
-                    thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                    thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
-                }
+                thumb.PreviewMouseLeftButtonUp += this.HeaderThumbOnPreviewMouseLeftButtonUp;
+                thumb.DragDelta += this.HeaderThumbMoveOnDragDelta;
+                thumb.MouseDoubleClick += this.HeaderThumbChangeWindowStateOnMouseDoubleClick;
+                thumb.MouseRightButtonUp += this.HeaderThumbSystemMenuOnMouseRightButtonUp;
             }
 
+#pragma warning disable WPF0130 // Add [TemplatePart] to the type.
             this.showStoryboard = this.GetTemplateChild("ShowStoryboard") as Storyboard;
             this.hideStoryboard = this.GetTemplateChild("HideStoryboard") as Storyboard;
             this.hideFrame = this.GetTemplateChild("hideFrame") as SplineDoubleKeyFrame;
@@ -747,8 +868,9 @@ namespace MahApps.Metro.Controls
             this.showFrame = this.GetTemplateChild("showFrame") as SplineDoubleKeyFrame;
             this.showFrameY = this.GetTemplateChild("showFrameY") as SplineDoubleKeyFrame;
             this.fadeOutFrame = this.GetTemplateChild("fadeOutFrame") as SplineDoubleKeyFrame;
+#pragma warning restore WPF0130 // Add [TemplatePart] to the type.
 
-            if (this.hideFrame == null || this.showFrame == null || this.hideFrameY == null || this.showFrameY == null || this.fadeOutFrame == null)
+            if (this.hideFrame is null || this.showFrame is null || this.hideFrameY is null || this.showFrameY is null || this.fadeOutFrame is null)
             {
                 return;
             }
@@ -756,65 +878,38 @@ namespace MahApps.Metro.Controls
             this.ApplyAnimation(this.Position, this.AnimateOpacity);
         }
 
-        private void WindowTitleThumbOnDragCompleted(object sender, DragCompletedEventArgs e)
+        internal void CleanUp()
         {
-            this.dragStartedMousePos = null;
-        }
-
-        private Point? dragStartedMousePos = null;
-
-        private void WindowTitleThumbOnDragStarted(object sender, DragStartedEventArgs e)
-        {
-            var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom)
+            if (this.flyoutHeader is IMetroThumb thumb)
             {
-                this.dragStartedMousePos = Mouse.GetPosition((IInputElement)sender);
-            }
-            else
-            {
-                this.dragStartedMousePos = null;
-            }
-        }
-
-        protected internal void CleanUp(FlyoutsControl flyoutsControl)
-        {
-            var thumbContentControl = this.flyoutHeader as IMetroThumb;
-            if (thumbContentControl != null)
-            {
-                thumbContentControl.DragStarted -= this.WindowTitleThumbOnDragStarted;
-                thumbContentControl.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
-                thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
-                thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                thumb.PreviewMouseLeftButtonUp -= this.HeaderThumbOnPreviewMouseLeftButtonUp;
+                thumb.DragDelta -= this.HeaderThumbMoveOnDragDelta;
+                thumb.MouseDoubleClick -= this.HeaderThumbChangeWindowStateOnMouseDoubleClick;
+                thumb.MouseRightButtonUp -= this.HeaderThumbSystemMenuOnMouseRightButtonUp;
             }
 
             this.parentWindow = null;
         }
 
-        private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void HeaderThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var window = this.ParentWindow;
             if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbOnPreviewMouseLeftButtonUp(window, e);
             }
-
-            this.dragStartedMousePos = null;
         }
 
-        private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
+        private void HeaderThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             var window = this.ParentWindow;
-            //if (window != null && this.Position != Position.Bottom && (this.Position == Position.Top || (this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitleBarHeight && window.TitleBarHeight > 0)))
-            //if (window != null && this.Position != Position.Bottom && this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitleBarHeight && window.TitleBarHeight > 0)
             if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, window, dragDeltaEventArgs);
             }
         }
 
-        private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void HeaderThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var window = this.ParentWindow;
             if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitleBarHeight && window.TitleBarHeight > 0)
@@ -823,7 +918,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void HeaderThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var window = this.ParentWindow;
             if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitleBarHeight && window.TitleBarHeight > 0)
@@ -834,16 +929,20 @@ namespace MahApps.Metro.Controls
 
         internal void ApplyAnimation(Position position, bool animateOpacity, bool resetShowFrame = true)
         {
-            if (this.flyoutRoot == null || this.hideFrame == null || this.showFrame == null || this.hideFrameY == null || this.showFrameY == null || this.fadeOutFrame == null)
+            if (this.flyoutRoot is null || this.hideFrame is null || this.showFrame is null || this.hideFrameY is null || this.showFrameY is null || this.fadeOutFrame is null)
+            {
                 return;
+            }
 
             if (this.Position == Position.Left || this.Position == Position.Right)
+            {
                 this.showFrame.Value = 0;
-            if (this.Position == Position.Top || this.Position == Position.Bottom)
-                this.showFrameY.Value = 0;
+            }
 
-            // I mean, we don't need this anymore, because we use ActualWidth and ActualHeight of the flyoutRoot
-            //this.flyoutRoot.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+            if (this.Position == Position.Top || this.Position == Position.Bottom)
+            {
+                this.showFrameY.Value = 0;
+            }
 
             if (!animateOpacity)
             {
@@ -853,38 +952,53 @@ namespace MahApps.Metro.Controls
             else
             {
                 this.fadeOutFrame.Value = 0;
-                if (!this.IsOpen) this.flyoutRoot.Opacity = 0;
+                if (!this.IsOpen)
+                {
+                    this.flyoutRoot.Opacity = 0;
+                }
             }
 
             switch (position)
             {
                 default:
-                    this.HorizontalAlignment = this.Margin.Right <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Left : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch; //HorizontalAlignment.Left;
+                    this.HorizontalAlignment = this.Margin.Right <= 0 ? this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Left : this.HorizontalContentAlignment : HorizontalAlignment.Stretch;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
                     this.hideFrame.Value = -this.flyoutRoot.ActualWidth - this.Margin.Left;
                     if (resetShowFrame)
+                    {
                         this.flyoutRoot.RenderTransform = new TranslateTransform(-this.flyoutRoot.ActualWidth, 0);
+                    }
+
                     break;
                 case Position.Right:
-                    this.HorizontalAlignment = this.Margin.Left <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Right : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch; //HorizontalAlignment.Right;
+                    this.HorizontalAlignment = this.Margin.Left <= 0 ? this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Right : this.HorizontalContentAlignment : HorizontalAlignment.Stretch;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
                     this.hideFrame.Value = this.flyoutRoot.ActualWidth + this.Margin.Right;
                     if (resetShowFrame)
+                    {
                         this.flyoutRoot.RenderTransform = new TranslateTransform(this.flyoutRoot.ActualWidth, 0);
+                    }
+
                     break;
                 case Position.Top:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = this.Margin.Bottom <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Top : this.VerticalContentAlignment) : VerticalAlignment.Stretch; //VerticalAlignment.Top;
+                    this.VerticalAlignment = this.Margin.Bottom <= 0 ? this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Top : this.VerticalContentAlignment : VerticalAlignment.Stretch;
                     this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1 - this.Margin.Top;
                     if (resetShowFrame)
+                    {
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, -this.flyoutRoot.ActualHeight - 1);
+                    }
+
                     break;
                 case Position.Bottom:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = this.Margin.Top <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Bottom : this.VerticalContentAlignment) : VerticalAlignment.Stretch; //VerticalAlignment.Bottom;
+                    this.VerticalAlignment = this.Margin.Top <= 0 ? this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Bottom : this.VerticalContentAlignment : VerticalAlignment.Stretch;
                     this.hideFrameY.Value = this.flyoutRoot.ActualHeight + this.Margin.Bottom;
                     if (resetShowFrame)
+                    {
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, this.flyoutRoot.ActualHeight);
+                    }
+
                     break;
             }
         }
@@ -893,15 +1007,30 @@ namespace MahApps.Metro.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
 
-            if (!this.IsOpen) return; // no changes for invisible flyouts, ApplyAnimation is called now in visible changed event
-            if (!sizeInfo.WidthChanged && !sizeInfo.HeightChanged) return;
-            if (this.flyoutRoot == null || this.hideFrame == null || this.showFrame == null || this.hideFrameY == null || this.showFrameY == null)
+            if (!this.IsOpen)
+            {
+                return; // no changes for invisible flyouts, ApplyAnimation is called now in visible changed event
+            }
+
+            if (!sizeInfo.WidthChanged && !sizeInfo.HeightChanged)
+            {
+                return;
+            }
+
+            if (this.flyoutRoot is null || this.hideFrame is null || this.showFrame is null || this.hideFrameY is null || this.showFrameY is null)
+            {
                 return; // don't bother checking IsOpen and calling ApplyAnimation
+            }
 
             if (this.Position == Position.Left || this.Position == Position.Right)
+            {
                 this.showFrame.Value = 0;
+            }
+
             if (this.Position == Position.Top || this.Position == Position.Bottom)
+            {
                 this.showFrameY.Value = 0;
+            }
 
             switch (this.Position)
             {

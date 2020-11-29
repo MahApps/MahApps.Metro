@@ -10,6 +10,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
@@ -44,7 +45,7 @@
                   FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                   IsChecked="{Binding RememberCheckBoxChecked, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                   Visibility="{Binding RememberCheckBoxVisibility, RelativeSource={RelativeSource AncestorType=dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
-        <StackPanel Grid.Row="4"
+        <StackPanel Grid.Row="5"
                     MinHeight="85"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">

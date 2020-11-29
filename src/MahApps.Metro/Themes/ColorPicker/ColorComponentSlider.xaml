@@ -1,0 +1,111 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+
+    <Style x:Key="MahApps.Styles.Slider.ColorComponent" TargetType="{x:Type Slider}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border Margin="5 2"
+                                Background="{DynamicResource MahApps.Brushes.Tile.Small}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid Background="{TemplateBinding Background}" />
+                        </Border>
+                        <Track x:Name="PART_Track" Margin="{TemplateBinding BorderThickness}">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                              Foreground="Transparent"
+                                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton x:Name="VerticalTrackIncrease"
+                                              Command="{x:Static Slider.IncreaseLarge}"
+                                              Foreground="Transparent"
+                                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <mah:MetroThumb x:Name="VerticalThumb"
+                                                Width="10"
+                                                Margin="0"
+                                                HorizontalAlignment="Stretch"
+                                                Background="Transparent"
+                                                IsTabStop="True"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                    <mah:MetroThumb.Template>
+                                        <ControlTemplate>
+                                            <Grid Width="10" Background="Transparent">
+                                                <Path VerticalAlignment="Top"
+                                                      Data="M 0 0 5 10 10 0 Z"
+                                                      Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                      Stretch="Uniform"
+                                                      Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                                      StrokeThickness="1" />
+                                                <Path VerticalAlignment="Bottom"
+                                                      Data="M 0 10 5 0 10 10 Z"
+                                                      Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                      SnapsToDevicePixels="False"
+                                                      Stretch="Uniform"
+                                                      Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                                      StrokeThickness="1" />
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </mah:MetroThumb.Template>
+                                </mah:MetroThumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Slider.ColorComponent.Hue"
+           BasedOn="{StaticResource MahApps.Styles.Slider.ColorComponent}"
+           TargetType="{x:Type Slider}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <GradientStop Offset="0.00000000000000000" Color="#FFFF0000" />
+                    <GradientStop Offset="0.16666666666666666" Color="#FFFFFF00" />
+                    <GradientStop Offset="0.33333333333333333" Color="#FF00FF00" />
+                    <GradientStop Offset="0.50000000000000000" Color="#FF00FFFF" />
+                    <GradientStop Offset="0.66666666666666666" Color="#FF0000FF" />
+                    <GradientStop Offset="0.83333333333333333" Color="#FFFF00FF" />
+                    <GradientStop Offset="1.00000000000000000" Color="#FFFF0000" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Maximum" Value="360" />
+        <Setter Property="Minimum" Value="0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Slider.ColorComponent.SV"
+           BasedOn="{StaticResource MahApps.Styles.Slider.ColorComponent}"
+           TargetType="{x:Type Slider}">
+        <Setter Property="LargeChange" Value="0.05" />
+        <Setter Property="Maximum" Value="1" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="SmallChange" Value="0.01" />
+    </Style>
+
+
+    <Style x:Key="MahApps.Styles.Slider.ColorComponent.ARGB"
+           BasedOn="{StaticResource MahApps.Styles.Slider.ColorComponent}"
+           TargetType="{x:Type Slider}">
+        <Setter Property="Maximum" Value="255" />
+        <Setter Property="Minimum" Value="0" />
+    </Style>
+
+</ResourceDictionary>

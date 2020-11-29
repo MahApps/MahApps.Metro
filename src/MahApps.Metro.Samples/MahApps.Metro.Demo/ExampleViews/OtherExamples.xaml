@@ -109,9 +109,33 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="2">
             <Label Content="FlipView" Style="{DynamicResource DescriptionHeaderStyle}" />
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox x:Name="ShowBannerCheckBox"
+                          Margin="2"
+                          Content="Show Banner"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=IsBannerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox x:Name="ShowMouseOverCheckBox"
+                          Margin="2"
+                          Content="MouseOver Border"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=MouseHoverBorderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox x:Name="CircularNaviCheckBox"
+                          Margin="2"
+                          Content="Circular Navi"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=CircularNavigation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox x:Name="ShowNaviCheckBox"
+                          Margin="2"
+                          Content="Show Navi Buttons"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=IsNavigationEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox x:Name="ShowIndexCheckBox"
+                          Margin="2"
+                          Content="Show Navi Index"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=ShowIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
             <Grid Grid.IsSharedSizeScope="True">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Group1" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="FlipViewSettingsLabel" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -120,72 +144,76 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <CheckBox x:Name="ShowBannerCheckBox"
-                          Grid.Row="0"
-                          Grid.Column="0"
-                          Margin="5 2"
-                          Content="Banner"
-                          IsChecked="{Binding ElementName=FlipView1st, Path=IsBannerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox x:Name="ShowMouseOverCheckBox"
-                          Grid.Row="0"
-                          Grid.Column="1"
-                          Margin="5 2"
-                          Content="MouseOver Border"
-                          IsChecked="{Binding ElementName=FlipView1st, Path=MouseHoverBorderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox x:Name="CircularNaviCheckBox"
-                          Grid.Row="1"
-                          Grid.Column="0"
-                          Margin="5 2"
-                          Content="Circular Navi"
-                          IsChecked="{Binding ElementName=FlipView1st, Path=CircularNavigation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <CheckBox x:Name="ShowNaviCheckBox"
-                          Grid.Row="1"
-                          Grid.Column="1"
-                          Margin="5 2"
-                          Content="Show NaviButtons"
-                          IsChecked="{Binding ElementName=FlipView1st, Path=IsNavigationEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Content="Navigation Button Orientation" />
                 <ComboBox x:Name="Orientation"
-                          Grid.Row="2"
-                          Grid.Column="0"
-                          Grid.ColumnSpan="1"
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
-                          SelectedValue="{Binding ElementName=FlipView1st, Path=Orientation, FallbackValue=Horizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=Orientation, FallbackValue={x:Static Orientation.Horizontal}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="Navigation Button Position" />
                 <ComboBox x:Name="NaviButtonsPosition"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:NavigationButtonsPosition}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=NavigationButtonsPosition, FallbackValue={x:Static mah:NavigationButtonsPosition.Inside}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Content="Navigation Index Placement" />
+                <ComboBox x:Name="IndexPlacement"
                           Grid.Row="2"
                           Grid.Column="1"
-                          Grid.ColumnSpan="1"
-                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:NavigationButtonsPosition}}, Mode=OneTime}"
-                          SelectedValue="{Binding ElementName=FlipView1st, Path=NavigationButtonsPosition, FallbackValue=Inside, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:NavigationIndexPlacement}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=IndexPlacement, FallbackValue={x:Static mah:NavigationIndexPlacement.Bottom}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
+
             <mah:FlipView x:Name="FlipView1st"
                           Height="200"
                           Margin="0 0 5 0"
                           Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                          SelectionChanged="FlipView_SelectionChanged">
+                          IndexHorizontalAlignment="Right"
+                          IndexPlacement="TopOverItem"
+                          ShowIndex="True">
                 <mah:FlipView.Items>
-                    <Grid Background="#2E8DEF">
+                    <mah:FlipViewItem Background="#2E8DEF"
+                                      BannerText="Cupcakes!"
+                                      BorderBrush="Black"
+                                      BorderThickness="1">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Kind="FoodCupcake" />
-                    </Grid>
-                    <Grid Background="#00A600">
+                    </mah:FlipViewItem>
+                    <mah:FlipViewItem Background="#00A600" BannerText="XBox!">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Kind="Xbox" />
-                    </Grid>
-                    <Grid Background="#BF1E4B">
+                    </mah:FlipViewItem>
+                    <mah:FlipViewItem Background="#BF1E4B" BannerText="Chess!">
                         <iconPacks:PackIconModern Width="60"
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   Kind="ChessHorse" />
-                    </Grid>
+                    </mah:FlipViewItem>
                 </mah:FlipView.Items>
             </mah:FlipView>
+
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView1st, Mode=OneWay}"
                         Orientation="Horizontal">
@@ -202,18 +230,18 @@
             </StackPanel>
 
             <Separator Margin="0 5" />
+
             <mah:FlipView x:Name="FlipView2nd"
                           Height="300"
                           Margin="0 0 5 0"
-                          BannerText="Databound Items"
-                          CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
-                          IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
-                          IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                          IndexPlacement="BottomOverItem"
+                          IsBannerEnabled="False"
+                          IsNavigationEnabled="False"
                           ItemTemplate="{StaticResource ImageDataTemplate}"
                           ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
                           MouseHoverBorderEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
-                          NavigationButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}"
-                          Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
+                          Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
+                          ShowIndex="True" />
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">
