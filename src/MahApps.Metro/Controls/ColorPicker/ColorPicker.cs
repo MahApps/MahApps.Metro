@@ -758,9 +758,6 @@ namespace MahApps.Metro.Controls
         {
             base.OnSelectedColorChanged(newValue, oldValue);
 
-            // Set color is Updating again
-            this.ColorIsUpdating = true;
-
             this.PART_ColorPaletteAvailable?.SetCurrentValue(Selector.SelectedValueProperty, newValue);
             this.PART_ColorPaletteStandard?.SetCurrentValue(Selector.SelectedValueProperty, newValue);
             this.PART_ColorPaletteCustom01?.SetCurrentValue(Selector.SelectedValueProperty, newValue);
@@ -771,8 +768,6 @@ namespace MahApps.Metro.Controls
             {
                 BuildInColorPalettes.AddColorToRecentColors(newValue, this.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(this));
             }
-
-            this.ColorIsUpdating = false;
         }
 
         private void ColorPalette_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -841,10 +836,7 @@ namespace MahApps.Metro.Controls
 
                     if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
                     {
-                        // We Update something so we need to flag this
-                        colorPicker.ColorIsUpdating = true;
                         BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker));
-                        colorPicker.ColorIsUpdating = false;
                     }
                 }
             }
