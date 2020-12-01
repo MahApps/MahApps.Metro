@@ -84,6 +84,12 @@
                 <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
             </Style>
 
+            <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown"
+                   BasedOn="{StaticResource MahApps.Styles.ColorPalette}"
+                   TargetType="{x:Type mah:ColorPalette}">
+                <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
