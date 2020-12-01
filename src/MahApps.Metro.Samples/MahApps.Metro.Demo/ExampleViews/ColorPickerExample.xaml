@@ -24,7 +24,7 @@
             </GroupBox>
 
             <GroupBox Margin="5 5 5 0" Header="Color Canvas">
-                <mah:ColorCanvas x:Name="ColorCanvasExample" SelectedColor="Blue" />
+                <mah:ColorCanvas x:Name="ColorCanvasExample" DefaultColor="{DynamicResource MahApps.Colors.AccentBase}" />
             </GroupBox>
 
             <GroupBox Margin="5" Header="Color Picker">

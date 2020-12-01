@@ -22,14 +22,26 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(SelectedColor),
                                           typeof(Color?),
                                           typeof(ColorPickerBase),
-                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorPropertyChanged));
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorPropertyChanged, CoerceSelectedColorProperty));
 
         private static void OnSelectedColorPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
+            if (dependencyObject is ColorPickerBase colorPicker && e.OldValue != e.NewValue && !colorPicker.ColorIsUpdating)
+            {
+                colorPicker.ColorIsUpdating = true;
+                colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color? ?? colorPicker.DefaultColor);
+                colorPicker.ColorIsUpdating = false;
+            }
+        }
+
+        private static object CoerceSelectedColorProperty(DependencyObject dependencyObject, object basevalue)
+        {
             if (dependencyObject is ColorPickerBase colorPicker)
             {
-                colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color?);
+                basevalue ??= colorPicker.DefaultColor;
             }
+
+            return basevalue;
         }
 
         /// <summary>
@@ -46,7 +58,15 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(DefaultColor),
                                           typeof(Color?),
                                           typeof(ColorPickerBase),
-                                          new FrameworkPropertyMetadata(null, OnSelectedColorPropertyChanged));
+                                          new FrameworkPropertyMetadata(null, OnDefaultColorPropertyChanged));
+
+        private static void OnDefaultColorPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is ColorPickerBase colorPicker && e.OldValue != e.NewValue)
+            {
+                colorPicker.SetCurrentValue(SelectedColorProperty, e.NewValue ?? colorPicker.SelectedColor);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a default selected <see cref="Color"/>
@@ -411,25 +431,12 @@ namespace MahApps.Metro.Controls
 
         internal virtual void OnSelectedColorChanged(Color? oldValue, Color? newValue)
         {
-            // don't do a second update
-            if (this.ColorIsUpdating)
-            {
-                return;
-            }
-
-            this.ColorIsUpdating = true;
-
-            if (this.SelectedColor == null && this.DefaultColor != null)
-            {
-                this.SetCurrentValue(SelectedColorProperty, this.DefaultColor);
-            }
-
-            this.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(this.SelectedColor, this.ColorNamesDictionary));
+            this.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(newValue, this.ColorNamesDictionary));
 
             // We just update the following lines if we have a Color.
-            if (this.SelectedColor != null)
+            if (newValue != null)
             {
-                var color = (Color)this.SelectedColor;
+                var color = (Color)newValue;
 
                 if (this.UpdateHsvValues)
                 {
@@ -446,8 +453,6 @@ namespace MahApps.Metro.Controls
                 this.SetCurrentValue(GProperty, color.G);
                 this.SetCurrentValue(BProperty, color.B);
             }
-
-            this.ColorIsUpdating = false;
 
             this.RaiseEvent(new RoutedPropertyChangedEventArgs<Color?>(oldValue, newValue, SelectedColorChangedEvent));
         }
