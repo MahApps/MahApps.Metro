@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
@@ -173,5 +173,7 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
     </Style>
+
+    <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown" BasedOn="{StaticResource MahApps.Styles.ColorPalette}" TargetType="{x:Type mah:ColorPalette}" />
 
 </ResourceDictionary>
