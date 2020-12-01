@@ -58,6 +58,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
         [AttachedPropertyBrowsableForType(typeof(SplitButton))]
         [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static CharacterCasing GetContentCharacterCasing(UIElement element)
         {
             return (CharacterCasing)element.GetValue(ContentCharacterCasingProperty);
