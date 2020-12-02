@@ -25,11 +25,14 @@
 
     <!-- Items include -->
     <ItemGroup>
+        <None Include="**/Generic.txt" />
+        <None Include="**/Generic.Common.xaml" />
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
         <None Remove="Assets\Eyedropper.cur" />
         <Resource Include="Assets\Eyedropper.cur" />
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
+        <UpToDateCheckInput Include="**/*.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -46,14 +49,13 @@
 
     <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
         <PropertyGroup>
-            <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
-            <!-- <XamlCombinePath>C:/DEV/OSS_Own/FluentRibbon/XamlCombine/bin/Debug/netcoreapp3.0/XamlCombine.exe</XamlCombinePath> -->
-        </PropertyGroup>       
+            <XamlCombinePath>$(MSBuildProjectDirectory)/../../XamlCombine/XamlCombine.exe</XamlCombinePath>
+        </PropertyGroup>
         <!-- Generate theme files -->
         <Message Text="$(XamlColorSchemeGeneratorExecutable)" />
         <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
         <!-- Combine xaml files -->
-        <!-- <Exec Command="&quot;$(XamlCombinePath)&quot; &quot;Styles.txt&quot; &quot;Styles.xaml&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Themes" /> -->
+        <Exec Command="&quot;$(XamlCombinePath)&quot; &quot;$(MSBuildProjectDirectory)/Themes/Generic.txt&quot; &quot;$(MSBuildProjectDirectory)/Themes/Generic.xaml&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Themes" />
     </Target>
 
     <!-- <ItemGroup> -->
