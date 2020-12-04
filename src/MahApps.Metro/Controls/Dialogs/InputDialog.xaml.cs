@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -11,6 +12,8 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public partial class InputDialog : BaseMetroDialog
     {
+        private CancellationTokenRegistration cancellationTokenRegistration;
+
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
 
@@ -81,15 +84,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = null;
-
-            var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
-                {
-                    cleanUpHandlers();
-                    tcs.TrySetResult(null);
-                });
-
-            cleanUpHandlers = () =>
+            Action cleanUpHandlers = () =>
                 {
                     this.PART_TextBox.KeyDown -= affirmativeKeyHandler;
 
@@ -101,8 +96,19 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.PART_NegativeButton.KeyDown -= negativeKeyHandler;
                     this.PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
 
-                    cancellationTokenRegistration.Dispose();
+                    this.cancellationTokenRegistration.Dispose();
                 };
+
+            this.cancellationTokenRegistration = this.DialogSettings
+                                                     .CancellationToken
+                                                     .Register(() =>
+                                                         {
+                                                             this.BeginInvoke(() =>
+                                                                 {
+                                                                     cleanUpHandlers();
+                                                                     tcs.TrySetResult(null);
+                                                                 });
+                                                         });
 
             escapeKeyHandler = (sender, e) =>
                 {
