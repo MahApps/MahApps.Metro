@@ -51,11 +51,11 @@ namespace MahApps.Metro.Controls
             if (recentColors is ObservableCollection<Color?> collection)
             {
                 var oldIndex = collection.IndexOf(color);
-                if (oldIndex > -1)
+                if (oldIndex > 0)
                 {
                     collection.Move(oldIndex, 0);
                 }
-                else
+                else if (oldIndex < 0)
                 {
                     if (collection.Count >= maxCount)
                     {
