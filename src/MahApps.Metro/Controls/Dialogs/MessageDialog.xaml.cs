@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         private const string ACCENT_BUTTON_STYLE = "MahApps.Styles.Button.Dialogs.Accent";
         private const string ACCENT_HIGHLIGHT_BUTTON_STYLE = "MahApps.Styles.Button.Dialogs.AccentHighlight";
+        private CancellationTokenRegistration cancellationTokenRegistration;
 
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
@@ -136,7 +138,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
                 }));
 
-            TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
+            var tcs = new TaskCompletionSource<MessageDialogResult>();
 
             RoutedEventHandler negativeHandler = null;
             KeyEventHandler negativeKeyHandler = null;
@@ -152,15 +154,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = null;
-
-            var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
-                {
-                    cleanUpHandlers?.Invoke();
-                    tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
-                });
-
-            cleanUpHandlers = () =>
+            Action cleanUpHandlers = () =>
                 {
                     this.PART_NegativeButton.Click -= negativeHandler;
                     this.PART_AffirmativeButton.Click -= affirmativeHandler;
@@ -174,8 +168,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
                     this.KeyDown -= escapeKeyHandler;
 
-                    cancellationTokenRegistration.Dispose();
+                    this.cancellationTokenRegistration.Dispose();
                 };
+
+            this.cancellationTokenRegistration = this.DialogSettings
+                                                     .CancellationToken
+                                                     .Register(() =>
+                                                         {
+                                                             this.BeginInvoke(() =>
+                                                                 {
+                                                                     cleanUpHandlers();
+                                                                     tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                                                                 });
+                                                         });
 
             negativeKeyHandler = (sender, e) =>
                 {
