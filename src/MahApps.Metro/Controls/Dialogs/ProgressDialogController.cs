@@ -47,18 +47,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
             this.WrappedDialog.Invoke(() => { this.WrappedDialog.PART_NegativeButton.Click += this.PART_NegativeButton_Click; });
 
-            dialog.CancellationToken.Register(() => { this.PART_NegativeButton_Click(null, new RoutedEventArgs()); });
+            dialog.CancellationToken.Register(() => { this.WrappedDialog.BeginInvoke(this.Abort); });
         }
 
         private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
         {
-            Action action = () =>
-                {
-                    this.IsCanceled = true;
-                    this.Canceled?.Invoke(this, EventArgs.Empty);
-                    this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                };
-            this.WrappedDialog.Invoke(action);
+            this.WrappedDialog.Invoke(this.Abort);
+        }
+
+        private void Abort()
+        {
+            this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
+            this.IsCanceled = true;
+            this.Canceled?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
