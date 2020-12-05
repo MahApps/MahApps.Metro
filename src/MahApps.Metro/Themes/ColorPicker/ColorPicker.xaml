@@ -2,15 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controlzex="urn:controlzex"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <system:Double x:Key="MahApps.Sizes.ColorListBox.ItemWidth">16</system:Double>
-    <system:Double x:Key="MahApps.Sizes.ColorListBox.ItemHeight">16</system:Double>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -46,6 +42,7 @@
 
     <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorOnly">
         <Border x:Name="Border"
+                Width="{DynamicResource MahApps.Sizes.ColorListBox.ItemWidth}"
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
