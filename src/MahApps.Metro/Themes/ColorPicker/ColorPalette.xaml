@@ -14,7 +14,6 @@
     <Style x:Key="MahApps.Styles.ListBoxItem.ColorPaletteItem"
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
            TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="MinHeight" Value="1" />
