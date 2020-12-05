@@ -7,7 +7,7 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     mc:Ignorable="po d">
 
-    <Cursor x:Key="MahApps.Cursors.EyeDropper">../../Assets/Eyedropper.cur</Cursor>
+    <Cursor x:Key="MahApps.Cursors.EyeDropper">pack://application:,,,/MahApps.Metro;component/Assets/Eyedropper.cur</Cursor>
 
     <Style x:Key="MahApps.Styles.ColorEyeDropper"
            BasedOn="{StaticResource {x:Type Button}}"
