@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.MultiSelectionComboBoxExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
+        <Style TargetType="GroupBox" BasedOn="{StaticResource MahApps.Styles.GroupBox}">
+            <Setter Property="Margin" Value="5,5,5,0" />
+        </Style>
+
+        <ObjectDataProvider x:Key="Demo.Enums.OrderSelectedItemsBy" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mah:OrderSelectedItemsBy" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="Demo.Enums.SelectionMode" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="SelectionMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="250" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" MinWidth="50"/>
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer Grid.Column="0" Grid.IsSharedSizeScope="True" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="Text">
+                    <StackPanel>
+                        <mah:MetroHeader Header="Text">
+                            <TextBox Text="{Binding ElementName=mscb_Example, Path=Text}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Separator">
+                            <TextBox Text="{Binding ElementName=mscb_Example, Path=Separator}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="IsEditable">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=IsEditable}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="IsReadOnly">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=IsReadOnly}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="MahApps Helper">
+                    <StackPanel>
+                        <mah:MetroHeader Header="Watermark">
+                            <TextBox Text="{Binding ElementName=mscb_Example, Path=(mah:TextBoxHelper.Watermark)}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="UseFloatingWatermark">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:TextBoxHelper.UseFloatingWatermark)}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="AutoWatermark">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:TextBoxHelper.AutoWatermark)}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="ClearTextButton">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:TextBoxHelper.ClearTextButton)}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Selection">
+                    <StackPanel>
+                        <mah:MetroHeader Header="SelectionMode">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=SelectionMode}" ItemsSource="{Binding Source={StaticResource Demo.Enums.SelectionMode}}"/>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="OrderSelectedItemsBy">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}"/>
+                        </mah:MetroHeader>
+                        
+                        <mah:MetroHeader Header="DisplayMemberPath">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=DisplayMemberPath}" mah:TextBoxHelper.ClearTextButton="True">
+                                <system:String>Title</system:String>
+                                <system:String>Artist</system:String>
+                                <system:String>Genre</system:String>
+                            </ComboBox>
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="1"
+                      Width="3"
+                      VerticalAlignment="Stretch" />
+
+        <GroupBox Grid.Column="2" Header="Result">
+            <Grid>
+                <mah:MultiSelectionComboBox x:Name="mscb_Example"
+                                            Margin="5"
+                                            VerticalAlignment="Center"
+                                            Separator=", "
+                                            SelectedItemsTemplate="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.Removeable}"
+                                            TextWrapping="Wrap"
+                                            SelectedItem="{Binding MultiSelectionComboBoxSelectedAlbum}"
+                                            ItemsSource="{Binding Albums}" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

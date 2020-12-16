@@ -80,8 +80,7 @@
                 <Setter Property="Header" Value="{Binding Mode=OneTime}" />
             </Style>
 
-            <UserControl x:Key="CustomDialogTest"
-                         x:Name="CustomDialogTest"
+            <UserControl x:Key="CustomDialogTest" x:Name="CustomDialogTest"
                          MinHeight="200">
 
                 <TextBlock x:Name="MessageTextBlock" Text="Message shown by this custom Dialog." />
@@ -91,12 +90,12 @@
             <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
-                    <TextBlock Height="30"
-                               Margin="0 4"
-                               Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                    <TextBlock Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                               Height="30"
+                               Margin="0,4"
                                TextWrapping="Wrap" />
-                    <Button Click="CloseCustomDialog"
-                            Content="Close Me!"
+                    <Button Content="Close Me!"
+                            Click="CloseCustomDialog"
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
@@ -117,23 +116,23 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">
-            <Button Click="LaunchFlyoutDemo"
-                    Content="Flyouts"
+            <Button Content="Flyouts"
+                    Click="LaunchFlyoutDemo"
                     ToolTip="Flyouts demo window" />
-            <Button Click="LaunchIcons"
-                    Content="IconPacks"
+            <Button Content="IconPacks"
+                    Click="LaunchIcons"
                     ToolTip="All MahApp icons" />
-            <Button Click="LaunchVisualStudioDemo"
-                    Content="VS"
+            <Button Content="VS"
+                    Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo" />
-            <Button Click="LauchCleanDemo"
-                    Content="Clean"
+            <Button Content="Clean"
+                    Click="LauchCleanDemo"
                     ToolTip="Clean window style demo" />
-            <Button Click="InteropDemo"
-                    Content="Interop"
+            <Button Content="Interop"
+                    Click="InteropDemo"
                     ToolTip="The interop demo" />
-            <Button Click="LaunchNavigationDemo"
-                    Content="Navigation"
+            <Button Content="Navigation"
+                    Click="LaunchNavigationDemo"
                     ToolTip="Window navigation demo" />
             <ToggleButton Content="Confirm quit"
                           IsChecked="{Binding QuitConfirmationEnabled}"
@@ -196,12 +195,12 @@
                 <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
                 <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
                 <MenuItem Header="Show MessageDialog via VM">
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
-                              CommandParameter="DISPATCHER_THREAD"
-                              Header="... from Main Thread" />
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
-                              CommandParameter="BACKGROUND_THREAD"
-                              Header="... from Background Thread" />
+                    <MenuItem Header="... from Main Thread"
+                              Command="{Binding ShowMessageDialogCommand}"
+                              CommandParameter="DISPATCHER_THREAD" />
+                    <MenuItem Header="... from Background Thread"
+                              Command="{Binding ShowMessageDialogCommand}"
+                              CommandParameter="BACKGROUND_THREAD" />
                 </MenuItem>
 
                 <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
@@ -230,8 +229,7 @@
                 <MenuItem Click="MenuWindowWithShadowOnClick" Header="Window with drop shadow" />
                 <MenuItem Click="LaunchSizeToContentDemo" Header="Window with SizeToContent" />
                 <Separator />
-                <MenuItem x:Name="ShowSeparatorsMI"
-                          Header="ShowSeparators (RightWindowCommands)"
+                <MenuItem x:Name="ShowSeparatorsMI" Header="ShowSeparators (RightWindowCommands)"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=RightWindowCommands.ShowSeparators}" />
                 <MenuItem Header="ShowLastSeparator in (RightWindowCommands)"
@@ -239,14 +237,14 @@
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}"
                           IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}" />
                 <Separator />
-                <MenuItem Command="{Binding ToggleIconScalingCommand}"
+                <MenuItem Header="Window icon: scale down larger frame"
+                          Command="{Binding ToggleIconScalingCommand}"
                           CommandParameter="{x:Static mah:MultiFrameImageMode.ScaleDownLargerFrame}"
-                          Header="Window icon: scale down larger frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsScaleDownLargerFrame, Mode=OneWay}" />
-                <MenuItem Command="{Binding ToggleIconScalingCommand}"
+                <MenuItem Header="Window icon: no scale, smaller frame"
+                          Command="{Binding ToggleIconScalingCommand}"
                           CommandParameter="{x:Static mah:MultiFrameImageMode.NoScaleSmallerFrame}"
-                          Header="Window icon: no scale, smaller frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
                 <Separator />
@@ -330,6 +328,10 @@
 
             <TabItem Header="ColorPicker">
                 <exampleViews:ColorPickerExample />
+            </TabItem>
+
+            <TabItem Header="MultiSelectionComboBox">
+                <exampleViews:MultiSelectionComboBoxExample/>
             </TabItem>
 
             <TabItem Header="others">

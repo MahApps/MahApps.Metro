@@ -30,5 +30,10 @@ namespace MetroDemo.Models
             get => this._albums;
             set => this.Set(ref this._albums, value);
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

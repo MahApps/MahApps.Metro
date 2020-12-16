@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using MetroDemo.Core;
 
@@ -73,6 +74,12 @@ namespace MetroDemo.Models
             get => this._artist;
             set => this.Set(ref this._artist, value);
         }
+
+        public override string ToString()
+        {
+            return $"{Artist}: {Title} ({Price.ToString("C")})";
+        }
+
     }
 
     public static class SampleData

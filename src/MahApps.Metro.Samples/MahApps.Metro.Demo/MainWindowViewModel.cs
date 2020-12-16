@@ -256,7 +256,16 @@ namespace MetroDemo
 
         public int SelectedIndex { get; set; }
 
+
         public ICollection<Album> Albums { get; set; }
+
+        private Album _MultiSelectionComboBoxSelectedAlbum;
+        [Display(Prompt = "Select an Album")]
+        public Album MultiSelectionComboBoxSelectedAlbum
+        {
+            get { return _MultiSelectionComboBoxSelectedAlbum; }
+            set { _MultiSelectionComboBoxSelectedAlbum = value; OnPropertyChanged(nameof(MultiSelectionComboBoxSelectedAlbum)); }
+        }
 
         public List<Artist>? Artists { get; set; }
 
