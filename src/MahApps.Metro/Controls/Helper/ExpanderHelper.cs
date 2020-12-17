@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
@@ -15,6 +16,10 @@ namespace MahApps.Metro.Controls
     /// A helper class that provides various attached properties for the Expander control.
     /// <see cref="Expander"/>
     /// </summary>
+    [StyleTypedProperty(Property = "HeaderUpStyle", StyleTargetType = typeof(ToggleButton))]
+    [StyleTypedProperty(Property = "HeaderDownStyle", StyleTargetType = typeof(ToggleButton))]
+    [StyleTypedProperty(Property = "HeaderLeftStyle", StyleTargetType = typeof(ToggleButton))]
+    [StyleTypedProperty(Property = "HeaderRightStyle", StyleTargetType = typeof(ToggleButton))]
     public static class ExpanderHelper
     {
         public static readonly DependencyProperty HeaderUpStyleProperty = DependencyProperty.RegisterAttached("HeaderUpStyle", typeof(Style), typeof(ExpanderHelper), new FrameworkPropertyMetadata((Style)null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));

@@ -5,9 +5,11 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
+    [StyleTypedProperty(Property = "ToggleButtonStyle", StyleTargetType = typeof(ToggleButton))]
     public static class TreeViewItemHelper
     {
         public static readonly DependencyProperty ToggleButtonStyleProperty

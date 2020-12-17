@@ -12,6 +12,8 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// A ContentControl which use a transition to slide in the content.
     /// </summary>
+    [TemplatePart(Name = "AfterLoadedStoryboard", Type = typeof(Storyboard))]
+    [TemplatePart(Name = "AfterLoadedReverseStoryboard", Type = typeof(Storyboard))]
     public class MetroContentControl : ContentControl
     {
         private Storyboard afterLoadedStoryboard;

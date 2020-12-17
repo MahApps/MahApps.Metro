@@ -155,7 +155,7 @@ namespace MahApps.Metro.Behaviors
 
         private static Behavior GetOriginalBehavior(DependencyObject obj)
         {
-            return obj.GetValue(OriginalBehaviorProperty) as Behavior;
+            return (Behavior)obj.GetValue(OriginalBehaviorProperty);
         }
 
         private static void SetOriginalBehavior(DependencyObject obj, Behavior value)

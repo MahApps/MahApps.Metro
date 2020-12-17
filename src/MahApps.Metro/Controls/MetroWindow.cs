@@ -46,6 +46,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_MetroActiveDialogContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MetroInactiveDialogsContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_FlyoutModal, Type = typeof(Rectangle))]
+    [TemplatePart(Name = PART_Content, Type = typeof(MetroContentControl))]
     public class MetroWindow : Window
     {
         private const string PART_Icon = "PART_Icon";

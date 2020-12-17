@@ -60,6 +60,8 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// A ContentControl that animates content as it loads and unloads.
     /// </summary>
+    [TemplatePart(Name = PreviousContentPresentationSitePartName, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = CurrentContentPresentationSitePartName, Type = typeof(ContentPresenter))]
     public class TransitioningContentControl : ContentControl
     {
         internal const string PresentationGroup = "PresentationStates";

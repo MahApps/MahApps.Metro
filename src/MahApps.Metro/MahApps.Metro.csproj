@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -7,6 +7,7 @@
         <RootNamespace>MahApps.Metro</RootNamespace>
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
