@@ -102,7 +102,7 @@ namespace MetroDemo
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, (sender, e) => this.OnHotKey(sender, e));
+                HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, async (sender, e) => await this.OnHotKey(sender, e));
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
