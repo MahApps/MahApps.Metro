@@ -30,11 +30,11 @@ namespace MetroDemo
 {
     public class AccentColorMenuData
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public Brush BorderColorBrush { get; set; }
+        public Brush? BorderColorBrush { get; set; }
 
-        public Brush ColorBrush { get; set; }
+        public Brush? ColorBrush { get; set; }
 
         public AccentColorMenuData()
         {
@@ -45,7 +45,10 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
+            if (this.Name is not null)
+            {
+                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
+            }
         }
     }
 
@@ -53,7 +56,10 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
+            if (this.Name is not null)
+            {
+                ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
+            }
         }
     }
 
@@ -102,7 +108,10 @@ namespace MetroDemo
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, async (sender, e) => await this.OnHotKey(sender, e));
+                if (this.HotKey is not null)
+                {
+                    HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, async (sender, e) => await this.OnHotKey(sender, e));
+                }
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
@@ -174,7 +183,7 @@ namespace MetroDemo
 
             this.ToggleIconScalingCommand = new SimpleCommand(o => true, this.ToggleIconScaling);
 
-            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => (o as Flyout).IsOpen = !(o as Flyout).IsOpen);
+            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => ((Flyout)o).IsOpen = !((Flyout)o).IsOpen);
 
             this.ArtistsDropDownCommand = new SimpleCommand(o => false);
 
@@ -239,11 +248,11 @@ namespace MetroDemo
 
         public ICollection<Album> Albums { get; set; }
 
-        public List<Artist> Artists { get; set; }
+        public List<Artist>? Artists { get; set; }
 
-        private ObservableCollection<Artist> _selectedArtists = new ObservableCollection<Artist>();
+        private ObservableCollection<Artist>? _selectedArtists = new ObservableCollection<Artist>();
 
-        public ObservableCollection<Artist> SelectedArtists
+        public ObservableCollection<Artist>? SelectedArtists
         {
             get => _selectedArtists;
             set => Set(ref _selectedArtists, value);
@@ -255,9 +264,9 @@ namespace MetroDemo
 
         public List<CultureInfo> CultureInfos { get; set; }
 
-        private CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        private CultureInfo? currentCulture = CultureInfo.CurrentCulture;
 
-        public CultureInfo CurrentCulture
+        public CultureInfo? CurrentCulture
         {
             get => this.currentCulture;
             set => this.Set(ref this.currentCulture, value);
@@ -334,7 +343,7 @@ namespace MetroDemo
 
         public ICommand TextBoxButtonCmdWithParameter { get; }
 
-        public string this[string columnName]
+        public string? this[string columnName]
         {
             get
             {
@@ -453,12 +462,17 @@ namespace MetroDemo
             {
                 var theme = ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
 
+                if (theme is null)
+                {
+                    return Enumerable.Empty<string>();
+                }
+
                 var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
 
                 var brushResources = resources.Keys
                                               .Cast<object>()
                                               .Where(key => resources[key] is SolidColorBrush)
-                                              .Select(key => key.ToString())
+                                              .Select(key => key.ToString()!)
                                               .OrderBy(s => s)
                                               .ToList();
 
@@ -472,17 +486,17 @@ namespace MetroDemo
 
         public class RandomDataTemplateSelector : DataTemplateSelector
         {
-            public DataTemplate TemplateOne { get; set; }
+            public DataTemplate? TemplateOne { get; set; }
 
-            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            public override DataTemplate? SelectTemplate(object item, DependencyObject container)
             {
                 return this.TemplateOne;
             }
         }
 
-        private HotKey _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
+        private HotKey? _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
 
-        public HotKey HotKey
+        public HotKey? HotKey
         {
             get => this._hotKey;
             set
@@ -501,7 +515,7 @@ namespace MetroDemo
             }
         }
 
-        private async Task OnHotKey(object sender, HotkeyEventArgs e)
+        private async Task OnHotKey(object? sender, HotkeyEventArgs e)
         {
             await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
                 "Hotkey pressed",

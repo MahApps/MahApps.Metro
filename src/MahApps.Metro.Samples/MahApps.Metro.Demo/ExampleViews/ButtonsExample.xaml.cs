@@ -26,7 +26,7 @@ namespace MetroDemo.ExampleViews
                 this.CountingBadge.Badge = 0;
             }
 
-            var next = int.Parse(this.CountingBadge.Badge.ToString()) + 1;
+            var next = int.Parse(this.CountingBadge.Badge.ToString()!) + 1;
             this.CountingBadge.Badge = next < 43 ? (object)next : null;
         }
 

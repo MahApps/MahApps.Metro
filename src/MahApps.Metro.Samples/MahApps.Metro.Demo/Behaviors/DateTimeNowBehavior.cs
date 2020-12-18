@@ -11,7 +11,7 @@ namespace MetroDemo.Behaviors
 {
     public class DateTimeNowBehavior : Behavior<DateTimePicker>
     {
-        private DispatcherTimer _dispatcherTimer;
+        private DispatcherTimer? _dispatcherTimer;
 
         protected override void OnAttached()
         {
@@ -25,7 +25,7 @@ namespace MetroDemo.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            _dispatcherTimer.Stop();
+            _dispatcherTimer?.Stop();
         }
     }
 }

@@ -12,13 +12,13 @@ namespace MetroDemo.Markup
     /// </summary>
     public class EnumBindingSourceExtension : MarkupExtension
     {
-        private Type enumType;
+        private Type? enumType;
 
         /// <summary>
         /// Gets or sets the type of the Enum.
         /// </summary>
         /// <exception cref="ArgumentException">Value is not an Enum type.</exception>
-        public Type EnumType
+        public Type? EnumType
         {
             get => this.enumType;
             set

@@ -20,7 +20,7 @@ namespace MetroDemo.ExampleViews
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
         }
 
-        void Tick(object sender, EventArgs e)
+        void Tick(object? sender, EventArgs e)
         {
             if (this.IsVisible == false)
             {

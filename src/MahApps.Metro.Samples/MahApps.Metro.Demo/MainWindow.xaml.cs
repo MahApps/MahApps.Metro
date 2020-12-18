@@ -18,7 +18,7 @@ namespace MetroDemo
     {
         private bool _shutdown;
         private readonly MainWindowViewModel _viewModel;
-        private FlyoutDemo flyoutDemo;
+        private FlyoutDemo? flyoutDemo;
 
         public MainWindow()
         {
@@ -78,7 +78,7 @@ namespace MetroDemo
             {
                 var window = (MainWindow)dependencyObject;
                 var useAccentForDialogs = (bool)e.NewValue;
-                window.MetroDialogOptions.ColorScheme = useAccentForDialogs ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+                window.MetroDialogOptions!.ColorScheme = useAccentForDialogs ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
             }
         }
 
@@ -125,7 +125,7 @@ namespace MetroDemo
                           });
         }
 
-        private Window cleanWindowDemo;
+        private Window? cleanWindowDemo;
 
         private void LauchCleanDemo(object sender, RoutedEventArgs e)
         {
@@ -143,7 +143,7 @@ namespace MetroDemo
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
-            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
+            var dialog = new CustomDialog(this.MetroDialogOptions!) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
             dialog = dialog.ShowDialogExternally();
 
             await Task.Delay(5000);
@@ -160,7 +160,7 @@ namespace MetroDemo
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",
                                  FirstAuxiliaryButtonText = "Cancel",
-                                 ColorScheme = MetroDialogOptions.ColorScheme,
+                                 ColorScheme = MetroDialogOptions!.ColorScheme,
                                  DialogButtonFontSize = 20D
                              };
 
@@ -182,7 +182,7 @@ namespace MetroDemo
                                  NegativeButtonText = "Go away!",
                                  FirstAuxiliaryButtonText = "Cancel",
                                  MaximumBodyHeight = 100,
-                                 ColorScheme = MetroDialogOptions.ColorScheme
+                                 ColorScheme = MetroDialogOptions!.ColorScheme
                              };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"),
@@ -202,11 +202,11 @@ namespace MetroDemo
             await this.ShowMetroDialogAsync(dialog);
 
             var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
-            textBlock.Text = "A message box will appear in 3 seconds.";
+            textBlock!.Text = "A message box will appear in 3 seconds.";
 
             await Task.Delay(3000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() { OwnerCanCloseWithDialog = true, ColorScheme = this.MetroDialogOptions.ColorScheme });
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() { OwnerCanCloseWithDialog = true, ColorScheme = this.MetroDialogOptions!.ColorScheme });
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await Task.Delay(2000);
@@ -216,7 +216,7 @@ namespace MetroDemo
 
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
-            EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogOpened = null;
+            EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogOpened = null;
             dialogManagerOnDialogOpened = (o, args) =>
                 {
                     DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
@@ -224,7 +224,7 @@ namespace MetroDemo
                 };
             DialogManager.DialogOpened += dialogManagerOnDialogOpened;
 
-            EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogClosed = null;
+            EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogClosed = null;
             dialogManagerOnDialogClosed = (o, args) =>
                 {
                     DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
@@ -240,7 +240,7 @@ namespace MetroDemo
 
         private async void CloseCustomDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = (sender as DependencyObject).TryFindParent<BaseMetroDialog>();
+            var dialog = ((DependencyObject)sender).TryFindParent<BaseMetroDialog>()!;
 
             await this.HideMetroDialogAsync(dialog);
             await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
@@ -248,7 +248,7 @@ namespace MetroDemo
 
         private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            var result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
             if (result == null)
             {
                 //User pressed cancel
@@ -261,7 +261,7 @@ namespace MetroDemo
 
         private async void ShowLoginDialogOnlyPassword(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, ShouldHideUsername = true });
+            var result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, ShouldHideUsername = true });
             if (result == null)
             {
                 //User pressed cancel
@@ -274,7 +274,7 @@ namespace MetroDemo
 
         private async void ShowLoginDialogWithRememberCheckBox(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, RememberCheckBoxVisibility = Visibility.Visible });
+            var result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, RememberCheckBoxVisibility = Visibility.Visible });
             if (result == null)
             {
                 //User pressed cancel
@@ -292,7 +292,7 @@ namespace MetroDemo
                                  NegativeButtonText = "Close now",
                                  AnimateShow = false,
                                  AnimateHide = false,
-                                 ColorScheme = this.MetroDialogOptions.ColorScheme
+                                 ColorScheme = this.MetroDialogOptions!.ColorScheme
                              };
 
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
@@ -355,7 +355,7 @@ namespace MetroDemo
 
         private async void ShowLoginDialog(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps" });
+            var result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, InitialUsername = "MahApps" });
             if (result == null)
             {
                 //User pressed cancel
@@ -429,7 +429,7 @@ namespace MetroDemo
             }
         }
 
-        private MetroWindow testWindow;
+        private MetroWindow? testWindow;
 
         private MetroWindow GetTestWindow()
         {
@@ -497,7 +497,7 @@ namespace MetroDemo
 
         private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            var result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
             if (result == null)
             {
                 //User pressed cancel
@@ -515,7 +515,7 @@ namespace MetroDemo
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",
                                  FirstAuxiliaryButtonText = "Cancel",
-                                 ColorScheme = MetroDialogOptions.ColorScheme
+                                 ColorScheme = MetroDialogOptions!.ColorScheme
                              };
 
             MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",

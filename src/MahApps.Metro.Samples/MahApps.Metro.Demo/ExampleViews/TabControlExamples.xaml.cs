@@ -23,7 +23,9 @@ namespace MetroDemo.ExampleViews
 
         private void MetroTabControl_TabItemClosingEvent(object sender, BaseMetroTabControl.TabItemClosingEventArgs e)
         {
-            if (e.ClosingTabItem.Header.ToString().StartsWith("sizes"))
+            var headerString = e.ClosingTabItem.Header?.ToString();
+            if (headerString is not null 
+                && headerString.StartsWith("sizes"))
             {
                 e.Cancel = true;
             }

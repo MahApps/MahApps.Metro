@@ -55,13 +55,13 @@ namespace MetroDemo.ExampleWindows
 
         internal class SuperDataTemplateSelector : DataTemplateSelector
         {
-            public DataTemplate FirstTemplate { get; set; }
+            public DataTemplate? FirstTemplate { get; set; }
 
-            public DataTemplate SecondTemplate { get; set; }
+            public DataTemplate? SecondTemplate { get; set; }
 
-            public DataTemplate NullTemplate { get; set; }
+            public DataTemplate? NullTemplate { get; set; }
 
-            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            public override DataTemplate? SelectTemplate(object? item, DependencyObject container)
             {
                 if (item == null)
                 {

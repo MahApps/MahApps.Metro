@@ -135,7 +135,7 @@ namespace MetroDemo.ExampleWindows
 
         private void ToggleFlyout(int index)
         {
-            var flyout = this.Flyouts.Items[index] as Flyout;
+            var flyout = this.Flyouts?.Items[index] as Flyout;
             if (flyout == null)
             {
                 return;
@@ -146,13 +146,13 @@ namespace MetroDemo.ExampleWindows
 
         private void ShowSettingsLeft(object sender, RoutedEventArgs e)
         {
-            var flyout = (Flyout)this.Flyouts.Items[6];
+            var flyout = (Flyout)this.Flyouts!.Items[6];
             flyout.Position = Position.Left;
         }
 
         private void ShowSettingsRight(object sender, RoutedEventArgs e)
         {
-            var flyout = (Flyout)this.Flyouts.Items[6];
+            var flyout = (Flyout)this.Flyouts!.Items[6];
             flyout.Position = Position.Right;
         }
 
@@ -164,7 +164,7 @@ namespace MetroDemo.ExampleWindows
                          };
 
             // when the flyout is closed, remove it from the hosting FlyoutsControl
-            RoutedEventHandler closingFinishedHandler = null;
+            RoutedEventHandler? closingFinishedHandler = null;
             closingFinishedHandler = (o, args) =>
                 {
                     flyout.ClosingFinished -= closingFinishedHandler;
