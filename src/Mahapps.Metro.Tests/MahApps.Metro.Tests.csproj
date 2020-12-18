@@ -6,7 +6,7 @@
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <Nullable>annotations</Nullable>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />

@@ -9,8 +9,6 @@
         <UseWindowsForms>true</UseWindowsForms>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>

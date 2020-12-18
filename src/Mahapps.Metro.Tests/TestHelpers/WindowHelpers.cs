@@ -15,7 +15,7 @@ namespace MahApps.Metro.Tests.TestHelpers
 {
     public static class WindowHelpers
     {
-        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T> changeAddiotionalProperties = null)
+        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? changeAddiotionalProperties = null)
             where T : Window, new()
         {
             var window = new T
@@ -49,12 +49,14 @@ namespace MahApps.Metro.Tests.TestHelpers
 
         public static void AssertWindowCommandsColor(this MetroWindow window, Color color)
         {
-            foreach (var element in window.RightWindowCommands.Items.OfType<Button>())
+            Assert.NotNull(window.RightWindowCommands);
+            
+            foreach (var element in window.RightWindowCommands!.Items.OfType<Button>())
             {
                 Assert.Equal(color, ((SolidColorBrush)element.Foreground).Color);
             }
 
-            Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
+            Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands!.Foreground).Color);
         }
     }
 }

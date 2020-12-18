@@ -16,7 +16,7 @@ namespace Caliburn.Metro.Demo
 {
     public class AppBootstrapper : BootstrapperBase
     {
-        private CompositionContainer container;
+        private CompositionContainer? container;
 
         public AppBootstrapper()
         {
@@ -25,7 +25,7 @@ namespace Caliburn.Metro.Demo
 
         protected override void BuildUp(object instance)
         {
-            this.container.SatisfyImportsOnce(instance);
+            this.container?.SatisfyImportsOnce(instance);
         }
 
         /// <summary>
@@ -49,17 +49,17 @@ namespace Caliburn.Metro.Demo
             this.container.Compose(batch);
         }
 
-        protected override IEnumerable<object> GetAllInstances(Type serviceType)
+        protected override IEnumerable<object>? GetAllInstances(Type serviceType)
         {
-            return this.container.GetExportedValues<object>(AttributedModelServices.GetContractName(serviceType));
+            return this.container?.GetExportedValues<object>(AttributedModelServices.GetContractName(serviceType));
         }
 
         protected override object GetInstance(Type serviceType, string key)
         {
             var contract = string.IsNullOrEmpty(key) ? AttributedModelServices.GetContractName(serviceType) : key;
-            var exports = this.container.GetExportedValues<object>(contract);
+            var exports = this.container?.GetExportedValues<object>(contract);
 
-            if (exports.Any())
+            if (exports?.Any() == true)
             {
                 return exports.First();
             }

@@ -9,12 +9,12 @@ namespace Caliburn.Metro.Demo.ViewModels
 {
     public abstract class FlyoutBaseViewModel : PropertyChangedBase
     {
-        private string header;
+        private string? header;
         private bool isOpen;
         private Position position;
         private FlyoutTheme theme = FlyoutTheme.Dark;
 
-        public string Header
+        public string? Header
         {
             get { return this.header; }
             set
