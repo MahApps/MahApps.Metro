@@ -38,9 +38,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current light style for the minimize button.
         /// </summary>
-        public Style LightMinButtonStyle
+        public Style? LightMinButtonStyle
         {
-            get => (Style)this.GetValue(LightMinButtonStyleProperty);
+            get => (Style?)this.GetValue(LightMinButtonStyleProperty);
             set => this.SetValue(LightMinButtonStyleProperty, value);
         }
 
@@ -54,9 +54,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current light style for the maximize button.
         /// </summary>
-        public Style LightMaxButtonStyle
+        public Style? LightMaxButtonStyle
         {
-            get => (Style)this.GetValue(LightMaxButtonStyleProperty);
+            get => (Style?)this.GetValue(LightMaxButtonStyleProperty);
             set => this.SetValue(LightMaxButtonStyleProperty, value);
         }
 
@@ -70,9 +70,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current light style for the close button.
         /// </summary>
-        public Style LightCloseButtonStyle
+        public Style? LightCloseButtonStyle
         {
-            get => (Style)this.GetValue(LightCloseButtonStyleProperty);
+            get => (Style?)this.GetValue(LightCloseButtonStyleProperty);
             set => this.SetValue(LightCloseButtonStyleProperty, value);
         }
 
@@ -86,9 +86,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current dark style for the minimize button.
         /// </summary>
-        public Style DarkMinButtonStyle
+        public Style? DarkMinButtonStyle
         {
-            get => (Style)this.GetValue(DarkMinButtonStyleProperty);
+            get => (Style?)this.GetValue(DarkMinButtonStyleProperty);
             set => this.SetValue(DarkMinButtonStyleProperty, value);
         }
 
@@ -102,9 +102,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current dark style for the maximize button.
         /// </summary>
-        public Style DarkMaxButtonStyle
+        public Style? DarkMaxButtonStyle
         {
-            get => (Style)this.GetValue(DarkMaxButtonStyleProperty);
+            get => (Style?)this.GetValue(DarkMaxButtonStyleProperty);
             set => this.SetValue(DarkMaxButtonStyleProperty, value);
         }
 
@@ -118,9 +118,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current dark style for the close button.
         /// </summary>
-        public Style DarkCloseButtonStyle
+        public Style? DarkCloseButtonStyle
         {
-            get => (Style)this.GetValue(DarkCloseButtonStyleProperty);
+            get => (Style?)this.GetValue(DarkCloseButtonStyleProperty);
             set => this.SetValue(DarkCloseButtonStyleProperty, value);
         }
 
@@ -150,9 +150,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the minimize button tooltip.
         /// </summary>
-        public string Minimize
+        public string? Minimize
         {
-            get => (string)this.GetValue(MinimizeProperty);
+            get => (string?)this.GetValue(MinimizeProperty);
             set => this.SetValue(MinimizeProperty, value);
         }
 
@@ -166,9 +166,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the maximize button tooltip.
         /// </summary>
-        public string Maximize
+        public string? Maximize
         {
-            get => (string)this.GetValue(MaximizeProperty);
+            get => (string?)this.GetValue(MaximizeProperty);
             set => this.SetValue(MaximizeProperty, value);
         }
 
@@ -182,9 +182,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the close button tooltip.
         /// </summary>
-        public string Close
+        public string? Close
         {
-            get => (string)this.GetValue(CloseProperty);
+            get => (string?)this.GetValue(CloseProperty);
             set => this.SetValue(CloseProperty, value);
         }
 
@@ -198,9 +198,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the restore button tooltip.
         /// </summary>
-        public string Restore
+        public string? Restore
         {
-            get => (string)this.GetValue(RestoreProperty);
+            get => (string?)this.GetValue(RestoreProperty);
             set => this.SetValue(RestoreProperty, value);
         }
 

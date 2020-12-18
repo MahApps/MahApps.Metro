@@ -204,15 +204,15 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
         /// </summary>
-        public Brush OverrideDefaultWindowCommandsBrush
+        public Brush? OverrideDefaultWindowCommandsBrush
         {
-            get { return (Brush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
+            get { return (Brush?)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
         }
 
-        public MetroDialogSettings MetroDialogOptions
+        public MetroDialogSettings? MetroDialogOptions
         {
-            get { return (MetroDialogSettings)GetValue(MetroDialogOptionsProperty); }
+            get { return (MetroDialogSettings?)GetValue(MetroDialogOptionsProperty); }
             set { SetValue(MetroDialogOptionsProperty, value); }
         }
 
@@ -258,9 +258,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the FlyoutsControl that hosts the window's flyouts.
         /// </summary>
-        public FlyoutsControl Flyouts
+        public FlyoutsControl? Flyouts
         {
-            get { return (FlyoutsControl)GetValue(FlyoutsProperty); }
+            get { return (FlyoutsControl?)GetValue(FlyoutsProperty); }
             set { SetValue(FlyoutsProperty, value); }
         }
 
@@ -373,9 +373,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
         /// </summary>
-        public Brush TitleForeground
+        public Brush? TitleForeground
         {
-            get { return (Brush)GetValue(TitleForegroundProperty); }
+            get { return (Brush?)GetValue(TitleForegroundProperty); }
             set { SetValue(TitleForegroundProperty, value); }
         }
 
@@ -483,7 +483,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
+#pragma warning disable WPF0024
         private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
+#pragma warning restore WPF0024
         {
             // if UseNoneWindowStyle = true no title bar should be shown
             if (((MetroWindow)d).UseNoneWindowStyle)
@@ -691,18 +693,18 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the brush used for the Window's glow.
         /// </summary>
-        public Brush GlowBrush
+        public Brush? GlowBrush
         {
-            get { return (Brush)GetValue(GlowBrushProperty); }
+            get { return (Brush?)GetValue(GlowBrushProperty); }
             set { SetValue(GlowBrushProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the brush used for the Window's non-active glow.
         /// </summary>
-        public Brush NonActiveGlowBrush
+        public Brush? NonActiveGlowBrush
         {
-            get { return (Brush)GetValue(NonActiveGlowBrushProperty); }
+            get { return (Brush?)GetValue(NonActiveGlowBrushProperty); }
             set { SetValue(NonActiveGlowBrushProperty, value); }
         }
 
@@ -727,9 +729,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the brush used for the dialog overlay.
         /// </summary>
-        public Brush OverlayBrush
+        public Brush? OverlayBrush
         {
-            get { return (Brush)GetValue(OverlayBrushProperty); }
+            get { return (Brush?)GetValue(OverlayBrushProperty); }
             set { SetValue(OverlayBrushProperty, value); }
         }
 
@@ -745,27 +747,27 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the brush used for the Flyouts overlay.
         /// </summary>
-        public Brush FlyoutOverlayBrush
+        public Brush? FlyoutOverlayBrush
         {
-            get { return (Brush)GetValue(FlyoutOverlayBrushProperty); }
+            get { return (Brush?)GetValue(FlyoutOverlayBrushProperty); }
             set { SetValue(FlyoutOverlayBrushProperty, value); }
         }
 
         /// <summary>
         /// Gets or sets the overlay fade in storyboard.
         /// </summary>
-        public Storyboard OverlayFadeIn
+        public Storyboard? OverlayFadeIn
         {
-            get { return (Storyboard)GetValue(OverlayFadeInProperty); }
+            get { return (Storyboard?)GetValue(OverlayFadeInProperty); }
             set { SetValue(OverlayFadeInProperty, value); }
         }
 
         /// <summary>
         /// Gets or sets the overlay fade out storyboard.
         /// </summary>
-        public Storyboard OverlayFadeOut
+        public Storyboard? OverlayFadeOut
         {
-            get { return (Storyboard)GetValue(OverlayFadeOutProperty); }
+            get { return (Storyboard?)GetValue(OverlayFadeOutProperty); }
             set { SetValue(OverlayFadeOutProperty, value); }
         }
 
@@ -1093,7 +1095,7 @@ namespace MahApps.Metro.Controls
         {
             this.Invoke(() =>
                 {
-                    var flyouts = this.Flyouts.GetFlyouts().OfType<Flyout>().ToList();
+                    var flyouts = this.Flyouts?.GetFlyouts().OfType<Flyout>().ToList() ?? new List<Flyout>();
                     // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
                     // e.g if the FlyoutsControl is hosted in a UserControl
                     var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
@@ -1135,7 +1137,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            if (Flyouts.OverrideExternalCloseButton == null)
+            if (Flyouts!.OverrideExternalCloseButton == null)
             {
                 foreach (var flyout in Flyouts.GetFlyouts().OfType<Flyout>().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {

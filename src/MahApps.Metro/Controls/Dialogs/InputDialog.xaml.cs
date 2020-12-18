@@ -17,18 +17,18 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
 
-        public string Message
+        public string? Message
         {
-            get { return (string)this.GetValue(MessageProperty); }
+            get { return (string?)this.GetValue(MessageProperty); }
             set { this.SetValue(MessageProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="Input"/> dependency property.</summary>
         public static readonly DependencyProperty InputProperty = DependencyProperty.Register(nameof(Input), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
 
-        public string Input
+        public string? Input
         {
-            get { return (string)this.GetValue(InputProperty); }
+            get { return (string?)this.GetValue(InputProperty); }
             set { this.SetValue(InputProperty, value); }
         }
 
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(this.Input);
+                        tcs.TrySetResult(this.Input!);
                     }
                 };
 
@@ -153,7 +153,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     cleanUpHandlers();
 
-                    tcs.TrySetResult(this.Input);
+                    tcs.TrySetResult(this.Input!);
 
                     e.Handled = true;
                 };

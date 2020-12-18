@@ -19,9 +19,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies the glyph to use from Segoe MDL2 Assets font.
         /// </summary>
-        public string Glyph
+        public string? Glyph
         {
-            get { return (string)GetValue(GlyphProperty); }
+            get { return (string?)GetValue(GlyphProperty); }
 
             set { SetValue(GlyphProperty, value); }
         }

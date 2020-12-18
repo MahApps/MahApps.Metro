@@ -22,9 +22,9 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(TextProperty, value); }
         }
 
-        public ImageSource Image
+        public ImageSource? Image
         {
-            get { return (ImageSource)this.GetValue(ImageProperty); }
+            get { return (ImageSource?)this.GetValue(ImageProperty); }
             set { this.SetValue(ImageProperty, value); }
         }
 

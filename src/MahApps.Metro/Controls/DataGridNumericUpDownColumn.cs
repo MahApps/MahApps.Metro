@@ -241,9 +241,9 @@ namespace MahApps.Metro.Controls
                 typeof(DataGridNumericUpDownColumn),
                 new FrameworkPropertyMetadata((CultureInfo)NumericUpDown.CultureProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
-        public CultureInfo Culture
+        public CultureInfo? Culture
         {
-            get { return (CultureInfo)this.GetValue(CultureProperty); }
+            get { return (CultureInfo?)this.GetValue(CultureProperty); }
             set { this.SetValue(CultureProperty, value); }
         }
 

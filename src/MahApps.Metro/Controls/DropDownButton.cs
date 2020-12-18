@@ -140,7 +140,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnCommandPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            (dependencyObject as DropDownButton)?.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+            (dependencyObject as DropDownButton)?.OnCommandChanged((ICommand?)e.OldValue, (ICommand?)e.NewValue);
         }
 
         /// <summary>
@@ -178,9 +178,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the parameter to pass to the command property.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
-            get => (object)this.GetValue(CommandParameterProperty);
+            get => (object?)this.GetValue(CommandParameterProperty);
             set => this.SetValue(CommandParameterProperty, value);
         }
 
@@ -193,9 +193,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the content of this control.
         /// </summary>
-        public object Content
+        public object? Content
         {
-            get => (object)this.GetValue(ContentProperty);
+            get => (object?)this.GetValue(ContentProperty);
             set => this.SetValue(ContentProperty, value);
         }
 
@@ -210,9 +210,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the data template used to display the content of the DropDownButton.
         /// </summary>
         [Bindable(true)]
-        public DataTemplate ContentTemplate
+        public DataTemplate? ContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ContentTemplateProperty);
             set => this.SetValue(ContentTemplateProperty, value);
         }
 
@@ -230,9 +230,9 @@ namespace MahApps.Metro.Controls
         /// This property is ignored if <seealso cref="ContentTemplate"/> is set.
         /// </remarks>
         [Bindable(true)]
-        public DataTemplateSelector ContentTemplateSelector
+        public DataTemplateSelector? ContentTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(ContentTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(ContentTemplateSelectorProperty);
             set => this.SetValue(ContentTemplateSelectorProperty, value);
         }
 
@@ -250,9 +250,9 @@ namespace MahApps.Metro.Controls
         /// This property is ignored if <seealso cref="ContentTemplate"/> is set.
         /// </remarks>
         [Bindable(true)]
-        public string ContentStringFormat
+        public string? ContentStringFormat
         {
-            get => (string)this.GetValue(ContentStringFormatProperty);
+            get => (string?)this.GetValue(ContentStringFormatProperty);
             set => this.SetValue(ContentStringFormatProperty, value);
         }
 
@@ -266,9 +266,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the button content style.
         /// </summary>
-        public Style ButtonStyle
+        public Style? ButtonStyle
         {
-            get => (Style)this.GetValue(ButtonStyleProperty);
+            get => (Style?)this.GetValue(ButtonStyleProperty);
             set => this.SetValue(ButtonStyleProperty, value);
         }
 
@@ -282,9 +282,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the "popup" menu style.
         /// </summary>
-        public Style MenuStyle
+        public Style? MenuStyle
         {
-            get => (Style)this.GetValue(MenuStyleProperty);
+            get => (Style?)this.GetValue(MenuStyleProperty);
             set => this.SetValue(MenuStyleProperty, value);
         }
 
@@ -298,9 +298,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush for the button arrow icon.
         /// </summary>
-        public Brush ArrowBrush
+        public Brush? ArrowBrush
         {
-            get => (Brush)this.GetValue(ArrowBrushProperty);
+            get => (Brush?)this.GetValue(ArrowBrushProperty);
             set => this.SetValue(ArrowBrushProperty, value);
         }
 
@@ -314,9 +314,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush of the button arrow icon if the mouse is over the drop down button.
         /// </summary>
-        public Brush ArrowMouseOverBrush
+        public Brush? ArrowMouseOverBrush
         {
-            get => (Brush)this.GetValue(ArrowMouseOverBrushProperty);
+            get => (Brush?)this.GetValue(ArrowMouseOverBrushProperty);
             set => this.SetValue(ArrowMouseOverBrushProperty, value);
         }
 
@@ -330,9 +330,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush of the button arrow icon if the arrow button is pressed.
         /// </summary>
-        public Brush ArrowPressedBrush
+        public Brush? ArrowPressedBrush
         {
-            get => (Brush)this.GetValue(ArrowPressedBrushProperty);
+            get => (Brush?)this.GetValue(ArrowPressedBrushProperty);
             set => this.SetValue(ArrowPressedBrushProperty, value);
         }
 

@@ -46,7 +46,7 @@ namespace MahApps.Metro.Controls
 
         public static ObservableCollection<Color?> RecentColors { get; } = new ObservableCollection<Color?>();
 
-        public static void AddColorToRecentColors(Color? color, IEnumerable recentColors, int maxCount)
+        public static void AddColorToRecentColors(Color? color, IEnumerable? recentColors, int maxCount)
         {
             if (recentColors is ObservableCollection<Color?> collection)
             {

@@ -276,7 +276,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceStringFormat(DependencyObject d, object baseValue)
+        private static object CoerceStringFormat(DependencyObject d, object? baseValue)
         {
             return baseValue ?? string.Empty;
         }
@@ -460,7 +460,9 @@ namespace MahApps.Metro.Controls
             numericUpDown.EnableDisableUpDown();
         }
 
+#pragma warning disable WPF0024
         private static object CoerceMaximum(DependencyObject d, object value)
+#pragma warning restore WPF0024
         {
             double minimum = ((NumericUpDown)d).Minimum;
             double val = (double)value;
@@ -672,9 +674,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category("Behavior")]
         [DefaultValue(null)]
-        public CultureInfo Culture
+        public CultureInfo? Culture
         {
-            get => (CultureInfo)this.GetValue(CultureProperty);
+            get => (CultureInfo?)this.GetValue(CultureProperty);
             set => this.SetValue(CultureProperty, value);
         }
 

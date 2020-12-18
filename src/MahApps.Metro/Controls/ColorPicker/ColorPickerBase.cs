@@ -123,9 +123,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the name of the <see cref="SelectedColor"/>.
         /// </summary>
-        public string ColorName
+        public string? ColorName
         {
-            get => (string)this.GetValue(ColorNameProperty);
+            get => (string?)this.GetValue(ColorNameProperty);
             set => this.SetValue(ColorNameProperty, value);
         }
 

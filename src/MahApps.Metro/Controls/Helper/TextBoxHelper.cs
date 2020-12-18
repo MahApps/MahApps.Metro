@@ -798,23 +798,23 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
-        public static ICommand GetButtonCommand(DependencyObject d)
+        public static ICommand? GetButtonCommand(DependencyObject d)
         {
-            return (ICommand)d.GetValue(ButtonCommandProperty);
+            return (ICommand?)d.GetValue(ButtonCommandProperty);
         }
 
-        public static void SetButtonCommand(DependencyObject obj, ICommand value)
+        public static void SetButtonCommand(DependencyObject obj, ICommand? value)
         {
             obj.SetValue(ButtonCommandProperty, value);
         }
 
         [Category(AppName.MahApps)]
-        public static object GetButtonCommandParameter(DependencyObject d)
+        public static object? GetButtonCommandParameter(DependencyObject d)
         {
-            return (object)d.GetValue(ButtonCommandParameterProperty);
+            return (object?)d.GetValue(ButtonCommandParameterProperty);
         }
 
-        public static void SetButtonCommandParameter(DependencyObject obj, object value)
+        public static void SetButtonCommandParameter(DependencyObject obj, object? value)
         {
             obj.SetValue(ButtonCommandParameterProperty, value);
         }
@@ -834,23 +834,23 @@ namespace MahApps.Metro.Controls
         /// ButtonContentTemplate is the template used to display the content of the ClearText button. 
         /// </summary>
         [Category(AppName.MahApps)]
-        public static DataTemplate GetButtonContentTemplate(DependencyObject d)
+        public static DataTemplate? GetButtonContentTemplate(DependencyObject d)
         {
-            return (DataTemplate)d.GetValue(ButtonContentTemplateProperty);
+            return (DataTemplate?)d.GetValue(ButtonContentTemplateProperty);
         }
 
-        public static void SetButtonContentTemplate(DependencyObject obj, DataTemplate value)
+        public static void SetButtonContentTemplate(DependencyObject obj, DataTemplate? value)
         {
             obj.SetValue(ButtonContentTemplateProperty, value);
         }
 
         [Category(AppName.MahApps)]
-        public static ControlTemplate GetButtonTemplate(DependencyObject d)
+        public static ControlTemplate? GetButtonTemplate(DependencyObject d)
         {
-            return (ControlTemplate)d.GetValue(ButtonTemplateProperty);
+            return (ControlTemplate?)d.GetValue(ButtonTemplateProperty);
         }
 
-        public static void SetButtonTemplate(DependencyObject obj, ControlTemplate value)
+        public static void SetButtonTemplate(DependencyObject obj, ControlTemplate? value)
         {
             obj.SetValue(ButtonTemplateProperty, value);
         }

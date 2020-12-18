@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls
                                           typeof(HamburgerMenu),
                                           new PropertyMetadata(240.0, OpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
 
-        private static object OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object inputValue)
+        private static object? OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object? inputValue)
         {
             if (dependencyObject is HamburgerMenu hamburgerMenu && hamburgerMenu.ActualWidth > 0 && inputValue is double openPaneLength)
             {
@@ -194,9 +194,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the <see cref="Style"/> for the resizing Thumb (type of <see cref="MetroThumb"/>)
         /// </summary>
-        public Style ResizeThumbStyle
+        public Style? ResizeThumbStyle
         {
-            get => (Style)this.GetValue(ResizeThumbStyleProperty);
+            get => (Style?)this.GetValue(ResizeThumbStyleProperty);
             set => this.SetValue(ResizeThumbStyleProperty, value);
         }
 
@@ -282,9 +282,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the Brush to apply to the background of the pane area of the HamburgerMenu.
         /// </summary>
-        public Brush PaneBackground
+        public Brush? PaneBackground
         {
-            get => (Brush)this.GetValue(PaneBackgroundProperty);
+            get => (Brush?)this.GetValue(PaneBackgroundProperty);
             set => this.SetValue(PaneBackgroundProperty, value);
         }
 
@@ -298,9 +298,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the Brush to apply to the foreground of the pane area of the HamburgerMenu.
         /// </summary>
-        public Brush PaneForeground
+        public Brush? PaneForeground
         {
-            get => (Brush)this.GetValue(PaneForegroundProperty);
+            get => (Brush?)this.GetValue(PaneForegroundProperty);
             set => this.SetValue(PaneForegroundProperty, value);
         }
 
@@ -338,7 +338,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets an object source used to generate the content of the menu.
         /// </summary>
-        public object ItemsSource
+        public object? ItemsSource
         {
             get => this.GetValue(ItemsSourceProperty);
             set => this.SetValue(ItemsSourceProperty, value);
@@ -354,9 +354,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> used for each item.
         /// </summary>
-        public Style ItemContainerStyle
+        public Style? ItemContainerStyle
         {
-            get => (Style)this.GetValue(ItemContainerStyleProperty);
+            get => (Style?)this.GetValue(ItemContainerStyleProperty);
             set => this.SetValue(ItemContainerStyleProperty, value);
         }
 
@@ -370,9 +370,9 @@ namespace MahApps.Metro.Controls
         /// <summary>   
         /// Gets or sets the <see cref="Style"/> used for each header item.
         /// </summary>
-        public Style HeaderItemContainerStyle
+        public Style? HeaderItemContainerStyle
         {
-            get => (Style)this.GetValue(HeaderItemContainerStyleProperty);
+            get => (Style?)this.GetValue(HeaderItemContainerStyleProperty);
             set => this.SetValue(HeaderItemContainerStyleProperty, value);
         }
 
@@ -386,9 +386,9 @@ namespace MahApps.Metro.Controls
         /// <summary>   
         /// Gets or sets the <see cref="Style"/> used for each separator item.
         /// </summary>
-        public Style SeparatorItemContainerStyle
+        public Style? SeparatorItemContainerStyle
         {
-            get => (Style)this.GetValue(SeparatorItemContainerStyleProperty);
+            get => (Style?)this.GetValue(SeparatorItemContainerStyleProperty);
             set => this.SetValue(SeparatorItemContainerStyleProperty, value);
         }
 
@@ -402,9 +402,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="DataTemplate"/> used to display each item.
         /// </summary>
-        public DataTemplate ItemTemplate
+        public DataTemplate? ItemTemplate
         {
-            get => (DataTemplate)this.GetValue(ItemTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ItemTemplateProperty);
             set => this.SetValue(ItemTemplateProperty, value);
         }
 
@@ -418,9 +418,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="DataTemplateSelector"/> used to display each item.
         /// </summary>
-        public DataTemplateSelector ItemTemplateSelector
+        public DataTemplateSelector? ItemTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(ItemTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(ItemTemplateSelectorProperty);
             set => this.SetValue(ItemTemplateSelectorProperty, value);
         }
 
@@ -434,7 +434,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the selected menu item.
         /// </summary>
-        public object SelectedItem
+        public object? SelectedItem
         {
             get => this.GetValue(SelectedItemProperty);
             set => this.SetValue(SelectedItemProperty, value);
@@ -482,9 +482,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a <see cref="ICommand"/> which will be executed if an item was clicked by the user.
         /// </summary>
-        public ICommand ItemCommand
+        public ICommand? ItemCommand
         {
-            get => (ICommand)this.GetValue(ItemCommandProperty);
+            get => (ICommand?)this.GetValue(ItemCommandProperty);
             set => this.SetValue(ItemCommandProperty, value);
         }
 
@@ -498,9 +498,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ICommand"/> parameter which will be passed by the <see cref="ItemCommand"/>.
         /// </summary>
-        public object ItemCommandParameter
+        public object? ItemCommandParameter
         {
-            get => (object)this.GetValue(ItemCommandParameterProperty);
+            get => this.GetValue(ItemCommandParameterProperty);
             set => this.SetValue(ItemCommandParameterProperty, value);
         }
 
@@ -550,9 +550,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the default FocusVisualStyle for a HamburgerMenuItem.
         /// This style can be override at the HamburgerMenuItem style by setting the FocusVisualStyle property.
         /// </summary>
-        public Style ItemFocusVisualStyle
+        public Style? ItemFocusVisualStyle
         {
-            get => (Style)this.GetValue(ItemFocusVisualStyleProperty);
+            get => (Style?)this.GetValue(ItemFocusVisualStyleProperty);
             protected set => this.SetValue(ItemFocusVisualStylePropertyKey, value);
         }
 

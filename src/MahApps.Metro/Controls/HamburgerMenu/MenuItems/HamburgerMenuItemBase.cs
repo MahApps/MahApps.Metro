@@ -22,7 +22,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies an user specific value.
         /// </summary>
-        public object Tag
+        public object? Tag
         {
             get { return this.GetValue(TagProperty); }
 

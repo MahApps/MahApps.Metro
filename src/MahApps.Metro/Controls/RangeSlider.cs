@@ -239,7 +239,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(UpperValueProperty, value);
         }
 
-        internal static object CoerceUpperValue(DependencyObject d, object basevalue)
+        internal static object? CoerceUpperValue(DependencyObject d, object? basevalue)
         {
             if (d is RangeSlider rangeSlider && basevalue is double value)
             {
@@ -299,9 +299,9 @@ namespace MahApps.Metro.Controls
             this.ReCalculateSize();
         }
 
-        internal static object CoerceLowerValue(DependencyObject d, object basevalue)
+        internal static object CoerceLowerValue(DependencyObject d, object? baseValue)
         {
-            if (d is RangeSlider rangeSlider && basevalue is double value)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
                 if (value < rangeSlider.Minimum || rangeSlider.UpperValue - rangeSlider.MinRange < rangeSlider.Minimum)
                 {
@@ -314,7 +314,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="MinRange"/> dependency property.</summary>
@@ -360,7 +360,9 @@ namespace MahApps.Metro.Controls
             slider.ReCalculateSize();
         }
 
+#pragma warning disable WPF0024
         private static object CoerceMinRange(DependencyObject d, object basevalue)
+#pragma warning restore WPF0024
         {
             var rangeSlider = (RangeSlider)d;
             var value = (double)basevalue;
@@ -396,7 +398,9 @@ namespace MahApps.Metro.Controls
             (sender as RangeSlider)?.ReCalculateSize();
         }
 
+#pragma warning disable WPF0024
         private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
+#pragma warning restore WPF0024
         {
             var rangeSlider = (RangeSlider)d;
 
@@ -418,7 +422,7 @@ namespace MahApps.Metro.Controls
             return basevalue;
         }
 
-        private static bool IsValidMinRange(object value)
+        private static bool IsValidMinRange(object? value)
         {
             return value is double doubleValue && IsValidDouble(doubleValue) && doubleValue >= 0d;
         }
@@ -551,9 +555,9 @@ namespace MahApps.Metro.Controls
         /// </returns>
         [Bindable(true)]
         [Category("Appearance")]
-        public DoubleCollection Ticks
+        public DoubleCollection? Ticks
         {
-            get => (DoubleCollection)this.GetValue(TicksProperty);
+            get => (DoubleCollection?)this.GetValue(TicksProperty);
             set => this.SetValue(TicksProperty, value);
         }
 
@@ -630,9 +634,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public DataTemplate AutoToolTipLowerValueTemplate
+        public DataTemplate? AutoToolTipLowerValueTemplate
         {
-            get => (DataTemplate)this.GetValue(AutoToolTipLowerValueTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AutoToolTipLowerValueTemplateProperty);
             set => this.SetValue(AutoToolTipLowerValueTemplateProperty, value);
         }
 
@@ -738,7 +742,9 @@ namespace MahApps.Metro.Controls
             (d as RangeSlider)?.CoerceValue(SelectionEndProperty);
         }
 
+#pragma warning disable WPF0024
         private static object CoerceSelectionStart(DependencyObject d, object value)
+#pragma warning restore WPF0024
         {
             RangeSlider rangeSlider = (RangeSlider)d;
             double num = (double)value;
@@ -785,7 +791,9 @@ namespace MahApps.Metro.Controls
             (d as RangeSlider)?.CoerceValue(SelectionStartProperty);
         }
 
+#pragma warning disable WPF0024
         private static object CoerceSelectionEnd(DependencyObject d, object value)
+#pragma warning restore WPF0024
         {
             RangeSlider rangeSlider = (RangeSlider)d;
             double num = (double)value;
@@ -2275,17 +2283,17 @@ namespace MahApps.Metro.Controls
 
         #region Validation methods
 
-        private static bool IsValidDoubleValue(object value)
+        private static bool IsValidDoubleValue(object? value)
         {
             return value is double doubleValue && IsValidDouble(doubleValue);
         }
 
-        private static bool IsValidDouble(double d)
+        private static bool IsValidDouble(double? d)
         {
-            return !double.IsNaN(d) && !double.IsInfinity(d);
+            return d is not null && !double.IsNaN(d.Value) && !double.IsInfinity(d.Value);
         }
 
-        private static bool IsValidPrecision(object value)
+        private static bool IsValidPrecision(object? value)
         {
             return value is int intValue && intValue >= 0;
         }
@@ -2294,7 +2302,9 @@ namespace MahApps.Metro.Controls
 
         #region Coerce callbacks
 
+#pragma warning disable WPF0024
         private static object CoerceMinimum(DependencyObject d, object basevalue)
+#pragma warning restore WPF0024
         {
             var rangeSlider = (RangeSlider)d;
             var value = (double)basevalue;
@@ -2307,7 +2317,9 @@ namespace MahApps.Metro.Controls
             return basevalue;
         }
 
+#pragma warning disable WPF0024
         private static object CoerceMaximum(DependencyObject d, object basevalue)
+#pragma warning restore WPF0024
         {
             var rangeSlider = (RangeSlider)d;
             var value = (double)basevalue;

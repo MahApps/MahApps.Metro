@@ -19,9 +19,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
-        public string Title
+        public string? Title
         {
-            get { return (string)GetValue(TitleProperty); }
+            get { return (string?)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
 
@@ -69,9 +69,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty CountProperty = DependencyProperty.Register(nameof(Count), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
-        public string Count
+        public string? Count
         {
-            get { return (string)GetValue(CountProperty); }
+            get { return (string?)GetValue(CountProperty); }
             set { SetValue(CountProperty, value); }
         }
 

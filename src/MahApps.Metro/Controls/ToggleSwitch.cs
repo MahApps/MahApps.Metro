@@ -220,9 +220,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string OnContentStringFormat
+        public string? OnContentStringFormat
         {
-            get => (string)this.GetValue(OnContentStringFormatProperty);
+            get => (string?)this.GetValue(OnContentStringFormatProperty);
             set => this.SetValue(OnContentStringFormatProperty, value);
         }
 
@@ -262,9 +262,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the DataTemplate used to display the control's content while in "Off" state.
         /// </summary>
         [Category(AppName.MahApps)]
-        public DataTemplate OffContentTemplate
+        public DataTemplate? OffContentTemplate
         {
-            get => (DataTemplate)this.GetValue(OffContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(OffContentTemplateProperty);
             set => this.SetValue(OffContentTemplateProperty, value);
         }
 
@@ -283,9 +283,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public DataTemplateSelector OffContentTemplateSelector
+        public DataTemplateSelector? OffContentTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(OffContentTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(OffContentTemplateSelectorProperty);
             set => this.SetValue(OffContentTemplateSelectorProperty, value);
         }
 
@@ -304,9 +304,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string OffContentStringFormat
+        public string? OffContentStringFormat
         {
-            get => (string)this.GetValue(OffContentStringFormatProperty);
+            get => (string?)this.GetValue(OffContentStringFormatProperty);
             set => this.SetValue(OffContentStringFormatProperty, value);
         }
 
@@ -389,7 +389,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the command parameter which will be passed by the Command.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
             get => this.GetValue(CommandParameterProperty);
             set => this.SetValue(CommandParameterProperty, value);
@@ -408,9 +408,9 @@ namespace MahApps.Metro.Controls
         /// <returns>
         /// Element on which to raise the Command.
         /// </returns>
-        public IInputElement CommandTarget
+        public IInputElement? CommandTarget
         {
-            get => (IInputElement)this.GetValue(CommandTargetProperty);
+            get => (IInputElement?)this.GetValue(CommandTargetProperty);
             set => this.SetValue(CommandTargetProperty, value);
         }
 
@@ -649,10 +649,10 @@ namespace MahApps.Metro.Controls
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((ToggleSwitch)d).OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+            ((ToggleSwitch)d).OnCommandChanged((ICommand?)e.OldValue, (ICommand?)e.NewValue);
         }
 
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
             {

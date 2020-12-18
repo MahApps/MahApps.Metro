@@ -42,9 +42,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the command that is executed when the Close Button is clicked.
         /// </summary>
-        public ICommand CloseTabCommand
+        public ICommand? CloseTabCommand
         {
-            get { return (ICommand)GetValue(CloseTabCommandProperty); }
+            get { return (ICommand?)GetValue(CloseTabCommandProperty); }
             set { SetValue(CloseTabCommandProperty, value); }
         }
 
@@ -57,7 +57,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the command parameter which is passed to the close button command.
         /// </summary>
-        public object CloseTabCommandParameter
+        public object? CloseTabCommandParameter
         {
             get { return GetValue(CloseTabCommandParameterProperty); }
             set { SetValue(CloseTabCommandParameterProperty, value); }

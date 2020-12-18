@@ -100,9 +100,9 @@ namespace MahApps.Metro.Controls
         /// <returns>ForegroundPointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetForegroundPointerOver(UIElement element)
+        public static Brush? GetForegroundPointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(ForegroundPointerOverProperty);
+            return (Brush?)element.GetValue(ForegroundPointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="ForegroundPointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -110,7 +110,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">ForegroundPointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetForegroundPointerOver(UIElement element, Brush value)
+        public static void SetForegroundPointerOver(UIElement element, Brush? value)
         {
             element.SetValue(ForegroundPointerOverProperty, value);
         }
@@ -126,9 +126,9 @@ namespace MahApps.Metro.Controls
         /// <returns>ForegroundPressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetForegroundPressed(UIElement element)
+        public static Brush? GetForegroundPressed(UIElement element)
         {
-            return (Brush)element.GetValue(ForegroundPressedProperty);
+            return (Brush?)element.GetValue(ForegroundPressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="ForegroundPressedProperty"/> on <paramref name="element"/>.</summary>
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">ForegroundPressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetForegroundPressed(UIElement element, Brush value)
+        public static void SetForegroundPressed(UIElement element, Brush? value)
         {
             element.SetValue(ForegroundPressedProperty, value);
         }
@@ -152,9 +152,9 @@ namespace MahApps.Metro.Controls
         /// <returns>ForegroundDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetForegroundDisabled(UIElement element)
+        public static Brush? GetForegroundDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(ForegroundDisabledProperty);
+            return (Brush?)element.GetValue(ForegroundDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="ForegroundDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -162,7 +162,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">ForegroundDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetForegroundDisabled(UIElement element, Brush value)
+        public static void SetForegroundDisabled(UIElement element, Brush? value)
         {
             element.SetValue(ForegroundDisabledProperty, value);
         }
@@ -178,9 +178,9 @@ namespace MahApps.Metro.Controls
         /// <returns>BackgroundPointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetBackgroundPointerOver(UIElement element)
+        public static Brush? GetBackgroundPointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(BackgroundPointerOverProperty);
+            return (Brush?)element.GetValue(BackgroundPointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="BackgroundPointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -188,7 +188,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">BackgroundPointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetBackgroundPointerOver(UIElement element, Brush value)
+        public static void SetBackgroundPointerOver(UIElement element, Brush? value)
         {
             element.SetValue(BackgroundPointerOverProperty, value);
         }
@@ -204,9 +204,9 @@ namespace MahApps.Metro.Controls
         /// <returns>BackgroundPressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetBackgroundPressed(UIElement element)
+        public static Brush? GetBackgroundPressed(UIElement element)
         {
-            return (Brush)element.GetValue(BackgroundPressedProperty);
+            return (Brush?)element.GetValue(BackgroundPressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="BackgroundPressedProperty"/> on <paramref name="element"/>.</summary>
@@ -214,7 +214,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">BackgroundPressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetBackgroundPressed(UIElement element, Brush value)
+        public static void SetBackgroundPressed(UIElement element, Brush? value)
         {
             element.SetValue(BackgroundPressedProperty, value);
         }
@@ -230,9 +230,9 @@ namespace MahApps.Metro.Controls
         /// <returns>BackgroundDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetBackgroundDisabled(UIElement element)
+        public static Brush? GetBackgroundDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(BackgroundDisabledProperty);
+            return (Brush?)element.GetValue(BackgroundDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="BackgroundDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -240,7 +240,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">BackgroundDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetBackgroundDisabled(UIElement element, Brush value)
+        public static void SetBackgroundDisabled(UIElement element, Brush? value)
         {
             element.SetValue(BackgroundDisabledProperty, value);
         }
@@ -256,9 +256,9 @@ namespace MahApps.Metro.Controls
         /// <returns>BorderBrushPointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetBorderBrushPointerOver(UIElement element)
+        public static Brush? GetBorderBrushPointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(BorderBrushPointerOverProperty);
+            return (Brush?)element.GetValue(BorderBrushPointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="BorderBrushPointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -266,7 +266,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">BorderBrushPointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetBorderBrushPointerOver(UIElement element, Brush value)
+        public static void SetBorderBrushPointerOver(UIElement element, Brush? value)
         {
             element.SetValue(BorderBrushPointerOverProperty, value);
         }
@@ -282,9 +282,9 @@ namespace MahApps.Metro.Controls
         /// <returns>BorderBrushPressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetBorderBrushPressed(UIElement element)
+        public static Brush? GetBorderBrushPressed(UIElement element)
         {
-            return (Brush)element.GetValue(BorderBrushPressedProperty);
+            return (Brush?)element.GetValue(BorderBrushPressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="BorderBrushPressedProperty"/> on <paramref name="element"/>.</summary>
@@ -292,7 +292,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">BorderBrushPressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetBorderBrushPressed(UIElement element, Brush value)
+        public static void SetBorderBrushPressed(UIElement element, Brush? value)
         {
             element.SetValue(BorderBrushPressedProperty, value);
         }
@@ -308,9 +308,9 @@ namespace MahApps.Metro.Controls
         /// <returns>BorderBrushDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetBorderBrushDisabled(UIElement element)
+        public static Brush? GetBorderBrushDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(BorderBrushDisabledProperty);
+            return (Brush?)element.GetValue(BorderBrushDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="BorderBrushDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -318,7 +318,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">BorderBrushDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetBorderBrushDisabled(UIElement element, Brush value)
+        public static void SetBorderBrushDisabled(UIElement element, Brush? value)
         {
             element.SetValue(BorderBrushDisabledProperty, value);
         }
@@ -334,9 +334,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseFill property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseFill(UIElement element)
+        public static Brush? GetOuterEllipseFill(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseFillProperty);
+            return (Brush?)element.GetValue(OuterEllipseFillProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseFillProperty"/> on <paramref name="element"/>.</summary>
@@ -344,7 +344,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseFill property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseFill(UIElement element, Brush value)
+        public static void SetOuterEllipseFill(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseFillProperty, value);
         }
@@ -360,9 +360,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseFillPointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseFillPointerOver(UIElement element)
+        public static Brush? GetOuterEllipseFillPointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseFillPointerOverProperty);
+            return (Brush?)element.GetValue(OuterEllipseFillPointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseFillPointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -370,7 +370,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseFillPointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseFillPointerOver(UIElement element, Brush value)
+        public static void SetOuterEllipseFillPointerOver(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseFillPointerOverProperty, value);
         }
@@ -386,9 +386,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseFillPressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseFillPressed(UIElement element)
+        public static Brush? GetOuterEllipseFillPressed(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseFillPressedProperty);
+            return (Brush?)element.GetValue(OuterEllipseFillPressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseFillPressedProperty"/> on <paramref name="element"/>.</summary>
@@ -396,7 +396,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseFillPressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseFillPressed(UIElement element, Brush value)
+        public static void SetOuterEllipseFillPressed(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseFillPressedProperty, value);
         }
@@ -412,9 +412,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseFillDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseFillDisabled(UIElement element)
+        public static Brush? GetOuterEllipseFillDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseFillDisabledProperty);
+            return (Brush?)element.GetValue(OuterEllipseFillDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseFillDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -422,7 +422,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseFillDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseFillDisabled(UIElement element, Brush value)
+        public static void SetOuterEllipseFillDisabled(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseFillDisabledProperty, value);
         }
@@ -438,9 +438,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseStroke property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseStroke(UIElement element)
+        public static Brush? GetOuterEllipseStroke(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseStrokeProperty);
+            return (Brush?)element.GetValue(OuterEllipseStrokeProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseStrokeProperty"/> on <paramref name="element"/>.</summary>
@@ -448,7 +448,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseStroke property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseStroke(UIElement element, Brush value)
+        public static void SetOuterEllipseStroke(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseStrokeProperty, value);
         }
@@ -464,9 +464,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseStrokePointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseStrokePointerOver(UIElement element)
+        public static Brush? GetOuterEllipseStrokePointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseStrokePointerOverProperty);
+            return (Brush?)element.GetValue(OuterEllipseStrokePointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseStrokePointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -474,7 +474,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseStrokePointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseStrokePointerOver(UIElement element, Brush value)
+        public static void SetOuterEllipseStrokePointerOver(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseStrokePointerOverProperty, value);
         }
@@ -490,9 +490,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseStrokePressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseStrokePressed(UIElement element)
+        public static Brush? GetOuterEllipseStrokePressed(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseStrokePressedProperty);
+            return (Brush?)element.GetValue(OuterEllipseStrokePressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseStrokePressedProperty"/> on <paramref name="element"/>.</summary>
@@ -500,7 +500,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseStrokePressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseStrokePressed(UIElement element, Brush value)
+        public static void SetOuterEllipseStrokePressed(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseStrokePressedProperty, value);
         }
@@ -516,9 +516,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseStrokeDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseStrokeDisabled(UIElement element)
+        public static Brush? GetOuterEllipseStrokeDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseStrokeDisabledProperty);
+            return (Brush?)element.GetValue(OuterEllipseStrokeDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseStrokeDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -526,7 +526,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseStrokeDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseStrokeDisabled(UIElement element, Brush value)
+        public static void SetOuterEllipseStrokeDisabled(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseStrokeDisabledProperty, value);
         }
@@ -542,9 +542,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedFill property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedFill(UIElement element)
+        public static Brush? GetOuterEllipseCheckedFill(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedFillProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedFillProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedFillProperty"/> on <paramref name="element"/>.</summary>
@@ -552,7 +552,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedFill property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedFill(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedFill(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedFillProperty, value);
         }
@@ -568,9 +568,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedFillPointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedFillPointerOver(UIElement element)
+        public static Brush? GetOuterEllipseCheckedFillPointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedFillPointerOverProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedFillPointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedFillPointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -578,7 +578,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedFillPointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedFillPointerOver(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedFillPointerOver(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedFillPointerOverProperty, value);
         }
@@ -594,9 +594,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedFillPressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedFillPressed(UIElement element)
+        public static Brush? GetOuterEllipseCheckedFillPressed(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedFillPressedProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedFillPressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedFillPressedProperty"/> on <paramref name="element"/>.</summary>
@@ -604,7 +604,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedFillPressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedFillPressed(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedFillPressed(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedFillPressedProperty, value);
         }
@@ -620,9 +620,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedFillDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedFillDisabled(UIElement element)
+        public static Brush? GetOuterEllipseCheckedFillDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedFillDisabledProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedFillDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedFillDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -630,7 +630,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedFillDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedFillDisabled(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedFillDisabled(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedFillDisabledProperty, value);
         }
@@ -646,9 +646,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedStroke property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedStroke(UIElement element)
+        public static Brush? GetOuterEllipseCheckedStroke(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedStrokeProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedStrokeProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedStrokeProperty"/> on <paramref name="element"/>.</summary>
@@ -656,7 +656,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedStroke property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedStroke(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedStroke(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedStrokeProperty, value);
         }
@@ -672,9 +672,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedStrokePointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedStrokePointerOver(UIElement element)
+        public static Brush? GetOuterEllipseCheckedStrokePointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedStrokePointerOverProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedStrokePointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedStrokePointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -682,7 +682,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedStrokePointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedStrokePointerOver(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedStrokePointerOver(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedStrokePointerOverProperty, value);
         }
@@ -698,9 +698,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedStrokePressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedStrokePressed(UIElement element)
+        public static Brush? GetOuterEllipseCheckedStrokePressed(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedStrokePressedProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedStrokePressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedStrokePressedProperty"/> on <paramref name="element"/>.</summary>
@@ -708,7 +708,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedStrokePressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedStrokePressed(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedStrokePressed(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedStrokePressedProperty, value);
         }
@@ -724,9 +724,9 @@ namespace MahApps.Metro.Controls
         /// <returns>OuterEllipseCheckedStrokeDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetOuterEllipseCheckedStrokeDisabled(UIElement element)
+        public static Brush? GetOuterEllipseCheckedStrokeDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(OuterEllipseCheckedStrokeDisabledProperty);
+            return (Brush?)element.GetValue(OuterEllipseCheckedStrokeDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="OuterEllipseCheckedStrokeDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -734,7 +734,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">OuterEllipseCheckedStrokeDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetOuterEllipseCheckedStrokeDisabled(UIElement element, Brush value)
+        public static void SetOuterEllipseCheckedStrokeDisabled(UIElement element, Brush? value)
         {
             element.SetValue(OuterEllipseCheckedStrokeDisabledProperty, value);
         }
@@ -750,9 +750,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphFill property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphFill(UIElement element)
+        public static Brush? GetCheckGlyphFill(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphFillProperty);
+            return (Brush?)element.GetValue(CheckGlyphFillProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphFillProperty"/> on <paramref name="element"/>.</summary>
@@ -760,7 +760,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphFill property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphFill(UIElement element, Brush value)
+        public static void SetCheckGlyphFill(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphFillProperty, value);
         }
@@ -776,9 +776,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphFillPointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphFillPointerOver(UIElement element)
+        public static Brush? GetCheckGlyphFillPointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphFillPointerOverProperty);
+            return (Brush?)element.GetValue(CheckGlyphFillPointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphFillPointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -786,7 +786,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphFillPointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphFillPointerOver(UIElement element, Brush value)
+        public static void SetCheckGlyphFillPointerOver(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphFillPointerOverProperty, value);
         }
@@ -802,9 +802,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphFillPressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphFillPressed(UIElement element)
+        public static Brush? GetCheckGlyphFillPressed(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphFillPressedProperty);
+            return (Brush?)element.GetValue(CheckGlyphFillPressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphFillPressedProperty"/> on <paramref name="element"/>.</summary>
@@ -812,7 +812,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphFillPressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphFillPressed(UIElement element, Brush value)
+        public static void SetCheckGlyphFillPressed(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphFillPressedProperty, value);
         }
@@ -828,9 +828,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphFillDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphFillDisabled(UIElement element)
+        public static Brush? GetCheckGlyphFillDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphFillDisabledProperty);
+            return (Brush?)element.GetValue(CheckGlyphFillDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphFillDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -838,7 +838,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphFillDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphFillDisabled(UIElement element, Brush value)
+        public static void SetCheckGlyphFillDisabled(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphFillDisabledProperty, value);
         }
@@ -854,9 +854,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphStroke property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphStroke(UIElement element)
+        public static Brush? GetCheckGlyphStroke(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphStrokeProperty);
+            return (Brush?)element.GetValue(CheckGlyphStrokeProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphStrokeProperty"/> on <paramref name="element"/>.</summary>
@@ -864,7 +864,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphStroke property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphStroke(UIElement element, Brush value)
+        public static void SetCheckGlyphStroke(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphStrokeProperty, value);
         }
@@ -880,9 +880,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphStrokePointerOver property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphStrokePointerOver(UIElement element)
+        public static Brush? GetCheckGlyphStrokePointerOver(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphStrokePointerOverProperty);
+            return (Brush?)element.GetValue(CheckGlyphStrokePointerOverProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphStrokePointerOverProperty"/> on <paramref name="element"/>.</summary>
@@ -890,7 +890,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphStrokePointerOver property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphStrokePointerOver(UIElement element, Brush value)
+        public static void SetCheckGlyphStrokePointerOver(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphStrokePointerOverProperty, value);
         }
@@ -906,9 +906,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphStrokePressed property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphStrokePressed(UIElement element)
+        public static Brush? GetCheckGlyphStrokePressed(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphStrokePressedProperty);
+            return (Brush?)element.GetValue(CheckGlyphStrokePressedProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphStrokePressedProperty"/> on <paramref name="element"/>.</summary>
@@ -916,7 +916,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphStrokePressed property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphStrokePressed(UIElement element, Brush value)
+        public static void SetCheckGlyphStrokePressed(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphStrokePressedProperty, value);
         }
@@ -932,9 +932,9 @@ namespace MahApps.Metro.Controls
         /// <returns>CheckGlyphStrokeDisabled property value.</returns>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static Brush GetCheckGlyphStrokeDisabled(UIElement element)
+        public static Brush? GetCheckGlyphStrokeDisabled(UIElement element)
         {
-            return (Brush)element.GetValue(CheckGlyphStrokeDisabledProperty);
+            return (Brush?)element.GetValue(CheckGlyphStrokeDisabledProperty);
         }
 
         /// <summary>Helper for setting <see cref="CheckGlyphStrokeDisabledProperty"/> on <paramref name="element"/>.</summary>
@@ -942,7 +942,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value">CheckGlyphStrokeDisabled property value.</param>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
-        public static void SetCheckGlyphStrokeDisabled(UIElement element, Brush value)
+        public static void SetCheckGlyphStrokeDisabled(UIElement element, Brush? value)
         {
             element.SetValue(CheckGlyphStrokeDisabledProperty, value);
         }

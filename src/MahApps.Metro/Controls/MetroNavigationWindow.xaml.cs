@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty OverlayContentProperty = DependencyProperty.Register(nameof(OverlayContent), typeof(object), typeof(MetroNavigationWindow));
 
-        public object OverlayContent
+        public object? OverlayContent
         {
             get { return GetValue(OverlayContentProperty); }
             set { SetValue(OverlayContentProperty, value); }
@@ -140,7 +140,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty PageContentProperty = DependencyProperty.Register(nameof(PageContent), typeof(object), typeof(MetroNavigationWindow));
 
-        public object PageContent
+        public object? PageContent
         {
             get { return GetValue(PageContentProperty); }
             private set { SetValue(PageContentProperty, value); }

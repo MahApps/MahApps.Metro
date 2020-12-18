@@ -89,9 +89,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static ICommand GetCloseTabCommand(UIElement element)
+        public static ICommand? GetCloseTabCommand(UIElement element)
         {
-            return (ICommand)element.GetValue(CloseTabCommandProperty);
+            return (ICommand?)element.GetValue(CloseTabCommandProperty);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static void SetCloseTabCommand(UIElement element, ICommand value)
+        public static void SetCloseTabCommand(UIElement element, ICommand? value)
         {
             element.SetValue(CloseTabCommandProperty, value);
         }
@@ -118,9 +118,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static object GetCloseTabCommandParameter(UIElement element)
+        public static object? GetCloseTabCommandParameter(UIElement element)
         {
-            return (object)element.GetValue(CloseTabCommandParameterProperty);
+            return (object?)element.GetValue(CloseTabCommandParameterProperty);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static void SetCloseTabCommandParameter(UIElement element, object value)
+        public static void SetCloseTabCommandParameter(UIElement element, object? value)
         {
             element.SetValue(CloseTabCommandParameterProperty, value);
         }
@@ -168,15 +168,15 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static Brush GetUnderlineBrush(UIElement element)
+        public static Brush? GetUnderlineBrush(UIElement element)
         {
-            return (Brush)element.GetValue(UnderlineBrushProperty);
+            return (Brush?)element.GetValue(UnderlineBrushProperty);
         }
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static void SetUnderlineBrush(UIElement element, Brush value)
+        public static void SetUnderlineBrush(UIElement element, Brush? value)
         {
             element.SetValue(UnderlineBrushProperty, value);
         }
@@ -193,15 +193,15 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static Brush GetUnderlineSelectedBrush(UIElement element)
+        public static Brush? GetUnderlineSelectedBrush(UIElement element)
         {
-            return (Brush)element.GetValue(UnderlineSelectedBrushProperty);
+            return (Brush?)element.GetValue(UnderlineSelectedBrushProperty);
         }
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static void SetUnderlineSelectedBrush(UIElement element, Brush value)
+        public static void SetUnderlineSelectedBrush(UIElement element, Brush? value)
         {
             element.SetValue(UnderlineSelectedBrushProperty, value);
         }
@@ -218,15 +218,15 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static Brush GetUnderlineMouseOverBrush(UIElement element)
+        public static Brush? GetUnderlineMouseOverBrush(UIElement element)
         {
-            return (Brush)element.GetValue(UnderlineMouseOverBrushProperty);
+            return (Brush?)element.GetValue(UnderlineMouseOverBrushProperty);
         }
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static void SetUnderlineMouseOverBrush(UIElement element, Brush value)
+        public static void SetUnderlineMouseOverBrush(UIElement element, Brush? value)
         {
             element.SetValue(UnderlineMouseOverBrushProperty, value);
         }
@@ -243,15 +243,15 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static Brush GetUnderlineMouseOverSelectedBrush(UIElement element)
+        public static Brush? GetUnderlineMouseOverSelectedBrush(UIElement element)
         {
-            return (Brush)element.GetValue(UnderlineMouseOverSelectedBrushProperty);
+            return (Brush?)element.GetValue(UnderlineMouseOverSelectedBrushProperty);
         }
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        public static void SetUnderlineMouseOverSelectedBrush(UIElement element, Brush value)
+        public static void SetUnderlineMouseOverSelectedBrush(UIElement element, Brush? value)
         {
             element.SetValue(UnderlineMouseOverSelectedBrushProperty, value);
         }

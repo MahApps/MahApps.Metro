@@ -45,9 +45,9 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="ParentWindowCommands"/> dependency property.</summary>
         public static readonly DependencyProperty ParentWindowCommandsProperty = ParentWindowCommandsPropertyKey.DependencyProperty;
 
-        public WindowCommands ParentWindowCommands
+        public WindowCommands? ParentWindowCommands
         {
-            get => (WindowCommands)this.GetValue(ParentWindowCommandsProperty);
+            get => (WindowCommands?)this.GetValue(ParentWindowCommandsProperty);
             protected set => this.SetValue(ParentWindowCommandsPropertyKey, value);
         }
 

@@ -105,9 +105,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a style for the navigation index items.
         /// </summary>
-        public Style IndexItemContainerStyle
+        public Style? IndexItemContainerStyle
         {
-            get => (Style)this.GetValue(IndexItemContainerStyleProperty);
+            get => (Style?)this.GetValue(IndexItemContainerStyleProperty);
             set => this.SetValue(IndexItemContainerStyleProperty, value);
         }
 
@@ -351,7 +351,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the banner text.
         /// </summary>
-        public object? BannerText
+        public object BannerText
         {
             get => this.GetValue(BannerTextProperty);
             set => this.SetValue(BannerTextProperty, value);
@@ -373,9 +373,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the banner's content.
         /// </summary>
-        public DataTemplate BannerTextTemplate
+        public DataTemplate? BannerTextTemplate
         {
-            get => (DataTemplate)this.GetValue(BannerTextTemplateProperty);
+            get => (DataTemplate?)this.GetValue(BannerTextTemplateProperty);
             set => this.SetValue(BannerTextTemplateProperty, value);
         }
 
@@ -394,9 +394,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public DataTemplateSelector BannerTextTemplateSelector
+        public DataTemplateSelector? BannerTextTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(BannerTextTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(BannerTextTemplateSelectorProperty);
             set => this.SetValue(BannerTextTemplateSelectorProperty, value);
         }
 
@@ -415,18 +415,18 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string BannerTextStringFormat
+        public string? BannerTextStringFormat
         {
-            get => (string)this.GetValue(BannerTextStringFormatProperty);
+            get => (string?)this.GetValue(BannerTextStringFormatProperty);
             set => this.SetValue(BannerTextStringFormatProperty, value);
         }
 
         /// <summary>
         /// Gets or sets a <see cref="T:System.Windows.Media.Brush" /> that is used to fill the banner.
         /// </summary>
-        public Brush BannerBackground
+        public Brush? BannerBackground
         {
-            get => (Brush)this.GetValue(BannerBackgroundProperty);
+            get => (Brush?)this.GetValue(BannerBackgroundProperty);
             set => this.SetValue(BannerBackgroundProperty, value);
         }
 
@@ -472,9 +472,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> for the navigation buttons.
         /// </summary>
-        public Style NavigationButtonStyle
+        public Style? NavigationButtonStyle
         {
-            get => (Style)this.GetValue(NavigationButtonStyleProperty);
+            get => (Style?)this.GetValue(NavigationButtonStyleProperty);
             set => this.SetValue(NavigationButtonStyleProperty, value);
         }
 
@@ -489,7 +489,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Back Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonBackContent
+        public object? ButtonBackContent
         {
             get => this.GetValue(ButtonBackContentProperty);
             set => this.SetValue(ButtonBackContentProperty, value);
@@ -504,9 +504,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Back button's content.
         /// </summary>
-        public DataTemplate ButtonBackContentTemplate
+        public DataTemplate? ButtonBackContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonBackContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonBackContentTemplateProperty);
             set => this.SetValue(ButtonBackContentTemplateProperty, value);
         }
 
@@ -525,9 +525,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonBackContentStringFormat
+        public string? ButtonBackContentStringFormat
         {
-            get => (string)this.GetValue(ButtonBackContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonBackContentStringFormatProperty);
             set => this.SetValue(ButtonBackContentStringFormatProperty, value);
         }
 
@@ -542,7 +542,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Forward Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonForwardContent
+        public object? ButtonForwardContent
         {
             get => this.GetValue(ButtonForwardContentProperty);
             set => this.SetValue(ButtonForwardContentProperty, value);
@@ -557,9 +557,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Forward button's content.
         /// </summary>
-        public DataTemplate ButtonForwardContentTemplate
+        public DataTemplate? ButtonForwardContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonForwardContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonForwardContentTemplateProperty);
             set => this.SetValue(ButtonForwardContentTemplateProperty, value);
         }
 
@@ -578,9 +578,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonForwardContentStringFormat
+        public string? ButtonForwardContentStringFormat
         {
-            get => (string)this.GetValue(ButtonForwardContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonForwardContentStringFormatProperty);
             set => this.SetValue(ButtonForwardContentStringFormatProperty, value);
         }
 
@@ -595,7 +595,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Up Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonUpContent
+        public object? ButtonUpContent
         {
             get => this.GetValue(ButtonUpContentProperty);
             set => this.SetValue(ButtonUpContentProperty, value);
@@ -610,9 +610,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Up button's content.
         /// </summary>
-        public DataTemplate ButtonUpContentTemplate
+        public DataTemplate? ButtonUpContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonUpContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonUpContentTemplateProperty);
             set => this.SetValue(ButtonUpContentTemplateProperty, value);
         }
 
@@ -631,9 +631,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonUpContentStringFormat
+        public string? ButtonUpContentStringFormat
         {
-            get => (string)this.GetValue(ButtonUpContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonUpContentStringFormatProperty);
             set => this.SetValue(ButtonUpContentStringFormatProperty, value);
         }
 
@@ -648,7 +648,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Down Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonDownContent
+        public object? ButtonDownContent
         {
             get => this.GetValue(ButtonDownContentProperty);
             set => this.SetValue(ButtonDownContentProperty, value);
@@ -663,9 +663,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Down button's content.
         /// </summary>
-        public DataTemplate ButtonDownContentTemplate
+        public DataTemplate? ButtonDownContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonDownContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonDownContentTemplateProperty);
             set => this.SetValue(ButtonDownContentTemplateProperty, value);
         }
 
@@ -684,9 +684,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonDownContentStringFormat
+        public string? ButtonDownContentStringFormat
         {
-            get => (string)this.GetValue(ButtonDownContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonDownContentStringFormatProperty);
             set => this.SetValue(ButtonDownContentStringFormatProperty, value);
         }
 

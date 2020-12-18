@@ -106,9 +106,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static object GetRevealButtonContent(DependencyObject d)
+        public static object? GetRevealButtonContent(DependencyObject d)
         {
-            return (object)d.GetValue(RevealButtonContentProperty);
+            return (object?)d.GetValue(RevealButtonContentProperty);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static void SetRevealButtonContent(DependencyObject obj, object value)
+        public static void SetRevealButtonContent(DependencyObject obj, object? value)
         {
             obj.SetValue(RevealButtonContentProperty, value);
         }
@@ -132,9 +132,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static DataTemplate GetRevealButtonContentTemplate(DependencyObject d)
+        public static DataTemplate? GetRevealButtonContentTemplate(DependencyObject d)
         {
-            return (DataTemplate)d.GetValue(RevealButtonContentTemplateProperty);
+            return (DataTemplate?)d.GetValue(RevealButtonContentTemplateProperty);
         }
 
         /// <summary> 
@@ -142,7 +142,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static void SetRevealButtonContentTemplate(DependencyObject obj, DataTemplate value)
+        public static void SetRevealButtonContentTemplate(DependencyObject obj, DataTemplate? value)
         {
             obj.SetValue(RevealButtonContentTemplateProperty, value);
         }

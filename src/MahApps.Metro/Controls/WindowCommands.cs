@@ -77,9 +77,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating the light theme ControlTemplate.
         /// </summary>
-        public ControlTemplate LightTemplate
+        public ControlTemplate? LightTemplate
         {
-            get => (ControlTemplate)this.GetValue(LightTemplateProperty);
+            get => (ControlTemplate?)this.GetValue(LightTemplateProperty);
             set => this.SetValue(LightTemplateProperty, value);
         }
 
@@ -93,9 +93,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating the light theme ControlTemplate.
         /// </summary>
-        public ControlTemplate DarkTemplate
+        public ControlTemplate? DarkTemplate
         {
-            get => (ControlTemplate)this.GetValue(DarkTemplateProperty);
+            get => (ControlTemplate?)this.GetValue(DarkTemplateProperty);
             set => this.SetValue(DarkTemplateProperty, value);
         }
 
@@ -182,9 +182,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the window.
         /// </summary>
-        public Window ParentWindow
+        public Window? ParentWindow
         {
-            get => (Window)this.GetValue(ParentWindowProperty);
+            get => (Window?)this.GetValue(ParentWindowProperty);
             protected set => this.SetValue(ParentWindowPropertyKey, value);
         }
 

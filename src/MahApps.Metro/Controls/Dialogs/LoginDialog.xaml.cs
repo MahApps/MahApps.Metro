@@ -19,9 +19,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
 
-        public string Message
+        public string? Message
         {
-            get { return (string)this.GetValue(MessageProperty); }
+            get { return (string?)this.GetValue(MessageProperty); }
             set { this.SetValue(MessageProperty, value); }
         }
 
@@ -37,9 +37,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="UsernameWatermark"/> dependency property.</summary>
         public static readonly DependencyProperty UsernameWatermarkProperty = DependencyProperty.Register(nameof(UsernameWatermark), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
 
-        public string UsernameWatermark
+        public string? UsernameWatermark
         {
-            get { return (string)this.GetValue(UsernameWatermarkProperty); }
+            get { return (string?)this.GetValue(UsernameWatermarkProperty); }
             set { this.SetValue(UsernameWatermarkProperty, value); }
         }
 
@@ -64,9 +64,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="PasswordWatermark"/> dependency property.</summary>
         public static readonly DependencyProperty PasswordWatermarkProperty = DependencyProperty.Register(nameof(PasswordWatermark), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
 
-        public string PasswordWatermark
+        public string? PasswordWatermark
         {
-            get { return (string)this.GetValue(PasswordWatermarkProperty); }
+            get { return (string?)this.GetValue(PasswordWatermarkProperty); }
             set { this.SetValue(PasswordWatermarkProperty, value); }
         }
 

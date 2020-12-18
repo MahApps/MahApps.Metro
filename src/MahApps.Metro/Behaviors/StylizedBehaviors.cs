@@ -19,12 +19,12 @@ namespace MahApps.Metro.Behaviors
                                                   new FrameworkPropertyMetadata(null, OnPropertyChanged));
 
         [Category(AppName.MahApps)]
-        public static StylizedBehaviorCollection GetBehaviors(DependencyObject uie)
+        public static StylizedBehaviorCollection? GetBehaviors(DependencyObject uie)
         {
-            return (StylizedBehaviorCollection)uie.GetValue(BehaviorsProperty);
+            return (StylizedBehaviorCollection?)uie.GetValue(BehaviorsProperty);
         }
 
-        public static void SetBehaviors(DependencyObject uie, StylizedBehaviorCollection value)
+        public static void SetBehaviors(DependencyObject uie, StylizedBehaviorCollection? value)
         {
             uie.SetValue(BehaviorsProperty, value);
         }
@@ -125,7 +125,7 @@ namespace MahApps.Metro.Behaviors
         {
             int index = -1;
 
-            Behavior orignalBehavior = GetOriginalBehavior(behavior);
+            var orignalBehavior = GetOriginalBehavior(behavior);
 
             for (int i = 0; i < itemBehaviors.Count; i++)
             {
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Behaviors
                     break;
                 }
 
-                Behavior currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
+                var currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
                 if (currentOrignalBehavior == behavior || currentOrignalBehavior == orignalBehavior)
                 {
                     index = i;
@@ -153,12 +153,12 @@ namespace MahApps.Metro.Behaviors
                                                   typeof(StylizedBehaviors),
                                                   new UIPropertyMetadata(null));
 
-        private static Behavior GetOriginalBehavior(DependencyObject obj)
+        private static Behavior? GetOriginalBehavior(DependencyObject obj)
         {
-            return (Behavior)obj.GetValue(OriginalBehaviorProperty);
+            return (Behavior?)obj.GetValue(OriginalBehaviorProperty);
         }
 
-        private static void SetOriginalBehavior(DependencyObject obj, Behavior value)
+        private static void SetOriginalBehavior(DependencyObject obj, Behavior? value)
         {
             obj.SetValue(OriginalBehaviorProperty, value);
         }

@@ -19,7 +19,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies an user specific object which can be used as icon.
         /// </summary>
-        public object Icon
+        public object? Icon
         {
             get { return GetValue(IconProperty); }
 

@@ -36,9 +36,16 @@ namespace MahApps.Metro.Controls
                 var oldBinding = GetSelectedItemBinding(d);
                 oldBinding?.UnBind();
 
-                var multiSelectorBinding = new MultiSelectorBinding((Selector)d, (IList)e.NewValue);
-                SetSelectedItemBinding(d, multiSelectorBinding);
-                multiSelectorBinding.Bind();
+                if (e.NewValue is IList newList)
+                {
+                    var multiSelectorBinding = new MultiSelectorBinding((Selector)d, newList);
+                    SetSelectedItemBinding(d, multiSelectorBinding);
+                    multiSelectorBinding.Bind();
+                }
+                else
+                {
+                    SetSelectedItemBinding((Selector)d, null);
+                }
             }
         }
 
@@ -48,9 +55,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
-        public static IList GetSelectedItems(DependencyObject element)
+        public static IList? GetSelectedItems(DependencyObject element)
         {
-            return (IList)element.GetValue(SelectedItemsProperty);
+            return (IList?)element.GetValue(SelectedItemsProperty);
         }
 
         /// <summary>
@@ -59,7 +66,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
-        public static void SetSelectedItems(DependencyObject element, IList value)
+        public static void SetSelectedItems(DependencyObject element, IList? value)
         {
             element.SetValue(SelectedItemsProperty, value);
         }
@@ -75,9 +82,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
-        private static MultiSelectorBinding GetSelectedItemBinding(DependencyObject element)
+        private static MultiSelectorBinding? GetSelectedItemBinding(DependencyObject element)
         {
-            return (MultiSelectorBinding)element.GetValue(SelectedItemBindingProperty);
+            return (MultiSelectorBinding?)element.GetValue(SelectedItemBindingProperty);
         }
 
         /// <summary>
@@ -85,7 +92,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
-        private static void SetSelectedItemBinding(DependencyObject element, MultiSelectorBinding value)
+        private static void SetSelectedItemBinding(DependencyObject element, MultiSelectorBinding? value)
         {
             element.SetValue(SelectedItemBindingProperty, value);
         }

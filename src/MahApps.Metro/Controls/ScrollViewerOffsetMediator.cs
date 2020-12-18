@@ -12,9 +12,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ScrollViewerProperty = DependencyProperty.Register(nameof(ScrollViewer), typeof(ScrollViewer), typeof(ScrollViewerOffsetMediator), new PropertyMetadata(default(ScrollViewer), OnScrollViewerChanged));
         public static readonly DependencyProperty HorizontalOffsetProperty = DependencyProperty.Register(nameof(HorizontalOffset), typeof(double), typeof(ScrollViewerOffsetMediator), new PropertyMetadata(default(double), OnHorizontalOffsetChanged));
 
-        public ScrollViewer ScrollViewer
+        public ScrollViewer? ScrollViewer
         {
-            get { return (ScrollViewer)GetValue(ScrollViewerProperty); }
+            get { return (ScrollViewer?)GetValue(ScrollViewerProperty); }
             set { SetValue(ScrollViewerProperty, value); }
         }
 
@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls
         private static void OnScrollViewerChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var mediator = (ScrollViewerOffsetMediator)o;
-            var scrollViewer = (ScrollViewer)(e.NewValue);
+            var scrollViewer = (ScrollViewer?)(e.NewValue);
             if (scrollViewer != null)
                 scrollViewer.ScrollToHorizontalOffset(mediator.HorizontalOffset);
         }

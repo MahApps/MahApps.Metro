@@ -102,7 +102,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                          {
                                              Title = title,
                                              Message = message,
-                                             Input = settings.DefaultText,
+                                             Input = settings?.DefaultText,
                                          };
 
                             SetDialogFontSizes(settings, dialog);
@@ -852,7 +852,7 @@ namespace MahApps.Metro.Controls.Dialogs
                          {
                              Message = message,
                              Title = title,
-                             Input = settings.DefaultText
+                             Input = settings?.DefaultText
                          };
 
             SetDialogFontSizes(settings, dialog);

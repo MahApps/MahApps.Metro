@@ -19,15 +19,15 @@ namespace MahApps.Metro.Behaviors
             base.OnAttached();
         }
 
-        public string ResourceName
+        public string? ResourceName
         {
-            get { return (string)GetValue(ResourceNameProperty); }
+            get { return (string?)GetValue(ResourceNameProperty); }
             set { SetValue(ResourceNameProperty, value); }
         }
 
-        public DependencyProperty Property
+        public DependencyProperty? Property
         {
-            get { return (DependencyProperty)GetValue(PropertyProperty); }
+            get { return (DependencyProperty?)GetValue(PropertyProperty); }
             set { SetValue(PropertyProperty, value); }
         }
     }

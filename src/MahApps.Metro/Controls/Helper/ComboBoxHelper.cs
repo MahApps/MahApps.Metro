@@ -19,10 +19,11 @@ namespace MahApps.Metro.Controls
                                                   typeof(ComboBoxHelper),
                                                   new FrameworkPropertyMetadata(0),
                                                   ValidateMaxLength);
-
+#pragma warning disable WPF0024
         private static bool ValidateMaxLength(object value)
+#pragma warning restore WPF0024
         {
-            return ((int)value) >= 0;
+            return (int)value >= 0;
         }
 
         /// <summary>
@@ -52,7 +53,9 @@ namespace MahApps.Metro.Controls
                                                   new FrameworkPropertyMetadata(CharacterCasing.Normal),
                                                   ValidateCharacterCasing);
 
+#pragma warning disable WPF0024
         private static bool ValidateCharacterCasing(object value)
+#pragma warning restore WPF0024
         {
             return (CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
         }

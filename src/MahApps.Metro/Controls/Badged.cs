@@ -19,9 +19,9 @@ namespace MahApps.Metro.Controls
                                           typeof(Badged),
                                           new PropertyMetadata(default(Storyboard)));
 
-        public Storyboard BadgeChangedStoryboard
+        public Storyboard? BadgeChangedStoryboard
         {
-            get => (Storyboard)this.GetValue(BadgeChangedStoryboardProperty);
+            get => (Storyboard?)this.GetValue(BadgeChangedStoryboardProperty);
             set => this.SetValue(BadgeChangedStoryboardProperty, value);
         }
 

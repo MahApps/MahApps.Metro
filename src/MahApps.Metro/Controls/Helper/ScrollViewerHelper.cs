@@ -279,9 +279,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static object GetEndOfScrollReachedCommandParameter(DependencyObject obj)
+        public static object? GetEndOfScrollReachedCommandParameter(DependencyObject obj)
         {
-            return (object)obj.GetValue(EndOfScrollReachedCommandParameterProperty);
+            return obj.GetValue(EndOfScrollReachedCommandParameterProperty);
         }
 
         /// <summary>Helper for setting <see cref="EndOfScrollReachedCommandParameterProperty"/> on <paramref name="obj"/>.</summary>
@@ -290,7 +290,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static void SetEndOfScrollReachedCommandParameter(DependencyObject obj, object value)
+        public static void SetEndOfScrollReachedCommandParameter(DependencyObject obj, object? value)
         {
             obj.SetValue(EndOfScrollReachedCommandParameterProperty, value);
         }

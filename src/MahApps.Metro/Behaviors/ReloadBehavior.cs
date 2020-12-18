@@ -170,12 +170,12 @@ namespace MahApps.Metro.Behaviors
                                                   typeof(ReloadBehavior),
                                                   new PropertyMetadata(default(ContentControl)));
 
-        internal static ContentControl GetContentControl(UIElement element)
+        internal static ContentControl? GetContentControl(UIElement element)
         {
-            return (ContentControl)element.GetValue(ContentControlProperty);
+            return (ContentControl?)element.GetValue(ContentControlProperty);
         }
 
-        internal static void SetContentControl(UIElement element, ContentControl value)
+        internal static void SetContentControl(UIElement element, ContentControl? value)
         {
             element.SetValue(ContentControlProperty, value);
         }

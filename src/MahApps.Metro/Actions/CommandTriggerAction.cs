@@ -95,15 +95,14 @@ namespace MahApps.Metro.Actions
                 return;
             }
 
-            if (e.OldValue != null)
+            if (e.OldValue is ICommand oldCommand)
             {
-                ((ICommand)e.OldValue).CanExecuteChanged -= action.OnCommandCanExecuteChanged;
+                oldCommand.CanExecuteChanged -= action.OnCommandCanExecuteChanged;
             }
 
-            var command = (ICommand?)e.NewValue;
-            if (command != null)
+            if (e.NewValue is ICommand newCommand)
             {
-                command.CanExecuteChanged += action.OnCommandCanExecuteChanged;
+                newCommand.CanExecuteChanged += action.OnCommandCanExecuteChanged;
             }
 
             action.EnableDisableElement();

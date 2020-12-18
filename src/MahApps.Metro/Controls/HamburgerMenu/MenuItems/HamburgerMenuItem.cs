@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Type? TargetPageType
         {
-            get { return (Type)GetValue(TargetPageTypeProperty); }
+            get { return (Type?)GetValue(TargetPageTypeProperty); }
 
             set { SetValue(TargetPageTypeProperty, value); }
         }
@@ -74,7 +74,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand? Command
         {
-            get { return (ICommand)GetValue(CommandProperty); }
+            get { return (ICommand?)GetValue(CommandProperty); }
 
             set { SetValue(CommandProperty, value); }
         }
@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? CommandParameter
         {
-            get { return (object)GetValue(CommandParameterProperty); }
+            get { return GetValue(CommandParameterProperty); }
 
             set { SetValue(CommandParameterProperty, value); }
         }
@@ -97,7 +97,7 @@ namespace MahApps.Metro.Controls
         /// </returns>
         public IInputElement? CommandTarget
         {
-            get { return (IInputElement)this.GetValue(CommandTargetProperty); }
+            get { return (IInputElement?)this.GetValue(CommandTargetProperty); }
 
             set { this.SetValue(CommandTargetProperty, value); }
         }
@@ -180,7 +180,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
+#pragma warning disable WPF0024
         private static object IsEnabledCoerceValueCallback(DependencyObject d, object value)
+#pragma warning restore WPF0024
         {
             if (!(bool)value)
             {

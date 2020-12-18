@@ -49,9 +49,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TextProperty = TextPropertyKey.DependencyProperty;
 
-        public string Text
+        public string? Text
         {
-            get { return (string)GetValue(TextProperty); }
+            get { return (string?)GetValue(TextProperty); }
             protected set { SetValue(TextPropertyKey, value); }
         }
 

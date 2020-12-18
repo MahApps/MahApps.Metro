@@ -135,9 +135,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="DataTemplate"/> for the <see cref="ColorPickerBase.SelectedColor"/>
         /// </summary>
-        public DataTemplate SelectedColorTemplate
+        public DataTemplate? SelectedColorTemplate
         {
-            get => (DataTemplate)this.GetValue(SelectedColorTemplateProperty);
+            get => (DataTemplate?)this.GetValue(SelectedColorTemplateProperty);
             set => this.SetValue(SelectedColorTemplateProperty, value);
         }
 
@@ -199,9 +199,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
-        public DataTemplate AvailableColorPaletteHeaderTemplate
+        public DataTemplate? AvailableColorPaletteHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(AvailableColorPaletteHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AvailableColorPaletteHeaderTemplateProperty);
             set => this.SetValue(AvailableColorPaletteHeaderTemplateProperty, value);
         }
 
@@ -215,9 +215,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
-        public IEnumerable AvailableColorPaletteItemsSource
+        public IEnumerable? AvailableColorPaletteItemsSource
         {
-            get => (IEnumerable)this.GetValue(AvailableColorPaletteItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(AvailableColorPaletteItemsSourceProperty);
             set => this.SetValue(AvailableColorPaletteItemsSourceProperty, value);
         }
 
@@ -231,9 +231,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
-        public Style AvailableColorPaletteStyle
+        public Style? AvailableColorPaletteStyle
         {
-            get => (Style)this.GetValue(AvailableColorPaletteStyleProperty);
+            get => (Style?)this.GetValue(AvailableColorPaletteStyleProperty);
             set => this.SetValue(AvailableColorPaletteStyleProperty, value);
         }
 
@@ -279,9 +279,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
-        public DataTemplate CustomColorPalette01HeaderTemplate
+        public DataTemplate? CustomColorPalette01HeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(CustomColorPalette01HeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(CustomColorPalette01HeaderTemplateProperty);
             set => this.SetValue(CustomColorPalette01HeaderTemplateProperty, value);
         }
 
@@ -295,9 +295,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
-        public IEnumerable CustomColorPalette01ItemsSource
+        public IEnumerable? CustomColorPalette01ItemsSource
         {
-            get => (IEnumerable)this.GetValue(CustomColorPalette01ItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(CustomColorPalette01ItemsSourceProperty);
             set => this.SetValue(CustomColorPalette01ItemsSourceProperty, value);
         }
 
@@ -311,9 +311,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
-        public Style CustomColorPalette01Style
+        public Style? CustomColorPalette01Style
         {
-            get => (Style)this.GetValue(CustomColorPalette01StyleProperty);
+            get => (Style?)this.GetValue(CustomColorPalette01StyleProperty);
             set => this.SetValue(CustomColorPalette01StyleProperty, value);
         }
 
@@ -359,9 +359,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
-        public DataTemplate CustomColorPalette02HeaderTemplate
+        public DataTemplate? CustomColorPalette02HeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(CustomColorPalette02HeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(CustomColorPalette02HeaderTemplateProperty);
             set => this.SetValue(CustomColorPalette02HeaderTemplateProperty, value);
         }
 
@@ -375,9 +375,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
-        public IEnumerable CustomColorPalette02ItemsSource
+        public IEnumerable? CustomColorPalette02ItemsSource
         {
-            get => (IEnumerable)this.GetValue(CustomColorPalette02ItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(CustomColorPalette02ItemsSourceProperty);
             set => this.SetValue(CustomColorPalette02ItemsSourceProperty, value);
         }
 
@@ -391,9 +391,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
-        public Style CustomColorPalette02Style
+        public Style? CustomColorPalette02Style
         {
-            get => (Style)this.GetValue(CustomColorPalette02StyleProperty);
+            get => (Style?)this.GetValue(CustomColorPalette02StyleProperty);
             set => this.SetValue(CustomColorPalette02StyleProperty, value);
         }
 
@@ -439,9 +439,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
-        public DataTemplate RecentColorPaletteHeaderTemplate
+        public DataTemplate? RecentColorPaletteHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(RecentColorPaletteHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(RecentColorPaletteHeaderTemplateProperty);
             set => this.SetValue(RecentColorPaletteHeaderTemplateProperty, value);
         }
 
@@ -455,9 +455,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
-        public IEnumerable RecentColorPaletteItemsSource
+        public IEnumerable? RecentColorPaletteItemsSource
         {
-            get => (IEnumerable)this.GetValue(RecentColorPaletteItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(RecentColorPaletteItemsSourceProperty);
             set => this.SetValue(RecentColorPaletteItemsSourceProperty, value);
         }
 
@@ -471,9 +471,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
-        public Style RecentColorPaletteStyle
+        public Style? RecentColorPaletteStyle
         {
-            get => (Style)this.GetValue(RecentColorPaletteStyleProperty);
+            get => (Style?)this.GetValue(RecentColorPaletteStyleProperty);
             set => this.SetValue(RecentColorPaletteStyleProperty, value);
         }
 
@@ -519,9 +519,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
-        public object StandardColorPaletteHeaderTemplate
+        public object? StandardColorPaletteHeaderTemplate
         {
-            get => (object)this.GetValue(StandardColorPaletteHeaderTemplateProperty);
+            get => (object?)this.GetValue(StandardColorPaletteHeaderTemplateProperty);
             set => this.SetValue(StandardColorPaletteHeaderTemplateProperty, value);
         }
 
@@ -535,9 +535,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
-        public IEnumerable StandardColorPaletteItemsSource
+        public IEnumerable? StandardColorPaletteItemsSource
         {
-            get => (IEnumerable)this.GetValue(StandardColorPaletteItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(StandardColorPaletteItemsSourceProperty);
             set => this.SetValue(StandardColorPaletteItemsSourceProperty, value);
         }
 
@@ -551,9 +551,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
-        public Style StandardColorPaletteStyle
+        public Style? StandardColorPaletteStyle
         {
-            get => (Style)this.GetValue(StandardColorPaletteStyleProperty);
+            get => (Style?)this.GetValue(StandardColorPaletteStyleProperty);
             set => this.SetValue(StandardColorPaletteStyleProperty, value);
         }
 
@@ -567,9 +567,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> for the <see cref="TabControl"/>.
         /// </summary>
-        public Style TabControlStyle
+        public Style? TabControlStyle
         {
-            get => (Style)this.GetValue(TabControlStyleProperty);
+            get => (Style?)this.GetValue(TabControlStyleProperty);
             set => this.SetValue(TabControlStyleProperty, value);
         }
 
@@ -583,9 +583,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> for the <see cref="TabItem"/>
         /// </summary>
-        public Style TabItemStyle
+        public Style? TabItemStyle
         {
-            get => (Style)this.GetValue(TabItemStyleProperty);
+            get => (Style?)this.GetValue(TabItemStyleProperty);
             set => this.SetValue(TabItemStyleProperty, value);
         }
 
@@ -615,9 +615,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="HeaderedContentControl.HeaderTemplate"/> for the <see cref="ColorPalette"/> <see cref="TabItem"/>.
         /// </summary>
-        public DataTemplate ColorPalettesTabHeaderTemplate
+        public DataTemplate? ColorPalettesTabHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(ColorPalettesTabHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ColorPalettesTabHeaderTemplateProperty);
             set => this.SetValue(ColorPalettesTabHeaderTemplateProperty, value);
         }
 
@@ -663,9 +663,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="HeaderedContentControl.HeaderTemplate"/> for the <see cref="ColorCanvas"/> <see cref="TabItem"/>.
         /// </summary>
-        public DataTemplate AdvancedTabHeaderTemplate
+        public DataTemplate? AdvancedTabHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(AdvancedTabHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AdvancedTabHeaderTemplateProperty);
             set => this.SetValue(AdvancedTabHeaderTemplateProperty, value);
         }
 

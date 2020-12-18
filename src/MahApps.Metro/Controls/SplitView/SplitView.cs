@@ -79,9 +79,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the contents of the main panel of a <see cref="SplitView" />.
         /// </summary>
         /// <returns>The contents of the main panel of a <see cref="SplitView" />. The default is null.</returns>
-        public UIElement Content
+        public UIElement? Content
         {
-            get => (UIElement)this.GetValue(ContentProperty);
+            get => (UIElement?)this.GetValue(ContentProperty);
             set => this.SetValue(ContentProperty, value);
         }
 
@@ -177,7 +177,7 @@ namespace MahApps.Metro.Controls
                                           typeof(SplitView),
                                           new PropertyMetadata(0d, OnOpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
 
-        private static object OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object inputValue)
+        private static object? OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object? inputValue)
         {
             if (dependencyObject is SplitView splitView && splitView.ActualWidth > 0 && inputValue is double openPaneLength)
             {
@@ -319,9 +319,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the <see cref="Style"/> for the resizing Thumb (type of <see cref="MetroThumb"/>)
         /// </summary>
-        public Style ResizeThumbStyle
+        public Style? ResizeThumbStyle
         {
-            get => (Style)this.GetValue(ResizeThumbStyleProperty);
+            get => (Style?)this.GetValue(ResizeThumbStyleProperty);
             set => this.SetValue(ResizeThumbStyleProperty, value);
         }
 
@@ -336,9 +336,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the contents of the pane of a <see cref="SplitView" />.
         /// </summary>
         /// <returns>The contents of the pane of a <see cref="SplitView" />. The default is null.</returns>
-        public UIElement Pane
+        public UIElement? Pane
         {
-            get => (UIElement)this.GetValue(PaneProperty);
+            get => (UIElement?)this.GetValue(PaneProperty);
             set => this.SetValue(PaneProperty, value);
         }
 
@@ -353,9 +353,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the Brush to apply to the background of the <see cref="Pane" /> area of the control.
         /// </summary>
         /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
-        public Brush PaneBackground
+        public Brush? PaneBackground
         {
-            get => (Brush)this.GetValue(PaneBackgroundProperty);
+            get => (Brush?)this.GetValue(PaneBackgroundProperty);
             set => this.SetValue(PaneBackgroundProperty, value);
         }
 
@@ -370,9 +370,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the Brush to apply to the foreground of the <see cref="Pane" /> area of the control.
         /// </summary>
         /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
-        public Brush PaneForeground
+        public Brush? PaneForeground
         {
-            get => (Brush)this.GetValue(PaneForegroundProperty);
+            get => (Brush?)this.GetValue(PaneForegroundProperty);
             set => this.SetValue(PaneForegroundProperty, value);
         }
 
@@ -418,9 +418,9 @@ namespace MahApps.Metro.Controls
         ///     templates for a <see cref="SplitView" /> control.
         /// </summary>
         /// <returns>An object that provides calculated values for templates.</returns>
-        public SplitViewTemplateSettings TemplateSettings
+        public SplitViewTemplateSettings? TemplateSettings
         {
-            get => (SplitViewTemplateSettings)this.GetValue(TemplateSettingsProperty);
+            get => (SplitViewTemplateSettings?)this.GetValue(TemplateSettingsProperty);
             private set => this.SetValue(TemplateSettingsProperty, value);
         }
 
@@ -485,7 +485,7 @@ namespace MahApps.Metro.Controls
 
             this.ExecuteWhenLoaded(() =>
                 {
-                    this.TemplateSettings.Update();
+                    this.TemplateSettings?.Update();
                     this.ChangeVisualState(false, false);
                 });
         }

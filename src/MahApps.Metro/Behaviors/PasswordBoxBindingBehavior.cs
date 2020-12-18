@@ -200,7 +200,7 @@ namespace MahApps.Metro.Behaviors
             return (TextBox?)obj.GetValue(RevealedPasswordTextBoxProperty);
         }
 
-        private static void SetRevealedPasswordTextBox(DependencyObject obj, TextBox value)
+        private static void SetRevealedPasswordTextBox(DependencyObject obj, TextBox? value)
         {
             obj.SetValue(RevealedPasswordTextBoxProperty, value);
         }

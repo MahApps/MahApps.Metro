@@ -17,9 +17,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
 
-        public string Message
+        public string? Message
         {
-            get { return (string)this.GetValue(MessageProperty); }
+            get { return (string?)this.GetValue(MessageProperty); }
             set { this.SetValue(MessageProperty, value); }
         }
 
@@ -44,9 +44,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="ProgressBarForeground"/> dependency property.</summary>
         public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register(nameof(ProgressBarForeground), typeof(Brush), typeof(ProgressDialog), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public Brush ProgressBarForeground
+        public Brush? ProgressBarForeground
         {
-            get { return (Brush)this.GetValue(ProgressBarForegroundProperty); }
+            get { return (Brush?)this.GetValue(ProgressBarForegroundProperty); }
             set { this.SetValue(ProgressBarForegroundProperty, value); }
         }
 

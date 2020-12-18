@@ -11,9 +11,9 @@ namespace MahApps.Metro.Controls
     {
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(string), typeof(PivotItem), new PropertyMetadata(default(string)));
 
-        public string Header
+        public string? Header
         {
-            get { return (string)GetValue(HeaderProperty); }
+            get { return (string?)GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
 

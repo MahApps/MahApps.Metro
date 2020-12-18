@@ -299,9 +299,9 @@ namespace MahApps.Metro.Controls
         /// <remarks>
         /// The <see cref="ICommand"/> won't be executed when <see cref="IsOpen"/> property will be set to false/true.
         /// </remarks>
-        public ICommand CloseCommand
+        public ICommand? CloseCommand
         {
-            get => (ICommand)this.GetValue(CloseCommandProperty);
+            get => (ICommand?)this.GetValue(CloseCommandProperty);
             set => this.SetValue(CloseCommandProperty, value);
         }
 
@@ -314,9 +314,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the parameter for the <see cref="CloseCommand"/>.
         /// </summary>
-        public object CloseCommandParameter
+        public object? CloseCommandParameter
         {
-            get => (object)this.GetValue(CloseCommandParameterProperty);
+            get => this.GetValue(CloseCommandParameterProperty);
             set => this.SetValue(CloseCommandParameterProperty, value);
         }
 

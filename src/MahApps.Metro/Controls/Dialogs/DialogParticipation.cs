@@ -31,12 +31,12 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
-        public static void SetRegister(DependencyObject element, object context)
+        public static void SetRegister(DependencyObject element, object? context)
         {
             element.SetValue(RegisterProperty, context);
         }
 
-        public static object GetRegister(DependencyObject element)
+        public static object? GetRegister(DependencyObject element)
         {
             return element.GetValue(RegisterProperty);
         }

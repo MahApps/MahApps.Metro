@@ -145,9 +145,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the style that is used when rendering the calendar.
         /// </summary>
-        public Style CalendarStyle
+        public Style? CalendarStyle
         {
-            get => (Style)this.GetValue(CalendarStyleProperty);
+            get => (Style?)this.GetValue(CalendarStyleProperty);
             set => this.SetValue(CalendarStyleProperty, value);
         }
 
@@ -344,7 +344,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceOrientation(DependencyObject d, object basevalue)
+        private static object? CoerceOrientation(DependencyObject d, object? basevalue)
         {
             if (((DateTimePicker)d).IsClockVisible)
             {

@@ -23,9 +23,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
 
-        public string Message
+        public string? Message
         {
-            get { return (string)this.GetValue(MessageProperty); }
+            get { return (string?)this.GetValue(MessageProperty); }
             set { this.SetValue(MessageProperty, value); }
         }
 
@@ -50,7 +50,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="FirstAuxiliaryButtonText"/> dependency property.</summary>
         public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(FirstAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
 
+#pragma warning disable WPF0012 // CLR property type should match registered type.
         public string? FirstAuxiliaryButtonText
+#pragma warning restore WPF0012 // CLR property type should match registered type.
         {
             get { return (string?)this.GetValue(FirstAuxiliaryButtonTextProperty); }
             set { this.SetValue(FirstAuxiliaryButtonTextProperty, value); }
@@ -59,7 +61,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="SecondAuxiliaryButtonText"/> dependency property.</summary>
         public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(SecondAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
 
+#pragma warning disable WPF0012 // CLR property type should match registered type.
         public string? SecondAuxiliaryButtonText
+#pragma warning restore WPF0012 // CLR property type should match registered type.
         {
             get { return (string?)this.GetValue(SecondAuxiliaryButtonTextProperty); }
             set { this.SetValue(SecondAuxiliaryButtonTextProperty, value); }

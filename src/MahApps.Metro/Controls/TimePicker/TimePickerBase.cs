@@ -178,7 +178,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value));
         }
 
-        private static object OnCoerceIsDropDownOpen(DependencyObject d, object baseValue)
+        private static object? OnCoerceIsDropDownOpen(DependencyObject d, object? baseValue)
         {
             if (d is TimePickerBase tp && !tp.IsEnabled)
             {
@@ -298,9 +298,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category("Behavior")]
         [DefaultValue(null)]
-        public CultureInfo Culture
+        public CultureInfo? Culture
         {
-            get => (CultureInfo)this.GetValue(CultureProperty);
+            get => (CultureInfo?)this.GetValue(CultureProperty);
             set => this.SetValue(CultureProperty, value);
         }
 
@@ -387,9 +387,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the hour items.
         /// </summary>
-        public string HoursItemStringFormat
+        public string? HoursItemStringFormat
         {
-            get => (string)this.GetValue(HoursItemStringFormatProperty);
+            get => (string?)this.GetValue(HoursItemStringFormatProperty);
             set => this.SetValue(HoursItemStringFormatProperty, value);
         }
 
@@ -403,9 +403,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the minute items.
         /// </summary>
-        public string MinutesItemStringFormat
+        public string? MinutesItemStringFormat
         {
-            get => (string)this.GetValue(MinutesItemStringFormatProperty);
+            get => (string?)this.GetValue(MinutesItemStringFormatProperty);
             set => this.SetValue(MinutesItemStringFormatProperty, value);
         }
 
@@ -419,9 +419,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the second items.
         /// </summary>
-        public string SecondsItemStringFormat
+        public string? SecondsItemStringFormat
         {
-            get => (string)this.GetValue(SecondsItemStringFormatProperty);
+            get => (string?)this.GetValue(SecondsItemStringFormatProperty);
             set => this.SetValue(SecondsItemStringFormatProperty, value);
         }
 
@@ -727,7 +727,7 @@ namespace MahApps.Metro.Controls
                              .ToList();
         }
 
-        private static object CoerceSource60(DependencyObject d, object basevalue)
+        private static object CoerceSource60(DependencyObject d, object? basevalue)
         {
             var list = basevalue as IEnumerable<int>;
             if (list != null)
@@ -738,7 +738,7 @@ namespace MahApps.Metro.Controls
             return Enumerable.Empty<int>();
         }
 
-        private static object CoerceSourceHours(DependencyObject d, object basevalue)
+        private static object CoerceSourceHours(DependencyObject d, object? basevalue)
         {
             var timePickerBase = d as TimePickerBase;
             var hourList = basevalue as IEnumerable<int>;

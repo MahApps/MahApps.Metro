@@ -34,9 +34,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the HeaderTemplate of this Control
         /// </summary>
-        public DataTemplate HeaderTemplate
+        public DataTemplate? HeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(HeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(HeaderTemplateProperty);
             set => this.SetValue(HeaderTemplateProperty, value);
         }
 
@@ -46,9 +46,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a custom dictionary for color to name. If null, the default dictionary will be used.
         /// </summary>
-        public Dictionary<Color, string> ColorNamesDictionary
+        public Dictionary<Color, string>? ColorNamesDictionary
         {
-            get => (Dictionary<Color, string>)this.GetValue(ColorNamesDictionaryProperty);
+            get => (Dictionary<Color, string>?)this.GetValue(ColorNamesDictionaryProperty);
             set => this.SetValue(ColorNamesDictionaryProperty, value);
         }
 

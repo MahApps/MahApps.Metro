@@ -20,9 +20,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies a bitmap to display with an Image control.
         /// </summary>
-        public ImageSource Thumbnail
+        public ImageSource? Thumbnail
         {
-            get { return (ImageSource)GetValue(ThumbnailProperty); }
+            get { return (ImageSource?)GetValue(ThumbnailProperty); }
 
             set { SetValue(ThumbnailProperty, value); }
         }

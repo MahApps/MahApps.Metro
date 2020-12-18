@@ -72,9 +72,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the Cursor for Selecting Color Mode
         /// </summary>
-        public Cursor EyeDropperCursor
+        public Cursor? EyeDropperCursor
         {
-            get => (Cursor)this.GetValue(EyeDropperCursorProperty);
+            get => (Cursor?)this.GetValue(EyeDropperCursorProperty);
             set => this.SetValue(EyeDropperCursorProperty, value);
         }
 
@@ -88,9 +88,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the ContentControl.ContentTemplate for the preview.
         /// </summary>
-        public DataTemplate PreviewContentTemplate
+        public DataTemplate? PreviewContentTemplate
         {
-            get => (DataTemplate)this.GetValue(PreviewContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(PreviewContentTemplateProperty);
             set => this.SetValue(PreviewContentTemplateProperty, value);
         }
 
