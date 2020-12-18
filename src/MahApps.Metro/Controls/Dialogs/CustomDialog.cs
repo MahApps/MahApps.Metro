@@ -14,12 +14,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        public CustomDialog(MetroWindow parentWindow)
+        public CustomDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        public CustomDialog(MetroDialogSettings settings)
+        public CustomDialog(MetroDialogSettings? settings)
             : this(null, settings)
         {
         }

@@ -89,13 +89,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings? settings = null)
+        public static Task<string?> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
             settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
-                    return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
+                    return (Task<string?>)window.Dispatcher.Invoke(new Func<Task<string?>>(() =>
                         {
                             //create the dialog control
                             var dialog = new InputDialog(window, settings)

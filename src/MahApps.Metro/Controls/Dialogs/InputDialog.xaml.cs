@@ -66,7 +66,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.InitializeComponent();
         }
 
-        internal Task<string> WaitForButtonPressAsync()
+        internal Task<string?> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -74,7 +74,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.PART_TextBox.Focus();
                 }));
 
-            var tcs = new TaskCompletionSource<string>();
+            var tcs = new TaskCompletionSource<string?>();
 
             RoutedEventHandler? negativeHandler = null;
             KeyEventHandler? negativeKeyHandler = null;
