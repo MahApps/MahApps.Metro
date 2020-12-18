@@ -302,7 +302,7 @@ namespace MahApps.Metro.Tests
 
             var settings = window.GetWindowPlacementSettings();
             Assert.NotNull(settings);
-            Assert.Equal(true, settings.UpgradeSettings);
+            Assert.True(settings.UpgradeSettings);
         }
 
         [Fact]

@@ -184,7 +184,7 @@ namespace MahApps.Metro.Tests
             window.RightFlyout.IsOpen = true;
 
             // IsOpen fires IsOpenChangedEvent with DispatcherPriority.Background
-            window.RightFlyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Assert.True(eventRaised)));
+            await window.RightFlyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Assert.True(eventRaised)));
         }
 
         [Fact]

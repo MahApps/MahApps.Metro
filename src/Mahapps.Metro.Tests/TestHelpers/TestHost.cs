@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MahApps.Metro.Tests.TestHelpers
@@ -62,6 +63,7 @@ namespace MahApps.Metro.Tests.TestHelpers
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
                     gate.Set();
+                    await Task.Yield();
                 };
             app.Run();
         }
