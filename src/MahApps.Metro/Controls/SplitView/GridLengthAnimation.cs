@@ -51,10 +51,10 @@ namespace MahApps.Metro.Controls
 
             if (fromVal > toVal)
             {
-                return new GridLength((1 - animationClock.CurrentProgress.Value) * (fromVal - toVal) + toVal, GridUnitType.Star);
+                return new GridLength((1 - animationClock.CurrentProgress.GetValueOrDefault()) * (fromVal - toVal) + toVal, GridUnitType.Star);
             }
 
-            return new GridLength(animationClock.CurrentProgress.Value * (toVal - fromVal) + fromVal, GridUnitType.Star);
+            return new GridLength(animationClock.CurrentProgress.GetValueOrDefault() * (toVal - fromVal) + fromVal, GridUnitType.Star);
         }
 
         protected override Freezable CreateInstanceCore()

@@ -119,7 +119,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(EllipseDiameterScaleProperty, value);
         }
 
-        private List<Action> deferredActions = new List<Action>();
+        private List<Action>? deferredActions = new List<Action>();
 
         static ProgressRing()
         {

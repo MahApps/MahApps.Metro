@@ -12,18 +12,18 @@ namespace MahApps.Metro.Actions
 {
     public class CloseTabItemAction : CommandTriggerAction
     {
-        private TabItem associatedTabItem;
+        private TabItem? associatedTabItem;
 
-        private TabItem AssociatedTabItem => this.associatedTabItem ?? (this.associatedTabItem = this.AssociatedObject.TryFindParent<TabItem>());
+        private TabItem? AssociatedTabItem => this.associatedTabItem ?? (this.associatedTabItem = this.AssociatedObject.TryFindParent<TabItem>());
 
-        protected override void Invoke(object parameter)
+        protected override void Invoke(object? parameter)
         {
             if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
             {
                 return;
             }
 
-            var tabControl = this.AssociatedObject.TryFindParent<TabControl>();
+            var tabControl = this.AssociatedObject?.TryFindParent<TabControl>();
             var tabItem = this.AssociatedTabItem;
             if (tabControl == null || tabItem == null)
             {
@@ -83,7 +83,7 @@ namespace MahApps.Metro.Actions
             }
         }
 
-        protected override object GetCommandParameter()
+        protected override object? GetCommandParameter()
         {
             return this.CommandParameter ?? this.AssociatedTabItem;
         }

@@ -109,7 +109,7 @@ namespace MahApps.Metro.Controls
         }
 
         [CanBeNull]
-        private static Theme GetCurrentTheme([NotNull] MetroWindow window)
+        private static Theme? GetCurrentTheme([NotNull] MetroWindow window)
         {
             if (window is null)
             {
@@ -146,7 +146,7 @@ namespace MahApps.Metro.Controls
             window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentTheme, flyout.Theme, flyout.Position);
         }
 
-        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme)
+        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush? foregroundBrush, ControlzEx.Theming.Theme? currentAppTheme)
         {
             if (foregroundBrush == null)
             {
@@ -171,7 +171,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
+        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush? foregroundBrush, ControlzEx.Theming.Theme? currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
         {
             if (position == Position.Right || position == Position.Top)
             {

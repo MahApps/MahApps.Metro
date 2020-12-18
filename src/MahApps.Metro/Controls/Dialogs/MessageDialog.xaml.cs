@@ -50,18 +50,18 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="FirstAuxiliaryButtonText"/> dependency property.</summary>
         public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(FirstAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
 
-        public string FirstAuxiliaryButtonText
+        public string? FirstAuxiliaryButtonText
         {
-            get { return (string)this.GetValue(FirstAuxiliaryButtonTextProperty); }
+            get { return (string?)this.GetValue(FirstAuxiliaryButtonTextProperty); }
             set { this.SetValue(FirstAuxiliaryButtonTextProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="SecondAuxiliaryButtonText"/> dependency property.</summary>
         public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(SecondAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
 
-        public string SecondAuxiliaryButtonText
+        public string? SecondAuxiliaryButtonText
         {
-            get { return (string)this.GetValue(SecondAuxiliaryButtonTextProperty); }
+            get { return (string?)this.GetValue(SecondAuxiliaryButtonTextProperty); }
             set { this.SetValue(SecondAuxiliaryButtonTextProperty, value); }
         }
 
@@ -87,12 +87,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        internal MessageDialog(MetroWindow parentWindow)
+        internal MessageDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        internal MessageDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        internal MessageDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
             this.InitializeComponent();
@@ -140,19 +140,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
             var tcs = new TaskCompletionSource<MessageDialogResult>();
 
-            RoutedEventHandler negativeHandler = null;
-            KeyEventHandler negativeKeyHandler = null;
+            RoutedEventHandler? negativeHandler = null;
+            KeyEventHandler? negativeKeyHandler = null;
 
-            RoutedEventHandler affirmativeHandler = null;
-            KeyEventHandler affirmativeKeyHandler = null;
+            RoutedEventHandler? affirmativeHandler = null;
+            KeyEventHandler? affirmativeKeyHandler = null;
 
-            RoutedEventHandler firstAuxHandler = null;
-            KeyEventHandler firstAuxKeyHandler = null;
+            RoutedEventHandler? firstAuxHandler = null;
+            KeyEventHandler? firstAuxKeyHandler = null;
 
-            RoutedEventHandler secondAuxHandler = null;
-            KeyEventHandler secondAuxKeyHandler = null;
+            RoutedEventHandler? secondAuxHandler = null;
+            KeyEventHandler? secondAuxKeyHandler = null;
 
-            KeyEventHandler escapeKeyHandler = null;
+            KeyEventHandler? escapeKeyHandler = null;
 
             Action cleanUpHandlers = () =>
                 {

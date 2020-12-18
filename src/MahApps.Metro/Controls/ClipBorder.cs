@@ -18,8 +18,8 @@ namespace MahApps.Metro.Controls
     {
         #region Fields
 
-        private StreamGeometry _backgroundGeometryCache;
-        private StreamGeometry _borderGeometryCache;
+        private StreamGeometry? _backgroundGeometryCache;
+        private StreamGeometry? _borderGeometryCache;
 
         #endregion
 

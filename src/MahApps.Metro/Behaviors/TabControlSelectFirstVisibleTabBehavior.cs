@@ -29,7 +29,7 @@ namespace MahApps.Metro.Behaviors
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             List<TabItem> tabItems = AssociatedObject.Items.Cast<TabItem>().ToList();
-            TabItem selectedItem = AssociatedObject.SelectedItem as TabItem;
+            var selectedItem = AssociatedObject.SelectedItem as TabItem;
 
             //if the selected item is visible already, return
             if (selectedItem != null && selectedItem.Visibility == Visibility.Visible)

@@ -419,9 +419,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the focused element.
         /// </summary>
-        public FrameworkElement FocusedElement
+        public FrameworkElement? FocusedElement
         {
-            get => (FrameworkElement)this.GetValue(FocusedElementProperty);
+            get => (FrameworkElement?)this.GetValue(FocusedElementProperty);
             set => this.SetValue(FocusedElementProperty, value);
         }
 
@@ -524,36 +524,36 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
         public static readonly DependencyProperty OwnerProperty = OwnerPropertyKey.DependencyProperty;
 
-        public FlyoutsControl Owner
+        public FlyoutsControl? Owner
         {
-            get => (FlyoutsControl)this.GetValue(OwnerProperty);
+            get => (FlyoutsControl?)this.GetValue(OwnerProperty);
             protected set => this.SetValue(OwnerPropertyKey, value);
         }
 
-        private DispatcherTimer autoCloseTimer;
-        private FrameworkElement flyoutRoot;
-        private Storyboard showStoryboard;
-        private Storyboard hideStoryboard;
-        private SplineDoubleKeyFrame hideFrame;
-        private SplineDoubleKeyFrame hideFrameY;
-        private SplineDoubleKeyFrame showFrame;
-        private SplineDoubleKeyFrame showFrameY;
-        private SplineDoubleKeyFrame fadeOutFrame;
-        private FrameworkElement flyoutHeader;
-        private FrameworkElement flyoutContent;
-        private MetroWindow parentWindow;
+        private DispatcherTimer? autoCloseTimer;
+        private FrameworkElement? flyoutRoot;
+        private Storyboard? showStoryboard;
+        private Storyboard? hideStoryboard;
+        private SplineDoubleKeyFrame? hideFrame;
+        private SplineDoubleKeyFrame? hideFrameY;
+        private SplineDoubleKeyFrame? showFrame;
+        private SplineDoubleKeyFrame? showFrameY;
+        private SplineDoubleKeyFrame? fadeOutFrame;
+        private FrameworkElement? flyoutHeader;
+        private FrameworkElement? flyoutContent;
+        private MetroWindow? parentWindow;
 
-        private MetroWindow ParentWindow => this.parentWindow ??= this.TryFindParent<MetroWindow>();
+        private MetroWindow? ParentWindow => this.parentWindow ??= this.TryFindParent<MetroWindow>();
 
         /// <summary>
         /// <see cref="IsOpen"/> property changed notifier used in <see cref="FlyoutsControl"/>.
         /// </summary>
-        internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier? IsOpenPropertyChangeNotifier { get; set; }
 
         /// <summary>
         /// <see cref="Theme"/> property changed notifier used in <see cref="FlyoutsControl"/>.
         /// </summary>
-        internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier? ThemePropertyChangeNotifier { get; set; }
 
         static Flyout()
         {
@@ -587,7 +587,7 @@ namespace MahApps.Metro.Controls
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                this.autoCloseTimer.Start();
+                this.autoCloseTimer?.Start();
             }
         }
 
@@ -599,7 +599,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void AutoCloseTimerCallback(object sender, EventArgs e)
+        private void AutoCloseTimerCallback(object? sender, EventArgs e)
         {
             this.StopAutoCloseTimer();
 
@@ -637,7 +637,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static ControlzEx.Theming.Theme DetectTheme(Flyout flyout)
+        private static ControlzEx.Theming.Theme? DetectTheme(Flyout? flyout)
         {
             if (flyout is null)
             {
@@ -786,9 +786,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void HideStoryboardCompleted(object sender, EventArgs e)
+        private void HideStoryboardCompleted(object? sender, EventArgs e)
         {
-            this.hideStoryboard.Completed -= this.HideStoryboardCompleted;
+            if (this.hideStoryboard is not null)
+            {
+                this.hideStoryboard.Completed -= this.HideStoryboardCompleted;
+            }
+
             this.Hide();
         }
 
@@ -799,9 +803,13 @@ namespace MahApps.Metro.Controls
             this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
         }
 
-        private void ShowStoryboardCompleted(object sender, EventArgs e)
+        private void ShowStoryboardCompleted(object? sender, EventArgs e)
         {
-            this.showStoryboard.Completed -= this.ShowStoryboardCompleted;
+            if (this.showStoryboard is not null)
+            {
+                this.showStoryboard.Completed -= this.ShowStoryboardCompleted;
+            }
+
             this.Shown();
         }
 

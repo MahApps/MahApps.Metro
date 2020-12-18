@@ -54,7 +54,7 @@ namespace MahApps.Metro.Controls
 
         private static void RefreshCapslockStatus(object sender, RoutedEventArgs e)
         {
-            FrameworkElement fe = FindCapsLockIndicator((Control)sender);
+            var fe = FindCapsLockIndicator((Control)sender);
             if (fe != null)
             {
                 fe.Visibility = Keyboard.IsKeyToggled(Key.CapsLock) ? Visibility.Visible : Visibility.Collapsed;
@@ -63,14 +63,14 @@ namespace MahApps.Metro.Controls
 
         private static void HandlePasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            FrameworkElement fe = FindCapsLockIndicator((Control)sender);
+            var fe = FindCapsLockIndicator((Control)sender);
             if (fe != null)
             {
                 fe.Visibility = Visibility.Collapsed;
             }
         }
 
-        private static FrameworkElement FindCapsLockIndicator(Control pb)
+        private static FrameworkElement? FindCapsLockIndicator(Control pb)
         {
             return pb?.Template?.FindName("PART_CapsLockIndicator", pb) as FrameworkElement;
         }
@@ -125,7 +125,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterAttached("RevealButtonContentTemplate",
                                                   typeof(DataTemplate),
                                                   typeof(PasswordBoxHelper),
-                                                  new FrameworkPropertyMetadata((DataTemplate)null));
+                                                  new FrameworkPropertyMetadata(null));
 
         /// <summary> 
         /// Gets the data template used to display the content of the RevealButton.

@@ -96,7 +96,7 @@ namespace MahApps.Metro.Controls
         /// An event that is raised when a TabItem is closed.
         /// </summary>
         // Todo Rename this to TabItemClosing
-        public event TabItemClosingEventHandler TabItemClosingEvent;
+        public event TabItemClosingEventHandler? TabItemClosingEvent;
 
         internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
         {

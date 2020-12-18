@@ -28,9 +28,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="Username"/> dependency property.</summary>
         public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register(nameof(Username), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
 
-        public string Username
+        public string? Username
         {
-            get { return (string)this.GetValue(UsernameProperty); }
+            get { return (string?)this.GetValue(UsernameProperty); }
             set { this.SetValue(UsernameProperty, value); }
         }
 
@@ -55,9 +55,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>Identifies the <see cref="Password"/> dependency property.</summary>
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register(nameof(Password), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
 
-        public string Password
+        public string? Password
         {
-            get { return (string)this.GetValue(PasswordProperty); }
+            get { return (string?)this.GetValue(PasswordProperty); }
             set { this.SetValue(PasswordProperty, value); }
         }
 
@@ -138,15 +138,16 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        internal LoginDialog(MetroWindow parentWindow)
+        internal LoginDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        internal LoginDialog(MetroWindow parentWindow, LoginDialogSettings settings)
-            : base(parentWindow, settings)
+        internal LoginDialog(MetroWindow? parentWindow, LoginDialogSettings? settings)
+            : base(parentWindow, settings ??= new LoginDialogSettings())
         {
             this.InitializeComponent();
+            
             this.Username = settings.InitialUsername;
             this.Password = settings.InitialPassword;
             this.UsernameCharacterCasing = settings.UsernameCharacterCasing;
@@ -159,7 +160,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.RememberCheckBoxChecked = settings.RememberCheckBoxChecked;
         }
 
-        internal Task<LoginDialogData> WaitForButtonPressAsync()
+        internal Task<LoginDialogData?> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -174,15 +175,15 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
                 }));
 
-            TaskCompletionSource<LoginDialogData> tcs = new TaskCompletionSource<LoginDialogData>();
+            TaskCompletionSource<LoginDialogData?> tcs = new();
 
-            RoutedEventHandler negativeHandler = null;
-            KeyEventHandler negativeKeyHandler = null;
+            RoutedEventHandler? negativeHandler = null;
+            KeyEventHandler? negativeKeyHandler = null;
 
-            RoutedEventHandler affirmativeHandler = null;
-            KeyEventHandler affirmativeKeyHandler = null;
+            RoutedEventHandler? affirmativeHandler = null;
+            KeyEventHandler? affirmativeKeyHandler = null;
 
-            KeyEventHandler escapeKeyHandler = null;
+            KeyEventHandler? escapeKeyHandler = null;
 
             Action cleanUpHandlers = () =>
                 {
@@ -207,7 +208,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                                              this.BeginInvoke(() =>
                                                                  {
                                                                      cleanUpHandlers();
-                                                                     tcs.TrySetResult(null);
+                                                                     tcs.TrySetResult(null!);
                                                                  });
                                                          });
 
@@ -217,7 +218,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     }
                 };
 
@@ -227,7 +228,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     }
                 };
 
@@ -249,7 +250,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     cleanUpHandlers();
 
-                    tcs.TrySetResult(null);
+                    tcs.TrySetResult(null!);
 
                     e.Handled = true;
                 };

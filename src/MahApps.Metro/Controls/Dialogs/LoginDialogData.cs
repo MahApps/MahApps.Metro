@@ -9,13 +9,18 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public class LoginDialogData
     {
-        public string Username { get; internal set; }
+        public string? Username { get; internal set; }
 
-        public string Password
+        public string? Password
         {
             [SecurityCritical]
             get
             {
+                if (this.SecurePassword is null)
+                {
+                    return null;
+                }
+
                 IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(this.SecurePassword);
                 try
                 {
@@ -28,7 +33,7 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
-        public SecureString SecurePassword { get; internal set; }
+        public SecureString? SecurePassword { get; internal set; }
 
         public bool ShouldRemember { get; internal set; }
     }

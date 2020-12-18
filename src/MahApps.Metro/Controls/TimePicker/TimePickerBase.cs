@@ -46,20 +46,20 @@ namespace MahApps.Metro.Controls
         private const string ElementSecondPicker = "PART_SecondPicker";
         private const string ElementTextBox = "PART_TextBox";
 
-        private Selector ampmSwitcher;
-        private Button dropDownButton;
+        private Selector? ampmSwitcher;
+        private Button? dropDownButton;
         private bool deactivateRangeBaseEvent;
         private bool deactivateTextChangedEvent;
         private bool textInputChanged;
-        private UIElement hourHand;
-        protected Selector hourInput;
-        private UIElement minuteHand;
-        private Selector minuteInput;
-        private Popup popUp;
+        private UIElement? hourHand;
+        protected Selector? hourInput;
+        private UIElement? minuteHand;
+        private Selector? minuteInput;
+        private Popup? popUp;
         private bool disablePopupReopen;
-        private UIElement secondHand;
-        private Selector secondInput;
-        protected DatePickerTextBox textBox;
+        private UIElement? secondHand;
+        private Selector? secondInput;
+        protected DatePickerTextBox? textBox;
         protected DateTime? originalSelectedDateTime;
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace MahApps.Metro.Controls
             return new Binding(property.Name) { Source = this, Mode = bindingMode };
         }
 
-        protected virtual string GetValueForTextBox()
+        protected virtual string? GetValueForTextBox()
         {
             var format = this.SelectedTimeFormat == TimePickerFormat.Long ? string.Intern(this.SpecificCultureInfo.DateTimeFormat.LongTimePattern) : string.Intern(this.SpecificCultureInfo.DateTimeFormat.ShortTimePattern);
             var valueForTextBox = this.SelectedDateTime?.ToString(string.Intern(format), this.SpecificCultureInfo);
@@ -666,7 +666,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void PopUp_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void PopUp_PreviewMouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
         {
             if (sender is Popup popup && !popup.StaysOpen)
             {
@@ -680,7 +680,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void PopUp_Opened(object sender, EventArgs e)
+        private void PopUp_Opened(object? sender, EventArgs e)
         {
             if (!this.IsDropDownOpen)
             {
@@ -695,7 +695,7 @@ namespace MahApps.Metro.Controls
             // nothing here
         }
 
-        private void PopUp_Closed(object sender, EventArgs e)
+        private void PopUp_Closed(object? sender, EventArgs e)
         {
             if (this.IsDropDownOpen)
             {
@@ -768,7 +768,7 @@ namespace MahApps.Metro.Controls
             Debug.Assert(selector != null);
             Debug.Assert(keyEventArgs != null);
 
-            if (keyEventArgs.Key == Key.Escape || keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space)
+            if (keyEventArgs is not null && (keyEventArgs.Key == Key.Escape || keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space))
             {
                 this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
                 if (keyEventArgs.Key == Key.Escape)
@@ -869,7 +869,7 @@ namespace MahApps.Metro.Controls
             this.SetHourPartValues(newValue.GetValueOrDefault().TimeOfDay);
         }
 
-        private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)
+        private static void SetVisibility(UIElement? partHours, UIElement? partMinutes, UIElement? partSeconds, TimePartVisibility visibility)
         {
             if (partHours != null)
             {
@@ -887,12 +887,12 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static bool IsValueSelected(Selector selector)
+        private static bool IsValueSelected(Selector? selector)
         {
             return selector != null && selector.SelectedItem != null;
         }
 
-        private static void SetDefaultTimeOfDayValue(Selector selector)
+        private static void SetDefaultTimeOfDayValue(Selector? selector)
         {
             if (selector != null)
             {
@@ -910,9 +910,9 @@ namespace MahApps.Metro.Controls
                     IsValueSelected(this.minuteInput) &&
                     IsValueSelected(this.secondInput))
                 {
-                    var hours = (int)this.hourInput.SelectedItem;
-                    var minutes = (int)this.minuteInput.SelectedItem;
-                    var seconds = (int)this.secondInput.SelectedItem;
+                    var hours = (int)this.hourInput!.SelectedItem;
+                    var minutes = (int)this.minuteInput!.SelectedItem;
+                    var seconds = (int)this.secondInput!.SelectedItem;
 
                     hours += this.GetAmPmOffset(hours);
 
@@ -951,7 +951,8 @@ namespace MahApps.Metro.Controls
         /// </returns>
         private int GetAmPmOffset(int currentHour)
         {
-            if (this.IsMilitaryTime)
+            if (this.IsMilitaryTime
+                && this.ampmSwitcher is not null)
             {
                 if (currentHour == 12)
                 {
@@ -1031,14 +1032,17 @@ namespace MahApps.Metro.Controls
             {
                 if (this.IsMilitaryTime)
                 {
-                    this.ampmSwitcher.SelectedValue = timeOfDay.Hours < 12 ? this.SpecificCultureInfo.DateTimeFormat.AMDesignator : this.SpecificCultureInfo.DateTimeFormat.PMDesignator;
-                    if (timeOfDay.Hours == 0 || timeOfDay.Hours == 12)
+                    if (this.ampmSwitcher is not null)
                     {
-                        this.hourInput.SelectedValue = 12;
-                    }
-                    else
-                    {
-                        this.hourInput.SelectedValue = timeOfDay.Hours % 12;
+                        this.ampmSwitcher.SelectedValue = timeOfDay.Hours < 12 ? this.SpecificCultureInfo.DateTimeFormat.AMDesignator : this.SpecificCultureInfo.DateTimeFormat.PMDesignator;
+                        if (timeOfDay.Hours == 0 || timeOfDay.Hours == 12)
+                        {
+                            this.hourInput.SelectedValue = 12;
+                        }
+                        else
+                        {
+                            this.hourInput.SelectedValue = timeOfDay.Hours % 12;
+                        }
                     }
                 }
                 else
@@ -1066,19 +1070,29 @@ namespace MahApps.Metro.Controls
             this.SetAmPmVisibility();
         }
 
-        private void UnsubscribeTimePickerEvents(params Selector[] selectors)
+        private void UnsubscribeTimePickerEvents(params Selector?[] selectors)
         {
-            foreach (var selector in selectors.Where(i => i != null))
+            foreach (var selector in selectors)
             {
+                if (selector is null)
+                {
+                    continue;
+                }
+
                 selector.PreviewKeyDown -= this.TimePickerPreviewKeyDown;
                 selector.SelectionChanged -= this.TimePickerSelectionChanged;
             }
         }
 
-        private void SubscribeTimePickerEvents(params Selector[] selectors)
+        private void SubscribeTimePickerEvents(params Selector?[] selectors)
         {
-            foreach (var selector in selectors.Where(i => i != null))
+            foreach (var selector in selectors)
             {
+                if (selector is null)
+                {
+                    continue;
+                }
+
                 selector.PreviewKeyDown += this.TimePickerPreviewKeyDown;
                 selector.SelectionChanged += this.TimePickerSelectionChanged;
             }

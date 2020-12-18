@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -22,7 +23,6 @@ using ControlzEx.Behaviors;
 using ControlzEx.Native;
 using ControlzEx.Standard;
 using ControlzEx.Theming;
-using JetBrains.Annotations;
 using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
@@ -167,21 +167,21 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register(nameof(IsWindowDraggable), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
-        FrameworkElement icon;
-        UIElement titleBar;
-        UIElement titleBarBackground;
-        Thumb windowTitleThumb;
-        Thumb flyoutModalDragMoveThumb;
-        private IInputElement restoreFocus;
-        internal ContentPresenter LeftWindowCommandsPresenter;
-        internal ContentPresenter RightWindowCommandsPresenter;
-        internal ContentPresenter WindowButtonCommandsPresenter;
+        FrameworkElement? icon;
+        UIElement? titleBar;
+        UIElement? titleBarBackground;
+        Thumb? windowTitleThumb;
+        Thumb? flyoutModalDragMoveThumb;
+        private IInputElement? restoreFocus;
+        internal ContentPresenter? LeftWindowCommandsPresenter;
+        internal ContentPresenter? RightWindowCommandsPresenter;
+        internal ContentPresenter? WindowButtonCommandsPresenter;
 
-        internal Grid overlayBox;
-        internal Grid metroActiveDialogContainer;
-        internal Grid metroInactiveDialogContainer;
-        private Storyboard overlayStoryboard;
-        Rectangle flyoutModal;
+        internal Grid? overlayBox;
+        internal Grid? metroActiveDialogContainer;
+        internal Grid? metroInactiveDialogContainer;
+        private Storyboard? overlayStoryboard;
+        Rectangle? flyoutModal;
 
         public static readonly RoutedEvent FlyoutsStatusChangedEvent = EventManager.RegisterRoutedEvent(
             nameof(FlyoutsStatusChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
@@ -267,45 +267,45 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the icon content template to show a custom icon.
         /// </summary>
-        public DataTemplate IconTemplate
+        public DataTemplate? IconTemplate
         {
-            get { return (DataTemplate)GetValue(IconTemplateProperty); }
+            get { return (DataTemplate?)GetValue(IconTemplateProperty); }
             set { SetValue(IconTemplateProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the title content template to show a custom title.
         /// </summary>
-        public DataTemplate TitleTemplate
+        public DataTemplate? TitleTemplate
         {
-            get { return (DataTemplate)GetValue(TitleTemplateProperty); }
+            get { return (DataTemplate?)GetValue(TitleTemplateProperty); }
             set { SetValue(TitleTemplateProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the left window commands that hosts the user commands.
         /// </summary>
-        public WindowCommands LeftWindowCommands
+        public WindowCommands? LeftWindowCommands
         {
-            get { return (WindowCommands)GetValue(LeftWindowCommandsProperty); }
+            get { return (WindowCommands?)GetValue(LeftWindowCommandsProperty); }
             set { SetValue(LeftWindowCommandsProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the right window commands that hosts the user commands.
         /// </summary>
-        public WindowCommands RightWindowCommands
+        public WindowCommands? RightWindowCommands
         {
-            get { return (WindowCommands)GetValue(RightWindowCommandsProperty); }
+            get { return (WindowCommands?)GetValue(RightWindowCommandsProperty); }
             set { SetValue(RightWindowCommandsProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the window button commands that hosts the min/max/close commands.
         /// </summary>
-        public WindowButtonCommands WindowButtonCommands
+        public WindowButtonCommands? WindowButtonCommands
         {
-            get { return (WindowButtonCommands)GetValue(WindowButtonCommandsProperty); }
+            get { return (WindowButtonCommands?)GetValue(WindowButtonCommandsProperty); }
             set { SetValue(WindowButtonCommandsProperty, value); }
         }
 
@@ -388,9 +388,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(SaveWindowPositionProperty, BooleanBoxes.Box(value)); }
         }
 
-        public IWindowPlacementSettings WindowPlacementSettings
+        public IWindowPlacementSettings? WindowPlacementSettings
         {
-            get { return (IWindowPlacementSettings)GetValue(WindowPlacementSettingsProperty); }
+            get { return (IWindowPlacementSettings?)GetValue(WindowPlacementSettingsProperty); }
             set { SetValue(WindowPlacementSettingsProperty, value); }
         }
 
@@ -769,7 +769,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(OverlayFadeOutProperty, value); }
         }
 
-        private bool CanUseOverlayFadingStoryboard(Storyboard sb, out DoubleAnimation animation)
+        private bool CanUseOverlayFadingStoryboard([NotNullWhen(true)] Storyboard? sb, [NotNullWhen(true)] out DoubleAnimation? animation)
         {
             animation = null;
             if (null == sb)
@@ -806,7 +806,7 @@ namespace MahApps.Metro.Controls
             if (IsOverlayVisible() && overlayStoryboard == null)
             {
                 //No Task.FromResult in .NET 4.
-                tcs.SetResult(null);
+                tcs.SetResult(null!);
                 return tcs.Task;
             }
 
@@ -814,14 +814,13 @@ namespace MahApps.Metro.Controls
 
             var sb = OverlayFadeIn?.Clone();
             overlayStoryboard = sb;
-            DoubleAnimation animation;
-            if (CanUseOverlayFadingStoryboard(sb, out animation))
+            if (CanUseOverlayFadingStoryboard(sb, out var animation))
             {
                 this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
 
                 animation.To = this.OverlayOpacity;
 
-                EventHandler completionHandler = null;
+                EventHandler? completionHandler = null;
                 completionHandler = (sender, args) =>
                     {
                         sb.Completed -= completionHandler;
@@ -830,7 +829,7 @@ namespace MahApps.Metro.Controls
                             overlayStoryboard = null;
                         }
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     };
 
                 sb.Completed += completionHandler;
@@ -839,7 +838,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 ShowOverlay();
-                tcs.TrySetResult(null);
+                tcs.TrySetResult(null!);
             }
 
             return tcs.Task;
@@ -859,7 +858,7 @@ namespace MahApps.Metro.Controls
             {
                 //No Task.FromResult in .NET 4.
                 this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
-                tcs.SetResult(null);
+                tcs.SetResult(null!);
                 return tcs.Task;
             }
 
@@ -867,12 +866,11 @@ namespace MahApps.Metro.Controls
 
             var sb = OverlayFadeOut?.Clone();
             overlayStoryboard = sb;
-            DoubleAnimation animation;
-            if (CanUseOverlayFadingStoryboard(sb, out animation))
+            if (CanUseOverlayFadingStoryboard(sb, out var animation))
             {
                 animation.To = 0d;
 
-                EventHandler completionHandler = null;
+                EventHandler? completionHandler = null;
                 completionHandler = (sender, args) =>
                     {
                         sb.Completed -= completionHandler;
@@ -882,7 +880,7 @@ namespace MahApps.Metro.Controls
                             overlayStoryboard = null;
                         }
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     };
 
                 sb.Completed += completionHandler;
@@ -891,7 +889,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 HideOverlay();
-                tcs.TrySetResult(null);
+                tcs.TrySetResult(null!);
             }
 
             return tcs.Task;
@@ -906,21 +904,21 @@ namespace MahApps.Metro.Controls
 
         public void ShowOverlay()
         {
-            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-            overlayBox.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
+            this.overlayBox?.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+            this.overlayBox?.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
         }
 
         public void HideOverlay()
         {
-            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0d);
-            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
+            this.overlayBox?.SetCurrentValue(Grid.OpacityProperty, 0d);
+            this.overlayBox?.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
         }
 
         /// <summary>
         /// Stores the given element, or the last focused element via FocusManager, for restoring the focus after closing a dialog.
         /// </summary>
         /// <param name="thisElement">The element which will be focused again.</param>
-        public void StoreFocus([CanBeNull] IInputElement thisElement = null)
+        public void StoreFocus(IInputElement? thisElement = null)
         {
             Dispatcher.BeginInvoke(new Action(() => { restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); }));
         }
@@ -1051,7 +1049,8 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
             // this all works only for centered title
-            if (TitleAlignment != HorizontalAlignment.Center)
+            if (TitleAlignment != HorizontalAlignment.Center
+                || this.titleBar is null)
             {
                 return;
             }
@@ -1090,17 +1089,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ThemeManagerOnIsThemeChanged(object sender, ThemeChangedEventArgs e)
+        private void ThemeManagerOnIsThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
             this.Invoke(() =>
                 {
-                    var flyouts = this.Flyouts.GetFlyouts().ToList();
+                    var flyouts = this.Flyouts.GetFlyouts().OfType<Flyout>().ToList();
                     // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
                     // e.g if the FlyoutsControl is hosted in a UserControl
                     var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
                     if (allChildFlyouts.Any())
                     {
-                        flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
+                        flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts().OfType<Flyout>()));
                     }
 
                     if (!flyouts.Any())
@@ -1138,14 +1137,14 @@ namespace MahApps.Metro.Controls
 
             if (Flyouts.OverrideExternalCloseButton == null)
             {
-                foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
+                foreach (var flyout in Flyouts.GetFlyouts().OfType<Flyout>().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
                 }
             }
             else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
             {
-                foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
+                foreach (var flyout in Flyouts.GetFlyouts().OfType<Flyout>().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
                 }
@@ -1394,7 +1393,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta((IMetroThumb)sender, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1415,7 +1414,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta(IMetroThumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta(IMetroThumb? thumb, [JetBrains.Annotations.NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             if (thumb == null)
             {
@@ -1455,7 +1454,7 @@ namespace MahApps.Metro.Controls
             if (windowIsMaximized)
             {
                 //var cursorXPos = cursorPos.x;
-                EventHandler windowOnStateChanged = null;
+                EventHandler? windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
                     {
                         //window.Top = 2;
@@ -1530,7 +1529,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
         /// <param name="name">The name of the template child.</param>
-        internal T GetPart<T>(string name)
+        internal T? GetPart<T>(string name)
             where T : class
         {
             return GetTemplateChild(name) as T;
@@ -1576,7 +1575,7 @@ namespace MahApps.Metro.Controls
             {
             }
 
-            public Flyout ChangedFlyout { get; internal set; }
+            public Flyout? ChangedFlyout { get; internal set; }
         }
     }
 }

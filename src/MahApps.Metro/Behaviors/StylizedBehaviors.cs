@@ -82,7 +82,7 @@ namespace MahApps.Metro.Behaviors
             uie.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
-        private static void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
+        private static void Dispatcher_ShutdownStarted(object? sender, System.EventArgs e)
         {
             Debug.WriteLine("Dispatcher.ShutdownStarted");
         }

@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class MetroThumbContentControl : ContentControlEx, IMetroThumb
     {
-        private TouchDevice currentDevice = null;
+        private TouchDevice? currentDevice = null;
         private Point startDragPoint;
         private Point startDragScreenPoint;
         private Point oldDragScreenPoint;

@@ -15,7 +15,7 @@ namespace MahApps.Metro.Converters
         /// <summary> Gets the default instance </summary>
         internal static HamburgerMenuItemAccessibleConverter Default { get; } = new HamburgerMenuItemAccessibleConverter();
 
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values is null)
             {

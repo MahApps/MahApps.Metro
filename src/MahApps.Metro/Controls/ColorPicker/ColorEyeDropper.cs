@@ -13,9 +13,9 @@ namespace MahApps.Metro.Controls
 {
     public class ColorEyeDropper : Button
     {
-        private DispatcherOperation currentTask;
+        private DispatcherOperation? currentTask;
         internal ColorEyePreviewData previewData = new ColorEyePreviewData();
-        private ToolTip previewToolTip;
+        private ToolTip? previewToolTip;
 
         static ColorEyeDropper()
         {

@@ -10,7 +10,7 @@ namespace MahApps.Metro.Converters
 {
     public class NullToUnsetValueConverter : MarkupConverter
     {
-        private static NullToUnsetValueConverter _instance;
+        private static NullToUnsetValueConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
@@ -23,7 +23,7 @@ namespace MahApps.Metro.Converters
             return _instance ?? (_instance = new NullToUnsetValueConverter());
         }
 
-        protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             return value ?? DependencyProperty.UnsetValue;
         }

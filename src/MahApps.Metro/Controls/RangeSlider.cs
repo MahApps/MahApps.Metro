@@ -648,9 +648,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public DataTemplate AutoToolTipUpperValueTemplate
+        public DataTemplate? AutoToolTipUpperValueTemplate
         {
-            get => (DataTemplate)this.GetValue(AutoToolTipUpperValueTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AutoToolTipUpperValueTemplateProperty);
             set => this.SetValue(AutoToolTipUpperValueTemplateProperty, value);
         }
 
@@ -666,9 +666,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public DataTemplate AutoToolTipRangeValuesTemplate
+        public DataTemplate? AutoToolTipRangeValuesTemplate
         {
-            get => (DataTemplate)this.GetValue(AutoToolTipRangeValuesTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AutoToolTipRangeValuesTemplateProperty);
             set => this.SetValue(AutoToolTipRangeValuesTemplateProperty, value);
         }
 
@@ -814,13 +814,13 @@ namespace MahApps.Metro.Controls
         private const double Epsilon = 0.00000153;
 
         private bool _internalUpdate;
-        private Thumb _centerThumb;
-        private Thumb _leftThumb;
-        private Thumb _rightThumb;
-        private RepeatButton _leftButton;
-        private RepeatButton _rightButton;
-        private StackPanel _visualElementsContainer;
-        private FrameworkElement _container;
+        private Thumb _centerThumb = null!;
+        private Thumb _leftThumb = null!;
+        private Thumb _rightThumb = null!;
+        private RepeatButton _leftButton = null!;
+        private RepeatButton _rightButton = null!;
+        private StackPanel _visualElementsContainer = null!;
+        private FrameworkElement _container = null!;
         private double _movableWidth;
         private readonly DispatcherTimer _timer;
         private uint _tickCount;
@@ -833,7 +833,7 @@ namespace MahApps.Metro.Controls
         private Point _basePoint;
         private double _currenValue;
         private double _density;
-        private ToolTip _autoToolTip;
+        private ToolTip? _autoToolTip;
         private double _oldLower;
         private double _oldUpper;
         private bool _isMoved;
@@ -1294,13 +1294,13 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            this._container = this.GetTemplateChild("PART_Container") as FrameworkElement;
-            this._visualElementsContainer = this.GetTemplateChild("PART_RangeSliderContainer") as StackPanel;
-            this._centerThumb = this.GetTemplateChild("PART_MiddleThumb") as Thumb;
-            this._leftButton = this.GetTemplateChild("PART_LeftEdge") as RepeatButton;
-            this._rightButton = this.GetTemplateChild("PART_RightEdge") as RepeatButton;
-            this._leftThumb = this.GetTemplateChild("PART_LeftThumb") as Thumb;
-            this._rightThumb = this.GetTemplateChild("PART_RightThumb") as Thumb;
+            this._container = this.GetTemplateChild("PART_Container") as FrameworkElement ?? throw new MissingRequiredTemplatePartException(this, "PART_Container");
+            this._visualElementsContainer = this.GetTemplateChild("PART_RangeSliderContainer") as StackPanel ?? throw new MissingRequiredTemplatePartException(this, "PART_RangeSliderContainer");
+            this._centerThumb = this.GetTemplateChild("PART_MiddleThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_MiddleThumb");
+            this._leftButton = this.GetTemplateChild("PART_LeftEdge") as RepeatButton ?? throw new MissingRequiredTemplatePartException(this, "PART_LeftEdge");
+            this._rightButton = this.GetTemplateChild("PART_RightEdge") as RepeatButton ?? throw new MissingRequiredTemplatePartException(this, "PART_RightEdge");
+            this._leftThumb = this.GetTemplateChild("PART_LeftThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_LeftThumb");
+            this._rightThumb = this.GetTemplateChild("PART_RightThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_RightThumb");
 
             this.InitializeVisualElementsContainer();
             this.ReCalculateSize();
@@ -1309,45 +1309,39 @@ namespace MahApps.Metro.Controls
         //adds visual element to the container
         private void InitializeVisualElementsContainer()
         {
-            if (this._visualElementsContainer != null
-                && this._leftThumb != null
-                && this._rightThumb != null
-                && this._centerThumb != null)
-            {
-                this._leftThumb.DragCompleted -= this.LeftThumbDragComplete;
-                this._rightThumb.DragCompleted -= this.RightThumbDragComplete;
-                this._leftThumb.DragStarted -= this.LeftThumbDragStart;
-                this._rightThumb.DragStarted -= this.RightThumbDragStart;
-                this._centerThumb.DragStarted -= this.CenterThumbDragStarted;
-                this._centerThumb.DragCompleted -= this.CenterThumbDragCompleted;
+            this._leftThumb.DragCompleted -= this.LeftThumbDragComplete;
+            this._rightThumb.DragCompleted -= this.RightThumbDragComplete;
+            this._leftThumb.DragStarted -= this.LeftThumbDragStart;
+            this._rightThumb.DragStarted -= this.RightThumbDragStart;
+            this._centerThumb.DragStarted -= this.CenterThumbDragStarted;
+            this._centerThumb.DragCompleted -= this.CenterThumbDragCompleted;
 
-                //handle the drag delta events
-                this._centerThumb.DragDelta -= this.CenterThumbDragDelta;
-                this._leftThumb.DragDelta -= this.LeftThumbDragDelta;
-                this._rightThumb.DragDelta -= this.RightThumbDragDelta;
+            //handle the drag delta events
+            this._centerThumb.DragDelta -= this.CenterThumbDragDelta;
+            this._leftThumb.DragDelta -= this.LeftThumbDragDelta;
+            this._rightThumb.DragDelta -= this.RightThumbDragDelta;
 
-                this._visualElementsContainer.PreviewMouseDown -= this.VisualElementsContainerPreviewMouseDown;
-                this._visualElementsContainer.PreviewMouseUp -= this.VisualElementsContainerPreviewMouseUp;
-                this._visualElementsContainer.MouseLeave -= this.VisualElementsContainerMouseLeave;
-                this._visualElementsContainer.MouseDown -= this.VisualElementsContainerMouseDown;
+            this._visualElementsContainer.PreviewMouseDown -= this.VisualElementsContainerPreviewMouseDown;
+            this._visualElementsContainer.PreviewMouseUp -= this.VisualElementsContainerPreviewMouseUp;
+            this._visualElementsContainer.MouseLeave -= this.VisualElementsContainerMouseLeave;
+            this._visualElementsContainer.MouseDown -= this.VisualElementsContainerMouseDown;
 
-                this._leftThumb.DragCompleted += this.LeftThumbDragComplete;
-                this._rightThumb.DragCompleted += this.RightThumbDragComplete;
-                this._leftThumb.DragStarted += this.LeftThumbDragStart;
-                this._rightThumb.DragStarted += this.RightThumbDragStart;
-                this._centerThumb.DragStarted += this.CenterThumbDragStarted;
-                this._centerThumb.DragCompleted += this.CenterThumbDragCompleted;
+            this._leftThumb.DragCompleted += this.LeftThumbDragComplete;
+            this._rightThumb.DragCompleted += this.RightThumbDragComplete;
+            this._leftThumb.DragStarted += this.LeftThumbDragStart;
+            this._rightThumb.DragStarted += this.RightThumbDragStart;
+            this._centerThumb.DragStarted += this.CenterThumbDragStarted;
+            this._centerThumb.DragCompleted += this.CenterThumbDragCompleted;
 
-                //handle the drag delta events
-                this._centerThumb.DragDelta += this.CenterThumbDragDelta;
-                this._leftThumb.DragDelta += this.LeftThumbDragDelta;
-                this._rightThumb.DragDelta += this.RightThumbDragDelta;
+            //handle the drag delta events
+            this._centerThumb.DragDelta += this.CenterThumbDragDelta;
+            this._leftThumb.DragDelta += this.LeftThumbDragDelta;
+            this._rightThumb.DragDelta += this.RightThumbDragDelta;
 
-                this._visualElementsContainer.PreviewMouseDown += this.VisualElementsContainerPreviewMouseDown;
-                this._visualElementsContainer.PreviewMouseUp += this.VisualElementsContainerPreviewMouseUp;
-                this._visualElementsContainer.MouseLeave += this.VisualElementsContainerMouseLeave;
-                this._visualElementsContainer.MouseDown += this.VisualElementsContainerMouseDown;
-            }
+            this._visualElementsContainer.PreviewMouseDown += this.VisualElementsContainerPreviewMouseDown;
+            this._visualElementsContainer.PreviewMouseUp += this.VisualElementsContainerPreviewMouseUp;
+            this._visualElementsContainer.MouseLeave += this.VisualElementsContainerMouseLeave;
+            this._visualElementsContainer.MouseDown += this.VisualElementsContainerMouseDown;
         }
 
         //Handler for preview mouse button down for the whole StackPanel container
@@ -1663,7 +1657,8 @@ namespace MahApps.Metro.Controls
             }
 
             this._basePoint = Mouse.GetPosition(this._container);
-            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
+            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None
+                && this._autoToolTip is not null)
             {
                 this._autoToolTip.Content = this.GetToolTipNumber(this.LowerValue);
                 this.RelocateAutoToolTip();
@@ -1741,7 +1736,8 @@ namespace MahApps.Metro.Controls
                 this._basePoint = Mouse.GetPosition(this._container);
             }
 
-            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
+            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None
+                && this._autoToolTip is not null)
             {
                 this._autoToolTip.Content = this.GetToolTipNumber(this.UpperValue);
                 this.RelocateAutoToolTip();
@@ -1829,7 +1825,8 @@ namespace MahApps.Metro.Controls
                 }
 
                 this._basePoint = Mouse.GetPosition(this._container);
-                if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
+                if (this.AutoToolTipPlacement != AutoToolTipPlacement.None
+                    && this._autoToolTip is not null)
                 {
                     if (this._autoToolTip.ContentTemplate != null)
                     {
@@ -1913,7 +1910,7 @@ namespace MahApps.Metro.Controls
 
         //This is timer event, which starts when IsMoveToPoint = false
         //Supports IsSnapToTick option
-        private void MoveToNextValue(object sender, EventArgs e)
+        private void MoveToNextValue(object? sender, EventArgs e)
         {
             //Get updated position of cursor
             this._position = Mouse.GetPosition(this._visualElementsContainer);
@@ -2216,6 +2213,11 @@ namespace MahApps.Metro.Controls
         //Change AutotoolTipPosition to move sync with Thumb
         private void RelocateAutoToolTip()
         {
+            if (this._autoToolTip is null)
+            {
+                return;
+            }
+
             var offset = this._autoToolTip.HorizontalOffset;
             this._autoToolTip.HorizontalOffset = offset + 0.001;
             this._autoToolTip.HorizontalOffset = offset;
@@ -2385,33 +2387,33 @@ namespace MahApps.Metro.Controls
 
     public class RangeSliderAutoTooltipValues : INotifyPropertyChanged
     {
-        private string lowerValue;
+        private string? lowerValue;
 
         /// <summary>
         /// Gets the lower value of the range selection.
         /// </summary>
-        public string LowerValue
+        public string? LowerValue
         {
             get => this.lowerValue;
             set
             {
-                if (value.Equals(this.lowerValue)) return;
+                if (value == this.lowerValue) return;
                 this.lowerValue = value;
                 this.OnPropertyChanged();
             }
         }
 
-        private string upperValue;
+        private string? upperValue;
 
         /// <summary>
         /// Gets the upper value of the range selection.
         /// </summary>
-        public string UpperValue
+        public string? UpperValue
         {
             get => this.upperValue;
             set
             {
-                if (value.Equals(this.upperValue)) return;
+                if (value == this.upperValue) return;
                 this.upperValue = value;
                 this.OnPropertyChanged();
             }
@@ -2434,10 +2436,10 @@ namespace MahApps.Metro.Controls
             return this.LowerValue + " - " + this.UpperValue;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

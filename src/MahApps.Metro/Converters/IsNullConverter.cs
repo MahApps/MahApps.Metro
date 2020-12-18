@@ -12,7 +12,7 @@ namespace MahApps.Metro.Converters
     /// </summary>
     public sealed class IsNullConverter : IValueConverter
     {
-        private static IsNullConverter _instance;
+        private static IsNullConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
@@ -29,7 +29,7 @@ namespace MahApps.Metro.Converters
             get { return _instance ?? (_instance = new IsNullConverter()); }
         }
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object? value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             return null == value;
         }

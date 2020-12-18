@@ -13,7 +13,7 @@ namespace MahApps.Metro.Converters
 {
     public class BackgroundToForegroundConverter : IValueConverter, IMultiValueConverter
     {
-        private static BackgroundToForegroundConverter _instance;
+        private static BackgroundToForegroundConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
@@ -44,7 +44,7 @@ namespace MahApps.Metro.Converters
             return foreColor;
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is SolidColorBrush)
             {

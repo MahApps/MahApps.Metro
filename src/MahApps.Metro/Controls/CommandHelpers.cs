@@ -62,7 +62,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal static bool CanExecuteCommandSource(ICommandSource commandSource, ICommand theCommand)
+        internal static bool CanExecuteCommandSource(ICommandSource commandSource, ICommand? theCommand)
         {
             var command = theCommand;
             if (command == null)
@@ -82,13 +82,13 @@ namespace MahApps.Metro.Controls
 
         [SecurityCritical]
         [SecuritySafeCritical]
-        internal static void ExecuteCommandSource(ICommandSource commandSource, ICommand theCommand)
+        internal static void ExecuteCommandSource(ICommandSource commandSource, ICommand? theCommand)
         {
             CriticalExecuteCommandSource(commandSource, theCommand);
         }
 
         [SecurityCritical]
-        internal static void CriticalExecuteCommandSource(ICommandSource commandSource, ICommand theCommand)
+        internal static void CriticalExecuteCommandSource(ICommandSource commandSource, ICommand? theCommand)
         {
             var command = theCommand;
             if (command == null)

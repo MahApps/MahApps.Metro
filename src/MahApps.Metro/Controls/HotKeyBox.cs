@@ -23,9 +23,9 @@ namespace MahApps.Metro.Controls
             nameof(HotKey), typeof(HotKey), typeof(HotKeyBox),
             new FrameworkPropertyMetadata(default(HotKey), OnHotKeyChanged) { BindsTwoWayByDefault = true });
 
-        public HotKey HotKey
+        public HotKey? HotKey
         {
-            get { return (HotKey)GetValue(HotKeyProperty); }
+            get { return (HotKey?)GetValue(HotKeyProperty); }
             set { SetValue(HotKeyProperty, value); }
         }
 
@@ -55,7 +55,7 @@ namespace MahApps.Metro.Controls
             protected set { SetValue(TextPropertyKey, value); }
         }
 
-        private TextBox _textBox;
+        private TextBox? _textBox;
 
         static HotKeyBox()
         {
@@ -115,7 +115,7 @@ namespace MahApps.Metro.Controls
 
         private void TextBoxOnTextChanged(object sender, TextChangedEventArgs args)
         {
-            _textBox.SelectionStart = _textBox.Text.Length;
+            _textBox!.SelectionStart = _textBox.Text.Length;
         }
 
         private void TextBoxOnGotFocus(object sender, RoutedEventArgs routedEventArgs)
@@ -225,7 +225,7 @@ namespace MahApps.Metro.Controls
             get { return _modifierKeys; }
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is HotKey && Equals((HotKey)obj);
         }
@@ -238,8 +238,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public bool Equals(HotKey other)
+        public bool Equals(HotKey? other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             return _key == other._key && _modifierKeys == other._modifierKeys;
         }
 
@@ -287,7 +292,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable 618
-        private static string GetLocalizedKeyStringUnsafe(int key)
+        private static string? GetLocalizedKeyStringUnsafe(int key)
         {
             // strip any modifier keys
             long keyCode = key & 0xffff;

@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        public CustomDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        public CustomDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
         }

@@ -32,9 +32,9 @@ namespace MahApps.Metro.Actions
         /// <summary>
         /// Gets or sets the command that this trigger is bound to.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
-            get { return (ICommand)this.GetValue(CommandProperty); }
+            get { return (ICommand?)this.GetValue(CommandProperty); }
             set { this.SetValue(CommandProperty, value); }
         }
 
@@ -58,7 +58,7 @@ namespace MahApps.Metro.Actions
         /// <summary>
         /// Gets or sets an object that will be passed to the <see cref="Command" /> attached to this trigger.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
             get { return this.GetValue(CommandParameterProperty); }
             set { this.SetValue(CommandParameterProperty, value); }
@@ -88,7 +88,7 @@ namespace MahApps.Metro.Actions
             }
         }
 
-        private static void OnCommandChanged(CommandTriggerAction action, DependencyPropertyChangedEventArgs e)
+        private static void OnCommandChanged(CommandTriggerAction? action, DependencyPropertyChangedEventArgs e)
         {
             if (action == null)
             {
@@ -100,7 +100,7 @@ namespace MahApps.Metro.Actions
                 ((ICommand)e.OldValue).CanExecuteChanged -= action.OnCommandCanExecuteChanged;
             }
 
-            var command = (ICommand)e.NewValue;
+            var command = (ICommand?)e.NewValue;
             if (command != null)
             {
                 command.CanExecuteChanged += action.OnCommandCanExecuteChanged;
@@ -109,7 +109,7 @@ namespace MahApps.Metro.Actions
             action.EnableDisableElement();
         }
 
-        protected virtual object GetCommandParameter()
+        protected virtual object? GetCommandParameter()
         {
             return this.CommandParameter ?? this.AssociatedObject;
         }
@@ -125,7 +125,7 @@ namespace MahApps.Metro.Actions
             this.AssociatedObject.SetCurrentValue(UIElement.IsEnabledProperty, BooleanBoxes.Box(command == null || command.CanExecute(this.GetCommandParameter())));
         }
 
-        private void OnCommandCanExecuteChanged(object sender, EventArgs e)
+        private void OnCommandCanExecuteChanged(object? sender, EventArgs e)
         {
             this.EnableDisableElement();
         }

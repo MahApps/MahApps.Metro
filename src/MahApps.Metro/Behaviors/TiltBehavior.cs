@@ -45,13 +45,13 @@ namespace MahApps.Metro.Behaviors
 
         private bool isPressed;
         private Thickness originalMargin;
-        private Panel originalPanel;
+        private Panel? originalPanel;
         private Size originalSize;
-        private FrameworkElement attachedElement;
+        private FrameworkElement? attachedElement;
         private Point current = new Point(-99, -99);
         private int times = -1;
 
-        public Planerator RotatorParent { get; private set; }
+        public Planerator? RotatorParent { get; private set; }
 
         protected override void OnAttached()
         {
@@ -106,19 +106,19 @@ namespace MahApps.Metro.Behaviors
             this.RotatorParent.SetValue(Canvas.BottomProperty, bottom);
             this.RotatorParent.SetValue(Panel.ZIndexProperty, z);
 
-            this.originalPanel.Children.Remove(this.attachedElement);
+            this.originalPanel?.Children.Remove(this.attachedElement);
             this.attachedElement.Margin = new Thickness();
             this.attachedElement.Width = double.NaN;
             this.attachedElement.Height = double.NaN;
 
-            this.originalPanel.Children.Add(this.RotatorParent);
+            this.originalPanel?.Children.Add(this.RotatorParent);
             this.RotatorParent.Child = this.attachedElement;
 
             CompositionTarget.Rendering += this.CompositionTargetRendering;
             ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
         }
 
-        private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
+        private void ThemeManagerIsThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
             this.Invoke(() => { this.RotatorParent?.Refresh(); });
         }
@@ -130,8 +130,14 @@ namespace MahApps.Metro.Behaviors
             base.OnDetaching();
         }
 
-        private void CompositionTargetRendering(object sender, EventArgs e)
+        private void CompositionTargetRendering(object? sender, EventArgs e)
         {
+            if (this.RotatorParent is null
+                || this.attachedElement is null)
+            {
+                return;
+            }
+
             if (this.KeepDragging)
             {
                 this.current = Mouse.GetPosition(this.RotatorParent.Child);
@@ -185,7 +191,7 @@ namespace MahApps.Metro.Behaviors
             }
         }
 
-        private static Panel GetParentPanel(DependencyObject element)
+        private static Panel? GetParentPanel(DependencyObject element)
         {
             return element.TryFindParent<Panel>();
         }

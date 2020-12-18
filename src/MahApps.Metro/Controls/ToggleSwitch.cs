@@ -52,21 +52,21 @@ namespace MahApps.Metro.Controls
         private double startTranslation;
         private bool wasDragged;
 
-        private ContentPresenter HeaderContentPresenter { get; set; }
+        private ContentPresenter? HeaderContentPresenter { get; set; }
 
-        private ContentPresenter ContentPresenter { get; set; }
+        private ContentPresenter? ContentPresenter { get; set; }
 
-        private ContentPresenter OffContentPresenter { get; set; }
+        private ContentPresenter? OffContentPresenter { get; set; }
 
-        private ContentPresenter OnContentPresenter { get; set; }
+        private ContentPresenter? OnContentPresenter { get; set; }
 
-        private FrameworkElement SwitchKnobBounds { get; set; }
+        private FrameworkElement? SwitchKnobBounds { get; set; }
 
-        private FrameworkElement SwitchKnob { get; set; }
+        private FrameworkElement? SwitchKnob { get; set; }
 
-        private TranslateTransform KnobTranslateTransform { get; set; }
+        private TranslateTransform? KnobTranslateTransform { get; set; }
 
-        private Thumb SwitchThumb { get; set; }
+        private Thumb? SwitchThumb { get; set; }
 
         /// <summary>Identifies the <see cref="ContentDirection"/> dependency property.</summary>
         public static readonly DependencyProperty ContentDirectionProperty
@@ -178,9 +178,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the control's content while in "On" state.
         /// </summary>
-        public DataTemplate OnContentTemplate
+        public DataTemplate? OnContentTemplate
         {
-            get => (DataTemplate)this.GetValue(OnContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(OnContentTemplateProperty);
             set => this.SetValue(OnContentTemplateProperty, value);
         }
 
@@ -189,7 +189,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(OnContentTemplateSelector),
                                           typeof(DataTemplateSelector),
                                           typeof(ToggleSwitch),
-                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a template selector for OnContent property that enables an application writer to provide custom template-selection logic .
@@ -199,9 +199,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public DataTemplateSelector OnContentTemplateSelector
+        public DataTemplateSelector? OnContentTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(OnContentTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(OnContentTemplateSelectorProperty);
             set => this.SetValue(OnContentTemplateSelectorProperty, value);
         }
 
@@ -210,7 +210,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(OnContentStringFormat),
                                           typeof(string),
                                           typeof(ToggleSwitch),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the OnContent property if it is displayed as a string.
@@ -273,7 +273,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(OffContentTemplateSelector),
                                           typeof(DataTemplateSelector),
                                           typeof(ToggleSwitch),
-                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a template selector for OffContent property that enables an application writer to provide custom template-selection logic .
@@ -294,7 +294,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(OffContentStringFormat),
                                           typeof(string),
                                           typeof(ToggleSwitch),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the OffContent property if it is displayed as a string.
@@ -339,9 +339,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
         /// </summary>
         [Category(AppName.MahApps)]
-        public ICommand Command
+        public ICommand? Command
         {
-            get => (ICommand)this.GetValue(CommandProperty);
+            get => (ICommand?)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
         }
 
@@ -356,9 +356,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
         /// </summary>
         [Category(AppName.MahApps)]
-        public ICommand OnCommand
+        public ICommand? OnCommand
         {
-            get => (ICommand)this.GetValue(OnCommandProperty);
+            get => (ICommand?)this.GetValue(OnCommandProperty);
             set => this.SetValue(OnCommandProperty, value);
         }
 
@@ -373,9 +373,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
         /// </summary>
         [Category(AppName.MahApps)]
-        public ICommand OffCommand
+        public ICommand? OffCommand
         {
-            get => (ICommand)this.GetValue(OffCommandProperty);
+            get => (ICommand?)this.GetValue(OffCommandProperty);
             set => this.SetValue(OffCommandProperty, value);
         }
 
@@ -417,7 +417,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Occurs when "On"/"Off" state changes for this ToggleSwitch.
         /// </summary>
-        public event RoutedEventHandler Toggled;
+        public event RoutedEventHandler? Toggled;
 
         /// <summary>This method is invoked when the <see cref="IsOnProperty"/> changes.</summary>
         protected virtual void OnToggled()
@@ -520,7 +520,9 @@ namespace MahApps.Metro.Controls
 
         private void UpdateContentPresenterVisibility()
         {
-            if (this.ContentPresenter == null)
+            if (this.ContentPresenter is null
+                || this.OffContentPresenter is null
+                || this.OnContentPresenter is null)
             {
                 return;
             }
@@ -556,7 +558,7 @@ namespace MahApps.Metro.Controls
             e.Handled = true;
             this.IsPressed = true;
             this.wasDragged = false;
-            this.startTranslation = this.KnobTranslateTransform.X;
+            this.startTranslation = this.KnobTranslateTransform!.X;
             this.UpdateVisualStates(true);
             this.KnobTranslateTransform.X = this.startTranslation;
         }
@@ -568,7 +570,7 @@ namespace MahApps.Metro.Controls
             {
                 this.wasDragged = Math.Abs(e.HorizontalChange) >= SystemParameters.MinimumHorizontalDragDistance;
                 double dragTranslation = this.startTranslation + e.HorizontalChange;
-                this.KnobTranslateTransform.X = Math.Max(0, Math.Min(this.onTranslation, dragTranslation));
+                this.KnobTranslateTransform!.X = Math.Max(0, Math.Min(this.onTranslation, dragTranslation));
             }
         }
 
@@ -578,11 +580,11 @@ namespace MahApps.Metro.Controls
             this.IsPressed = false;
             if (this.wasDragged)
             {
-                if (!this.IsOn && this.KnobTranslateTransform.X + this.SwitchKnob.ActualWidth / 2 >= this.SwitchKnobBounds.ActualWidth / 2)
+                if (!this.IsOn && this.KnobTranslateTransform!.X + this.SwitchKnob!.ActualWidth / 2 >= this.SwitchKnobBounds!.ActualWidth / 2)
                 {
                     this.Toggle();
                 }
-                else if (this.IsOn && this.KnobTranslateTransform.X + this.SwitchKnob.ActualWidth / 2 <= this.SwitchKnobBounds.ActualWidth / 2)
+                else if (this.IsOn && this.KnobTranslateTransform!.X + this.SwitchKnob!.ActualWidth / 2 <= this.SwitchKnobBounds!.ActualWidth / 2)
                 {
                     this.Toggle();
                 }
@@ -675,7 +677,7 @@ namespace MahApps.Metro.Controls
             this.UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             this.UpdateCanExecute();
         }

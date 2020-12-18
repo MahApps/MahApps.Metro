@@ -13,7 +13,7 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(ToUpperConverter))]
     public class ToUpperConverter : MarkupConverter
     {
-        private static ToUpperConverter _instance;
+        private static ToUpperConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit

@@ -119,9 +119,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static ICommand GetEndOfVerticalScrollReachedCommand(DependencyObject obj)
+        public static ICommand? GetEndOfVerticalScrollReachedCommand(DependencyObject obj)
         {
-            return (ICommand)obj.GetValue(EndOfVerticalScrollReachedCommandProperty);
+            return (ICommand?)obj.GetValue(EndOfVerticalScrollReachedCommandProperty);
         }
 
         /// <summary>Helper for setting <see cref="EndOfVerticalScrollReachedCommandProperty"/> on <paramref name="obj"/>.</summary>
@@ -130,7 +130,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static void SetEndOfVerticalScrollReachedCommand(DependencyObject obj, ICommand value)
+        public static void SetEndOfVerticalScrollReachedCommand(DependencyObject obj, ICommand? value)
         {
             obj.SetValue(EndOfVerticalScrollReachedCommandProperty, value);
         }
@@ -199,9 +199,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static ICommand GetEndOfHorizontalScrollReachedCommand(DependencyObject obj)
+        public static ICommand? GetEndOfHorizontalScrollReachedCommand(DependencyObject obj)
         {
-            return (ICommand)obj.GetValue(EndOfHorizontalScrollReachedCommandProperty);
+            return (ICommand?)obj.GetValue(EndOfHorizontalScrollReachedCommandProperty);
         }
 
         /// <summary>Helper for setting <see cref="EndOfHorizontalScrollReachedCommandProperty"/> on <paramref name="obj"/>.</summary>
@@ -210,7 +210,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static void SetEndOfHorizontalScrollReachedCommand(DependencyObject obj, ICommand value)
+        public static void SetEndOfHorizontalScrollReachedCommand(DependencyObject obj, ICommand? value)
         {
             obj.SetValue(EndOfHorizontalScrollReachedCommandProperty, value);
         }
@@ -426,7 +426,7 @@ namespace MahApps.Metro.Controls
         
         private static readonly List<MouseWheelEventArgs> _reentrantList = new List<MouseWheelEventArgs>();
 
-        private static void HandlePreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private static void HandlePreviewMouseWheel(object? sender, MouseWheelEventArgs e)
         {
             var scrollControl = sender as ScrollViewer;
 
@@ -440,12 +440,12 @@ namespace MahApps.Metro.Controls
 
                 var originalSource = e.OriginalSource as UIElement;
                 _reentrantList.Add(previewEventArg);
-                originalSource.RaiseEvent(previewEventArg);
+                originalSource?.RaiseEvent(previewEventArg);
                 _reentrantList.Remove(previewEventArg);
 
                 // at this point if no one else handled the event in our children, we do our job
-                if (!previewEventArg.Handled && ((e.Delta > 0 && scrollControl.VerticalOffset == 0)
-                    || (e.Delta <= 0 && scrollControl.VerticalOffset >= scrollControl.ExtentHeight - scrollControl.ViewportHeight)))
+                if (!previewEventArg.Handled && ((e.Delta > 0 && scrollControl?.VerticalOffset == 0)
+                    || (e.Delta <= 0 && scrollControl?.VerticalOffset >= scrollControl?.ExtentHeight - scrollControl?.ViewportHeight)))
                 {
                     e.Handled = true;
                     var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)

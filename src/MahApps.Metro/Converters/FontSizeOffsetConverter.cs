@@ -12,7 +12,7 @@ namespace MahApps.Metro.Converters
     // this converter is only used by DatePicker to convert the font size to width and height of the icon button
     public class FontSizeOffsetConverter : IValueConverter
     {
-        private static FontSizeOffsetConverter _instance;
+        private static FontSizeOffsetConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit

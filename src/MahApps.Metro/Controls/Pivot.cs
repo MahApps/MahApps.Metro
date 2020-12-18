@@ -14,25 +14,25 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Mediator", Type = typeof(ScrollViewerOffsetMediator))]
     public class Pivot : ItemsControl
     {
-        private ScrollViewer scroller;
-        private ListView headers;
-        private PivotItem selectedItem;
-        private ScrollViewerOffsetMediator mediator;
+        private ScrollViewer? scroller;
+        private ListView? headers;
+        private PivotItem? selectedItem;
+        private ScrollViewerOffsetMediator? mediator;
         internal int internalIndex;
         public static readonly RoutedEvent SelectionChangedEvent = EventManager.RegisterRoutedEvent(nameof(SelectionChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Pivot));
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(string), typeof(Pivot), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register(nameof(HeaderTemplate), typeof(DataTemplate), typeof(Pivot));
         public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(Pivot), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));
 
-        public DataTemplate HeaderTemplate
+        public DataTemplate? HeaderTemplate
         {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            get { return (DataTemplate?)GetValue(HeaderTemplateProperty); }
             set { SetValue(HeaderTemplateProperty, value); }
         }
 
-        public string Header
+        public string? Header
         {
-            get { return (string)GetValue(HeaderProperty); }
+            get { return (string?)GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
 
@@ -48,7 +48,7 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(SelectionChangedEvent, value); }
         }
 
-        public void GoToItem(PivotItem item)
+        public void GoToItem(PivotItem? item)
         {
             if (item == null || item == selectedItem)
             {
@@ -68,18 +68,26 @@ namespace MahApps.Metro.Controls
                 widthToScroll += ((PivotItem)Items[index]).ActualWidth;
             }
 
-            mediator.HorizontalOffset = scroller.HorizontalOffset;
-            var sb = mediator.Resources["Storyboard1"] as Storyboard;
-            var frame = (EasingDoubleKeyFrame)mediator.FindName("edkf");
-            frame.Value = widthToScroll;
-            sb.Completed -= sb_Completed;
-            sb.Completed += sb_Completed;
-            sb.Begin();
+            if (this.mediator is not null
+                && this.scroller is not null)
+            {
+                mediator.HorizontalOffset = scroller.HorizontalOffset;
+                var sb = mediator.Resources["Storyboard1"] as Storyboard;
+                var frame = (EasingDoubleKeyFrame)mediator.FindName("edkf");
+                frame.Value = widthToScroll;
+
+                if (sb is not null)
+                {
+                    sb.Completed -= sb_Completed;
+                    sb.Completed += sb_Completed;
+                    sb.Begin();
+                }
+            }
 
             RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
         }
 
-        private void sb_Completed(object sender, EventArgs e)
+        private void sb_Completed(object? sender, EventArgs e)
         {
             SelectedIndex = internalIndex;
         }
@@ -110,12 +118,12 @@ namespace MahApps.Metro.Controls
 
         private void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
-            scroller.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
+            scroller!.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
         }
 
         private void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GoToItem((PivotItem)headers.SelectedItem);
+            GoToItem((PivotItem)headers!.SelectedItem);
         }
 
         private void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -128,7 +136,7 @@ namespace MahApps.Metro.Controls
                 if (e.HorizontalOffset <= (position + widthOfItem - 1))
                 {
                     selectedItem = pivotItem;
-                    if (headers.SelectedItem != selectedItem)
+                    if (this.headers is not null && headers.SelectedItem != selectedItem)
                     {
                         headers.SelectedItem = selectedItem;
                         internalIndex = i;
@@ -154,7 +162,11 @@ namespace MahApps.Metro.Controls
                 {
                     var pivotItem = (PivotItem)pivot.Items[newSelectedIndex];
                     // set headers selected item too
-                    pivot.headers.SelectedItem = pivotItem;
+                    if (pivot.headers is not null)
+                    {
+                        pivot.headers.SelectedItem = pivotItem;
+                    }
+
                     pivot.GoToItem(pivotItem);
                 }
             }

@@ -351,7 +351,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the banner text.
         /// </summary>
-        public object BannerText
+        public object? BannerText
         {
             get => this.GetValue(BannerTextProperty);
             set => this.SetValue(BannerTextProperty, value);
@@ -384,7 +384,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(BannerTextTemplateSelector),
                                           typeof(DataTemplateSelector),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a template selector for BannerText property that enables an application writer to provide custom template-selection logic .
@@ -405,7 +405,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(BannerTextStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the BannerText property if it is displayed as a string.
@@ -515,7 +515,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonBackContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonBackContent property if it is displayed as a string.
@@ -568,7 +568,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonForwardContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonForwardContent property if it is displayed as a string.
@@ -621,7 +621,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonUpContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonUpContent property if it is displayed as a string.
@@ -674,7 +674,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonDownContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonDownContent property if it is displayed as a string.
@@ -703,20 +703,20 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private bool loaded;
         private bool allowSelectedIndexChangedCallback = true;
-        private Grid bannerGrid;
-        private Label bannerLabel;
-        private ListBox indexListBox;
-        private Button backButton;
-        private Button forwardButton;
-        private Button downButton;
-        private Button upButton;
-        private Storyboard hideBannerStoryboard;
-        private Storyboard hideControlStoryboard;
-        private EventHandler hideControlStoryboardCompletedHandler;
-        private TransitioningContentControl presenter;
-        private Storyboard showBannerStoryboard;
-        private Storyboard showControlStoryboard;
-        private object savedBannerText;
+        private Grid? bannerGrid;
+        private Label? bannerLabel;
+        private ListBox? indexListBox;
+        private Button? backButton;
+        private Button? forwardButton;
+        private Button? downButton;
+        private Button? upButton;
+        private Storyboard? hideBannerStoryboard;
+        private Storyboard? hideControlStoryboard;
+        private EventHandler? hideControlStoryboardCompletedHandler;
+        private TransitioningContentControl? presenter;
+        private Storyboard? showBannerStoryboard;
+        private Storyboard? showControlStoryboard;
+        private object? savedBannerText;
 
         static FlipView()
         {
@@ -788,7 +788,11 @@ namespace MahApps.Metro.Controls
             this.allowSelectedIndexChangedCallback = false;
             try
             {
-                this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+                if (this.presenter is not null)
+                {
+                    this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+                }
+
                 if (this.SelectedIndex > 0)
                 {
                     this.SelectedIndex--;
@@ -815,7 +819,11 @@ namespace MahApps.Metro.Controls
             this.allowSelectedIndexChangedCallback = false;
             try
             {
-                this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+                if (this.presenter is not null)
+                {
+                    this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+                }
+                
                 if (this.SelectedIndex < this.Items.Count - 1)
                 {
                     this.SelectedIndex++;
@@ -1038,7 +1046,7 @@ namespace MahApps.Metro.Controls
 
             this.GetNavigationButtons(out var prevButton, out var nextButton, out var inactiveButtons);
 
-            foreach (var button in inactiveButtons.Where(b => !(b is null)))
+            foreach (var button in inactiveButtons.OfType<Button>())
             {
                 inactiveButtonsApply(button);
             }
@@ -1054,12 +1062,15 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ChangeBannerText(object value = null)
+        private void ChangeBannerText(object? value = null)
         {
             if (this.IsBannerEnabled)
             {
                 var newValue = value ?? this.BannerText;
-                if (newValue == null || this.hideControlStoryboard == null)
+                if (newValue == null 
+                    || this.hideControlStoryboard == null
+                    || this.showControlStoryboard is null
+                    || this.bannerLabel is null)
                 {
                     return;
                 }
@@ -1090,7 +1101,13 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                this.ExecuteWhenLoaded(() => { this.bannerLabel.Content = value ?? this.BannerText; });
+                this.ExecuteWhenLoaded(() => 
+                                           {
+                                               if (this.bannerLabel is not null)
+                                               {
+                                                   this.bannerLabel.Content = value ?? this.BannerText;
+                                               }
+                                           });
             }
         }
 
@@ -1185,7 +1202,7 @@ namespace MahApps.Metro.Controls
         /// <param name="prevButton">Previous button.</param>
         /// <param name="nextButton">Next button.</param>
         /// <param name="inactiveButtons">Inactive buttons.</param>
-        private void GetNavigationButtons(out Button prevButton, out Button nextButton, out IEnumerable<Button> inactiveButtons)
+        private void GetNavigationButtons(out Button? prevButton, out Button? nextButton, out IEnumerable<Button?> inactiveButtons)
         {
             if (this.Orientation == Orientation.Horizontal)
             {
@@ -1205,8 +1222,15 @@ namespace MahApps.Metro.Controls
         {
             if (this.ActualHeight > 0.0)
             {
-                this.bannerLabel?.BeginStoryboard(this.hideControlStoryboard);
-                this.bannerGrid?.BeginStoryboard(this.hideBannerStoryboard);
+                if (this.hideBannerStoryboard is not null)
+                {
+                    this.bannerLabel?.BeginStoryboard(this.hideControlStoryboard);
+                }
+
+                if (this.hideBannerStoryboard is not null)
+                {
+                    this.bannerGrid?.BeginStoryboard(this.hideBannerStoryboard);
+                }
             }
         }
 

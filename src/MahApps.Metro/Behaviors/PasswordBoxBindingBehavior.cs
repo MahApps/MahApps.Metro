@@ -128,7 +128,7 @@ namespace MahApps.Metro.Behaviors
             }
         }
 
-        private void PasswordBoxSelectionChanged(object sender, EventArgs e)
+        private void PasswordBoxSelectionChanged(object? sender, EventArgs e)
         {
             SetRevealedPasswordCaretIndex(this.AssociatedObject);
         }
@@ -179,12 +179,12 @@ namespace MahApps.Metro.Behaviors
                                                   typeof(PasswordBoxBindingBehavior),
                                                   new UIPropertyMetadata(default(TextSelection)));
 
-        private static TextSelection GetSelection(DependencyObject obj)
+        private static TextSelection? GetSelection(DependencyObject obj)
         {
-            return (TextSelection)obj.GetValue(SelectionProperty);
+            return (TextSelection?)obj.GetValue(SelectionProperty);
         }
 
-        private static void SetSelection(DependencyObject obj, TextSelection value)
+        private static void SetSelection(DependencyObject obj, TextSelection? value)
         {
             obj.SetValue(SelectionProperty, value);
         }
@@ -195,9 +195,9 @@ namespace MahApps.Metro.Behaviors
                                                   typeof(PasswordBoxBindingBehavior),
                                                   new UIPropertyMetadata(default(TextBox)));
 
-        private static TextBox GetRevealedPasswordTextBox(DependencyObject obj)
+        private static TextBox? GetRevealedPasswordTextBox(DependencyObject obj)
         {
-            return (TextBox)obj.GetValue(RevealedPasswordTextBoxProperty);
+            return (TextBox?)obj.GetValue(RevealedPasswordTextBoxProperty);
         }
 
         private static void SetRevealedPasswordTextBox(DependencyObject obj, TextBox value)

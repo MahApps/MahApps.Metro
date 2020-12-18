@@ -69,12 +69,12 @@ namespace MahApps.Metro.Controls
         internal const string PreviousContentPresentationSitePartName = "PreviousContentPresentationSite";
         internal const string CurrentContentPresentationSitePartName = "CurrentContentPresentationSite";
 
-        private ContentPresenter currentContentPresentationSite;
-        private ContentPresenter previousContentPresentationSite;
+        private ContentPresenter? currentContentPresentationSite;
+        private ContentPresenter? previousContentPresentationSite;
         private bool allowIsTransitioningPropertyWrite;
-        private Storyboard currentTransition;
+        private Storyboard? currentTransition;
 
-        public event RoutedEventHandler TransitionCompleted;
+        public event RoutedEventHandler? TransitionCompleted;
 
         public const TransitionType DefaultTransitionState = TransitionType.Default;
 
@@ -84,9 +84,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register(nameof(CustomVisualStates), typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
         public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register(nameof(CustomVisualStatesName), typeof(string), typeof(TransitioningContentControl), new PropertyMetadata("CustomTransition"));
 
-        public ObservableCollection<VisualState> CustomVisualStates
+        public ObservableCollection<VisualState>? CustomVisualStates
         {
-            get { return (ObservableCollection<VisualState>)this.GetValue(CustomVisualStatesProperty); }
+            get { return (ObservableCollection<VisualState>?)this.GetValue(CustomVisualStatesProperty); }
             set { this.SetValue(CustomVisualStatesProperty, value); }
         }
 
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal Storyboard CurrentTransition
+        internal Storyboard? CurrentTransition
         {
             get { return this.currentTransition; }
             set
@@ -168,7 +168,7 @@ namespace MahApps.Metro.Controls
             }
 
             // find new transition
-            Storyboard newStoryboard = source.GetStoryboard(newTransition);
+            var newStoryboard = source.GetStoryboard(newTransition);
 
             // unable to find the transition.
             if (newStoryboard == null)
@@ -233,7 +233,7 @@ namespace MahApps.Metro.Controls
             this.currentContentPresentationSite = this.GetTemplateChild(CurrentContentPresentationSitePartName) as ContentPresenter;
 
             // hookup currenttransition
-            Storyboard transition = this.GetStoryboard(this.Transition);
+            var transition = this.GetStoryboard(this.Transition);
             this.CurrentTransition = transition;
             if (transition == null)
             {
@@ -263,7 +263,8 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (this.currentContentPresentationSite != null && this.previousContentPresentationSite != null)
             {
-                if (this.RestartTransitionOnContentChange)
+                if (this.RestartTransitionOnContentChange
+                    && this.CurrentTransition is not null)
                 {
                     this.CurrentTransition.Completed -= this.OnTransitionCompleted;
                 }
@@ -274,7 +275,8 @@ namespace MahApps.Metro.Controls
                 // and start a new transition
                 if (!this.IsTransitioning || this.RestartTransitionOnContentChange)
                 {
-                    if (this.RestartTransitionOnContentChange)
+                    if (this.RestartTransitionOnContentChange
+                        && this.CurrentTransition is not null)
                     {
                         this.CurrentTransition.Completed += this.OnTransitionCompleted;
                     }
@@ -294,14 +296,16 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (this.currentContentPresentationSite != null && this.previousContentPresentationSite != null)
             {
-                if (this.RestartTransitionOnContentChange)
+                if (this.RestartTransitionOnContentChange
+                    && this.CurrentTransition is not null)
                 {
                     this.CurrentTransition.Completed -= this.OnTransitionCompleted;
                 }
 
                 if (!this.IsTransitioning || this.RestartTransitionOnContentChange)
                 {
-                    if (this.RestartTransitionOnContentChange)
+                    if (this.RestartTransitionOnContentChange
+                        && this.CurrentTransition is not null)
                     {
                         this.CurrentTransition.Completed += this.OnTransitionCompleted;
                     }
@@ -313,7 +317,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void OnTransitionCompleted(object sender, EventArgs e)
+        private void OnTransitionCompleted(object? sender, EventArgs e)
         {
             var clockGroup = sender as ClockGroup;
             this.AbortTransition();
@@ -331,10 +335,10 @@ namespace MahApps.Metro.Controls
             this.previousContentPresentationSite?.SetCurrentValue(ContentPresenter.ContentProperty, null);
         }
 
-        private Storyboard GetStoryboard(TransitionType newTransition)
+        private Storyboard? GetStoryboard(TransitionType newTransition)
         {
-            VisualStateGroup presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
-            Storyboard newStoryboard = null;
+            var presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
+            Storyboard? newStoryboard = null;
             if (presentationGroup != null)
             {
                 var transitionName = this.GetTransitionName(newTransition);

@@ -12,7 +12,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_ColorEyeDropper", Type = typeof(ColorEyeDropper))]
     public class ColorCanvas : ColorPickerBase
     {
-        private FrameworkElement saturationValueBox;
+        private FrameworkElement? saturationValueBox;
 
         static ColorCanvas()
         {
@@ -21,14 +21,14 @@ namespace MahApps.Metro.Controls
 
         private void PART_SaturationValueBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.saturationValueBox.ReleaseMouseCapture();
+            this.saturationValueBox!.ReleaseMouseCapture();
             this.saturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
         }
 
         private void PART_SaturationValueBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Mouse.Capture(this.saturationValueBox);
-            this.saturationValueBox.MouseMove += this.PART_SaturationValueBox_MouseMove;
+            this.saturationValueBox!.MouseMove += this.PART_SaturationValueBox_MouseMove;
 
             this.UpdateValues(e.GetPosition(this.saturationValueBox));
         }
@@ -43,7 +43,7 @@ namespace MahApps.Metro.Controls
 
         private void UpdateValues(Point position)
         {
-            if (this.saturationValueBox.ActualWidth < 1 || this.saturationValueBox.ActualHeight < 1)
+            if (this.saturationValueBox!.ActualWidth < 1 || this.saturationValueBox.ActualHeight < 1)
             {
                 return;
             }
@@ -79,7 +79,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            this.saturationValueBox = (FrameworkElement)this.GetTemplateChild("PART_SaturationValueBox");
+            this.saturationValueBox = (FrameworkElement?)this.GetTemplateChild("PART_SaturationValueBox");
             if (this.saturationValueBox != null)
             {
                 this.saturationValueBox.MouseLeftButtonDown += this.PART_SaturationValueBox_MouseLeftButtonDown;

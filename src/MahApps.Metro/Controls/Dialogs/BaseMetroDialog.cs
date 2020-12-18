@@ -11,7 +11,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using ControlzEx.Theming;
-using JetBrains.Annotations;
 using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -61,9 +60,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the title of the dialog.
         /// </summary>
-        public string Title
+        public string? Title
         {
-            get { return (string)this.GetValue(TitleProperty); }
+            get { return (string?)this.GetValue(TitleProperty); }
             set { this.SetValue(TitleProperty, value); }
         }
 
@@ -73,7 +72,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the content above the dialog.
         /// </summary>
-        public object DialogTop
+        public object? DialogTop
         {
             get { return this.GetValue(DialogTopProperty); }
             set { this.SetValue(DialogTopProperty, value); }
@@ -85,7 +84,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the content below the dialog.
         /// </summary>
-        public object DialogBottom
+        public object? DialogBottom
         {
             get { return this.GetValue(DialogBottomProperty); }
             set { this.SetValue(DialogBottomProperty, value); }
@@ -127,9 +126,9 @@ namespace MahApps.Metro.Controls.Dialogs
             set { this.SetValue(DialogButtonFontSizeProperty, value); }
         }
 
-        public MetroDialogSettings DialogSettings { get; private set; }
+        public MetroDialogSettings DialogSettings { get; private set; } = null!;
 
-        internal SizeChangedEventHandler SizeChangedHandler { get; set; }
+        internal SizeChangedEventHandler? SizeChangedHandler { get; set; }
 
         static BaseMetroDialog()
         {
@@ -141,7 +140,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
         /// <param name="settings">The settings for the message dialog.</param>
-        protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
+        protected BaseMetroDialog(MetroWindow? owningWindow, MetroDialogSettings? settings)
         {
             this.Initialize(owningWindow, settings);
         }
@@ -209,7 +208,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return settings;
         }
 
-        private void Initialize([CanBeNull] MetroWindow owningWindow, [CanBeNull] MetroDialogSettings settings)
+        private void Initialize(MetroWindow? owningWindow, MetroDialogSettings? settings)
         {
             this.OwningWindow = owningWindow;
             this.DialogSettings = this.ConfigureSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
@@ -226,7 +225,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.Unloaded += this.BaseMetroDialogUnloaded;
         }
 
-        private void BaseMetroDialogDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void BaseMetroDialogDataContextChanged(object? sender, DependencyPropertyChangedEventArgs e)
         {
             // MahApps add these content presenter to the dialog with AddLogicalChild method.
             // This has the side effect that the DataContext doesn't update, so do this now here.
@@ -234,24 +233,24 @@ namespace MahApps.Metro.Controls.Dialogs
             if (this.DialogBottom is FrameworkElement elementBottom) elementBottom.DataContext = this.DataContext;
         }
 
-        private void BaseMetroDialogLoaded(object sender, RoutedEventArgs e)
+        private void BaseMetroDialogLoaded(object? sender, RoutedEventArgs e)
         {
             ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
             ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
             this.OnLoaded();
         }
 
-        private void BaseMetroDialogUnloaded(object sender, RoutedEventArgs e)
+        private void BaseMetroDialogUnloaded(object? sender, RoutedEventArgs e)
         {
             ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
         }
 
-        private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
+        private void ThemeManagerIsThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
             this.Invoke(this.HandleThemeChange);
         }
 
-        private static object TryGetResource(ControlzEx.Theming.Theme theme, string key)
+        private static object? TryGetResource(ControlzEx.Theming.Theme? theme, string key)
         {
             if (theme == null)
             {
@@ -322,7 +321,7 @@ namespace MahApps.Metro.Controls.Dialogs
             // nothing here
         }
 
-        private static ControlzEx.Theming.Theme DetectTheme(BaseMetroDialog dialog)
+        private static ControlzEx.Theming.Theme? DetectTheme(BaseMetroDialog? dialog)
         {
             if (dialog == null)
             {
@@ -362,21 +361,21 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded) return new Task(() => { });
 
-            if (!this.DialogSettings.AnimateShow)
+            if (this.DialogSettings?.AnimateShow != true)
             {
                 this.Opacity = 1.0; //skip the animation
             }
 
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            RoutedEventHandler handler = null;
+            RoutedEventHandler? handler = null;
             handler = (sender, args) =>
                 {
                     this.Loaded -= handler;
 
                     this.Focus();
 
-                    tcs.TrySetResult(null);
+                    tcs.TrySetResult(null!);
                 };
 
             this.Loaded += handler;
@@ -436,12 +435,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown externally.
         /// </summary>
-        protected internal Window ParentDialogWindow { get; internal set; }
+        protected internal Window? ParentDialogWindow { get; internal set; }
 
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
         /// </summary>
-        protected internal MetroWindow OwningWindow { get; internal set; }
+        protected internal MetroWindow? OwningWindow { get; internal set; }
 
         /// <summary>
         /// Waits until this dialog gets unloaded.
@@ -451,7 +450,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            this.Unloaded += (s, e) => { tcs.TrySetResult(null); };
+            this.Unloaded += (s, e) => { tcs.TrySetResult(null!); };
 
             return tcs.Task;
         }
@@ -460,21 +459,21 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            if (this.DialogSettings.AnimateHide)
+            if (this.DialogSettings?.AnimateHide == true)
             {
-                Storyboard closingStoryboard = this.TryFindResource("MahApps.Storyboard.Dialogs.Close") as Storyboard;
+                var closingStoryboard = this.TryFindResource("MahApps.Storyboard.Dialogs.Close") as Storyboard;
 
                 if (closingStoryboard == null)
                 {
                     throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add BaseMetroDialog.xaml to your merged dictionaries?");
                 }
 
-                EventHandler handler = null;
+                EventHandler? handler = null;
                 handler = (sender, args) =>
                     {
                         closingStoryboard.Completed -= handler;
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     };
 
                 closingStoryboard = closingStoryboard.Clone();
@@ -486,7 +485,7 @@ namespace MahApps.Metro.Controls.Dialogs
             else
             {
                 this.Opacity = 0.0;
-                tcs.TrySetResult(null); //skip the animation
+                tcs.TrySetResult(null!); //skip the animation
             }
 
             return tcs.Task;

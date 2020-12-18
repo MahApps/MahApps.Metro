@@ -27,9 +27,9 @@ namespace MahApps.Metro.Controls
         private const string PART_PopupContainer = "PART_PopupContainer";
         private const string PART_Calendar = "PART_Calendar";
 
-        private FrameworkElement popupContainer;
-        private ContentPresenter popupCalendarPresenter;
-        private Calendar calendar;
+        private FrameworkElement? popupContainer;
+        private ContentPresenter? popupCalendarPresenter;
+        private Calendar? calendar;
 
         /// <summary>Identifies the <see cref="DisplayDateEnd"/> dependency property.</summary>
         public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
@@ -154,7 +154,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the days that are not selectable.
         /// </summary>
-        public CalendarBlackoutDatesCollection BlackoutDates => this.calendar.BlackoutDates;
+        public CalendarBlackoutDatesCollection? BlackoutDates => this.calendar?.BlackoutDates;
 
         static DateTimePicker()
         {
@@ -245,21 +245,23 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void CalendarDisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
+        private void CalendarDisplayDateChanged(object? sender, CalendarDateChangedEventArgs e)
         {
-            if (e.AddedDate is DateTime addedDate && addedDate != this.DisplayDate)
+            if (e.AddedDate.HasValue && e.AddedDate.Value != this.DisplayDate)
             {
-                this.SetCurrentValue(DisplayDateProperty, addedDate);
+                this.SetCurrentValue(DisplayDateProperty, e.AddedDate.Value);
             }
         }
 
-        private void CalendarPreviewKeyDown(object sender, RoutedEventArgs e)
+        private void CalendarPreviewKeyDown(object? sender, RoutedEventArgs e)
         {
             var keyEventArgs = (KeyEventArgs)e;
 
             Debug.Assert(keyEventArgs != null);
 
-            if (keyEventArgs.Key == Key.Escape || ((keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space) && this.calendar.DisplayMode == CalendarMode.Month))
+            if (keyEventArgs is not null 
+                && this.calendar is not null
+                && (keyEventArgs.Key == Key.Escape || ((keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space) && this.calendar.DisplayMode == CalendarMode.Month)))
             {
                 this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
                 if (keyEventArgs.Key == Key.Escape)
@@ -282,7 +284,7 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc />
         protected override void OnPopUpClosed()
         {
-            if (this.calendar.IsKeyboardFocusWithin)
+            if (this.calendar?.IsKeyboardFocusWithin == true)
             {
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
             }
@@ -305,7 +307,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <inheritdoc />
-        protected override string GetValueForTextBox()
+        protected override string? GetValueForTextBox()
         {
             var formatInfo = this.SpecificCultureInfo.DateTimeFormat;
             var timeFormat = this.SelectedTimeFormat == TimePickerFormat.Long ? formatInfo.LongTimePattern : formatInfo.ShortTimePattern;
@@ -357,9 +359,9 @@ namespace MahApps.Metro.Controls
             d.CoerceValue(OrientationProperty);
         }
 
-        private void CalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void CalendarSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0 && this.SelectedDateTime.HasValue && DateTime.Compare((DateTime)e.AddedItems[0], this.SelectedDateTime.Value) != 0)
+            if (e.AddedItems.Count > 0 && this.SelectedDateTime.HasValue && DateTime.Compare((DateTime?)e.AddedItems[0] ?? default, this.SelectedDateTime.Value) != 0)
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, (DateTime?)e.AddedItems[0] + this.GetSelectedTimeFromGUI());
             }

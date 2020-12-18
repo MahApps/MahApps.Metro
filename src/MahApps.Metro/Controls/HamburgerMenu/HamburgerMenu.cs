@@ -16,9 +16,9 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "OptionsListView", Type = typeof(ListBox))]
     public partial class HamburgerMenu : ContentControl
     {
-        private Button hamburgerButton;
-        private ListBox buttonsListView;
-        private ListBox optionsListView;
+        private Button? hamburgerButton;
+        private ListBox? buttonsListView;
+        private ListBox? optionsListView;
         private readonly PropertyChangeNotifier actualWidthPropertyChangeNotifier;
 
         /// <summary>

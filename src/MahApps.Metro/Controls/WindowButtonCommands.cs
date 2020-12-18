@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(DarkCloseButtonStyle), StyleTargetType = typeof(Button))]
     public class WindowButtonCommands : ContentControl
     {
-        public event ClosingWindowEventHandler ClosingWindow;
+        public event ClosingWindowEventHandler? ClosingWindow;
 
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
 
@@ -217,9 +217,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the window.
         /// </summary>
-        public Window ParentWindow
+        public Window? ParentWindow
         {
-            get => (Window)this.GetValue(ParentWindowProperty);
+            get => (Window?)this.GetValue(ParentWindowProperty);
             protected set => this.SetValue(ParentWindowPropertyKey, value);
         }
 
@@ -319,7 +319,7 @@ namespace MahApps.Metro.Controls
             return sb.ToString().Replace("&", "");
         }
 
-        private SafeLibraryHandle user32;
+        private SafeLibraryHandle? user32;
 #pragma warning restore 618
     }
 }

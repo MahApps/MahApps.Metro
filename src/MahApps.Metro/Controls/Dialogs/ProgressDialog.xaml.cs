@@ -55,12 +55,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        internal ProgressDialog(MetroWindow parentWindow)
+        internal ProgressDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        internal ProgressDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        internal ProgressDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
             this.InitializeComponent();

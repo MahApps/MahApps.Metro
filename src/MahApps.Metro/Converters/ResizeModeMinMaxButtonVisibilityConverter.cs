@@ -12,7 +12,7 @@ namespace MahApps.Metro.Converters
 {
     public sealed class ResizeModeMinMaxButtonVisibilityConverter : IMultiValueConverter
     {
-        private static ResizeModeMinMaxButtonVisibilityConverter _instance;
+        private static ResizeModeMinMaxButtonVisibilityConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
@@ -29,7 +29,7 @@ namespace MahApps.Metro.Converters
             get { return _instance ?? (_instance = new ResizeModeMinMaxButtonVisibilityConverter()); }
         }
 
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
         {
             var whichButton = parameter as string;
             if (values != null && !string.IsNullOrEmpty(whichButton))

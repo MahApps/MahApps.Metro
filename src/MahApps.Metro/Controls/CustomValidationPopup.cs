@@ -23,11 +23,11 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class CustomValidationPopup : Popup
     {
-        private Window hostWindow;
-        private ScrollViewer scrollViewer;
-        private MetroContentControl metroContentControl;
-        private TransitioningContentControl transitioningContentControl;
-        private Flyout flyout;
+        private Window? hostWindow;
+        private ScrollViewer? scrollViewer;
+        private MetroContentControl? metroContentControl;
+        private TransitioningContentControl? transitioningContentControl;
+        private Flyout? flyout;
 
         /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
@@ -71,9 +71,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="T:System.Windows.UIElement" /> that this <see cref="T:System.Windows.Controls.Primitives.Popup" /> object is reserving space for.
         /// </summary>
-        public UIElement AdornedElement
+        public UIElement? AdornedElement
         {
-            get => (UIElement)this.GetValue(AdornedElementProperty);
+            get => (UIElement?)this.GetValue(AdornedElementProperty);
             set => this.SetValue(AdornedElementProperty, value);
         }
 
@@ -122,7 +122,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
+        private void CustomValidationPopup_Loaded(object? sender, RoutedEventArgs e)
         {
             var adornedElement = this.AdornedElement;
             if (adornedElement is null)
@@ -218,47 +218,47 @@ namespace MahApps.Metro.Controls
             this.Unloaded += this.CustomValidationPopup_Unloaded;
         }
 
-        private void Flyout_OpeningFinished(object sender, RoutedEventArgs e)
+        private void Flyout_OpeningFinished(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
 
             var adornedElement = this.AdornedElement;
-            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+            var isOpen = Validation.GetHasError(adornedElement!) && adornedElement!.IsKeyboardFocusWithin;
             this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
 
             this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
 
-        private void Flyout_IsOpenChanged(object sender, RoutedEventArgs e)
+        private void Flyout_IsOpenChanged(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
             this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
-        private void Flyout_ClosingFinished(object sender, RoutedEventArgs e)
+        private void Flyout_ClosingFinished(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
             this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
-        private void OnTransitionStarted(object sender, RoutedEventArgs e)
+        private void OnTransitionStarted(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
             this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
-        private void OnTransitionCompleted(object sender, RoutedEventArgs e)
+        private void OnTransitionCompleted(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
 
             var adornedElement = this.AdornedElement;
-            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+            var isOpen = Validation.GetHasError(adornedElement!) && adornedElement!.IsKeyboardFocusWithin;
             this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
 
             this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
 
-        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        private void ScrollViewer_ScrollChanged(object? sender, ScrollChangedEventArgs e)
         {
             this.RefreshPosition();
 
@@ -267,7 +267,7 @@ namespace MahApps.Metro.Controls
                 if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
                 {
                     var adornedElement = this.AdornedElement;
-                    var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+                    var isOpen = Validation.GetHasError(adornedElement!) && adornedElement!.IsKeyboardFocusWithin;
                     this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
                 }
                 else
@@ -277,7 +277,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static bool IsElementVisible(FrameworkElement element, FrameworkElement container)
+        private static bool IsElementVisible(FrameworkElement? element, FrameworkElement? container)
         {
             if (element is null || container is null || !element.IsVisible)
             {
@@ -290,22 +290,22 @@ namespace MahApps.Metro.Controls
             return rect.IntersectsWith(bounds);
         }
 
-        private void CustomValidationPopup_Opened(object sender, EventArgs e)
+        private void CustomValidationPopup_Opened(object? sender, EventArgs e)
         {
             this.SetTopmostState(true);
         }
 
-        private void OnHostWindowActivated(object sender, EventArgs e)
+        private void OnHostWindowActivated(object? sender, EventArgs e)
         {
             this.SetTopmostState(true);
         }
 
-        private void OnHostWindowDeactivated(object sender, EventArgs e)
+        private void OnHostWindowDeactivated(object? sender, EventArgs e)
         {
             this.SetTopmostState(false);
         }
 
-        private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
+        private void CustomValidationPopup_Unloaded(object? sender, RoutedEventArgs e)
         {
             this.OnUnLoaded();
 
@@ -359,7 +359,7 @@ namespace MahApps.Metro.Controls
         {
         }
 
-        private void OnHostWindowStateChanged(object sender, EventArgs e)
+        private void OnHostWindowStateChanged(object? sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
@@ -375,7 +375,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void OnSizeOrLocationChanged(object sender, EventArgs e)
+        private void OnSizeOrLocationChanged(object? sender, EventArgs e)
         {
             this.RefreshPosition();
         }

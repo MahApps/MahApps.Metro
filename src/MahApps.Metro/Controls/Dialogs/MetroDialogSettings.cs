@@ -71,7 +71,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets a custom resource dictionary which can contains custom styles, brushes or something else.
         /// </summary>
-        public ResourceDictionary CustomResourceDictionary { get; set; }
+        public ResourceDictionary? CustomResourceDictionary { get; set; }
 
         /// <summary>
         /// Gets or sets which button should be focused by default
@@ -127,7 +127,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the text used for the first auxiliary button.
         /// </summary>
-        public string FirstAuxiliaryButtonText { get; set; }
+        public string? FirstAuxiliaryButtonText { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
@@ -142,6 +142,6 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the text used for the second auxiliary button.
         /// </summary>
-        public string SecondAuxiliaryButtonText { get; set; }
+        public string? SecondAuxiliaryButtonText { get; set; }
     }
 }

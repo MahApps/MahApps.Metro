@@ -55,12 +55,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        internal InputDialog(MetroWindow parentWindow)
+        internal InputDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        internal InputDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        internal InputDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
             this.InitializeComponent();
@@ -76,13 +76,13 @@ namespace MahApps.Metro.Controls.Dialogs
 
             var tcs = new TaskCompletionSource<string>();
 
-            RoutedEventHandler negativeHandler = null;
-            KeyEventHandler negativeKeyHandler = null;
+            RoutedEventHandler? negativeHandler = null;
+            KeyEventHandler? negativeKeyHandler = null;
 
-            RoutedEventHandler affirmativeHandler = null;
-            KeyEventHandler affirmativeKeyHandler = null;
+            RoutedEventHandler? affirmativeHandler = null;
+            KeyEventHandler? affirmativeKeyHandler = null;
 
-            KeyEventHandler escapeKeyHandler = null;
+            KeyEventHandler? escapeKeyHandler = null;
 
             Action cleanUpHandlers = () =>
                 {
@@ -106,7 +106,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                                              this.BeginInvoke(() =>
                                                                  {
                                                                      cleanUpHandlers();
-                                                                     tcs.TrySetResult(null);
+                                                                     tcs.TrySetResult(null!);
                                                                  });
                                                          });
 
@@ -116,7 +116,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     }
                 };
 
@@ -126,7 +126,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     }
                 };
 
@@ -144,7 +144,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     cleanUpHandlers();
 
-                    tcs.TrySetResult(null);
+                    tcs.TrySetResult(null!);
 
                     e.Handled = true;
                 };

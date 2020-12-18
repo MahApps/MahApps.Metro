@@ -44,7 +44,8 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsExpandedPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if (dependencyObject is DropDownButton dropDownButton)
+            if (dependencyObject is DropDownButton dropDownButton
+                && dropDownButton.contextMenu is not null)
             {
                 dropDownButton.SetContextMenuPlacementTarget(dropDownButton.contextMenu);
             }
@@ -76,7 +77,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets an extra tag.
         /// </summary>
-        public object ExtraTag
+        public object? ExtraTag
         {
             get => this.GetValue(ExtraTagProperty);
             set => this.SetValue(ExtraTagProperty, value);
@@ -108,7 +109,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the content for the icon part.
         /// </summary>
         [Bindable(true)]
-        public object Icon
+        public object? Icon
         {
             get => this.GetValue(IconProperty);
             set => this.SetValue(IconProperty, value);
@@ -124,9 +125,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the DataTemplate for the icon part.
         /// </summary>
         [Bindable(true)]
-        public DataTemplate IconTemplate
+        public DataTemplate? IconTemplate
         {
-            get => (DataTemplate)this.GetValue(IconTemplateProperty);
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
             set => this.SetValue(IconTemplateProperty, value);
         }
 
@@ -145,9 +146,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the command to invoke when the content button is pressed.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
-            get => (ICommand)this.GetValue(CommandProperty);
+            get => (ICommand?)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
         }
 
@@ -161,9 +162,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the element on which to raise the specified command.
         /// </summary>
-        public IInputElement CommandTarget
+        public IInputElement? CommandTarget
         {
-            get => (IInputElement)this.GetValue(CommandTargetProperty);
+            get => (IInputElement?)this.GetValue(CommandTargetProperty);
             set => this.SetValue(CommandTargetProperty, value);
         }
 
@@ -203,7 +204,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ContentTemplate),
                                           typeof(DataTemplate),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata((DataTemplate)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary> 
         /// Gets or sets the data template used to display the content of the DropDownButton.
@@ -220,7 +221,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ContentTemplateSelector),
                                           typeof(DataTemplateSelector),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a template selector that enables an application writer to provide custom template-selection logic.
@@ -240,7 +241,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ContentStringFormat),
                                           typeof(string),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the content property if it is displayed as a string.
@@ -356,7 +357,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DropDownButton), new FrameworkPropertyMetadata(typeof(DropDownButton)));
         }
 
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
             {
@@ -381,7 +382,7 @@ namespace MahApps.Metro.Controls
             this.UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             this.UpdateCanExecute();
         }
@@ -468,7 +469,7 @@ namespace MahApps.Metro.Controls
             {
                 foreach (var groupStyle in e.OldItems.OfType<GroupStyle>())
                 {
-                    this.contextMenu.GroupStyle.Remove(groupStyle);
+                    this.contextMenu?.GroupStyle.Remove(groupStyle);
                 }
             }
 
@@ -476,7 +477,7 @@ namespace MahApps.Metro.Controls
             {
                 foreach (var groupStyle in e.NewItems.OfType<GroupStyle>())
                 {
-                    this.contextMenu.GroupStyle.Add(groupStyle);
+                    this.contextMenu?.GroupStyle.Add(groupStyle);
                 }
             }
         }
@@ -488,7 +489,7 @@ namespace MahApps.Metro.Controls
             e.Handled = true;
         }
 
-        private void TryRemoveVisualFromOldTree(object item)
+        private void TryRemoveVisualFromOldTree(object? item)
         {
             if (item is Visual visual)
             {
@@ -571,7 +572,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private Button button;
-        private ContextMenu contextMenu;
+        private Button? button;
+        private ContextMenu? contextMenu;
     }
 }

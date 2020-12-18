@@ -195,7 +195,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the base uniform resource identifier (URI) of the current context.
         /// </summary>
         /// <see cref="IUriContext.BaseUri"/>
-        Uri IUriContext.BaseUri { get; set; }
+        Uri? IUriContext.BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets the uniform resource identifier (URI) of the current content, or the URI of new content that is currently being navigated to.  
@@ -313,42 +313,42 @@ namespace MahApps.Metro.Controls
         /// Occurs when navigation to a content fragment begins, which occurs immediately, if the desired fragment is in the current content, or after the source XAML content has been loaded, if the desired fragment is in different content.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.FragmentNavigation"/>
-        public event FragmentNavigationEventHandler FragmentNavigation;
+        public event FragmentNavigationEventHandler? FragmentNavigation;
 
         /// <summary>
         /// Occurs when a new navigation is requested.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.Navigating"/>
-        public event NavigatingCancelEventHandler Navigating;
+        public event NavigatingCancelEventHandler? Navigating;
 
         /// <summary>
         /// Occurs when an error is raised while navigating to the requested content.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.NavigationFailed"/>
-        public event NavigationFailedEventHandler NavigationFailed;
+        public event NavigationFailedEventHandler? NavigationFailed;
 
         /// <summary>
         /// Occurs periodically during a download to provide navigation progress information.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.NavigationProgress"/>
-        public event NavigationProgressEventHandler NavigationProgress;
+        public event NavigationProgressEventHandler? NavigationProgress;
 
         /// <summary>
         /// Occurs when the StopLoading method is called, or when a new navigation is requested while a current navigation is in progre
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.NavigationStopped"/>
-        public event NavigationStoppedEventHandler NavigationStopped;
+        public event NavigationStoppedEventHandler? NavigationStopped;
 
         /// <summary>
         /// Occurs when the content that is being navigated to has been found, and is available from the PageContent property, although it may not have completed loading
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.Navigated"/>
-        public event NavigatedEventHandler Navigated;
+        public event NavigatedEventHandler? Navigated;
 
         /// <summary>
         /// Occurs when content that was navigated to has been loaded, parsed, and has begun rendering.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.LoadCompleted"/>
-        public event LoadCompletedEventHandler LoadCompleted;
+        public event LoadCompletedEventHandler? LoadCompleted;
     }
 }

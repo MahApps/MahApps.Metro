@@ -9,11 +9,11 @@ namespace MahApps.Metro.Actions
 {
     public class CloseFlyoutAction : CommandTriggerAction
     {
-        private Flyout associatedFlyout;
+        private Flyout? associatedFlyout;
 
-        private Flyout AssociatedFlyout => this.associatedFlyout ?? (this.associatedFlyout = this.AssociatedObject.TryFindParent<Flyout>());
+        private Flyout? AssociatedFlyout => this.associatedFlyout ?? (this.associatedFlyout = this.AssociatedObject.TryFindParent<Flyout>());
 
-        protected override void Invoke(object parameter)
+        protected override void Invoke(object? parameter)
         {
             if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
             {
@@ -35,7 +35,7 @@ namespace MahApps.Metro.Actions
             }
         }
 
-        protected override object GetCommandParameter()
+        protected override object? GetCommandParameter()
         {
             return this.CommandParameter ?? this.AssociatedFlyout;
         }

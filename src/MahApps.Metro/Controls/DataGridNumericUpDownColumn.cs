@@ -15,8 +15,8 @@ namespace MahApps.Metro.Controls
 {
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {
-        private static Style _defaultEditingElementStyle;
-        private static Style _defaultElementStyle;
+        private static Style? _defaultEditingElementStyle;
+        private static Style? _defaultElementStyle;
 
         static DataGridNumericUpDownColumn()
         {
@@ -169,7 +169,7 @@ namespace MahApps.Metro.Controls
         /// <param name="editingElement">A reference to element returned by GenerateEditingElement.</param>
         /// <param name="editingEventArgs">The event args of the input event that caused the cell to go into edit mode. May be null.</param>
         /// <returns>The unedited value of the cell.</returns>
-        protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
+        protected override object? PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
             if (editingElement is NumericUpDown numericUpDown)
             {

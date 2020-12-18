@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(ItemFocusVisualStyle), StyleTargetType = typeof(Control))]
     public partial class HamburgerMenu
     {
-        private ControlTemplate _defaultItemFocusVisualTemplate = null;
+        private ControlTemplate? _defaultItemFocusVisualTemplate = null;
 
         /// <summary>Identifies the <see cref="OpenPaneLength"/> dependency property.</summary>
         public static readonly DependencyProperty OpenPaneLengthProperty

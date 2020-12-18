@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Controls
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
         private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
-        private Regex regexNumber = null;
+        private Regex? regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
@@ -43,10 +44,10 @@ namespace MahApps.Metro.Controls
         private double internalLargeChange = DefaultInterval * 100;
         private double intervalValueSinceReset;
         private bool manualChange;
-        private RepeatButton repeatDown;
-        private RepeatButton repeatUp;
-        private TextBox valueTextBox;
-        private ScrollViewer scrollViewer;
+        private RepeatButton? repeatDown;
+        private RepeatButton? repeatUp;
+        private TextBox? valueTextBox;
+        private ScrollViewer? scrollViewer;
 
         /// <summary>Identifies the <see cref="ValueIncremented"/> routed event.</summary>
         public static readonly RoutedEvent ValueIncrementedEvent
@@ -374,7 +375,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceValue(DependencyObject d, object value)
+        private static object? CoerceValue(DependencyObject d, object? value)
         {
             if (value == null)
             {
@@ -991,7 +992,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnPreviewMouseWheel(e);
 
-            if (this.InterceptMouseWheel && (this.IsFocused || this.valueTextBox.IsFocused || this.TrackMouseWheelWhenMouseOver))
+            if (this.InterceptMouseWheel && (this.IsFocused || this.valueTextBox?.IsFocused == true || this.TrackMouseWheelWhenMouseOver))
             {
                 bool increment = e.Delta > 0;
                 this.manualChange = false;
@@ -1008,7 +1009,7 @@ namespace MahApps.Metro.Controls
                 }
                 else if (this.InterceptMouseWheel)
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(sv, this.valueTextBox.IsFocused, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, this.valueTextBox?.IsFocused == true, null);
                 }
                 else
                 {
@@ -1108,24 +1109,32 @@ namespace MahApps.Metro.Controls
         {
             if (!newValue.HasValue)
             {
-                this.valueTextBox.Text = null;
+                if (this.valueTextBox is not null)
+                {
+                    this.valueTextBox.Text = null;
+                }
+
                 return;
             }
 
-            this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
+            if (this.valueTextBox is not null)
+            {
+                this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
+            }
 
             if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
             {
-                this.SetValue(TextBoxHelper.TextLengthProperty, this.valueTextBox.Text.Length);
+                var textLength = this.valueTextBox?.Text?.Length ?? 0;
+                this.SetValue(TextBoxHelper.TextLengthProperty, textLength);
             }
         }
 
-        private static string FormattedValueString(double newValue, string format, CultureInfo culture)
+        private static string? FormattedValueString(double newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                if (TryFormatHexadecimal(newValue, format, culture, out var hexValue))
                 {
                     return hexValue;
                 }
@@ -1151,7 +1160,7 @@ namespace MahApps.Metro.Controls
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (!TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                if (!TryFormatHexadecimal(newValue, format, culture, out var hexValue))
                 {
                     var match = RegexStringFormat.Match(format);
                     if (match.Success)
@@ -1182,7 +1191,7 @@ namespace MahApps.Metro.Controls
             return value;
         }
 
-        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, out string output)
+        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, [NotNullWhen(true)] out string? output)
         {
             var match = RegexStringFormatHexadecimal.Match(format);
             if (match.Success)
@@ -1205,16 +1214,16 @@ namespace MahApps.Metro.Controls
             return false;
         }
 
-        private ScrollViewer TryFindScrollViewer()
+        private ScrollViewer? TryFindScrollViewer()
         {
             if (this.scrollViewer != null)
             {
                 return this.scrollViewer;
             }
 
-            this.valueTextBox.ApplyTemplate();
+            this.valueTextBox?.ApplyTemplate();
 
-            this.scrollViewer = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
+            this.scrollViewer = this.valueTextBox?.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
             if (this.scrollViewer != null)
             {
                 this.handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
@@ -1267,7 +1276,11 @@ namespace MahApps.Metro.Controls
             if (!routedEvent.Handled)
             {
                 this.ChangeValueBy(routedEvent.Interval);
-                this.valueTextBox.CaretIndex = this.valueTextBox.Text.Length;
+
+                if (this.valueTextBox is not null)
+                {
+                    this.valueTextBox.CaretIndex = this.valueTextBox.Text.Length;
+                }
             }
         }
 
@@ -1361,7 +1374,7 @@ namespace MahApps.Metro.Controls
         private static async void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
         {
             // Select the proper decimal-point string upon the context
-            string replace;
+            string? replace;
             switch (mode)
             {
                 case DecimalPointCorrectionMode.Number:
@@ -1392,12 +1405,12 @@ namespace MahApps.Metro.Controls
             await Task.FromResult(true);
         }
 
-        private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
         {
             this.ChangeValueFromTextInput(sender as TextBox);
         }
 
-        private void ChangeValueFromTextInput(TextBox textBox)
+        private void ChangeValueFromTextInput(TextBox? textBox)
         {
             if (textBox is null || !this.InterceptManualEnter)
             {

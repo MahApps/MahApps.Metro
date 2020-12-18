@@ -34,9 +34,9 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
     public class SplitView : Control
     {
-        private Rectangle lightDismissLayer;
-        private RectangleGeometry paneClipRectangle;
-        private MetroThumb resizingThumb;
+        private Rectangle? lightDismissLayer;
+        private RectangleGeometry? paneClipRectangle;
+        private MetroThumb? resizingThumb;
 
         /// <summary>Identifies the <see cref="CompactPaneLength"/> dependency property.</summary>
         public static readonly DependencyProperty CompactPaneLengthProperty
@@ -447,12 +447,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Occurs when the <see cref="SplitView" /> pane is closed.
         /// </summary>
-        public event EventHandler PaneClosed;
+        public event EventHandler? PaneClosed;
 
         /// <summary>
         ///     Occurs when the <see cref="SplitView" /> pane is closing.
         /// </summary>
-        public event EventHandler<SplitViewPaneClosingEventArgs> PaneClosing;
+        public event EventHandler<SplitViewPaneClosingEventArgs>? PaneClosing;
 
         /// <inheritdoc />
         public override void OnApplyTemplate()

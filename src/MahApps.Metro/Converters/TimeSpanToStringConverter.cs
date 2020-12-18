@@ -17,7 +17,7 @@ namespace MahApps.Metro.Converters
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan? timeSpan = value as TimeSpan?;
             if (timeSpan == null)
@@ -35,10 +35,10 @@ namespace MahApps.Metro.Converters
         /// <param name="targetType">The type to convert to.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             DateTime dateTime;
-            if (DateTime.TryParseExact(value.ToString(), culture.DateTimeFormat.LongTimePattern, culture, DateTimeStyles.None, out dateTime))
+            if (DateTime.TryParseExact(value?.ToString(), culture.DateTimeFormat.LongTimePattern, culture, DateTimeStyles.None, out dateTime))
             {
                 return dateTime.TimeOfDay;
             }

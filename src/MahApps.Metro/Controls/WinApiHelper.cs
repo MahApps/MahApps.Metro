@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
         /// <param name="visual">The visual element to get the monitor information.</param>
         /// <returns>The working area size of the monitor.</returns>
 #pragma warning disable 618
-        public static Size GetMonitorWorkSize(this Visual visual)
+        public static Size GetMonitorWorkSize(this Visual? visual)
         {
             if (visual is null == false
                 && PresentationSource.FromVisual(visual) is HwndSource source
@@ -45,7 +45,7 @@ namespace MahApps.Metro.Controls
         /// <param name="window"> The window to act on. </param>
         /// <returns> The window text. </returns>
 #pragma warning disable 618
-        internal static string GetWindowText(this Window window)
+        internal static string? GetWindowText(this Window? window)
         {
             if (window is null == false
                 && PresentationSource.FromVisual(window) is HwndSource source
@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
         /// <summary> Gets the text associated with the given window handle. </summary>
         /// <param name="window"> The window to act on. </param>
         /// <returns> The window text. </returns>
-        internal static Rect GetWindowBoundingRectangle(this Window window)
+        internal static Rect GetWindowBoundingRectangle(this Window? window)
         {
             Rect bounds = new Rect(0, 0, 0, 0);
 

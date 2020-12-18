@@ -22,14 +22,14 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the Header of this Control
         /// </summary>
-        public object Header
+        public object? Header
         {
-            get => (object)this.GetValue(HeaderProperty);
+            get => this.GetValue(HeaderProperty);
             set => this.SetValue(HeaderProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
-        public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color?, string>), typeof(ColorPalette), new PropertyMetadata(null));
+        public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color, string>), typeof(ColorPalette), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the HeaderTemplate of this Control
@@ -46,15 +46,15 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a custom dictionary for color to name. If null, the default dictionary will be used.
         /// </summary>
-        public Dictionary<Color?, string> ColorNamesDictionary
+        public Dictionary<Color, string> ColorNamesDictionary
         {
-            get => (Dictionary<Color?, string>)this.GetValue(ColorNamesDictionaryProperty);
+            get => (Dictionary<Color, string>)this.GetValue(ColorNamesDictionaryProperty);
             set => this.SetValue(ColorNamesDictionaryProperty, value);
         }
 
         internal bool FocusSelectedItem()
         {
-            ListBoxItem listBoxItem = null;
+            ListBoxItem? listBoxItem = null;
             if (this.SelectedIndex >= 0)
             {
                 listBoxItem = (ListBoxItem)this.ItemContainerGenerator.ContainerFromIndex(this.SelectedIndex);

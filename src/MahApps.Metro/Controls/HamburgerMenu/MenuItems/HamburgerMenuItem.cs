@@ -52,9 +52,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies label to display.
         /// </summary>
-        public string Label
+        public string? Label
         {
-            get { return (string)GetValue(LabelProperty); }
+            get { return (string?)GetValue(LabelProperty); }
 
             set { SetValue(LabelProperty, value); }
         }
@@ -62,7 +62,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies the page to navigate to (if you use the HamburgerMenu with a Frame content)
         /// </summary>
-        public Type TargetPageType
+        public Type? TargetPageType
         {
             get { return (Type)GetValue(TargetPageTypeProperty); }
 
@@ -72,7 +72,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a command which will be executed if an item is clicked by the user.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
 
@@ -82,7 +82,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the command parameter which will be passed by the Command.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
             get { return (object)GetValue(CommandParameterProperty); }
 
@@ -95,7 +95,7 @@ namespace MahApps.Metro.Controls
         /// <returns>
         /// Element on which to raise a command.
         /// </returns>
-        public IInputElement CommandTarget
+        public IInputElement? CommandTarget
         {
             get { return (IInputElement)this.GetValue(CommandTargetProperty); }
 
@@ -118,7 +118,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies ToolTip to display.
         /// </summary>
-        public object ToolTip
+        public object? ToolTip
         {
             get { return GetValue(ToolTipProperty); }
 
@@ -135,10 +135,10 @@ namespace MahApps.Metro.Controls
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((HamburgerMenuItem)d).OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+            ((HamburgerMenuItem)d).OnCommandChanged((ICommand?)e.OldValue, (ICommand?)e.NewValue);
         }
 
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
             {
@@ -163,7 +163,7 @@ namespace MahApps.Metro.Controls
             this.UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             this.UpdateCanExecute();
         }

@@ -45,7 +45,7 @@ namespace MahApps.Metro.Controls
                 "DropDownButtonContentTemplate",
                 typeof(DataTemplate),
                 typeof(DatePickerHelper),
-                new FrameworkPropertyMetadata((DataTemplate)null));
+                new FrameworkPropertyMetadata(null));
 
         /// <summary> 
         /// Gets the data template used to display the content of the DropDown Button.

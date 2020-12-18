@@ -34,7 +34,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceSelectedColorProperty(DependencyObject dependencyObject, object basevalue)
+        private static object? CoerceSelectedColorProperty(DependencyObject dependencyObject, object? basevalue)
         {
             if (dependencyObject is ColorPickerBase colorPicker)
             {
@@ -108,7 +108,7 @@ namespace MahApps.Metro.Controls
                     {
                         colorPicker.SetCurrentValue(SelectedColorProperty, null);
                     }
-                    else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is Color color)
+                    else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
                     {
                         colorPicker.SetCurrentValue(SelectedColorProperty, color);
                     }
@@ -132,16 +132,16 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
         public static readonly DependencyProperty ColorNamesDictionaryProperty
             = DependencyProperty.Register(nameof(ColorNamesDictionary),
-                                          typeof(Dictionary<Color?, string>),
+                                          typeof(Dictionary<Color, string>),
                                           typeof(ColorPickerBase),
                                           new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a <see cref="Dictionary{TKey, TValue}"/> for looking up the <see cref="ColorName"/>
         /// </summary>
-        public Dictionary<Color?, string> ColorNamesDictionary
+        public Dictionary<Color, string>? ColorNamesDictionary
         {
-            get => (Dictionary<Color?, string>)this.GetValue(ColorNamesDictionaryProperty);
+            get => (Dictionary<Color, string>?)this.GetValue(ColorNamesDictionaryProperty);
             set => this.SetValue(ColorNamesDictionaryProperty, value);
         }
 
@@ -431,7 +431,7 @@ namespace MahApps.Metro.Controls
 
         internal virtual void OnSelectedColorChanged(Color? oldValue, Color? newValue)
         {
-            this.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(newValue, this.ColorNamesDictionary));
+            this.SetCurrentValue(ColorNameProperty, newValue is null ? null : ColorHelper.GetColorName(newValue.Value, this.ColorNamesDictionary));
 
             // We just update the following lines if we have a Color.
             if (newValue != null)

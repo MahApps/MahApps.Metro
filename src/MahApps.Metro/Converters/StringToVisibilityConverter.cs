@@ -52,22 +52,22 @@ namespace MahApps.Metro.Converters
 
         #region IValueConverter Members
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((value == null || value is string) && targetType == typeof(Visibility))
             {
                 if (OppositeStringValue)
                 {
-                    return string.IsNullOrEmpty((string)value) ? Visibility.Visible : FalseEquivalent;
+                    return string.IsNullOrEmpty((string?)value) ? Visibility.Visible : FalseEquivalent;
                 }
 
-                return string.IsNullOrEmpty((string)value) ? FalseEquivalent : Visibility.Visible;
+                return string.IsNullOrEmpty((string?)value) ? FalseEquivalent : Visibility.Visible;
             }
 
             return value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Visibility)
             {

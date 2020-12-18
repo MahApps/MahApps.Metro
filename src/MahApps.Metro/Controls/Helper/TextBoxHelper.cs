@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata("r"));
-        public static readonly DependencyProperty ButtonContentTemplateProperty = DependencyProperty.RegisterAttached("ButtonContentTemplate", typeof(DataTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata((DataTemplate)null));
+        public static readonly DependencyProperty ButtonContentTemplateProperty = DependencyProperty.RegisterAttached("ButtonContentTemplate", typeof(DataTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata(new FontFamilyConverter().ConvertFromString("Marlett")));
         public static readonly DependencyProperty ButtonFontSizeProperty = DependencyProperty.RegisterAttached("ButtonFontSize", typeof(double), typeof(TextBoxHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
@@ -151,7 +151,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnAutoWatermarkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkElement element = d as FrameworkElement;
+            var element = d as FrameworkElement;
             bool? enable = e.NewValue as bool?;
             if (element != null)
             {
@@ -178,9 +178,7 @@ namespace MahApps.Metro.Controls
             FrameworkElement obj = (FrameworkElement)o;
             obj.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
 
-            DependencyProperty dependencyProperty;
-
-            if (!AutoWatermarkPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
+            if (!AutoWatermarkPropertyMapping.TryGetValue(obj.GetType(), out var dependencyProperty))
             {
                 throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
             }
@@ -197,7 +195,7 @@ namespace MahApps.Metro.Controls
         }
 
         [CanBeNull]
-        private static PropertyInfo ResolvePropertyFromBindingExpression(BindingExpression bindingExpression)
+        private static PropertyInfo? ResolvePropertyFromBindingExpression(BindingExpression? bindingExpression)
         {
             if (bindingExpression != null)
             {
@@ -330,7 +328,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void RemoveSpellCheckMenuItems([CanBeNull] ContextMenu contextMenu)
+        private static void RemoveSpellCheckMenuItems(ContextMenu? contextMenu)
         {
             if (contextMenu != null)
             {
@@ -650,7 +648,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength)
+        private static void SetTextLength<TDependencyObject>(TDependencyObject? sender, Func<TDependencyObject, int> funcTextLength)
             where TDependencyObject : DependencyObject
         {
             if (sender != null)
@@ -676,22 +674,22 @@ namespace MahApps.Metro.Controls
             SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
         }
 
-        private static void OnDatePickerBaseSelectedDateChanged(object sender, RoutedEventArgs e)
+        private static void OnDatePickerBaseSelectedDateChanged(object? sender, RoutedEventArgs e)
         {
             SetTextLength(sender as DatePicker, timePickerBase => timePickerBase.SelectedDate.HasValue ? 1 : 0);
         }
 
-        private static void OnTimePickerBaseSelectedDateTimeChanged(object sender, RoutedEventArgs e)
+        private static void OnTimePickerBaseSelectedDateTimeChanged(object? sender, RoutedEventArgs e)
         {
             SetTextLength(sender as TimePickerBase, timePickerBase => timePickerBase.SelectedDateTime.HasValue ? 1 : 0);
         }
 
-        private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
+        private static void TextBoxGotFocus(object? sender, RoutedEventArgs e)
         {
             ControlGotFocus(sender as TextBoxBase, textBox => textBox.SelectAll());
         }
 
-        private static void UIElementPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private static void UIElementPreviewMouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
         {
             if (sender is UIElement uiElement && !uiElement.IsKeyboardFocusWithin && GetSelectAllOnFocus(uiElement))
             {
@@ -703,10 +701,10 @@ namespace MahApps.Metro.Controls
 
         private static void PasswordGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll());
+            ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox?.SelectAll());
         }
 
-        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Action<TDependencyObject> action)
+        private static void ControlGotFocus<TDependencyObject>(TDependencyObject? sender, Action<TDependencyObject> action)
             where TDependencyObject : DependencyObject
         {
             if (sender != null)

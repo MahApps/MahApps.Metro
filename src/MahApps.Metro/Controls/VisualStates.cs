@@ -74,7 +74,6 @@ namespace MahApps.Metro.Controls
         public static void GoToState(Control control, bool useTransitions, params string[] stateNames)
         {
             Debug.Assert(control != null, "control should not be null!");
-            Debug.Assert(stateNames != null, "stateNames should not be null!");
             Debug.Assert(stateNames.Length > 0, "stateNames should not be empty!");
 
             foreach (string name in stateNames)
@@ -86,7 +85,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static FrameworkElement GetImplementationRoot(DependencyObject dependencyObject)
+        public static FrameworkElement? GetImplementationRoot(DependencyObject dependencyObject)
         {
             Debug.Assert(dependencyObject != null, "DependencyObject should not be null.");
             return VisualTreeHelper.GetChildrenCount(dependencyObject) == 1
@@ -94,9 +93,9 @@ namespace MahApps.Metro.Controls
                 : null;
         }
 
-        public static VisualStateGroup TryGetVisualStateGroup(DependencyObject dependencyObject, string groupName)
+        public static VisualStateGroup? TryGetVisualStateGroup(DependencyObject dependencyObject, string groupName)
         {
-            FrameworkElement root = GetImplementationRoot(dependencyObject);
+            var root = GetImplementationRoot(dependencyObject);
             return root == null
                 ? null
                 : VisualStateManager.GetVisualStateGroups(root)?.OfType<VisualStateGroup>().FirstOrDefault(group => string.CompareOrdinal(groupName, group.Name) == 0);

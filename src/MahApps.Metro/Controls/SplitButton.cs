@@ -94,9 +94,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the DataTemplate for the icon part.
         /// </summary>
         [Bindable(true)]
-        public DataTemplate IconTemplate
+        public DataTemplate? IconTemplate
         {
-            get => (DataTemplate)this.GetValue(IconTemplateProperty);
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
             set => this.SetValue(IconTemplateProperty, value);
         }
 
@@ -115,9 +115,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the command to invoke when the content button is pressed.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
-            get => (ICommand)this.GetValue(CommandProperty);
+            get => (ICommand?)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
         }
 
@@ -131,9 +131,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the element on which to raise the specified command.
         /// </summary>
-        public IInputElement CommandTarget
+        public IInputElement? CommandTarget
         {
-            get => (IInputElement)this.GetValue(CommandTargetProperty);
+            get => (IInputElement?)this.GetValue(CommandTargetProperty);
             set => this.SetValue(CommandTargetProperty, value);
         }
 
@@ -147,7 +147,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the parameter to pass to the command property.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
             get => this.GetValue(CommandParameterProperty);
             set => this.SetValue(CommandParameterProperty, value);
@@ -163,9 +163,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the button content style.
         /// </summary>
-        public Style ButtonStyle
+        public Style? ButtonStyle
         {
-            get => (Style)this.GetValue(ButtonStyleProperty);
+            get => (Style?)this.GetValue(ButtonStyleProperty);
             set => this.SetValue(ButtonStyleProperty, value);
         }
 
@@ -265,7 +265,7 @@ namespace MahApps.Metro.Controls
             this.UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             this.UpdateCanExecute();
         }
@@ -344,7 +344,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private Button button;
-        private Button expanderButton;
+        private Button? button;
+        private Button? expanderButton;
     }
 }

@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        string ShowModalInputExternal(object context, string title, string message, MetroDialogSettings settings = null);
+        string? ShowModalInputExternal(object context, string title, string message, MetroDialogSettings settings = null);
 
         /// <summary>
         /// Creates a LoginDialog inside of the current window.
@@ -40,7 +40,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null);
+        Task<LoginDialogData?> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null);
 
         /// <summary>
         /// Creates a LoginDialog outside of the current window.
@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        LoginDialogData ShowModalLoginExternal(object context, string title, string message, LoginDialogSettings settings = null);
+        LoginDialogData? ShowModalLoginExternal(object context, string title, string message, LoginDialogSettings settings = null);
 
         /// <summary>
         /// Creates a MessageDialog inside of the current window.

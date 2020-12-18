@@ -217,7 +217,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (!(item is FrameworkElement frameworkElement))
+            var frameworkElement = item as FrameworkElement;
+            if (item is not FrameworkElement)
             {
                 windowCommandsItem.ApplyTemplate();
                 frameworkElement = windowCommandsItem.ContentTemplate?.LoadContent() as FrameworkElement;
@@ -243,7 +244,7 @@ namespace MahApps.Metro.Controls
             this.ResetSeparators(false);
         }
 
-        private void AttachVisibilityHandler(WindowCommandsItem container, UIElement item)
+        private void AttachVisibilityHandler(WindowCommandsItem? container, UIElement? item)
         {
             if (container == null)
             {
@@ -270,7 +271,7 @@ namespace MahApps.Metro.Controls
             container.VisibilityPropertyChangeNotifier = isVisibilityNotifier;
         }
 
-        private void DetachVisibilityHandler(WindowCommandsItem container)
+        private void DetachVisibilityHandler(WindowCommandsItem? container)
         {
             if (container != null)
             {
@@ -278,7 +279,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void VisibilityPropertyChanged(object sender, EventArgs e)
+        private void VisibilityPropertyChanged(object? sender, EventArgs e)
         {
             if (sender is UIElement item)
             {
@@ -322,14 +323,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private WindowCommandsItem GetWindowCommandsItem(object item)
+        private WindowCommandsItem? GetWindowCommandsItem(object? item)
         {
             if (item is WindowCommandsItem windowCommandsItem)
             {
                 return windowCommandsItem;
             }
 
-            return (WindowCommandsItem)this.ItemContainerGenerator.ContainerFromItem(item);
+            return (WindowCommandsItem?)this.ItemContainerGenerator.ContainerFromItem(item);
         }
 
         private IEnumerable<WindowCommandsItem> GetWindowCommandsItems()

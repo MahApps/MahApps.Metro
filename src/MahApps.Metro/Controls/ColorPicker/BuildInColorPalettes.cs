@@ -39,7 +39,7 @@ namespace MahApps.Metro.Controls
             typeof(Colors)
                 .GetProperties()
                 .Where(x => x.PropertyType == typeof(Color))
-                .Select(x => (Color)x.GetValue(null))
+                .Select(x => (Color)(x.GetValue(null) ?? default(Color)))
                 .OrderBy(c => new HSVColor(c).Hue)
                 .ThenBy(c => new HSVColor(c).Saturation)
                 .ThenByDescending(c => new HSVColor(c).Value));

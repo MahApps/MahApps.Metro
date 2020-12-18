@@ -32,15 +32,15 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(TabItemStyle), StyleTargetType = typeof(TabItem))]
     public class ColorPicker : ColorPickerBase
     {
-        private Popup PART_Popup;
-        private ColorPalette PART_ColorPaletteStandard;
-        private ColorPalette PART_ColorPaletteAvailable;
-        private ColorPalette PART_ColorPaletteCustom01;
-        private ColorPalette PART_ColorPaletteCustom02;
-        private ColorPalette PART_ColorPaletteRecent;
-        private TabControl PART_PopupTabControl;
-        private TabItem PART_ColorPalettesTab;
-        private TabItem PART_AdvancedTab;
+        private Popup? PART_Popup;
+        private ColorPalette? PART_ColorPaletteStandard;
+        private ColorPalette? PART_ColorPaletteAvailable;
+        private ColorPalette? PART_ColorPaletteCustom01;
+        private ColorPalette? PART_ColorPaletteCustom02;
+        private ColorPalette? PART_ColorPaletteRecent;
+        private TabControl? PART_PopupTabControl;
+        private TabItem? PART_ColorPalettesTab;
+        private TabItem? PART_AdvancedTab;
 
         /// <summary>Identifies the <see cref="DropDownClosed"/> routed event.</summary>
         public static readonly RoutedEvent DropDownClosedEvent = EventManager.RegisterRoutedEvent(
@@ -780,20 +780,25 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorPicker colorPicker)
+            if (d is not ColorPicker colorPicker)
             {
-                if ((bool)e.NewValue)
-                {
-                    colorPicker.RaiseEvent(new RoutedEventArgs(DropDownOpenedEvent));
+                return;
+            }
 
-                    var action = new Action(() =>
+            if ((bool)e.NewValue)
+            {
+                colorPicker.RaiseEvent(new RoutedEventArgs(DropDownOpenedEvent));
+
+                var action = new Action(() =>
+                    {
+                        colorPicker.Focus();
+
+                        Mouse.Capture(colorPicker, CaptureMode.SubTree);
+
+                        colorPicker.ValidateTabItems();
+
+                        if (colorPicker.PART_PopupTabControl is not null)
                         {
-                            colorPicker.Focus();
-
-                            Mouse.Capture(colorPicker, CaptureMode.SubTree);
-
-                            colorPicker.ValidateTabItems();
-
                             if (ReferenceEquals(colorPicker.PART_PopupTabControl.SelectedItem, colorPicker.PART_ColorPalettesTab))
                             {
                                 if (colorPicker.IsStandardColorPaletteVisible && colorPicker.PART_ColorPaletteStandard != null)
@@ -821,23 +826,23 @@ namespace MahApps.Metro.Controls
                             {
                                 colorPicker.PART_AdvancedTab.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                             }
-                        });
+                        }
+                    });
 
-                    colorPicker.Dispatcher.BeginInvoke(DispatcherPriority.Send, action);
-                }
-                else
+                colorPicker.Dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+            }
+            else
+            {
+                colorPicker.RaiseEvent(new RoutedEventArgs(DropDownClosedEvent));
+
+                if (Mouse.Captured == colorPicker)
                 {
-                    colorPicker.RaiseEvent(new RoutedEventArgs(DropDownClosedEvent));
+                    Mouse.Capture(null);
+                }
 
-                    if (Mouse.Captured == colorPicker)
-                    {
-                        Mouse.Capture(null);
-                    }
-
-                    if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
-                    {
-                        BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker));
-                    }
+                if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
+                {
+                    BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker));
                 }
             }
         }
@@ -850,14 +855,14 @@ namespace MahApps.Metro.Controls
             {
                 if (ReferenceEquals(e.OriginalSource, colorPicker))
                 {
-                    if (Mouse.Captured == null || !(Mouse.Captured as DependencyObject).IsDescendantOf(colorPicker))
+                    if (Mouse.Captured == null || !(Mouse.Captured as DependencyObject)?.IsDescendantOf(colorPicker) == true)
                     {
                         colorPicker.Close();
                     }
                 }
                 else
                 {
-                    if ((e.OriginalSource as DependencyObject).IsDescendantOf(colorPicker))
+                    if ((e.OriginalSource as DependencyObject)?.IsDescendantOf(colorPicker) == true)
                     {
                         // Take capture if one of our children gave up capture (by closing their drop down)
                         if (colorPicker.IsDropDownOpen && Mouse.Captured == null)
@@ -910,6 +915,13 @@ namespace MahApps.Metro.Controls
 
         private void ValidateTabItems()
         {
+            if (this.PART_PopupTabControl is null
+                || this.PART_ColorPalettesTab is null
+                || this.PART_AdvancedTab is null)
+            {
+                return;
+            }
+
             if (!this.IsAdvancedTabVisible && !this.IsColorPalettesTabVisible)
             {
                 // If both TabItems are invisible we set the content to null

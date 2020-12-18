@@ -16,8 +16,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "AfterLoadedReverseStoryboard", Type = typeof(Storyboard))]
     public class MetroContentControl : ContentControl
     {
-        private Storyboard afterLoadedStoryboard;
-        private Storyboard afterLoadedReverseStoryboard;
+        private Storyboard? afterLoadedStoryboard;
+        private Storyboard? afterLoadedReverseStoryboard;
         private bool transitionLoaded;
 
         /// <summary>Identifies the <see cref="ReverseTransition"/> dependency property.</summary>
@@ -221,7 +221,7 @@ namespace MahApps.Metro.Controls
             this.afterLoadedReverseStoryboard = this.GetTemplateChild("AfterLoadedReverseStoryboard") as Storyboard;
         }
 
-        private void AfterLoadedStoryboardCurrentTimeInvalidated(object sender, System.EventArgs e)
+        private void AfterLoadedStoryboardCurrentTimeInvalidated(object? sender, System.EventArgs e)
         {
             if (sender is Clock clock)
             {
@@ -233,7 +233,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void AfterLoadedStoryboardCompleted(object sender, System.EventArgs e)
+        private void AfterLoadedStoryboardCompleted(object? sender, System.EventArgs e)
         {
             if (this.transitionLoaded)
             {

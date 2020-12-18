@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
         private const string PART_ContentPresenter = "PART_ContentPresenter";
         private const string PART_Separator = "PART_Separator";
 
-        internal PropertyChangeNotifier VisibilityPropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier? VisibilityPropertyChangeNotifier { get; set; }
 
         /// <summary>Identifies the <see cref="IsSeparatorVisible"/> dependency property.</summary>
         public static readonly DependencyProperty IsSeparatorVisibleProperty =

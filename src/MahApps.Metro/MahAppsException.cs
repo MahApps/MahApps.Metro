@@ -4,6 +4,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using System.Windows;
 
 namespace MahApps.Metro
 {
@@ -19,12 +20,26 @@ namespace MahApps.Metro
         {
         }
 
-        public MahAppsException(string message, Exception innerException)
+        public MahAppsException(string message, Exception? innerException)
             : base(message, innerException)
         {
         }
 
         protected MahAppsException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
+
+    [Serializable]
+    public class MissingRequiredTemplatePartException : MahAppsException
+    {
+        public MissingRequiredTemplatePartException(FrameworkElement target, string templatePart)
+            : base($"Template part \"{templatePart}\" in template for \"{target.GetType().FullName}\" is missing.")
+        {
+        }
+        
+        protected MissingRequiredTemplatePartException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

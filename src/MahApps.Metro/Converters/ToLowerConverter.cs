@@ -13,7 +13,7 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(ToLowerConverter))]
     public class ToLowerConverter : MarkupConverter
     {
-        private static ToLowerConverter _instance;
+        private static ToLowerConverter? _instance;
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit

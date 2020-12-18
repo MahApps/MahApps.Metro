@@ -30,7 +30,7 @@ namespace MahApps.Metro.Behaviors
             base.OnDetaching();
         }
 
-        private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
+        private void AssociatedObject_SourceInitialized(object? sender, EventArgs e)
         {
             this.LoadWindowState();
 
@@ -56,22 +56,22 @@ namespace MahApps.Metro.Behaviors
                 });
         }
 
-        private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void AssociatedObject_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             this.SaveWindowState();
         }
 
-        private void AssociatedObject_Closed(object sender, EventArgs e)
+        private void AssociatedObject_Closed(object? sender, EventArgs e)
         {
             this.CleanUp("from AssociatedObject closed event");
         }
 
-        private void CurrentApplicationSessionEnding(object sender, SessionEndingCancelEventArgs e)
+        private void CurrentApplicationSessionEnding(object? sender, SessionEndingCancelEventArgs e)
         {
             this.SaveWindowState();
         }
 
-        private void AssociatedObject_StateChanged(object sender, EventArgs e)
+        private void AssociatedObject_StateChanged(object? sender, EventArgs e)
         {
             // save the settings on this state change, because hidden windows gets no window placements
             // all the saving stuff could be so much easier with ReactiveUI :-D
@@ -118,7 +118,7 @@ namespace MahApps.Metro.Behaviors
             }
 
             var settings = window.GetWindowPlacementSettings();
-            if (null == settings || !window.SaveWindowPosition)
+            if (!window.SaveWindowPosition)
             {
                 return;
             }

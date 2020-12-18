@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(default(double)));
 
         private readonly object lockme = new object();
-        private Storyboard indeterminateStoryboard;
+        private Storyboard? indeterminateStoryboard;
 
         static MetroProgressBar()
         {
@@ -107,7 +107,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(EllipseOffsetProperty, value); }
         }
 
-        private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
+        private void SizeChangedHandler(object? sender, SizeChangedEventArgs? e)
         {
             var size = this.ActualSize(false);
             var bar = this;
@@ -207,7 +207,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private VisualState GetIndeterminate()
+        private VisualState? GetIndeterminate()
         {
             var templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
             if (templateGrid == null)
