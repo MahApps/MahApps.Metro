@@ -8,6 +8,7 @@
         <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
