@@ -24,7 +24,6 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.ValueBoxes")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Actions")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Converters")]
-[assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Markup")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Controls")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Controls.Dialogs")]
@@ -33,7 +32,6 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Behaviors")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Actions")]
 [assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Converters")]
-[assembly: XmlnsDefinition(@"http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Markup")]
 
 [assembly: SuppressMessage("WpfAnalyzers.DependencyProperty", "WPF0005:Name of PropertyChangedCallback should match registered name.")]
 [assembly: SuppressMessage("WpfAnalyzers.DependencyProperty", "WPF0006:Name of CoerceValueCallback should match registered name.")]
