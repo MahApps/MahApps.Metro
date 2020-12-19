@@ -29,7 +29,10 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ListBox || d is MultiSelector)) throw new ArgumentException("The property 'SelectedItems' may only be set on ListBox or MultiSelector elements.");
+            if (!(d is ListBox || d is MultiSelector))
+            {
+                throw new ArgumentException("The property 'SelectedItems' may only be set on ListBox or MultiSelector elements.");
+            }
 
             if (e.OldValue != e.NewValue)
             {

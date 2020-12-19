@@ -44,56 +44,72 @@ namespace MahApps.Metro.Controls
         void PART_ForwardButton_Click(object sender, RoutedEventArgs e)
         {
             if (CanGoForward)
-                GoForward();
+            {
+                this.GoForward();
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_FragmentNavigation(object sender, FragmentNavigationEventArgs e)
         {
             if (FragmentNavigation != null)
-                FragmentNavigation(this, e);
+            {
+                this.FragmentNavigation(this, e);
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_LoadCompleted(object sender, NavigationEventArgs e)
         {
             if (LoadCompleted != null)
-                LoadCompleted(this, e);
+            {
+                this.LoadCompleted(this, e);
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_NavigationStopped(object sender, NavigationEventArgs e)
         {
             if (NavigationStopped != null)
-                NavigationStopped(this, e);
+            {
+                this.NavigationStopped(this, e);
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_NavigationProgress(object sender, NavigationProgressEventArgs e)
         {
             if (NavigationProgress != null)
-                NavigationProgress(this, e);
+            {
+                this.NavigationProgress(this, e);
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             if (NavigationFailed != null)
-                NavigationFailed(this, e);
+            {
+                this.NavigationFailed(this, e);
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             if (Navigating != null)
-                Navigating(this, e);
+            {
+                this.Navigating(this, e);
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (CanGoBack)
-                GoBack();
+            {
+                this.GoBack();
+            }
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
@@ -127,7 +143,9 @@ namespace MahApps.Metro.Controls
             PART_ForwardButton.IsEnabled = CanGoForward;
 
             if (Navigated != null)
-                Navigated(this, e);
+            {
+                this.Navigated(this, e);
+            }
         }
 
         public static readonly DependencyProperty OverlayContentProperty = DependencyProperty.Register(nameof(OverlayContent), typeof(object), typeof(MetroNavigationWindow));

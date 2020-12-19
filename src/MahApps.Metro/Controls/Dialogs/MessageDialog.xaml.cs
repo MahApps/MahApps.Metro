@@ -296,7 +296,9 @@ namespace MahApps.Metro.Controls.Dialogs
         private static void SetButtonState(MessageDialog md)
         {
             if (md.PART_AffirmativeButton == null)
+            {
                 return;
+            }
 
             switch (md.ButtonStyle)
             {

@@ -2417,7 +2417,11 @@ namespace MahApps.Metro.Controls
             get => this.lowerValue;
             set
             {
-                if (value == this.lowerValue) return;
+                if (value == this.lowerValue)
+                {
+                    return;
+                }
+
                 this.lowerValue = value;
                 this.OnPropertyChanged();
             }
@@ -2433,7 +2437,11 @@ namespace MahApps.Metro.Controls
             get => this.upperValue;
             set
             {
-                if (value == this.upperValue) return;
+                if (value == this.upperValue)
+                {
+                    return;
+                }
+
                 this.upperValue = value;
                 this.OnPropertyChanged();
             }

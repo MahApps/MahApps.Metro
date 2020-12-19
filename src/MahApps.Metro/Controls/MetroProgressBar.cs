@@ -214,7 +214,10 @@ namespace MahApps.Metro.Controls
             {
                 this.ApplyTemplate();
                 templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
-                if (templateGrid == null) return null;
+                if (templateGrid == null)
+                {
+                    return null;
+                }
             }
 
             var groups = VisualStateManager.GetVisualStateGroups(templateGrid);

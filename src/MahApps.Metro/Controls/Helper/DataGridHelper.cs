@@ -529,7 +529,10 @@ namespace MahApps.Metro.Controls
                 var dataGridCell = inputHitTest as DataGridCell;
                 if (dataGridCell != null && dataGrid.Equals(dataGridCell.TryFindParent<DataGrid>()))
                 {
-                    if (dataGridCell.IsReadOnly) return;
+                    if (dataGridCell.IsReadOnly)
+                    {
+                        return;
+                    }
 
                     if (IsDirectHitOnEditComponent<ToggleButton>(dataGridCell, e, out var toggleButton))
                     {
@@ -541,7 +544,10 @@ namespace MahApps.Metro.Controls
                     }
                     else if (IsDirectHitOnEditComponent<ComboBox>(dataGridCell, e, out var comboBox))
                     {
-                        if (_suppressComboAutoDropDown != null) return;
+                        if (_suppressComboAutoDropDown != null)
+                        {
+                            return;
+                        }
 
                         dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
                         dataGrid.BeginEdit();

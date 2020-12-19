@@ -22,7 +22,9 @@ namespace MahApps.Metro.Controls
         {
             var fe = d as FrameworkElement;
             if (fe == null)
+            {
                 return;
+            }
 
             fe.Visibility = ((bool?)e.NewValue) == true
                 ? Visibility.Visible
@@ -53,7 +55,9 @@ namespace MahApps.Metro.Controls
         {
             var fe = d as FrameworkElement;
             if (fe == null)
+            {
                 return;
+            }
 
             fe.Visibility = ((bool?)e.NewValue) == true
                 ? Visibility.Collapsed
@@ -84,7 +88,9 @@ namespace MahApps.Metro.Controls
         {
             var fe = d as FrameworkElement;
             if (fe == null)
+            {
                 return;
+            }
 
             fe.Visibility = ((bool?)e.NewValue) == true
                 ? Visibility.Hidden

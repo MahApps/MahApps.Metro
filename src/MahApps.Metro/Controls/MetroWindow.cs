@@ -801,7 +801,10 @@ namespace MahApps.Metro.Controls
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task ShowOverlayAsync()
         {
-            if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+            if (overlayBox == null)
+            {
+                throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+            }
 
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
@@ -852,7 +855,10 @@ namespace MahApps.Metro.Controls
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task HideOverlayAsync()
         {
-            if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+            if (overlayBox == null)
+            {
+                throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+            }
 
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
@@ -899,7 +905,10 @@ namespace MahApps.Metro.Controls
 
         public bool IsOverlayVisible()
         {
-            if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+            if (overlayBox == null)
+            {
+                throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+            }
 
             return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= this.OverlayOpacity;
         }
@@ -1042,10 +1051,25 @@ namespace MahApps.Metro.Controls
         {
             // MahApps add these controls to the window with AddLogicalChild method.
             // This has the side effect that the DataContext doesn't update, so do this now here.
-            if (this.LeftWindowCommands != null) this.LeftWindowCommands.DataContext = this.DataContext;
-            if (this.RightWindowCommands != null) this.RightWindowCommands.DataContext = this.DataContext;
-            if (this.WindowButtonCommands != null) this.WindowButtonCommands.DataContext = this.DataContext;
-            if (this.Flyouts != null) this.Flyouts.DataContext = this.DataContext;
+            if (this.LeftWindowCommands != null)
+            {
+                this.LeftWindowCommands.DataContext = this.DataContext;
+            }
+
+            if (this.RightWindowCommands != null)
+            {
+                this.RightWindowCommands.DataContext = this.DataContext;
+            }
+
+            if (this.WindowButtonCommands != null)
+            {
+                this.WindowButtonCommands.DataContext = this.DataContext;
+            }
+
+            if (this.Flyouts != null)
+            {
+                this.Flyouts.DataContext = this.DataContext;
+            }
         }
 
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)

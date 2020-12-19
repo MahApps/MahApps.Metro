@@ -20,7 +20,9 @@ namespace MahApps.Metro.Converters
         {
             var item = value as TreeViewItem;
             if (item == null)
+            {
                 return new Thickness(0);
+            }
 
             return new Thickness(Length * item.GetDepth(), 0, 0, 0);
         }

@@ -45,7 +45,10 @@ namespace MahApps.Metro.Controls
             var from = (GridLength)this.GetValue(FromProperty);
             var to = (GridLength)this.GetValue(ToProperty);
             if (from.GridUnitType != to.GridUnitType) // We can't animate different types, so just skip straight to it
+            {
                 return to;
+            }
+
             var fromVal = from.Value;
             var toVal = to.Value;
 

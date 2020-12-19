@@ -136,9 +136,13 @@ namespace MetroDemo
             }
 
             if (cleanWindowDemo.IsVisible)
-                cleanWindowDemo.Hide();
+            {
+                this.cleanWindowDemo.Hide();
+            }
             else
-                cleanWindowDemo.Show();
+            {
+                this.cleanWindowDemo.Show();
+            }
         }
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
@@ -168,10 +172,12 @@ namespace MetroDemo
                                                                      MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
+            {
                 await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative
                                                 ? mySettings.AffirmativeButtonText
                                                 : mySettings.NegativeButtonText +
                                                   Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+            }
         }
 
         private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
@@ -189,10 +195,12 @@ namespace MetroDemo
                                                                      MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
+            {
                 await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative
                                                 ? mySettings.AffirmativeButtonText
                                                 : mySettings.NegativeButtonText +
                                                   Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+            }
         }
 
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
@@ -310,7 +318,9 @@ namespace MetroDemo
                 controller.SetMessage("Baking cupcake: " + i + "...");
 
                 if (controller.IsCanceled)
+                {
                     break; //canceled progressdialog auto closes.
+                }
 
                 i += 1.0;
 
@@ -334,7 +344,9 @@ namespace MetroDemo
             var result = await this.ShowInputAsync("Hello!", "What is your name?");
 
             if (result == null) //user pressed cancel
+            {
                 return;
+            }
 
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
@@ -348,7 +360,9 @@ namespace MetroDemo
             var result = await this.ShowInputAsync("Hello!", "What is your name?", settings);
 
             if (result == null) //user pressed cancel
+            {
                 return;
+            }
 
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
@@ -490,7 +504,9 @@ namespace MetroDemo
             var result = this.ShowModalInputExternal("Hello!", "What is your name?");
 
             if (result == null) //user pressed cancel
+            {
                 return;
+            }
 
             this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
         }
@@ -522,10 +538,12 @@ namespace MetroDemo
                                                                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
+            {
                 this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative
                                                   ? mySettings.AffirmativeButtonText
                                                   : mySettings.NegativeButtonText +
                                                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+            }
         }
     }
 }

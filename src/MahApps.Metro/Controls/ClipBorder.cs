@@ -400,7 +400,9 @@ namespace MahApps.Metro.Controls
                 else if (borderBrush.IsOpaqueSolidColorBrush())
                 {
                     if ((borderGeometry == null) || (backgroundGeometry == null))
+                    {
                         return;
+                    }
 
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
@@ -416,7 +418,9 @@ namespace MahApps.Metro.Controls
                 else
                 {
                     if ((borderGeometry == null) || (backgroundGeometry == null))
+                    {
                         return;
+                    }
 
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();

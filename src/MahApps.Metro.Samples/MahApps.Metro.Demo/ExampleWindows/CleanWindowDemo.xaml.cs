@@ -29,12 +29,18 @@ namespace MetroDemo.ExampleWindows
 
         private async void CleanWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (e.Cancel) return;
+            if (e.Cancel)
+            {
+                return;
+            }
 
             // we want manage the closing itself!
             e.Cancel = !this.closeMe;
             // yes we want now really close the window
-            if (this.closeMe) return;
+            if (this.closeMe)
+            {
+                return;
+            }
 
             var mySettings = new MetroDialogSettings
                              {
@@ -50,7 +56,10 @@ namespace MetroDemo.ExampleWindows
 
             this.closeMe = result == MessageDialogResult.Affirmative;
 
-            if (this.closeMe) this.Close();
+            if (this.closeMe)
+            {
+                this.Close();
+            }
         }
 
         internal class SuperDataTemplateSelector : DataTemplateSelector

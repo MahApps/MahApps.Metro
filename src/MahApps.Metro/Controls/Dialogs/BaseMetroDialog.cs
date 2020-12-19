@@ -229,8 +229,15 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             // MahApps add these content presenter to the dialog with AddLogicalChild method.
             // This has the side effect that the DataContext doesn't update, so do this now here.
-            if (this.DialogTop is FrameworkElement elementTop) elementTop.DataContext = this.DataContext;
-            if (this.DialogBottom is FrameworkElement elementBottom) elementBottom.DataContext = this.DataContext;
+            if (this.DialogTop is FrameworkElement elementTop)
+            {
+                elementTop.DataContext = this.DataContext;
+            }
+
+            if (this.DialogBottom is FrameworkElement elementBottom)
+            {
+                elementBottom.DataContext = this.DataContext;
+            }
         }
 
         private void BaseMetroDialogLoaded(object? sender, RoutedEventArgs e)
@@ -359,7 +366,10 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             this.Dispatcher.VerifyAccess();
 
-            if (this.IsLoaded) return new Task(() => { });
+            if (this.IsLoaded)
+            {
+                return new Task(() => { });
+            }
 
             if (this.DialogSettings?.AnimateShow != true)
             {
