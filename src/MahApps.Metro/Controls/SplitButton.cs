@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -295,6 +296,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [MustUseReturnValue]
         private static object CoerceIsEditableProperty(DependencyObject dependencyObject, object? value)
         {
             // For now SplitButton is not editable

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
@@ -34,6 +35,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [MustUseReturnValue]
         private static object? CoerceSelectedColorProperty(DependencyObject dependencyObject, object? basevalue)
         {
             if (dependencyObject is ColorPickerBase colorPicker)

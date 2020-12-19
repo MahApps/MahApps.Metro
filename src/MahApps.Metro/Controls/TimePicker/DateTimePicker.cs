@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -344,6 +345,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [MustUseReturnValue]
         private static object? CoerceOrientation(DependencyObject d, object? basevalue)
         {
             if (((DateTimePicker)d).IsClockVisible)

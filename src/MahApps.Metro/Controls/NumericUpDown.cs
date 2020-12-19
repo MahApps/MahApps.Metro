@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -276,6 +277,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [MustUseReturnValue]
         private static object CoerceStringFormat(DependencyObject d, object? baseValue)
         {
             return baseValue ?? string.Empty;
@@ -375,6 +377,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [MustUseReturnValue]
         private static object? CoerceValue(DependencyObject d, object? value)
         {
             if (value == null)
@@ -461,6 +464,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceMaximum(DependencyObject d, object value)
 #pragma warning restore WPF0024
         {

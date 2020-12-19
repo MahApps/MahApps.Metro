@@ -15,6 +15,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -178,6 +179,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value));
         }
 
+        [MustUseReturnValue]
         private static object? OnCoerceIsDropDownOpen(DependencyObject d, object? baseValue)
         {
             if (d is TimePickerBase tp && !tp.IsEnabled)
@@ -727,6 +729,7 @@ namespace MahApps.Metro.Controls
                              .ToList();
         }
 
+        [MustUseReturnValue]
         private static object CoerceSource60(DependencyObject d, object? basevalue)
         {
             var list = basevalue as IEnumerable<int>;
@@ -738,6 +741,7 @@ namespace MahApps.Metro.Controls
             return Enumerable.Empty<int>();
         }
 
+        [MustUseReturnValue]
         private static object CoerceSourceHours(DependencyObject d, object? basevalue)
         {
             var timePickerBase = d as TimePickerBase;

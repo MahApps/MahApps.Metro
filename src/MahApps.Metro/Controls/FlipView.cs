@@ -12,6 +12,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -769,6 +770,7 @@ namespace MahApps.Metro.Controls
         /// <param name="d">The object that the property exists on.</param>
         /// <param name="value">The new value of the property, prior to any coercion attempt.</param>
         /// <returns>The coerced value (with appropriate type). </returns>
+        [MustUseReturnValue]
         private static object CoerceSelectedIndexProperty(DependencyObject d, object value)
         {
             // call ComputeTransition only if SelectedIndex is changed from outside and not from GoBack or GoForward

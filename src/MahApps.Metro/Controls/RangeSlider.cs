@@ -239,6 +239,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(UpperValueProperty, value);
         }
 
+        [MustUseReturnValue]
         internal static object? CoerceUpperValue(DependencyObject d, object? basevalue)
         {
             if (d is RangeSlider rangeSlider && basevalue is double value)
@@ -299,6 +300,7 @@ namespace MahApps.Metro.Controls
             this.ReCalculateSize();
         }
 
+        [MustUseReturnValue]
         internal static object CoerceLowerValue(DependencyObject d, object? baseValue)
         {
             if (d is RangeSlider rangeSlider && baseValue is double value)
@@ -361,6 +363,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceMinRange(DependencyObject d, object basevalue)
 #pragma warning restore WPF0024
         {
@@ -399,6 +402,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
 #pragma warning restore WPF0024
         {
@@ -743,6 +747,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceSelectionStart(DependencyObject d, object value)
 #pragma warning restore WPF0024
         {
@@ -792,6 +797,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceSelectionEnd(DependencyObject d, object value)
 #pragma warning restore WPF0024
         {
@@ -2303,6 +2309,7 @@ namespace MahApps.Metro.Controls
         #region Coerce callbacks
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceMinimum(DependencyObject d, object basevalue)
 #pragma warning restore WPF0024
         {
@@ -2318,6 +2325,7 @@ namespace MahApps.Metro.Controls
         }
 
 #pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceMaximum(DependencyObject d, object basevalue)
 #pragma warning restore WPF0024
         {
