@@ -95,7 +95,7 @@ namespace MetroDemo
 
         private void LaunchSizeToContentDemo(object sender, RoutedEventArgs e)
         {
-            new SizeToContentDemo() { Owner = this }.Show();
+            new SizeToContentDemo { Owner = this }.Show();
         }
 
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
@@ -155,7 +155,7 @@ namespace MetroDemo
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
             // The package is only used by the demo and not a dependency of the library!
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",
@@ -176,7 +176,7 @@ namespace MetroDemo
 
         private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
         {
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",
@@ -206,7 +206,7 @@ namespace MetroDemo
 
             await Task.Delay(3000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() { OwnerCanCloseWithDialog = true, ColorScheme = this.MetroDialogOptions!.ColorScheme });
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings { OwnerCanCloseWithDialog = true, ColorScheme = this.MetroDialogOptions!.ColorScheme });
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await Task.Delay(2000);
@@ -287,7 +287,7 @@ namespace MetroDemo
 
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  NegativeButtonText = "Close now",
                                  AnimateShow = false,
@@ -438,7 +438,7 @@ namespace MetroDemo
                 testWindow.Close();
             }
 
-            testWindow = new MetroWindow()
+            testWindow = new MetroWindow
                          {
                              Owner = this,
                              WindowStartupLocation = WindowStartupLocation.CenterOwner,
@@ -453,7 +453,7 @@ namespace MetroDemo
         private void MenuWindowWithoutBorderOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(0);
             w.Show();
         }
@@ -461,14 +461,14 @@ namespace MetroDemo
         private void MenuWindowWithBorderOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.Show();
         }
 
         private void MenuWindowWithGlowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new Button() { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new Button { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
             w.SetResourceReference(MetroWindow.GlowBrushProperty, "MahApps.Brushes.Accent");
@@ -478,7 +478,7 @@ namespace MetroDemo
         private void MenuWindowWithShadowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(0);
             w.BorderBrush = null;
             w.GlowBrush = Brushes.Black;
@@ -510,7 +510,7 @@ namespace MetroDemo
 
         private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
         {
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",

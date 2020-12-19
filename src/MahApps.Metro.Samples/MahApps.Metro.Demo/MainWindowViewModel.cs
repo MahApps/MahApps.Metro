@@ -86,7 +86,7 @@ namespace MetroDemo
             this.AppThemes = ThemeManager.Current.Themes
                                          .GroupBy(x => x.BaseColorScheme)
                                          .Select(x => x.First())
-                                         .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+                                         .Select(a => new AppThemeMenuData { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
                                          .ToList();
 
             this.Albums = new ObservableCollection<Album>(SampleData.Albums);
@@ -436,7 +436,7 @@ namespace MetroDemo
 
         private async void RunCustomFromVm()
         {
-            var customDialog = new CustomDialog() { Title = "Custom Dialog" };
+            var customDialog = new CustomDialog { Title = "Custom Dialog" };
 
             var dataContext = new CustomDialogExampleContent(instance =>
                 {

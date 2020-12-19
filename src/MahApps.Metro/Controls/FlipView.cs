@@ -949,7 +949,7 @@ namespace MahApps.Metro.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new FlipViewItem() { HorizontalAlignment = HorizontalAlignment.Stretch };
+            return new FlipViewItem { HorizontalAlignment = HorizontalAlignment.Stretch };
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)

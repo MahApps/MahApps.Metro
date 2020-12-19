@@ -36,7 +36,7 @@ namespace MetroDemo.ExampleWindows
             // yes we want now really close the window
             if (this.closeMe) return;
 
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Quit",
                                  NegativeButtonText = "Cancel",
@@ -88,7 +88,7 @@ namespace MetroDemo.ExampleWindows
             this.ShowMessageAsync("Something",
                                   "Something should be displayed here.",
                                   MessageDialogStyle.Affirmative,
-                                  new MetroDialogSettings()
+                                  new MetroDialogSettings
                                   {
                                       ColorScheme = MetroDialogColorScheme.Inverted
                                   });
