@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -118,7 +118,22 @@ namespace MahApps.Metro.Controls
                     }
                     else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
                     {
-                        colorPicker.SetCurrentValue(SelectedColorProperty, color);
+                        if (colorPicker.SelectedColor != color)
+                        {
+                            colorPicker.SetCurrentValue(SelectedColorProperty, color);
+                        }
+                        else // if the color stayed the same we still have to update the displayed name
+                        {
+                            colorPicker.ColorIsUpdating = true;
+                            try
+                            {
+                                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(color, colorPicker.ColorNamesDictionary));
+                            }
+                            finally
+                            {
+                                colorPicker.ColorIsUpdating = false;
+                            }
+                        }
                     }
                     else
                     {
