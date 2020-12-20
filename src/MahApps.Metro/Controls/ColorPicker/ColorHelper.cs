@@ -70,7 +70,11 @@ namespace MahApps.Metro.Controls
 
                 if (!colorName!.StartsWith("#"))
                 {
-                    result = colorNamesDictionary?.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
+                    // We need to check with any first as the key is of type Color, which is a struct.
+                    if (colorNamesDictionary?.Any(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)) == true)
+                    {
+                        result = colorNamesDictionary.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
+                    }
                 }
 
                 result ??= ColorConverter.ConvertFromString(colorName) as Color?;
