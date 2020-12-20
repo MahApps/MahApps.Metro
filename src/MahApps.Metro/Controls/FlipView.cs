@@ -1224,7 +1224,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.ActualHeight > 0.0)
             {
-                if (this.hideBannerStoryboard is not null)
+                if (this.hideControlStoryboard is not null)
                 {
                     this.bannerLabel?.BeginStoryboard(this.hideControlStoryboard);
                 }
