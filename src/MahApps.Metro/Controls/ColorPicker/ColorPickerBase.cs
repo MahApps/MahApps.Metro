@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,8 +30,14 @@ namespace MahApps.Metro.Controls
             if (dependencyObject is ColorPickerBase colorPicker && e.OldValue != e.NewValue && !colorPicker.ColorIsUpdating)
             {
                 colorPicker.ColorIsUpdating = true;
-                colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color? ?? colorPicker.DefaultColor);
-                colorPicker.ColorIsUpdating = false;
+                try
+                {
+                    colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color? ?? colorPicker.DefaultColor);
+                }
+                finally
+                {
+                    colorPicker.ColorIsUpdating = false;
+                }
             }
         }
 
@@ -225,8 +231,14 @@ namespace MahApps.Metro.Controls
                 var hsv = new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value);
 
                 colorPicker.UpdateHsvValues = false;
-                colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor());
-                colorPicker.UpdateHsvValues = true;
+                try
+                {
+                    colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor());
+                }
+                finally
+                {
+                    colorPicker.UpdateHsvValues = true;
+                }
             }
         }
 
