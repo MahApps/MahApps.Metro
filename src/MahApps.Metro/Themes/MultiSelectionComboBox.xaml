@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:mahConverter="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:mahConverter="clr-namespace:MahApps.Metro.Converters">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
@@ -18,11 +18,7 @@
                     Background="{DynamicResource MahApps.Brushes.Gray8}"
                     CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={mahConverter:SizeToCornerRadiusConverter}}"
                     IsHitTestVisible="False" />
-            <StackPanel Margin="7,2,2,2" Orientation="Horizontal">
-                <ContentControl Margin="0"
-                                VerticalAlignment="Center"
-                                Content="{Binding}"
-                                IsHitTestVisible="False" />
+            <DockPanel Margin="7,2,2,2" LastChildFill="True">
                 <Button Width="10"
                         Height="10"
                         Margin="5,2,2,2"
@@ -30,6 +26,7 @@
                         mah:ControlsHelper.CornerRadius="5"
                         Command="mah:MultiSelectionComboBox.RemoveItemCommand"
                         CommandParameter="{Binding}"
+                        DockPanel.Dock="Right"
                         IsHitTestVisible="True">
                     <Button.Style>
                         <Style BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}" TargetType="Button">
@@ -47,7 +44,11 @@
                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
                           Stretch="Uniform" />
                 </Button>
-            </StackPanel>
+                <ContentControl Margin="0"
+                                VerticalAlignment="Center"
+                                Content="{Binding}"
+                                IsHitTestVisible="False" />
+            </DockPanel>
         </Grid>
     </DataTemplate>
 
@@ -340,9 +341,9 @@
         <Setter Property="IsDropDownOpen" Value="False" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="SelectedItemsTemplate">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="SelectedItemTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <Border Margin="2,0"
@@ -373,6 +374,13 @@
                         </DockPanel>
                     </Border>
                 </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SelectedItemsPanelTemplate">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
         <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
@@ -416,22 +424,27 @@
                                           Foreground="{TemplateBinding Foreground}"
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           KeyboardNavigation.IsTabStop="False"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                          Style="{DynamicResource MahApps.Styles.ToggleButton.MultiSelectionComboBox.DropDown}"/>
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Style="{DynamicResource MahApps.Styles.ToggleButton.MultiSelectionComboBox.DropDown}" />
 
                             <Grid x:Name="ContentSite"
                                   Grid.Row="1"
                                   Grid.Column="0"
                                   Margin="1,0">
-                                <ItemsControl ItemTemplate="{TemplateBinding SelectedItemsTemplate}"
-                                              ItemTemplateSelector="{TemplateBinding SelectedItemsTemplateSelector}"
-                                              ItemsSource="{TemplateBinding DisplaySelectedItems}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
+                                <ScrollViewer x:Name="PART_SelectedItemsScrollViewer"
+                                              Padding="{TemplateBinding Padding}"
+                                              mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer), Mode=OneWay}"
+                                              mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled), Mode=OneWay}"
+                                              mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide), Mode=OneWay}"
+                                              HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+                                              VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}">
+                                    <ItemsControl ItemContainerStyle="{TemplateBinding SelectedItemContainerStyle}"
+                                                  ItemContainerStyleSelector="{TemplateBinding SelectedItemContainerStyleSelector}"
+                                                  ItemTemplate="{TemplateBinding SelectedItemTemplate}"
+                                                  ItemTemplateSelector="{TemplateBinding SelectedItemTemplateSelector}"
+                                                  ItemsSource="{TemplateBinding DisplaySelectedItems}"
+                                                  ItemsPanel="{TemplateBinding SelectedItemsPanelTemplate}" />
+                                </ScrollViewer>
                             </Grid>
 
                             <TextBox x:Name="PART_EditableTextBox"
@@ -462,6 +475,8 @@
                                      Foreground="{TemplateBinding Foreground}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ComboBoxHelper.MaxLength), Mode=OneWay}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+                                     ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      Style="{DynamicResource MahApps.Styles.TextBox.MultiSelectionComboBox.Editable}"
                                      TextWrapping="{TemplateBinding TextWrapping}"
@@ -551,18 +566,18 @@
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <Grid>
                                         <ListBox x:Name="PART_PopupListBox"
+                                                 AlternationCount="{TemplateBinding AlternationCount}"
                                                  ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                                  ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                                 ItemsSource="{TemplateBinding ItemsSource}"
                                                  ItemStringFormat="{TemplateBinding ItemStringFormat}"
                                                  ItemTemplate="{TemplateBinding ItemTemplate}"
                                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                 AlternationCount="{TemplateBinding AlternationCount}"
-                                                 SelectionMode="{TemplateBinding SelectionMode}"
-                                                 SelectedItem="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
+                                                 ItemsSource="{TemplateBinding ItemsSource}"
                                                  SelectedIndex="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
+                                                 SelectedItem="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
                                                  SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedValue, Mode=TwoWay}"
                                                  SelectedValuePath="{TemplateBinding SelectedValuePath}"
+                                                 SelectionMode="{TemplateBinding SelectionMode}"
                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                         <ContentControl x:Name="PART_PopupOverlay"
                                                         HorizontalAlignment="Stretch"
@@ -728,4 +743,16 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="mah:MultiSelectionComboBox" BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" x:Key="MahApps.Styles.MultiSelectionComboBox.Horizontal">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True"/>
+        <Setter Property="SelectedItemsPanelTemplate" >
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>

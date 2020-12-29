@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MetroDemo"
+             xmlns:local1="clr-namespace:MetroDemo.ExampleViews"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -12,31 +13,85 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
-        <Style TargetType="GroupBox" BasedOn="{StaticResource MahApps.Styles.GroupBox}">
+        <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox">
             <Setter Property="Margin" Value="5,5,5,0" />
         </Style>
 
-        <ObjectDataProvider x:Key="Demo.Enums.OrderSelectedItemsBy" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+        <!--  Selection Order  -->
+        <ObjectDataProvider x:Key="Demo.Enums.OrderSelectedItemsBy"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="mah:OrderSelectedItemsBy" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ObjectDataProvider x:Key="Demo.Enums.SelectionMode" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+        <!--  Selection Mode  -->
+        <ObjectDataProvider x:Key="Demo.Enums.SelectionMode"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="SelectionMode" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
+        <!--  HorizontalAlignment  -->
+        <ObjectDataProvider x:Key="Demo.Enums.HorizontalAlignment"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="HorizontalAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--  VerticalAlignment  -->
+        <ObjectDataProvider x:Key="Demo.Enums.VerticalAlignment"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="VerticalAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--  ScrollViewerVisibility  -->
+        <ObjectDataProvider x:Key="Demo.Enums.ScrollBarVisibility"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ScrollBarVisibility" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--  TextWrapping  -->
+        <ObjectDataProvider x:Key="Demo.Enums.TextWrapping"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="TextWrapping" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--  StringComparision  -->
+        <ObjectDataProvider x:Key="Demo.Enums.StringComparision"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="system:StringComparison" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="250" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" MinWidth="50"/>
+            <ColumnDefinition Width="*" MinWidth="50" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer Grid.Column="0" Grid.IsSharedSizeScope="True" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="0"
+                      Grid.IsSharedSizeScope="True"
+                      VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <GroupBox Header="Text">
                     <StackPanel>
@@ -52,10 +107,64 @@
                         <mah:MetroHeader Header="IsReadOnly">
                             <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=IsReadOnly}" />
                         </mah:MetroHeader>
+                        <mah:MetroHeader Header="StaysOpenOnEdit">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=StaysOpenOnEdit}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="TextWrapping">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.TextWrapping}}" SelectedItem="{Binding ElementName=mscb_Example, Path=TextWrapping}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="StringComparision">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.StringComparision}}" SelectedItem="{Binding ElementName=mscb_Example, Path=EditableTextStringComparision}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Selection">
+                    <StackPanel>
+                        <mah:MetroHeader Header="SelectionMode">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.SelectionMode}}" SelectedItem="{Binding ElementName=mscb_Example, Path=SelectionMode}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="OrderSelectedItemsBy">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}" SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" />
+                        </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="MahApps Helper">
+                <GroupBox Header="Style">
+                    <StackPanel>
+                        <mah:MetroHeader Header="Style">
+                            <ComboBox x:Name="CmbSelectStyle"
+                                      IsEditable="True"
+                                      IsReadOnly="True"
+                                      SelectedIndex="0"
+                                      ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}">
+                                <ComboBoxItem Content="MahApps.Styles.MultiSelectionComboBox (Default)" Tag="{DynamicResource MahApps.Styles.MultiSelectionComboBox}" />
+                                <ComboBoxItem Content="MahApps.Styles.MultiSelectionComboBox.Horizontal" Tag="{DynamicResource MahApps.Styles.MultiSelectionComboBox.Horizontal}" />
+                            </ComboBox>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="ItemTemplate">
+                            <ComboBox x:Name="CmbSelectItemTemplate"
+                                      IsEditable="True"
+                                      IsReadOnly="True"
+                                      SelectedIndex="0"
+                                      ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}">
+                                <ComboBoxItem Content="Default" Tag="{x:Null}" />
+                                <ComboBoxItem Content="MahApps.DataTemplates.MultiSelectionComboBox.CheckBox" Tag="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.CheckBox}" />
+                            </ComboBox>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="SelectedItemTemplate">
+                            <ComboBox x:Name="CmbSelectISelectedtemTemplate"
+                                      IsEditable="True"
+                                      IsReadOnly="True"
+                                      SelectedIndex="0"
+                                      ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}">
+                                <ComboBoxItem Content="Default" Tag="{x:Null}" />
+                                <ComboBoxItem Content="MahApps.DataTemplates.MultiSelectionComboBox.Removeable" Tag="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.Removeable}" />
+                            </ComboBox>
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="MahApps TextBox-Helper">
                     <StackPanel>
                         <mah:MetroHeader Header="Watermark">
                             <TextBox Text="{Binding ElementName=mscb_Example, Path=(mah:TextBoxHelper.Watermark)}" />
@@ -72,25 +181,41 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Selection">
+                <GroupBox Header="MahApps ScrollViewer-Helper">
                     <StackPanel>
-                        <mah:MetroHeader Header="SelectionMode">
-                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=SelectionMode}" ItemsSource="{Binding Source={StaticResource Demo.Enums.SelectionMode}}"/>
-                        </mah:MetroHeader>
-                        <mah:MetroHeader Header="OrderSelectedItemsBy">
-                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}"/>
-                        </mah:MetroHeader>
-                        
-                        <mah:MetroHeader Header="DisplayMemberPath">
-                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=DisplayMemberPath}" mah:TextBoxHelper.ClearTextButton="True">
-                                <system:String>Title</system:String>
-                                <system:String>Artist</system:String>
-                                <system:String>Genre</system:String>
-                            </ComboBox>
+                        <mah:MetroHeader Header="IsHorizontalScrollWheelEnabled">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled)}" />
                         </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
+
+
+
+                <GroupBox Header="Layout">
+                    <StackPanel>
+                        <mah:MetroHeader Header="MaxHeight">
+                            <mah:NumericUpDown Value="{Binding ElementName=mscb_Example, Path=MaxHeight}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="MaxWidth">
+                            <mah:NumericUpDown Value="{Binding ElementName=mscb_Example, Path=MaxWidth}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="HorizontalAlignment">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.HorizontalAlignment}}" SelectedItem="{Binding ElementName=mscb_Example, Path=HorizontalAlignment}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="VerticalAlignment">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.VerticalAlignment}}" SelectedItem="{Binding ElementName=mscb_Example, Path=VerticalAlignment}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="HorizontalScrollBarVisibility">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.ScrollBarVisibility}}" SelectedItem="{Binding ElementName=mscb_Example, Path=HorizontalScrollBarVisibility}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="VerticalScrollBarVisibility">
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.ScrollBarVisibility}}" SelectedItem="{Binding ElementName=mscb_Example, Path=VerticalScrollBarVisibility}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
             </StackPanel>
+
         </ScrollViewer>
 
         <GridSplitter Grid.Column="1"
@@ -102,11 +227,17 @@
                 <mah:MultiSelectionComboBox x:Name="mscb_Example"
                                             Margin="5"
                                             VerticalAlignment="Center"
+                                            ItemsSource="{Binding Animals}"
+                                            ItemTemplate="{Binding ElementName=CmbSelectItemTemplate, Path=SelectedItem.Tag}"
+                                            SelectedItem="{Binding MyFavoriteAnimal}"
+                                            SelectedItemTemplate="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.Removeable}"
+                                            mah:TextBoxHelper.AutoWatermark="True"
+                                            mah:TextBoxHelper.UseFloatingWatermark="True"
+                                            EditableTextStringComparision="CurrentCultureIgnoreCase"
                                             Separator=", "
-                                            SelectedItemsTemplate="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.Removeable}"
-                                            TextWrapping="Wrap"
-                                            SelectedItem="{Binding MultiSelectionComboBoxSelectedAlbum}"
-                                            ItemsSource="{Binding Albums}" />
+                                            ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
+                                            Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
+                                            TextWrapping="Wrap" />
             </Grid>
         </GroupBox>
     </Grid>
