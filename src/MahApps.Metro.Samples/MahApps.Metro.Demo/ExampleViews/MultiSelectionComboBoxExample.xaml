@@ -237,6 +237,7 @@
                                             Separator=", "
                                             ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
+                                            StringToObjectParser="{Binding MyObjectParser}"
                                             TextWrapping="Wrap" />
             </Grid>
         </GroupBox>

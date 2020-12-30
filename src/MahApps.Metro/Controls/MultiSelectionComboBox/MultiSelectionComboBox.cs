@@ -187,32 +187,58 @@ namespace MahApps.Metro.Controls
                 {
                     Thread.Sleep(miliSecondsToWait);
 
+                    bool foundItem;
+
                     switch (SelectionMode)
                     {
                         case SelectionMode.Single:
+                            foundItem = false;
                             SelectedItem = null;
                             for (int i = 0; i < Items.Count; i++)
                             {
                                 if (ObjectToStringComparer.CheckIfStringMatchesObject(Text, Items[i], EditableTextStringComparision))
                                 {
                                     SetCurrentValue(SelectedItemProperty, Items[i]);
+                                    foundItem = true;
                                     break;
                                 }
                             }
+
+                            if (!foundItem)
+                            {
+                                var result = TryAddObjectFromString(Text);
+                                if (!(result is null))
+                                {
+                                    SelectedItem = result;
+                                }
+                            }
+
                             break;
                         case SelectionMode.Multiple:
                         case SelectionMode.Extended:
+
                             var strings = Text.Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
 
                             SelectedItems.Clear();
 
                             for (int i = 0; i < strings.Length; i++)
                             {
+                                foundItem = false;
                                 for (int j = 0; j < Items.Count; j++)
                                 {
                                     if (ObjectToStringComparer.CheckIfStringMatchesObject(strings[i], Items[j], EditableTextStringComparision))
                                     {
                                         SelectedItems.Add(Items[j]);
+                                        foundItem = true;
+                                    }
+                                }
+
+                                if (!foundItem)
+                                {
+                                    var result = TryAddObjectFromString(strings[i]);
+                                    if (!(result is null))
+                                    {
+                                        SelectedItems.Add(result);
                                     }
                                 }
                             }
@@ -237,6 +263,33 @@ namespace MahApps.Metro.Controls
                 });
 
                 _updateSelectedItemsFromTextOperation = Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, action);
+            }
+        }
+
+        private object TryAddObjectFromString(string input)
+        {
+            if (!(StringToObjectParser is null))
+            {
+                object item = StringToObjectParser.CreateObjectFromString(input, Language.GetEquivalentCulture());
+                
+                if (item is null)
+                {
+                    return null;
+                }
+                else if (ReadLocalValue(ItemsSourceProperty) == DependencyProperty.UnsetValue)
+                {
+                    Items.Add(item);
+                }
+                else if (ItemsSource is IList list)
+                {
+                    list.Add(item);
+                }
+
+                return item;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -368,6 +421,20 @@ namespace MahApps.Metro.Controls
             set { SetValue(EditableTextStringComparisionProperty, value); }
         }
 
+
+
+        /// <summary>Identifies the <see cref="StringToObjectParser"/> dependency property.</summary>
+        public static readonly DependencyProperty StringToObjectParserProperty = DependencyProperty.Register(nameof(StringToObjectParser), typeof(IParseStringToObject), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets a parser-class that implements <see cref="IParseStringToObject{T}"/> 
+        /// </summary>
+        public IParseStringToObject StringToObjectParser
+        {
+            get { return (IParseStringToObject)GetValue(StringToObjectParserProperty); }
+            set { SetValue(StringToObjectParserProperty, value); }
+        }
+       
 
         /// <summary>
         /// Updates the Text of the editable Textbox.

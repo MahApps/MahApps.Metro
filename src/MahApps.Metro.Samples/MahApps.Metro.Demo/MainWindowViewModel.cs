@@ -211,6 +211,8 @@ namespace MetroDemo
 
             this.ToggleSwitchOffCommand = new SimpleCommand<MainWindowViewModel?>(x => x is not null && x.CanUseToggleSwitch,
                                                                                   async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now Off."); });
+
+            MyObjectParser = new ObjectParser(this, _dialogCoordinator);
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -708,5 +710,7 @@ namespace MetroDemo
 
         [Display(Prompt = "Select your favoite animal(s)")]
         public string MyFavoriteAnimal { get; set; }
+
+        public ObjectParser MyObjectParser {get;} 
     }
 }
