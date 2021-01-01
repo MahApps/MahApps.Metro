@@ -22,6 +22,14 @@ namespace MahApps.Metro.Controls.Helper
             typeof(BindingHelper),
             new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// A dummy property to initialize the binding to evaluate. This property supports also string format.
+        /// </summary>
+        private static readonly DependencyProperty DummyTextProperty = DependencyProperty.RegisterAttached(
+            "DummyText",
+            typeof(string),
+            typeof(BindingHelper),
+            new UIPropertyMetadata(null));
 
         /// <summary>
         /// Evaluates a defined <see cref="Binding"/>-path on the given object
@@ -82,12 +90,21 @@ namespace MahApps.Metro.Controls.Helper
         /// </summary>
         /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
         /// <param name="dependencyObject">optional: The <see cref="DependencyObject"/> to evalutate</param>
-        /// <returns></returns>
+        /// <returns>The resulting object</returns>
         public static object Eval(Binding binding, DependencyObject dependencyObject = null)
         {
             dependencyObject ??= new DependencyObject();
-            BindingOperations.SetBinding(dependencyObject, DummyProperty, binding);
-            return dependencyObject.GetValue(DummyProperty);
+
+            if (string.IsNullOrEmpty(binding.StringFormat))
+            {
+                BindingOperations.SetBinding(dependencyObject, DummyProperty, binding);
+                return dependencyObject.GetValue(DummyProperty);
+            }
+            else
+            {
+                BindingOperations.SetBinding(dependencyObject, DummyTextProperty, binding);
+                return dependencyObject.GetValue(DummyTextProperty);
+            }
         }
     }
 }

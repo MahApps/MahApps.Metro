@@ -40,9 +40,18 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>ColorNames.resx</DependentUpon>
         </Compile>
+        <Compile Update="Lang\MultiSelectionComboBox.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>MultiSelectionComboBox.resx</DependentUpon>
+        </Compile>
         <EmbeddedResource Update="Lang\ColorNames.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>ColorNames.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Lang\MultiSelectionComboBox.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>MultiSelectionComboBox.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
 

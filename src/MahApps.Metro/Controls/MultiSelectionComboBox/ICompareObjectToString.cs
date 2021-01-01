@@ -18,8 +18,9 @@ namespace MahApps.Metro.Controls
         /// <param name="input">The string to compare</param>
         /// <param name="objectToCompare">The object to compare</param>
         /// <param name="stringComparison">The <see cref="StringComparison"/> used to check if the string matches</param>
+        /// <param name="stringFormat">The string format to applay</param>
         /// <returns>true if the string represents the object, otherwise fase.</returns>
-        public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison);
+        public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat);
     }
 
 
@@ -29,7 +30,7 @@ namespace MahApps.Metro.Controls
         static DefaultObjectToStringComparer _Instance; 
 
         /// <inheritdoc/>
-        public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison)
+        public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat)
         {
             if (input is null)
             {
@@ -41,7 +42,21 @@ namespace MahApps.Metro.Controls
                 return false;
             }
 
-            return input.Equals(objectToCompare.ToString(), stringComparison);
+            string objectText;
+            if (string.IsNullOrEmpty(stringFormat))
+            {
+                objectText = objectToCompare.ToString();
+            }
+            else if (stringFormat.Contains('{') && stringFormat.Contains('{'))
+            {
+                objectText = string.Format(stringFormat, objectToCompare);
+            }
+            else
+            {
+                objectText = string.Format($"{{0:{stringFormat}}}", objectToCompare);
+            }
+
+            return input.Equals(objectText, stringComparison);
         }
 
         /// <inheritdoc/>

@@ -20,8 +20,9 @@ namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = nameof(PART_PopupListBox), Type = typeof(ListBox))]
     [TemplatePart(Name = nameof(PART_Popup), Type = typeof(Popup))]
-    [TemplatePart(Name = nameof(PART_SelectedItemsScrollViewer), Type = typeof(ScrollViewer))]
-    [StyleTypedProperty(Property = nameof(SelectedItemContainerStyle), StyleTargetType = typeof(FrameworkElement))]
+    [TemplatePart(Name = nameof(PART_SelectedItemsPresenter), Type = typeof(ListBox))]
+    [StyleTypedProperty(Property = nameof(SelectedItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
+    [StyleTypedProperty(Property = nameof(ItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
 
     public class MultiSelectionComboBox : ComboBox
     {
@@ -45,7 +46,7 @@ namespace MahApps.Metro.Controls
         private Popup PART_Popup;
         private ListBox PART_PopupListBox;
         private TextBox PART_EditableTextBox;
-        private ScrollViewer PART_SelectedItemsScrollViewer;
+        private ListBox PART_SelectedItemsPresenter;
 
         private bool isUserdefinedTextInputPending;
         private DispatcherOperation _updateSelectedItemsFromTextOperation;
@@ -196,7 +197,7 @@ namespace MahApps.Metro.Controls
                             SelectedItem = null;
                             for (int i = 0; i < Items.Count; i++)
                             {
-                                if (ObjectToStringComparer.CheckIfStringMatchesObject(Text, Items[i], EditableTextStringComparision))
+                                if (ObjectToStringComparer.CheckIfStringMatchesObject(Text, Items[i], EditableTextStringComparision, SelectedItemStringFormat))
                                 {
                                     SetCurrentValue(SelectedItemProperty, Items[i]);
                                     foundItem = true;
@@ -226,7 +227,7 @@ namespace MahApps.Metro.Controls
                                 foundItem = false;
                                 for (int j = 0; j < Items.Count; j++)
                                 {
-                                    if (ObjectToStringComparer.CheckIfStringMatchesObject(strings[i], Items[j], EditableTextStringComparision))
+                                    if (ObjectToStringComparer.CheckIfStringMatchesObject(strings[i], Items[j], EditableTextStringComparision, SelectedItemStringFormat))
                                     {
                                         SelectedItems.Add(Items[j]);
                                         foundItem = true;
@@ -270,7 +271,7 @@ namespace MahApps.Metro.Controls
         {
             if (!(StringToObjectParser is null))
             {
-                object item = StringToObjectParser.CreateObjectFromString(input, Language.GetEquivalentCulture());
+                object item = StringToObjectParser.CreateObjectFromString(input, Language.GetEquivalentCulture(), SelectedItemStringFormat);
                 
                 if (item is null)
                 {
@@ -346,7 +347,7 @@ namespace MahApps.Metro.Controls
 
 
         /// <summary>Identifies the <see cref="Separator"/> dependency property.</summary>
-        public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(nameof(Separator), typeof(string), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(nameof(Separator), typeof(string), typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(UpdateText)));
 
         /// <summary>
         /// Gets or Sets the Separator which will be used if the ComboBox is editable.
@@ -427,7 +428,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty StringToObjectParserProperty = DependencyProperty.Register(nameof(StringToObjectParser), typeof(IParseStringToObject), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets a parser-class that implements <see cref="IParseStringToObject{T}"/> 
+        /// Gets or Sets a parser-class that implements <see cref="IParseStringToObject"/> 
         /// </summary>
         public IParseStringToObject StringToObjectParser
         {
@@ -469,9 +470,9 @@ namespace MahApps.Metro.Controls
             switch (SelectionMode)
             {
                 case SelectionMode.Single:
-                    if (ReadLocalValue(DisplayMemberPathProperty) != DependencyProperty.UnsetValue || ReadLocalValue(ItemStringFormatProperty) != DependencyProperty.UnsetValue)
+                    if (ReadLocalValue(DisplayMemberPathProperty) != DependencyProperty.UnsetValue || ReadLocalValue(SelectedItemStringFormatProperty) != DependencyProperty.UnsetValue)
                     {
-                        return BindingHelper.Eval(SelectedItem, DisplayMemberPath ?? "", ItemStringFormat)?.ToString();
+                        return BindingHelper.Eval(SelectedItem, DisplayMemberPath ?? "", SelectedItemStringFormat)?.ToString();
                     }
                     else
                     {
@@ -482,9 +483,9 @@ namespace MahApps.Metro.Controls
                 case SelectionMode.Extended:
                     IEnumerable<object> values;
 
-                    if (ReadLocalValue(DisplayMemberPathProperty) != DependencyProperty.UnsetValue || ReadLocalValue(ItemStringFormatProperty) != DependencyProperty.UnsetValue)
+                    if (ReadLocalValue(DisplayMemberPathProperty) != DependencyProperty.UnsetValue || ReadLocalValue(SelectedItemStringFormatProperty) != DependencyProperty.UnsetValue)
                     {
-                        values = ((IEnumerable<object>)DisplaySelectedItems)?.Select(o => BindingHelper.Eval(o, DisplayMemberPath ?? string.Empty, ItemStringFormat));
+                        values = ((IEnumerable<object>)DisplaySelectedItems)?.Select(o => BindingHelper.Eval(o, DisplayMemberPath ?? string.Empty, SelectedItemStringFormat));
                     }
                     else
                     {
@@ -555,6 +556,20 @@ namespace MahApps.Metro.Controls
             get { return (DataTemplateSelector)GetValue(SelectedItemTemplateSelectorProperty); }
             set { SetValue(SelectedItemTemplateSelectorProperty, value); }
         }
+
+
+
+        /// <summary>
+        /// Gets or Sets the string format for the selected items
+        /// </summary>
+        public string SelectedItemStringFormat
+        {
+            get { return (string)GetValue(SelectedItemStringFormatProperty); }
+            set { SetValue(SelectedItemStringFormatProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="SelectedItemStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemStringFormatProperty = DependencyProperty.Register(nameof(SelectedItemStringFormat), typeof(string), typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(UpdateText)));
 
 
         /// <summary>Identifies the <see cref="VerticalScrollBarVisibility"/> dependency property.</summary>
@@ -668,8 +683,9 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            PART_SelectedItemsScrollViewer = GetTemplateChild(nameof(PART_SelectedItemsScrollViewer)) as ScrollViewer;
-            PART_SelectedItemsScrollViewer.MouseLeftButtonUp += PART_SelectedItemsScrollViewer_MouseLeftButtonUp;
+            PART_SelectedItemsPresenter = GetTemplateChild(nameof(PART_SelectedItemsPresenter)) as ListBox;
+            PART_SelectedItemsPresenter.MouseLeftButtonUp += PART_SelectedItemsPresenter_MouseLeftButtonUp;
+            PART_SelectedItemsPresenter.SelectionChanged += PART_SelectedItemsPresenter_SelectionChanged;
 
             PART_EditableTextBox = GetTemplateChild(nameof(PART_EditableTextBox)) as TextBox;
             PART_EditableTextBox.TextChanged += PART_EditableTextBox_TextChanged;
@@ -789,6 +805,20 @@ namespace MahApps.Metro.Controls
             SelectItemsFromText(0);
         }
 
+        /// <summary>
+        /// Return true if the item is (or is eligible to be) its own ItemUI
+        /// </summary>
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return (item is ListBoxItem);
+        }
+
+        /// <summary> Create or identify the element used to display the given item. </summary>
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new ListBoxItem();
+        }
+
         #endregion
 
         #region Events
@@ -825,10 +855,24 @@ namespace MahApps.Metro.Controls
             SelectItemsFromText(0);
         }
 
-        private void PART_SelectedItemsScrollViewer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void PART_SelectedItemsPresenter_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            // If we have a ScrollViewer we need to handle this event here as it will not be forwarded to the ToggleButton
+            // If we have a ScrollViewer (ListBox has) we need to handle this event here as it will not be forwarded to the ToggleButton
             SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.Box(!IsDropDownOpen));
+        }
+
+        private void PART_SelectedItemsPresenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // We don't want the SelctedItems to be selectable. So anytime the selection will be changed we will reset it. 
+            PART_SelectedItemsPresenter.SelectedItem = null;
+        }
+
+        private static void UpdateText(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is MultiSelectionComboBox multiSelectionComboBox)
+            {
+                multiSelectionComboBox.UpdateEditableText();
+            }
         }
         #endregion
     }

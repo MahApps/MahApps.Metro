@@ -21,7 +21,7 @@ namespace MetroDemo.Models
             this._dialogCoordinator = dialogCoordinator;
         }
         
-        public object CreateObjectFromString(string input, CultureInfo culture)
+        public object CreateObjectFromString(string input, CultureInfo culture, string stringFormat)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
