@@ -475,6 +475,7 @@
         </Setter>
         <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="mah:ComboBoxHelper.InterceptMouseWheelSelection" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:MultiSelectionComboBox}">
@@ -575,6 +576,7 @@
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
                                      ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+                                     mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      Style="{DynamicResource MahApps.Styles.TextBox.MultiSelectionComboBox.Editable}"
                                      TextWrapping="{TemplateBinding TextWrapping}"

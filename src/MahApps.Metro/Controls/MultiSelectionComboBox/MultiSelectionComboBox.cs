@@ -819,6 +819,53 @@ namespace MahApps.Metro.Controls
             return new ListBoxItem();
         }
 
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            if (IsEditable && !IsDropDownOpen && !(PART_EditableTextBox is null) && !ComboBoxHelper.GetInterceptMouseWheelSelection(this))
+            {
+                if (HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled && ScrollViewerHelper.GetIsHorizontalScrollWheelEnabled(this))
+                {
+                    if (e.Delta > 0)
+                    {
+                        PART_EditableTextBox.LineLeft();
+                    }
+                    else
+                    {
+                        PART_EditableTextBox.LineRight();
+                    }
+                }
+                else
+                {
+                    if (e.Delta > 0)
+                    {
+                        PART_EditableTextBox.LineUp();
+                    }
+                    else
+                    {
+                        PART_EditableTextBox.LineDown();
+                    }
+                }
+            }
+            // ListBox eats the selection so we need to handle this event here if we want to select the next item.
+            else if (!IsDropDownOpen && ComboBoxHelper.GetInterceptMouseWheelSelection(this) && SelectionMode == SelectionMode.Single)
+            { 
+                if (e.Delta > 0 && PART_PopupListBox.SelectedIndex > 0)
+                {
+                    PART_PopupListBox.SelectedIndex--;
+                }
+                else if(e.Delta < 0 && PART_PopupListBox.SelectedIndex < PART_PopupListBox.Items.Count-1)
+                {
+                    PART_PopupListBox.SelectedIndex++;
+                }
+                
+            }
+
+            // The event is handled if the drop down is not open. 
+            e.Handled = !IsDropDownOpen;
+            base.OnPreviewMouseWheel(e);
+        }
+
         #endregion
 
         #region Events

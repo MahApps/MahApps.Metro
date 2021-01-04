@@ -142,6 +142,18 @@
                         <mah:MetroHeader Header="OrderSelectedItemsBy">
                             <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}" SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" />
                         </mah:MetroHeader>
+                        <mah:MetroHeader Header="ObjectToStringComparer">
+                            <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding ElementName=mscb_Example, Path=ObjectToStringComparer}" >
+                                <ComboBoxItem Tag="{x:Null}" Content="None" />
+                                <ComboBoxItem Tag="{mah:DefaultObjectToStringComparer}" Content="Build-In" />
+                            </ComboBox>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="StringToObjectParser">
+                            <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding ElementName=mscb_Example, Path=StringToObjectParser}" SelectedIndex="1" >
+                                <ComboBoxItem Tag="{x:Null}" Content="None" />
+                                <ComboBoxItem Tag="{Binding MyObjectParser}" Content="Example from the Demo with Dialog" />
+                            </ComboBox>
+                        </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
 
@@ -205,6 +217,14 @@
                     </StackPanel>
                 </GroupBox>
 
+                <GroupBox Header="MahApps ComboBox-Helper">
+                    <StackPanel>
+                        <mah:MetroHeader Header="InterceptMouseWheelSelection">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:ComboBoxHelper.InterceptMouseWheelSelection)}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
                 <GroupBox Header="Layout">
                     <StackPanel>
                         <mah:MetroHeader Header="MaxHeight">
@@ -246,6 +266,7 @@
                 <mah:MultiSelectionComboBox x:Name="mscb_Example"
                                             Margin="5"
                                             VerticalAlignment="Center"
+                                            mah:ComboBoxHelper.InterceptMouseWheelSelection="False"
                                             mah:TextBoxHelper.AutoWatermark="True"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
                                             EditableTextStringComparision="CurrentCultureIgnoreCase"
@@ -255,7 +276,6 @@
                                             ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
                                             SelectedItem="{Binding MyFavoriteAnimal}"
                                             Separator=", "
-                                            StringToObjectParser="{Binding MyObjectParser}"
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
                                             TextWrapping="Wrap" />
             </Grid>
