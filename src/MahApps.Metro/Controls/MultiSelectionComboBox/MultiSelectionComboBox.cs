@@ -31,6 +31,7 @@ namespace MahApps.Metro.Controls
         static MultiSelectionComboBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(typeof(MultiSelectionComboBox)));
+            TextProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, new PropertyChangedCallback(OnTextChanged)));
         }
 
         #endregion
@@ -49,7 +50,7 @@ namespace MahApps.Metro.Controls
         private ListBox PART_SelectedItemsPresenter;
 
         private bool isUserdefinedTextInputPending;
-        private DispatcherOperation _updateSelectedItemsFromTextOperation;
+        private DispatcherTimer _updateSelectedItemsFromTextTimer;
 
         #endregion
 
@@ -152,148 +153,6 @@ namespace MahApps.Metro.Controls
             get { return (IEnumerable)GetValue(DisplaySelectedItemsProperty); }
         }
 
-        private void UpdateDisplaySelectedItems()
-        {
-            UpdateDisplaySelectedItems(OrderSelectedItemsBy);
-        }
-
-        private void UpdateDisplaySelectedItems(OrderSelectedItemsBy orderBy)
-        {
-            switch (orderBy)
-            {
-                case OrderSelectedItemsBy.SelectedOrder:
-                    SetCurrentValue(DisplaySelectedItemsProperty, SelectedItems);
-                    break;
-                case OrderSelectedItemsBy.ItemsSourceOrder:
-                    SetCurrentValue(DisplaySelectedItemsProperty, ((IEnumerable<object>)PART_PopupListBox.SelectedItems).OrderBy(o => Items.IndexOf(o)));
-                    break;
-            }
-        }
-
-        private void SelectItemsFromText(int miliSecondsToWait)
-        {
-            if (!isUserdefinedTextInputPending)
-            {
-                return;
-            }
-
-            if (_updateSelectedItemsFromTextOperation?.Status == DispatcherOperationStatus.Executing || _updateSelectedItemsFromTextOperation?.Status == DispatcherOperationStatus.Pending)
-            {
-                _updateSelectedItemsFromTextOperation.Abort();
-            }
-
-            if (!string.IsNullOrEmpty(Text) && HasCustomText && !(ObjectToStringComparer is null) && !string.IsNullOrEmpty(Separator))
-            {
-                var action = new Action(() =>
-                {
-                    Thread.Sleep(miliSecondsToWait);
-
-                    bool foundItem;
-
-                    switch (SelectionMode)
-                    {
-                        case SelectionMode.Single:
-                            foundItem = false;
-                            SelectedItem = null;
-                            for (int i = 0; i < Items.Count; i++)
-                            {
-                                if (ObjectToStringComparer.CheckIfStringMatchesObject(Text, Items[i], EditableTextStringComparision, SelectedItemStringFormat))
-                                {
-                                    SetCurrentValue(SelectedItemProperty, Items[i]);
-                                    foundItem = true;
-                                    break;
-                                }
-                            }
-
-                            if (!foundItem)
-                            {
-                                var result = TryAddObjectFromString(Text);
-                                if (!(result is null))
-                                {
-                                    SelectedItem = result;
-                                }
-                            }
-
-                            break;
-                        case SelectionMode.Multiple:
-                        case SelectionMode.Extended:
-
-                            var strings = Text.Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
-
-                            SelectedItems.Clear();
-
-                            for (int i = 0; i < strings.Length; i++)
-                            {
-                                foundItem = false;
-                                for (int j = 0; j < Items.Count; j++)
-                                {
-                                    if (ObjectToStringComparer.CheckIfStringMatchesObject(strings[i], Items[j], EditableTextStringComparision, SelectedItemStringFormat))
-                                    {
-                                        SelectedItems.Add(Items[j]);
-                                        foundItem = true;
-                                    }
-                                }
-
-                                if (!foundItem)
-                                {
-                                    var result = TryAddObjectFromString(strings[i]);
-                                    if (!(result is null))
-                                    {
-                                        SelectedItems.Add(result);
-                                    }
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-
-
-                    // First we need to check if the string matches completely to the selected items. Therefore we need to display the items in the selected order first
-                    UpdateDisplaySelectedItems(OrderSelectedItemsBy.SelectedOrder);
-                    UpdateHasCustomText(null);
-
-                    // If the items should be ordered differntly than above we need to reoder them accordingly.
-                    if (OrderSelectedItemsBy != OrderSelectedItemsBy.SelectedOrder)
-                    {
-                        UpdateDisplaySelectedItems();
-                    }
-                    UpdateEditableText();
-
-                    isUserdefinedTextInputPending = false;
-                });
-
-                _updateSelectedItemsFromTextOperation = Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, action);
-            }
-        }
-
-        private object TryAddObjectFromString(string input)
-        {
-            if (!(StringToObjectParser is null))
-            {
-                object item = StringToObjectParser.CreateObjectFromString(input, Language.GetEquivalentCulture(), SelectedItemStringFormat);
-                
-                if (item is null)
-                {
-                    return null;
-                }
-                else if (ReadLocalValue(ItemsSourceProperty) == DependencyProperty.UnsetValue)
-                {
-                    Items.Add(item);
-                }
-                else if (ItemsSource is IList list)
-                {
-                    list.Add(item);
-                }
-
-                return item;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         /// <summary>Identifies the <see cref="OrderSelectedItemsBy"/> dependency property.</summary>
         public static readonly DependencyProperty OrderSelectedItemsByProperty =
             DependencyProperty.Register(nameof(OrderSelectedItemsBy), typeof(OrderSelectedItemsBy), typeof(MultiSelectionComboBox), new PropertyMetadata(OrderSelectedItemsBy.SelectedOrder, new PropertyChangedCallback(OnOrderSelectedItemsByChanged)));
@@ -315,8 +174,6 @@ namespace MahApps.Metro.Controls
                 multiSelectionComboBox.UpdateEditableText();
             }
         }
-
-
 
         /// <summary>Identifies the <see cref="SelectedItemContainerStyle"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedItemContainerStyleProperty = DependencyProperty.Register(nameof(SelectedItemContainerStyle), typeof(Style), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
@@ -611,6 +468,192 @@ namespace MahApps.Metro.Controls
         }
 
 
+        /// <summary>Identifies the <see cref="SelectItemsFromTextInputDelay"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectItemsFromTextInputDelayProperty = DependencyProperty.Register(nameof(SelectItemsFromTextInputDelay), typeof(int), typeof(MultiSelectionComboBox), new PropertyMetadata(-1));
+
+        /// <summary>
+        /// Gets or Sets the delay in miliseconds to wait before the selection is updated during text input. If this value is -1 the selection will not be updated during text input. 
+        /// Note: You also need to set <see cref="ObjectToStringComparer"/> to get this to work. 
+        /// </summary>
+        public int SelectItemsFromTextInputDelay
+        {
+            get { return (int)GetValue(SelectItemsFromTextInputDelayProperty); }
+            set { SetValue(SelectItemsFromTextInputDelayProperty, value); }
+        }
+
+
+        #endregion
+
+        #region Methods
+        private void UpdateDisplaySelectedItems()
+        {
+            UpdateDisplaySelectedItems(OrderSelectedItemsBy);
+        }
+
+        private void UpdateDisplaySelectedItems(OrderSelectedItemsBy orderBy)
+        {
+            switch (orderBy)
+            {
+                case OrderSelectedItemsBy.SelectedOrder:
+                    SetCurrentValue(DisplaySelectedItemsProperty, SelectedItems);
+                    break;
+                case OrderSelectedItemsBy.ItemsSourceOrder:
+                    SetCurrentValue(DisplaySelectedItemsProperty, ((IEnumerable<object>)PART_PopupListBox.SelectedItems).OrderBy(o => Items.IndexOf(o)));
+                    break;
+            }
+        }
+
+        private void SelectItemsFromText(int miliSecondsToWait)
+        {
+            if (!isUserdefinedTextInputPending)
+            {
+                return;
+            }
+
+            if (_updateSelectedItemsFromTextTimer is null)
+            {
+                _updateSelectedItemsFromTextTimer = new DispatcherTimer(DispatcherPriority.Background);
+                _updateSelectedItemsFromTextTimer.Tick += UpdateSelectedItemsFromTextTimer_Tick;
+            }
+
+            if (_updateSelectedItemsFromTextTimer.IsEnabled)
+            {
+                _updateSelectedItemsFromTextTimer.Stop();
+            }
+
+            if (HasCustomText && !(ObjectToStringComparer is null) && !string.IsNullOrEmpty(Separator))
+            {
+                _updateSelectedItemsFromTextTimer.Interval = TimeSpan.FromMilliseconds(miliSecondsToWait > 0 ? miliSecondsToWait : 0);
+                _updateSelectedItemsFromTextTimer.Start();
+            }
+        }
+
+        private void UpdateSelectedItemsFromTextTimer_Tick(object sender, EventArgs e)
+        {
+            _updateSelectedItemsFromTextTimer.Stop();
+
+            bool foundItem;
+
+            // We clear the selection if there is no text available. 
+            if (string.IsNullOrEmpty(Text))
+            {
+                switch (SelectionMode)
+                {
+                    case SelectionMode.Single:
+                        SelectedItem = null;
+                        break;
+                    case SelectionMode.Multiple:
+                    case SelectionMode.Extended:
+                        SelectedItems.Clear();
+                        break;
+                    default:
+                        break;
+                }
+                return;
+            }
+
+            switch (SelectionMode)
+            {
+                case SelectionMode.Single:
+                    foundItem = false;
+                    SelectedItem = null;
+                    for (int i = 0; i < Items.Count; i++)
+                    {
+                        if (ObjectToStringComparer.CheckIfStringMatchesObject(Text, Items[i], EditableTextStringComparision, SelectedItemStringFormat))
+                        {
+                            SetCurrentValue(SelectedItemProperty, Items[i]);
+                            foundItem = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundItem)
+                    {
+                        var result = TryAddObjectFromString(Text);
+                        if (!(result is null))
+                        {
+                            SelectedItem = result;
+                        }
+                    }
+
+                    break;
+                case SelectionMode.Multiple:
+                case SelectionMode.Extended:
+
+                    var strings = Text.Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
+
+                    SelectedItems.Clear();
+
+                    for (int i = 0; i < strings.Length; i++)
+                    {
+                        foundItem = false;
+                        for (int j = 0; j < Items.Count; j++)
+                        {
+                            if (ObjectToStringComparer.CheckIfStringMatchesObject(strings[i], Items[j], EditableTextStringComparision, SelectedItemStringFormat))
+                            {
+                                SelectedItems.Add(Items[j]);
+                                foundItem = true;
+                            }
+                        }
+
+                        if (!foundItem)
+                        {
+                            var result = TryAddObjectFromString(strings[i]);
+                            if (!(result is null))
+                            {
+                                SelectedItems.Add(result);
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+
+            // First we need to check if the string matches completely to the selected items. Therefore we need to display the items in the selected order first
+            UpdateDisplaySelectedItems(OrderSelectedItemsBy.SelectedOrder);
+            UpdateHasCustomText(null);
+
+            // If the items should be ordered differntly than above we need to reoder them accordingly.
+            if (OrderSelectedItemsBy != OrderSelectedItemsBy.SelectedOrder)
+            {
+                UpdateDisplaySelectedItems();
+            }
+
+            var oldCaretPos = PART_EditableTextBox.CaretIndex;
+            UpdateEditableText();
+            PART_EditableTextBox.CaretIndex = oldCaretPos;
+
+            isUserdefinedTextInputPending = false;
+        }
+
+        private object TryAddObjectFromString(string input)
+        {
+            if (!(StringToObjectParser is null))
+            {
+                object item = StringToObjectParser.CreateObjectFromString(input, Language.GetEquivalentCulture(), SelectedItemStringFormat);
+
+                if (item is null)
+                {
+                    return null;
+                }
+                else if (ReadLocalValue(ItemsSourceProperty) == DependencyProperty.UnsetValue)
+                {
+                    Items.Add(item);
+                }
+                else if (ItemsSource is IList list)
+                {
+                    list.Add(item);
+                }
+
+                return item;
+            }
+            else
+            {
+                return null;
+            }
+        }
         #endregion
 
         #region Commands
@@ -683,18 +726,51 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            // Init SelectedItemsPresenter
             PART_SelectedItemsPresenter = GetTemplateChild(nameof(PART_SelectedItemsPresenter)) as ListBox;
-            PART_SelectedItemsPresenter.MouseLeftButtonUp += PART_SelectedItemsPresenter_MouseLeftButtonUp;
-            PART_SelectedItemsPresenter.SelectionChanged += PART_SelectedItemsPresenter_SelectionChanged;
-
+            if (!(PART_SelectedItemsPresenter is null))
+            {
+                PART_SelectedItemsPresenter.MouseLeftButtonUp -= PART_SelectedItemsPresenter_MouseLeftButtonUp;
+                PART_SelectedItemsPresenter.SelectionChanged -= PART_SelectedItemsPresenter_SelectionChanged;
+                
+                PART_SelectedItemsPresenter.MouseLeftButtonUp += PART_SelectedItemsPresenter_MouseLeftButtonUp;
+                PART_SelectedItemsPresenter.SelectionChanged += PART_SelectedItemsPresenter_SelectionChanged;
+            }
+            else
+            {
+                throw new MahAppsException($"The template part \"{nameof(PART_SelectedItemsPresenter)}\" could not be found.");
+            }
+            // Init EditableTextBox
             PART_EditableTextBox = GetTemplateChild(nameof(PART_EditableTextBox)) as TextBox;
-            PART_EditableTextBox.TextChanged += PART_EditableTextBox_TextChanged;
-            PART_EditableTextBox.LostFocus += PART_EditableTextBox_LostFocus;
 
+            if (!(PART_EditableTextBox is null))
+            {
+                PART_EditableTextBox.LostFocus -= PART_EditableTextBox_LostFocus;
+                PART_EditableTextBox.LostFocus += PART_EditableTextBox_LostFocus;
+            }
+            else
+            {
+                throw new MahAppsException($"The template part \"{nameof(PART_EditableTextBox)}\" could not be found.");
+            }
+
+            // Init Popup
             PART_Popup = GetTemplateChild(nameof(PART_Popup)) as Popup;
 
+            if (PART_Popup is null)
+            {
+                throw new MahAppsException($"The template part \"{nameof(PART_Popup)}\" could not be found.");
+            }
+
             PART_PopupListBox = GetTemplateChild(nameof(PART_PopupListBox)) as ListBox;
-            PART_PopupListBox.SelectionChanged += PART_PopupListBox_SelectionChanged;
+            if (!(PART_PopupListBox is null))
+            {
+                PART_PopupListBox.SelectionChanged -= PART_PopupListBox_SelectionChanged;
+                PART_PopupListBox.SelectionChanged += PART_PopupListBox_SelectionChanged;
+            }
+            else
+            {
+                throw new MahAppsException($"The template part \"{nameof(PART_PopupListBox)}\" could not be found.");
+            }
 
             CommandBindings.Add(new CommandBinding(ClearContentCommand, ExecutedClearContentCommand, CanExecuteClearContentCommand));
             CommandBindings.Add(new CommandBinding(RemoveItemCommand, RemoveItemCommand_Executed, RemoveItemCommand_CanExecute));
@@ -865,16 +941,9 @@ namespace MahApps.Metro.Controls
             e.Handled = !IsDropDownOpen;
             base.OnPreviewMouseWheel(e);
         }
-
         #endregion
 
         #region Events
-
-        private void PART_EditableTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateHasCustomText(null);
-            isUserdefinedTextInputPending = true;
-        }
 
         private void PART_PopupListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -919,6 +988,21 @@ namespace MahApps.Metro.Controls
             if (d is MultiSelectionComboBox multiSelectionComboBox)
             {
                 multiSelectionComboBox.UpdateEditableText();
+            }
+        }
+
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is MultiSelectionComboBox multiSelectionComboBox)
+            {
+                multiSelectionComboBox.UpdateHasCustomText(null);
+                multiSelectionComboBox.isUserdefinedTextInputPending = true;
+
+                // Select the items during typing if enabled
+                if (multiSelectionComboBox.SelectItemsFromTextInputDelay >= 0)
+                {
+                    multiSelectionComboBox.SelectItemsFromText(multiSelectionComboBox.SelectItemsFromTextInputDelay);
+                }
             }
         }
         #endregion

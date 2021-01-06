@@ -188,10 +188,11 @@
                                 RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <DockPanel Margin="{TemplateBinding Margin}" LastChildFill="True">
-                            <Button x:Name="PART_RemoveButton" Command="mah:MultiSelectionComboBox.RemoveItemCommand"
+                            <Button x:Name="PART_RemoveButton"
+                                    Command="mah:MultiSelectionComboBox.RemoveItemCommand"
                                     CommandParameter="{Binding}"
                                     DockPanel.Dock="Right"
-                                    Style="{DynamicResource MahApps.Styles.Button.MulitselectionComboBoxSelectedItem.RemoveItem}"/>
+                                    Style="{DynamicResource MahApps.Styles.Button.MulitselectionComboBoxSelectedItem.RemoveItem}" />
                             <ContentPresenter Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -466,6 +467,8 @@
         <Setter Property="SelectedItemContainerStyle" Value="{DynamicResource MahApps.Styles.MulitselectionComboBoxSelectedItem}" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.MultiSelectionComboBoxItem}" />
         <Setter Property="DisabledPopupOverlayContentTemplate" Value="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.DisabledPopupOverlay}" />
+        <Setter Property="SelectItemsFromTextInputDelay" Value="-1" />
+        <Setter Property="IsTextSearchEnabled" Value="False" />
         <Setter Property="SelectedItemsPanelTemplate">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -538,12 +541,6 @@
                                          ScrollViewer.CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
                                          ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
                                          ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" />
-
-                                <!--<ScrollViewer x:Name="PART_SelectedItemsScrollViewer"
-
-                                              >
-                                    <ItemsControl  />
-                                </ScrollViewer>-->
                             </Grid>
 
                             <TextBox x:Name="PART_EditableTextBox"
@@ -554,6 +551,7 @@
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                                      mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                      mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                      mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
@@ -576,9 +574,9 @@
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
                                      ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
-                                     mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      Style="{DynamicResource MahApps.Styles.TextBox.MultiSelectionComboBox.Editable}"
+                                     Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text}"
                                      TextWrapping="{TemplateBinding TextWrapping}"
                                      Visibility="Collapsed" />
 

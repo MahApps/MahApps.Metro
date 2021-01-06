@@ -79,8 +79,8 @@
                 <x:Type TypeName="system:StringComparison" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        
-        <!-- FlowDirection -->
+
+        <!--  FlowDirection  -->
         <ObjectDataProvider x:Key="Demo.Enums.FlowDirection"
                             MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
@@ -133,7 +133,7 @@
                         </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
-                
+
                 <GroupBox Header="Selection">
                     <StackPanel>
                         <mah:MetroHeader Header="SelectionMode">
@@ -143,16 +143,26 @@
                             <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}" SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" />
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="ObjectToStringComparer">
-                            <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding ElementName=mscb_Example, Path=ObjectToStringComparer}" >
-                                <ComboBoxItem Tag="{x:Null}" Content="None" />
-                                <ComboBoxItem Tag="{mah:DefaultObjectToStringComparer}" Content="Build-In" />
+                            <ComboBox SelectedValue="{Binding ElementName=mscb_Example, Path=ObjectToStringComparer}" SelectedValuePath="Tag">
+                                <ComboBoxItem Content="None" Tag="{x:Null}" />
+                                <ComboBoxItem Content="Build-In" Tag="{mah:DefaultObjectToStringComparer}" />
                             </ComboBox>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="StringToObjectParser">
-                            <ComboBox SelectedValuePath="Tag" SelectedValue="{Binding ElementName=mscb_Example, Path=StringToObjectParser}" SelectedIndex="1" >
-                                <ComboBoxItem Tag="{x:Null}" Content="None" />
-                                <ComboBoxItem Tag="{Binding MyObjectParser}" Content="Example from the Demo with Dialog" />
+                            <ComboBox SelectedIndex="1"
+                                      SelectedValue="{Binding ElementName=mscb_Example, Path=StringToObjectParser}"
+                                      SelectedValuePath="Tag">
+                                <ComboBoxItem Content="None" Tag="{x:Null}" />
+                                <ComboBoxItem Content="Example from the Demo with Dialog" Tag="{Binding MyObjectParser}" />
                             </ComboBox>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="SelectItemsFromTextInputDelay">
+                            <mah:NumericUpDown Interval="100"
+                                               Minimum="-1"
+                                               SnapToMultipleOfInterval="True"
+                                               StringFormat="{}{0} Miliseconds"
+                                               ToolTip="The delay to wait before the selection gets updated from text input. Set this to -1 to disable this."
+                                               Value="{Binding ElementName=mscb_Example, Path=SelectItemsFromTextInputDelay}" />
                         </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
@@ -248,6 +258,9 @@
                         <mah:MetroHeader Header="FlowDirection">
                             <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.FlowDirection}}" SelectedItem="{Binding ElementName=mscb_Example, Path=FlowDirection}" />
                         </mah:MetroHeader>
+                        <mah:MetroHeader Header="IsDropDownOpen">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=IsDropDownOpen, Mode=TwoWay}" />
+                        </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
 
@@ -271,10 +284,10 @@
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
                                             EditableTextStringComparision="CurrentCultureIgnoreCase"
                                             ItemContainerStyle="{Binding ElementName=Cmb_ItemContainerStyle, Path=SelectedItem.Tag}"
-                                            SelectedItemContainerStyle="{Binding ElementName=Cmb_SelectedItemContainerStyle, Path=SelectedItem.Tag}"
                                             ItemsSource="{Binding Animals}"
                                             ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
                                             SelectedItem="{Binding MyFavoriteAnimal}"
+                                            SelectedItemContainerStyle="{Binding ElementName=Cmb_SelectedItemContainerStyle, Path=SelectedItem.Tag}"
                                             Separator=", "
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
                                             TextWrapping="Wrap" />
