@@ -1014,6 +1014,11 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+            else if (!IsDropDownOpen && !ComboBoxHelper.GetInterceptMouseWheelSelection(this))
+            {
+                base.OnPreviewMouseWheel(e);
+                return;
+            }
             // ListBox eats the selection so we need to handle this event here if we want to select the next item.
             else if (!IsDropDownOpen && ComboBoxHelper.GetInterceptMouseWheelSelection(this) && SelectionMode == SelectionMode.Single)
             { 
@@ -1025,7 +1030,6 @@ namespace MahApps.Metro.Controls
                 {
                     PART_PopupListBox.SelectedIndex++;
                 }
-                
             }
 
             // The event is handled if the drop down is not open. 
