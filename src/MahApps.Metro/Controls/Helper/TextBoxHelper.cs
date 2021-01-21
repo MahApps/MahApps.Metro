@@ -931,11 +931,11 @@ namespace MahApps.Metro.Controls
                 {
                     if (comboBox.IsEditable)
                     {
-                        comboBox.Text = string.Empty;
+                        comboBox.SetCurrentValue(ComboBox.TextProperty, string.Empty);
                         comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
 
-                    comboBox.SelectedItem = null;
+                    comboBox.SetCurrentValue(ComboBox.SelectedItemProperty, null);
                     comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
                 else if (parent is ColorPickerBase colorPicker)
