@@ -48,12 +48,13 @@
                                       Width="16"
                                       Height="16"
                                       Margin="1 1 0 0"
-                                      Data="{StaticResource Checkmark}"
+                                      Data="{DynamicResource Checkmark}"
                                       Fill="{DynamicResource MahApps.Brushes.Menu.Checkmark.Fill}"
                                       FlowDirection="LeftToRight" />
                             </Grid>
                             <ContentPresenter x:Name="Icon"
                                               Grid.Column="0"
+                                              HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               ContentSource="Icon" />
                             <ContentPresenter x:Name="HeaderHost"
