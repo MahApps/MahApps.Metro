@@ -264,7 +264,8 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 !src/MahApps.Metro/Styles/Themes/Theme.Template.xaml
 
 # cake
-tools/
+tools/*
+!tools/packages.config
 
 # XamlStyler
 !XamlStyler/
