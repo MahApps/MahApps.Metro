@@ -22,11 +22,7 @@
                     Background="{DynamicResource MahApps.Brushes.Tile.Small}"
                     BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                     BorderThickness="1">
-                <Rectangle>
-                    <Rectangle.Fill>
-                        <SolidColorBrush Color="{Binding TargetNullValue=Transparent}" />
-                    </Rectangle.Fill>
-                </Rectangle>
+                <Rectangle Fill="{Binding Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
             </Border>
 
             <TextBlock Grid.Column="1"
@@ -49,11 +45,7 @@
                 Background="{DynamicResource MahApps.Brushes.Tile.Small}"
                 BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                 BorderThickness="1">
-            <Rectangle>
-                <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding}" />
-                </Rectangle.Fill>
-            </Rectangle>
+            <Rectangle Fill="{Binding Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
         </Border>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding}" Value="{x:Null}">
