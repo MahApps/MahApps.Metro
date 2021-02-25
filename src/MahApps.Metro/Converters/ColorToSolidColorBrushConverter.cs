@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Converters
 {
     /// <summary>
     /// Converts a given <see cref="Color"/> into a <see cref="SolidColorBrush"/>.
     /// </summary>
-    [ValueConversion (typeof(Color), typeof(SolidColorBrush)) ]
-    public class ColorToSolidColorBrushConverter : MarkupConverter
+    [ValueConversion(typeof(Color), typeof(SolidColorBrush))]
+    public class ColorToSolidColorBrushConverter : IValueConverter
     {
-        static ColorToSolidColorBrushConverter _DefaultInstance;
+        private static ColorToSolidColorBrushConverter defaultInstance;
 
         /// <summary>
-        /// returns a static instance if needed.
+        /// Gets a static instance of the converter if needed.
         /// </summary>
-        public static ColorToSolidColorBrushConverter DefaultInstance => _DefaultInstance ??= new ColorToSolidColorBrushConverter();
+        public static ColorToSolidColorBrushConverter DefaultInstance => defaultInstance ??= new ColorToSolidColorBrushConverter();
 
         /// <summary>
-        /// Gets or Sets the FallbackBrush which should be used if the conversion fails. 
+        /// Gets or Sets the brush which will be used if the conversion fails.
         /// </summary>
+        [CanBeNull]
         public SolidColorBrush FallbackBrush { get; set; }
 
-        protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// Gets or Sets the color which will be used if the conversion fails.
+        /// </summary>
+        [CanBeNull]
+        public Color? FallbackColor { get; set; }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Color color)
             {
@@ -35,22 +39,13 @@ namespace MahApps.Metro.Converters
                 brush.Freeze();
                 return brush;
             }
-            else
-            {
-                return FallbackBrush;
-            }
+
+            return this.FallbackBrush;
         }
 
-        protected override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is SolidColorBrush brush)
-            {
-                return brush.Color;
-            }
-            else
-            {
-                return null;
-            }
+            return value is SolidColorBrush brush ? brush.Color : this.FallbackColor;
         }
     }
 }

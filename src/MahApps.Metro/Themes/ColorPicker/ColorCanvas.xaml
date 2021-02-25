@@ -187,7 +187,7 @@
                                         Background="{DynamicResource MahApps.Brushes.Tile}"
                                         BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                         BorderThickness="1">
-                                    <Rectangle Fill="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
+                                    <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
                                 </Border>
 
                                 <ContentControl x:Name="PART_NoColorPreview"
