@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_DownButton, Type = typeof(Button))]
     [TemplatePart(Name = PART_BannerGrid, Type = typeof(Grid))]
     [TemplatePart(Name = PART_BannerLabel, Type = typeof(Label))]
+    [TemplatePart(Name = PART_Index, Type = typeof(ListBox))]
     [StyleTypedProperty(Property = nameof(NavigationButtonStyle), StyleTargetType = typeof(Button))]
     [StyleTypedProperty(Property = nameof(IndexItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
     public class FlipView : Selector
@@ -696,6 +697,7 @@ namespace MahApps.Metro.Controls
         private const string PART_ForwardButton = "PART_ForwardButton";
         private const string PART_Presenter = "PART_Presenter";
         private const string PART_UpButton = "PART_UpButton";
+        private const string PART_Index = "PART_Index";
         /// <summary>
         /// To counteract the double Loaded event issue.
         /// </summary>
@@ -911,6 +913,20 @@ namespace MahApps.Metro.Controls
             {
                 this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
             }
+            
+            this.ExecuteWhenLoaded(() =>
+                {
+                    if (this.GetTemplateChild(PART_Index) is ListBox listBox)
+                    {
+                        listBox.SelectionChanged += (sender, e) =>
+                            {
+                                if (ReferenceEquals(e.OriginalSource, listBox))
+                                {
+                                    e.Handled = true;
+                                }
+                            };
+                    }
+                });
         }
 
         protected override DependencyObject GetContainerForItemOverride()
