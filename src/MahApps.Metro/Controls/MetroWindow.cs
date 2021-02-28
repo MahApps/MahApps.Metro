@@ -196,6 +196,11 @@ namespace MahApps.Metro.Controls
 
                 static IntPtr LockHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
                 {
+                    //just to avoid unused argument
+                    if(hwnd == IntPtr.Zero)
+                    {
+                        return IntPtr.Zero;
+                    }
                     if (msg == 0x46)
                     {
 #pragma warning disable CS0618 // Type or member is obsolete
