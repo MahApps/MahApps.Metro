@@ -166,6 +166,106 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register(nameof(IsWindowDraggable), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
+        #region Full Screen Region
+
+        public readonly static DependencyProperty RealRestoreBoundsProperty = DependencyProperty.RegisterAttached(
+            "RealRestoreBounds",
+            typeof(Rect),
+            typeof(MetroWindow),
+            new PropertyMetadata(null));
+
+        public readonly static DependencyProperty PreWindowsStateProperty = DependencyProperty.RegisterAttached(
+            "PreWindowsState",
+            typeof(WindowState),
+            typeof(MetroWindow),
+            new PropertyMetadata(null));
+
+        public readonly static DependencyProperty FullScreenProperty = DependencyProperty.RegisterAttached(
+            "FullScreen",
+            typeof(bool),
+            typeof(MetroWindow),
+            new PropertyMetadata(false, (sender, args) =>
+            {
+                if (!(sender is MetroWindow win))
+                {
+                    return;
+                }
+                System.Windows.Interop.WindowInteropHelper windowInteropHelper = new System.Windows.Interop.WindowInteropHelper(win);
+                System.Windows.Interop.HwndSource hwndSource =
+                    System.Windows.Interop.HwndSource.FromHwnd(windowInteropHelper.EnsureHandle());
+
+                static IntPtr LockHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+                {
+                    if (msg == 0x46)
+                    {
+#pragma warning disable CS0618 // Type or member is obsolete
+                        WINDOWPOS wp = System.Runtime.InteropServices.Marshal.PtrToStructure<WINDOWPOS>(lParam);
+                        wp.flags |= SWP.NOMOVE | SWP.NOSIZE;
+#pragma warning restore CS0618 // Type or member is obsolete
+                        System.Runtime.InteropServices.Marshal.StructureToPtr(wp, lParam, false);
+                    }
+                    return IntPtr.Zero;
+                }
+
+                if ((bool)args.NewValue)
+                {
+                    SetRealRestoreBounds(win, win.RestoreBounds);
+                    win.Height = SystemParameters.PrimaryScreenHeight;
+                    win.Width = SystemParameters.PrimaryScreenWidth;
+                    win.Top = 0;
+                    win.Left = 0;
+                    win.ResizeMode = ResizeMode.NoResize;
+                    win.WindowStyle = WindowStyle.None;
+                    win.ShowTitleBar = false;
+                    win.ShowCloseButton = false;
+                    win.GlowBrush = null;
+                    SetPreWindowsState(win, win.WindowState);
+                    win.WindowState = WindowState.Normal;
+                    win.BorderThickness = new Thickness(0);
+                    hwndSource.AddHook(LockHook);
+                }
+                else
+                {
+                    hwndSource.RemoveHook(LockHook);
+                    win.WindowState = GetPreWindowsState(win);
+                    Rect restoreBounds = GetRealRestoreBounds(win);
+                    win.Height = restoreBounds.Height;
+                    win.Width = restoreBounds.Width;
+                    win.Top = restoreBounds.Top;
+                    win.Left = restoreBounds.Left;
+                    win.ResizeMode = ResizeMode.CanResize;
+                    win.WindowStyle = WindowStyle.SingleBorderWindow;
+                    win.BorderThickness = new Thickness(1);
+                    win.ShowTitleBar = true;
+                    win.ShowCloseButton = true;
+                }
+            }));
+
+        private static WindowState GetPreWindowsState(Window window)
+        {
+            return (WindowState)window.GetValue(PreWindowsStateProperty);
+        }
+        private static void SetPreWindowsState(Window window, WindowState value)
+        {
+            window.SetValue(PreWindowsStateProperty, value);
+        }
+
+        private static Rect GetRealRestoreBounds(Window window)
+        {
+            return (Rect)window.GetValue(RealRestoreBoundsProperty);
+        }
+        private static void SetRealRestoreBounds(Window window, Rect value)
+        {
+            window.SetValue(RealRestoreBoundsProperty, value);
+        }
+
+        public bool FullScreen
+        {
+            get { return (bool)GetValue(FullScreenProperty); }
+            set { SetValue(FullScreenProperty, value); }
+        }
+
+        #endregion
         FrameworkElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
