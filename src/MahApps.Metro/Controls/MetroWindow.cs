@@ -194,13 +194,9 @@ namespace MahApps.Metro.Controls
                 System.Windows.Interop.HwndSource hwndSource =
                     System.Windows.Interop.HwndSource.FromHwnd(windowInteropHelper.EnsureHandle());
 
-                static IntPtr LockHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+                System.Windows.Interop.HwndSourceHook LockHook = new System.Windows.Interop.HwndSourceHook(
+                (IntPtr _, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
                 {
-                    //just to avoid unused argument
-                    if(hwnd == IntPtr.Zero)
-                    {
-                        return hwnd;
-                    }
                     if (msg == 0x46)
                     {
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -210,7 +206,7 @@ namespace MahApps.Metro.Controls
                         System.Runtime.InteropServices.Marshal.StructureToPtr(wp, lParam, false);
                     }
                     return IntPtr.Zero;
-                }
+                });
 
                 if ((bool)args.NewValue)
                 {
