@@ -2,15 +2,15 @@
 // TOOLS / ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
-#module nuget:?package=Cake.DotNetTool.Module
-#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28"
-#tool "dotnet:?package=AzureSignTool&version=2.0.17"
+#module nuget:?package=Cake.DotNetTool.Module&version=0.5.0
+#tool dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28
+#tool dotnet:?package=AzureSignTool&version=2.0.17
+#tool dotnet:?package=GitReleaseManager.Tool&version=0.11.0
+#tool dotnet:?package=GitVersion.Tool&version=5.6.6
 
-#tool GitVersion.CommandLine&version=5.5.1
-#tool gitreleasemanager
-#tool xunit.runner.console
-#tool vswhere
-#addin Cake.Figlet
+#tool xunit.runner.console&version=2.4.1
+#tool vswhere&version=2.8.4
+#addin nuget:?package=Cake.Figlet&version=1.4.0
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS

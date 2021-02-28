@@ -321,7 +321,7 @@
                 </StackPanel.Resources>
 
                 <Label Content="CheckBox Win10" Style="{DynamicResource DescriptionHeaderStyle}" />
-                <CheckBox IsChecked="False" IsEnabled="True" />
+                <CheckBox IsChecked="False" IsEnabled="True" mah:CheckBoxHelper.CheckCornerRadius="2" />
                 <CheckBox IsChecked="False" IsEnabled="False" />
                 <CheckBox IsChecked="True" IsEnabled="False" />
                 <CheckBox IsChecked="True" IsEnabled="True" />

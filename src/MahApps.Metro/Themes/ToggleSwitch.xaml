@@ -22,6 +22,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForeground}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="MinWidth" Value="{DynamicResource ToggleSwitchThemeMinWidth}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -55,8 +56,8 @@
                                               TextElement.Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                               Visibility="Collapsed" />
 
-                            <Grid Grid.Row="1"
-                                  MinWidth="{DynamicResource ToggleSwitchThemeMinWidth}"
+                            <Grid x:Name="SwitchContentGrid"
+                                  Grid.Row="1"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top">
 
@@ -345,6 +346,7 @@
                             <Setter TargetName="OffContentPresenter" Property="Grid.Column" Value="0" />
                             <Setter TargetName="OnContentPresenter" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Switch" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="SwitchContentGrid" Property="HorizontalAlignment" Value="Right" />
                         </Trigger>
 
                         <!--  MouseOver  -->

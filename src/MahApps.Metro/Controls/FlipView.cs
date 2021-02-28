@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_DownButton, Type = typeof(Button))]
     [TemplatePart(Name = PART_BannerGrid, Type = typeof(Grid))]
     [TemplatePart(Name = PART_BannerLabel, Type = typeof(Label))]
+    [TemplatePart(Name = PART_Index, Type = typeof(ListBox))]
     [StyleTypedProperty(Property = nameof(NavigationButtonStyle), StyleTargetType = typeof(Button))]
     [StyleTypedProperty(Property = nameof(IndexItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
     public class FlipView : Selector
@@ -696,6 +697,7 @@ namespace MahApps.Metro.Controls
         private const string PART_ForwardButton = "PART_ForwardButton";
         private const string PART_Presenter = "PART_Presenter";
         private const string PART_UpButton = "PART_UpButton";
+        private const string PART_Index = "PART_Index";
         /// <summary>
         /// To counteract the double Loaded event issue.
         /// </summary>
@@ -703,6 +705,7 @@ namespace MahApps.Metro.Controls
         private bool allowSelectedIndexChangedCallback = true;
         private Grid bannerGrid;
         private Label bannerLabel;
+        private ListBox indexListBox;
         private Button backButton;
         private Button forwardButton;
         private Button downButton;
@@ -859,6 +862,11 @@ namespace MahApps.Metro.Controls
 
             this.presenter = this.GetTemplateChild(PART_Presenter) as TransitioningContentControl;
 
+            if (this.indexListBox != null)
+            {
+                this.indexListBox.SelectionChanged -= OnIndexListBoxSelectionChanged;
+            }
+
             if (this.forwardButton != null)
             {
                 this.forwardButton.Click -= this.NextButtonClick;
@@ -878,6 +886,8 @@ namespace MahApps.Metro.Controls
             {
                 this.downButton.Click -= this.NextButtonClick;
             }
+
+            this.indexListBox = this.GetTemplateChild(PART_Index) as ListBox;
 
             this.forwardButton = this.GetTemplateChild(PART_ForwardButton) as Button;
             this.backButton = this.GetTemplateChild(PART_BackButton) as Button;
@@ -910,6 +920,22 @@ namespace MahApps.Metro.Controls
             if (this.bannerLabel != null)
             {
                 this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
+            }
+
+            this.ExecuteWhenLoaded(() =>
+                {
+                    if (this.indexListBox != null)
+                    {
+                        this.indexListBox.SelectionChanged += OnIndexListBoxSelectionChanged;
+                    }
+                });
+        }
+
+        private void OnIndexListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ReferenceEquals(e.OriginalSource, this.indexListBox))
+            {
+                e.Handled = true;
             }
         }
 

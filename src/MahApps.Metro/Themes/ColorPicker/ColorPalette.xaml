@@ -111,11 +111,7 @@
                     <Binding Path="ColorNamesDictionary" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
                 </MultiBinding>
             </Border.ToolTip>
-            <Grid>
-                <Grid.Background>
-                    <SolidColorBrush Color="{Binding}" />
-                </Grid.Background>
-            </Grid>
+            <Grid Background="{Binding Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
         </Border>
     </DataTemplate>
 

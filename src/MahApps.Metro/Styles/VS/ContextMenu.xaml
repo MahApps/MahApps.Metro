@@ -55,7 +55,9 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <ContextMenu x:Key="MahApps.TextBox.ContextMenu" Style="{StaticResource MahApps.Styles.ContextMenu.VisualStudio}" x:Shared="False">
+    <ContextMenu x:Key="MahApps.TextBox.ContextMenu"
+                 x:Shared="False"
+                 Style="{StaticResource MahApps.Styles.ContextMenu.VisualStudio}">
         <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.VisualStudio}" />
         <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem.VisualStudio}" />
         <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem.VisualStudio}" />

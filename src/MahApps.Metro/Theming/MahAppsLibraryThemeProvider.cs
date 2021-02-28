@@ -8,7 +8,7 @@ using ControlzEx.Theming;
 namespace MahApps.Metro.Theming
 {
     /// <summary>
-    /// Provides theme resources from Fluent.Ribbon.
+    /// Provides theme resources from MahApps.Metro.
     /// </summary>
     public class MahAppsLibraryThemeProvider : LibraryThemeProvider
     {
