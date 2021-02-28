@@ -168,19 +168,19 @@ namespace MahApps.Metro.Controls
 
         #region Full Screen Region
 
-        public readonly static DependencyProperty RealRestoreBoundsProperty = DependencyProperty.RegisterAttached(
+        public readonly static DependencyProperty RealRestoreBoundsProperty = DependencyProperty.Register(
             "RealRestoreBounds",
             typeof(Rect),
             typeof(MetroWindow),
             new PropertyMetadata(null));
 
-        public readonly static DependencyProperty PreWindowsStateProperty = DependencyProperty.RegisterAttached(
+        public readonly static DependencyProperty PreWindowsStateProperty = DependencyProperty.Register(
             "PreWindowsState",
             typeof(WindowState),
             typeof(MetroWindow),
             new PropertyMetadata(null));
 
-        public readonly static DependencyProperty FullScreenProperty = DependencyProperty.RegisterAttached(
+        public readonly static DependencyProperty FullScreenProperty = DependencyProperty.Register(
             "FullScreen",
             typeof(bool),
             typeof(MetroWindow),
