@@ -199,7 +199,7 @@ namespace MahApps.Metro.Controls
                     //just to avoid unused argument
                     if(hwnd == IntPtr.Zero)
                     {
-                        return IntPtr.Zero;
+                        return hwnd;
                     }
                     if (msg == 0x46)
                     {
