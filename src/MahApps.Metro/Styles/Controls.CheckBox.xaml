@@ -1,11 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <!--  ********************************** CheckBoxStyle **********************************  -->
     <system:Double x:Key="CheckBoxBorderThemeThickness">2</system:Double>
     <system:Double x:Key="CheckBoxCheckedStrokeThickness">0</system:Double>
+    <converters:CornerRadiusFilterConverter x:Key="CornerRadiusTopLeftConverter" Filter="TopLeft" />
+    <converters:CornerRadiusFilterConverter x:Key="CornerRadiusBottomRightConverter" Filter="BottomRight" />
 
     <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />
@@ -42,6 +45,8 @@
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                 <Rectangle x:Name="NormalRectangle"
                                            Fill="{TemplateBinding mah:CheckBoxHelper.CheckBackgroundFillUnchecked}"
+                                           RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:CheckBoxHelper.CheckCornerRadius), Mode=OneWay, Converter={StaticResource CornerRadiusTopLeftConverter}}"
+                                           RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:CheckBoxHelper.CheckCornerRadius), Mode=OneWay, Converter={StaticResource CornerRadiusBottomRightConverter}}"
                                            Stroke="{TemplateBinding mah:CheckBoxHelper.CheckBackgroundStrokeUnchecked}"
                                            StrokeThickness="{TemplateBinding mah:CheckBoxHelper.CheckStrokeThickness}"
                                            UseLayoutRounding="False" />

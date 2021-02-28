@@ -705,6 +705,7 @@ namespace MahApps.Metro.Controls
         private bool allowSelectedIndexChangedCallback = true;
         private Grid bannerGrid;
         private Label bannerLabel;
+        private ListBox indexListBox;
         private Button backButton;
         private Button forwardButton;
         private Button downButton;
@@ -861,6 +862,11 @@ namespace MahApps.Metro.Controls
 
             this.presenter = this.GetTemplateChild(PART_Presenter) as TransitioningContentControl;
 
+            if (this.indexListBox != null)
+            {
+                this.indexListBox.SelectionChanged -= OnIndexListBoxSelectionChanged;
+            }
+
             if (this.forwardButton != null)
             {
                 this.forwardButton.Click -= this.NextButtonClick;
@@ -880,6 +886,8 @@ namespace MahApps.Metro.Controls
             {
                 this.downButton.Click -= this.NextButtonClick;
             }
+
+            this.indexListBox = this.GetTemplateChild(PART_Index) as ListBox;
 
             this.forwardButton = this.GetTemplateChild(PART_ForwardButton) as Button;
             this.backButton = this.GetTemplateChild(PART_BackButton) as Button;
@@ -913,20 +921,22 @@ namespace MahApps.Metro.Controls
             {
                 this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
             }
-            
+
             this.ExecuteWhenLoaded(() =>
                 {
-                    if (this.GetTemplateChild(PART_Index) is ListBox listBox)
+                    if (this.indexListBox != null)
                     {
-                        listBox.SelectionChanged += (sender, e) =>
-                            {
-                                if (ReferenceEquals(e.OriginalSource, listBox))
-                                {
-                                    e.Handled = true;
-                                }
-                            };
+                        this.indexListBox.SelectionChanged += OnIndexListBoxSelectionChanged;
                     }
                 });
+        }
+
+        private void OnIndexListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ReferenceEquals(e.OriginalSource, this.indexListBox))
+            {
+                e.Handled = true;
+            }
         }
 
         protected override DependencyObject GetContainerForItemOverride()

@@ -38,6 +38,36 @@ namespace MahApps.Metro.Controls
             obj.SetValue(CheckSizeProperty, value);
         }
 
+        public static readonly DependencyProperty CheckCornerRadiusProperty
+            = DependencyProperty.RegisterAttached(
+                "CheckCornerRadius",
+                typeof(CornerRadius),
+                typeof(CheckBoxHelper),
+                new FrameworkPropertyMetadata(
+                    new CornerRadius(),
+                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets the CornerRadius of the CheckBox itself.
+        /// The CheckCornerRadius property allows users to control the roundness of the CheckBox corners independently by setting a radius value for each corner.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
+        public static CornerRadius GetCheckCornerRadius(UIElement element)
+        {
+            return (CornerRadius)element.GetValue(CheckCornerRadiusProperty);
+        }
+
+        /// <summary>
+        /// Sets the CornerRadius of the CheckBox itself.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
+        public static void SetCheckCornerRadius(UIElement element, CornerRadius value)
+        {
+            element.SetValue(CheckCornerRadiusProperty, value);
+        }
+
         public static readonly DependencyProperty CheckStrokeThicknessProperty
             = DependencyProperty.RegisterAttached(
                 "CheckStrokeThickness",
