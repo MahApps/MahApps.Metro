@@ -153,6 +153,7 @@
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
                             <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
                         </DataTrigger>
@@ -389,6 +390,7 @@
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
                             <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
                         </DataTrigger>
@@ -677,6 +679,7 @@
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
                             <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
                         </DataTrigger>
@@ -890,6 +893,7 @@
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
                             <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
                         </DataTrigger>
