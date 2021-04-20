@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls
                 throw new ArgumentNullException(nameof(invokeAction));
             }
 
-            dispatcherObject.Dispatcher.BeginInvoke(priority, invokeAction);
+            dispatcherObject.Dispatcher?.BeginInvoke(priority, invokeAction);
         }
 
         public static void BeginInvoke<T>([NotNull] this T dispatcherObject, [NotNull] Action<T> invokeAction, DispatcherPriority priority = DispatcherPriority.Background)
