@@ -27,7 +27,7 @@ namespace MahApps.Metro.Converters
 
         public static BackgroundToForegroundConverter Instance
         {
-            get { return _instance ?? (_instance = new BackgroundToForegroundConverter()); }
+            get { return _instance ??= new BackgroundToForegroundConverter(); }
         }
 
         /// <summary>

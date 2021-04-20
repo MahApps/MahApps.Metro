@@ -26,7 +26,7 @@ namespace MahApps.Metro.Converters
 
         public static IsNullConverter Instance
         {
-            get { return _instance ?? (_instance = new IsNullConverter()); }
+            get { return _instance ??= new IsNullConverter(); }
         }
 
         public object Convert(object? value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

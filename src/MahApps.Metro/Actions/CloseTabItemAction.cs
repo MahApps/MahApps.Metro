@@ -14,7 +14,7 @@ namespace MahApps.Metro.Actions
     {
         private TabItem? associatedTabItem;
 
-        private TabItem? AssociatedTabItem => this.associatedTabItem ?? (this.associatedTabItem = this.AssociatedObject.TryFindParent<TabItem>());
+        private TabItem? AssociatedTabItem => this.associatedTabItem ??= this.AssociatedObject.TryFindParent<TabItem>();
 
         protected override void Invoke(object? parameter)
         {

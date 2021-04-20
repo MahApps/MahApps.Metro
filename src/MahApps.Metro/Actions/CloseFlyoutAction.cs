@@ -11,7 +11,7 @@ namespace MahApps.Metro.Actions
     {
         private Flyout? associatedFlyout;
 
-        private Flyout? AssociatedFlyout => this.associatedFlyout ?? (this.associatedFlyout = this.AssociatedObject.TryFindParent<Flyout>());
+        private Flyout? AssociatedFlyout => this.associatedFlyout ??= this.AssociatedObject.TryFindParent<Flyout>();
 
         protected override void Invoke(object? parameter)
         {

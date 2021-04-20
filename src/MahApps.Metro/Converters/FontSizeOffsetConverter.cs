@@ -26,7 +26,7 @@ namespace MahApps.Metro.Converters
 
         public static FontSizeOffsetConverter Instance
         {
-            get { return _instance ?? (_instance = new FontSizeOffsetConverter()); }
+            get { return _instance ??= new FontSizeOffsetConverter(); }
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

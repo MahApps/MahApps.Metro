@@ -26,7 +26,7 @@ namespace MahApps.Metro.Converters
 
         public static ResizeModeMinMaxButtonVisibilityConverter Instance
         {
-            get { return _instance ?? (_instance = new ResizeModeMinMaxButtonVisibilityConverter()); }
+            get { return _instance ??= new ResizeModeMinMaxButtonVisibilityConverter(); }
         }
 
         public object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)

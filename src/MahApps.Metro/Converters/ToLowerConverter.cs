@@ -24,7 +24,7 @@ namespace MahApps.Metro.Converters
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _instance ?? (_instance = new ToLowerConverter());
+            return _instance ??= new ToLowerConverter();
         }
 
         protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
