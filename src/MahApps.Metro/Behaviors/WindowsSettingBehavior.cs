@@ -46,15 +46,14 @@ namespace MahApps.Metro.Behaviors
             window.Closing += this.AssociatedObject_Closing;
             window.Closed += this.AssociatedObject_Closed;
 
-            // This operation must be thread safe
-            window.BeginInvoke(() =>
+            // This operation must be thread safe. It is possible, that the window is running in a different Thread.
+            Application.Current?.BeginInvoke(app =>
                 {
-                    var application = Application.Current;
-                    if (application != null)
+                    if (app != null)
                     {
-                        application.SessionEnding += this.CurrentApplicationSessionEnding;
+                        app.SessionEnding += this.CurrentApplicationSessionEnding;
                     }
-                }); 
+                });
         }
 
         private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -100,12 +99,11 @@ namespace MahApps.Metro.Behaviors
             window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
 
             // This operation must be thread safe
-            window.BeginInvoke(() =>
+            Application.Current?.BeginInvoke(app =>
                 {
-                    var application = Application.Current;
-                    if (application != null)
+                    if (app != null)
                     {
-                        application.SessionEnding -= this.CurrentApplicationSessionEnding;
+                        app.SessionEnding -= this.CurrentApplicationSessionEnding;
                     }
                 });
         }
