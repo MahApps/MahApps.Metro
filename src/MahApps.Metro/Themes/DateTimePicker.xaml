@@ -441,7 +441,6 @@
 
                         <Trigger Property="IsClockVisible" Value="False">
                             <Setter TargetName="PART_Clock" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_ClockPartSelectorsHolder" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
