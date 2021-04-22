@@ -510,15 +510,15 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets the current shown dialog in async way.
         /// </summary>
         /// <param name="window">The dialog owner.</param>
-        public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window)
+        public static Task<TDialog?> GetCurrentDialogAsync<TDialog>(this MetroWindow window)
             where TDialog : BaseMetroDialog
         {
             window.Dispatcher.VerifyAccess();
-            var t = new TaskCompletionSource<TDialog>();
+            var t = new TaskCompletionSource<TDialog?>();
             window.Dispatcher.Invoke((Action)(() =>
                 {
                     var dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
-                    t.TrySetResult(dialog!);
+                    t.TrySetResult(dialog);
                 }));
             return t.Task;
         }

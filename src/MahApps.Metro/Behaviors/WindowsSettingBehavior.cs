@@ -118,7 +118,7 @@ namespace MahApps.Metro.Behaviors
             }
 
             var settings = window.GetWindowPlacementSettings();
-            if (!window.SaveWindowPosition)
+            if (settings is null || !window.SaveWindowPosition)
             {
                 return;
             }
@@ -164,26 +164,26 @@ namespace MahApps.Metro.Behaviors
         private void SaveWindowState()
         {
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 return;
             }
 
             var settings = window.GetWindowPlacementSettings();
-            if (null == settings || !window.SaveWindowPosition)
+            if (settings is null || !window.SaveWindowPosition)
             {
                 return;
             }
 
-            var hwnd = new WindowInteropHelper(window).Handle;
-            var wp = NativeMethods.GetWindowPlacement(hwnd);
+            var windowHandle = new WindowInteropHelper(window).Handle;
+            var wp = NativeMethods.GetWindowPlacement(windowHandle);
+
             // check for saveable values
             if (wp.showCmd != SW.HIDE && wp.length > 0)
             {
                 if (wp.showCmd == SW.NORMAL)
                 {
-                    RECT rect;
-                    if (UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
+                    if (UnsafeNativeMethods.GetWindowRect(windowHandle, out var rect))
                     {
                         wp.normalPosition = rect;
                     }

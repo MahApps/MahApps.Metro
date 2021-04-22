@@ -67,11 +67,11 @@ namespace MahApps.Metro.Controls
         /// <returns>The first parent item that matches the submitted type parameter. 
         /// If not matching item can be found, 
         /// a null parent is being returned.</returns>
-        public static T? FindChild<T>(this DependencyObject parent, string? childName = null)
+        public static T? FindChild<T>(this DependencyObject? parent, string? childName = null)
             where T : DependencyObject
         {
             // Confirm parent and childName are valid. 
-            if (parent == null)
+            if (parent is null)
             {
                 return null;
             }
@@ -270,35 +270,26 @@ namespace MahApps.Metro.Controls
         {
             bool success = false;
 
-            DependencyObject? curr = node;
+            DependencyObject? currentNode = node;
 
-            while (curr != null)
+            while (currentNode != null)
             {
-                if (curr == reference)
+                if (currentNode == reference)
                 {
                     success = true;
                     break;
                 }
 
-                if (curr is Popup popup)
+                if (currentNode is Popup popup)
                 {
-                    curr = popup;
-
-                    if (popup != null)
-                    {
-                        // Try the poup Parent
-                        curr = popup.Parent;
-
-                        // Otherwise fall back to placement target
-                        if (curr == null)
-                        {
-                            curr = popup.PlacementTarget;
-                        }
-                    }
+                    // Try the Parent of the Popup
+                    // Otherwise fall back to placement target
+                    currentNode = popup.Parent ?? popup.PlacementTarget;
                 }
-                else // Otherwise walk tree
+                else
                 {
-                    curr = curr.GetParentObject();
+                    // Otherwise walk tree
+                    currentNode = currentNode.GetParentObject();
                 }
             }
 

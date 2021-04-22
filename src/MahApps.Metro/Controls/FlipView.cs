@@ -1068,9 +1068,9 @@ namespace MahApps.Metro.Controls
         {
             if (this.IsBannerEnabled)
             {
-                var newValue = value ?? this.BannerText;
-                if (newValue == null 
-                    || this.hideControlStoryboard == null
+                var newValue = value ?? (object?)this.BannerText;
+                if (newValue is null
+                    || this.hideControlStoryboard is null
                     || this.showControlStoryboard is null
                     || this.bannerLabel is null)
                 {

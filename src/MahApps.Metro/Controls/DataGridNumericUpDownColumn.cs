@@ -82,7 +82,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ApplyBinding(BindingBase binding, DependencyObject target, DependencyProperty property)
+        private static void ApplyBinding(BindingBase? binding, DependencyObject target, DependencyProperty property)
         {
             if (binding != null)
             {
@@ -96,8 +96,8 @@ namespace MahApps.Metro.Controls
 
         private void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
-            Style style = this.PickStyle(isEditing, defaultToElementStyle);
-            if (style != null)
+            var style = this.PickStyle(isEditing, defaultToElementStyle);
+            if (style is not null)
             {
                 element.Style = style;
             }
@@ -206,10 +206,10 @@ namespace MahApps.Metro.Controls
             return DependencyPropertyHelper.GetValueSource(d, dp).BaseValueSource == BaseValueSource.Default;
         }
 
-        private Style PickStyle(bool isEditing, bool defaultToElementStyle)
+        private Style? PickStyle(bool isEditing, bool defaultToElementStyle)
         {
-            Style style = isEditing ? this.EditingElementStyle : this.ElementStyle;
-            if (isEditing && defaultToElementStyle && (style == null))
+            var style = isEditing ? this.EditingElementStyle : this.ElementStyle;
+            if (isEditing && defaultToElementStyle && style is null)
             {
                 style = this.ElementStyle;
             }

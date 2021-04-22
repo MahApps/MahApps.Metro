@@ -397,7 +397,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the window placement settings (can be overwritten).
         /// </summary>
-        public virtual IWindowPlacementSettings GetWindowPlacementSettings()
+        public virtual IWindowPlacementSettings? GetWindowPlacementSettings()
         {
             return this.WindowPlacementSettings ?? new WindowApplicationSettings(this);
         }
@@ -1041,7 +1041,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);

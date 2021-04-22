@@ -36,7 +36,7 @@ namespace MahApps.Metro.Tests
             this.NumDown = this.Window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
         }
 
-        public static IEnumerable<DependencyProperty> EnumerateDependencyProperties(DependencyObject obj)
+        public static IEnumerable<DependencyProperty> EnumerateDependencyProperties(DependencyObject? obj)
         {
             if (obj != null)
             {

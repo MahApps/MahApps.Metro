@@ -69,7 +69,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.Invoke(() => metroWindow.HideMetroDialogAsync(dialog, settings));
         }
 
-        public Task<TDialog> GetCurrentDialogAsync<TDialog>(object context)
+        public Task<TDialog?> GetCurrentDialogAsync<TDialog>(object context)
             where TDialog : BaseMetroDialog
         {
             var metroWindow = GetMetroWindow(context);

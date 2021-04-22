@@ -35,9 +35,9 @@ namespace MahApps.Metro.Controls
         /// This is a timing problem in WPF of the binding mechanism itself.
         ///
         /// To avoid this, we can set the Style and Template to null.
-        public static void ClearStyle(this TabItem tabItem)
+        public static void ClearStyle(this TabItem? tabItem)
         {
-            if (null == tabItem)
+            if (tabItem is null)
             {
                 return;
             }

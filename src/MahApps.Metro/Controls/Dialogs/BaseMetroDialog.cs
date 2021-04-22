@@ -275,38 +275,35 @@ namespace MahApps.Metro.Controls.Dialogs
             var theme = DetectTheme(this);
 
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)
-                || theme == null)
+                || theme is null)
             {
                 return;
             }
 
-            if (this.DialogSettings != null)
+            switch (this.DialogSettings.ColorScheme)
             {
-                switch (this.DialogSettings.ColorScheme)
-                {
-                    case MetroDialogColorScheme.Theme:
-                        ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
-                        this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
-                        this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
-                        break;
-                    case MetroDialogColorScheme.Inverted:
-                        theme = ThemeManager.Current.GetInverseTheme(theme);
-                        if (theme == null)
-                        {
-                            throw new InvalidOperationException("The inverse dialog theme only works if the window theme abides the naming convention. " +
-                                                                "See ThemeManager.GetInverseAppTheme for more infos");
-                        }
+                case MetroDialogColorScheme.Theme:
+                    ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
+                    this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
+                    this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
+                    break;
+                case MetroDialogColorScheme.Inverted:
+                    theme = ThemeManager.Current.GetInverseTheme(theme);
+                    if (theme == null)
+                    {
+                        throw new InvalidOperationException("The inverse dialog theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
+                    }
 
-                        ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
-                        this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
-                        this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
-                        break;
-                    case MetroDialogColorScheme.Accented:
-                        ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
-                        this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Highlight"));
-                        this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.IdealForeground"));
-                        break;
-                }
+                    ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
+                    this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
+                    this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
+                    break;
+                case MetroDialogColorScheme.Accented:
+                    ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
+                    this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Highlight"));
+                    this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.IdealForeground"));
+                    break;
             }
 
             if (this.ParentDialogWindow != null)

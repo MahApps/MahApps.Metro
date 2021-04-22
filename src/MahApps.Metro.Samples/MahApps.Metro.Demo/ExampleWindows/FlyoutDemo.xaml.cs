@@ -31,7 +31,7 @@ namespace MetroDemo.ExampleWindows
 
             var mainWindow = (MetroWindow)this;
             var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
-            if (windowPlacementSettings.UpgradeSettings)
+            if (windowPlacementSettings is not null && windowPlacementSettings.UpgradeSettings)
             {
                 windowPlacementSettings.Upgrade();
                 windowPlacementSettings.UpgradeSettings = false;
