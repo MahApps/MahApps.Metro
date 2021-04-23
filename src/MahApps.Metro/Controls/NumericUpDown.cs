@@ -380,12 +380,12 @@ namespace MahApps.Metro.Controls
         [MustUseReturnValue]
         private static object? CoerceValue(DependencyObject d, object? value)
         {
+            var numericUpDown = (NumericUpDown)d;
             if (value is null)
             {
-                return null;
+                return numericUpDown.DefaultValue;
             }
 
-            var numericUpDown = (NumericUpDown)d;
             double val = ((double?)value).Value;
 
             if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
@@ -418,6 +418,57 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ValueProperty, value);
         }
 
+
+        /// <summary>Identifies the <see cref="DefaultValue"/> dependency property.</summary>
+        public static readonly DependencyProperty DefaultValueProperty 
+            = DependencyProperty.Register(nameof(DefaultValue), 
+                                          typeof(double?), 
+                                          typeof(NumericUpDown), 
+                                          new PropertyMetadata(null, OnDefaultValuePropertyChanged, CoerceDefaultValue));
+
+        /// <summary>
+        /// Gets or sets the default value of the NumericUpDown which will be used if the <see cref="Value"/> is <see langword="null"/>.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(null)]
+        public double? DefaultValue
+        {
+            get { return (double?)GetValue(DefaultValueProperty); }
+            set { SetValue(DefaultValueProperty, value); }
+        }
+
+        private static void OnDefaultValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            if (!numericUpDown.Value.HasValue && numericUpDown.DefaultValue.HasValue)
+            {
+                numericUpDown.SetValueTo(numericUpDown.DefaultValue.Value);
+            }
+        }
+
+        private static object CoerceDefaultValue(DependencyObject d, object value)
+        {
+            if (value is double val)
+            {
+                double minimum = ((NumericUpDown)d).Minimum;
+                double maximum = ((NumericUpDown)d).Maximum;
+
+                if (val < minimum)
+                {
+                    return minimum;
+                }
+                else if (val > maximum)
+                {
+                    return maximum;
+                }
+            }
+           
+            return value;
+        }
+
+
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty
             = DependencyProperty.Register(nameof(Minimum),
@@ -431,6 +482,7 @@ namespace MahApps.Metro.Controls
 
             numericUpDown.CoerceValue(MaximumProperty);
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(DefaultValueProperty);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -459,6 +511,7 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(DefaultValueProperty);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -1432,6 +1485,10 @@ namespace MahApps.Metro.Controls
                     convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
+                else if (this.DefaultValue.HasValue)
+                {
+                    this.SetValueTo(DefaultValue.Value);
+                }
             }
 
             this.OnValueChanged(this.Value, this.Value);
@@ -1446,7 +1503,18 @@ namespace MahApps.Metro.Controls
 
             if (string.IsNullOrEmpty(((TextBox)sender).Text))
             {
-                this.Value = null;
+                if (DefaultValue.HasValue)
+                {
+                    this.SetValueTo(DefaultValue.Value);
+                    if (!this.manualChange)
+                    {
+                        this.InternalSetText(DefaultValue.Value);
+                    }
+                }
+                else
+                {
+                    this.SetCurrentValue(ValueProperty, null);
+                }
             }
             else if (this.manualChange || e.UndoAction == UndoAction.Undo || e.UndoAction == UndoAction.Redo)
             {

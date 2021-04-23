@@ -355,6 +355,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
@@ -621,6 +622,7 @@
                                    mah:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text, Mode=OneWay}"
                                    Maximum="10"
                                    Minimum="0"
+                                   DefaultValue="-1"
                                    Value="{Binding NumericUpDownValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="22"
