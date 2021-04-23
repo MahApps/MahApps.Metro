@@ -276,13 +276,22 @@ namespace MetroDemo
             set => this.Set(ref this.currentCulture, value);
         }
 
-        private double? numericUpDownValue = null;
+        private double numericUpDownValue = default;
 
-        public double? NumericUpDownValue
+        public double NumericUpDownValue
         {
             get => this.numericUpDownValue;
             set => this.Set(ref this.numericUpDownValue, value);
         }
+
+        private double? nullableNumericUpDownValue = null;
+
+        public double? NullableNumericUpDownValue
+        {
+            get => this.nullableNumericUpDownValue;
+            set => this.Set(ref this.nullableNumericUpDownValue, value);
+        }
+
 
         public ICommand EndOfScrollReachedCmdWithParameter { get; }
 
