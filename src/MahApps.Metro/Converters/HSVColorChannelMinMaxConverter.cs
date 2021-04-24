@@ -23,18 +23,20 @@ namespace MahApps.Metro.Converters
     /// <summary>
     /// Converts a given Color to a new Color with the specified Channel turned to the Min or Max Value
     /// </summary>
-    [ValueConversion(typeof(HSVColor), typeof(Color))]
+    [ValueConversion(typeof(HSVColor), typeof(Color), ParameterType = typeof(HSVColorChannelType))]
     public sealed class HSVColorChannelMinMaxConverter : IValueConverter
     {
+        /// <summary>
+        /// Gets a static default instance of <see cref="HSVColorChannelMinMaxConverter"/>.
+        /// </summary>
+        public static readonly HSVColorChannelMinMaxConverter Default = new();
+
         // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
         static HSVColorChannelMinMaxConverter()
         {
         }
 
-        /// <summary> Gets the default instance </summary>
-        public static HSVColorChannelMinMaxConverter Default { get; } = new HSVColorChannelMinMaxConverter();
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is HSVColor hsv && parameter is HSVColorChannelType channel)
             {
@@ -56,7 +58,7 @@ namespace MahApps.Metro.Converters
             return Binding.DoNothing;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

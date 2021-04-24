@@ -9,8 +9,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <converters:MetroTabItemCloseButtonWidthConverter x:Key="MetroTabItemCloseButtonWidthConverter" />
-
     <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type mah:MetroTabItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -58,7 +56,7 @@
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Button x:Name="PART_CloseButton"
                                         Grid.Column="1"
-                                        Width="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
+                                        Width="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize, Converter={converters:MathMultiplyConverter}, ConverterParameter=0.5}"
                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Mode=OneWay}"
                                         Margin="{TemplateBinding CloseButtonMargin}"
                                         VerticalAlignment="Top"

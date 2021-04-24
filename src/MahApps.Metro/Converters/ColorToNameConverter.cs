@@ -26,7 +26,7 @@ namespace MahApps.Metro.Converters
         /// <param name="parameter">Optional: A <see cref="Dictionary{TKey, TValue}"/></param>
         /// <param name="culture"></param>
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
-        public override object? Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return ColorHelper.GetColorName(value as Color?, parameter as Dictionary<Color, string>);
         }
@@ -39,7 +39,7 @@ namespace MahApps.Metro.Converters
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
-        public override object? Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             var color = values?.OfType<Color>().FirstOrDefault();
 
@@ -56,7 +56,7 @@ namespace MahApps.Metro.Converters
         /// <param name="parameter">Optional: A <see cref="Dictionary{TKey, TValue}"/></param>
         /// <param name="culture"></param>
         /// <returns><see cref="Color"/></returns>
-        public override object? ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is string text)
             {
@@ -78,7 +78,7 @@ namespace MahApps.Metro.Converters
         /// <param name="culture"></param>
         /// <returns></returns>
         /// <throws><see cref="NotSupportedException"/></throws>
-        public override object[] ConvertBack(object? value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public override object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

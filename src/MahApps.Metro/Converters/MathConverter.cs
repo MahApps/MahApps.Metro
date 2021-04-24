@@ -35,29 +35,29 @@ namespace MahApps.Metro.Converters
     {
         public MathOperation Operation { get; set; }
 
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return DoConvert(value, parameter, this.Operation);
         }
 
-        public object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             return values is null
                 ? Binding.DoNothing
                 : DoConvert(values.ElementAtOrDefault(0), values.ElementAtOrDefault(1), this.Operation);
         }
 
-        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }
 
-        public object[] ConvertBack(object? value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return targetTypes.Select(t => DependencyProperty.UnsetValue).ToArray();
         }
 
-        private static object DoConvert(object? firstValue, object? secondValue, MathOperation operation)
+        private static object? DoConvert(object? firstValue, object? secondValue, MathOperation operation)
         {
             if (firstValue is null
                 || secondValue is null
@@ -111,22 +111,22 @@ namespace MahApps.Metro.Converters
     {
         private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Add };
 
-        public override object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
-        public override object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
-        public override object[] ConvertBack(object? value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public override object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
-        public override object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
@@ -141,22 +141,22 @@ namespace MahApps.Metro.Converters
     {
         private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Subtract };
 
-        public override object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
-        public override object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
-        public override object[] ConvertBack(object? value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public override object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
-        public override object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
@@ -171,22 +171,22 @@ namespace MahApps.Metro.Converters
     {
         private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Multiply };
 
-        public override object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
-        public override object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
-        public override object[] ConvertBack(object? value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public override object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
-        public override object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }
@@ -201,22 +201,22 @@ namespace MahApps.Metro.Converters
     {
         private static readonly MathConverter MathConverter = new MathConverter { Operation = MathOperation.Divide };
 
-        public override object Convert(object[]? values, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(values, targetType, parameter, culture);
         }
 
-        public override object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.Convert(value, targetType, parameter, culture);
         }
 
-        public override object[] ConvertBack(object? value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public override object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetTypes, parameter, culture);
         }
 
-        public override object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        public override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return MathConverter.ConvertBack(value, targetType, parameter, culture);
         }

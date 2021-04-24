@@ -17,7 +17,7 @@ namespace MahApps.Metro.Converters
     {
         public ThicknessSideType IgnoreThicknessSide { get; set; } = ThicknessSideType.None;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is Thickness thickness)
             {
@@ -29,27 +29,21 @@ namespace MahApps.Metro.Converters
                     ignoreThickness = sideType;
                 }
 
-                switch (ignoreThickness)
+                return ignoreThickness switch
                 {
-                    case ThicknessSideType.Left:
-                        return new Thickness(0, thickness.Top, thickness.Right, thickness.Bottom);
-                    case ThicknessSideType.Top:
-                        return new Thickness(thickness.Left, 0, thickness.Right, thickness.Bottom);
-                    case ThicknessSideType.Right:
-                        return new Thickness(thickness.Left, thickness.Top, 0, thickness.Bottom);
-                    case ThicknessSideType.Bottom:
-                        return new Thickness(thickness.Left, thickness.Top, thickness.Right, 0);
-                    default:
-                        return thickness;
-                }
+                    ThicknessSideType.Left => new Thickness(0, thickness.Top, thickness.Right, thickness.Bottom),
+                    ThicknessSideType.Top => new Thickness(thickness.Left, 0, thickness.Right, thickness.Bottom),
+                    ThicknessSideType.Right => new Thickness(thickness.Left, thickness.Top, 0, thickness.Bottom),
+                    ThicknessSideType.Bottom => new Thickness(thickness.Left, thickness.Top, thickness.Right, 0),
+                    _ => thickness
+                };
             }
 
             return default(Thickness);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            // for now no back converting
             return DependencyProperty.UnsetValue;
         }
     }
