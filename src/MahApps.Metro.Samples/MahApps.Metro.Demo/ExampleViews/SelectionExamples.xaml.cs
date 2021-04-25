@@ -14,7 +14,7 @@ namespace MetroDemo.ExampleViews
     {
         public SelectionExamples()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.DataContextChanged += (sender, args) =>
                 {

@@ -254,8 +254,8 @@ namespace MetroDemo
 
         public ObservableCollection<Artist>? SelectedArtists
         {
-            get => _selectedArtists;
-            set => Set(ref _selectedArtists, value);
+            get => this._selectedArtists;
+            set => this.Set(ref this._selectedArtists, value);
         }
 
         public List<AccentColorMenuData> AccentColors { get; set; }
@@ -347,27 +347,27 @@ namespace MetroDemo
         {
             get
             {
-                if (columnName == nameof(IntegerGreater10Property) && this.IntegerGreater10Property < 10)
+                if (columnName == nameof(this.IntegerGreater10Property) && this.IntegerGreater10Property < 10)
                 {
                     return "Number is not greater than 10!";
                 }
 
-                if (columnName == nameof(DatePickerDate) && this.DatePickerDate == null)
+                if (columnName == nameof(this.DatePickerDate) && this.DatePickerDate == null)
                 {
                     return "No date given!";
                 }
 
-                if (columnName == nameof(HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
+                if (columnName == nameof(this.HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
                 {
                     return "SHIFT-D is not allowed";
                 }
 
-                if (columnName == nameof(TimePickerDate) && this.TimePickerDate == null)
+                if (columnName == nameof(this.TimePickerDate) && this.TimePickerDate == null)
                 {
                     return "No time given!";
                 }
 
-                if (columnName == nameof(IsToggleSwitchVisible) && !IsToggleSwitchVisible)
+                if (columnName == nameof(this.IsToggleSwitchVisible) && !this.IsToggleSwitchVisible)
                 {
                     return "There is something hidden... \nActivate me to show it up.";
                 }
@@ -528,8 +528,8 @@ namespace MetroDemo
         {
             var multiFrameImageMode = (MultiFrameImageMode)obj;
             ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
-            this.OnPropertyChanged(nameof(IsScaleDownLargerFrame));
-            this.OnPropertyChanged(nameof(IsNoScaleSmallerFrame));
+            this.OnPropertyChanged(nameof(this.IsScaleDownLargerFrame));
+            this.OnPropertyChanged(nameof(this.IsNoScaleSmallerFrame));
         }
 
         public bool IsScaleDownLargerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame;

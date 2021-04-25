@@ -8,7 +8,7 @@ namespace MetroDemo.ExampleWindows
     {
         public InteropDemo()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

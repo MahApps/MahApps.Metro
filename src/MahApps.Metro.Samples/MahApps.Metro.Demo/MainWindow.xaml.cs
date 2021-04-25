@@ -22,14 +22,14 @@ namespace MetroDemo
 
         public MainWindow()
         {
-            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
-            DataContext = _viewModel;
+            this._viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
+            this.DataContext = this._viewModel;
 
-            InitializeComponent();
+            this.InitializeComponent();
 
-            flyoutDemo = new FlyoutDemo();
-            flyoutDemo.ApplyTemplate();
-            flyoutDemo.Closed += (o, e) => flyoutDemo = null;
+            this.flyoutDemo = new FlyoutDemo();
+            this.flyoutDemo.ApplyTemplate();
+            this.flyoutDemo.Closed += (o, e) => this.flyoutDemo = null;
         }
 
         public static readonly DependencyProperty ToggleFullScreenProperty =
@@ -62,8 +62,8 @@ namespace MetroDemo
 
         public bool ToggleFullScreen
         {
-            get { return (bool)GetValue(ToggleFullScreenProperty); }
-            set { SetValue(ToggleFullScreenProperty, value); }
+            get { return (bool)this.GetValue(ToggleFullScreenProperty); }
+            set { this.SetValue(ToggleFullScreenProperty, value); }
         }
 
         public static readonly DependencyProperty UseAccentForDialogsProperty =
@@ -84,13 +84,13 @@ namespace MetroDemo
 
         public bool UseAccentForDialogs
         {
-            get { return (bool)GetValue(UseAccentForDialogsProperty); }
-            set { SetValue(UseAccentForDialogsProperty, value); }
+            get { return (bool)this.GetValue(UseAccentForDialogsProperty); }
+            set { this.SetValue(UseAccentForDialogsProperty, value); }
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro");
+            Process.Start("https://github.com/MahApps/MahApps.Metro");
         }
 
         private void LaunchSizeToContentDemo(object sender, RoutedEventArgs e)
@@ -105,13 +105,13 @@ namespace MetroDemo
 
         private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
         {
-            if (flyoutDemo == null)
+            if (this.flyoutDemo == null)
             {
-                flyoutDemo = new FlyoutDemo();
-                flyoutDemo.Closed += (o, args) => flyoutDemo = null;
+                this.flyoutDemo = new FlyoutDemo();
+                this.flyoutDemo.Closed += (o, args) => this.flyoutDemo = null;
             }
 
-            flyoutDemo.Launch();
+            this.flyoutDemo.Launch();
         }
 
         private void LaunchIcons(object sender, RoutedEventArgs e)
@@ -129,13 +129,13 @@ namespace MetroDemo
 
         private void LauchCleanDemo(object sender, RoutedEventArgs e)
         {
-            if (cleanWindowDemo == null)
+            if (this.cleanWindowDemo == null)
             {
-                cleanWindowDemo = new CleanWindowDemo();
-                cleanWindowDemo.Closed += (o, args) => cleanWindowDemo = null;
+                this.cleanWindowDemo = new CleanWindowDemo();
+                this.cleanWindowDemo.Closed += (o, args) => this.cleanWindowDemo = null;
             }
 
-            if (cleanWindowDemo.IsVisible)
+            if (this.cleanWindowDemo.IsVisible)
             {
                 this.cleanWindowDemo.Hide();
             }
@@ -164,7 +164,7 @@ namespace MetroDemo
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",
                                  FirstAuxiliaryButtonText = "Cancel",
-                                 ColorScheme = MetroDialogOptions!.ColorScheme,
+                                 ColorScheme = this.MetroDialogOptions!.ColorScheme,
                                  DialogButtonFontSize = 20D
                              };
 
@@ -188,7 +188,7 @@ namespace MetroDemo
                                  NegativeButtonText = "Go away!",
                                  FirstAuxiliaryButtonText = "Cancel",
                                  MaximumBodyHeight = 100,
-                                 ColorScheme = MetroDialogOptions!.ColorScheme
+                                 ColorScheme = this.MetroDialogOptions!.ColorScheme
                              };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"),
@@ -405,19 +405,19 @@ namespace MetroDemo
                 return;
             }
 
-            if (_viewModel.QuitConfirmationEnabled
-                && _shutdown == false)
+            if (this._viewModel.QuitConfirmationEnabled
+                && this._shutdown == false)
             {
                 e.Cancel = true;
 
                 // We have to delay the execution through BeginInvoke to prevent potential re-entrancy
-                Dispatcher.BeginInvoke(new Action(async () => await this.ConfirmShutdown()));
+                this.Dispatcher.BeginInvoke(new Action(async () => await this.ConfirmShutdown()));
             }
             else
             {
-                flyoutDemo?.Dispose();
+                this.flyoutDemo?.Dispose();
 
-                _viewModel.Dispose();
+                this._viewModel.Dispose();
             }
         }
 
@@ -435,9 +435,9 @@ namespace MetroDemo
                                                      "Sure you want to quit application?",
                                                      MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
-            _shutdown = result == MessageDialogResult.Affirmative;
+            this._shutdown = result == MessageDialogResult.Affirmative;
 
-            if (_shutdown)
+            if (this._shutdown)
             {
                 Application.Current.Shutdown();
             }
@@ -447,21 +447,21 @@ namespace MetroDemo
 
         private MetroWindow GetTestWindow()
         {
-            if (testWindow != null)
+            if (this.testWindow != null)
             {
-                testWindow.Close();
+                this.testWindow.Close();
             }
 
-            testWindow = new MetroWindow
-                         {
-                             Owner = this,
-                             WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                             Title = "Another Test...",
-                             Width = 500,
-                             Height = 300
-                         };
-            testWindow.Closed += (o, args) => testWindow = null;
-            return testWindow;
+            this.testWindow = new MetroWindow
+                              {
+                                  Owner = this,
+                                  WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                                  Title = "Another Test...",
+                                  Width = 500,
+                                  Height = 300
+                              };
+            this.testWindow.Closed += (o, args) => this.testWindow = null;
+            return this.testWindow;
         }
 
         private void MenuWindowWithoutBorderOnClick(object sender, RoutedEventArgs e)
@@ -485,7 +485,7 @@ namespace MetroDemo
             w.Content = new Button { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
-            w.SetResourceReference(MetroWindow.GlowBrushProperty, "MahApps.Brushes.Accent");
+            w.SetResourceReference(GlowBrushProperty, "MahApps.Brushes.Accent");
             w.Show();
         }
 
@@ -531,7 +531,7 @@ namespace MetroDemo
                                  AffirmativeButtonText = "Hi",
                                  NegativeButtonText = "Go away!",
                                  FirstAuxiliaryButtonText = "Cancel",
-                                 ColorScheme = MetroDialogOptions!.ColorScheme
+                                 ColorScheme = this.MetroDialogOptions!.ColorScheme
                              };
 
             MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",

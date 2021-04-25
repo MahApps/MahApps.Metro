@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public TilesExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

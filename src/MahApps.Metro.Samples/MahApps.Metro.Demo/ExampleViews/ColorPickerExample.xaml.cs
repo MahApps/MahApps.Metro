@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public ColorPickerExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
