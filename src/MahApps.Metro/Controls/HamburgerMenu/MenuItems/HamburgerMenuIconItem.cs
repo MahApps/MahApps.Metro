@@ -21,9 +21,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? Icon
         {
-            get { return GetValue(IconProperty); }
+            get => GetValue(IconProperty);
 
-            set { SetValue(IconProperty, value); }
+            set => SetValue(IconProperty, value);
         }
 
         protected override Freezable CreateInstanceCore()

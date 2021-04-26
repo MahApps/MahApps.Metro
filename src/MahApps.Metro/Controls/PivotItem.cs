@@ -13,8 +13,8 @@ namespace MahApps.Metro.Controls
 
         public string? Header
         {
-            get { return (string?)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get => (string?)GetValue(HeaderProperty);
+            set => SetValue(HeaderProperty, value);
         }
 
         static PivotItem()

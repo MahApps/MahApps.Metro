@@ -19,8 +19,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? Message
         {
-            get { return (string?)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
+            get => (string?)this.GetValue(MessageProperty);
+            set => this.SetValue(MessageProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Input"/> dependency property.</summary>
@@ -28,8 +28,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? Input
         {
-            get { return (string?)this.GetValue(InputProperty); }
-            set { this.SetValue(InputProperty, value); }
+            get => (string?)this.GetValue(InputProperty);
+            set => this.SetValue(InputProperty, value);
         }
 
         /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
@@ -37,8 +37,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string AffirmativeButtonText
         {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+            get => (string)this.GetValue(AffirmativeButtonTextProperty);
+            set => this.SetValue(AffirmativeButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
@@ -46,8 +46,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string NegativeButtonText
         {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
+            get => (string)this.GetValue(NegativeButtonTextProperty);
+            set => this.SetValue(NegativeButtonTextProperty, value);
         }
 
         internal InputDialog()

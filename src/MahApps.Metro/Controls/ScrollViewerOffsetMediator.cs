@@ -14,14 +14,14 @@ namespace MahApps.Metro.Controls
 
         public ScrollViewer? ScrollViewer
         {
-            get { return (ScrollViewer?)GetValue(ScrollViewerProperty); }
-            set { SetValue(ScrollViewerProperty, value); }
+            get => (ScrollViewer?)GetValue(ScrollViewerProperty);
+            set => SetValue(ScrollViewerProperty, value);
         }
 
         public double HorizontalOffset
         {
-            get { return (double)GetValue(HorizontalOffsetProperty); }
-            set { SetValue(HorizontalOffsetProperty, value); }
+            get => (double)GetValue(HorizontalOffsetProperty);
+            set => SetValue(HorizontalOffsetProperty, value);
         }
 
         private static void OnScrollViewerChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)

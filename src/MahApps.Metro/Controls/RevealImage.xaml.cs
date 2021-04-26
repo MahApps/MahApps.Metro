@@ -18,14 +18,14 @@ namespace MahApps.Metro.Controls
 
         public string Text
         {
-            get { return (string)this.GetValue(TextProperty); }
-            set { this.SetValue(TextProperty, value); }
+            get => (string)this.GetValue(TextProperty);
+            set => this.SetValue(TextProperty, value);
         }
 
         public ImageSource? Image
         {
-            get { return (ImageSource?)this.GetValue(ImageProperty); }
-            set { this.SetValue(ImageProperty, value); }
+            get => (ImageSource?)this.GetValue(ImageProperty);
+            set => this.SetValue(ImageProperty, value);
         }
 
         public RevealImage()

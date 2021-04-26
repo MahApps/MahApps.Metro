@@ -25,8 +25,8 @@ namespace MahApps.Metro.Controls
         /// <returns>The hexadecimal character code for the icon glyph.</returns>
         public string Glyph
         {
-            get { return (string)this.GetValue(GlyphProperty); }
-            set { this.SetValue(GlyphProperty, value); }
+            get => (string)this.GetValue(GlyphProperty);
+            set => this.SetValue(GlyphProperty, value);
         }
 
         static FontIcon()

@@ -86,8 +86,8 @@ namespace MahApps.Metro.Controls
 
         public ObservableCollection<VisualState>? CustomVisualStates
         {
-            get { return (ObservableCollection<VisualState>?)this.GetValue(CustomVisualStatesProperty); }
-            set { this.SetValue(CustomVisualStatesProperty, value); }
+            get => (ObservableCollection<VisualState>?)this.GetValue(CustomVisualStatesProperty);
+            set => this.SetValue(CustomVisualStatesProperty, value);
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string CustomVisualStatesName
         {
-            get { return (string)this.GetValue(CustomVisualStatesNameProperty); }
-            set { this.SetValue(CustomVisualStatesNameProperty, value); }
+            get => (string)this.GetValue(CustomVisualStatesNameProperty);
+            set => this.SetValue(CustomVisualStatesNameProperty, value);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsTransitioning
         {
-            get { return (bool)this.GetValue(IsTransitioningProperty); }
+            get => (bool)this.GetValue(IsTransitioningProperty);
             private set
             {
                 this.allowIsTransitioningPropertyWrite = true;
@@ -115,14 +115,14 @@ namespace MahApps.Metro.Controls
 
         public TransitionType Transition
         {
-            get { return (TransitionType)this.GetValue(TransitionProperty); }
-            set { this.SetValue(TransitionProperty, value); }
+            get => (TransitionType)this.GetValue(TransitionProperty);
+            set => this.SetValue(TransitionProperty, value);
         }
 
         public bool RestartTransitionOnContentChange
         {
-            get { return (bool)this.GetValue(RestartTransitionOnContentChangeProperty); }
-            set { this.SetValue(RestartTransitionOnContentChangeProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(RestartTransitionOnContentChangeProperty);
+            set => this.SetValue(RestartTransitionOnContentChangeProperty, BooleanBoxes.Box(value));
         }
 
         private static void OnIsTransitioningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -138,7 +138,7 @@ namespace MahApps.Metro.Controls
 
         internal Storyboard? CurrentTransition
         {
-            get { return this.currentTransition; }
+            get => this.currentTransition;
             set
             {
                 // decouple event

@@ -30,8 +30,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool CloseButtonEnabled
         {
-            get { return (bool)GetValue(CloseButtonEnabledProperty); }
-            set { SetValue(CloseButtonEnabledProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(CloseButtonEnabledProperty);
+            set => SetValue(CloseButtonEnabledProperty, BooleanBoxes.Box(value));
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
@@ -44,8 +44,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand? CloseTabCommand
         {
-            get { return (ICommand?)GetValue(CloseTabCommandProperty); }
-            set { SetValue(CloseTabCommandProperty, value); }
+            get => (ICommand?)GetValue(CloseTabCommandProperty);
+            set => SetValue(CloseTabCommandProperty, value);
         }
 
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
@@ -59,8 +59,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? CloseTabCommandParameter
         {
-            get { return GetValue(CloseTabCommandParameterProperty); }
-            set { SetValue(CloseTabCommandParameterProperty, value); }
+            get => GetValue(CloseTabCommandParameterProperty);
+            set => SetValue(CloseTabCommandParameterProperty, value);
         }
 
         public static readonly DependencyProperty CloseButtonMarginProperty =
@@ -74,8 +74,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Thickness CloseButtonMargin
         {
-            get { return (Thickness)GetValue(CloseButtonMarginProperty); }
-            set { SetValue(CloseButtonMarginProperty, value); }
+            get => (Thickness)GetValue(CloseButtonMarginProperty);
+            set => SetValue(CloseButtonMarginProperty, value);
         }
     }
 }

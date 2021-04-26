@@ -33,8 +33,8 @@ namespace MahApps.Metro.Controls
 
         public bool KeepVisualTreeInMemoryWhenChangingTabs
         {
-            get { return (bool)GetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty); }
-            set { SetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty);
+            set => SetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty, BooleanBoxes.Box(value));
         }
     }
 
@@ -50,8 +50,8 @@ namespace MahApps.Metro.Controls
 
         public Thickness TabStripMargin
         {
-            get { return (Thickness)GetValue(TabStripMarginProperty); }
-            set { SetValue(TabStripMarginProperty, value); }
+            get => (Thickness)GetValue(TabStripMarginProperty);
+            set => SetValue(TabStripMarginProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for TabStripMargin.  This enables animation, styling, binding, etc...
@@ -83,8 +83,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand? CloseTabCommand
         {
-            get { return (ICommand?)GetValue(CloseTabCommandProperty); }
-            set { SetValue(CloseTabCommandProperty, value); }
+            get => (ICommand?)GetValue(CloseTabCommandProperty);
+            set => SetValue(CloseTabCommandProperty, value);
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =

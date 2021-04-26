@@ -94,8 +94,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public double EllipseDiameter
         {
-            get { return (double)this.GetValue(EllipseDiameterProperty); }
-            set { this.SetValue(EllipseDiameterProperty, value); }
+            get => (double)this.GetValue(EllipseDiameterProperty);
+            set => this.SetValue(EllipseDiameterProperty, value);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public double EllipseOffset
         {
-            get { return (double)this.GetValue(EllipseOffsetProperty); }
-            set { this.SetValue(EllipseOffsetProperty, value); }
+            get => (double)this.GetValue(EllipseOffsetProperty);
+            set => this.SetValue(EllipseOffsetProperty, value);
         }
 
         private void SizeChangedHandler(object? sender, SizeChangedEventArgs? e)

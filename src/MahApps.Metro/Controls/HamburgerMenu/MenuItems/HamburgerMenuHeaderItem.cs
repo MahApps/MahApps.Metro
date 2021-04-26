@@ -18,9 +18,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string? Label
         {
-            get { return (string?)GetValue(LabelProperty); }
+            get => (string?)GetValue(LabelProperty);
 
-            set { SetValue(LabelProperty, value); }
+            set => SetValue(LabelProperty, value);
         }
 
         protected override Freezable CreateInstanceCore()

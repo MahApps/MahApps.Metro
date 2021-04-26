@@ -24,8 +24,8 @@ namespace MahApps.Metro.Controls
 
         public MultiFrameImageMode MultiFrameImageMode
         {
-            get { return (MultiFrameImageMode)GetValue(MultiFrameImageModeProperty); }
-            set { SetValue(MultiFrameImageModeProperty, value); }
+            get => (MultiFrameImageMode)GetValue(MultiFrameImageModeProperty);
+            set => SetValue(MultiFrameImageModeProperty, value);
         }
 
         private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

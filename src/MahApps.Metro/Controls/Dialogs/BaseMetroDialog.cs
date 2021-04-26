@@ -38,8 +38,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public GridLength DialogContentMargin
         {
-            get { return (GridLength)this.GetValue(DialogContentMarginProperty); }
-            set { this.SetValue(DialogContentMarginProperty, value); }
+            get => (GridLength)this.GetValue(DialogContentMarginProperty);
+            set => this.SetValue(DialogContentMarginProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DialogContentWidth"/> dependency property.</summary>
@@ -50,8 +50,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public GridLength DialogContentWidth
         {
-            get { return (GridLength)this.GetValue(DialogContentWidthProperty); }
-            set { this.SetValue(DialogContentWidthProperty, value); }
+            get => (GridLength)this.GetValue(DialogContentWidthProperty);
+            set => this.SetValue(DialogContentWidthProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
@@ -62,8 +62,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public string? Title
         {
-            get { return (string?)this.GetValue(TitleProperty); }
-            set { this.SetValue(TitleProperty, value); }
+            get => (string?)this.GetValue(TitleProperty);
+            set => this.SetValue(TitleProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DialogTop"/> dependency property.</summary>
@@ -74,8 +74,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public object? DialogTop
         {
-            get { return this.GetValue(DialogTopProperty); }
-            set { this.SetValue(DialogTopProperty, value); }
+            get => this.GetValue(DialogTopProperty);
+            set => this.SetValue(DialogTopProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DialogBottom"/> dependency property.</summary>
@@ -86,8 +86,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public object? DialogBottom
         {
-            get { return this.GetValue(DialogBottomProperty); }
-            set { this.SetValue(DialogBottomProperty, value); }
+            get => this.GetValue(DialogBottomProperty);
+            set => this.SetValue(DialogBottomProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DialogTitleFontSize"/> dependency property.</summary>
@@ -98,8 +98,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double DialogTitleFontSize
         {
-            get { return (double)this.GetValue(DialogTitleFontSizeProperty); }
-            set { this.SetValue(DialogTitleFontSizeProperty, value); }
+            get => (double)this.GetValue(DialogTitleFontSizeProperty);
+            set => this.SetValue(DialogTitleFontSizeProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DialogMessageFontSize"/> dependency property.</summary>
@@ -110,8 +110,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double DialogMessageFontSize
         {
-            get { return (double)this.GetValue(DialogMessageFontSizeProperty); }
-            set { this.SetValue(DialogMessageFontSizeProperty, value); }
+            get => (double)this.GetValue(DialogMessageFontSizeProperty);
+            set => this.SetValue(DialogMessageFontSizeProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DialogButtonFontSize"/> dependency property.</summary>
@@ -122,8 +122,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double DialogButtonFontSize
         {
-            get { return (double)this.GetValue(DialogButtonFontSizeProperty); }
-            set { this.SetValue(DialogButtonFontSizeProperty, value); }
+            get => (double)this.GetValue(DialogButtonFontSizeProperty);
+            set => this.SetValue(DialogButtonFontSizeProperty, value);
         }
 
         public MetroDialogSettings DialogSettings { get; private set; } = null!;

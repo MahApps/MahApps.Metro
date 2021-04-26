@@ -25,8 +25,8 @@ namespace MahApps.Metro.Controls
 
         public HotKey? HotKey
         {
-            get { return (HotKey?)GetValue(HotKeyProperty); }
-            set { SetValue(HotKeyProperty, value); }
+            get => (HotKey?)GetValue(HotKeyProperty);
+            set => SetValue(HotKeyProperty, value);
         }
 
         private static void OnHotKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -40,8 +40,8 @@ namespace MahApps.Metro.Controls
 
         public bool AreModifierKeysRequired
         {
-            get { return (bool)GetValue(AreModifierKeysRequiredProperty); }
-            set { SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(AreModifierKeysRequiredProperty);
+            set => SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value));
         }
 
         private static readonly DependencyPropertyKey TextPropertyKey = DependencyProperty.RegisterReadOnly(
@@ -51,8 +51,8 @@ namespace MahApps.Metro.Controls
 
         public string? Text
         {
-            get { return (string?)GetValue(TextProperty); }
-            protected set { SetValue(TextPropertyKey, value); }
+            get => (string?)GetValue(TextProperty);
+            protected set => SetValue(TextPropertyKey, value);
         }
 
         private TextBox? _textBox;
@@ -215,15 +215,9 @@ namespace MahApps.Metro.Controls
             _modifierKeys = modifierKeys;
         }
 
-        public Key Key
-        {
-            get { return _key; }
-        }
+        public Key Key => _key;
 
-        public ModifierKeys ModifierKeys
-        {
-            get { return _modifierKeys; }
-        }
+        public ModifierKeys ModifierKeys => _modifierKeys;
 
         public override bool Equals(object? obj)
         {

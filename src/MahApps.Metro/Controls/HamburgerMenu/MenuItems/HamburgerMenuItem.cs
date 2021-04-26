@@ -54,9 +54,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string? Label
         {
-            get { return (string?)GetValue(LabelProperty); }
+            get => (string?)GetValue(LabelProperty);
 
-            set { SetValue(LabelProperty, value); }
+            set => SetValue(LabelProperty, value);
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Type? TargetPageType
         {
-            get { return (Type?)GetValue(TargetPageTypeProperty); }
+            get => (Type?)GetValue(TargetPageTypeProperty);
 
-            set { SetValue(TargetPageTypeProperty, value); }
+            set => SetValue(TargetPageTypeProperty, value);
         }
 
         /// <summary>
@@ -74,9 +74,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand? Command
         {
-            get { return (ICommand?)GetValue(CommandProperty); }
+            get => (ICommand?)GetValue(CommandProperty);
 
-            set { SetValue(CommandProperty, value); }
+            set => SetValue(CommandProperty, value);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? CommandParameter
         {
-            get { return GetValue(CommandParameterProperty); }
+            get => GetValue(CommandParameterProperty);
 
-            set { SetValue(CommandParameterProperty, value); }
+            set => SetValue(CommandParameterProperty, value);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace MahApps.Metro.Controls
         /// </returns>
         public IInputElement? CommandTarget
         {
-            get { return (IInputElement?)this.GetValue(CommandTargetProperty); }
+            get => (IInputElement?)this.GetValue(CommandTargetProperty);
 
-            set { this.SetValue(CommandTargetProperty, value); }
+            set => this.SetValue(CommandTargetProperty, value);
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace MahApps.Metro.Controls
         /// </returns>
         public bool IsEnabled
         {
-            get { return (bool)this.GetValue(IsEnabledProperty); }
+            get => (bool)this.GetValue(IsEnabledProperty);
 
-            set { this.SetValue(IsEnabledProperty, BooleanBoxes.Box(value)); }
+            set => this.SetValue(IsEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? ToolTip
         {
-            get { return GetValue(ToolTipProperty); }
+            get => GetValue(ToolTipProperty);
 
-            set { SetValue(ToolTipProperty, value); }
+            set => SetValue(ToolTipProperty, value);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace MahApps.Metro.Controls
 
         private bool CanExecute
         {
-            get { return this.canExecute; }
+            get => this.canExecute;
             set
             {
                 if (value == this.canExecute)

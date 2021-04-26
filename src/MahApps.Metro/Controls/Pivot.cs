@@ -26,26 +26,26 @@ namespace MahApps.Metro.Controls
 
         public DataTemplate? HeaderTemplate
         {
-            get { return (DataTemplate?)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
+            get => (DataTemplate?)GetValue(HeaderTemplateProperty);
+            set => SetValue(HeaderTemplateProperty, value);
         }
 
         public string? Header
         {
-            get { return (string?)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get => (string?)GetValue(HeaderProperty);
+            set => SetValue(HeaderProperty, value);
         }
 
         public int SelectedIndex
         {
-            get { return (int)GetValue(SelectedIndexProperty); }
-            set { SetValue(SelectedIndexProperty, value); }
+            get => (int)GetValue(SelectedIndexProperty);
+            set => SetValue(SelectedIndexProperty, value);
         }
 
         public event RoutedEventHandler SelectionChanged
         {
-            add { AddHandler(SelectionChangedEvent, value); }
-            remove { RemoveHandler(SelectionChangedEvent, value); }
+            add => AddHandler(SelectionChangedEvent, value);
+            remove => RemoveHandler(SelectionChangedEvent, value);
         }
 
         public void GoToItem(PivotItem? item)

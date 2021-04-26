@@ -21,9 +21,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string? Glyph
         {
-            get { return (string?)GetValue(GlyphProperty); }
+            get => (string?)GetValue(GlyphProperty);
 
-            set { SetValue(GlyphProperty, value); }
+            set => SetValue(GlyphProperty, value);
         }
 
         protected override Freezable CreateInstanceCore()

@@ -152,62 +152,47 @@ namespace MahApps.Metro.Controls
 
         public object? OverlayContent
         {
-            get { return GetValue(OverlayContentProperty); }
-            set { SetValue(OverlayContentProperty, value); }
+            get => GetValue(OverlayContentProperty);
+            set => SetValue(OverlayContentProperty, value);
         }
 
         public static readonly DependencyProperty PageContentProperty = DependencyProperty.Register(nameof(PageContent), typeof(object), typeof(MetroNavigationWindow));
 
         public object? PageContent
         {
-            get { return GetValue(PageContentProperty); }
-            private set { SetValue(PageContentProperty, value); }
+            get => GetValue(PageContentProperty);
+            private set => SetValue(PageContentProperty, value);
         }
 
         /// <summary>
         /// Gets an IEnumerable that you use to enumerate the entries in back navigation history for a NavigationWindow.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.ForwardStack"/>
-        public IEnumerable ForwardStack
-        {
-            get { return PART_Frame.ForwardStack; }
-        }
+        public IEnumerable ForwardStack => PART_Frame.ForwardStack;
 
         /// <summary>
         /// Gets an IEnumerable that you use to enumerate the entries in back navigation history for a NavigationWindow.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.BackStack"/>
-        public IEnumerable BackStack
-        {
-            get { return PART_Frame.BackStack; }
-        }
+        public IEnumerable BackStack => PART_Frame.BackStack;
 
         /// <summary>
         /// Gets the NavigationService that is used by this MetroNavigationWindow to provide navigation services to its content.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.NavigationService"/>
-        public NavigationService NavigationService
-        {
-            get { return PART_Frame.NavigationService; }
-        }
+        public NavigationService NavigationService => PART_Frame.NavigationService;
 
         /// <summary>
         /// Gets a value that indicates whether there is at least one entry in back navigation history.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.CanGoBack"/>
-        public bool CanGoBack
-        {
-            get { return PART_Frame.CanGoBack; }
-        }
+        public bool CanGoBack => PART_Frame.CanGoBack;
 
         /// <summary>
         /// Gets a value that indicates whether there is at least one entry in forward navigation history.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.CanGoForward"/>
-        public bool CanGoForward
-        {
-            get { return PART_Frame.CanGoForward; }
-        }
+        public bool CanGoForward => PART_Frame.CanGoForward;
 
         /// <summary>
         /// Gets or sets the base uniform resource identifier (URI) of the current context.
@@ -221,8 +206,8 @@ namespace MahApps.Metro.Controls
         /// <see cref="System.Windows.Navigation.NavigationWindow.Source"/>
         public Uri Source
         {
-            get { return PART_Frame.Source; }
-            set { PART_Frame.Source = value; }
+            get => PART_Frame.Source;
+            set => PART_Frame.Source = value;
         }
 
         /// <summary>

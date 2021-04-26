@@ -21,8 +21,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? Message
         {
-            get { return (string?)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
+            get => (string?)this.GetValue(MessageProperty);
+            set => this.SetValue(MessageProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Username"/> dependency property.</summary>
@@ -30,8 +30,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? Username
         {
-            get { return (string?)this.GetValue(UsernameProperty); }
-            set { this.SetValue(UsernameProperty, value); }
+            get => (string?)this.GetValue(UsernameProperty);
+            set => this.SetValue(UsernameProperty, value);
         }
 
         /// <summary>Identifies the <see cref="UsernameWatermark"/> dependency property.</summary>
@@ -39,8 +39,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? UsernameWatermark
         {
-            get { return (string?)this.GetValue(UsernameWatermarkProperty); }
-            set { this.SetValue(UsernameWatermarkProperty, value); }
+            get => (string?)this.GetValue(UsernameWatermarkProperty);
+            set => this.SetValue(UsernameWatermarkProperty, value);
         }
 
         /// <summary>Identifies the <see cref="UsernameCharacterCasing"/> dependency property.</summary>
@@ -48,8 +48,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public CharacterCasing UsernameCharacterCasing
         {
-            get { return (CharacterCasing)this.GetValue(UsernameCharacterCasingProperty); }
-            set { this.SetValue(UsernameCharacterCasingProperty, value); }
+            get => (CharacterCasing)this.GetValue(UsernameCharacterCasingProperty);
+            set => this.SetValue(UsernameCharacterCasingProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Password"/> dependency property.</summary>
@@ -57,8 +57,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? Password
         {
-            get { return (string?)this.GetValue(PasswordProperty); }
-            set { this.SetValue(PasswordProperty, value); }
+            get => (string?)this.GetValue(PasswordProperty);
+            set => this.SetValue(PasswordProperty, value);
         }
 
         /// <summary>Identifies the <see cref="PasswordWatermark"/> dependency property.</summary>
@@ -66,8 +66,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? PasswordWatermark
         {
-            get { return (string?)this.GetValue(PasswordWatermarkProperty); }
-            set { this.SetValue(PasswordWatermarkProperty, value); }
+            get => (string?)this.GetValue(PasswordWatermarkProperty);
+            set => this.SetValue(PasswordWatermarkProperty, value);
         }
 
         /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
@@ -75,8 +75,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string AffirmativeButtonText
         {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+            get => (string)this.GetValue(AffirmativeButtonTextProperty);
+            set => this.SetValue(AffirmativeButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
@@ -84,8 +84,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string NegativeButtonText
         {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
+            get => (string)this.GetValue(NegativeButtonTextProperty);
+            set => this.SetValue(NegativeButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="NegativeButtonButtonVisibility"/> dependency property.</summary>
@@ -93,8 +93,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public Visibility NegativeButtonButtonVisibility
         {
-            get { return (Visibility)this.GetValue(NegativeButtonButtonVisibilityProperty); }
-            set { this.SetValue(NegativeButtonButtonVisibilityProperty, value); }
+            get => (Visibility)this.GetValue(NegativeButtonButtonVisibilityProperty);
+            set => this.SetValue(NegativeButtonButtonVisibilityProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ShouldHideUsername"/> dependency property.</summary>
@@ -102,8 +102,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public bool ShouldHideUsername
         {
-            get { return (bool)this.GetValue(ShouldHideUsernameProperty); }
-            set { this.SetValue(ShouldHideUsernameProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(ShouldHideUsernameProperty);
+            set => this.SetValue(ShouldHideUsernameProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="RememberCheckBoxVisibility"/> dependency property.</summary>
@@ -111,8 +111,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public Visibility RememberCheckBoxVisibility
         {
-            get { return (Visibility)this.GetValue(RememberCheckBoxVisibilityProperty); }
-            set { this.SetValue(RememberCheckBoxVisibilityProperty, value); }
+            get => (Visibility)this.GetValue(RememberCheckBoxVisibilityProperty);
+            set => this.SetValue(RememberCheckBoxVisibilityProperty, value);
         }
 
         /// <summary>Identifies the <see cref="RememberCheckBoxText"/> dependency property.</summary>
@@ -120,8 +120,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string RememberCheckBoxText
         {
-            get { return (string)this.GetValue(RememberCheckBoxTextProperty); }
-            set { this.SetValue(RememberCheckBoxTextProperty, value); }
+            get => (string)this.GetValue(RememberCheckBoxTextProperty);
+            set => this.SetValue(RememberCheckBoxTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="RememberCheckBoxChecked"/> dependency property.</summary>
@@ -129,8 +129,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public bool RememberCheckBoxChecked
         {
-            get { return (bool)this.GetValue(RememberCheckBoxCheckedProperty); }
-            set { this.SetValue(RememberCheckBoxCheckedProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(RememberCheckBoxCheckedProperty);
+            set => this.SetValue(RememberCheckBoxCheckedProperty, BooleanBoxes.Box(value));
         }
 
         internal LoginDialog()

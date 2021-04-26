@@ -21,8 +21,8 @@ namespace MahApps.Metro.Controls
 
         public string? Title
         {
-            get { return (string?)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+            get => (string?)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
         }
 
         /// <summary> 
@@ -42,8 +42,8 @@ namespace MahApps.Metro.Controls
         [Bindable(true), Category("Layout")]
         public HorizontalAlignment HorizontalTitleAlignment
         {
-            get { return (HorizontalAlignment)GetValue(HorizontalTitleAlignmentProperty); }
-            set { SetValue(HorizontalTitleAlignmentProperty, value); }
+            get => (HorizontalAlignment)GetValue(HorizontalTitleAlignmentProperty);
+            set => SetValue(HorizontalTitleAlignmentProperty, value);
         }
 
         /// <summary>
@@ -63,48 +63,48 @@ namespace MahApps.Metro.Controls
         [Bindable(true), Category("Layout")]
         public VerticalAlignment VerticalTitleAlignment
         {
-            get { return (VerticalAlignment)GetValue(VerticalTitleAlignmentProperty); }
-            set { SetValue(VerticalTitleAlignmentProperty, value); }
+            get => (VerticalAlignment)GetValue(VerticalTitleAlignmentProperty);
+            set => SetValue(VerticalTitleAlignmentProperty, value);
         }
 
         public static readonly DependencyProperty CountProperty = DependencyProperty.Register(nameof(Count), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
         public string? Count
         {
-            get { return (string?)GetValue(CountProperty); }
-            set { SetValue(CountProperty, value); }
+            get => (string?)GetValue(CountProperty);
+            set => SetValue(CountProperty, value);
         }
 
         public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register(nameof(KeepDragging), typeof(bool), typeof(Tile), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         public bool KeepDragging
         {
-            get { return (bool)GetValue(KeepDraggingProperty); }
-            set { SetValue(KeepDraggingProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(KeepDraggingProperty);
+            set => SetValue(KeepDraggingProperty, BooleanBoxes.Box(value));
         }
 
         public static readonly DependencyProperty TiltFactorProperty = DependencyProperty.Register(nameof(TiltFactor), typeof(int), typeof(Tile), new PropertyMetadata(5));
 
         public int TiltFactor
         {
-            get { return (Int32)GetValue(TiltFactorProperty); }
-            set { SetValue(TiltFactorProperty, value); }
+            get => (Int32)GetValue(TiltFactorProperty);
+            set => SetValue(TiltFactorProperty, value);
         }
 
         public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register(nameof(TitleFontSize), typeof(double), typeof(Tile), new PropertyMetadata(16d));
 
         public double TitleFontSize
         {
-            get { return (double)GetValue(TitleFontSizeProperty); }
-            set { SetValue(TitleFontSizeProperty, value); }
+            get => (double)GetValue(TitleFontSizeProperty);
+            set => SetValue(TitleFontSizeProperty, value);
         }
 
         public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register(nameof(CountFontSize), typeof(double), typeof(Tile), new PropertyMetadata(28d));
 
         public double CountFontSize
         {
-            get { return (double)GetValue(CountFontSizeProperty); }
-            set { SetValue(CountFontSizeProperty, value); }
+            get => (double)GetValue(CountFontSizeProperty);
+            set => SetValue(CountFontSizeProperty, value);
         }
     }
 }

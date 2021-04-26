@@ -21,14 +21,14 @@ namespace MahApps.Metro.Behaviors
 
         public string? ResourceName
         {
-            get { return (string?)GetValue(ResourceNameProperty); }
-            set { SetValue(ResourceNameProperty, value); }
+            get => (string?)GetValue(ResourceNameProperty);
+            set => SetValue(ResourceNameProperty, value);
         }
 
         public DependencyProperty? Property
         {
-            get { return (DependencyProperty?)GetValue(PropertyProperty); }
-            set { SetValue(PropertyProperty, value); }
+            get => (DependencyProperty?)GetValue(PropertyProperty);
+            set => SetValue(PropertyProperty, value);
         }
     }
 }

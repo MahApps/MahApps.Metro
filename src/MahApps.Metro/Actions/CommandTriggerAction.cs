@@ -34,8 +34,8 @@ namespace MahApps.Metro.Actions
         /// </summary>
         public ICommand? Command
         {
-            get { return (ICommand?)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
+            get => (ICommand?)this.GetValue(CommandProperty);
+            set => this.SetValue(CommandProperty, value);
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace MahApps.Metro.Actions
         /// </summary>
         public object? CommandParameter
         {
-            get { return this.GetValue(CommandParameterProperty); }
-            set { this.SetValue(CommandParameterProperty, value); }
+            get => this.GetValue(CommandParameterProperty);
+            set => this.SetValue(CommandParameterProperty, value);
         }
 
         protected override void OnAttached()

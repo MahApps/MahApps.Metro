@@ -189,16 +189,16 @@ namespace MahApps.Metro.Controls
         // Provide CLR accessors for the event
         public event RoutedEventHandler FlyoutsStatusChanged
         {
-            add { AddHandler(FlyoutsStatusChangedEvent, value); }
-            remove { RemoveHandler(FlyoutsStatusChangedEvent, value); }
+            add => AddHandler(FlyoutsStatusChangedEvent, value);
+            remove => RemoveHandler(FlyoutsStatusChangedEvent, value);
         }
 
         public static readonly RoutedEvent WindowTransitionCompletedEvent = EventManager.RegisterRoutedEvent(nameof(WindowTransitionCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
 
         public event RoutedEventHandler WindowTransitionCompleted
         {
-            add { this.AddHandler(WindowTransitionCompletedEvent, value); }
-            remove { this.RemoveHandler(WindowTransitionCompletedEvent, value); }
+            add => this.AddHandler(WindowTransitionCompletedEvent, value);
+            remove => this.RemoveHandler(WindowTransitionCompletedEvent, value);
         }
 
         /// <summary>
@@ -206,44 +206,44 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush? OverrideDefaultWindowCommandsBrush
         {
-            get { return (Brush?)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
-            set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
+            get => (Brush?)this.GetValue(OverrideDefaultWindowCommandsBrushProperty);
+            set => this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value);
         }
 
         public MetroDialogSettings? MetroDialogOptions
         {
-            get { return (MetroDialogSettings?)GetValue(MetroDialogOptionsProperty); }
-            set { SetValue(MetroDialogOptionsProperty, value); }
+            get => (MetroDialogSettings?)GetValue(MetroDialogOptionsProperty);
+            set => SetValue(MetroDialogOptionsProperty, value);
         }
 
         public bool IsWindowDraggable
         {
-            get { return (bool)GetValue(IsWindowDraggableProperty); }
-            set { SetValue(IsWindowDraggableProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(IsWindowDraggableProperty);
+            set => SetValue(IsWindowDraggableProperty, BooleanBoxes.Box(value));
         }
 
         public WindowCommandsOverlayBehavior LeftWindowCommandsOverlayBehavior
         {
-            get { return (WindowCommandsOverlayBehavior)this.GetValue(LeftWindowCommandsOverlayBehaviorProperty); }
-            set { SetValue(LeftWindowCommandsOverlayBehaviorProperty, value); }
+            get => (WindowCommandsOverlayBehavior)this.GetValue(LeftWindowCommandsOverlayBehaviorProperty);
+            set => SetValue(LeftWindowCommandsOverlayBehaviorProperty, value);
         }
 
         public WindowCommandsOverlayBehavior RightWindowCommandsOverlayBehavior
         {
-            get { return (WindowCommandsOverlayBehavior)this.GetValue(RightWindowCommandsOverlayBehaviorProperty); }
-            set { SetValue(RightWindowCommandsOverlayBehaviorProperty, value); }
+            get => (WindowCommandsOverlayBehavior)this.GetValue(RightWindowCommandsOverlayBehaviorProperty);
+            set => SetValue(RightWindowCommandsOverlayBehaviorProperty, value);
         }
 
         public OverlayBehavior WindowButtonCommandsOverlayBehavior
         {
-            get { return (OverlayBehavior)this.GetValue(WindowButtonCommandsOverlayBehaviorProperty); }
-            set { SetValue(WindowButtonCommandsOverlayBehaviorProperty, value); }
+            get => (OverlayBehavior)this.GetValue(WindowButtonCommandsOverlayBehaviorProperty);
+            set => SetValue(WindowButtonCommandsOverlayBehaviorProperty, value);
         }
 
         public OverlayBehavior IconOverlayBehavior
         {
-            get { return (OverlayBehavior)this.GetValue(IconOverlayBehaviorProperty); }
-            set { SetValue(IconOverlayBehaviorProperty, value); }
+            get => (OverlayBehavior)this.GetValue(IconOverlayBehaviorProperty);
+            set => SetValue(IconOverlayBehaviorProperty, value);
         }
 
         /// <summary>
@@ -251,8 +251,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool WindowTransitionsEnabled
         {
-            get { return (bool)this.GetValue(WindowTransitionsEnabledProperty); }
-            set { SetValue(WindowTransitionsEnabledProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(WindowTransitionsEnabledProperty);
+            set => SetValue(WindowTransitionsEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FlyoutsControl? Flyouts
         {
-            get { return (FlyoutsControl?)GetValue(FlyoutsProperty); }
-            set { SetValue(FlyoutsProperty, value); }
+            get => (FlyoutsControl?)GetValue(FlyoutsProperty);
+            set => SetValue(FlyoutsProperty, value);
         }
 
         /// <summary>
@@ -269,8 +269,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplate? IconTemplate
         {
-            get { return (DataTemplate?)GetValue(IconTemplateProperty); }
-            set { SetValue(IconTemplateProperty, value); }
+            get => (DataTemplate?)GetValue(IconTemplateProperty);
+            set => SetValue(IconTemplateProperty, value);
         }
 
         /// <summary>
@@ -278,8 +278,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplate? TitleTemplate
         {
-            get { return (DataTemplate?)GetValue(TitleTemplateProperty); }
-            set { SetValue(TitleTemplateProperty, value); }
+            get => (DataTemplate?)GetValue(TitleTemplateProperty);
+            set => SetValue(TitleTemplateProperty, value);
         }
 
         /// <summary>
@@ -287,8 +287,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public WindowCommands? LeftWindowCommands
         {
-            get { return (WindowCommands?)GetValue(LeftWindowCommandsProperty); }
-            set { SetValue(LeftWindowCommandsProperty, value); }
+            get => (WindowCommands?)GetValue(LeftWindowCommandsProperty);
+            set => SetValue(LeftWindowCommandsProperty, value);
         }
 
         /// <summary>
@@ -296,8 +296,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public WindowCommands? RightWindowCommands
         {
-            get { return (WindowCommands?)GetValue(RightWindowCommandsProperty); }
-            set { SetValue(RightWindowCommandsProperty, value); }
+            get => (WindowCommands?)GetValue(RightWindowCommandsProperty);
+            set => SetValue(RightWindowCommandsProperty, value);
         }
 
         /// <summary>
@@ -305,8 +305,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public WindowButtonCommands? WindowButtonCommands
         {
-            get { return (WindowButtonCommands?)GetValue(WindowButtonCommandsProperty); }
-            set { SetValue(WindowButtonCommandsProperty, value); }
+            get => (WindowButtonCommands?)GetValue(WindowButtonCommandsProperty);
+            set => SetValue(WindowButtonCommandsProperty, value);
         }
 
         /// <summary>
@@ -315,8 +315,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IgnoreTaskbarOnMaximize
         {
-            get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
-            set { SetValue(IgnoreTaskbarOnMaximizeProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty);
+            set => SetValue(IgnoreTaskbarOnMaximizeProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -329,8 +329,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Thickness ResizeBorderThickness
         {
-            get { return (Thickness)this.GetValue(ResizeBorderThicknessProperty); }
-            set { this.SetValue(ResizeBorderThicknessProperty, value); }
+            get => (Thickness)this.GetValue(ResizeBorderThicknessProperty);
+            set => this.SetValue(ResizeBorderThicknessProperty, value);
         }
 
         /// <summary>
@@ -344,8 +344,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool KeepBorderOnMaximize
         {
-            get { return (bool)this.GetValue(KeepBorderOnMaximizeProperty); }
-            set { this.SetValue(KeepBorderOnMaximizeProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(KeepBorderOnMaximizeProperty);
+            set => this.SetValue(KeepBorderOnMaximizeProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -361,8 +361,8 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         public bool TryToBeFlickerFree
         {
-            get { return (bool)this.GetValue(TryToBeFlickerFreeProperty); }
-            set { this.SetValue(TryToBeFlickerFreeProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(TryToBeFlickerFreeProperty);
+            set => this.SetValue(TryToBeFlickerFreeProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -375,8 +375,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush? TitleForeground
         {
-            get { return (Brush?)GetValue(TitleForegroundProperty); }
-            set { SetValue(TitleForegroundProperty, value); }
+            get => (Brush?)GetValue(TitleForegroundProperty);
+            set => SetValue(TitleForegroundProperty, value);
         }
 
         /// <summary>
@@ -384,14 +384,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool SaveWindowPosition
         {
-            get { return (bool)GetValue(SaveWindowPositionProperty); }
-            set { SetValue(SaveWindowPositionProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(SaveWindowPositionProperty);
+            set => SetValue(SaveWindowPositionProperty, BooleanBoxes.Box(value));
         }
 
         public IWindowPlacementSettings? WindowPlacementSettings
         {
-            get { return (IWindowPlacementSettings?)GetValue(WindowPlacementSettingsProperty); }
-            set { SetValue(WindowPlacementSettingsProperty, value); }
+            get => (IWindowPlacementSettings?)GetValue(WindowPlacementSettingsProperty);
+            set => SetValue(WindowPlacementSettingsProperty, value);
         }
 
         /// <summary>
@@ -407,8 +407,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowIconOnTitleBar
         {
-            get { return (bool)GetValue(ShowIconOnTitleBarProperty); }
-            set { SetValue(ShowIconOnTitleBarProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowIconOnTitleBarProperty);
+            set => SetValue(ShowIconOnTitleBarProperty, BooleanBoxes.Box(value));
         }
 
         private static void OnShowIconOnTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -425,8 +425,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowDialogsOverTitleBar
         {
-            get { return (bool)GetValue(ShowDialogsOverTitleBarProperty); }
-            set { SetValue(ShowDialogsOverTitleBarProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowDialogsOverTitleBarProperty);
+            set => SetValue(ShowDialogsOverTitleBarProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -434,8 +434,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsAnyDialogOpen
         {
-            get { return (bool)GetValue(IsAnyDialogOpenProperty); }
-            protected set { SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(IsAnyDialogOpenProperty);
+            protected set => SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -443,8 +443,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public EdgeMode IconEdgeMode
         {
-            get { return (EdgeMode)this.GetValue(IconEdgeModeProperty); }
-            set { SetValue(IconEdgeModeProperty, value); }
+            get => (EdgeMode)this.GetValue(IconEdgeModeProperty);
+            set => SetValue(IconEdgeModeProperty, value);
         }
 
         /// <summary>
@@ -452,8 +452,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public BitmapScalingMode IconBitmapScalingMode
         {
-            get { return (BitmapScalingMode)this.GetValue(IconBitmapScalingModeProperty); }
-            set { SetValue(IconBitmapScalingModeProperty, value); }
+            get => (BitmapScalingMode)this.GetValue(IconBitmapScalingModeProperty);
+            set => SetValue(IconBitmapScalingModeProperty, value);
         }
 
         /// <summary>
@@ -461,8 +461,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MultiFrameImageMode IconScalingMode
         {
-            get { return (MultiFrameImageMode)this.GetValue(IconScalingModeProperty); }
-            set { SetValue(IconScalingModeProperty, value); }
+            get => (MultiFrameImageMode)this.GetValue(IconScalingModeProperty);
+            set => SetValue(IconScalingModeProperty, value);
         }
 
         /// <summary>
@@ -470,8 +470,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowTitleBar
         {
-            get { return (bool)GetValue(ShowTitleBarProperty); }
-            set { SetValue(ShowTitleBarProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowTitleBarProperty);
+            set => SetValue(ShowTitleBarProperty, BooleanBoxes.Box(value));
         }
 
         private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -501,8 +501,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool UseNoneWindowStyle
         {
-            get { return (bool)GetValue(UseNoneWindowStyleProperty); }
-            set { SetValue(UseNoneWindowStyleProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(UseNoneWindowStyleProperty);
+            set => SetValue(UseNoneWindowStyleProperty, BooleanBoxes.Box(value));
         }
 
         private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -525,8 +525,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowMinButton
         {
-            get { return (bool)GetValue(ShowMinButtonProperty); }
-            set { SetValue(ShowMinButtonProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowMinButtonProperty);
+            set => SetValue(ShowMinButtonProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -534,8 +534,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowMaxRestoreButton
         {
-            get { return (bool)GetValue(ShowMaxRestoreButtonProperty); }
-            set { SetValue(ShowMaxRestoreButtonProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowMaxRestoreButtonProperty);
+            set => SetValue(ShowMaxRestoreButtonProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -543,8 +543,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowCloseButton
         {
-            get { return (bool)GetValue(ShowCloseButtonProperty); }
-            set { SetValue(ShowCloseButtonProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowCloseButtonProperty);
+            set => SetValue(ShowCloseButtonProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -552,8 +552,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsMinButtonEnabled
         {
-            get { return (bool)GetValue(IsMinButtonEnabledProperty); }
-            set { SetValue(IsMinButtonEnabledProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(IsMinButtonEnabledProperty);
+            set => SetValue(IsMinButtonEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -561,8 +561,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsMaxRestoreButtonEnabled
         {
-            get { return (bool)GetValue(IsMaxRestoreButtonEnabledProperty); }
-            set { SetValue(IsMaxRestoreButtonEnabledProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(IsMaxRestoreButtonEnabledProperty);
+            set => SetValue(IsMaxRestoreButtonEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -570,8 +570,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsCloseButtonEnabled
         {
-            get { return (bool)GetValue(IsCloseButtonEnabledProperty); }
-            set { SetValue(IsCloseButtonEnabledProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(IsCloseButtonEnabledProperty);
+            set => SetValue(IsCloseButtonEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -579,8 +579,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsCloseButtonEnabledWithDialog
         {
-            get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
-            protected set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(IsCloseButtonEnabledWithDialogProperty);
+            protected set => SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -588,8 +588,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowSystemMenu
         {
-            get { return (bool)GetValue(ShowSystemMenuProperty); }
-            set { SetValue(ShowSystemMenuProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowSystemMenuProperty);
+            set => SetValue(ShowSystemMenuProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -597,8 +597,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowSystemMenuOnRightClick
         {
-            get { return (bool)GetValue(ShowSystemMenuOnRightClickProperty); }
-            set { SetValue(ShowSystemMenuOnRightClickProperty, BooleanBoxes.Box(value)); }
+            get => (bool)GetValue(ShowSystemMenuOnRightClickProperty);
+            set => SetValue(ShowSystemMenuOnRightClickProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -606,8 +606,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public int TitleBarHeight
         {
-            get { return (int)GetValue(TitleBarHeightProperty); }
-            set { SetValue(TitleBarHeightProperty, value); }
+            get => (int)GetValue(TitleBarHeightProperty);
+            set => SetValue(TitleBarHeightProperty, value);
         }
 
         private static void TitleBarHeightPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -655,8 +655,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public CharacterCasing TitleCharacterCasing
         {
-            get { return (CharacterCasing)GetValue(TitleCharacterCasingProperty); }
-            set { SetValue(TitleCharacterCasingProperty, value); }
+            get => (CharacterCasing)GetValue(TitleCharacterCasingProperty);
+            set => SetValue(TitleCharacterCasingProperty, value);
         }
 
         /// <summary>
@@ -664,8 +664,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public HorizontalAlignment TitleAlignment
         {
-            get { return (HorizontalAlignment)GetValue(TitleAlignmentProperty); }
-            set { SetValue(TitleAlignmentProperty, value); }
+            get => (HorizontalAlignment)GetValue(TitleAlignmentProperty);
+            set => SetValue(TitleAlignmentProperty, value);
         }
 
         private static void OnTitleAlignmentChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -686,8 +686,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush WindowTitleBrush
         {
-            get { return (Brush)GetValue(WindowTitleBrushProperty); }
-            set { SetValue(WindowTitleBrushProperty, value); }
+            get => (Brush)GetValue(WindowTitleBrushProperty);
+            set => SetValue(WindowTitleBrushProperty, value);
         }
 
         /// <summary>
@@ -695,8 +695,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush? GlowBrush
         {
-            get { return (Brush?)GetValue(GlowBrushProperty); }
-            set { SetValue(GlowBrushProperty, value); }
+            get => (Brush?)GetValue(GlowBrushProperty);
+            set => SetValue(GlowBrushProperty, value);
         }
 
         /// <summary>
@@ -704,8 +704,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush? NonActiveGlowBrush
         {
-            get { return (Brush?)GetValue(NonActiveGlowBrushProperty); }
-            set { SetValue(NonActiveGlowBrushProperty, value); }
+            get => (Brush?)GetValue(NonActiveGlowBrushProperty);
+            set => SetValue(NonActiveGlowBrushProperty, value);
         }
 
         /// <summary>
@@ -713,8 +713,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush NonActiveBorderBrush
         {
-            get { return (Brush)GetValue(NonActiveBorderBrushProperty); }
-            set { SetValue(NonActiveBorderBrushProperty, value); }
+            get => (Brush)GetValue(NonActiveBorderBrushProperty);
+            set => SetValue(NonActiveBorderBrushProperty, value);
         }
 
         /// <summary>
@@ -722,8 +722,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush NonActiveWindowTitleBrush
         {
-            get { return (Brush)GetValue(NonActiveWindowTitleBrushProperty); }
-            set { SetValue(NonActiveWindowTitleBrushProperty, value); }
+            get => (Brush)GetValue(NonActiveWindowTitleBrushProperty);
+            set => SetValue(NonActiveWindowTitleBrushProperty, value);
         }
 
         /// <summary>
@@ -731,8 +731,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush? OverlayBrush
         {
-            get { return (Brush?)GetValue(OverlayBrushProperty); }
-            set { SetValue(OverlayBrushProperty, value); }
+            get => (Brush?)GetValue(OverlayBrushProperty);
+            set => SetValue(OverlayBrushProperty, value);
         }
 
         /// <summary>
@@ -740,8 +740,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public double OverlayOpacity
         {
-            get { return (double)GetValue(OverlayOpacityProperty); }
-            set { SetValue(OverlayOpacityProperty, value); }
+            get => (double)GetValue(OverlayOpacityProperty);
+            set => SetValue(OverlayOpacityProperty, value);
         }
 
         /// <summary>
@@ -749,8 +749,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush? FlyoutOverlayBrush
         {
-            get { return (Brush?)GetValue(FlyoutOverlayBrushProperty); }
-            set { SetValue(FlyoutOverlayBrushProperty, value); }
+            get => (Brush?)GetValue(FlyoutOverlayBrushProperty);
+            set => SetValue(FlyoutOverlayBrushProperty, value);
         }
 
         /// <summary>
@@ -758,8 +758,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Storyboard? OverlayFadeIn
         {
-            get { return (Storyboard?)GetValue(OverlayFadeInProperty); }
-            set { SetValue(OverlayFadeInProperty, value); }
+            get => (Storyboard?)GetValue(OverlayFadeInProperty);
+            set => SetValue(OverlayFadeInProperty, value);
         }
 
         /// <summary>
@@ -767,8 +767,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Storyboard? OverlayFadeOut
         {
-            get { return (Storyboard?)GetValue(OverlayFadeOutProperty); }
-            set { SetValue(OverlayFadeOutProperty, value); }
+            get => (Storyboard?)GetValue(OverlayFadeOutProperty);
+            set => SetValue(OverlayFadeOutProperty, value);
         }
 
         private bool CanUseOverlayFadingStoryboard([NotNullWhen(true)] Storyboard? sb, [NotNullWhen(true)] out DoubleAnimation? animation)

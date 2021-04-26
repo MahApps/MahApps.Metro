@@ -53,8 +53,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event DragStartedEventHandler DragStarted
         {
-            add { this.AddHandler(DragStartedEvent, value); }
-            remove { this.RemoveHandler(DragStartedEvent, value); }
+            add => this.AddHandler(DragStartedEvent, value);
+            remove => this.RemoveHandler(DragStartedEvent, value);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event DragDeltaEventHandler DragDelta
         {
-            add { this.AddHandler(DragDeltaEvent, value); }
-            remove { this.RemoveHandler(DragDeltaEvent, value); }
+            add => this.AddHandler(DragDeltaEvent, value);
+            remove => this.RemoveHandler(DragDeltaEvent, value);
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event DragCompletedEventHandler DragCompleted
         {
-            add { this.AddHandler(DragCompletedEvent, value); }
-            remove { this.RemoveHandler(DragCompletedEvent, value); }
+            add => this.AddHandler(DragCompletedEvent, value);
+            remove => this.RemoveHandler(DragCompletedEvent, value);
         }
 
         private static readonly DependencyPropertyKey IsDraggingPropertyKey
@@ -91,8 +91,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsDragging
         {
-            get { return (bool)this.GetValue(IsDraggingProperty); }
-            protected set { this.SetValue(IsDraggingPropertyKey, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(IsDraggingProperty);
+            protected set => this.SetValue(IsDraggingPropertyKey, BooleanBoxes.Box(value));
         }
 
         public void CancelDragAction()

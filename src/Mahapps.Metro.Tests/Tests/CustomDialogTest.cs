@@ -45,10 +45,7 @@ namespace MahApps.Metro.Tests
 
         private class TheViewModel
         {
-            public string Text
-            {
-                get { return "TheText"; }
-            }
+            public string Text => "TheText";
         }
     }
 }

@@ -24,9 +24,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? Tag
         {
-            get { return this.GetValue(TagProperty); }
+            get => this.GetValue(TagProperty);
 
-            set { this.SetValue(TagProperty, value); }
+            set => this.SetValue(TagProperty, value);
         }
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace MahApps.Metro.Controls
         /// </returns>
         public bool IsVisible
         {
-            get { return (bool)this.GetValue(IsVisibleProperty); }
+            get => (bool)this.GetValue(IsVisibleProperty);
 
-            set { this.SetValue(IsVisibleProperty, BooleanBoxes.Box(value)); }
+            set => this.SetValue(IsVisibleProperty, BooleanBoxes.Box(value));
         }
 
         protected override Freezable CreateInstanceCore()

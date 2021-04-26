@@ -62,8 +62,8 @@ namespace MetroDemo
 
         public bool ToggleFullScreen
         {
-            get { return (bool)this.GetValue(ToggleFullScreenProperty); }
-            set { this.SetValue(ToggleFullScreenProperty, value); }
+            get => (bool)this.GetValue(ToggleFullScreenProperty);
+            set => this.SetValue(ToggleFullScreenProperty, value);
         }
 
         public static readonly DependencyProperty UseAccentForDialogsProperty =
@@ -84,8 +84,8 @@ namespace MetroDemo
 
         public bool UseAccentForDialogs
         {
-            get { return (bool)this.GetValue(UseAccentForDialogsProperty); }
-            set { this.SetValue(UseAccentForDialogsProperty, value); }
+            get => (bool)this.GetValue(UseAccentForDialogsProperty);
+            set => this.SetValue(UseAccentForDialogsProperty, value);
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
