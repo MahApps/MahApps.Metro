@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -102,7 +103,10 @@ namespace MetroDemo
                                       new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
                                   };
 
-            this.BrushResources = this.FindBrushResources();
+            this.ThemeResources = new ObservableCollection<ThemeResource>();
+            var view = CollectionViewSource.GetDefaultView(this.ThemeResources);
+            view.SortDescriptions.Add(new SortDescription(nameof(ThemeResource.Key), ListSortDirection.Ascending));
+            this.UpdateThemeResources();
 
             this.CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
@@ -448,7 +452,7 @@ namespace MetroDemo
             await this._dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public IEnumerable<string> BrushResources { get; private set; }
+        public ObservableCollection<ThemeResource> ThemeResources { get; }
 
         public bool AnimateOnPositionChange
         {
@@ -456,30 +460,27 @@ namespace MetroDemo
             set => this.Set(ref this._animateOnPositionChange, value);
         }
 
-        private IEnumerable<string> FindBrushResources()
+        public void UpdateThemeResources()
         {
+            this.ThemeResources.Clear();
+
             if (Application.Current.MainWindow != null)
             {
                 var theme = ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
-
-                if (theme is null)
+                if (theme is not null)
                 {
-                    return Enumerable.Empty<string>();
+                    var libraryTheme = theme.LibraryThemes.FirstOrDefault(x => x.Origin == "MahApps.Metro");
+                    var resourceDictionary = libraryTheme?.Resources.MergedDictionaries.FirstOrDefault();
+
+                    if (resourceDictionary != null)
+                    {
+                        foreach (var dictionaryEntry in resourceDictionary.OfType<DictionaryEntry>())
+                        {
+                            this.ThemeResources.Add(new ThemeResource(theme, libraryTheme!, resourceDictionary, dictionaryEntry));
+                        }
+                    }
                 }
-
-                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
-
-                var brushResources = resources.Keys
-                                              .Cast<object>()
-                                              .Where(key => resources[key] is SolidColorBrush)
-                                              .Select(key => key.ToString()!)
-                                              .OrderBy(s => s)
-                                              .ToList();
-
-                return brushResources;
             }
-
-            return Enumerable.Empty<string>();
         }
 
         public Uri[] FlipViewImages { get; set; }
