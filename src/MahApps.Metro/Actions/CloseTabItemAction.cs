@@ -18,14 +18,14 @@ namespace MahApps.Metro.Actions
 
         protected override void Invoke(object? parameter)
         {
-            if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
+            if (this.AssociatedObject is null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
             {
                 return;
             }
 
             var tabControl = this.AssociatedObject?.TryFindParent<TabControl>();
             var tabItem = this.AssociatedTabItem;
-            if (tabControl == null || tabItem == null)
+            if (tabControl is null || tabItem is null)
             {
                 return;
             }
@@ -40,11 +40,11 @@ namespace MahApps.Metro.Actions
                 }
             }
 
-            if (tabControl is BaseMetroTabControl && tabItem is MetroTabItem)
+            if (tabControl is BaseMetroTabControl metroTabControl && tabItem is MetroTabItem metroTabItem)
             {
                 // run the command handler for the TabControl
                 // see #555
-                tabControl.BeginInvoke(() => ((BaseMetroTabControl)tabControl).CloseThisTabItem((MetroTabItem)tabItem));
+                metroTabControl.BeginInvoke(x => x.CloseThisTabItem(metroTabItem));
             }
             else
             {
@@ -54,7 +54,7 @@ namespace MahApps.Metro.Actions
                             {
                                 // TODO Raise a closing event to cancel this action
 
-                                if (tabControl.ItemsSource == null)
+                                if (tabControl.ItemsSource is null)
                                 {
                                     // if the list is hard-coded (i.e. has no ItemsSource)
                                     // then we remove the item from the collection
@@ -65,7 +65,7 @@ namespace MahApps.Metro.Actions
                                 {
                                     // if ItemsSource is something we cannot work with, bail out
                                     var collection = tabControl.ItemsSource as IList;
-                                    if (collection == null)
+                                    if (collection is null)
                                     {
                                         return;
                                     }
@@ -85,7 +85,13 @@ namespace MahApps.Metro.Actions
 
         protected override object? GetCommandParameter()
         {
-            return this.CommandParameter ?? this.AssociatedTabItem;
+            var parameter = this.CommandParameter;
+            if (parameter is null && this.PassAssociatedObjectToCommand)
+            {
+                parameter = this.AssociatedTabItem;
+            }
+
+            return parameter;
         }
     }
 }

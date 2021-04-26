@@ -15,7 +15,7 @@ namespace MahApps.Metro.Actions
 
         protected override void Invoke(object? parameter)
         {
-            if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
+            if (this.AssociatedObject is null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
             {
                 return;
             }
@@ -37,7 +37,13 @@ namespace MahApps.Metro.Actions
 
         protected override object? GetCommandParameter()
         {
-            return this.CommandParameter ?? this.AssociatedFlyout;
+            var parameter = this.CommandParameter;
+            if (parameter is null && this.PassAssociatedObjectToCommand)
+            {
+                parameter = this.AssociatedFlyout;
+            }
+
+            return parameter;
         }
     }
 }

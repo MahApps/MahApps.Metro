@@ -64,6 +64,17 @@ namespace MahApps.Metro.Actions
             set => this.SetValue(CommandParameterProperty, value);
         }
 
+        /// <summary>
+        /// Specifies whether the AssociatedObject should be passed to the bound RelayCommand.
+        /// This happens only if the <see cref="CommandParameter"/> is not set.
+        /// </summary>
+        public bool PassAssociatedObjectToCommand { get; set; }
+
+        public CommandTriggerAction()
+        {
+            this.PassAssociatedObjectToCommand = true;
+        }
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -72,7 +83,7 @@ namespace MahApps.Metro.Actions
 
         protected override void Invoke(object parameter)
         {
-            if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
+            if (this.AssociatedObject is null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
             {
                 return;
             }
@@ -90,7 +101,7 @@ namespace MahApps.Metro.Actions
 
         private static void OnCommandChanged(CommandTriggerAction? action, DependencyPropertyChangedEventArgs e)
         {
-            if (action == null)
+            if (action is null)
             {
                 return;
             }
@@ -110,18 +121,24 @@ namespace MahApps.Metro.Actions
 
         protected virtual object? GetCommandParameter()
         {
-            return this.CommandParameter ?? this.AssociatedObject;
+            var parameter = this.CommandParameter;
+            if (parameter is null && this.PassAssociatedObjectToCommand)
+            {
+                parameter = this.AssociatedObject;
+            }
+
+            return parameter;
         }
 
         private void EnableDisableElement()
         {
-            if (this.AssociatedObject == null)
+            if (this.AssociatedObject is null)
             {
                 return;
             }
 
             var command = this.Command;
-            this.AssociatedObject.SetCurrentValue(UIElement.IsEnabledProperty, BooleanBoxes.Box(command == null || command.CanExecute(this.GetCommandParameter())));
+            this.AssociatedObject.SetCurrentValue(UIElement.IsEnabledProperty, BooleanBoxes.Box(command is null || command.CanExecute(this.GetCommandParameter())));
         }
 
         private void OnCommandCanExecuteChanged(object? sender, EventArgs e)
