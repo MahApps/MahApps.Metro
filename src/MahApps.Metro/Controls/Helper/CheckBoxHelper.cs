@@ -1716,7 +1716,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the glyph Foregorund for IsChecked = null.
+        /// Sets the glyph Foreground for IsChecked = null.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
@@ -1878,7 +1878,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the glyph Foregorund for IsChecked = null, IsMouseOver = true.
+        /// Sets the glyph Foreground for IsChecked = null, IsMouseOver = true.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
@@ -2040,7 +2040,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the glyph Foregorund for IsChecked = null, IsPressed = true.
+        /// Sets the glyph Foreground for IsChecked = null, IsPressed = true.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
@@ -2202,7 +2202,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the glyph Foregorund for IsChecked = null, IsEnabled = false.
+        /// Sets the glyph Foreground for IsChecked = null, IsEnabled = false.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]

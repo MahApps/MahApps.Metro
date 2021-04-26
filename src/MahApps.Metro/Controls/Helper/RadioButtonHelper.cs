@@ -12,10 +12,11 @@ namespace MahApps.Metro.Controls
     public static class RadioButtonHelper
     {
         public static readonly DependencyProperty RadioSizeProperty
-            = DependencyProperty.RegisterAttached("RadioSize",
-                                                  typeof(double),
-                                                  typeof(RadioButtonHelper),
-                                                  new FrameworkPropertyMetadata(18.0));
+            = DependencyProperty.RegisterAttached(
+                "RadioSize",
+                typeof(double),
+                typeof(RadioButtonHelper),
+                new FrameworkPropertyMetadata(18.0));
 
         /// <summary>Helper for getting <see cref="RadioSizeProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="RadioSizeProperty"/> from.</param>
@@ -38,10 +39,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty RadioCheckSizeProperty
-            = DependencyProperty.RegisterAttached("RadioCheckSize",
-                                                  typeof(double),
-                                                  typeof(RadioButtonHelper),
-                                                  new FrameworkPropertyMetadata(10.0));
+            = DependencyProperty.RegisterAttached(
+                "RadioCheckSize",
+                typeof(double),
+                typeof(RadioButtonHelper),
+                new FrameworkPropertyMetadata(10.0));
 
         /// <summary>Helper for getting <see cref="RadioCheckSizeProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="RadioCheckSizeProperty"/> from.</param>
@@ -64,10 +66,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty RadioStrokeThicknessProperty
-            = DependencyProperty.RegisterAttached("RadioStrokeThickness",
-                                                  typeof(double),
-                                                  typeof(RadioButtonHelper),
-                                                  new FrameworkPropertyMetadata(1.0));
+            = DependencyProperty.RegisterAttached(
+                "RadioStrokeThickness",
+                typeof(double),
+                typeof(RadioButtonHelper),
+                new FrameworkPropertyMetadata(1.0));
 
         /// <summary>Helper for getting <see cref="RadioStrokeThicknessProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="RadioStrokeThicknessProperty"/> from.</param>
@@ -90,10 +93,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty ForegroundPointerOverProperty
-            = DependencyProperty.RegisterAttached("ForegroundPointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "ForegroundPointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="ForegroundPointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="ForegroundPointerOverProperty"/> from.</param>
@@ -116,10 +120,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty ForegroundPressedProperty
-            = DependencyProperty.RegisterAttached("ForegroundPressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "ForegroundPressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="ForegroundPressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="ForegroundPressedProperty"/> from.</param>
@@ -142,10 +147,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty ForegroundDisabledProperty
-            = DependencyProperty.RegisterAttached("ForegroundDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "ForegroundDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="ForegroundDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="ForegroundDisabledProperty"/> from.</param>
@@ -168,10 +174,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BackgroundPointerOverProperty
-            = DependencyProperty.RegisterAttached("BackgroundPointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "BackgroundPointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="BackgroundPointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="BackgroundPointerOverProperty"/> from.</param>
@@ -194,10 +201,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BackgroundPressedProperty
-            = DependencyProperty.RegisterAttached("BackgroundPressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "BackgroundPressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="BackgroundPressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="BackgroundPressedProperty"/> from.</param>
@@ -220,10 +228,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BackgroundDisabledProperty
-            = DependencyProperty.RegisterAttached("BackgroundDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "BackgroundDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="BackgroundDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="BackgroundDisabledProperty"/> from.</param>
@@ -246,10 +255,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BorderBrushPointerOverProperty
-            = DependencyProperty.RegisterAttached("BorderBrushPointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "BorderBrushPointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="BorderBrushPointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="BorderBrushPointerOverProperty"/> from.</param>
@@ -272,10 +282,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BorderBrushPressedProperty
-            = DependencyProperty.RegisterAttached("BorderBrushPressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "BorderBrushPressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="BorderBrushPressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="BorderBrushPressedProperty"/> from.</param>
@@ -298,10 +309,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BorderBrushDisabledProperty
-            = DependencyProperty.RegisterAttached("BorderBrushDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "BorderBrushDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="BorderBrushDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="BorderBrushDisabledProperty"/> from.</param>
@@ -324,10 +336,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseFillProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseFill",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseFill",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseFillProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseFillProperty"/> from.</param>
@@ -350,10 +363,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseFillPointerOverProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseFillPointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseFillPointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseFillPointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseFillPointerOverProperty"/> from.</param>
@@ -376,10 +390,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseFillPressedProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseFillPressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseFillPressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseFillPressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseFillPressedProperty"/> from.</param>
@@ -402,10 +417,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseFillDisabledProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseFillDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseFillDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseFillDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseFillDisabledProperty"/> from.</param>
@@ -428,10 +444,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseStrokeProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseStroke",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseStroke",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseStrokeProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseStrokeProperty"/> from.</param>
@@ -454,10 +471,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseStrokePointerOverProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseStrokePointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseStrokePointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseStrokePointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseStrokePointerOverProperty"/> from.</param>
@@ -480,10 +498,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseStrokePressedProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseStrokePressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseStrokePressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseStrokePressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseStrokePressedProperty"/> from.</param>
@@ -506,10 +525,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseStrokeDisabledProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseStrokeDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseStrokeDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseStrokeDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseStrokeDisabledProperty"/> from.</param>
@@ -532,10 +552,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedFillProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedFill",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedFill",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedFillProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedFillProperty"/> from.</param>
@@ -558,10 +579,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedFillPointerOverProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedFillPointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedFillPointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedFillPointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedFillPointerOverProperty"/> from.</param>
@@ -584,10 +606,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedFillPressedProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedFillPressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedFillPressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedFillPressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedFillPressedProperty"/> from.</param>
@@ -610,10 +633,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedFillDisabledProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedFillDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedFillDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedFillDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedFillDisabledProperty"/> from.</param>
@@ -636,10 +660,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedStrokeProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedStroke",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedStroke",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedStrokeProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedStrokeProperty"/> from.</param>
@@ -662,10 +687,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedStrokePointerOverProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedStrokePointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedStrokePointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedStrokePointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedStrokePointerOverProperty"/> from.</param>
@@ -688,10 +714,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedStrokePressedProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedStrokePressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedStrokePressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedStrokePressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedStrokePressedProperty"/> from.</param>
@@ -714,10 +741,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty OuterEllipseCheckedStrokeDisabledProperty
-            = DependencyProperty.RegisterAttached("OuterEllipseCheckedStrokeDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "OuterEllipseCheckedStrokeDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="OuterEllipseCheckedStrokeDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="OuterEllipseCheckedStrokeDisabledProperty"/> from.</param>
@@ -740,10 +768,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphFillProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphFill",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphFill",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphFillProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphFillProperty"/> from.</param>
@@ -766,10 +795,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphFillPointerOverProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphFillPointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphFillPointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphFillPointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphFillPointerOverProperty"/> from.</param>
@@ -792,10 +822,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphFillPressedProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphFillPressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphFillPressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphFillPressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphFillPressedProperty"/> from.</param>
@@ -818,10 +849,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphFillDisabledProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphFillDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphFillDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphFillDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphFillDisabledProperty"/> from.</param>
@@ -844,10 +876,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphStrokeProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphStroke",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphStroke",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphStrokeProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphStrokeProperty"/> from.</param>
@@ -870,10 +903,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphStrokePointerOverProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphStrokePointerOver",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphStrokePointerOver",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphStrokePointerOverProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphStrokePointerOverProperty"/> from.</param>
@@ -896,10 +930,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphStrokePressedProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphStrokePressed",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphStrokePressed",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphStrokePressedProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphStrokePressedProperty"/> from.</param>
@@ -922,10 +957,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CheckGlyphStrokeDisabledProperty
-            = DependencyProperty.RegisterAttached("CheckGlyphStrokeDisabled",
-                                                  typeof(Brush),
-                                                  typeof(RadioButtonHelper),
-                                                  new PropertyMetadata(default(Brush)));
+            = DependencyProperty.RegisterAttached(
+                "CheckGlyphStrokeDisabled",
+                typeof(Brush),
+                typeof(RadioButtonHelper),
+                new PropertyMetadata(default(Brush)));
 
         /// <summary>Helper for getting <see cref="CheckGlyphStrokeDisabledProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="CheckGlyphStrokeDisabledProperty"/> from.</param>

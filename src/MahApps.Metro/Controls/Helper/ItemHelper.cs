@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -16,10 +17,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used for the active selected item (if the keyboard focus is within).
         /// </summary>
         public static readonly DependencyProperty ActiveSelectionBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("ActiveSelectionBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "ActiveSelectionBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush the background brush which will be used for the active selected item (if the keyboard focus is within).
@@ -47,10 +49,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used for the active selected item (if the keyboard focus is within).
         /// </summary>
         public static readonly DependencyProperty ActiveSelectionForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("ActiveSelectionForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "ActiveSelectionForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush the foreground brush which will be used for the active selected item (if the keyboard focus is within).
@@ -78,10 +81,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used for a selected item.
         /// </summary>
         public static readonly DependencyProperty SelectedBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("SelectedBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "SelectedBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the background brush which will be used for a selected item.
@@ -109,10 +113,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used for a selected item.
         /// </summary>
         public static readonly DependencyProperty SelectedForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("SelectedForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "SelectedForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the foreground brush which will be used for a selected item.
@@ -140,10 +145,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used for an mouse hovered item.
         /// </summary>
         public static readonly DependencyProperty HoverBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("HoverBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "HoverBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the background brush which will be used for an mouse hovered item.
@@ -171,10 +177,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used for an mouse hovered item.
         /// </summary>
         public static readonly DependencyProperty HoverForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("HoverForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "HoverForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the foreground brush which will be used for an mouse hovered item.
@@ -202,10 +209,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used for an mouse hovered and selected item.
         /// </summary>
         public static readonly DependencyProperty HoverSelectedBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("HoverSelectedBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "HoverSelectedBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the background brush which will be used for an mouse hovered and selected item.
@@ -233,10 +241,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used for an mouse hovered and selected item.
         /// </summary>
         public static readonly DependencyProperty HoverSelectedForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("HoverSelectedForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "HoverSelectedForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the foreground brush which will be used for an mouse hovered and selected item.
@@ -264,10 +273,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used for selected disabled items.
         /// </summary>
         public static readonly DependencyProperty DisabledSelectedBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("DisabledSelectedBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "DisabledSelectedBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the background brush which will be used for selected disabled items.
@@ -295,10 +305,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used for selected disabled items.
         /// </summary>
         public static readonly DependencyProperty DisabledSelectedForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("DisabledSelectedForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "DisabledSelectedForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the foreground brush which will be used for selected disabled items.
@@ -326,10 +337,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used for disabled items.
         /// </summary>
         public static readonly DependencyProperty DisabledBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("DisabledBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "DisabledBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the background brush which will be used for disabled items.
@@ -357,10 +369,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used for disabled items.
         /// </summary>
         public static readonly DependencyProperty DisabledForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("DisabledForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "DisabledForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the foreground brush which will be used for disabled items.
@@ -385,10 +398,11 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly DependencyPropertyKey IsMouseLeftButtonPressedPropertyKey
-            = DependencyProperty.RegisterAttachedReadOnly("IsMouseLeftButtonPressed",
-                                                          typeof(bool),
-                                                          typeof(ItemHelper),
-                                                          new PropertyMetadata(false));
+            = DependencyProperty.RegisterAttachedReadOnly(
+                "IsMouseLeftButtonPressed",
+                typeof(bool),
+                typeof(ItemHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public static readonly DependencyProperty IsMouseLeftButtonPressedProperty = IsMouseLeftButtonPressedPropertyKey.DependencyProperty;
 
@@ -401,12 +415,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used when an item is pressed by the left mouse button.
         /// </summary>
         public static readonly DependencyProperty MouseLeftButtonPressedBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("MouseLeftButtonPressedBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush),
-                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                                OnMouseLeftButtonPressedBackgroundBrushPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "MouseLeftButtonPressedBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseLeftButtonPressedBackgroundBrushPropertyChanged));
 
         private static void OnMouseLeftButtonPressedBackgroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -432,7 +445,7 @@ namespace MahApps.Metro.Controls
             var element = (UIElement)sender;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                element.SetValue(IsMouseLeftButtonPressedPropertyKey, true);
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, BooleanBoxes.TrueBox);
             }
         }
 
@@ -441,7 +454,7 @@ namespace MahApps.Metro.Controls
             var element = (UIElement)sender;
             if (e.LeftButton == MouseButtonState.Pressed && GetIsMouseLeftButtonPressed(element))
             {
-                element.SetValue(IsMouseLeftButtonPressedPropertyKey, false);
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, BooleanBoxes.FalseBox);
             }
         }
 
@@ -450,7 +463,7 @@ namespace MahApps.Metro.Controls
             var element = (UIElement)sender;
             if (e.ButtonState == MouseButtonState.Pressed)
             {
-                element.SetValue(IsMouseLeftButtonPressedPropertyKey, true);
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, BooleanBoxes.TrueBox);
             }
         }
 
@@ -459,7 +472,7 @@ namespace MahApps.Metro.Controls
             var element = (UIElement)sender;
             if (GetIsMouseLeftButtonPressed(element))
             {
-                element.SetValue(IsMouseLeftButtonPressedPropertyKey, false);
+                element.SetValue(IsMouseLeftButtonPressedPropertyKey, BooleanBoxes.FalseBox);
             }
         }
 
@@ -489,12 +502,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used when an item is pressed by the left mouse button.
         /// </summary>
         public static readonly DependencyProperty MouseLeftButtonPressedForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("MouseLeftButtonPressedForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush),
-                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                                OnMouseLeftButtonPressedForegroundBrushPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "MouseLeftButtonPressedForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseLeftButtonPressedForegroundBrushPropertyChanged));
 
         private static void OnMouseLeftButtonPressedForegroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -538,10 +550,11 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly DependencyPropertyKey IsMouseRightButtonPressedPropertyKey
-            = DependencyProperty.RegisterAttachedReadOnly("IsMouseRightButtonPressed",
-                                                          typeof(bool),
-                                                          typeof(ItemHelper),
-                                                          new PropertyMetadata(false));
+            = DependencyProperty.RegisterAttachedReadOnly(
+                "IsMouseRightButtonPressed",
+                typeof(bool),
+                typeof(ItemHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public static readonly DependencyProperty IsMouseRightButtonPressedProperty = IsMouseRightButtonPressedPropertyKey.DependencyProperty;
 
@@ -554,12 +567,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the background brush which will be used when an item is pressed by the right mouse button.
         /// </summary>
         public static readonly DependencyProperty MouseRightButtonPressedBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("MouseRightButtonPressedBackgroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush),
-                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                                OnMouseRightButtonPressedBackgroundBrushPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "MouseRightButtonPressedBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseRightButtonPressedBackgroundBrushPropertyChanged));
 
         private static void OnMouseRightButtonPressedBackgroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -590,7 +602,7 @@ namespace MahApps.Metro.Controls
                     Mouse.Capture(element);
                 }
 
-                element.SetValue(IsMouseRightButtonPressedPropertyKey, true);
+                element.SetValue(IsMouseRightButtonPressedPropertyKey, BooleanBoxes.TrueBox);
             }
         }
 
@@ -600,7 +612,7 @@ namespace MahApps.Metro.Controls
             if (GetIsMouseRightButtonPressed(element))
             {
                 Mouse.Capture(null);
-                element.SetValue(IsMouseRightButtonPressedPropertyKey, false);
+                element.SetValue(IsMouseRightButtonPressedPropertyKey, BooleanBoxes.FalseBox);
             }
         }
 
@@ -630,12 +642,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the foreground brush which will be used when an item is pressed by the right mouse button.
         /// </summary>
         public static readonly DependencyProperty MouseRightButtonPressedForegroundBrushProperty
-            = DependencyProperty.RegisterAttached("MouseRightButtonPressedForegroundBrush",
-                                                  typeof(Brush),
-                                                  typeof(ItemHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush),
-                                                                                FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                                OnMouseRightButtonPressedForegroundBrushPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "MouseRightButtonPressedForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseRightButtonPressedForegroundBrushPropertyChanged));
 
         private static void OnMouseRightButtonPressedForegroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

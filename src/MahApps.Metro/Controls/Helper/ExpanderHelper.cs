@@ -22,7 +22,12 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = "HeaderRightStyle", StyleTargetType = typeof(ToggleButton))]
     public static class ExpanderHelper
     {
-        public static readonly DependencyProperty HeaderUpStyleProperty = DependencyProperty.RegisterAttached("HeaderUpStyle", typeof(Style), typeof(ExpanderHelper), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty HeaderUpStyleProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderUpStyle",
+                typeof(Style),
+                typeof(ExpanderHelper),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets the toggle button style used for the ExpandDirection Up.
@@ -42,7 +47,12 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderUpStyleProperty, value);
         }
 
-        public static readonly DependencyProperty HeaderDownStyleProperty = DependencyProperty.RegisterAttached("HeaderDownStyle", typeof(Style), typeof(ExpanderHelper), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty HeaderDownStyleProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderDownStyle",
+                typeof(Style),
+                typeof(ExpanderHelper),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets the toggle button style used for the ExpandDirection Down.
@@ -62,7 +72,12 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderDownStyleProperty, value);
         }
 
-        public static readonly DependencyProperty HeaderLeftStyleProperty = DependencyProperty.RegisterAttached("HeaderLeftStyle", typeof(Style), typeof(ExpanderHelper), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty HeaderLeftStyleProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderLeftStyle",
+                typeof(Style),
+                typeof(ExpanderHelper),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets the toggle button style used for the ExpandDirection Left.
@@ -82,7 +97,12 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderLeftStyleProperty, value);
         }
 
-        public static readonly DependencyProperty HeaderRightStyleProperty = DependencyProperty.RegisterAttached("HeaderRightStyle", typeof(Style), typeof(ExpanderHelper), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty HeaderRightStyleProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderRightStyle",
+                typeof(Style),
+                typeof(ExpanderHelper),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets the toggle button style used for the ExpandDirection Right.
@@ -108,10 +128,11 @@ namespace MahApps.Metro.Controls
         /// If the Storyboard is set, the expanded event applies this to the inner grid.
         /// </summary>
         public static readonly DependencyProperty ExpandStoryboardProperty
-            = DependencyProperty.RegisterAttached("ExpandStoryboard",
-                                                  typeof(Storyboard),
-                                                  typeof(ExpanderHelper),
-                                                  new FrameworkPropertyMetadata(null, OnExpandStoryboardPropertyChangedCallback));
+            = DependencyProperty.RegisterAttached(
+                "ExpandStoryboard",
+                typeof(Storyboard),
+                typeof(ExpanderHelper),
+                new FrameworkPropertyMetadata(null, OnExpandStoryboardPropertyChangedCallback));
 
         private static void OnExpandStoryboardPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -202,10 +223,11 @@ namespace MahApps.Metro.Controls
         /// If the Storyboard is set, the collapsed event applies this to the inner grid.
         /// </summary>
         public static readonly DependencyProperty CollapseStoryboardProperty
-            = DependencyProperty.RegisterAttached("CollapseStoryboard",
-                                                  typeof(Storyboard),
-                                                  typeof(ExpanderHelper),
-                                                  new FrameworkPropertyMetadata(null, OnCollapseStoryboardPropertyChangedCallback));
+            = DependencyProperty.RegisterAttached(
+                "CollapseStoryboard",
+                typeof(Storyboard),
+                typeof(ExpanderHelper),
+                new FrameworkPropertyMetadata(null, OnCollapseStoryboardPropertyChangedCallback));
 
         private static void OnCollapseStoryboardPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -310,10 +332,11 @@ namespace MahApps.Metro.Controls
         }
 
         internal static readonly DependencyProperty ExpandSiteControlProperty
-            = DependencyProperty.RegisterAttached("ExpandSiteControl",
-                                                  typeof(FrameworkElement),
-                                                  typeof(ExpanderHelper),
-                                                  new PropertyMetadata(default(FrameworkElement)));
+            = DependencyProperty.RegisterAttached(
+                "ExpandSiteControl",
+                typeof(FrameworkElement),
+                typeof(ExpanderHelper),
+                new PropertyMetadata(default(FrameworkElement)));
 
         internal static FrameworkElement? GetExpandSiteControl(UIElement element)
         {

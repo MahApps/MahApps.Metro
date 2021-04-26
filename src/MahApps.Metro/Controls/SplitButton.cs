@@ -238,7 +238,7 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
 
-            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(false, null, CoerceIsEditableProperty));
+            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, null, CoerceIsEditableProperty));
         }
 
         private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)

@@ -13,7 +13,7 @@ using System.Windows.Controls.Primitives;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Defines a helper class for selected items binding on collections with multiselector elements
+    /// Defines a helper class for selected items binding on <see cref="ListBox"/> or <see cref="MultiSelector"/> controls.
     /// </summary>
     public static class MultiSelectorHelper
     {
@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the <see cref="MultiSelectorBinding"/> for a bining
+        /// Sets the <see cref="MultiSelectorBinding"/> for a binding
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
@@ -115,8 +115,8 @@ namespace MahApps.Metro.Controls
             /// <param name="collection">The bound collection</param>
             public MultiSelectorBinding(Selector selector, IList collection)
             {
-                _selector = selector;
-                _collection = collection;
+                this._selector = selector;
+                this._collection = collection;
 
                 if (selector is ListBox listbox)
                 {
@@ -126,7 +126,7 @@ namespace MahApps.Metro.Controls
                         listbox.SelectedItems.Add(newItem);
                     }
                 }
-                else if (_selector is MultiSelector multiSelector)
+                else if (this._selector is MultiSelector multiSelector)
                 {
                     multiSelector.SelectedItems.Clear();
                     foreach (var newItem in collection)
@@ -142,22 +142,22 @@ namespace MahApps.Metro.Controls
             public void Bind()
             {
                 // prevent multiple event registration
-                UnBind();
+                this.UnBind();
 
-                _selector.SelectionChanged += OnSelectionChanged;
-                if (_collection is INotifyCollectionChanged notifyCollection)
+                this._selector.SelectionChanged += this.OnSelectionChanged;
+                if (this._collection is INotifyCollectionChanged notifyCollection)
                 {
                     notifyCollection.CollectionChanged += this.OnCollectionChanged;
                 }
             }
 
             /// <summary>
-            /// Unregisters the event handlers for selector and collection changes
+            /// Clear the event handlers for selector and collection changes
             /// </summary>
             public void UnBind()
             {
-                _selector.SelectionChanged -= OnSelectionChanged;
-                if (_collection is INotifyCollectionChanged notifyCollection)
+                this._selector.SelectionChanged -= this.OnSelectionChanged;
+                if (this._collection is INotifyCollectionChanged notifyCollection)
                 {
                     notifyCollection.CollectionChanged -= this.OnCollectionChanged;
                 }
@@ -168,7 +168,7 @@ namespace MahApps.Metro.Controls
             /// </summary>
             private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
             {
-                var notifyCollection = _collection as INotifyCollectionChanged;
+                var notifyCollection = this._collection as INotifyCollectionChanged;
                 if (notifyCollection != null)
                 {
                     notifyCollection.CollectionChanged -= this.OnCollectionChanged;
@@ -178,12 +178,12 @@ namespace MahApps.Metro.Controls
                 {
                     foreach (var oldItem in e.RemovedItems)
                     {
-                        _collection.Remove(oldItem);
+                        this._collection.Remove(oldItem);
                     }
 
                     foreach (var newItem in e.AddedItems)
                     {
-                        _collection.Add(newItem);
+                        this._collection.Add(newItem);
                     }
                 }
                 finally
@@ -200,11 +200,11 @@ namespace MahApps.Metro.Controls
             /// </summary>
             private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
             {
-                _selector.SelectionChanged -= OnSelectionChanged;
+                this._selector.SelectionChanged -= this.OnSelectionChanged;
 
                 try
                 {
-                    if (_selector is ListBox listBox)
+                    if (this._selector is ListBox listBox)
                     {
                         switch (e.Action)
                         {
@@ -232,7 +232,7 @@ namespace MahApps.Metro.Controls
                                 break;
                         }
                     }
-                    else if (_selector is MultiSelector multiSelector)
+                    else if (this._selector is MultiSelector multiSelector)
                     {
                         switch (e.Action)
                         {
@@ -263,7 +263,7 @@ namespace MahApps.Metro.Controls
                 }
                 finally
                 {
-                    _selector.SelectionChanged += OnSelectionChanged;
+                    this._selector.SelectionChanged += this.OnSelectionChanged;
                 }
             }
 

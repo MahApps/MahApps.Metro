@@ -228,7 +228,7 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="IsReadOnly"/> dependency property.</summary>
         public static readonly DependencyProperty IsReadOnlyProperty
             = TextBoxBase.IsReadOnlyProperty.AddOwner(typeof(NumericUpDown),
-                                                      new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, OnIsReadOnlyPropertyChanged));
+                                                      new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits, OnIsReadOnlyPropertyChanged));
 
         private static void OnIsReadOnlyPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -250,7 +250,7 @@ namespace MahApps.Metro.Controls
         public bool IsReadOnly
         {
             get => (bool)this.GetValue(IsReadOnlyProperty);
-            set => this.SetValue(IsReadOnlyProperty, value);
+            set => this.SetValue(IsReadOnlyProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="StringFormat"/> dependency property.</summary>
@@ -1131,7 +1131,7 @@ namespace MahApps.Metro.Controls
             if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
             {
                 var textLength = this.valueTextBox?.Text?.Length ?? 0;
-                this.SetValue(TextBoxHelper.TextLengthProperty, textLength);
+                this.SetValue(TextBoxHelper.TextLengthPropertyKey, textLength);
             }
         }
 
