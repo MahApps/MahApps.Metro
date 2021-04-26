@@ -110,15 +110,40 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets a collection used to generate the content for selecting the hours.
         /// </summary>
         /// <returns>
-        ///     A collection that is used to generate the content for selecting the hours. The default is a list of interger from 0
-        ///     to 23 if <see cref="IsMilitaryTime" /> is false or a list of interger from
-        ///     1 to 12 otherwise..
+        ///     A collection that is used to generate the content for selecting the hours. The default is a list of integer from 0
+        ///     to 23 if <see cref="IsMilitaryTime" /> is false or a list of integer from
+        ///     1 to 12 otherwise.
         /// </returns>
         [Category("Common")]
         public IEnumerable<int> SourceHours
         {
             get => (IEnumerable<int>)this.GetValue(SourceHoursProperty);
             set => this.SetValue(SourceHoursProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="SourceHoursAmPmComparer"/> dependency property.</summary>
+        public static readonly DependencyProperty SourceHoursAmPmComparerProperty
+            = DependencyProperty.Register(nameof(SourceHoursAmPmComparer),
+                                          typeof(IComparer<int>),
+                                          typeof(TimePickerBase),
+                                          new FrameworkPropertyMetadata(null, OnSourceHoursAmPmComparerPropertyChanged));
+
+        private static void OnSourceHoursAmPmComparerPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TimePickerBase timePicker && e.OldValue != e.NewValue)
+            {
+                timePicker.CoerceValue(SourceHoursProperty);
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets a comparer for the Am/Pm collection used to generate the content for selecting the hours.
+        /// </summary>
+        [Category("Common")]
+        public IComparer<int>? SourceHoursAmPmComparer
+        {
+            get => (IComparer<int>?)this.GetValue(SourceHoursAmPmComparerProperty);
+            set => this.SetValue(SourceHoursAmPmComparerProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SourceMinutes"/> dependency property.</summary>
@@ -464,6 +489,8 @@ namespace MahApps.Metro.Controls
 
         protected TimePickerBase()
         {
+            this.SetCurrentValue(SourceHoursAmPmComparerProperty, new AmPmComparer());
+
             Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
         }
 
@@ -527,33 +554,37 @@ namespace MahApps.Metro.Controls
         protected virtual void ApplyCulture()
         {
             this.deactivateRangeBaseEvent = true;
-
-            if (this.ampmSwitcher != null)
+            try
             {
-                this.ampmSwitcher.Items.Clear();
-                if (!string.IsNullOrEmpty(this.SpecificCultureInfo.DateTimeFormat.AMDesignator))
+                if (this.ampmSwitcher != null)
                 {
-                    this.ampmSwitcher.Items.Add(this.SpecificCultureInfo.DateTimeFormat.AMDesignator);
+                    this.ampmSwitcher.Items.Clear();
+                    if (!string.IsNullOrEmpty(this.SpecificCultureInfo.DateTimeFormat.AMDesignator))
+                    {
+                        this.ampmSwitcher.Items.Add(this.SpecificCultureInfo.DateTimeFormat.AMDesignator);
+                    }
+
+                    if (!string.IsNullOrEmpty(this.SpecificCultureInfo.DateTimeFormat.PMDesignator))
+                    {
+                        this.ampmSwitcher.Items.Add(this.SpecificCultureInfo.DateTimeFormat.PMDesignator);
+                    }
                 }
 
-                if (!string.IsNullOrEmpty(this.SpecificCultureInfo.DateTimeFormat.PMDesignator))
+                this.SetAmPmVisibility();
+
+                this.CoerceValue(SourceHoursProperty);
+
+                if (this.SelectedDateTime.HasValue)
                 {
-                    this.ampmSwitcher.Items.Add(this.SpecificCultureInfo.DateTimeFormat.PMDesignator);
+                    this.SetHourPartValues(this.SelectedDateTime.Value.TimeOfDay);
                 }
+
+                this.SetDefaultTimeOfDayValues();
             }
-
-            this.SetAmPmVisibility();
-
-            this.CoerceValue(SourceHoursProperty);
-
-            if (this.SelectedDateTime.HasValue)
+            finally
             {
-                this.SetHourPartValues(this.SelectedDateTime.Value.TimeOfDay);
+                this.deactivateRangeBaseEvent = false;
             }
-
-            this.SetDefaultTimeOfDayValues();
-
-            this.deactivateRangeBaseEvent = false;
 
             this.WriteValueToTextBox();
         }
@@ -594,10 +625,10 @@ namespace MahApps.Metro.Controls
 
         protected void SetDefaultTimeOfDayValues()
         {
-            SetDefaultTimeOfDayValue(this.hourInput);
-            SetDefaultTimeOfDayValue(this.minuteInput);
-            SetDefaultTimeOfDayValue(this.secondInput);
-            SetDefaultTimeOfDayValue(this.ampmSwitcher);
+            SetDefaultTimeOfDayValue(this.hourInput, this.hourInput?.Items.IndexOf(this.IsMilitaryTime ? 12 : 0));
+            SetDefaultTimeOfDayValue(this.minuteInput, 0);
+            SetDefaultTimeOfDayValue(this.secondInput, 0);
+            SetDefaultTimeOfDayValue(this.ampmSwitcher, 0);
         }
 
         private void SubscribeEvents()
@@ -744,13 +775,16 @@ namespace MahApps.Metro.Controls
         [MustUseReturnValue]
         private static object CoerceSourceHours(DependencyObject d, object? basevalue)
         {
-            var timePickerBase = d as TimePickerBase;
-            var hourList = basevalue as IEnumerable<int>;
-            if (timePickerBase != null && hourList != null)
+            if (d is TimePickerBase timePicker && basevalue is IEnumerable<int> hourList)
             {
-                if (timePickerBase.IsMilitaryTime)
+                if (timePicker.IsMilitaryTime)
                 {
-                    return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
+                    if (timePicker.SourceHoursAmPmComparer is not null)
+                    {
+                        return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, timePicker.SourceHoursAmPmComparer);
+                    }
+
+                    return hourList.Where(i => i > 0 && i <= 12);
                 }
 
                 return hourList.Where(i => i >= 0 && i < 24);
@@ -893,17 +927,14 @@ namespace MahApps.Metro.Controls
 
         private static bool IsValueSelected(Selector? selector)
         {
-            return selector != null && selector.SelectedItem != null;
+            return selector?.SelectedItem is not null;
         }
 
-        private static void SetDefaultTimeOfDayValue(Selector? selector)
+        private static void SetDefaultTimeOfDayValue(Selector? selector, int? defaultIndex)
         {
-            if (selector != null)
+            if (selector is not null && selector.SelectedValue is null)
             {
-                if (selector.SelectedValue == null)
-                {
-                    selector.SelectedIndex = 0;
-                }
+                selector.SelectedIndex = defaultIndex.GetValueOrDefault(0);
             }
         }
 
@@ -1032,40 +1063,45 @@ namespace MahApps.Metro.Controls
             }
 
             this.deactivateRangeBaseEvent = true;
-            if (this.hourInput != null)
+            try
             {
-                if (this.IsMilitaryTime)
+                if (this.hourInput != null)
                 {
-                    if (this.ampmSwitcher is not null)
+                    if (this.IsMilitaryTime)
                     {
-                        this.ampmSwitcher.SelectedValue = timeOfDay.Hours < 12 ? this.SpecificCultureInfo.DateTimeFormat.AMDesignator : this.SpecificCultureInfo.DateTimeFormat.PMDesignator;
-                        if (timeOfDay.Hours == 0 || timeOfDay.Hours == 12)
+                        if (this.ampmSwitcher is not null)
                         {
-                            this.hourInput.SelectedValue = 12;
-                        }
-                        else
-                        {
-                            this.hourInput.SelectedValue = timeOfDay.Hours % 12;
+                            this.ampmSwitcher.SelectedValue = timeOfDay.Hours < 12 ? this.SpecificCultureInfo.DateTimeFormat.AMDesignator : this.SpecificCultureInfo.DateTimeFormat.PMDesignator;
+                            if (timeOfDay.Hours == 0 || timeOfDay.Hours == 12)
+                            {
+                                this.hourInput.SelectedValue = 12;
+                            }
+                            else
+                            {
+                                this.hourInput.SelectedValue = timeOfDay.Hours % 12;
+                            }
                         }
                     }
+                    else
+                    {
+                        this.hourInput.SelectedValue = timeOfDay.Hours;
+                    }
                 }
-                else
+
+                if (this.minuteInput != null)
                 {
-                    this.hourInput.SelectedValue = timeOfDay.Hours;
+                    this.minuteInput.SelectedValue = timeOfDay.Minutes;
+                }
+
+                if (this.secondInput != null)
+                {
+                    this.secondInput.SelectedValue = timeOfDay.Seconds;
                 }
             }
-
-            if (this.minuteInput != null)
+            finally
             {
-                this.minuteInput.SelectedValue = timeOfDay.Minutes;
+                this.deactivateRangeBaseEvent = false;
             }
-
-            if (this.secondInput != null)
-            {
-                this.secondInput.SelectedValue = timeOfDay.Seconds;
-            }
-
-            this.deactivateRangeBaseEvent = false;
         }
 
         private void SetPickerVisibility(TimePartVisibility visibility)
