@@ -17,12 +17,21 @@ namespace MahApps.Metro.Behaviors
 {
     public class TiltBehavior : Behavior<FrameworkElement>
     {
+        private bool isPressed;
+        private Thickness originalMargin;
+        private Panel? originalPanel;
+        private Size originalSize;
+        private FrameworkElement? attachedElement;
+        private Point current = new Point(-99, -99);
+        private int times = -1;
+
         /// <summary>Identifies the <see cref="KeepDragging"/> dependency property.</summary>
         public static readonly DependencyProperty KeepDraggingProperty
-            = DependencyProperty.Register(nameof(KeepDragging),
-                                          typeof(bool),
-                                          typeof(TiltBehavior),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+            = DependencyProperty.Register(
+                nameof(KeepDragging),
+                typeof(bool),
+                typeof(TiltBehavior),
+                new PropertyMetadata(BooleanBoxes.TrueBox));
 
         public bool KeepDragging
         {
@@ -32,10 +41,11 @@ namespace MahApps.Metro.Behaviors
 
         /// <summary>Identifies the <see cref="TiltFactor"/> dependency property.</summary>
         public static readonly DependencyProperty TiltFactorProperty
-            = DependencyProperty.Register(nameof(TiltFactor),
-                                          typeof(int),
-                                          typeof(TiltBehavior),
-                                          new PropertyMetadata(20));
+            = DependencyProperty.Register(
+                nameof(TiltFactor),
+                typeof(int),
+                typeof(TiltBehavior),
+                new PropertyMetadata(20));
 
         public int TiltFactor
         {
@@ -43,18 +53,12 @@ namespace MahApps.Metro.Behaviors
             set => this.SetValue(TiltFactorProperty, value);
         }
 
-        private bool isPressed;
-        private Thickness originalMargin;
-        private Panel? originalPanel;
-        private Size originalSize;
-        private FrameworkElement? attachedElement;
-        private Point current = new Point(-99, -99);
-        private int times = -1;
-
         public Planerator? RotatorParent { get; private set; }
 
         protected override void OnAttached()
         {
+            base.OnAttached();
+
             this.attachedElement = this.AssociatedObject;
             if (this.attachedElement is ListBox)
             {
@@ -65,7 +69,7 @@ namespace MahApps.Metro.Behaviors
             {
                 panel.Loaded += (sl, el) =>
                     {
-                        var elements = panel.Children.Cast<UIElement>().ToList();
+                        var elements = panel.Children.OfType<UIElement>().ToList();
 
                         elements.ForEach(element =>
                                              Interaction.GetBehaviors(element).Add(
@@ -79,7 +83,7 @@ namespace MahApps.Metro.Behaviors
                 return;
             }
 
-            this.originalPanel = this.attachedElement.Parent as Panel ?? GetParentPanel(this.attachedElement);
+            this.originalPanel = this.attachedElement.Parent as Panel ?? this.attachedElement.TryFindParent<Panel>();
 
             this.originalMargin = this.attachedElement.Margin;
             this.originalSize = new Size(this.attachedElement.Width, this.attachedElement.Height);
@@ -127,6 +131,7 @@ namespace MahApps.Metro.Behaviors
         {
             CompositionTarget.Rendering -= this.CompositionTargetRendering;
             ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
+
             base.OnDetaching();
         }
 
@@ -189,11 +194,6 @@ namespace MahApps.Metro.Behaviors
                     this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0 ? 0 : this.RotatorParent.RotationX - 5;
                 }
             }
-        }
-
-        private static Panel? GetParentPanel(DependencyObject element)
-        {
-            return element.TryFindParent<Panel>();
         }
     }
 }

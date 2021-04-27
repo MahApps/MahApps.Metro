@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
 
@@ -13,10 +12,11 @@ namespace MahApps.Metro.Behaviors
     public class StylizedBehaviors
     {
         public static readonly DependencyProperty BehaviorsProperty
-            = DependencyProperty.RegisterAttached("Behaviors",
-                                                  typeof(StylizedBehaviorCollection),
-                                                  typeof(StylizedBehaviors),
-                                                  new FrameworkPropertyMetadata(null, OnPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "Behaviors",
+                typeof(StylizedBehaviorCollection),
+                typeof(StylizedBehaviors),
+                new FrameworkPropertyMetadata(null, OnPropertyChanged));
 
         [Category(AppName.MahApps)]
         public static StylizedBehaviorCollection? GetBehaviors(DependencyObject uie)
@@ -24,6 +24,7 @@ namespace MahApps.Metro.Behaviors
             return (StylizedBehaviorCollection?)uie.GetValue(BehaviorsProperty);
         }
 
+        [Category(AppName.MahApps)]
         public static void SetBehaviors(DependencyObject uie, StylizedBehaviorCollection? value)
         {
             uie.SetValue(BehaviorsProperty, value);
@@ -31,8 +32,7 @@ namespace MahApps.Metro.Behaviors
 
         private static void OnPropertyChanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
         {
-            var uie = dpo as FrameworkElement;
-            if (uie == null)
+            if (dpo is not FrameworkElement frameworkElement)
             {
                 return;
             }
@@ -44,15 +44,15 @@ namespace MahApps.Metro.Behaviors
                 return;
             }
 
-            BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
+            var itemBehaviors = Interaction.GetBehaviors(frameworkElement);
 
-            uie.Unloaded -= FrameworkElementUnloaded;
+            frameworkElement.Unloaded -= FrameworkElementUnloaded;
 
             if (oldBehaviors != null)
             {
                 foreach (var behavior in oldBehaviors)
                 {
-                    int index = GetIndexOf(itemBehaviors, behavior);
+                    var index = GetIndexOf(itemBehaviors, behavior);
                     if (index >= 0)
                     {
                         itemBehaviors.RemoveAt(index);
@@ -64,7 +64,7 @@ namespace MahApps.Metro.Behaviors
             {
                 foreach (var behavior in newBehaviors)
                 {
-                    int index = GetIndexOf(itemBehaviors, behavior);
+                    var index = GetIndexOf(itemBehaviors, behavior);
                     if (index < 0)
                     {
                         var clone = (Behavior)behavior.Clone();
@@ -76,68 +76,59 @@ namespace MahApps.Metro.Behaviors
 
             if (itemBehaviors.Count > 0)
             {
-                uie.Unloaded += FrameworkElementUnloaded;
+                frameworkElement.Unloaded += FrameworkElementUnloaded;
             }
-
-            uie.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
-        }
-
-        private static void Dispatcher_ShutdownStarted(object? sender, System.EventArgs e)
-        {
-            Debug.WriteLine("Dispatcher.ShutdownStarted");
         }
 
         private static void FrameworkElementUnloaded(object sender, RoutedEventArgs e)
         {
             // BehaviorCollection doesn't call Detach, so we do this
-            var uie = sender as FrameworkElement;
-            if (uie == null)
+            if (sender is not FrameworkElement frameworkElement)
             {
                 return;
             }
 
-            BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
+            var itemBehaviors = Interaction.GetBehaviors(frameworkElement);
             foreach (var behavior in itemBehaviors)
             {
                 behavior.Detach();
             }
 
-            uie.Loaded += FrameworkElementLoaded;
+            frameworkElement.Loaded += FrameworkElementLoaded;
         }
 
         private static void FrameworkElementLoaded(object sender, RoutedEventArgs e)
         {
-            var uie = sender as FrameworkElement;
-            if (uie == null)
+            if (sender is not FrameworkElement frameworkElement)
             {
                 return;
             }
 
-            uie.Loaded -= FrameworkElementLoaded;
-            BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
+            frameworkElement.Loaded -= FrameworkElementLoaded;
+            var itemBehaviors = Interaction.GetBehaviors(frameworkElement);
             foreach (var behavior in itemBehaviors)
             {
-                behavior.Attach(uie);
+                behavior.Attach(frameworkElement);
             }
         }
 
         private static int GetIndexOf(BehaviorCollection itemBehaviors, Behavior behavior)
         {
-            int index = -1;
+            var index = -1;
 
-            var orignalBehavior = GetOriginalBehavior(behavior);
+            var originalBehavior = GetOriginalBehavior(behavior);
 
-            for (int i = 0; i < itemBehaviors.Count; i++)
+            for (var i = 0; i < itemBehaviors.Count; i++)
             {
-                Behavior currentBehavior = itemBehaviors[i];
-                if (currentBehavior == behavior || currentBehavior == orignalBehavior)
+                var currentBehavior = itemBehaviors[i];
+                if (currentBehavior == behavior || currentBehavior == originalBehavior)
                 {
                     index = i;
                     break;
                 }
 
-                var currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
-                if (currentOrignalBehavior == behavior || currentOrignalBehavior == orignalBehavior)
+                var currentOriginalBehavior = GetOriginalBehavior(currentBehavior);
+                if (currentOriginalBehavior == behavior || currentOriginalBehavior == originalBehavior)
                 {
                     index = i;
                     break;
@@ -148,10 +139,11 @@ namespace MahApps.Metro.Behaviors
         }
 
         private static readonly DependencyProperty OriginalBehaviorProperty
-            = DependencyProperty.RegisterAttached("OriginalBehavior",
-                                                  typeof(Behavior),
-                                                  typeof(StylizedBehaviors),
-                                                  new UIPropertyMetadata(null));
+            = DependencyProperty.RegisterAttached(
+                "OriginalBehavior",
+                typeof(Behavior),
+                typeof(StylizedBehaviors),
+                new UIPropertyMetadata(null));
 
         private static Behavior? GetOriginalBehavior(DependencyObject obj)
         {

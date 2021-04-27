@@ -35,7 +35,7 @@ namespace MahApps.Metro.Behaviors
             this.LoadWindowState();
 
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 // if the associated object is null at this point, then there is really something wrong!
                 Trace.TraceError($"{this}: Can not attach to nested events, cause the AssociatedObject is null.");
@@ -84,7 +84,7 @@ namespace MahApps.Metro.Behaviors
         private void CleanUp(string fromWhere)
         {
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 // it's bad if the associated object is null, so trace this here
                 Trace.TraceWarning($"{this}: Can not clean up {fromWhere}, cause the AssociatedObject is null. This can maybe happen if this Behavior was already detached.");
@@ -112,7 +112,7 @@ namespace MahApps.Metro.Behaviors
         private void LoadWindowState()
         {
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 return;
             }
@@ -134,7 +134,7 @@ namespace MahApps.Metro.Behaviors
             }
 
             // check for existing placement and prevent empty bounds
-            if (null == settings.Placement || settings.Placement.normalPosition.IsEmpty)
+            if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
             {
                 return;
             }
@@ -149,8 +149,8 @@ namespace MahApps.Metro.Behaviors
                 window.Left = wp.normalPosition.Left;
                 window.Top = wp.normalPosition.Top;
 
-                var hwnd = new WindowInteropHelper(window).Handle;
-                if (!NativeMethods.SetWindowPlacement(hwnd, wp))
+                var windowHandle = new WindowInteropHelper(window).Handle;
+                if (!NativeMethods.SetWindowPlacement(windowHandle, wp))
                 {
                     Trace.TraceWarning($"{this}: The WINDOWPLACEMENT {wp} could not be set by SetWindowPlacement.");
                 }
