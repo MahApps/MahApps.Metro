@@ -127,10 +127,7 @@ namespace MahApps.Metro.Controls
 
             Mouse.Capture(this);
 
-            if (this.previewToolTip is null)
-            {
-                this.previewToolTip = ColorEyePreview.GetPreviewToolTip(this);
-            }
+            this.previewToolTip ??= ColorEyePreview.GetPreviewToolTip(this);
 
             this.previewToolTip.Show();
 

@@ -108,37 +108,34 @@ namespace MahApps.Metro.Controls
 
         private static void OnColorNamePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (dependencyObject is ColorPickerBase colorPicker)
+            if (dependencyObject is ColorPickerBase colorPicker && !colorPicker.ColorIsUpdating)
             {
-                if (!colorPicker.ColorIsUpdating)
+                if (string.IsNullOrEmpty(e.NewValue?.ToString()))
                 {
-                    if (string.IsNullOrEmpty(e.NewValue?.ToString()))
+                    colorPicker.SetCurrentValue(SelectedColorProperty, null);
+                }
+                else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
+                {
+                    if (colorPicker.SelectedColor != color)
                     {
-                        colorPicker.SetCurrentValue(SelectedColorProperty, null);
+                        colorPicker.SetCurrentValue(SelectedColorProperty, color);
                     }
-                    else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
+                    else // if the color stayed the same we still have to update the displayed name
                     {
-                        if (colorPicker.SelectedColor != color)
+                        colorPicker.ColorIsUpdating = true;
+                        try
                         {
-                            colorPicker.SetCurrentValue(SelectedColorProperty, color);
+                            colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(color, colorPicker.ColorNamesDictionary));
                         }
-                        else // if the color stayed the same we still have to update the displayed name
+                        finally
                         {
-                            colorPicker.ColorIsUpdating = true;
-                            try
-                            {
-                                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(color, colorPicker.ColorNamesDictionary));
-                            }
-                            finally
-                            {
-                                colorPicker.ColorIsUpdating = false;
-                            }
+                            colorPicker.ColorIsUpdating = false;
                         }
                     }
-                    else
-                    {
-                        throw new InvalidCastException("Cannot convert the given input to a valid color");
-                    }
+                }
+                else
+                {
+                    throw new InvalidCastException("Cannot convert the given input to a valid color");
                 }
             }
         }

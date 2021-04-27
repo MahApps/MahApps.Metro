@@ -44,11 +44,11 @@ namespace MahApps.Metro.Controls
         private TabItem? PART_AdvancedTab;
 
         /// <summary>Identifies the <see cref="DropDownClosed"/> routed event.</summary>
-        public static readonly RoutedEvent DropDownClosedEvent = EventManager.RegisterRoutedEvent(
-            nameof(DropDownClosed),
-            RoutingStrategy.Bubble,
-            typeof(EventHandler<EventArgs>),
-            typeof(ColorPicker));
+        public static readonly RoutedEvent DropDownClosedEvent
+            = EventManager.RegisterRoutedEvent(nameof(DropDownClosed),
+                                               RoutingStrategy.Bubble,
+                                               typeof(EventHandler<EventArgs>),
+                                               typeof(ColorPicker));
 
         /// <summary>
         ///     Occurs when the DropDown is closed.
@@ -60,11 +60,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="DropDownOpened"/> routed event.</summary>
-        public static readonly RoutedEvent DropDownOpenedEvent = EventManager.RegisterRoutedEvent(
-            nameof(DropDownOpened),
-            RoutingStrategy.Bubble,
-            typeof(EventHandler<EventArgs>),
-            typeof(ColorPicker));
+        public static readonly RoutedEvent DropDownOpenedEvent
+            = EventManager.RegisterRoutedEvent(nameof(DropDownOpened),
+                                               RoutingStrategy.Bubble,
+                                               typeof(EventHandler<EventArgs>),
+                                               typeof(ColorPicker));
 
         /// <summary>
         ///     Occurs when the DropDown is opened.
@@ -836,7 +836,7 @@ namespace MahApps.Metro.Controls
             {
                 colorPicker.RaiseEvent(new RoutedEventArgs(DropDownClosedEvent));
 
-                if (Mouse.Captured == colorPicker)
+                if (ReferenceEquals(Mouse.Captured, colorPicker))
                 {
                     Mouse.Capture(null);
                 }
@@ -856,7 +856,7 @@ namespace MahApps.Metro.Controls
             {
                 if (ReferenceEquals(e.OriginalSource, colorPicker))
                 {
-                    if (Mouse.Captured == null || !(Mouse.Captured as DependencyObject)?.IsDescendantOf(colorPicker) == true)
+                    if (Mouse.Captured is null || !(Mouse.Captured as DependencyObject)?.IsDescendantOf(colorPicker) == true)
                     {
                         colorPicker.Close();
                     }
@@ -866,7 +866,7 @@ namespace MahApps.Metro.Controls
                     if ((e.OriginalSource as DependencyObject)?.IsDescendantOf(colorPicker) == true)
                     {
                         // Take capture if one of our children gave up capture (by closing their drop down)
-                        if (colorPicker.IsDropDownOpen && Mouse.Captured == null)
+                        if (colorPicker.IsDropDownOpen && Mouse.Captured is null)
                         {
                             Mouse.Capture(colorPicker, CaptureMode.SubTree);
                             e.Handled = true;
@@ -892,7 +892,7 @@ namespace MahApps.Metro.Controls
 
             e.Handled = true; // Always handle so that parents won't take focus away
 
-            if (Mouse.Captured == colorPicker && e.OriginalSource == colorPicker)
+            if (ReferenceEquals(Mouse.Captured, colorPicker) && ReferenceEquals(e.OriginalSource, colorPicker))
             {
                 colorPicker.Close();
             }
