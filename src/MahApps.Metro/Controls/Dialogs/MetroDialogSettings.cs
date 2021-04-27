@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Threading;
 using System.Windows;
 
@@ -23,19 +22,19 @@ namespace MahApps.Metro.Controls.Dialogs
             this.ColorScheme = MetroDialogColorScheme.Theme;
             this.AnimateShow = this.AnimateHide = true;
 
-            this.MaximumBodyHeight = Double.NaN;
+            this.MaximumBodyHeight = double.NaN;
 
             this.DefaultText = "";
             this.DefaultButtonFocus = MessageDialogResult.Negative;
             this.CancellationToken = CancellationToken.None;
-            this.DialogTitleFontSize = Double.NaN;
-            this.DialogMessageFontSize = Double.NaN;
-            this.DialogButtonFontSize = Double.NaN;
+            this.DialogTitleFontSize = double.NaN;
+            this.DialogMessageFontSize = double.NaN;
+            this.DialogButtonFontSize = double.NaN;
             this.DialogResultOnCancel = null;
         }
 
         /// <summary>
-        /// Gets or sets wheater the owner of the dialog can be closed.
+        /// Gets or sets whether the owner of the dialog can be closed.
         /// </summary>
         public bool OwnerCanCloseWithDialog { get; set; }
 
@@ -79,7 +78,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public MessageDialogResult DefaultButtonFocus { get; set; }
 
         /// <summary>
-        /// Gets or sets the default text (just the inputdialog needed)
+        /// Gets or sets the default text for <see cref="InputDialog"/>.
         /// </summary>
         public string DefaultText { get; set; }
 

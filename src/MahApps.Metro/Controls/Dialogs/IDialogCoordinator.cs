@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MahApps.Metro.Controls.Dialogs
 {
     /// <summary>
-    /// Use the dialog coordinator to help you interfact with dialogs from a view model.
+    /// Use the dialog coordinator to help you interface with dialogs from a view model.
     /// </summary>
     public interface IDialogCoordinator
     {
@@ -83,8 +83,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
-        Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
-                                                         bool isCancelable = false, MetroDialogSettings? settings = null);
+        Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message, bool isCancelable = false, MetroDialogSettings? settings = null);
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.        
@@ -95,8 +94,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
-        Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
-                                  MetroDialogSettings? settings = null);
+        Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings? settings = null);
 
         /// <summary>
         /// Hides a visible Metro Dialog instance.

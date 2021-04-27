@@ -15,7 +15,11 @@ namespace MahApps.Metro.Controls.Dialogs
     public partial class ProgressDialog : BaseMetroDialog
     {
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty MessageProperty
+            = DependencyProperty.Register(nameof(Message),
+                                          typeof(string),
+                                          typeof(ProgressDialog),
+                                          new PropertyMetadata(default(string)));
 
         public string? Message
         {
@@ -24,7 +28,11 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>Identifies the <see cref="IsCancelable"/> dependency property.</summary>
-        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register(nameof(IsCancelable), typeof(bool), typeof(ProgressDialog), new PropertyMetadata(BooleanBoxes.FalseBox, (s, e) => { ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
+        public static readonly DependencyProperty IsCancelableProperty
+            = DependencyProperty.Register(nameof(IsCancelable),
+                                          typeof(bool),
+                                          typeof(ProgressDialog),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, (s, e) => { ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
 
         public bool IsCancelable
         {
@@ -33,7 +41,11 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty NegativeButtonTextProperty
+            = DependencyProperty.Register(nameof(NegativeButtonText),
+                                          typeof(string),
+                                          typeof(ProgressDialog),
+                                          new PropertyMetadata("Cancel"));
 
         public string NegativeButtonText
         {
@@ -42,7 +54,11 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>Identifies the <see cref="ProgressBarForeground"/> dependency property.</summary>
-        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register(nameof(ProgressBarForeground), typeof(Brush), typeof(ProgressDialog), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ProgressBarForegroundProperty
+            = DependencyProperty.Register(nameof(ProgressBarForeground),
+                                          typeof(Brush),
+                                          typeof(ProgressDialog),
+                                          new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Brush? ProgressBarForeground
         {

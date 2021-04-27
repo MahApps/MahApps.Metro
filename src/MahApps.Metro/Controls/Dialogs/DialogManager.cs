@@ -27,7 +27,9 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<LoginDialogData?> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            settings = settings ?? new LoginDialogSettings();
+
+            settings ??= new LoginDialogSettings();
+
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<LoginDialogData?>)window.Dispatcher.Invoke(new Func<Task<LoginDialogData?>>(() =>
@@ -72,7 +74,6 @@ namespace MahApps.Metro.Controls.Dialogs
                                                             window.RemoveDialog(dialog);
 
                                                             return HandleOverlayOnHide(settings, window);
-                                                            //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
                                                         }))).ContinueWith(y3 => y).Unwrap();
                                                 });
                                         }).Unwrap();
@@ -92,7 +93,9 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<string?> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            settings = settings ?? window.MetroDialogOptions;
+
+            settings ??= window.MetroDialogOptions;
+
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<string?>)window.Dispatcher.Invoke(new Func<Task<string?>>(() =>
@@ -158,7 +161,9 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            settings = settings ?? window.MetroDialogOptions;
+
+            settings ??= window.MetroDialogOptions;
+
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
@@ -224,7 +229,9 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            settings = settings ?? window.MetroDialogOptions;
+
+            settings ??= window.MetroDialogOptions;
+
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
@@ -282,15 +289,15 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new InvalidOperationException("Active dialog container could not be found.");
             }
-            
+
             Task? result = null;
             if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
             {
-                result = (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
+                result = (settings is null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
             }
             else
             {
-                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+                var tcs = new TaskCompletionSource<object>();
                 tcs.SetResult(null!);
                 result = tcs.Task;
             }
@@ -307,7 +314,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             else
                             {
                                 var onTopShownDialogSettings = window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().LastOrDefault()?.DialogSettings;
-                                var isCloseButtonEnabled = window.ShowDialogsOverTitleBar || onTopShownDialogSettings == null || onTopShownDialogSettings.OwnerCanCloseWithDialog;
+                                var isCloseButtonEnabled = window.ShowDialogsOverTitleBar || onTopShownDialogSettings is null || onTopShownDialogSettings.OwnerCanCloseWithDialog;
                                 window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(isCloseButtonEnabled));
                             }
                         });
@@ -322,7 +329,7 @@ namespace MahApps.Metro.Controls.Dialogs
                            {
                                window.Invoke(() =>
                                    {
-                                       var isCloseButtonEnabled = window.ShowDialogsOverTitleBar || settings == null || settings.OwnerCanCloseWithDialog;
+                                       var isCloseButtonEnabled = window.ShowDialogsOverTitleBar || settings is null || settings.OwnerCanCloseWithDialog;
                                        window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(isCloseButtonEnabled));
                                    });
                            })
@@ -334,14 +341,14 @@ namespace MahApps.Metro.Controls.Dialogs
                                        {
                                            throw new InvalidOperationException("Active dialog container could not be found.");
                                        }
-                                       
+
                                        if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
                                        {
-                                           return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
+                                           return (settings is null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
                                        }
                                        else
                                        {
-                                           var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+                                           var tcs = new TaskCompletionSource<object>();
                                            tcs.SetResult(null!);
                                            return tcs.Task;
                                        }
@@ -362,13 +369,14 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog, MetroDialogSettings? settings = null)
         {
-            if (window == null)
+            if (window is null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
 
             window.Dispatcher.VerifyAccess();
-            if (dialog == null)
+
+            if (dialog is null)
             {
                 throw new ArgumentNullException(nameof(dialog));
             }
@@ -377,18 +385,18 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new InvalidOperationException("Active dialog container could not be found.");
             }
-            
+
             if (window.metroInactiveDialogContainer is null)
             {
                 throw new InvalidOperationException("Inactive dialog container could not be found.");
             }
-            
+
             if (window.metroActiveDialogContainer.Children.Contains(dialog) || window.metroInactiveDialogContainer.Children.Contains(dialog))
             {
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
             }
 
-            settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+            settings ??= (dialog.DialogSettings ?? window.MetroDialogOptions);
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
@@ -423,7 +431,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<TDialog> ShowMetroDialogAsync<TDialog>([NotNull] this MetroWindow window, MetroDialogSettings? settings = null)
             where TDialog : BaseMetroDialog
         {
-            if (window == null)
+            if (window is null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
@@ -468,17 +476,17 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            
+
             if (window.metroActiveDialogContainer is null)
             {
                 throw new InvalidOperationException("Active dialog container could not be found.");
             }
-            
+
             if (window.metroInactiveDialogContainer is null)
             {
                 throw new InvalidOperationException("Inactive dialog container could not be found.");
             }
-            
+
             if (!window.metroActiveDialogContainer.Children.Contains(dialog) && !window.metroInactiveDialogContainer.Children.Contains(dialog))
             {
                 throw new InvalidOperationException("The provided dialog is not visible in the specified window.");
@@ -500,7 +508,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         {
                             window.RemoveDialog(dialog);
 
-                            settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+                            settings ??= (dialog.DialogSettings ?? window.MetroDialogOptions);
                             return HandleOverlayOnHide(settings, window);
                         }));
                 }).Unwrap();
@@ -528,7 +536,7 @@ namespace MahApps.Metro.Controls.Dialogs
             dialog.SetValue(Panel.ZIndexProperty, (int)(window.overlayBox?.GetValue(Panel.ZIndexProperty) ?? 0) + 1);
 
             var fixedMinHeight = dialog.MinHeight > 0;
-            var fixedMaxHeight = !(dialog.MaxHeight is double.PositiveInfinity) && dialog.MaxHeight > 0;
+            var fixedMaxHeight = dialog.MaxHeight is not double.PositiveInfinity && dialog.MaxHeight > 0;
 
             void CalculateMinAndMaxHeight()
             {
@@ -569,7 +577,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new InvalidOperationException("Active dialog container could not be found.");
             }
-            
+
             if (window.metroInactiveDialogContainer is null)
             {
                 throw new InvalidOperationException("Inactive dialog container could not be found.");
@@ -596,12 +604,12 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new InvalidOperationException("Active dialog container could not be found.");
             }
-            
+
             if (window.metroInactiveDialogContainer is null)
             {
                 throw new InvalidOperationException("Inactive dialog container could not be found.");
             }
-            
+
             if (window.metroActiveDialogContainer.Children.Contains(dialog))
             {
                 window.metroActiveDialogContainer.Children.Remove(dialog); //remove the dialog from the container
@@ -684,11 +692,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 window.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml", UriKind.RelativeOrAbsolute) });
                 window.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml", UriKind.RelativeOrAbsolute) });
 
-                if (windowOwner is null)
-                {
-                    // should really not happen
-                }
-                else
+                if (windowOwner is not null)
                 {
                     var theme = ThemeManager.Current.DetectTheme(windowOwner);
                     if (theme != null)
@@ -706,13 +710,10 @@ namespace MahApps.Metro.Controls.Dialogs
             var win = CreateExternalWindow(windowOwner ?? Application.Current?.MainWindow);
 
             // Remove the border on left and right side
-            win.BeginInvoke(x =>
+            win.BeginInvoke(window =>
                                 {
-                                    x.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, x.BorderThickness.Top, 0, x.BorderThickness.Bottom));
-                                    if (x is MetroWindow metroWindow)
-                                    {
-                                        metroWindow.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, metroWindow.ResizeBorderThickness.Top, 0, metroWindow.ResizeBorderThickness.Bottom));
-                                    }
+                                    window.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, window.BorderThickness.Top, 0, window.BorderThickness.Bottom));
+                                    window.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, window.ResizeBorderThickness.Top, 0, window.ResizeBorderThickness.Bottom));
                                 },
                             DispatcherPriority.Loaded);
 
@@ -738,12 +739,13 @@ namespace MahApps.Metro.Controls.Dialogs
             dialog.HandleThemeChange();
 
             EventHandler? closedHandler = null;
-            closedHandler = (sender, args) =>
+            closedHandler = (_, _) =>
                 {
                     win.Closed -= closedHandler;
                     dialog.ParentDialogWindow = null;
                     win.Content = null;
                 };
+
             win.Closed += closedHandler;
 
             win.SizeToContent = SizeToContent.Height;
@@ -754,7 +756,7 @@ namespace MahApps.Metro.Controls.Dialogs
         private static MetroWindow CreateModalExternalWindow(MetroWindow windowOwner)
         {
             var win = CreateExternalWindow(windowOwner);
-            win.Topmost = false; // It is not necessary here because the owner is setted
+            win.Topmost = false; // It is not necessary here because the owner is set
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner; // WindowStartupLocation should be CenterOwner
 
             // Set Width and Height maximum according Owner
@@ -766,13 +768,10 @@ namespace MahApps.Metro.Controls.Dialogs
             else
             {
                 // Remove the border on left and right side
-                win.BeginInvoke(x =>
+                win.BeginInvoke(window =>
                                     {
-                                        x.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, x.BorderThickness.Top, 0, x.BorderThickness.Bottom));
-                                        if (x is MetroWindow metroWindow)
-                                        {
-                                            metroWindow.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, metroWindow.ResizeBorderThickness.Top, 0, metroWindow.ResizeBorderThickness.Bottom));
-                                        }
+                                        window.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, window.BorderThickness.Top, 0, window.BorderThickness.Bottom));
+                                        window.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, window.ResizeBorderThickness.Top, 0, window.ResizeBorderThickness.Bottom));
                                     },
                                 DispatcherPriority.Loaded);
 
@@ -807,7 +806,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = CreateModalExternalWindow(window);
 
-            settings = settings ?? new LoginDialogSettings();
+            settings ??= new LoginDialogSettings();
 
             //create the dialog control
             LoginDialog dialog = new LoginDialog(win, settings)
@@ -821,11 +820,12 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             LoginDialogData? result = null;
-            dialog.WaitForButtonPressAsync().ContinueWith(task =>
-                {
-                    result = task.Result;
-                    win.Invoke(win.Close);
-                });
+            dialog.WaitForButtonPressAsync()
+                  .ContinueWith(task =>
+                      {
+                          result = task.Result;
+                          win.Invoke(win.Close);
+                      });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -845,7 +845,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = CreateModalExternalWindow(window);
 
-            settings = settings ?? window.MetroDialogOptions;
+            settings ??= window.MetroDialogOptions;
 
             //create the dialog control
             var dialog = new InputDialog(win, settings)
@@ -860,11 +860,12 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             string? result = null;
-            dialog.WaitForButtonPressAsync().ContinueWith(task =>
-                {
-                    result = task.Result;
-                    win.Invoke(win.Close);
-                });
+            dialog.WaitForButtonPressAsync()
+                  .ContinueWith(task =>
+                      {
+                          result = task.Result;
+                          win.Invoke(win.Close);
+                      });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -873,7 +874,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Creates a MessageDialog ouside of the current window.
+        /// Creates a MessageDialog outside of the current window.
         /// </summary>
         /// <param name="window">The MetroWindow</param>
         /// <param name="title">The title of the MessageDialog.</param>
@@ -885,7 +886,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = CreateModalExternalWindow(window);
 
-            settings = settings ?? window.MetroDialogOptions;
+            settings ??= window.MetroDialogOptions;
 
             //create the dialog control
             var dialog = new MessageDialog(win, settings)
@@ -900,11 +901,12 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             MessageDialogResult result = MessageDialogResult.Affirmative;
-            dialog.WaitForButtonPressAsync().ContinueWith(task =>
-                {
-                    result = task.Result;
-                    win.Invoke(win.Close);
-                });
+            dialog.WaitForButtonPressAsync()
+                  .ContinueWith(task =>
+                      {
+                          result = task.Result;
+                          win.Invoke(win.Close);
+                      });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -914,7 +916,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static void SetDialogFontSizes(MetroDialogSettings? settings, BaseMetroDialog dialog)
         {
-            if (settings == null)
+            if (settings is null)
             {
                 return;
             }

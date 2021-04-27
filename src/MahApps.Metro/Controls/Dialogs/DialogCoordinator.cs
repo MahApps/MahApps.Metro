@@ -78,21 +78,21 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static MetroWindow GetMetroWindow(object context)
         {
-            if (context == null)
+            if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
 
-            if (!DialogParticipation.IsRegistered(context))
+            if (DialogParticipation.IsRegistered(context) == false)
             {
-                throw new InvalidOperationException("Context is not registered. Consider using DialogParticipation.Register in XAML to bind in the DataContext.");
+                throw new InvalidOperationException($"The context `{context}` is not registered. Consider using the DialogParticipation.Register property in XAML to bind in the DataContext.");
             }
 
             var association = DialogParticipation.GetAssociation(context);
             var metroWindow = association.Invoke(() => Window.GetWindow(association) as MetroWindow);
-            if (metroWindow == null)
+            if (metroWindow is null)
             {
-                throw new InvalidOperationException("Context is not inside a MetroWindow.");
+                throw new InvalidOperationException($"The context `{context}` is not inside a MetroWindow.");
             }
 
             return metroWindow;

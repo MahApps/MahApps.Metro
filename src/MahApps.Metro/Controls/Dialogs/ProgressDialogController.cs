@@ -102,7 +102,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Minimum
         {
-            get { return this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum); }
+            get => this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum);
             set { this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum = value); }
         }
 
@@ -111,7 +111,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Maximum
         {
-            get { return this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum); }
+            get => this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum);
             set { this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum = value); }
         }
 

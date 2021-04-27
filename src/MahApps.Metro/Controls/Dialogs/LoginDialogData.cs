@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Security;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -21,7 +20,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     return null;
                 }
 
-                IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(this.SecurePassword);
+                var ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(this.SecurePassword);
                 try
                 {
                     return System.Runtime.InteropServices.Marshal.PtrToStringBSTR(ptr);
