@@ -166,7 +166,7 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (this.optionsListView == null)
+                if (this.optionsListView is null)
                 {
                     throw new Exception("OptionsListView is not defined yet. Please use OptionsItemsSource instead.");
                 }

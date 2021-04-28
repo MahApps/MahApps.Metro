@@ -205,7 +205,7 @@ namespace MahApps.Metro.Controls
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(sender is ListBox listBox))
+            if (sender is not ListBox listBox)
             {
                 return;
             }
@@ -235,7 +235,7 @@ namespace MahApps.Metro.Controls
 
         private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(sender is ListBox listBox))
+            if (sender is not ListBox listBox)
             {
                 return;
             }

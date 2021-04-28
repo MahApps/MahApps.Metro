@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -27,6 +28,7 @@ namespace MahApps.Metro.Controls
                                           typeof(HamburgerMenu),
                                           new PropertyMetadata(240.0, OpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
 
+        [MustUseReturnValue]
         private static object? OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object? inputValue)
         {
             if (dependencyObject is HamburgerMenu hamburgerMenu && hamburgerMenu.ActualWidth > 0 && inputValue is double openPaneLength)
@@ -63,10 +65,8 @@ namespace MahApps.Metro.Controls
 
                 return openPaneLength;
             }
-            else
-            {
-                return inputValue;
-            }
+
+            return inputValue;
         }
 
         private static void OpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -89,7 +89,8 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="CompactPaneLength"/> dependency property.</summary>
         public static readonly DependencyProperty CompactPaneLengthProperty
             = DependencyProperty.Register(nameof(CompactPaneLength),
-                                          typeof(double), typeof(HamburgerMenu),
+                                          typeof(double),
+                                          typeof(HamburgerMenu),
                                           new PropertyMetadata(48.0, OnCompactPaneLengthPropertyChangedCallback));
 
         private static void OnCompactPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -566,7 +567,7 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (this.buttonsListView == null)
+                if (this.buttonsListView is null)
                 {
                     throw new Exception("ButtonsListView is not defined yet. Please use ItemsSource instead.");
                 }
@@ -590,7 +591,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeItemFocusVisualStyle()
         {
-            this._defaultItemFocusVisualTemplate = this._defaultItemFocusVisualTemplate ?? this.TryFindResource("MahApps.Templates.HamburgerMenuItem.FocusVisual") as ControlTemplate;
+            this._defaultItemFocusVisualTemplate ??= this.TryFindResource("MahApps.Templates.HamburgerMenuItem.FocusVisual") as ControlTemplate;
             if (this._defaultItemFocusVisualTemplate != null)
             {
                 var focusVisualStyle = new Style(typeof(Control));
