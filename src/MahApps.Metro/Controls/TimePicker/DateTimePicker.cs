@@ -105,6 +105,14 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="SelectedDateFormat"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedDateFormatProperty = DatePicker.SelectedDateFormatProperty.AddOwner(typeof(DateTimePicker), new FrameworkPropertyMetadata(DatePickerFormat.Short, OnSelectedDateFormatChanged));
 
+        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is DateTimePicker dateTimePicker)
+            {
+                dateTimePicker.WriteValueToTextBox();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the format that is used to display the selected date.
         /// </summary>
@@ -122,6 +130,17 @@ namespace MahApps.Metro.Controls
                                           typeof(Orientation),
                                           typeof(DateTimePicker),
                                           new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
+
+        [MustUseReturnValue]
+        private static object? CoerceOrientation(DependencyObject d, object? basevalue)
+        {
+            if (((DateTimePicker)d).IsClockVisible)
+            {
+                return basevalue;
+            }
+
+            return Orientation.Vertical;
+        }
 
         /// <summary>
         ///     Gets or sets a value that indicates the dimension by which calendar and clock are stacked.
@@ -221,7 +240,7 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc />
         public override void OnApplyTemplate()
         {
-            if (!(this.popupCalendarPresenter is null))
+            if (this.popupCalendarPresenter is not null)
             {
                 this.popupCalendarPresenter.Content = null;
             }
@@ -232,7 +251,7 @@ namespace MahApps.Metro.Controls
             this.popupContainer?.SetBinding(StackPanel.OrientationProperty, this.GetBinding(OrientationProperty));
 
             this.popupCalendarPresenter = this.GetTemplateChild(PART_Calendar) as ContentPresenter;
-            if (!(this.popupCalendarPresenter is null))
+            if (this.popupCalendarPresenter is not null)
             {
                 this.popupCalendarPresenter.Content = this.calendar;
             }
@@ -291,14 +310,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is DateTimePicker dateTimePicker)
-            {
-                dateTimePicker.WriteValueToTextBox();
-            }
-        }
-
         /// <inheritdoc />
         protected override void ApplyCulture()
         {
@@ -343,17 +354,6 @@ namespace MahApps.Metro.Controls
                     this.WriteValueToTextBox();
                 }
             }
-        }
-
-        [MustUseReturnValue]
-        private static object? CoerceOrientation(DependencyObject d, object? basevalue)
-        {
-            if (((DateTimePicker)d).IsClockVisible)
-            {
-                return basevalue;
-            }
-
-            return Orientation.Vertical;
         }
 
         private static void OnClockVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

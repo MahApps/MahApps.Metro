@@ -106,6 +106,27 @@ namespace MahApps.Metro.Controls
                                           typeof(TimePickerBase),
                                           new FrameworkPropertyMetadata(Enumerable.Range(0, 24), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
 
+        [MustUseReturnValue]
+        private static object CoerceSourceHours(DependencyObject d, object? basevalue)
+        {
+            if (d is TimePickerBase timePicker && basevalue is IEnumerable<int> hourList)
+            {
+                if (timePicker.IsMilitaryTime)
+                {
+                    if (timePicker.SourceHoursAmPmComparer is not null)
+                    {
+                        return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, timePicker.SourceHoursAmPmComparer);
+                    }
+
+                    return hourList.Where(i => i > 0 && i <= 12);
+                }
+
+                return hourList.Where(i => i >= 0 && i < 24);
+            }
+
+            return Enumerable.Empty<int>();
+        }
+
         /// <summary>
         ///     Gets or sets a collection used to generate the content for selecting the hours.
         /// </summary>
@@ -153,6 +174,17 @@ namespace MahApps.Metro.Controls
                                           typeof(TimePickerBase),
                                           new FrameworkPropertyMetadata(Enumerable.Range(0, 60), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
+        [MustUseReturnValue]
+        private static object CoerceSource60(DependencyObject d, object? basevalue)
+        {
+            if (basevalue is IEnumerable<int> list)
+            {
+                return list.Where(i => i >= 0 && i < 60);
+            }
+
+            return Enumerable.Empty<int>();
+        }
+
         /// <summary>
         ///     Gets or sets a collection used to generate the content for selecting the minutes.
         /// </summary>
@@ -193,17 +225,6 @@ namespace MahApps.Metro.Controls
             = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase),
                                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged, OnCoerceIsDropDownOpen));
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether the drop-down for a <see cref="TimePickerBase"/> box is currently
-        ///         open.
-        /// </summary>
-        /// <returns>true if the drop-down is open; otherwise, false. The default is false.</returns>
-        public bool IsDropDownOpen
-        {
-            get => (bool)this.GetValue(IsDropDownOpenProperty);
-            set => this.SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value));
-        }
-
         [MustUseReturnValue]
         private static object? OnCoerceIsDropDownOpen(DependencyObject d, object? baseValue)
         {
@@ -222,7 +243,7 @@ namespace MahApps.Metro.Controls
         /// <param name="e">DependencyPropertyChangedEventArgs.</param>
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is TimePickerBase tp))
+            if (d is not TimePickerBase tp)
             {
                 return;
             }
@@ -238,6 +259,17 @@ namespace MahApps.Metro.Controls
                     tp.FocusElementAfterIsDropDownOpenChanged();
                 }
             }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the drop-down for a <see cref="TimePickerBase"/> box is currently
+        ///         open.
+        /// </summary>
+        /// <returns>true if the drop-down is open; otherwise, false. The default is false.</returns>
+        public bool IsDropDownOpen
+        {
+            get => (bool)this.GetValue(IsDropDownOpenProperty);
+            set => this.SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -299,6 +331,11 @@ namespace MahApps.Metro.Controls
                                           typeof(TimePickerBase),
                                           new PropertyMetadata(TimePartVisibility.All, OnHandVisibilityChanged));
 
+        private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((TimePickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
+        }
+
         /// <summary>
         ///     Gets or sets a value indicating the visibility of the clock hands in the user interface (UI).
         /// </summary>
@@ -320,6 +357,15 @@ namespace MahApps.Metro.Controls
                                           typeof(TimePickerBase),
                                           new PropertyMetadata(null, OnCultureChanged));
 
+        private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePartPickerBase = (TimePickerBase)d;
+
+            timePartPickerBase.Language = e.NewValue is CultureInfo info ? XmlLanguage.GetLanguage(info.IetfLanguageTag) : XmlLanguage.Empty;
+
+            timePartPickerBase.ApplyCulture();
+        }
+
         /// <summary>
         ///     Gets or sets a value indicating the culture to be used in string formatting operations.
         /// </summary>
@@ -337,6 +383,11 @@ namespace MahApps.Metro.Controls
                                           typeof(TimePartVisibility),
                                           typeof(TimePickerBase),
                                           new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
+
+        private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((TimePickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
+        }
 
         /// <summary>
         ///     Gets or sets a value indicating the visibility of the selectable date-time-parts in the user interface (UI).
@@ -373,6 +424,22 @@ namespace MahApps.Metro.Controls
                                           typeof(DateTime?),
                                           typeof(TimePickerBase),
                                           new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateTimeChanged));
+
+        private static void OnSelectedDateTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePartPickerBase = (TimePickerBase)d;
+
+            if (timePartPickerBase.deactivateRangeBaseEvent)
+            {
+                return;
+            }
+
+            timePartPickerBase.OnSelectedDateTimeChanged(e.OldValue as DateTime?, e.NewValue as DateTime?);
+
+            timePartPickerBase.WriteValueToTextBox();
+
+            timePartPickerBase.RaiseSelectedDateTimeChangedEvent(e.OldValue as DateTime?, e.NewValue as DateTime?);
+        }
 
         /// <summary>
         ///     Gets or sets the currently selected date and time.
@@ -492,6 +559,15 @@ namespace MahApps.Metro.Controls
             this.SetCurrentValue(SourceHoursAmPmComparerProperty, new AmPmComparer());
 
             Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+        }
+
+        private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePartPickerBase = (TimePickerBase)d;
+
+            timePartPickerBase.Language = e.NewValue as XmlLanguage ?? XmlLanguage.Empty;
+
+            timePartPickerBase.ApplyCulture();
         }
 
         private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -760,42 +836,9 @@ namespace MahApps.Metro.Controls
                              .ToList();
         }
 
-        [MustUseReturnValue]
-        private static object CoerceSource60(DependencyObject d, object? basevalue)
-        {
-            var list = basevalue as IEnumerable<int>;
-            if (list != null)
-            {
-                return list.Where(i => i >= 0 && i < 60);
-            }
-
-            return Enumerable.Empty<int>();
-        }
-
-        [MustUseReturnValue]
-        private static object CoerceSourceHours(DependencyObject d, object? basevalue)
-        {
-            if (d is TimePickerBase timePicker && basevalue is IEnumerable<int> hourList)
-            {
-                if (timePicker.IsMilitaryTime)
-                {
-                    if (timePicker.SourceHoursAmPmComparer is not null)
-                    {
-                        return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, timePicker.SourceHoursAmPmComparer);
-                    }
-
-                    return hourList.Where(i => i > 0 && i <= 12);
-                }
-
-                return hourList.Where(i => i >= 0 && i < 24);
-            }
-
-            return Enumerable.Empty<int>();
-        }
-
         private void TimePickerPreviewKeyDown(object sender, RoutedEventArgs e)
         {
-            if (!(e.OriginalSource is Selector))
+            if (e.OriginalSource is not Selector)
             {
                 return;
             }
@@ -826,25 +869,6 @@ namespace MahApps.Metro.Controls
             this.ClockSelectedTimeChanged();
         }
 
-        private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var timePartPickerBase = (TimePickerBase)d;
-
-            var info = e.NewValue as CultureInfo;
-            timePartPickerBase.Language = info != null ? XmlLanguage.GetLanguage(info.IetfLanguageTag) : XmlLanguage.Empty;
-
-            timePartPickerBase.ApplyCulture();
-        }
-
-        private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var timePartPickerBase = (TimePickerBase)d;
-
-            timePartPickerBase.Language = e.NewValue as XmlLanguage ?? XmlLanguage.Empty;
-
-            timePartPickerBase.ApplyCulture();
-        }
-
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             TimePickerBase picker = (TimePickerBase)sender;
@@ -855,9 +879,8 @@ namespace MahApps.Metro.Controls
                     // MoveFocus takes a TraversalRequest as its argument.
                     var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
                     // Gets the element with keyboard focus.
-                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
                     // Change keyboard focus.
-                    if (elementWithFocus != null)
+                    if (Keyboard.FocusedElement is UIElement elementWithFocus)
                     {
                         elementWithFocus.MoveFocus(request);
                     }
@@ -874,32 +897,6 @@ namespace MahApps.Metro.Controls
                     e.Handled = true;
                 }
             }
-        }
-
-        private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((TimePickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
-        }
-
-        private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((TimePickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
-        }
-
-        private static void OnSelectedDateTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var timePartPickerBase = (TimePickerBase)d;
-
-            if (timePartPickerBase.deactivateRangeBaseEvent)
-            {
-                return;
-            }
-
-            timePartPickerBase.OnSelectedDateTimeChanged(e.OldValue as DateTime?, e.NewValue as DateTime?);
-
-            timePartPickerBase.WriteValueToTextBox();
-
-            timePartPickerBase.RaiseSelectedDateTimeChangedEvent(e.OldValue as DateTime?, e.NewValue as DateTime?);
         }
 
         protected virtual void OnSelectedDateTimeChanged(DateTime? oldValue, DateTime? newValue)
@@ -940,22 +937,20 @@ namespace MahApps.Metro.Controls
 
         protected TimeSpan? GetSelectedTimeFromGUI()
         {
+            if (IsValueSelected(this.hourInput) &&
+                IsValueSelected(this.minuteInput) &&
+                IsValueSelected(this.secondInput))
             {
-                if (IsValueSelected(this.hourInput) &&
-                    IsValueSelected(this.minuteInput) &&
-                    IsValueSelected(this.secondInput))
-                {
-                    var hours = (int)this.hourInput!.SelectedItem;
-                    var minutes = (int)this.minuteInput!.SelectedItem;
-                    var seconds = (int)this.secondInput!.SelectedItem;
+                var hours = (int)this.hourInput!.SelectedItem;
+                var minutes = (int)this.minuteInput!.SelectedItem;
+                var seconds = (int)this.secondInput!.SelectedItem;
 
-                    hours += this.GetAmPmOffset(hours);
+                hours += this.GetAmPmOffset(hours);
 
-                    return new TimeSpan(hours, minutes, seconds);
-                }
-
-                return null;
+                return new TimeSpan(hours, minutes, seconds);
             }
+
+            return null;
         }
 
         /// <summary>
