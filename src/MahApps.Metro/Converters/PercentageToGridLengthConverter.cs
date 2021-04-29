@@ -12,15 +12,17 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(double), typeof(GridLength))]
     public sealed class PercentageToGridLengthConverter : IValueConverter
     {
+        /// <summary>
+        /// Gets a static default instance of <see cref="PercentageToGridLengthConverter"/>.
+        /// </summary>
+        public static readonly PercentageToGridLengthConverter Default = new();
+
         // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
         static PercentageToGridLengthConverter()
         {
         }
 
-        /// <summary> Gets the default instance </summary>
-        public static PercentageToGridLengthConverter Default { get; } = new PercentageToGridLengthConverter();
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is double percent)
             {
@@ -36,7 +38,7 @@ namespace MahApps.Metro.Converters
             return Binding.DoNothing;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

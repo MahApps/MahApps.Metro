@@ -7,9 +7,10 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class CustomDialogTest : AutomationTestBase
     {
@@ -45,10 +46,7 @@ namespace MahApps.Metro.Tests
 
         private class TheViewModel
         {
-            public string Text
-            {
-                get { return "TheText"; }
-            }
+            public string Text => "TheText";
         }
     }
 }

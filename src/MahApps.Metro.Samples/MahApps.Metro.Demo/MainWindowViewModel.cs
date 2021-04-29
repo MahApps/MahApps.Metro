@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,11 +31,11 @@ namespace MetroDemo
 {
     public class AccentColorMenuData
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public Brush BorderColorBrush { get; set; }
+        public Brush? BorderColorBrush { get; set; }
 
-        public Brush ColorBrush { get; set; }
+        public Brush? ColorBrush { get; set; }
 
         public AccentColorMenuData()
         {
@@ -45,7 +46,10 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
+            if (this.Name is not null)
+            {
+                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
+            }
         }
     }
 
@@ -53,7 +57,10 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
+            if (this.Name is not null)
+            {
+                ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
+            }
         }
     }
 
@@ -80,7 +87,7 @@ namespace MetroDemo
             this.AppThemes = ThemeManager.Current.Themes
                                          .GroupBy(x => x.BaseColorScheme)
                                          .Select(x => x.First())
-                                         .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+                                         .Select(a => new AppThemeMenuData { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
                                          .ToList();
 
             this.Albums = new ObservableCollection<Album>(SampleData.Albums);
@@ -96,13 +103,19 @@ namespace MetroDemo
                                       new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
                                   };
 
-            this.BrushResources = this.FindBrushResources();
+            this.ThemeResources = new ObservableCollection<ThemeResource>();
+            var view = CollectionViewSource.GetDefaultView(this.ThemeResources);
+            view.SortDescriptions.Add(new SortDescription(nameof(ThemeResource.Key), ListSortDirection.Ascending));
+            this.UpdateThemeResources();
 
             this.CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, (sender, e) => this.OnHotKey(sender, e));
+                if (this.HotKey is not null)
+                {
+                    HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, async (sender, e) => await this.OnHotKey(sender, e));
+                }
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
@@ -174,7 +187,7 @@ namespace MetroDemo
 
             this.ToggleIconScalingCommand = new SimpleCommand(o => true, this.ToggleIconScaling);
 
-            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => (o as Flyout).IsOpen = !(o as Flyout).IsOpen);
+            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => ((Flyout)o).IsOpen = !((Flyout)o).IsOpen);
 
             this.ArtistsDropDownCommand = new SimpleCommand(o => false);
 
@@ -239,14 +252,14 @@ namespace MetroDemo
 
         public ICollection<Album> Albums { get; set; }
 
-        public List<Artist> Artists { get; set; }
+        public List<Artist>? Artists { get; set; }
 
-        private ObservableCollection<Artist> _selectedArtists = new ObservableCollection<Artist>();
+        private ObservableCollection<Artist>? _selectedArtists = new ObservableCollection<Artist>();
 
-        public ObservableCollection<Artist> SelectedArtists
+        public ObservableCollection<Artist>? SelectedArtists
         {
-            get => _selectedArtists;
-            set => Set(ref _selectedArtists, value);
+            get => this._selectedArtists;
+            set => this.Set(ref this._selectedArtists, value);
         }
 
         public List<AccentColorMenuData> AccentColors { get; set; }
@@ -255,9 +268,9 @@ namespace MetroDemo
 
         public List<CultureInfo> CultureInfos { get; set; }
 
-        private CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        private CultureInfo? currentCulture = CultureInfo.CurrentCulture;
 
-        public CultureInfo CurrentCulture
+        public CultureInfo? CurrentCulture
         {
             get => this.currentCulture;
             set => this.Set(ref this.currentCulture, value);
@@ -334,31 +347,31 @@ namespace MetroDemo
 
         public ICommand TextBoxButtonCmdWithParameter { get; }
 
-        public string this[string columnName]
+        public string? this[string columnName]
         {
             get
             {
-                if (columnName == nameof(IntegerGreater10Property) && this.IntegerGreater10Property < 10)
+                if (columnName == nameof(this.IntegerGreater10Property) && this.IntegerGreater10Property < 10)
                 {
                     return "Number is not greater than 10!";
                 }
 
-                if (columnName == nameof(DatePickerDate) && this.DatePickerDate == null)
+                if (columnName == nameof(this.DatePickerDate) && this.DatePickerDate == null)
                 {
                     return "No date given!";
                 }
 
-                if (columnName == nameof(HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
+                if (columnName == nameof(this.HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
                 {
                     return "SHIFT-D is not allowed";
                 }
 
-                if (columnName == nameof(TimePickerDate) && this.TimePickerDate == null)
+                if (columnName == nameof(this.TimePickerDate) && this.TimePickerDate == null)
                 {
                     return "No time given!";
                 }
 
-                if (columnName == nameof(IsToggleSwitchVisible) && !IsToggleSwitchVisible)
+                if (columnName == nameof(this.IsToggleSwitchVisible) && !this.IsToggleSwitchVisible)
                 {
                     return "There is something hidden... \nActivate me to show it up.";
                 }
@@ -427,7 +440,7 @@ namespace MetroDemo
 
         private async void RunCustomFromVm()
         {
-            var customDialog = new CustomDialog() { Title = "Custom Dialog" };
+            var customDialog = new CustomDialog { Title = "Custom Dialog" };
 
             var dataContext = new CustomDialogExampleContent(instance =>
                 {
@@ -439,7 +452,7 @@ namespace MetroDemo
             await this._dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public IEnumerable<string> BrushResources { get; private set; }
+        public ObservableCollection<ThemeResource> ThemeResources { get; }
 
         public bool AnimateOnPositionChange
         {
@@ -447,42 +460,44 @@ namespace MetroDemo
             set => this.Set(ref this._animateOnPositionChange, value);
         }
 
-        private IEnumerable<string> FindBrushResources()
+        public void UpdateThemeResources()
         {
+            this.ThemeResources.Clear();
+
             if (Application.Current.MainWindow != null)
             {
                 var theme = ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
+                if (theme is not null)
+                {
+                    var libraryTheme = theme.LibraryThemes.FirstOrDefault(x => x.Origin == "MahApps.Metro");
+                    var resourceDictionary = libraryTheme?.Resources.MergedDictionaries.FirstOrDefault();
 
-                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
-
-                var brushResources = resources.Keys
-                                              .Cast<object>()
-                                              .Where(key => resources[key] is SolidColorBrush)
-                                              .Select(key => key.ToString())
-                                              .OrderBy(s => s)
-                                              .ToList();
-
-                return brushResources;
+                    if (resourceDictionary != null)
+                    {
+                        foreach (var dictionaryEntry in resourceDictionary.OfType<DictionaryEntry>())
+                        {
+                            this.ThemeResources.Add(new ThemeResource(theme, libraryTheme!, resourceDictionary, dictionaryEntry));
+                        }
+                    }
+                }
             }
-
-            return Enumerable.Empty<string>();
         }
 
         public Uri[] FlipViewImages { get; set; }
 
         public class RandomDataTemplateSelector : DataTemplateSelector
         {
-            public DataTemplate TemplateOne { get; set; }
+            public DataTemplate? TemplateOne { get; set; }
 
-            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            public override DataTemplate? SelectTemplate(object item, DependencyObject container)
             {
                 return this.TemplateOne;
             }
         }
 
-        private HotKey _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
+        private HotKey? _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
 
-        public HotKey HotKey
+        public HotKey? HotKey
         {
             get => this._hotKey;
             set
@@ -501,7 +516,7 @@ namespace MetroDemo
             }
         }
 
-        private async Task OnHotKey(object sender, HotkeyEventArgs e)
+        private async Task OnHotKey(object? sender, HotkeyEventArgs e)
         {
             await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
                 "Hotkey pressed",
@@ -514,8 +529,8 @@ namespace MetroDemo
         {
             var multiFrameImageMode = (MultiFrameImageMode)obj;
             ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
-            this.OnPropertyChanged(nameof(IsScaleDownLargerFrame));
-            this.OnPropertyChanged(nameof(IsNoScaleSmallerFrame));
+            this.OnPropertyChanged(nameof(this.IsScaleDownLargerFrame));
+            this.OnPropertyChanged(nameof(this.IsNoScaleSmallerFrame));
         }
 
         public bool IsScaleDownLargerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame;

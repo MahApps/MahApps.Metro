@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace MahApps.Metro.Tests.TestHelpers
@@ -23,11 +25,11 @@ namespace MahApps.Metro.Tests.TestHelpers
     /// </summary>
     public class TestHost
     {
-        private TestApp app;
-        private readonly Thread appThread;
+        private TestApp? app;
+        private readonly Thread? appThread;
         private readonly AutoResetEvent gate = new AutoResetEvent(false);
 
-        private static TestHost testHost;
+        private static TestHost? testHost;
 
         public static void Initialize()
         {
@@ -62,6 +64,7 @@ namespace MahApps.Metro.Tests.TestHelpers
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
                     gate.Set();
+                    await Task.Yield();
                 };
             app.Run();
         }
@@ -71,6 +74,11 @@ namespace MahApps.Metro.Tests.TestHelpers
         /// </summary>
         public static SwitchContextToUiThreadAwaiter SwitchToAppThread()
         {
+            if (testHost?.app is null)
+            {
+                throw new InvalidOperationException("Testhost is not initialized.");
+            }
+
             return new SwitchContextToUiThreadAwaiter(testHost.app.Dispatcher);
         }
     }

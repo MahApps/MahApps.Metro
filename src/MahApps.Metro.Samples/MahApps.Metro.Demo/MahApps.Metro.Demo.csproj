@@ -12,7 +12,7 @@
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <NoWarn>SA1652</NoWarn>
+        <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>

@@ -27,9 +27,9 @@ namespace MahApps.Metro.Controls.Dialogs
             this.RememberCheckBoxChecked = false;
         }
 
-        public string InitialUsername { get; set; }
+        public string? InitialUsername { get; set; }
 
-        public string InitialPassword { get; set; }
+        public string? InitialPassword { get; set; }
 
         public string UsernameWatermark { get; set; }
 

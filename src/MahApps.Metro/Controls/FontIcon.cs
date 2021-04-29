@@ -13,11 +13,10 @@ namespace MahApps.Metro.Controls
     {
         /// <summary>Identifies the <see cref="Glyph"/> dependency property.</summary>
         public static readonly DependencyProperty GlyphProperty
-            = DependencyProperty.Register(
-                nameof(Glyph),
-                typeof(string),
-                typeof(FontIcon),
-                new FrameworkPropertyMetadata(string.Empty));
+            = DependencyProperty.Register(nameof(Glyph),
+                                          typeof(string),
+                                          typeof(FontIcon),
+                                          new FrameworkPropertyMetadata(string.Empty));
 
         /// <summary>
         /// Gets or sets the character code that identifies the icon glyph.
@@ -25,8 +24,8 @@ namespace MahApps.Metro.Controls
         /// <returns>The hexadecimal character code for the icon glyph.</returns>
         public string Glyph
         {
-            get { return (string)this.GetValue(GlyphProperty); }
-            set { this.SetValue(GlyphProperty, value); }
+            get => (string)this.GetValue(GlyphProperty);
+            set => this.SetValue(GlyphProperty, value);
         }
 
         static FontIcon()

@@ -14,10 +14,11 @@ namespace MahApps.Metro.Controls
         /// Identifies the CloseOnMouseLeftButtonDown attached property.
         /// </summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
-            = DependencyProperty.RegisterAttached("CloseOnMouseLeftButtonDown",
-                                                  typeof(bool),
-                                                  typeof(ValidationHelper),
-                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
+            = DependencyProperty.RegisterAttached(
+                "CloseOnMouseLeftButtonDown",
+                typeof(bool),
+                typeof(ValidationHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets whether if the popup can be closed by left mouse button down.
@@ -43,10 +44,11 @@ namespace MahApps.Metro.Controls
         /// Identifies the ShowValidationErrorOnMouseOver attached property.
         /// </summary>
         public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
-            = DependencyProperty.RegisterAttached("ShowValidationErrorOnMouseOver",
-                                                  typeof(bool),
-                                                  typeof(ValidationHelper),
-                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
+            = DependencyProperty.RegisterAttached(
+                "ShowValidationErrorOnMouseOver",
+                typeof(bool),
+                typeof(ValidationHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets whether the validation error text will be shown when hovering the validation triangle.

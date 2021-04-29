@@ -18,12 +18,7 @@ namespace MahApps.Metro.Controls
                                                   typeof(int),
                                                   typeof(ComboBoxHelper),
                                                   new FrameworkPropertyMetadata(0),
-                                                  ValidateMaxLength);
-
-        private static bool ValidateMaxLength(object value)
-        {
-            return ((int)value) >= 0;
-        }
+                                                  value => (int)value >= 0);
 
         /// <summary>
         /// Gets the Maximum number of characters the TextBox can accept.
@@ -50,15 +45,10 @@ namespace MahApps.Metro.Controls
                                                   typeof(CharacterCasing),
                                                   typeof(ComboBoxHelper),
                                                   new FrameworkPropertyMetadata(CharacterCasing.Normal),
-                                                  ValidateCharacterCasing);
-
-        private static bool ValidateCharacterCasing(object value)
-        {
-            return (CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
-        }
+                                                  value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
 
         /// <summary>
-        /// Gets the Character casing of the TextBox.
+        /// Gets the Character casing of the inner TextBox.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
@@ -68,7 +58,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the Character casing of the TextBox.
+        /// Sets the Character casing of the inner TextBox.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]

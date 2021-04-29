@@ -13,7 +13,7 @@ namespace MetroDemo
     {
         public HomeView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

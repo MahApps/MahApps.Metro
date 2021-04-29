@@ -12,43 +12,36 @@ namespace MahApps.Metro.Converters
 {
     public sealed class ResizeModeMinMaxButtonVisibilityConverter : IMultiValueConverter
     {
-        private static ResizeModeMinMaxButtonVisibilityConverter _instance;
+        /// <summary>
+        /// Gets a static default instance of <see cref="ResizeModeMinMaxButtonVisibilityConverter"/>.
+        /// </summary>
+        public static readonly ResizeModeMinMaxButtonVisibilityConverter Instance = new();
 
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
         static ResizeModeMinMaxButtonVisibilityConverter()
         {
         }
 
-        private ResizeModeMinMaxButtonVisibilityConverter()
+        public object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
-        }
-
-        public static ResizeModeMinMaxButtonVisibilityConverter Instance
-        {
-            get { return _instance ?? (_instance = new ResizeModeMinMaxButtonVisibilityConverter()); }
-        }
-
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            var whichButton = parameter as string;
-            if (values != null && !string.IsNullOrEmpty(whichButton))
+            if (values != null && parameter is ResizeModeButtonType whichButton)
             {
-                var showButton = values.Length > 0 && (bool)values[0];
-                var useNoneWindowStyle = values.Length > 1 && (bool)values[1];
-                var windowResizeMode = values.Length > 2 ? (ResizeMode)values[2] : ResizeMode.CanResize;
+                var showButton = (values.ElementAtOrDefault(0) as bool?).GetValueOrDefault(true);
+                var useNoneWindowStyle = (values.ElementAtOrDefault(1) as bool?).GetValueOrDefault(false);
 
-                if (whichButton == "CLOSE")
+                if (whichButton == ResizeModeButtonType.Close)
                 {
                     return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
+
+                var windowResizeMode = (values.ElementAtOrDefault(2) as ResizeMode?).GetValueOrDefault(ResizeMode.CanResize);
 
                 switch (windowResizeMode)
                 {
                     case ResizeMode.NoResize:
                         return Visibility.Collapsed;
                     case ResizeMode.CanMinimize:
-                        if (whichButton == "MIN")
+                        if (whichButton == ResizeModeButtonType.Min)
                         {
                             return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                         }
@@ -64,7 +57,7 @@ namespace MahApps.Metro.Converters
             return Visibility.Visible;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return targetTypes.Select(t => DependencyProperty.UnsetValue).ToArray();
         }

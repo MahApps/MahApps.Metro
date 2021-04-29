@@ -12,10 +12,17 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(object), typeof(object))]
     internal sealed class HamburgerMenuItemAccessibleConverter : IMultiValueConverter
     {
-        /// <summary> Gets the default instance </summary>
-        internal static HamburgerMenuItemAccessibleConverter Default { get; } = new HamburgerMenuItemAccessibleConverter();
+        /// <summary>
+        /// Gets a static default instance of <see cref="HamburgerMenuItemAccessibleConverter"/>.
+        /// </summary>
+        internal static readonly HamburgerMenuItemAccessibleConverter Default = new();
 
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
+        static HamburgerMenuItemAccessibleConverter()
+        {
+        }
+
+        public object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             if (values is null)
             {
@@ -37,7 +44,7 @@ namespace MahApps.Metro.Converters
             return Binding.DoNothing;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             return targetTypes.Select(t => Binding.DoNothing).ToArray();
         }

@@ -9,7 +9,7 @@ namespace MahApps.Metro.Controls
 {
     public class LayoutInvalidationCatcher : Decorator
     {
-        private Planerator PlaParent => this.Parent as Planerator;
+        private Planerator? PlaParent => this.Parent as Planerator;
 
         protected override Size MeasureOverride(Size constraint)
         {

@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
     public interface IWindowPlacementSettings
     {
 #pragma warning disable 618
-        WINDOWPLACEMENT Placement { get; set; }
+        WINDOWPLACEMENT? Placement { get; set; }
 #pragma warning restore 618
 
         /// <summary>
@@ -47,13 +47,13 @@ namespace MahApps.Metro.Controls
 
 #pragma warning disable 618
         [UserScopedSetting]
-        public WINDOWPLACEMENT Placement
+        public WINDOWPLACEMENT? Placement
         {
             get
             {
                 if (this["Placement"] != null)
                 {
-                    return ((WINDOWPLACEMENT)this["Placement"]);
+                    return ((WINDOWPLACEMENT?)this["Placement"]);
                 }
 
                 return null;
@@ -77,9 +77,9 @@ namespace MahApps.Metro.Controls
                         return (bool)this["UpgradeSettings"];
                     }
                 }
-                catch (ConfigurationErrorsException ex)
+                catch (ConfigurationErrorsException? ex)
                 {
-                    string filename = null;
+                    string? filename = null;
                     while (ex != null && (filename = ex.Filename) == null)
                     {
                         ex = ex.InnerException as ConfigurationErrorsException;

@@ -9,12 +9,34 @@ namespace MahApps.Metro.Controls
 {
     public class PivotItem : ContentControl
     {
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(string), typeof(PivotItem), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty HeaderProperty
+            = DependencyProperty.Register(nameof(Header),
+                                          typeof(object),
+                                          typeof(PivotItem),
+                                          new PropertyMetadata(default(string)));
 
-        public string Header
+        /// <summary>
+        /// Gets or sets the Header of the <see cref="PivotItem"/>.
+        /// </summary>
+        public object? Header
         {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get => (object?)this.GetValue(HeaderProperty);
+            set => this.SetValue(HeaderProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="HeaderTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty HeaderTemplateProperty
+            = DependencyProperty.Register(nameof(HeaderTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(PivotItem));
+
+        /// <summary>
+        /// Gets or sets the HeaderTemplate of the <see cref="PivotItem"/>.
+        /// </summary>
+        public DataTemplate? HeaderTemplate
+        {
+            get => (DataTemplate?)this.GetValue(HeaderTemplateProperty);
+            set => this.SetValue(HeaderTemplateProperty, value);
         }
 
         static PivotItem()
@@ -24,7 +46,7 @@ namespace MahApps.Metro.Controls
 
         public PivotItem()
         {
-            RequestBringIntoView += (s, e) => { e.Handled = true; };
+            this.RequestBringIntoView += (s, e) => { e.Handled = true; };
         }
     }
 }

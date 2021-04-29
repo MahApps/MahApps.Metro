@@ -11,11 +11,11 @@ namespace MetroDemo.Core
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected bool Set<T>(ref T field, T newValue = default(T), [CallerMemberName] string propertyName = null)
+        protected bool Set<T>(ref T? field, T? newValue = default, [CallerMemberName] string? propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(field, newValue))
+            if (EqualityComparer<T>.Default.Equals(field!, newValue!))
             {
                 return false;
             }
@@ -28,7 +28,7 @@ namespace MetroDemo.Core
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

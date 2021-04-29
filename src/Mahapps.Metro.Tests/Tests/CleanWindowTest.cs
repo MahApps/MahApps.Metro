@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ControlzEx.Theming;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class CleanWindowTest : AutomationTestBase
     {

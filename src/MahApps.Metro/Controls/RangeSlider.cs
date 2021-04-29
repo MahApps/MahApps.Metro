@@ -5,7 +5,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -239,9 +238,10 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(UpperValueProperty, value);
         }
 
-        internal static object CoerceUpperValue(DependencyObject d, object basevalue)
+        [MustUseReturnValue]
+        internal static object CoerceUpperValue(DependencyObject d, object? baseValue)
         {
-            if (d is RangeSlider rangeSlider && basevalue is double value)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
                 if (value > rangeSlider.Maximum || rangeSlider.LowerValue + rangeSlider.MinRange > rangeSlider.Maximum)
                 {
@@ -254,7 +254,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="LowerValue"/> dependency property.</summary>
@@ -299,9 +299,10 @@ namespace MahApps.Metro.Controls
             this.ReCalculateSize();
         }
 
-        internal static object CoerceLowerValue(DependencyObject d, object basevalue)
+        [MustUseReturnValue]
+        internal static object CoerceLowerValue(DependencyObject d, object? baseValue)
         {
-            if (d is RangeSlider rangeSlider && basevalue is double value)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
                 if (value < rangeSlider.Minimum || rangeSlider.UpperValue - rangeSlider.MinRange < rangeSlider.Minimum)
                 {
@@ -314,7 +315,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="MinRange"/> dependency property.</summary>
@@ -360,17 +361,18 @@ namespace MahApps.Metro.Controls
             slider.ReCalculateSize();
         }
 
-        private static object CoerceMinRange(DependencyObject d, object basevalue)
+        [MustUseReturnValue]
+        private static object CoerceMinRange(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-            var value = (double)basevalue;
-
-            if (rangeSlider.LowerValue + value > rangeSlider.Maximum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return rangeSlider.Maximum - rangeSlider.LowerValue;
+                if (rangeSlider.LowerValue + value > rangeSlider.Maximum)
+                {
+                    return rangeSlider.Maximum - rangeSlider.LowerValue;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="MinRangeWidth"/> dependency property.</summary>
@@ -396,29 +398,31 @@ namespace MahApps.Metro.Controls
             (sender as RangeSlider)?.ReCalculateSize();
         }
 
-        private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
+        [MustUseReturnValue]
+        private static object CoerceMinRangeWidth(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-
-            if (rangeSlider._leftThumb != null && rangeSlider._rightThumb != null)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                double width;
-                if (rangeSlider.Orientation == Orientation.Horizontal)
+                if (rangeSlider._leftThumb != null && rangeSlider._rightThumb != null)
                 {
-                    width = rangeSlider.ActualWidth - rangeSlider._leftThumb.ActualWidth - rangeSlider._rightThumb.ActualWidth;
-                }
-                else
-                {
-                    width = rangeSlider.ActualHeight - rangeSlider._leftThumb.ActualHeight - rangeSlider._rightThumb.ActualHeight;
-                }
+                    double width;
+                    if (rangeSlider.Orientation == Orientation.Horizontal)
+                    {
+                        width = rangeSlider.ActualWidth - rangeSlider._leftThumb.ActualWidth - rangeSlider._rightThumb.ActualWidth;
+                    }
+                    else
+                    {
+                        width = rangeSlider.ActualHeight - rangeSlider._leftThumb.ActualHeight - rangeSlider._rightThumb.ActualHeight;
+                    }
 
-                return (double)basevalue > width / 2 ? width / 2 : (double)basevalue;
+                    return value > width / 2 ? width / 2 : value;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
-        private static bool IsValidMinRange(object value)
+        private static bool IsValidMinRange(object? value)
         {
             return value is double doubleValue && IsValidDouble(doubleValue) && doubleValue >= 0d;
         }
@@ -449,7 +453,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
-        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + control button
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -467,7 +471,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
-        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// When 'true', RangeSlider will automatically move the Thumb (and/or change current value) to the closest TickMark.
         /// </summary>
         [Bindable(true)]
         [Category("Appearance")]
@@ -551,9 +555,9 @@ namespace MahApps.Metro.Controls
         /// </returns>
         [Bindable(true)]
         [Category("Appearance")]
-        public DoubleCollection Ticks
+        public DoubleCollection? Ticks
         {
-            get => (DoubleCollection)this.GetValue(TicksProperty);
+            get => (DoubleCollection?)this.GetValue(TicksProperty);
             set => this.SetValue(TicksProperty, value);
         }
 
@@ -630,9 +634,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public DataTemplate AutoToolTipLowerValueTemplate
+        public DataTemplate? AutoToolTipLowerValueTemplate
         {
-            get => (DataTemplate)this.GetValue(AutoToolTipLowerValueTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AutoToolTipLowerValueTemplateProperty);
             set => this.SetValue(AutoToolTipLowerValueTemplateProperty, value);
         }
 
@@ -648,9 +652,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public DataTemplate AutoToolTipUpperValueTemplate
+        public DataTemplate? AutoToolTipUpperValueTemplate
         {
-            get => (DataTemplate)this.GetValue(AutoToolTipUpperValueTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AutoToolTipUpperValueTemplateProperty);
             set => this.SetValue(AutoToolTipUpperValueTemplateProperty, value);
         }
 
@@ -666,9 +670,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public DataTemplate AutoToolTipRangeValuesTemplate
+        public DataTemplate? AutoToolTipRangeValuesTemplate
         {
-            get => (DataTemplate)this.GetValue(AutoToolTipRangeValuesTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AutoToolTipRangeValuesTemplateProperty);
             set => this.SetValue(AutoToolTipRangeValuesTemplateProperty, value);
         }
 
@@ -738,24 +742,26 @@ namespace MahApps.Metro.Controls
             (d as RangeSlider)?.CoerceValue(SelectionEndProperty);
         }
 
-        private static object CoerceSelectionStart(DependencyObject d, object value)
+        [MustUseReturnValue]
+        private static object CoerceSelectionStart(DependencyObject d, object? baseValue)
         {
-            RangeSlider rangeSlider = (RangeSlider)d;
-            double num = (double)value;
-            double minimum = rangeSlider.Minimum;
-            double maximum = rangeSlider.Maximum;
-
-            if (num < minimum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return minimum;
+                double minimum = rangeSlider.Minimum;
+                double maximum = rangeSlider.Maximum;
+
+                if (value < minimum)
+                {
+                    return minimum;
+                }
+
+                if (value > maximum)
+                {
+                    return maximum;
+                }
             }
 
-            if (num > maximum)
-            {
-                return maximum;
-            }
-
-            return value;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="SelectionEnd"/> dependency property.</summary>
@@ -785,24 +791,26 @@ namespace MahApps.Metro.Controls
             (d as RangeSlider)?.CoerceValue(SelectionStartProperty);
         }
 
-        private static object CoerceSelectionEnd(DependencyObject d, object value)
+        [MustUseReturnValue]
+        private static object CoerceSelectionEnd(DependencyObject d, object? baseValue)
         {
-            RangeSlider rangeSlider = (RangeSlider)d;
-            double num = (double)value;
-            double selectionStart = rangeSlider.SelectionStart;
-            double maximum = rangeSlider.Maximum;
-
-            if (num < selectionStart)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return selectionStart;
+                double selectionStart = rangeSlider.SelectionStart;
+                double maximum = rangeSlider.Maximum;
+
+                if (value < selectionStart)
+                {
+                    return selectionStart;
+                }
+
+                if (value > maximum)
+                {
+                    return maximum;
+                }
             }
 
-            if (num > maximum)
-            {
-                return maximum;
-            }
-
-            return value;
+            return baseValue ?? 0D;
         }
 
         protected double MovableRange => this.Maximum - this.Minimum - this.MinRange;
@@ -814,13 +822,13 @@ namespace MahApps.Metro.Controls
         private const double Epsilon = 0.00000153;
 
         private bool _internalUpdate;
-        private Thumb _centerThumb;
-        private Thumb _leftThumb;
-        private Thumb _rightThumb;
-        private RepeatButton _leftButton;
-        private RepeatButton _rightButton;
-        private StackPanel _visualElementsContainer;
-        private FrameworkElement _container;
+        private Thumb _centerThumb = null!;
+        private Thumb _leftThumb = null!;
+        private Thumb _rightThumb = null!;
+        private RepeatButton _leftButton = null!;
+        private RepeatButton _rightButton = null!;
+        private StackPanel _visualElementsContainer = null!;
+        private FrameworkElement _container = null!;
         private double _movableWidth;
         private readonly DispatcherTimer _timer;
         private uint _tickCount;
@@ -833,7 +841,7 @@ namespace MahApps.Metro.Controls
         private Point _basePoint;
         private double _currenValue;
         private double _density;
-        private ToolTip _autoToolTip;
+        private ToolTip? _autoToolTip;
         private double _oldLower;
         private double _oldUpper;
         private bool _isMoved;
@@ -846,15 +854,15 @@ namespace MahApps.Metro.Controls
 
         public RangeSlider()
         {
-            this.CommandBindings.Add(new CommandBinding(MoveBack, (sender, e) => this.MoveSelection(true)));
-            this.CommandBindings.Add(new CommandBinding(MoveForward, (sender, e) => this.MoveSelection(false)));
-            this.CommandBindings.Add(new CommandBinding(MoveAllForward, (sender, e) => this.ResetSelection(false)));
-            this.CommandBindings.Add(new CommandBinding(MoveAllBack, (sender, e) => this.ResetSelection(true)));
+            this.CommandBindings.Add(new CommandBinding(MoveBack, (_, _) => this.MoveSelection(true)));
+            this.CommandBindings.Add(new CommandBinding(MoveForward, (_, _) => this.MoveSelection(false)));
+            this.CommandBindings.Add(new CommandBinding(MoveAllForward, (_, _) => this.ResetSelection(false)));
+            this.CommandBindings.Add(new CommandBinding(MoveAllBack, (_, _) => this.ResetSelection(true)));
 
             this.actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualWidthProperty);
-            this.actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => this.ReCalculateSize();
+            this.actualWidthPropertyChangeNotifier.ValueChanged += (_, _) => this.ReCalculateSize();
             this.actualHeightPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualHeightProperty);
-            this.actualHeightPropertyChangeNotifier.ValueChanged += (s, e) => this.ReCalculateSize();
+            this.actualHeightPropertyChangeNotifier.ValueChanged += (_, _) => this.ReCalculateSize();
 
             this._timer = new DispatcherTimer();
             this._timer.Tick += this.MoveToNextValue;
@@ -916,13 +924,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void MoveThumbHorizontal(FrameworkElement x, FrameworkElement y, double horizonalChange)
+        private static void MoveThumbHorizontal(FrameworkElement x, FrameworkElement y, double horizontalChange)
         {
             if (!double.IsNaN(x.Width) && !double.IsNaN(y.Width))
             {
-                if (horizonalChange < 0) //slider went left
+                if (horizontalChange < 0) //slider went left
                 {
-                    var change = GetChangeKeepPositive(x.Width, horizonalChange);
+                    var change = GetChangeKeepPositive(x.Width, horizontalChange);
                     if (x.Name == "PART_MiddleThumb")
                     {
                         if (x.Width > x.MinWidth)
@@ -946,9 +954,9 @@ namespace MahApps.Metro.Controls
                         y.Width -= change;
                     }
                 }
-                else if (horizonalChange > 0) //slider went right if(horizontal change == 0 do nothing)
+                else if (horizontalChange > 0) //slider went right if(horizontal change == 0 do nothing)
                 {
-                    var change = -GetChangeKeepPositive(y.Width, -horizonalChange);
+                    var change = -GetChangeKeepPositive(y.Width, -horizontalChange);
                     if (y.Name == "PART_MiddleThumb")
                     {
                         if (y.Width > y.MinWidth)
@@ -1157,7 +1165,7 @@ namespace MahApps.Metro.Controls
             RaiseValueChangedEvents(this, reCalculateLowerValue, reCalculateUpperValue);
         }
 
-        //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving separately)
+        //Method used for checking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving separately)
         private void ReCalculateRangeSelected(bool reCalculateLowerValue, bool reCalculateUpperValue, double value, Direction direction)
         {
             this._internalUpdate = true; //set flag to signal that the properties are being set by the object itself
@@ -1208,17 +1216,18 @@ namespace MahApps.Metro.Controls
             RaiseValueChangedEvents(this, reCalculateLowerValue, reCalculateUpperValue);
         }
 
-        //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
+        //Method used for checking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
         private void ReCalculateRangeSelected(double newLower, double newUpper, Direction direction)
         {
-            double lower = 0,
-                   upper = 0;
             this._internalUpdate = true; //set flag to signal that the properties are being set by the object itself
             this._oldLower = this.LowerValue;
             this._oldUpper = this.UpperValue;
 
             if (this.IsSnapToTickEnabled)
             {
+                double lower;
+                double upper;
+
                 if (direction == Direction.Increase)
                 {
                     lower = Math.Min(newLower, this.Maximum - (this.UpperValue - this.LowerValue));
@@ -1294,13 +1303,13 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            this._container = this.GetTemplateChild("PART_Container") as FrameworkElement;
-            this._visualElementsContainer = this.GetTemplateChild("PART_RangeSliderContainer") as StackPanel;
-            this._centerThumb = this.GetTemplateChild("PART_MiddleThumb") as Thumb;
-            this._leftButton = this.GetTemplateChild("PART_LeftEdge") as RepeatButton;
-            this._rightButton = this.GetTemplateChild("PART_RightEdge") as RepeatButton;
-            this._leftThumb = this.GetTemplateChild("PART_LeftThumb") as Thumb;
-            this._rightThumb = this.GetTemplateChild("PART_RightThumb") as Thumb;
+            this._container = this.GetTemplateChild("PART_Container") as FrameworkElement ?? throw new MissingRequiredTemplatePartException(this, "PART_Container");
+            this._visualElementsContainer = this.GetTemplateChild("PART_RangeSliderContainer") as StackPanel ?? throw new MissingRequiredTemplatePartException(this, "PART_RangeSliderContainer");
+            this._centerThumb = this.GetTemplateChild("PART_MiddleThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_MiddleThumb");
+            this._leftButton = this.GetTemplateChild("PART_LeftEdge") as RepeatButton ?? throw new MissingRequiredTemplatePartException(this, "PART_LeftEdge");
+            this._rightButton = this.GetTemplateChild("PART_RightEdge") as RepeatButton ?? throw new MissingRequiredTemplatePartException(this, "PART_RightEdge");
+            this._leftThumb = this.GetTemplateChild("PART_LeftThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_LeftThumb");
+            this._rightThumb = this.GetTemplateChild("PART_RightThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_RightThumb");
 
             this.InitializeVisualElementsContainer();
             this.ReCalculateSize();
@@ -1309,45 +1318,39 @@ namespace MahApps.Metro.Controls
         //adds visual element to the container
         private void InitializeVisualElementsContainer()
         {
-            if (this._visualElementsContainer != null
-                && this._leftThumb != null
-                && this._rightThumb != null
-                && this._centerThumb != null)
-            {
-                this._leftThumb.DragCompleted -= this.LeftThumbDragComplete;
-                this._rightThumb.DragCompleted -= this.RightThumbDragComplete;
-                this._leftThumb.DragStarted -= this.LeftThumbDragStart;
-                this._rightThumb.DragStarted -= this.RightThumbDragStart;
-                this._centerThumb.DragStarted -= this.CenterThumbDragStarted;
-                this._centerThumb.DragCompleted -= this.CenterThumbDragCompleted;
+            this._leftThumb.DragCompleted -= this.LeftThumbDragComplete;
+            this._rightThumb.DragCompleted -= this.RightThumbDragComplete;
+            this._leftThumb.DragStarted -= this.LeftThumbDragStart;
+            this._rightThumb.DragStarted -= this.RightThumbDragStart;
+            this._centerThumb.DragStarted -= this.CenterThumbDragStarted;
+            this._centerThumb.DragCompleted -= this.CenterThumbDragCompleted;
 
-                //handle the drag delta events
-                this._centerThumb.DragDelta -= this.CenterThumbDragDelta;
-                this._leftThumb.DragDelta -= this.LeftThumbDragDelta;
-                this._rightThumb.DragDelta -= this.RightThumbDragDelta;
+            //handle the drag delta events
+            this._centerThumb.DragDelta -= this.CenterThumbDragDelta;
+            this._leftThumb.DragDelta -= this.LeftThumbDragDelta;
+            this._rightThumb.DragDelta -= this.RightThumbDragDelta;
 
-                this._visualElementsContainer.PreviewMouseDown -= this.VisualElementsContainerPreviewMouseDown;
-                this._visualElementsContainer.PreviewMouseUp -= this.VisualElementsContainerPreviewMouseUp;
-                this._visualElementsContainer.MouseLeave -= this.VisualElementsContainerMouseLeave;
-                this._visualElementsContainer.MouseDown -= this.VisualElementsContainerMouseDown;
+            this._visualElementsContainer.PreviewMouseDown -= this.VisualElementsContainerPreviewMouseDown;
+            this._visualElementsContainer.PreviewMouseUp -= this.VisualElementsContainerPreviewMouseUp;
+            this._visualElementsContainer.MouseLeave -= this.VisualElementsContainerMouseLeave;
+            this._visualElementsContainer.MouseDown -= this.VisualElementsContainerMouseDown;
 
-                this._leftThumb.DragCompleted += this.LeftThumbDragComplete;
-                this._rightThumb.DragCompleted += this.RightThumbDragComplete;
-                this._leftThumb.DragStarted += this.LeftThumbDragStart;
-                this._rightThumb.DragStarted += this.RightThumbDragStart;
-                this._centerThumb.DragStarted += this.CenterThumbDragStarted;
-                this._centerThumb.DragCompleted += this.CenterThumbDragCompleted;
+            this._leftThumb.DragCompleted += this.LeftThumbDragComplete;
+            this._rightThumb.DragCompleted += this.RightThumbDragComplete;
+            this._leftThumb.DragStarted += this.LeftThumbDragStart;
+            this._rightThumb.DragStarted += this.RightThumbDragStart;
+            this._centerThumb.DragStarted += this.CenterThumbDragStarted;
+            this._centerThumb.DragCompleted += this.CenterThumbDragCompleted;
 
-                //handle the drag delta events
-                this._centerThumb.DragDelta += this.CenterThumbDragDelta;
-                this._leftThumb.DragDelta += this.LeftThumbDragDelta;
-                this._rightThumb.DragDelta += this.RightThumbDragDelta;
+            //handle the drag delta events
+            this._centerThumb.DragDelta += this.CenterThumbDragDelta;
+            this._leftThumb.DragDelta += this.LeftThumbDragDelta;
+            this._rightThumb.DragDelta += this.RightThumbDragDelta;
 
-                this._visualElementsContainer.PreviewMouseDown += this.VisualElementsContainerPreviewMouseDown;
-                this._visualElementsContainer.PreviewMouseUp += this.VisualElementsContainerPreviewMouseUp;
-                this._visualElementsContainer.MouseLeave += this.VisualElementsContainerMouseLeave;
-                this._visualElementsContainer.MouseDown += this.VisualElementsContainerMouseDown;
-            }
+            this._visualElementsContainer.PreviewMouseDown += this.VisualElementsContainerPreviewMouseDown;
+            this._visualElementsContainer.PreviewMouseUp += this.VisualElementsContainerPreviewMouseUp;
+            this._visualElementsContainer.MouseLeave += this.VisualElementsContainerMouseLeave;
+            this._visualElementsContainer.MouseDown += this.VisualElementsContainerMouseDown;
         }
 
         //Handler for preview mouse button down for the whole StackPanel container
@@ -1613,12 +1616,7 @@ namespace MahApps.Metro.Controls
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (this._autoToolTip == null)
-                {
-                    this._autoToolTip = new ToolTip();
-                    this._autoToolTip.Placement = PlacementMode.Custom;
-                    this._autoToolTip.CustomPopupPlacementCallback = this.PopupPlacementCallback;
-                }
+                this._autoToolTip ??= new ToolTip { Placement = PlacementMode.Custom, CustomPopupPlacementCallback = this.PopupPlacementCallback };
 
                 this._autoToolTip.SetValue(ContentControl.ContentTemplateProperty, this.AutoToolTipLowerValueTemplate);
                 this._autoToolTip.Content = this.GetToolTipNumber(this.LowerValue);
@@ -1663,7 +1661,8 @@ namespace MahApps.Metro.Controls
             }
 
             this._basePoint = Mouse.GetPosition(this._container);
-            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
+            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None
+                && this._autoToolTip is not null)
             {
                 this._autoToolTip.Content = this.GetToolTipNumber(this.LowerValue);
                 this.RelocateAutoToolTip();
@@ -1690,12 +1689,7 @@ namespace MahApps.Metro.Controls
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (this._autoToolTip == null)
-                {
-                    this._autoToolTip = new ToolTip();
-                    this._autoToolTip.Placement = PlacementMode.Custom;
-                    this._autoToolTip.CustomPopupPlacementCallback = this.PopupPlacementCallback;
-                }
+                this._autoToolTip ??= new ToolTip { Placement = PlacementMode.Custom, CustomPopupPlacementCallback = this.PopupPlacementCallback };
 
                 this._autoToolTip.SetValue(ContentControl.ContentTemplateProperty, this.AutoToolTipUpperValueTemplate);
                 this._autoToolTip.Content = this.GetToolTipNumber(this.UpperValue);
@@ -1741,7 +1735,8 @@ namespace MahApps.Metro.Controls
                 this._basePoint = Mouse.GetPosition(this._container);
             }
 
-            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
+            if (this.AutoToolTipPlacement != AutoToolTipPlacement.None
+                && this._autoToolTip is not null)
             {
                 this._autoToolTip.Content = this.GetToolTipNumber(this.UpperValue);
                 this.RelocateAutoToolTip();
@@ -1768,12 +1763,7 @@ namespace MahApps.Metro.Controls
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (this._autoToolTip == null)
-                {
-                    this._autoToolTip = new ToolTip();
-                    this._autoToolTip.Placement = PlacementMode.Custom;
-                    this._autoToolTip.CustomPopupPlacementCallback = this.PopupPlacementCallback;
-                }
+                this._autoToolTip ??= new ToolTip { Placement = PlacementMode.Custom, CustomPopupPlacementCallback = this.PopupPlacementCallback };
 
                 var autoToolTipRangeValuesTemplate = this.AutoToolTipRangeValuesTemplate;
                 this._autoToolTip.SetValue(ContentControl.ContentTemplateProperty, autoToolTipRangeValuesTemplate);
@@ -1829,7 +1819,8 @@ namespace MahApps.Metro.Controls
                 }
 
                 this._basePoint = Mouse.GetPosition(this._container);
-                if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
+                if (this.AutoToolTipPlacement != AutoToolTipPlacement.None
+                    && this._autoToolTip is not null)
                 {
                     if (this._autoToolTip.ContentTemplate != null)
                     {
@@ -1913,7 +1904,7 @@ namespace MahApps.Metro.Controls
 
         //This is timer event, which starts when IsMoveToPoint = false
         //Supports IsSnapToTick option
-        private void MoveToNextValue(object sender, EventArgs e)
+        private void MoveToNextValue(object? sender, EventArgs e)
         {
             //Get updated position of cursor
             this._position = Mouse.GetPosition(this._visualElementsContainer);
@@ -2138,11 +2129,11 @@ namespace MahApps.Metro.Controls
                 var x = currentValue / this.TickFrequency;
                 if (direction == Direction.Increase)
                 {
-                    var nextvalue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
+                    var nextValue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
                         ? (x * this.TickFrequency) + this.TickFrequency
                         : ((int)x * this.TickFrequency) + this.TickFrequency;
 
-                    distance = (nextvalue - Math.Abs(checkingValuePos));
+                    distance = (nextValue - Math.Abs(checkingValuePos));
                 }
                 else
                 {
@@ -2154,7 +2145,7 @@ namespace MahApps.Metro.Controls
             }
 
             //return absolute value without sign not to depend on it if value is negative 
-            //(could cause bugs in calcutaions if return not absolute value)
+            //(could cause bugs in calculations if return not absolute value)
             return Math.Abs(distance);
         }
 
@@ -2213,9 +2204,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        //Change AutotoolTipPosition to move sync with Thumb
+        //Change AutotoolTip position to move sync with Thumb
         private void RelocateAutoToolTip()
         {
+            if (this._autoToolTip is null)
+            {
+                return;
+            }
+
             var offset = this._autoToolTip.HorizontalOffset;
             this._autoToolTip.HorizontalOffset = offset + 0.001;
             this._autoToolTip.HorizontalOffset = offset;
@@ -2239,7 +2235,7 @@ namespace MahApps.Metro.Controls
             return value.ToString("N", numberFormatInfo);
         }
 
-        //CustomPopupPlacement callback for placing autotooltip int TopLeft or BottomRight position
+        //CustomPopupPlacement callback for placing AutoToolTip int TopLeft or BottomRight position
         private CustomPopupPlacement[] PopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
         {
             switch (this.AutoToolTipPlacement)
@@ -2273,17 +2269,17 @@ namespace MahApps.Metro.Controls
 
         #region Validation methods
 
-        private static bool IsValidDoubleValue(object value)
+        private static bool IsValidDoubleValue(object? value)
         {
             return value is double doubleValue && IsValidDouble(doubleValue);
         }
 
-        private static bool IsValidDouble(double d)
+        private static bool IsValidDouble(double? d)
         {
-            return !double.IsNaN(d) && !double.IsInfinity(d);
+            return d is not null && !double.IsNaN(d.Value) && !double.IsInfinity(d.Value);
         }
 
-        private static bool IsValidPrecision(object value)
+        private static bool IsValidPrecision(object? value)
         {
             return value is int intValue && intValue >= 0;
         }
@@ -2292,30 +2288,32 @@ namespace MahApps.Metro.Controls
 
         #region Coerce callbacks
 
-        private static object CoerceMinimum(DependencyObject d, object basevalue)
+        [MustUseReturnValue]
+        private static object CoerceMinimum(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-            var value = (double)basevalue;
-
-            if (value > rangeSlider.Maximum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return rangeSlider.Maximum;
+                if (value > rangeSlider.Maximum)
+                {
+                    return rangeSlider.Maximum;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
-        private static object CoerceMaximum(DependencyObject d, object basevalue)
+        [MustUseReturnValue]
+        private static object CoerceMaximum(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-            var value = (double)basevalue;
-
-            if (value < rangeSlider.Minimum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return rangeSlider.Minimum;
+                if (value < rangeSlider.Minimum)
+                {
+                    return rangeSlider.Minimum;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         #endregion
@@ -2380,66 +2378,6 @@ namespace MahApps.Metro.Controls
         {
             Increase,
             Decrease
-        }
-    }
-
-    public class RangeSliderAutoTooltipValues : INotifyPropertyChanged
-    {
-        private string lowerValue;
-
-        /// <summary>
-        /// Gets the lower value of the range selection.
-        /// </summary>
-        public string LowerValue
-        {
-            get => this.lowerValue;
-            set
-            {
-                if (value.Equals(this.lowerValue)) return;
-                this.lowerValue = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        private string upperValue;
-
-        /// <summary>
-        /// Gets the upper value of the range selection.
-        /// </summary>
-        public string UpperValue
-        {
-            get => this.upperValue;
-            set
-            {
-                if (value.Equals(this.upperValue)) return;
-                this.upperValue = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        internal RangeSliderAutoTooltipValues(RangeSlider rangeSlider)
-        {
-            this.UpdateValues(rangeSlider);
-        }
-
-        internal void UpdateValues(RangeSlider rangeSlider)
-        {
-            this.LowerValue = rangeSlider.GetToolTipNumber(rangeSlider.LowerValue);
-            this.UpperValue = rangeSlider.GetToolTipNumber(rangeSlider.UpperValue);
-        }
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return this.LowerValue + " - " + this.UpperValue;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

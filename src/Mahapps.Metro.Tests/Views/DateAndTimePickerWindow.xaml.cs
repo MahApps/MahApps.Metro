@@ -4,13 +4,13 @@
 
 using MahApps.Metro.Controls;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Views
 {
     public partial class DateAndTimePickerWindow : MetroWindow
     {
         public DateAndTimePickerWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

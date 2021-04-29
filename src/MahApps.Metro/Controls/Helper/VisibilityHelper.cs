@@ -20,13 +20,12 @@ namespace MahApps.Metro.Controls
 
         private static void IsVisibleChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var fe = d as FrameworkElement;
-            if (fe == null)
-                return;
-
-            fe.Visibility = ((bool?)e.NewValue) == true
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+            if (d is FrameworkElement fe)
+            {
+                fe.Visibility = (bool?)e.NewValue == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
         }
 
         public static void SetIsVisible(DependencyObject element, bool? value)
@@ -51,13 +50,12 @@ namespace MahApps.Metro.Controls
 
         private static void IsCollapsedChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var fe = d as FrameworkElement;
-            if (fe == null)
-                return;
-
-            fe.Visibility = ((bool?)e.NewValue) == true
-                ? Visibility.Collapsed
-                : Visibility.Visible;
+            if (d is FrameworkElement fe)
+            {
+                fe.Visibility = (bool?)e.NewValue == true
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+            }
         }
 
         public static void SetIsCollapsed(DependencyObject element, bool? value)
@@ -82,13 +80,12 @@ namespace MahApps.Metro.Controls
 
         private static void IsHiddenChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var fe = d as FrameworkElement;
-            if (fe == null)
-                return;
-
-            fe.Visibility = ((bool?)e.NewValue) == true
-                ? Visibility.Hidden
-                : Visibility.Visible;
+            if (d is FrameworkElement fe)
+            {
+                fe.Visibility = (bool?)e.NewValue == true
+                    ? Visibility.Hidden
+                    : Visibility.Visible;
+            }
         }
 
         public static void SetIsHidden(DependencyObject element, bool? value)

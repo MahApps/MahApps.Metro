@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Threading;
 using System.Windows;
 
@@ -23,19 +22,19 @@ namespace MahApps.Metro.Controls.Dialogs
             this.ColorScheme = MetroDialogColorScheme.Theme;
             this.AnimateShow = this.AnimateHide = true;
 
-            this.MaximumBodyHeight = Double.NaN;
+            this.MaximumBodyHeight = double.NaN;
 
             this.DefaultText = "";
             this.DefaultButtonFocus = MessageDialogResult.Negative;
             this.CancellationToken = CancellationToken.None;
-            this.DialogTitleFontSize = Double.NaN;
-            this.DialogMessageFontSize = Double.NaN;
-            this.DialogButtonFontSize = Double.NaN;
+            this.DialogTitleFontSize = double.NaN;
+            this.DialogMessageFontSize = double.NaN;
+            this.DialogButtonFontSize = double.NaN;
             this.DialogResultOnCancel = null;
         }
 
         /// <summary>
-        /// Gets or sets wheater the owner of the dialog can be closed.
+        /// Gets or sets whether the owner of the dialog can be closed.
         /// </summary>
         public bool OwnerCanCloseWithDialog { get; set; }
 
@@ -71,7 +70,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets a custom resource dictionary which can contains custom styles, brushes or something else.
         /// </summary>
-        public ResourceDictionary CustomResourceDictionary { get; set; }
+        public ResourceDictionary? CustomResourceDictionary { get; set; }
 
         /// <summary>
         /// Gets or sets which button should be focused by default
@@ -79,7 +78,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public MessageDialogResult DefaultButtonFocus { get; set; }
 
         /// <summary>
-        /// Gets or sets the default text (just the inputdialog needed)
+        /// Gets or sets the default text for <see cref="InputDialog"/>.
         /// </summary>
         public string DefaultText { get; set; }
 
@@ -127,7 +126,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the text used for the first auxiliary button.
         /// </summary>
-        public string FirstAuxiliaryButtonText { get; set; }
+        public string? FirstAuxiliaryButtonText { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
@@ -142,6 +141,6 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets the text used for the second auxiliary button.
         /// </summary>
-        public string SecondAuxiliaryButtonText { get; set; }
+        public string? SecondAuxiliaryButtonText { get; set; }
     }
 }

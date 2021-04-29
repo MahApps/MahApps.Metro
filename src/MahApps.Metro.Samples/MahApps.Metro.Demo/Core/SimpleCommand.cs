@@ -9,15 +9,15 @@ namespace MetroDemo.Core
 {
     public class SimpleCommand : ICommand
     {
-        public SimpleCommand(Func<object, bool> canExecute = null, Action<object> execute = null)
+        public SimpleCommand(Func<object, bool>? canExecute = null, Action<object>? execute = null)
         {
             this.CanExecuteDelegate = canExecute;
             this.ExecuteDelegate = execute;
         }
 
-        public Func<object, bool> CanExecuteDelegate { get; set; }
+        public Func<object, bool>? CanExecuteDelegate { get; set; }
 
-        public Action<object> ExecuteDelegate { get; set; }
+        public Action<object>? ExecuteDelegate { get; set; }
 
         public bool CanExecute(object parameter)
         {

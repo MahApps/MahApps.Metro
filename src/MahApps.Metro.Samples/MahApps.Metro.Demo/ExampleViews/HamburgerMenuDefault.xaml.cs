@@ -37,8 +37,8 @@ namespace MetroDemo.ExampleViews
         // Another option to handle the options menu item click
         private async void HamburgerMenuControl_OnOptionsItemClick(object sender, ItemClickEventArgs e)
         {
-            var menuItem = e.ClickedItem as HamburgerMenuItem;
-            await this.TryFindParent<MetroWindow>().ShowMessageAsync("", $"You clicked on {menuItem.Label} button");
+            var menuItem = (HamburgerMenuItem)e.ClickedItem!;
+            await this.TryFindParent<MetroWindow>()!.ShowMessageAsync("", $"You clicked on {menuItem.Label} button");
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
@@ -61,10 +61,10 @@ namespace MetroDemo.ExampleViews
         // Using a DependencyProperty as the backing store for Data. This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register(nameof(Data), typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
 
-        public object Data
+        public object? Data
         {
-            get { return (object)this.GetValue(DataProperty); }
-            set { this.SetValue(DataProperty, value); }
+            get => this.GetValue(DataProperty);
+            set => this.SetValue(DataProperty, value);
         }
 
         protected override Freezable CreateInstanceCore()

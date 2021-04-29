@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleWindows
     {
         public SizeToContentDemo()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

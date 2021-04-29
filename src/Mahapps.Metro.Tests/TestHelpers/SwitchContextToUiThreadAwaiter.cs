@@ -22,10 +22,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             return this;
         }
 
-        public bool IsCompleted
-        {
-            get { return false; }
-        }
+        public bool IsCompleted => false;
 
         public void OnCompleted(Action continuation)
         {

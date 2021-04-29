@@ -5,9 +5,11 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
+    [StyleTypedProperty(Property = "ToggleButtonStyle", StyleTargetType = typeof(ToggleButton))]
     public static class TreeViewItemHelper
     {
         public static readonly DependencyProperty ToggleButtonStyleProperty
@@ -15,16 +17,16 @@ namespace MahApps.Metro.Controls
                 "ToggleButtonStyle",
                 typeof(Style),
                 typeof(TreeViewItemHelper),
-                new FrameworkPropertyMetadata((Style)null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets the toggle button style used for the TreeViewItem expander.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
-        public static Style GetToggleButtonStyle(UIElement element)
+        public static Style? GetToggleButtonStyle(UIElement element)
         {
-            return (Style)element.GetValue(ToggleButtonStyleProperty);
+            return (Style?)element.GetValue(ToggleButtonStyleProperty);
         }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
-        public static void SetToggleButtonStyle(UIElement element, Style value)
+        public static void SetToggleButtonStyle(UIElement element, Style? value)
         {
             element.SetValue(ToggleButtonStyleProperty, value);
         }

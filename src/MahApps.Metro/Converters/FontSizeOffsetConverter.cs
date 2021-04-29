@@ -10,38 +10,31 @@ using System.Windows.Data;
 namespace MahApps.Metro.Converters
 {
     // this converter is only used by DatePicker to convert the font size to width and height of the icon button
+    [ValueConversion(typeof(double), typeof(double), ParameterType = typeof(double))]
+    [ValueConversion(typeof(object), typeof(object), ParameterType = typeof(double))]
     public class FontSizeOffsetConverter : IValueConverter
     {
-        private static FontSizeOffsetConverter _instance;
+        /// <summary>
+        /// Gets a static default instance of <see cref="FontSizeOffsetConverter"/>.
+        /// </summary>
+        public static readonly FontSizeOffsetConverter Instance = new();
 
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
         static FontSizeOffsetConverter()
         {
         }
 
-        private FontSizeOffsetConverter()
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-        }
-
-        public static FontSizeOffsetConverter Instance
-        {
-            get { return _instance ?? (_instance = new FontSizeOffsetConverter()); }
-        }
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is double && parameter is double)
+            if (value is double orgValue && parameter is double offset)
             {
-                var offset = (double)parameter;
-                var orgValue = (double)value;
                 return Math.Round(orgValue + offset);
             }
 
             return value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }

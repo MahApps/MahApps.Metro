@@ -50,7 +50,7 @@
                     Margin="2"
                     caliburn:Message.Attach="[Event Click] = [Action ToggleFlyout(3)]"
                     Content="Settings" />
-            <Button x:Name="Close"
+            <Button x:Name="CloseButton"
                     MinWidth="90"
                     Margin="2"
                     Content="Close" />

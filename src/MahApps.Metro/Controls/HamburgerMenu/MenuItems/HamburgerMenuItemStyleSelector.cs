@@ -15,7 +15,7 @@ namespace MahApps.Metro.Controls
         public bool IsItemOptions { get; set; }
 
         /// <inheritdoc />
-        public override Style SelectStyle(object item, DependencyObject container)
+        public override Style SelectStyle(object? item, DependencyObject? container)
         {
             if (container != null)
             {

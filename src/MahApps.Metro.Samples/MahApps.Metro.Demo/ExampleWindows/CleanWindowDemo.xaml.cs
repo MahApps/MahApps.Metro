@@ -29,14 +29,20 @@ namespace MetroDemo.ExampleWindows
 
         private async void CleanWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (e.Cancel) return;
+            if (e.Cancel)
+            {
+                return;
+            }
 
             // we want manage the closing itself!
             e.Cancel = !this.closeMe;
             // yes we want now really close the window
-            if (this.closeMe) return;
+            if (this.closeMe)
+            {
+                return;
+            }
 
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Quit",
                                  NegativeButtonText = "Cancel",
@@ -50,18 +56,21 @@ namespace MetroDemo.ExampleWindows
 
             this.closeMe = result == MessageDialogResult.Affirmative;
 
-            if (this.closeMe) this.Close();
+            if (this.closeMe)
+            {
+                this.Close();
+            }
         }
 
         internal class SuperDataTemplateSelector : DataTemplateSelector
         {
-            public DataTemplate FirstTemplate { get; set; }
+            public DataTemplate? FirstTemplate { get; set; }
 
-            public DataTemplate SecondTemplate { get; set; }
+            public DataTemplate? SecondTemplate { get; set; }
 
-            public DataTemplate NullTemplate { get; set; }
+            public DataTemplate? NullTemplate { get; set; }
 
-            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            public override DataTemplate? SelectTemplate(object? item, DependencyObject container)
             {
                 if (item == null)
                 {
@@ -88,7 +97,7 @@ namespace MetroDemo.ExampleWindows
             this.ShowMessageAsync("Something",
                                   "Something should be displayed here.",
                                   MessageDialogStyle.Affirmative,
-                                  new MetroDialogSettings()
+                                  new MetroDialogSettings
                                   {
                                       ColorScheme = MetroDialogColorScheme.Inverted
                                   });

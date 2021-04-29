@@ -21,52 +21,76 @@ namespace MahApps.Metro.Controls.Dialogs
         private CancellationTokenRegistration cancellationTokenRegistration;
 
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty MessageProperty
+            = DependencyProperty.Register(nameof(Message),
+                                          typeof(string),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata(default(string)));
 
-        public string Message
+        public string? Message
         {
-            get { return (string)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
+            get => (string?)this.GetValue(MessageProperty);
+            set => this.SetValue(MessageProperty, value);
         }
 
         /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register(nameof(AffirmativeButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("OK"));
+        public static readonly DependencyProperty AffirmativeButtonTextProperty
+            = DependencyProperty.Register(nameof(AffirmativeButtonText),
+                                          typeof(string),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata("OK"));
 
         public string AffirmativeButtonText
         {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+            get => (string)this.GetValue(AffirmativeButtonTextProperty);
+            set => this.SetValue(AffirmativeButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty NegativeButtonTextProperty
+            = DependencyProperty.Register(nameof(NegativeButtonText),
+                                          typeof(string),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata("Cancel"));
 
         public string NegativeButtonText
         {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
+            get => (string)this.GetValue(NegativeButtonTextProperty);
+            set => this.SetValue(NegativeButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="FirstAuxiliaryButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(FirstAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty
+            = DependencyProperty.Register(nameof(FirstAuxiliaryButtonText),
+                                          typeof(string),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata(default(string)));
 
-        public string FirstAuxiliaryButtonText
+        public string? FirstAuxiliaryButtonText
         {
-            get { return (string)this.GetValue(FirstAuxiliaryButtonTextProperty); }
-            set { this.SetValue(FirstAuxiliaryButtonTextProperty, value); }
+            get => (string?)this.GetValue(FirstAuxiliaryButtonTextProperty);
+            set => this.SetValue(FirstAuxiliaryButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SecondAuxiliaryButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(SecondAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty
+            = DependencyProperty.Register(nameof(SecondAuxiliaryButtonText),
+                                          typeof(string),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata(default(string)));
 
-        public string SecondAuxiliaryButtonText
+        public string? SecondAuxiliaryButtonText
         {
-            get { return (string)this.GetValue(SecondAuxiliaryButtonTextProperty); }
-            set { this.SetValue(SecondAuxiliaryButtonTextProperty, value); }
+            get => (string?)this.GetValue(SecondAuxiliaryButtonTextProperty);
+            set => this.SetValue(SecondAuxiliaryButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ButtonStyle"/> dependency property.</summary>
-        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register(nameof(ButtonStyle), typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, ButtonStylePropertyChangedCallback));
+        public static readonly DependencyProperty ButtonStyleProperty
+            = DependencyProperty.Register(nameof(ButtonStyle),
+                                          typeof(MessageDialogStyle),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata(MessageDialogStyle.Affirmative, ButtonStylePropertyChangedCallback));
 
         private static void ButtonStylePropertyChangedCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
@@ -78,8 +102,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public MessageDialogStyle ButtonStyle
         {
-            get { return (MessageDialogStyle)this.GetValue(ButtonStyleProperty); }
-            set { this.SetValue(ButtonStyleProperty, value); }
+            get => (MessageDialogStyle)this.GetValue(ButtonStyleProperty);
+            set => this.SetValue(ButtonStyleProperty, value);
         }
 
         internal MessageDialog()
@@ -87,18 +111,31 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        internal MessageDialog(MetroWindow parentWindow)
+        internal MessageDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        internal MessageDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        internal MessageDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
             this.InitializeComponent();
 
+            this.SetCurrentValue(FirstAuxiliaryButtonTextProperty, "Cancel");
+            this.SetCurrentValue(SecondAuxiliaryButtonTextProperty, "Cancel");
+
             this.PART_MessageScrollViewer.Height = this.DialogSettings.MaximumBodyHeight;
         }
+
+        private RoutedEventHandler? negativeHandler = null;
+        private KeyEventHandler? negativeKeyHandler = null;
+        private RoutedEventHandler? affirmativeHandler = null;
+        private KeyEventHandler? affirmativeKeyHandler = null;
+        private RoutedEventHandler? firstAuxHandler = null;
+        private KeyEventHandler? firstAuxKeyHandler = null;
+        private RoutedEventHandler? secondAuxHandler = null;
+        private KeyEventHandler? secondAuxKeyHandler = null;
+        private KeyEventHandler? escapeKeyHandler = null;
 
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
@@ -140,36 +177,22 @@ namespace MahApps.Metro.Controls.Dialogs
 
             var tcs = new TaskCompletionSource<MessageDialogResult>();
 
-            RoutedEventHandler negativeHandler = null;
-            KeyEventHandler negativeKeyHandler = null;
+            void CleanUpHandlers()
+            {
+                this.PART_NegativeButton.Click -= this.negativeHandler;
+                this.PART_AffirmativeButton.Click -= this.affirmativeHandler;
+                this.PART_FirstAuxiliaryButton.Click -= this.firstAuxHandler;
+                this.PART_SecondAuxiliaryButton.Click -= this.secondAuxHandler;
 
-            RoutedEventHandler affirmativeHandler = null;
-            KeyEventHandler affirmativeKeyHandler = null;
+                this.PART_NegativeButton.KeyDown -= this.negativeKeyHandler;
+                this.PART_AffirmativeButton.KeyDown -= this.affirmativeKeyHandler;
+                this.PART_FirstAuxiliaryButton.KeyDown -= this.firstAuxKeyHandler;
+                this.PART_SecondAuxiliaryButton.KeyDown -= this.secondAuxKeyHandler;
 
-            RoutedEventHandler firstAuxHandler = null;
-            KeyEventHandler firstAuxKeyHandler = null;
+                this.KeyDown -= this.escapeKeyHandler;
 
-            RoutedEventHandler secondAuxHandler = null;
-            KeyEventHandler secondAuxKeyHandler = null;
-
-            KeyEventHandler escapeKeyHandler = null;
-
-            Action cleanUpHandlers = () =>
-                {
-                    this.PART_NegativeButton.Click -= negativeHandler;
-                    this.PART_AffirmativeButton.Click -= affirmativeHandler;
-                    this.PART_FirstAuxiliaryButton.Click -= firstAuxHandler;
-                    this.PART_SecondAuxiliaryButton.Click -= secondAuxHandler;
-
-                    this.PART_NegativeButton.KeyDown -= negativeKeyHandler;
-                    this.PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
-                    this.PART_FirstAuxiliaryButton.KeyDown -= firstAuxKeyHandler;
-                    this.PART_SecondAuxiliaryButton.KeyDown -= secondAuxKeyHandler;
-
-                    this.KeyDown -= escapeKeyHandler;
-
-                    this.cancellationTokenRegistration.Dispose();
-                };
+                this.cancellationTokenRegistration.Dispose();
+            }
 
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
@@ -177,98 +200,98 @@ namespace MahApps.Metro.Controls.Dialogs
                                                          {
                                                              this.BeginInvoke(() =>
                                                                  {
-                                                                     cleanUpHandlers();
+                                                                     CleanUpHandlers();
                                                                      tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
                                                                  });
                                                          });
 
-            negativeKeyHandler = (sender, e) =>
+            negativeKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
                         tcs.TrySetResult(MessageDialogResult.Negative);
                     }
                 };
 
-            affirmativeKeyHandler = (sender, e) =>
+            affirmativeKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
                         tcs.TrySetResult(MessageDialogResult.Affirmative);
                     }
                 };
 
-            firstAuxKeyHandler = (sender, e) =>
+            firstAuxKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
                         tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
                     }
                 };
 
-            secondAuxKeyHandler = (sender, e) =>
+            secondAuxKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
                         tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
                     }
                 };
 
-            negativeHandler = (sender, e) =>
+            negativeHandler = (_, e) =>
                 {
-                    cleanUpHandlers();
+                    CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.Negative);
 
                     e.Handled = true;
                 };
 
-            affirmativeHandler = (sender, e) =>
+            affirmativeHandler = (_, e) =>
                 {
-                    cleanUpHandlers();
+                    CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.Affirmative);
 
                     e.Handled = true;
                 };
 
-            firstAuxHandler = (sender, e) =>
+            firstAuxHandler = (_, e) =>
                 {
-                    cleanUpHandlers();
+                    CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
 
                     e.Handled = true;
                 };
 
-            secondAuxHandler = (sender, e) =>
+            secondAuxHandler = (_, e) =>
                 {
-                    cleanUpHandlers();
+                    CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
 
                     e.Handled = true;
                 };
 
-            escapeKeyHandler = (sender, e) =>
+            escapeKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
                         tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? (this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative));
                     }
                     else if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
                         tcs.TrySetResult(MessageDialogResult.Affirmative);
                     }
@@ -291,8 +314,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static void SetButtonState(MessageDialog md)
         {
-            if (md.PART_AffirmativeButton == null)
+            if (md.PART_AffirmativeButton is null)
+            {
                 return;
+            }
 
             switch (md.ButtonStyle)
             {
@@ -347,24 +372,23 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void OnKeyCopyExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Clipboard.SetDataObject(this.Message);
+            var message = this.Message;
+            if (message != null)
+            {
+                Clipboard.SetDataObject(message);
+            }
         }
 
         private bool IsApplicable(MessageDialogResult value)
         {
-            switch (value)
+            return value switch
             {
-                case MessageDialogResult.Affirmative:
-                    return this.PART_AffirmativeButton.IsVisible;
-                case MessageDialogResult.Negative:
-                    return this.PART_NegativeButton.IsVisible;
-                case MessageDialogResult.FirstAuxiliary:
-                    return this.PART_FirstAuxiliaryButton.IsVisible;
-                case MessageDialogResult.SecondAuxiliary:
-                    return this.PART_SecondAuxiliaryButton.IsVisible;
-            }
-
-            return false;
+                MessageDialogResult.Affirmative => this.PART_AffirmativeButton.IsVisible,
+                MessageDialogResult.Negative => this.PART_NegativeButton.IsVisible,
+                MessageDialogResult.FirstAuxiliary => this.PART_FirstAuxiliaryButton.IsVisible,
+                MessageDialogResult.SecondAuxiliary => this.PART_SecondAuxiliaryButton.IsVisible,
+                _ => false
+            };
         }
     }
 }

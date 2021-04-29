@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
@@ -29,12 +30,19 @@ namespace MahApps.Metro.Controls
             if (dependencyObject is ColorPickerBase colorPicker && e.OldValue != e.NewValue && !colorPicker.ColorIsUpdating)
             {
                 colorPicker.ColorIsUpdating = true;
-                colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color? ?? colorPicker.DefaultColor);
-                colorPicker.ColorIsUpdating = false;
+                try
+                {
+                    colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color? ?? colorPicker.DefaultColor);
+                }
+                finally
+                {
+                    colorPicker.ColorIsUpdating = false;
+                }
             }
         }
 
-        private static object CoerceSelectedColorProperty(DependencyObject dependencyObject, object basevalue)
+        [MustUseReturnValue]
+        private static object? CoerceSelectedColorProperty(DependencyObject dependencyObject, object? basevalue)
         {
             if (dependencyObject is ColorPickerBase colorPicker)
             {
@@ -100,22 +108,34 @@ namespace MahApps.Metro.Controls
 
         private static void OnColorNamePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (dependencyObject is ColorPickerBase colorPicker)
+            if (dependencyObject is ColorPickerBase colorPicker && !colorPicker.ColorIsUpdating)
             {
-                if (!colorPicker.ColorIsUpdating)
+                if (string.IsNullOrEmpty(e.NewValue?.ToString()))
                 {
-                    if (string.IsNullOrEmpty(e.NewValue?.ToString()))
-                    {
-                        colorPicker.SetCurrentValue(SelectedColorProperty, null);
-                    }
-                    else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is Color color)
+                    colorPicker.SetCurrentValue(SelectedColorProperty, null);
+                }
+                else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
+                {
+                    if (colorPicker.SelectedColor != color)
                     {
                         colorPicker.SetCurrentValue(SelectedColorProperty, color);
                     }
-                    else
+                    else // if the color stayed the same we still have to update the displayed name
                     {
-                        throw new InvalidCastException("Cannot convert the given input to a valid color");
+                        colorPicker.ColorIsUpdating = true;
+                        try
+                        {
+                            colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(color, colorPicker.ColorNamesDictionary));
+                        }
+                        finally
+                        {
+                            colorPicker.ColorIsUpdating = false;
+                        }
                     }
+                }
+                else
+                {
+                    throw new InvalidCastException("Cannot convert the given input to a valid color");
                 }
             }
         }
@@ -123,25 +143,25 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the name of the <see cref="SelectedColor"/>.
         /// </summary>
-        public string ColorName
+        public string? ColorName
         {
-            get => (string)this.GetValue(ColorNameProperty);
+            get => (string?)this.GetValue(ColorNameProperty);
             set => this.SetValue(ColorNameProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
         public static readonly DependencyProperty ColorNamesDictionaryProperty
             = DependencyProperty.Register(nameof(ColorNamesDictionary),
-                                          typeof(Dictionary<Color?, string>),
+                                          typeof(Dictionary<Color, string>),
                                           typeof(ColorPickerBase),
                                           new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a <see cref="Dictionary{TKey, TValue}"/> for looking up the <see cref="ColorName"/>
         /// </summary>
-        public Dictionary<Color?, string> ColorNamesDictionary
+        public Dictionary<Color, string>? ColorNamesDictionary
         {
-            get => (Dictionary<Color?, string>)this.GetValue(ColorNamesDictionaryProperty);
+            get => (Dictionary<Color, string>?)this.GetValue(ColorNamesDictionaryProperty);
             set => this.SetValue(ColorNamesDictionaryProperty, value);
         }
 
@@ -223,8 +243,14 @@ namespace MahApps.Metro.Controls
                 var hsv = new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value);
 
                 colorPicker.UpdateHsvValues = false;
-                colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor());
-                colorPicker.UpdateHsvValues = true;
+                try
+                {
+                    colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor());
+                }
+                finally
+                {
+                    colorPicker.UpdateHsvValues = true;
+                }
             }
         }
 
@@ -431,7 +457,7 @@ namespace MahApps.Metro.Controls
 
         internal virtual void OnSelectedColorChanged(Color? oldValue, Color? newValue)
         {
-            this.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(newValue, this.ColorNamesDictionary));
+            this.SetCurrentValue(ColorNameProperty, newValue is null ? null : ColorHelper.GetColorName(newValue.Value, this.ColorNamesDictionary));
 
             // We just update the following lines if we have a Color.
             if (newValue != null)

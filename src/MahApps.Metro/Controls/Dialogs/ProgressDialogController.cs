@@ -21,12 +21,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// This event is raised when the associated <see cref="ProgressDialog"/> was closed programmatically.
         /// </summary>
-        public event EventHandler Closed;
+        public event EventHandler? Closed;
 
         /// <summary>
         /// This event is raised when the associated <see cref="ProgressDialog"/> was cancelled by the user.
         /// </summary>
-        public event EventHandler Canceled;
+        public event EventHandler? Canceled;
 
         /// <summary>
         /// Gets if the Cancel button has been pressed.
@@ -102,7 +102,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Minimum
         {
-            get { return this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum); }
+            get => this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum);
             set { this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum = value); }
         }
 
@@ -111,7 +111,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Maximum
         {
-            get { return this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum); }
+            get => this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum);
             set { this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum = value); }
         }
 

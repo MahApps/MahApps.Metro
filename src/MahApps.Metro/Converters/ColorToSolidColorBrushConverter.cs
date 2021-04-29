@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using JetBrains.Annotations;
 
 namespace MahApps.Metro.Converters
 {
@@ -12,26 +11,27 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(Color), typeof(SolidColorBrush))]
     public class ColorToSolidColorBrushConverter : IValueConverter
     {
-        private static ColorToSolidColorBrushConverter defaultInstance;
-
         /// <summary>
-        /// Gets a static instance of the converter if needed.
+        /// Gets a static default instance of <see cref="ColorToSolidColorBrushConverter"/>.
         /// </summary>
-        public static ColorToSolidColorBrushConverter DefaultInstance => defaultInstance ??= new ColorToSolidColorBrushConverter();
+        public static readonly ColorToSolidColorBrushConverter DefaultInstance = new();
+
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
+        static ColorToSolidColorBrushConverter()
+        {
+        }
 
         /// <summary>
         /// Gets or Sets the brush which will be used if the conversion fails.
         /// </summary>
-        [CanBeNull]
-        public SolidColorBrush FallbackBrush { get; set; }
+        public SolidColorBrush? FallbackBrush { get; set; }
 
         /// <summary>
         /// Gets or Sets the color which will be used if the conversion fails.
         /// </summary>
-        [CanBeNull]
         public Color? FallbackColor { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo? culture)
         {
             if (value is Color color)
             {
@@ -43,7 +43,7 @@ namespace MahApps.Metro.Converters
             return this.FallbackBrush;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo? culture)
         {
             return value is SolidColorBrush brush ? brush.Color : this.FallbackColor;
         }

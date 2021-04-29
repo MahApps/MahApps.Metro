@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ControlzEx.Native;
 using ControlzEx.Theming;
-using System;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,7 +21,7 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(DarkCloseButtonStyle), StyleTargetType = typeof(Button))]
     public class WindowButtonCommands : ContentControl
     {
-        public event ClosingWindowEventHandler ClosingWindow;
+        public event ClosingWindowEventHandler? ClosingWindow;
 
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
 
@@ -38,9 +35,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current light style for the minimize button.
         /// </summary>
-        public Style LightMinButtonStyle
+        public Style? LightMinButtonStyle
         {
-            get => (Style)this.GetValue(LightMinButtonStyleProperty);
+            get => (Style?)this.GetValue(LightMinButtonStyleProperty);
             set => this.SetValue(LightMinButtonStyleProperty, value);
         }
 
@@ -54,9 +51,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current light style for the maximize button.
         /// </summary>
-        public Style LightMaxButtonStyle
+        public Style? LightMaxButtonStyle
         {
-            get => (Style)this.GetValue(LightMaxButtonStyleProperty);
+            get => (Style?)this.GetValue(LightMaxButtonStyleProperty);
             set => this.SetValue(LightMaxButtonStyleProperty, value);
         }
 
@@ -70,9 +67,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current light style for the close button.
         /// </summary>
-        public Style LightCloseButtonStyle
+        public Style? LightCloseButtonStyle
         {
-            get => (Style)this.GetValue(LightCloseButtonStyleProperty);
+            get => (Style?)this.GetValue(LightCloseButtonStyleProperty);
             set => this.SetValue(LightCloseButtonStyleProperty, value);
         }
 
@@ -86,9 +83,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current dark style for the minimize button.
         /// </summary>
-        public Style DarkMinButtonStyle
+        public Style? DarkMinButtonStyle
         {
-            get => (Style)this.GetValue(DarkMinButtonStyleProperty);
+            get => (Style?)this.GetValue(DarkMinButtonStyleProperty);
             set => this.SetValue(DarkMinButtonStyleProperty, value);
         }
 
@@ -102,9 +99,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current dark style for the maximize button.
         /// </summary>
-        public Style DarkMaxButtonStyle
+        public Style? DarkMaxButtonStyle
         {
-            get => (Style)this.GetValue(DarkMaxButtonStyleProperty);
+            get => (Style?)this.GetValue(DarkMaxButtonStyleProperty);
             set => this.SetValue(DarkMaxButtonStyleProperty, value);
         }
 
@@ -118,9 +115,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating current dark style for the close button.
         /// </summary>
-        public Style DarkCloseButtonStyle
+        public Style? DarkCloseButtonStyle
         {
-            get => (Style)this.GetValue(DarkCloseButtonStyleProperty);
+            get => (Style?)this.GetValue(DarkCloseButtonStyleProperty);
             set => this.SetValue(DarkCloseButtonStyleProperty, value);
         }
 
@@ -150,9 +147,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the minimize button tooltip.
         /// </summary>
-        public string Minimize
+        public string? Minimize
         {
-            get => (string)this.GetValue(MinimizeProperty);
+            get => (string?)this.GetValue(MinimizeProperty);
             set => this.SetValue(MinimizeProperty, value);
         }
 
@@ -166,9 +163,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the maximize button tooltip.
         /// </summary>
-        public string Maximize
+        public string? Maximize
         {
-            get => (string)this.GetValue(MaximizeProperty);
+            get => (string?)this.GetValue(MaximizeProperty);
             set => this.SetValue(MaximizeProperty, value);
         }
 
@@ -182,9 +179,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the close button tooltip.
         /// </summary>
-        public string Close
+        public string? Close
         {
-            get => (string)this.GetValue(CloseProperty);
+            get => (string?)this.GetValue(CloseProperty);
             set => this.SetValue(CloseProperty, value);
         }
 
@@ -198,9 +195,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the restore button tooltip.
         /// </summary>
-        public string Restore
+        public string? Restore
         {
-            get => (string)this.GetValue(RestoreProperty);
+            get => (string?)this.GetValue(RestoreProperty);
             set => this.SetValue(RestoreProperty, value);
         }
 
@@ -217,9 +214,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the window.
         /// </summary>
-        public Window ParentWindow
+        public Window? ParentWindow
         {
-            get => (Window)this.GetValue(ParentWindowProperty);
+            get => (Window?)this.GetValue(ParentWindowProperty);
             protected set => this.SetValue(ParentWindowPropertyKey, value);
         }
 
@@ -237,7 +234,7 @@ namespace MahApps.Metro.Controls
 
             this.BeginInvoke(() =>
                                  {
-                                     if (null == this.ParentWindow)
+                                     if (this.ParentWindow is null)
                                      {
                                          var window = this.TryFindParent<Window>();
                                          this.SetValue(ParentWindowPropertyKey, window);
@@ -245,22 +242,22 @@ namespace MahApps.Metro.Controls
 
                                      if (string.IsNullOrWhiteSpace(this.Minimize))
                                      {
-                                         this.SetCurrentValue(MinimizeProperty, this.GetCaption(900));
+                                         this.SetCurrentValue(MinimizeProperty, WinApiHelper.GetCaption(900));
                                      }
 
                                      if (string.IsNullOrWhiteSpace(this.Maximize))
                                      {
-                                         this.SetCurrentValue(MaximizeProperty, this.GetCaption(901));
+                                         this.SetCurrentValue(MaximizeProperty, WinApiHelper.GetCaption(901));
                                      }
 
                                      if (string.IsNullOrWhiteSpace(this.Close))
                                      {
-                                         this.SetCurrentValue(CloseProperty, this.GetCaption(905));
+                                         this.SetCurrentValue(CloseProperty, WinApiHelper.GetCaption(905));
                                      }
 
                                      if (string.IsNullOrWhiteSpace(this.Restore))
                                      {
-                                         this.SetCurrentValue(RestoreProperty, this.GetCaption(903));
+                                         this.SetCurrentValue(RestoreProperty, WinApiHelper.GetCaption(903));
                                      }
                                  },
                              DispatcherPriority.Loaded);
@@ -305,21 +302,5 @@ namespace MahApps.Metro.Controls
                 SystemCommands.CloseWindow(this.ParentWindow);
             }
         }
-
-#pragma warning disable 618
-        private string GetCaption(int id)
-        {
-            if (this.user32 == null)
-            {
-                this.user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
-            }
-
-            var sb = new StringBuilder(256);
-            UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
-            return sb.ToString().Replace("&", "");
-        }
-
-        private SafeLibraryHandle user32;
-#pragma warning restore 618
     }
 }

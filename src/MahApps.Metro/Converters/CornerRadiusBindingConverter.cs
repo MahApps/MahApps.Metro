@@ -17,7 +17,7 @@ namespace MahApps.Metro.Converters
     {
         public RadiusType IgnoreRadius { get; set; } = RadiusType.None;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is CornerRadius cornerRadius)
             {
@@ -29,33 +29,24 @@ namespace MahApps.Metro.Converters
                     ignoreRadius = radiusType;
                 }
 
-                switch (ignoreRadius)
+                return ignoreRadius switch
                 {
-                    case RadiusType.Left:
-                        return new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, 0);
-                    case RadiusType.Top:
-                        return new CornerRadius(0, 0, cornerRadius.BottomRight, cornerRadius.BottomLeft);
-                    case RadiusType.Right:
-                        return new CornerRadius(cornerRadius.TopLeft, 0, 0, cornerRadius.BottomLeft);
-                    case RadiusType.Bottom:
-                        return new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, 0, 0);
-                    case RadiusType.TopLeft:
-                        return new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, cornerRadius.BottomLeft);
-                    case RadiusType.TopRight:
-                        return new CornerRadius(cornerRadius.TopLeft, 0, cornerRadius.BottomRight, cornerRadius.BottomLeft);
-                    case RadiusType.BottomRight:
-                        return new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, 0, cornerRadius.BottomLeft);
-                    case RadiusType.BottomLeft:
-                        return new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, cornerRadius.BottomRight, 0);
-                    default:
-                        return cornerRadius;
-                }
+                    RadiusType.Left => new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, 0),
+                    RadiusType.Top => new CornerRadius(0, 0, cornerRadius.BottomRight, cornerRadius.BottomLeft),
+                    RadiusType.Right => new CornerRadius(cornerRadius.TopLeft, 0, 0, cornerRadius.BottomLeft),
+                    RadiusType.Bottom => new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, 0, 0),
+                    RadiusType.TopLeft => new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, cornerRadius.BottomLeft),
+                    RadiusType.TopRight => new CornerRadius(cornerRadius.TopLeft, 0, cornerRadius.BottomRight, cornerRadius.BottomLeft),
+                    RadiusType.BottomRight => new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, 0, cornerRadius.BottomLeft),
+                    RadiusType.BottomLeft => new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, cornerRadius.BottomRight, 0),
+                    _ => cornerRadius
+                };
             }
 
             return default(CornerRadius);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             // for now no back converting
             return DependencyProperty.UnsetValue;

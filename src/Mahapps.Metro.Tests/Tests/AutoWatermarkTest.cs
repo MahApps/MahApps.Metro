@@ -4,11 +4,11 @@
 
 using System.Threading.Tasks;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Tests;
-using Xunit;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
+using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class AutoWatermarkTest : AutomationTestBase
     {

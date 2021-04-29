@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -32,22 +33,22 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(TabItemStyle), StyleTargetType = typeof(TabItem))]
     public class ColorPicker : ColorPickerBase
     {
-        private Popup PART_Popup;
-        private ColorPalette PART_ColorPaletteStandard;
-        private ColorPalette PART_ColorPaletteAvailable;
-        private ColorPalette PART_ColorPaletteCustom01;
-        private ColorPalette PART_ColorPaletteCustom02;
-        private ColorPalette PART_ColorPaletteRecent;
-        private TabControl PART_PopupTabControl;
-        private TabItem PART_ColorPalettesTab;
-        private TabItem PART_AdvancedTab;
+        private Popup? PART_Popup;
+        private ColorPalette? PART_ColorPaletteStandard;
+        private ColorPalette? PART_ColorPaletteAvailable;
+        private ColorPalette? PART_ColorPaletteCustom01;
+        private ColorPalette? PART_ColorPaletteCustom02;
+        private ColorPalette? PART_ColorPaletteRecent;
+        private TabControl? PART_PopupTabControl;
+        private TabItem? PART_ColorPalettesTab;
+        private TabItem? PART_AdvancedTab;
 
         /// <summary>Identifies the <see cref="DropDownClosed"/> routed event.</summary>
-        public static readonly RoutedEvent DropDownClosedEvent = EventManager.RegisterRoutedEvent(
-            nameof(DropDownClosed),
-            RoutingStrategy.Bubble,
-            typeof(EventHandler<EventArgs>),
-            typeof(ColorPicker));
+        public static readonly RoutedEvent DropDownClosedEvent
+            = EventManager.RegisterRoutedEvent(nameof(DropDownClosed),
+                                               RoutingStrategy.Bubble,
+                                               typeof(EventHandler<EventArgs>),
+                                               typeof(ColorPicker));
 
         /// <summary>
         ///     Occurs when the DropDown is closed.
@@ -59,11 +60,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="DropDownOpened"/> routed event.</summary>
-        public static readonly RoutedEvent DropDownOpenedEvent = EventManager.RegisterRoutedEvent(
-            nameof(DropDownOpened),
-            RoutingStrategy.Bubble,
-            typeof(EventHandler<EventArgs>),
-            typeof(ColorPicker));
+        public static readonly RoutedEvent DropDownOpenedEvent
+            = EventManager.RegisterRoutedEvent(nameof(DropDownOpened),
+                                               RoutingStrategy.Bubble,
+                                               typeof(EventHandler<EventArgs>),
+                                               typeof(ColorPicker));
 
         /// <summary>
         ///     Occurs when the DropDown is opened.
@@ -113,7 +114,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsDropDownOpen),
                                           typeof(bool),
                                           typeof(ColorPicker),
-                                          new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged));
 
         /// <summary>
         /// Whether or not the "popup" for this control is currently open
@@ -122,7 +123,7 @@ namespace MahApps.Metro.Controls
         public bool IsDropDownOpen
         {
             get => (bool)this.GetValue(IsDropDownOpenProperty);
-            set => this.SetValue(IsDropDownOpenProperty, value);
+            set => this.SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="SelectedColorTemplate"/> dependency property.</summary>
@@ -135,9 +136,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="DataTemplate"/> for the <see cref="ColorPickerBase.SelectedColor"/>
         /// </summary>
-        public DataTemplate SelectedColorTemplate
+        public DataTemplate? SelectedColorTemplate
         {
-            get => (DataTemplate)this.GetValue(SelectedColorTemplateProperty);
+            get => (DataTemplate?)this.GetValue(SelectedColorTemplateProperty);
             set => this.SetValue(SelectedColorTemplateProperty, value);
         }
 
@@ -162,7 +163,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(IsAvailableColorPaletteVisible),
                                         typeof(bool),
                                         typeof(ColorPicker),
-                                        new PropertyMetadata(true));
+                                        new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets the visibility of the available <see cref="ColorPalette"/>.
@@ -170,7 +171,7 @@ namespace MahApps.Metro.Controls
         public bool IsAvailableColorPaletteVisible
         {
             get => (bool)this.GetValue(IsAvailableColorPaletteVisibleProperty);
-            set => this.SetValue(IsAvailableColorPaletteVisibleProperty, value);
+            set => this.SetValue(IsAvailableColorPaletteVisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="AvailableColorPaletteHeader"/> dependency property.</summary>
@@ -199,9 +200,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
-        public DataTemplate AvailableColorPaletteHeaderTemplate
+        public DataTemplate? AvailableColorPaletteHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(AvailableColorPaletteHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AvailableColorPaletteHeaderTemplateProperty);
             set => this.SetValue(AvailableColorPaletteHeaderTemplateProperty, value);
         }
 
@@ -215,9 +216,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
-        public IEnumerable AvailableColorPaletteItemsSource
+        public IEnumerable? AvailableColorPaletteItemsSource
         {
-            get => (IEnumerable)this.GetValue(AvailableColorPaletteItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(AvailableColorPaletteItemsSourceProperty);
             set => this.SetValue(AvailableColorPaletteItemsSourceProperty, value);
         }
 
@@ -231,9 +232,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the available <see cref="ColorPalette"/>.
         /// </summary>
-        public Style AvailableColorPaletteStyle
+        public Style? AvailableColorPaletteStyle
         {
-            get => (Style)this.GetValue(AvailableColorPaletteStyleProperty);
+            get => (Style?)this.GetValue(AvailableColorPaletteStyleProperty);
             set => this.SetValue(AvailableColorPaletteStyleProperty, value);
         }
 
@@ -242,7 +243,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(IsCustomColorPalette01Visible),
                                         typeof(bool),
                                         typeof(ColorPicker),
-                                        new PropertyMetadata(false));
+                                        new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets the visibility of the custom <see cref="ColorPalette"/> (1/2).
@@ -250,7 +251,7 @@ namespace MahApps.Metro.Controls
         public bool IsCustomColorPalette01Visible
         {
             get => (bool)this.GetValue(IsCustomColorPalette01VisibleProperty);
-            set => this.SetValue(IsCustomColorPalette01VisibleProperty, value);
+            set => this.SetValue(IsCustomColorPalette01VisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="CustomColorPalette01Header"/> dependency property.</summary>
@@ -279,9 +280,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
-        public DataTemplate CustomColorPalette01HeaderTemplate
+        public DataTemplate? CustomColorPalette01HeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(CustomColorPalette01HeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(CustomColorPalette01HeaderTemplateProperty);
             set => this.SetValue(CustomColorPalette01HeaderTemplateProperty, value);
         }
 
@@ -295,9 +296,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
-        public IEnumerable CustomColorPalette01ItemsSource
+        public IEnumerable? CustomColorPalette01ItemsSource
         {
-            get => (IEnumerable)this.GetValue(CustomColorPalette01ItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(CustomColorPalette01ItemsSourceProperty);
             set => this.SetValue(CustomColorPalette01ItemsSourceProperty, value);
         }
 
@@ -311,9 +312,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the custom <see cref="ColorPalette"/> (1/2).
         /// </summary>
-        public Style CustomColorPalette01Style
+        public Style? CustomColorPalette01Style
         {
-            get => (Style)this.GetValue(CustomColorPalette01StyleProperty);
+            get => (Style?)this.GetValue(CustomColorPalette01StyleProperty);
             set => this.SetValue(CustomColorPalette01StyleProperty, value);
         }
 
@@ -322,7 +323,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(IsCustomColorPalette02Visible),
                                         typeof(bool),
                                         typeof(ColorPicker),
-                                        new PropertyMetadata(false));
+                                        new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets the visibility of the custom <see cref="ColorPalette"/> (2/2).
@@ -330,7 +331,7 @@ namespace MahApps.Metro.Controls
         public bool IsCustomColorPalette02Visible
         {
             get => (bool)this.GetValue(IsCustomColorPalette02VisibleProperty);
-            set => this.SetValue(IsCustomColorPalette02VisibleProperty, value);
+            set => this.SetValue(IsCustomColorPalette02VisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="CustomColorPalette02Header"/> dependency property.</summary>
@@ -359,9 +360,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
-        public DataTemplate CustomColorPalette02HeaderTemplate
+        public DataTemplate? CustomColorPalette02HeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(CustomColorPalette02HeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(CustomColorPalette02HeaderTemplateProperty);
             set => this.SetValue(CustomColorPalette02HeaderTemplateProperty, value);
         }
 
@@ -375,9 +376,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
-        public IEnumerable CustomColorPalette02ItemsSource
+        public IEnumerable? CustomColorPalette02ItemsSource
         {
-            get => (IEnumerable)this.GetValue(CustomColorPalette02ItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(CustomColorPalette02ItemsSourceProperty);
             set => this.SetValue(CustomColorPalette02ItemsSourceProperty, value);
         }
 
@@ -391,9 +392,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the custom <see cref="ColorPalette"/> (2/2).
         /// </summary>
-        public Style CustomColorPalette02Style
+        public Style? CustomColorPalette02Style
         {
-            get => (Style)this.GetValue(CustomColorPalette02StyleProperty);
+            get => (Style?)this.GetValue(CustomColorPalette02StyleProperty);
             set => this.SetValue(CustomColorPalette02StyleProperty, value);
         }
 
@@ -402,7 +403,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(IsRecentColorPaletteVisible),
                                         typeof(bool),
                                         typeof(ColorPicker),
-                                        new PropertyMetadata(true));
+                                        new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets the visibility of the recent <see cref="ColorPalette"/>.
@@ -410,7 +411,7 @@ namespace MahApps.Metro.Controls
         public bool IsRecentColorPaletteVisible
         {
             get => (bool)this.GetValue(IsRecentColorPaletteVisibleProperty);
-            set => this.SetValue(IsRecentColorPaletteVisibleProperty, value);
+            set => this.SetValue(IsRecentColorPaletteVisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="RecentColorPaletteHeader"/> dependency property.</summary>
@@ -439,9 +440,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
-        public DataTemplate RecentColorPaletteHeaderTemplate
+        public DataTemplate? RecentColorPaletteHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(RecentColorPaletteHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(RecentColorPaletteHeaderTemplateProperty);
             set => this.SetValue(RecentColorPaletteHeaderTemplateProperty, value);
         }
 
@@ -455,9 +456,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
-        public IEnumerable RecentColorPaletteItemsSource
+        public IEnumerable? RecentColorPaletteItemsSource
         {
-            get => (IEnumerable)this.GetValue(RecentColorPaletteItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(RecentColorPaletteItemsSourceProperty);
             set => this.SetValue(RecentColorPaletteItemsSourceProperty, value);
         }
 
@@ -471,9 +472,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the recent <see cref="ColorPalette"/>.
         /// </summary>
-        public Style RecentColorPaletteStyle
+        public Style? RecentColorPaletteStyle
         {
-            get => (Style)this.GetValue(RecentColorPaletteStyleProperty);
+            get => (Style?)this.GetValue(RecentColorPaletteStyleProperty);
             set => this.SetValue(RecentColorPaletteStyleProperty, value);
         }
 
@@ -482,7 +483,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(IsStandardColorPaletteVisible),
                                         typeof(bool),
                                         typeof(ColorPicker),
-                                        new PropertyMetadata(true));
+                                        new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets the visibility of the standard <see cref="ColorPalette"/>.
@@ -490,7 +491,7 @@ namespace MahApps.Metro.Controls
         public bool IsStandardColorPaletteVisible
         {
             get => (bool)this.GetValue(IsStandardColorPaletteVisibleProperty);
-            set => this.SetValue(IsStandardColorPaletteVisibleProperty, value);
+            set => this.SetValue(IsStandardColorPaletteVisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="StandardColorPaletteHeader"/> dependency property.</summary>
@@ -519,9 +520,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ColorPalette.HeaderTemplate"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
-        public object StandardColorPaletteHeaderTemplate
+        public object? StandardColorPaletteHeaderTemplate
         {
-            get => (object)this.GetValue(StandardColorPaletteHeaderTemplateProperty);
+            get => (object?)this.GetValue(StandardColorPaletteHeaderTemplateProperty);
             set => this.SetValue(StandardColorPaletteHeaderTemplateProperty, value);
         }
 
@@ -535,9 +536,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsControl.ItemsSource"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
-        public IEnumerable StandardColorPaletteItemsSource
+        public IEnumerable? StandardColorPaletteItemsSource
         {
-            get => (IEnumerable)this.GetValue(StandardColorPaletteItemsSourceProperty);
+            get => (IEnumerable?)this.GetValue(StandardColorPaletteItemsSourceProperty);
             set => this.SetValue(StandardColorPaletteItemsSourceProperty, value);
         }
 
@@ -551,9 +552,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> of the standard <see cref="ColorPalette"/>.
         /// </summary>
-        public Style StandardColorPaletteStyle
+        public Style? StandardColorPaletteStyle
         {
-            get => (Style)this.GetValue(StandardColorPaletteStyleProperty);
+            get => (Style?)this.GetValue(StandardColorPaletteStyleProperty);
             set => this.SetValue(StandardColorPaletteStyleProperty, value);
         }
 
@@ -567,9 +568,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> for the <see cref="TabControl"/>.
         /// </summary>
-        public Style TabControlStyle
+        public Style? TabControlStyle
         {
-            get => (Style)this.GetValue(TabControlStyleProperty);
+            get => (Style?)this.GetValue(TabControlStyleProperty);
             set => this.SetValue(TabControlStyleProperty, value);
         }
 
@@ -583,9 +584,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> for the <see cref="TabItem"/>
         /// </summary>
-        public Style TabItemStyle
+        public Style? TabItemStyle
         {
-            get => (Style)this.GetValue(TabItemStyleProperty);
+            get => (Style?)this.GetValue(TabItemStyleProperty);
             set => this.SetValue(TabItemStyleProperty, value);
         }
 
@@ -615,9 +616,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="HeaderedContentControl.HeaderTemplate"/> for the <see cref="ColorPalette"/> <see cref="TabItem"/>.
         /// </summary>
-        public DataTemplate ColorPalettesTabHeaderTemplate
+        public DataTemplate? ColorPalettesTabHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(ColorPalettesTabHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ColorPalettesTabHeaderTemplateProperty);
             set => this.SetValue(ColorPalettesTabHeaderTemplateProperty, value);
         }
 
@@ -626,7 +627,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsColorPalettesTabVisible),
                                           typeof(bool),
                                           typeof(ColorPicker),
-                                          new PropertyMetadata(true, OnIsTabVisiblePropertyChanged));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnIsTabVisiblePropertyChanged));
 
         /// <summary>
         /// Gets or sets the visibility of the <see cref="ColorPalette"/> <see cref="TabItem"/>.
@@ -634,7 +635,7 @@ namespace MahApps.Metro.Controls
         public bool IsColorPalettesTabVisible
         {
             get => (bool)this.GetValue(IsColorPalettesTabVisibleProperty);
-            set => this.SetValue(IsColorPalettesTabVisibleProperty, value);
+            set => this.SetValue(IsColorPalettesTabVisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="AdvancedTabHeader"/> dependency property.</summary>
@@ -663,9 +664,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="HeaderedContentControl.HeaderTemplate"/> for the <see cref="ColorCanvas"/> <see cref="TabItem"/>.
         /// </summary>
-        public DataTemplate AdvancedTabHeaderTemplate
+        public DataTemplate? AdvancedTabHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(AdvancedTabHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(AdvancedTabHeaderTemplateProperty);
             set => this.SetValue(AdvancedTabHeaderTemplateProperty, value);
         }
 
@@ -674,7 +675,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsAdvancedTabVisible),
                                           typeof(bool),
                                           typeof(ColorPicker),
-                                          new PropertyMetadata(true, OnIsTabVisiblePropertyChanged));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnIsTabVisiblePropertyChanged));
 
         /// <summary>
         /// Gets or sets the visibility of the <see cref="ColorCanvas"/> <see cref="TabItem"/>.
@@ -682,7 +683,7 @@ namespace MahApps.Metro.Controls
         public bool IsAdvancedTabVisible
         {
             get => (bool)this.GetValue(IsAdvancedTabVisibleProperty);
-            set => this.SetValue(IsAdvancedTabVisibleProperty, value);
+            set => this.SetValue(IsAdvancedTabVisibleProperty, BooleanBoxes.Box(value));
         }
 
         public override void OnApplyTemplate()
@@ -780,20 +781,25 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ColorPicker colorPicker)
+            if (d is not ColorPicker colorPicker)
             {
-                if ((bool)e.NewValue)
-                {
-                    colorPicker.RaiseEvent(new RoutedEventArgs(DropDownOpenedEvent));
+                return;
+            }
 
-                    var action = new Action(() =>
+            if ((bool)e.NewValue)
+            {
+                colorPicker.RaiseEvent(new RoutedEventArgs(DropDownOpenedEvent));
+
+                var action = new Action(() =>
+                    {
+                        colorPicker.Focus();
+
+                        Mouse.Capture(colorPicker, CaptureMode.SubTree);
+
+                        colorPicker.ValidateTabItems();
+
+                        if (colorPicker.PART_PopupTabControl is not null)
                         {
-                            colorPicker.Focus();
-
-                            Mouse.Capture(colorPicker, CaptureMode.SubTree);
-
-                            colorPicker.ValidateTabItems();
-
                             if (ReferenceEquals(colorPicker.PART_PopupTabControl.SelectedItem, colorPicker.PART_ColorPalettesTab))
                             {
                                 if (colorPicker.IsStandardColorPaletteVisible && colorPicker.PART_ColorPaletteStandard != null)
@@ -821,23 +827,23 @@ namespace MahApps.Metro.Controls
                             {
                                 colorPicker.PART_AdvancedTab.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                             }
-                        });
+                        }
+                    });
 
-                    colorPicker.Dispatcher.BeginInvoke(DispatcherPriority.Send, action);
-                }
-                else
+                colorPicker.Dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+            }
+            else
+            {
+                colorPicker.RaiseEvent(new RoutedEventArgs(DropDownClosedEvent));
+
+                if (ReferenceEquals(Mouse.Captured, colorPicker))
                 {
-                    colorPicker.RaiseEvent(new RoutedEventArgs(DropDownClosedEvent));
+                    Mouse.Capture(null);
+                }
 
-                    if (Mouse.Captured == colorPicker)
-                    {
-                        Mouse.Capture(null);
-                    }
-
-                    if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
-                    {
-                        BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker));
-                    }
+                if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
+                {
+                    BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource, BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker));
                 }
             }
         }
@@ -850,17 +856,17 @@ namespace MahApps.Metro.Controls
             {
                 if (ReferenceEquals(e.OriginalSource, colorPicker))
                 {
-                    if (Mouse.Captured == null || !(Mouse.Captured as DependencyObject).IsDescendantOf(colorPicker))
+                    if (Mouse.Captured is null || !(Mouse.Captured as DependencyObject)?.IsDescendantOf(colorPicker) == true)
                     {
                         colorPicker.Close();
                     }
                 }
                 else
                 {
-                    if ((e.OriginalSource as DependencyObject).IsDescendantOf(colorPicker))
+                    if ((e.OriginalSource as DependencyObject)?.IsDescendantOf(colorPicker) == true)
                     {
                         // Take capture if one of our children gave up capture (by closing their drop down)
-                        if (colorPicker.IsDropDownOpen && Mouse.Captured == null)
+                        if (colorPicker.IsDropDownOpen && Mouse.Captured is null)
                         {
                             Mouse.Capture(colorPicker, CaptureMode.SubTree);
                             e.Handled = true;
@@ -886,7 +892,7 @@ namespace MahApps.Metro.Controls
 
             e.Handled = true; // Always handle so that parents won't take focus away
 
-            if (Mouse.Captured == colorPicker && e.OriginalSource == colorPicker)
+            if (ReferenceEquals(Mouse.Captured, colorPicker) && ReferenceEquals(e.OriginalSource, colorPicker))
             {
                 colorPicker.Close();
             }
@@ -896,7 +902,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.IsDropDownOpen)
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
             }
         }
 
@@ -910,6 +916,13 @@ namespace MahApps.Metro.Controls
 
         private void ValidateTabItems()
         {
+            if (this.PART_PopupTabControl is null
+                || this.PART_ColorPalettesTab is null
+                || this.PART_AdvancedTab is null)
+            {
+                return;
+            }
+
             if (!this.IsAdvancedTabVisible && !this.IsColorPalettesTabVisible)
             {
                 // If both TabItems are invisible we set the content to null

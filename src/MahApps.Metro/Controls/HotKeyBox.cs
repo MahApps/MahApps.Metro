@@ -2,13 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Controls;
-using ControlzEx.Native;
 using ControlzEx.Standard;
 using MahApps.Metro.ValueBoxes;
 
@@ -19,48 +16,67 @@ namespace MahApps.Metro.Controls
     {
         private const string PART_TextBox = "PART_TextBox";
 
-        public static readonly DependencyProperty HotKeyProperty = DependencyProperty.Register(
-            nameof(HotKey), typeof(HotKey), typeof(HotKeyBox),
-            new FrameworkPropertyMetadata(default(HotKey), OnHotKeyChanged) { BindsTwoWayByDefault = true });
+        /// <summary>Identifies the <see cref="HotKey"/> dependency property.</summary>
+        public static readonly DependencyProperty HotKeyProperty
+            = DependencyProperty.Register(nameof(HotKey),
+                                          typeof(HotKey),
+                                          typeof(HotKeyBox),
+                                          new FrameworkPropertyMetadata(default(HotKey), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotKeyPropertyChanged));
 
-        public HotKey HotKey
+        private static void OnHotKeyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            get { return (HotKey)GetValue(HotKeyProperty); }
-            set { SetValue(HotKeyProperty, value); }
+            (d as HotKeyBox)?.UpdateText();
         }
 
-        private static void OnHotKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Gets or sets the <see cref="HotKey"/> for this <see cref="HotKeyBox"/>.
+        /// </summary>
+        public HotKey? HotKey
         {
-            var ctrl = (HotKeyBox)d;
-            ctrl.UpdateText();
+            get => (HotKey?)this.GetValue(HotKeyProperty);
+            set => this.SetValue(HotKeyProperty, value);
         }
 
-        public static readonly DependencyProperty AreModifierKeysRequiredProperty = DependencyProperty.Register(
-            nameof(AreModifierKeysRequired), typeof(bool), typeof(HotKeyBox), new PropertyMetadata(BooleanBoxes.FalseBox));
+        /// <summary>Identifies the <see cref="AreModifierKeysRequired"/> dependency property.</summary>
+        public static readonly DependencyProperty AreModifierKeysRequiredProperty
+            = DependencyProperty.Register(nameof(AreModifierKeysRequired),
+                                          typeof(bool),
+                                          typeof(HotKeyBox),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
+        /// <summary>
+        /// Gets or sets if the modifier keys are required.
+        /// </summary>
         public bool AreModifierKeysRequired
         {
-            get { return (bool)GetValue(AreModifierKeysRequiredProperty); }
-            set { SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(AreModifierKeysRequiredProperty);
+            set => this.SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value));
         }
 
-        private static readonly DependencyPropertyKey TextPropertyKey = DependencyProperty.RegisterReadOnly(
-            nameof(Text), typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
+        private static readonly DependencyPropertyKey TextPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(Text),
+                                                  typeof(string),
+                                                  typeof(HotKeyBox),
+                                                  new PropertyMetadata(default(string)));
 
+        /// <summary>Identifies the <see cref="Text"/> dependency property.</summary>
         public static readonly DependencyProperty TextProperty = TextPropertyKey.DependencyProperty;
 
-        public string Text
+        /// <summary>
+        /// Gets the text of the <see cref="HotKey"/>.
+        /// </summary>
+        public string? Text
         {
-            get { return (string)GetValue(TextProperty); }
-            protected set { SetValue(TextPropertyKey, value); }
+            get => (string?)this.GetValue(TextProperty);
+            protected set => this.SetValue(TextPropertyKey, value);
         }
 
-        private TextBox _textBox;
+        private TextBox? _textBox;
 
         static HotKeyBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HotKeyBox), new FrameworkPropertyMetadata(typeof(HotKeyBox)));
-            EventManager.RegisterClassHandler(typeof(HotKeyBox), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
+            EventManager.RegisterClassHandler(typeof(HotKeyBox), GotFocusEvent, new RoutedEventHandler(OnGotFocus));
         }
 
         private static void OnGotFocus(object sender, RoutedEventArgs e)
@@ -74,9 +90,8 @@ namespace MahApps.Metro.Controls
                     // MoveFocus takes a TraversalRequest as its argument.
                     var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
                     // Gets the element with keyboard focus.
-                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
                     // Change keyboard focus.
-                    if (elementWithFocus != null)
+                    if (Keyboard.FocusedElement is UIElement elementWithFocus)
                     {
                         elementWithFocus.MoveFocus(request);
                     }
@@ -92,35 +107,36 @@ namespace MahApps.Metro.Controls
 
         public override void OnApplyTemplate()
         {
-            if (_textBox != null)
+            if (this._textBox != null)
             {
-                _textBox.PreviewKeyDown -= TextBoxOnPreviewKeyDown2;
-                _textBox.GotFocus -= TextBoxOnGotFocus;
-                _textBox.LostFocus -= TextBoxOnLostFocus;
-                _textBox.TextChanged -= TextBoxOnTextChanged;
+                this._textBox.PreviewKeyDown -= this.TextBoxOnPreviewKeyDown2;
+                this._textBox.GotFocus -= this.TextBoxOnGotFocus;
+                this._textBox.LostFocus -= this.TextBoxOnLostFocus;
+                this._textBox.TextChanged -= this.TextBoxOnTextChanged;
             }
 
             base.OnApplyTemplate();
 
-            _textBox = Template.FindName(PART_TextBox, this) as TextBox;
-            if (_textBox != null)
+            this._textBox = this.Template.FindName(PART_TextBox, this) as TextBox;
+            if (this._textBox != null)
             {
-                _textBox.PreviewKeyDown += TextBoxOnPreviewKeyDown2;
-                _textBox.GotFocus += TextBoxOnGotFocus;
-                _textBox.LostFocus += TextBoxOnLostFocus;
-                _textBox.TextChanged += TextBoxOnTextChanged;
-                UpdateText();
+                this._textBox.PreviewKeyDown += this.TextBoxOnPreviewKeyDown2;
+                this._textBox.GotFocus += this.TextBoxOnGotFocus;
+                this._textBox.LostFocus += this.TextBoxOnLostFocus;
+                this._textBox.TextChanged += this.TextBoxOnTextChanged;
             }
+
+            this.UpdateText();
         }
 
         private void TextBoxOnTextChanged(object sender, TextChangedEventArgs args)
         {
-            _textBox.SelectionStart = _textBox.Text.Length;
+            this._textBox!.SelectionStart = this._textBox.Text.Length;
         }
 
         private void TextBoxOnGotFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcherOnThreadPreprocessMessage;
+            ComponentDispatcher.ThreadPreprocessMessage += this.ComponentDispatcherOnThreadPreprocessMessage;
         }
 
 #pragma warning disable 618
@@ -136,7 +152,7 @@ namespace MahApps.Metro.Controls
 
         private void TextBoxOnLostFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            ComponentDispatcher.ThreadPreprocessMessage -= ComponentDispatcherOnThreadPreprocessMessage;
+            ComponentDispatcher.ThreadPreprocessMessage -= this.ComponentDispatcherOnThreadPreprocessMessage;
         }
 
         private void TextBoxOnPreviewKeyDown2(object sender, KeyEventArgs e)
@@ -161,14 +177,14 @@ namespace MahApps.Metro.Controls
             var currentModifierKeys = GetCurrentModifierKeys();
             if (currentModifierKeys == ModifierKeys.None && key == Key.Back)
             {
-                HotKey = null;
+                this.SetCurrentValue(HotKeyProperty, null);
             }
-            else if (currentModifierKeys != ModifierKeys.None || !AreModifierKeysRequired)
+            else if (currentModifierKeys != ModifierKeys.None || !this.AreModifierKeysRequired)
             {
-                HotKey = new HotKey(key, currentModifierKeys);
+                this.SetCurrentValue(HotKeyProperty, new HotKey(key, currentModifierKeys));
             }
 
-            UpdateText();
+            this.UpdateText();
         }
 
         private static ModifierKeys GetCurrentModifierKeys()
@@ -199,117 +215,8 @@ namespace MahApps.Metro.Controls
 
         private void UpdateText()
         {
-            var hotkey = HotKey;
-            Text = hotkey == null || hotkey.Key == Key.None ? string.Empty : hotkey.ToString();
+            var hotkey = this.HotKey;
+            this.Text = hotkey is null || hotkey.Key == Key.None ? string.Empty : hotkey.ToString();
         }
-    }
-
-    public class HotKey : IEquatable<HotKey>
-    {
-        private readonly Key _key;
-        private readonly ModifierKeys _modifierKeys;
-
-        public HotKey(Key key, ModifierKeys modifierKeys = ModifierKeys.None)
-        {
-            _key = key;
-            _modifierKeys = modifierKeys;
-        }
-
-        public Key Key
-        {
-            get { return _key; }
-        }
-
-        public ModifierKeys ModifierKeys
-        {
-            get { return _modifierKeys; }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is HotKey && Equals((HotKey)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ((int)_key * 397) ^ (int)_modifierKeys;
-            }
-        }
-
-        public bool Equals(HotKey other)
-        {
-            return _key == other._key && _modifierKeys == other._modifierKeys;
-        }
-
-#pragma warning disable 618
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            if ((_modifierKeys & ModifierKeys.Alt) == ModifierKeys.Alt)
-            {
-                sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_MENU));
-                sb.Append("+");
-            }
-
-            if ((_modifierKeys & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_CONTROL));
-                sb.Append("+");
-            }
-
-            if ((_modifierKeys & ModifierKeys.Shift) == ModifierKeys.Shift)
-            {
-                sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_SHIFT));
-                sb.Append("+");
-            }
-
-            if ((_modifierKeys & ModifierKeys.Windows) == ModifierKeys.Windows)
-            {
-                sb.Append("Windows+");
-            }
-
-            sb.Append(GetLocalizedKeyString(_key));
-            return sb.ToString();
-        }
-#pragma warning restore 618
-
-        private static string GetLocalizedKeyString(Key key)
-        {
-            if (key >= Key.BrowserBack && key <= Key.LaunchApplication2)
-            {
-                return key.ToString();
-            }
-
-            var vkey = KeyInterop.VirtualKeyFromKey(key);
-            return GetLocalizedKeyStringUnsafe(vkey) ?? key.ToString();
-        }
-
-#pragma warning disable 618
-        private static string GetLocalizedKeyStringUnsafe(int key)
-        {
-            // strip any modifier keys
-            long keyCode = key & 0xffff;
-
-            var sb = new StringBuilder(256);
-
-            long scanCode = NativeMethods.MapVirtualKey((uint)keyCode, NativeMethods.MapType.MAPVK_VK_TO_VSC);
-
-            // shift the scancode to the high word
-            scanCode = (scanCode << 16);
-            if (keyCode == 45 ||
-                keyCode == 46 ||
-                keyCode == 144 ||
-                (33 <= keyCode && keyCode <= 40))
-            {
-                // add the extended key flag
-                scanCode |= 0x1000000;
-            }
-
-            var resultLength = UnsafeNativeMethods.GetKeyNameText((int)scanCode, sb, 256);
-            return resultLength > 0 ? sb.ToString() : null;
-        }
-#pragma warning restore 618
     }
 }

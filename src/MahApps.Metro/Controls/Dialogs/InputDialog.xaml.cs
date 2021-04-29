@@ -15,39 +15,55 @@ namespace MahApps.Metro.Controls.Dialogs
         private CancellationTokenRegistration cancellationTokenRegistration;
 
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty MessageProperty
+            = DependencyProperty.Register(nameof(Message),
+                                          typeof(string),
+                                          typeof(InputDialog),
+                                          new PropertyMetadata(default(string)));
 
-        public string Message
+        public string? Message
         {
-            get { return (string)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
+            get => (string?)this.GetValue(MessageProperty);
+            set => this.SetValue(MessageProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Input"/> dependency property.</summary>
-        public static readonly DependencyProperty InputProperty = DependencyProperty.Register(nameof(Input), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty InputProperty
+            = DependencyProperty.Register(nameof(Input),
+                                          typeof(string),
+                                          typeof(InputDialog),
+                                          new PropertyMetadata(default(string)));
 
-        public string Input
+        public string? Input
         {
-            get { return (string)this.GetValue(InputProperty); }
-            set { this.SetValue(InputProperty, value); }
+            get => (string?)this.GetValue(InputProperty);
+            set => this.SetValue(InputProperty, value);
         }
 
         /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register(nameof(AffirmativeButtonText), typeof(string), typeof(InputDialog), new PropertyMetadata("OK"));
+        public static readonly DependencyProperty AffirmativeButtonTextProperty
+            = DependencyProperty.Register(nameof(AffirmativeButtonText),
+                                          typeof(string),
+                                          typeof(InputDialog),
+                                          new PropertyMetadata("OK"));
 
         public string AffirmativeButtonText
         {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+            get => (string)this.GetValue(AffirmativeButtonTextProperty);
+            set => this.SetValue(AffirmativeButtonTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(InputDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty NegativeButtonTextProperty
+            = DependencyProperty.Register(nameof(NegativeButtonText),
+                                          typeof(string),
+                                          typeof(InputDialog),
+                                          new PropertyMetadata("Cancel"));
 
         public string NegativeButtonText
         {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
+            get => (string)this.GetValue(NegativeButtonTextProperty);
+            set => this.SetValue(NegativeButtonTextProperty, value);
         }
 
         internal InputDialog()
@@ -55,18 +71,24 @@ namespace MahApps.Metro.Controls.Dialogs
         {
         }
 
-        internal InputDialog(MetroWindow parentWindow)
+        internal InputDialog(MetroWindow? parentWindow)
             : this(parentWindow, null)
         {
         }
 
-        internal InputDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        internal InputDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
             this.InitializeComponent();
         }
 
-        internal Task<string> WaitForButtonPressAsync()
+        private RoutedEventHandler? negativeHandler = null;
+        private KeyEventHandler? negativeKeyHandler = null;
+        private RoutedEventHandler? affirmativeHandler = null;
+        private KeyEventHandler? affirmativeKeyHandler = null;
+        private KeyEventHandler? escapeKeyHandler = null;
+
+        internal Task<string?> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -74,30 +96,22 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.PART_TextBox.Focus();
                 }));
 
-            var tcs = new TaskCompletionSource<string>();
+            var tcs = new TaskCompletionSource<string?>();
 
-            RoutedEventHandler negativeHandler = null;
-            KeyEventHandler negativeKeyHandler = null;
+            void CleanUpHandlers()
+            {
+                this.PART_TextBox.KeyDown -= this.affirmativeKeyHandler;
 
-            RoutedEventHandler affirmativeHandler = null;
-            KeyEventHandler affirmativeKeyHandler = null;
+                this.KeyDown -= this.escapeKeyHandler;
 
-            KeyEventHandler escapeKeyHandler = null;
+                this.PART_NegativeButton.Click -= this.negativeHandler;
+                this.PART_AffirmativeButton.Click -= this.affirmativeHandler;
 
-            Action cleanUpHandlers = () =>
-                {
-                    this.PART_TextBox.KeyDown -= affirmativeKeyHandler;
+                this.PART_NegativeButton.KeyDown -= this.negativeKeyHandler;
+                this.PART_AffirmativeButton.KeyDown -= this.affirmativeKeyHandler;
 
-                    this.KeyDown -= escapeKeyHandler;
-
-                    this.PART_NegativeButton.Click -= negativeHandler;
-                    this.PART_AffirmativeButton.Click -= affirmativeHandler;
-
-                    this.PART_NegativeButton.KeyDown -= negativeKeyHandler;
-                    this.PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
-
-                    this.cancellationTokenRegistration.Dispose();
-                };
+                this.cancellationTokenRegistration.Dispose();
+            }
 
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
@@ -105,68 +119,68 @@ namespace MahApps.Metro.Controls.Dialogs
                                                          {
                                                              this.BeginInvoke(() =>
                                                                  {
-                                                                     cleanUpHandlers();
-                                                                     tcs.TrySetResult(null);
+                                                                     CleanUpHandlers();
+                                                                     tcs.TrySetResult(null!);
                                                                  });
                                                          });
 
-            escapeKeyHandler = (sender, e) =>
+            this.escapeKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     }
                 };
 
-            negativeKeyHandler = (sender, e) =>
+            this.negativeKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
-                        tcs.TrySetResult(null);
+                        tcs.TrySetResult(null!);
                     }
                 };
 
-            affirmativeKeyHandler = (sender, e) =>
+            this.affirmativeKeyHandler = (_, e) =>
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
+                        CleanUpHandlers();
 
-                        tcs.TrySetResult(this.Input);
+                        tcs.TrySetResult(this.Input!);
                     }
                 };
 
-            negativeHandler = (sender, e) =>
+            this.negativeHandler = (_, e) =>
                 {
-                    cleanUpHandlers();
+                    CleanUpHandlers();
 
-                    tcs.TrySetResult(null);
+                    tcs.TrySetResult(null!);
 
                     e.Handled = true;
                 };
 
-            affirmativeHandler = (sender, e) =>
+            this.affirmativeHandler = (_, e) =>
                 {
-                    cleanUpHandlers();
+                    CleanUpHandlers();
 
-                    tcs.TrySetResult(this.Input);
+                    tcs.TrySetResult(this.Input!);
 
                     e.Handled = true;
                 };
 
-            this.PART_NegativeButton.KeyDown += negativeKeyHandler;
-            this.PART_AffirmativeButton.KeyDown += affirmativeKeyHandler;
+            this.PART_NegativeButton.KeyDown += this.negativeKeyHandler;
+            this.PART_AffirmativeButton.KeyDown += this.affirmativeKeyHandler;
 
-            this.PART_TextBox.KeyDown += affirmativeKeyHandler;
+            this.PART_TextBox.KeyDown += this.affirmativeKeyHandler;
 
-            this.KeyDown += escapeKeyHandler;
+            this.KeyDown += this.escapeKeyHandler;
 
-            this.PART_NegativeButton.Click += negativeHandler;
-            this.PART_AffirmativeButton.Click += affirmativeHandler;
+            this.PART_NegativeButton.Click += this.negativeHandler;
+            this.PART_AffirmativeButton.Click += this.affirmativeHandler;
 
             return tcs.Task;
         }

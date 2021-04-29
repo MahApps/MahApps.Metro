@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public DataGridExamples()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

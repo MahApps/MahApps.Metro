@@ -21,7 +21,7 @@ namespace MahApps.Metro.Controls
     {
         static ColorHelper()
         {
-            ColorNamesDictionary = new Dictionary<Color?, string>();
+            ColorNamesDictionary = new Dictionary<Color, string>();
 
             var rm = new ResourceManager(typeof(ColorNames));
             var resourceSet = rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
@@ -34,7 +34,7 @@ namespace MahApps.Metro.Controls
                     {
                         if (ColorConverter.ConvertFromString(entry.Key.ToString()) is Color color)
                         {
-                            ColorNamesDictionary.Add(color, entry.Value.ToString());
+                            ColorNamesDictionary.Add(color, entry.Value!.ToString()!);
                         }
                     }
                     catch (Exception)
@@ -54,7 +54,7 @@ namespace MahApps.Metro.Controls
         /// <param name="colorName">The localized name of the color, the hex-code of the color or the internal color name</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
         /// <returns>the Color if successful, else null</returns>
-        public static Color? ColorFromString(string colorName, Dictionary<Color?, string> colorNamesDictionary)
+        public static Color? ColorFromString(string? colorName, Dictionary<Color, string>? colorNamesDictionary)
         {
             Color? result = null;
 
@@ -68,9 +68,13 @@ namespace MahApps.Metro.Controls
 
                 colorNamesDictionary ??= ColorNamesDictionary;
 
-                if (!colorName.StartsWith("#"))
+                if (!colorName!.StartsWith("#"))
                 {
-                    result = colorNamesDictionary?.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
+                    // We need to check with any first as the key is of type Color, which is a struct.
+                    if (colorNamesDictionary?.Any(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)) == true)
+                    {
+                        result = colorNamesDictionary.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
+                    }
                 }
 
                 result ??= ColorConverter.ConvertFromString(colorName) as Color?;
@@ -102,7 +106,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// A Dictionary with localized Color Names
         /// </summary>
-        public static Dictionary<Color?, string> ColorNamesDictionary { get; set; }
+        public static Dictionary<Color, string> ColorNamesDictionary { get; set; }
 
         /// <summary>
         /// Searches for the localized name of a given <paramref name="color"/>
@@ -110,7 +114,7 @@ namespace MahApps.Metro.Controls
         /// <param name="color">color</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string GetColorName(Color? color, Dictionary<Color?, string> colorNamesDictionary)
+        public static string? GetColorName(Color? color, Dictionary<Color, string>? colorNamesDictionary)
         {
             if (color is null)
             {
@@ -119,7 +123,7 @@ namespace MahApps.Metro.Controls
 
             colorNamesDictionary ??= ColorNamesDictionary;
 
-            return colorNamesDictionary.TryGetValue(color, out string name) ? $"{name} ({color})" : $"{color}";
+            return colorNamesDictionary.TryGetValue(color.Value, out var name) ? $"{name} ({color})" : $"{color}";
         }
 
         /// <summary>
@@ -127,7 +131,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string GetColorName(Color? color)
+        public static string? GetColorName(Color color)
         {
             return GetColorName(color, null);
         }

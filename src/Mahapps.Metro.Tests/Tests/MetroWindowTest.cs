@@ -8,9 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class MetroWindowTest : AutomationTestBase
     {
@@ -151,9 +152,9 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            var minButton = GetButton(window, "PART_Min");
-            var maxButton = GetButton(window, "PART_Max");
-            var closeButton = GetButton(window, "PART_Close");
+            var minButton = this.GetButton(window, "PART_Min");
+            var maxButton = this.GetButton(window, "PART_Max");
+            var closeButton = this.GetButton(window, "PART_Close");
 
             // min/max/close should be visible
             Assert.True(minButton.IsVisible);
@@ -170,8 +171,8 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            var minButton = GetButton(window, "PART_Min");
-            var maxButton = GetButton(window, "PART_Max");
+            var minButton = this.GetButton(window, "PART_Min");
+            var maxButton = this.GetButton(window, "PART_Max");
 
             // min/max should be visible
             Assert.True(minButton.IsVisible);
@@ -194,8 +195,8 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            var minButton = GetButton(window, "PART_Min");
-            var maxButton = GetButton(window, "PART_Max");
+            var minButton = this.GetButton(window, "PART_Min");
+            var maxButton = this.GetButton(window, "PART_Max");
 
             // min/max should be visible
             Assert.True(minButton.IsVisible);
@@ -218,8 +219,8 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            var minButton = GetButton(window, "PART_Min");
-            var maxButton = GetButton(window, "PART_Max");
+            var minButton = this.GetButton(window, "PART_Min");
+            var maxButton = this.GetButton(window, "PART_Max");
 
             // min/max should be visible
             Assert.True(minButton.IsVisible);
@@ -280,9 +281,9 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<HiddenMinMaxCloseButtonsWindow>();
 
-            var minButton = GetButton(window, "PART_Min");
-            var maxButton = GetButton(window, "PART_Max");
-            var closeButton = GetButton(window, "PART_Close");
+            var minButton = this.GetButton(window, "PART_Min");
+            var maxButton = this.GetButton(window, "PART_Max");
+            var closeButton = this.GetButton(window, "PART_Close");
 
             // min/max/close should be hidden
             Assert.False(minButton.IsVisible);
@@ -302,7 +303,7 @@ namespace MahApps.Metro.Tests
 
             var settings = window.GetWindowPlacementSettings();
             Assert.NotNull(settings);
-            Assert.Equal(true, settings.UpgradeSettings);
+            Assert.True(settings.UpgradeSettings);
         }
 
         [Fact]

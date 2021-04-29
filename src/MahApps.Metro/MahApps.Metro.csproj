@@ -7,6 +7,7 @@
         <RootNamespace>MahApps.Metro</RootNamespace>
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DefineConstants>$(DefineConstants);INTERNAL_NULLABLE_ATTRIBUTES</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
@@ -16,7 +17,7 @@
 
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="4.*" />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" PrivateAssets="All" IIncludeAssets="build" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" PrivateAssets="All" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

@@ -28,18 +28,20 @@ namespace MahApps.Metro.Converters
     /// <summary>
     /// Converts a given Color to a new Color with the specified Channel turned to the Min or Max Value
     /// </summary>
-    [ValueConversion(typeof(Color), typeof(Color))]
+    [ValueConversion(typeof(Color), typeof(Color), ParameterType = typeof(ColorChannelType))]
     public sealed class ColorChannelMinMaxConverter : IValueConverter
     {
+        /// <summary>
+        /// Gets a static default instance of <see cref="ColorChannelMinMaxConverter"/>.
+        /// </summary>
+        public static readonly ColorChannelMinMaxConverter Default = new();
+
         // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
         static ColorChannelMinMaxConverter()
         {
         }
 
-        /// <summary> Gets the default instance </summary>
-        public static ColorChannelMinMaxConverter Default { get; } = new ColorChannelMinMaxConverter();
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is Color color && parameter is ColorChannelType channel)
             {
@@ -64,7 +66,7 @@ namespace MahApps.Metro.Converters
             return Binding.DoNothing;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

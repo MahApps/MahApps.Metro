@@ -15,10 +15,10 @@ namespace MetroDemo.Models
         private int _albumId;
         private int _genreId;
         private int _artistId;
-        private string _title;
+        private string? _title;
         private decimal _price;
-        private Genre _genre;
-        private Artist _artist;
+        private Genre? _genre;
+        private Artist? _artist;
         private bool isSelected;
 
         public int AlbumId
@@ -47,7 +47,7 @@ namespace MetroDemo.Models
             set => this.Set(ref this.isSelected, value);
         }
 
-        public string Title
+        public string? Title
         {
             get => this._title;
             set => this.Set(ref this._title, value);
@@ -60,15 +60,15 @@ namespace MetroDemo.Models
         }
 
         [DisplayName("Album Art URL")]
-        public string AlbumArtUrl { get; set; }
+        public string? AlbumArtUrl { get; set; }
 
-        public virtual Genre Genre
+        public virtual Genre? Genre
         {
             get => this._genre;
             set => this.Set(ref this._genre, value);
         }
 
-        public virtual Artist Artist
+        public virtual Artist? Artist
         {
             get => this._artist;
             set => this.Set(ref this._artist, value);
@@ -77,11 +77,11 @@ namespace MetroDemo.Models
 
     public static class SampleData
     {
-        public static List<Genre> Genres { get; set; }
+        public static List<Genre>? Genres { get; set; }
 
-        public static List<Artist> Artists { get; set; }
+        public static List<Artist>? Artists { get; set; }
 
-        public static List<Album> Albums { get; set; }
+        public static List<Album>? Albums { get; set; }
 
         public static void Seed()
         {
@@ -516,7 +516,7 @@ namespace MetroDemo.Models
             var albumsGroupedByArtist = Albums.GroupBy(a => a.Artist);
             foreach (var grouping in albumsGroupedByArtist)
             {
-                grouping.Key.Albums = grouping.ToList();
+                grouping!.Key!.Albums = grouping.ToList();
             }
         }
     }

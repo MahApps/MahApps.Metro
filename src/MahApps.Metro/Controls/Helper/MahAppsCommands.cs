@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
         static MahAppsCommands()
         {
             // Register CommandBinding for all windows.
-            CommandManager.RegisterClassCommandBinding(typeof(Window), new CommandBinding(ClearControlCommand, (sender, args) => ClearControl(args), (sender, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(Window), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
         }
 
         private static void CanClearControl(CanExecuteRoutedEventArgs args)
@@ -27,28 +27,19 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (!(args.OriginalSource is DependencyObject control) || false == TextBoxHelper.GetClearTextButton(control))
+            if (args.OriginalSource is not DependencyObject control || false == TextBoxHelper.GetClearTextButton(control))
             {
                 return;
             }
 
-            args.CanExecute = true;
-
-            switch (control)
+            args.CanExecute = control switch
             {
-                case DatePicker datePicker:
-                    args.CanExecute = !ControlsHelper.GetIsReadOnly(datePicker);
-                    break;
-                case TimePickerBase timePicker:
-                    args.CanExecute = !timePicker.IsReadOnly;
-                    break;
-                case TextBoxBase textBox:
-                    args.CanExecute = !textBox.IsReadOnly;
-                    break;
-                case ComboBox comboBox:
-                    args.CanExecute = !comboBox.IsReadOnly;
-                    break;
-            }
+                DatePicker datePicker => !ControlsHelper.GetIsReadOnly(datePicker),
+                TimePickerBase timePicker => !timePicker.IsReadOnly,
+                TextBoxBase textBox => !textBox.IsReadOnly,
+                ComboBox comboBox => !comboBox.IsReadOnly,
+                _ => true
+            };
         }
 
         public static void ClearControl(ExecutedRoutedEventArgs args)
@@ -58,7 +49,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (!(args.OriginalSource is DependencyObject control) || false == TextBoxHelper.GetClearTextButton(control))
+            if (args.OriginalSource is not DependencyObject control || false == TextBoxHelper.GetClearTextButton(control))
             {
                 return;
             }

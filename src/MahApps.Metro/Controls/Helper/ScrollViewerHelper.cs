@@ -19,10 +19,11 @@ namespace MahApps.Metro.Controls
         /// This property can be used to set vertical scrollbar left side from the tabpanel (look at MetroAnimatedSingleRowTabControl)
         /// </summary>
         public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty =
-            DependencyProperty.RegisterAttached("VerticalScrollBarOnLeftSide",
-                                                typeof(bool),
-                                                typeof(ScrollViewerHelper),
-                                                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+            DependencyProperty.RegisterAttached(
+                "VerticalScrollBarOnLeftSide",
+                typeof(bool),
+                typeof(ScrollViewerHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>Helper for getting <see cref="VerticalScrollBarOnLeftSideProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="VerticalScrollBarOnLeftSideProperty"/> from.</param>
@@ -48,18 +49,18 @@ namespace MahApps.Metro.Controls
         /// Identifies the IsHorizontalScrollWheelEnabled attached property.
         /// </summary>
         public static readonly DependencyProperty IsHorizontalScrollWheelEnabledProperty =
-            DependencyProperty.RegisterAttached("IsHorizontalScrollWheelEnabled",
-                                                typeof(bool),
-                                                typeof(ScrollViewerHelper),
-                                                new PropertyMetadata(BooleanBoxes.FalseBox, OnIsHorizontalScrollWheelEnabledPropertyChangedCallback));
+            DependencyProperty.RegisterAttached(
+                "IsHorizontalScrollWheelEnabled",
+                typeof(bool),
+                typeof(ScrollViewerHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnIsHorizontalScrollWheelEnabledPropertyChangedCallback));
 
         private static void OnIsHorizontalScrollWheelEnabledPropertyChangedCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var scrollViewer = o as ScrollViewer;
-            if (scrollViewer != null && e.NewValue != e.OldValue && e.NewValue is bool)
+            if (o is ScrollViewer scrollViewer && e.NewValue != e.OldValue)
             {
                 scrollViewer.PreviewMouseWheel -= ScrollViewerOnPreviewMouseWheel;
-                if ((bool)e.NewValue)
+                if (e.NewValue is true)
                 {
                     scrollViewer.PreviewMouseWheel += ScrollViewerOnPreviewMouseWheel;
                 }
@@ -68,8 +69,7 @@ namespace MahApps.Metro.Controls
 
         private static void ScrollViewerOnPreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
-            var scrollViewer = sender as ScrollViewer;
-            if (scrollViewer != null && scrollViewer.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled)
+            if (sender is ScrollViewer scrollViewer && scrollViewer.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled)
             {
                 if (e.Delta > 0)
                 {
@@ -108,10 +108,11 @@ namespace MahApps.Metro.Controls
         /// This property can be used to trigger the call to a command when the user reach the end of the vertical scrollable area.
         /// </summary>
         public static readonly DependencyProperty EndOfVerticalScrollReachedCommandProperty
-            = DependencyProperty.RegisterAttached("EndOfVerticalScrollReachedCommand",
-                                                  typeof(ICommand),
-                                                  typeof(ScrollViewerHelper),
-                                                  new FrameworkPropertyMetadata(null, EndOfVerticalScrollReachedCommandPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "EndOfVerticalScrollReachedCommand",
+                typeof(ICommand),
+                typeof(ScrollViewerHelper),
+                new FrameworkPropertyMetadata(null, EndOfVerticalScrollReachedCommandPropertyChanged));
 
         /// <summary>Helper for getting <see cref="EndOfVerticalScrollReachedCommandProperty"/> from <paramref name="obj"/>.</summary>
         /// <param name="obj"><see cref="DependencyObject"/> to read <see cref="EndOfVerticalScrollReachedCommandProperty"/> from.</param>
@@ -119,9 +120,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static ICommand GetEndOfVerticalScrollReachedCommand(DependencyObject obj)
+        public static ICommand? GetEndOfVerticalScrollReachedCommand(DependencyObject obj)
         {
-            return (ICommand)obj.GetValue(EndOfVerticalScrollReachedCommandProperty);
+            return (ICommand?)obj.GetValue(EndOfVerticalScrollReachedCommandProperty);
         }
 
         /// <summary>Helper for setting <see cref="EndOfVerticalScrollReachedCommandProperty"/> on <paramref name="obj"/>.</summary>
@@ -130,7 +131,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static void SetEndOfVerticalScrollReachedCommand(DependencyObject obj, ICommand value)
+        public static void SetEndOfVerticalScrollReachedCommand(DependencyObject obj, ICommand? value)
         {
             obj.SetValue(EndOfVerticalScrollReachedCommandProperty, value);
         }
@@ -188,10 +189,11 @@ namespace MahApps.Metro.Controls
         /// This property can be used to trigger the call to a command when the user reach the end of the horizontal scrollable area.
         /// </summary>
         public static readonly DependencyProperty EndOfHorizontalScrollReachedCommandProperty
-            = DependencyProperty.RegisterAttached("EndOfHorizontalScrollReachedCommand",
-                                                  typeof(ICommand),
-                                                  typeof(ScrollViewerHelper),
-                                                  new FrameworkPropertyMetadata(null, EndOfHorizontalScrollReachedCommandPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "EndOfHorizontalScrollReachedCommand",
+                typeof(ICommand),
+                typeof(ScrollViewerHelper),
+                new FrameworkPropertyMetadata(null, EndOfHorizontalScrollReachedCommandPropertyChanged));
 
         /// <summary>Helper for getting <see cref="EndOfHorizontalScrollReachedCommandProperty"/> from <paramref name="obj"/>.</summary>
         /// <param name="obj"><see cref="DependencyObject"/> to read <see cref="EndOfHorizontalScrollReachedCommandProperty"/> from.</param>
@@ -199,9 +201,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static ICommand GetEndOfHorizontalScrollReachedCommand(DependencyObject obj)
+        public static ICommand? GetEndOfHorizontalScrollReachedCommand(DependencyObject obj)
         {
-            return (ICommand)obj.GetValue(EndOfHorizontalScrollReachedCommandProperty);
+            return (ICommand?)obj.GetValue(EndOfHorizontalScrollReachedCommandProperty);
         }
 
         /// <summary>Helper for setting <see cref="EndOfHorizontalScrollReachedCommandProperty"/> on <paramref name="obj"/>.</summary>
@@ -210,7 +212,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static void SetEndOfHorizontalScrollReachedCommand(DependencyObject obj, ICommand value)
+        public static void SetEndOfHorizontalScrollReachedCommand(DependencyObject obj, ICommand? value)
         {
             obj.SetValue(EndOfHorizontalScrollReachedCommandProperty, value);
         }
@@ -268,10 +270,11 @@ namespace MahApps.Metro.Controls
         /// This property can be used to provide a command parameter to the command called when reaching the end of the vertical or horizontal scrollable area.
         /// </summary>
         public static readonly DependencyProperty EndOfScrollReachedCommandParameterProperty
-            = DependencyProperty.RegisterAttached("EndOfScrollReachedCommandParameter",
-                                                  typeof(object),
-                                                  typeof(ScrollViewerHelper),
-                                                  new FrameworkPropertyMetadata(null, EndOfScrollReachedCommandParameterPropertyChanged));
+            = DependencyProperty.RegisterAttached(
+                "EndOfScrollReachedCommandParameter",
+                typeof(object),
+                typeof(ScrollViewerHelper),
+                new FrameworkPropertyMetadata(null, EndOfScrollReachedCommandParameterPropertyChanged));
 
         /// <summary>Helper for getting <see cref="EndOfScrollReachedCommandParameterProperty"/> from <paramref name="obj"/>.</summary>
         /// <param name="obj"><see cref="DependencyObject"/> to read <see cref="EndOfScrollReachedCommandParameterProperty"/> from.</param>
@@ -279,9 +282,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static object GetEndOfScrollReachedCommandParameter(DependencyObject obj)
+        public static object? GetEndOfScrollReachedCommandParameter(DependencyObject obj)
         {
-            return (object)obj.GetValue(EndOfScrollReachedCommandParameterProperty);
+            return obj.GetValue(EndOfScrollReachedCommandParameterProperty);
         }
 
         /// <summary>Helper for setting <see cref="EndOfScrollReachedCommandParameterProperty"/> on <paramref name="obj"/>.</summary>
@@ -290,7 +293,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         [AttachedPropertyBrowsableForType(typeof(ItemsControl))]
-        public static void SetEndOfScrollReachedCommandParameter(DependencyObject obj, object value)
+        public static void SetEndOfScrollReachedCommandParameter(DependencyObject obj, object? value)
         {
             obj.SetValue(EndOfScrollReachedCommandParameterProperty, value);
         }
@@ -382,9 +385,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        // The following Propety was taken from here: https://serialseb.com/blog/2007/09/03/wpf-tips-6-preventing-scrollviewer-from/
-        public static readonly DependencyProperty BubbleUpScrollEventToParentScrollviewerProperty = DependencyProperty.RegisterAttached("BubbleUpScrollEventToParentScrollviewer", typeof(bool), typeof(ScrollViewerHelper), new FrameworkPropertyMetadata(false, ScrollViewerHelper.OnBubbleUpScrollEventToParentScrollviewerPropertyChanged));
-
+        // The following Property was taken from here: https://serialseb.com/blog/2007/09/03/wpf-tips-6-preventing-scrollviewer-from/
+        public static readonly DependencyProperty BubbleUpScrollEventToParentScrollviewerProperty
+            = DependencyProperty.RegisterAttached(
+                "BubbleUpScrollEventToParentScrollviewer",
+                typeof(bool),
+                typeof(ScrollViewerHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnBubbleUpScrollEventToParentScrollviewerPropertyChanged));
 
         /// <summary>Helper for getting <see cref="BubbleUpScrollEventToParentScrollviewerProperty"/> on <paramref name="obj"/>.</summary>
         /// <param name="obj"><see cref="DependencyObject"/> to get <see cref="BubbleUpScrollEventToParentScrollviewerProperty"/> on.</param>
@@ -395,7 +402,6 @@ namespace MahApps.Metro.Controls
             return (bool)obj.GetValue(BubbleUpScrollEventToParentScrollviewerProperty);
         }
 
-
         /// <summary>Helper for setting <see cref="BubbleUpScrollEventToParentScrollviewerProperty"/> on <paramref name="obj"/>.</summary>
         /// <param name="obj"><see cref="DependencyObject"/> to set <see cref="BubbleUpScrollEventToParentScrollviewerProperty"/> on.</param>
         /// <param name="value">BubbleUpScrollEventToParentScrollviewerProperty property value.</param>
@@ -403,61 +409,60 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         public static void SetBubbleUpScrollEventToParentScrollviewer(DependencyObject obj, bool value)
         {
-            obj.SetValue(BubbleUpScrollEventToParentScrollviewerProperty, value);
+            obj.SetValue(BubbleUpScrollEventToParentScrollviewerProperty, BooleanBoxes.Box(value));
         }
-
 
         public static void OnBubbleUpScrollEventToParentScrollviewerPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!(sender is ScrollViewer viewer))
             {
-                throw new ArgumentException("The dependency property can only be attached to a ScrollViewer", "sender");
+                throw new ArgumentException("This dependency property can only be attached to a ScrollViewer", nameof(sender));
             }
 
-            if ((bool)e.NewValue == true)
+            if (e.OldValue != e.NewValue)
             {
-                viewer.PreviewMouseWheel += HandlePreviewMouseWheel;
-            }
-            else if ((bool)e.NewValue == false)
-            {
-                viewer.PreviewMouseWheel -= HandlePreviewMouseWheel;
+                if ((bool)e.NewValue == true)
+                {
+                    viewer.PreviewMouseWheel += HandlePreviewMouseWheel;
+                }
+                else if ((bool)e.NewValue == false)
+                {
+                    viewer.PreviewMouseWheel -= HandlePreviewMouseWheel;
+                }
             }
         }
-        
-        private static readonly List<MouseWheelEventArgs> _reentrantList = new List<MouseWheelEventArgs>();
 
-        private static void HandlePreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private static readonly List<MouseWheelEventArgs> ReentrantList = new();
+
+        private static void HandlePreviewMouseWheel(object? sender, MouseWheelEventArgs e)
         {
-            var scrollControl = sender as ScrollViewer;
-
-            if (!e.Handled && sender != null && !_reentrantList.Contains(e))
+            if (!e.Handled && sender is ScrollViewer scrollControl && !ReentrantList.Contains(e))
             {
                 var previewEventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-                {
-                    RoutedEvent = UIElement.PreviewMouseWheelEvent,
-                    Source = sender
-                };
+                                      {
+                                          RoutedEvent = UIElement.PreviewMouseWheelEvent,
+                                          Source = scrollControl
+                                      };
 
                 var originalSource = e.OriginalSource as UIElement;
-                _reentrantList.Add(previewEventArg);
-                originalSource.RaiseEvent(previewEventArg);
-                _reentrantList.Remove(previewEventArg);
+                ReentrantList.Add(previewEventArg);
+                originalSource?.RaiseEvent(previewEventArg);
+                ReentrantList.Remove(previewEventArg);
 
-                // at this point if no one else handled the event in our children, we do our job
+                // At this point if no one else handled the event in our children, we do our job
                 if (!previewEventArg.Handled && ((e.Delta > 0 && scrollControl.VerticalOffset == 0)
-                    || (e.Delta <= 0 && scrollControl.VerticalOffset >= scrollControl.ExtentHeight - scrollControl.ViewportHeight)))
+                                                 || (e.Delta <= 0 && scrollControl.VerticalOffset >= scrollControl.ExtentHeight - scrollControl.ViewportHeight)))
                 {
                     e.Handled = true;
                     var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-                    {
-                        RoutedEvent = UIElement.MouseWheelEvent,
-                        Source = sender
-                    };
-                    var parent = (UIElement)((FrameworkElement)sender).Parent;
-                    parent.RaiseEvent(eventArg);
+                                   {
+                                       RoutedEvent = UIElement.MouseWheelEvent,
+                                       Source = scrollControl
+                                   };
+                    var parent = scrollControl.Parent as UIElement;
+                    parent?.RaiseEvent(eventArg);
                 }
             }
-
         }
     }
 }

@@ -15,16 +15,19 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="Thumbnail"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ThumbnailProperty = DependencyProperty.Register(nameof(Thumbnail), typeof(ImageSource), typeof(HamburgerMenuImageItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty ThumbnailProperty
+            = DependencyProperty.Register(nameof(Thumbnail),
+                                          typeof(ImageSource),
+                                          typeof(HamburgerMenuImageItem),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a value that specifies a bitmap to display with an Image control.
         /// </summary>
-        public ImageSource Thumbnail
+        public ImageSource? Thumbnail
         {
-            get { return (ImageSource)GetValue(ThumbnailProperty); }
-
-            set { SetValue(ThumbnailProperty, value); }
+            get => (ImageSource?)this.GetValue(ThumbnailProperty);
+            set => this.SetValue(ThumbnailProperty, value);
         }
 
         protected override Freezable CreateInstanceCore()

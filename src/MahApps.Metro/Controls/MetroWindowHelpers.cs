@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls
         public static void SetIsHitTestVisibleInChromeProperty<T>([NotNull] this MetroWindow window, string name, bool hitTestVisible = true)
             where T : class
         {
-            if (window == null)
+            if (window is null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
@@ -50,12 +50,12 @@ namespace MahApps.Metro.Controls
         /// <param name="direction">The direction.</param>
         public static void SetWindowChromeResizeGripDirection([NotNull] this MetroWindow window, string name, ResizeGripDirection direction)
         {
-            if (window == null)
+            if (window is null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
 
-            var inputElement = window.GetPart(name) as IInputElement;
+            var inputElement = window.GetPart<IInputElement>(name);
             Debug.Assert(inputElement != null, $"{name} is not a IInputElement");
             if (WindowChrome.GetResizeGripDirection(inputElement) != direction)
             {
@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls
         /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
         public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts)
         {
-            var allOpenFlyouts = flyouts.Where(x => x.IsOpen);
+            var allOpenFlyouts = flyouts.Where(x => x.IsOpen).ToList();
 
             var anyFlyoutOpen = allOpenFlyouts.Any(x => x.Position != Position.Bottom);
             if (!anyFlyoutOpen)
@@ -109,7 +109,7 @@ namespace MahApps.Metro.Controls
         }
 
         [CanBeNull]
-        private static Theme GetCurrentTheme([NotNull] MetroWindow window)
+        private static Theme? GetCurrentTheme([NotNull] MetroWindow window)
         {
             if (window is null)
             {
@@ -119,11 +119,12 @@ namespace MahApps.Metro.Controls
             var currentTheme = ThemeManager.Current.DetectTheme(window);
             if (currentTheme is null)
             {
-                if (!(Application.Current is null))
+                var application = Application.Current;
+                if (application is not null)
                 {
-                    currentTheme = Application.Current.MainWindow is null
-                        ? ThemeManager.Current.DetectTheme(Application.Current)
-                        : ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
+                    currentTheme = application.MainWindow is null
+                        ? ThemeManager.Current.DetectTheme(application)
+                        : ThemeManager.Current.DetectTheme(application.MainWindow);
                 }
             }
 
@@ -146,9 +147,9 @@ namespace MahApps.Metro.Controls
             window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentTheme, flyout.Theme, flyout.Position);
         }
 
-        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme)
+        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush? foregroundBrush, ControlzEx.Theming.Theme? currentAppTheme)
         {
-            if (foregroundBrush == null)
+            if (foregroundBrush is null)
             {
                 window.LeftWindowCommands?.ClearValue(Control.ForegroundProperty);
                 window.RightWindowCommands?.ClearValue(Control.ForegroundProperty);
@@ -171,11 +172,11 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
+        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush? foregroundBrush, ControlzEx.Theming.Theme? currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
         {
             if (position == Position.Right || position == Position.Top)
             {
-                if (foregroundBrush == null)
+                if (foregroundBrush is null)
                 {
                     window.WindowButtonCommands?.ClearValue(Control.ForegroundProperty);
                 }
@@ -186,18 +187,13 @@ namespace MahApps.Metro.Controls
                     ? ThemeManager.BaseColorDark
                     : ThemeManager.BaseColorLight;
 
-                if (flyoutTheme == FlyoutTheme.Light)
+                theme = flyoutTheme switch
                 {
-                    theme = ThemeManager.BaseColorLight;
-                }
-                else if (flyoutTheme == FlyoutTheme.Dark)
-                {
-                    theme = ThemeManager.BaseColorDark;
-                }
-                else if (flyoutTheme == FlyoutTheme.Inverse)
-                {
-                    theme = theme == ThemeManager.BaseColorLight ? ThemeManager.BaseColorDark : ThemeManager.BaseColorLight;
-                }
+                    FlyoutTheme.Light => ThemeManager.BaseColorLight,
+                    FlyoutTheme.Dark => ThemeManager.BaseColorDark,
+                    FlyoutTheme.Inverse => theme == ThemeManager.BaseColorLight ? ThemeManager.BaseColorDark : ThemeManager.BaseColorLight,
+                    _ => theme
+                };
 
                 window.WindowButtonCommands?.SetValue(WindowButtonCommands.ThemeProperty, theme);
 

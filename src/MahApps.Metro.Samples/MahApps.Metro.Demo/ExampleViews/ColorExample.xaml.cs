@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
+using ControlzEx.Theming;
 
 namespace MetroDemo.ExampleViews
 {
@@ -13,7 +14,14 @@ namespace MetroDemo.ExampleViews
     {
         public ColorExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+
+            ThemeManager.Current.ThemeChanged += this.ThemeManager_ThemeChanged;
+        }
+
+        private void ThemeManager_ThemeChanged(object? sender, ThemeChangedEventArgs e)
+        {
+            (this.DataContext as MainWindowViewModel)?.UpdateThemeResources();
         }
     }
 }

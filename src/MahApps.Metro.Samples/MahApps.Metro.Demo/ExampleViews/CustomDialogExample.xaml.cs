@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public CustomDialogExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

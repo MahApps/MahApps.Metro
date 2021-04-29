@@ -22,16 +22,16 @@ namespace MetroDemo.ExampleWindows
 
             this.Closing += (s, e) =>
                 {
-                    if (_hideOnClose)
+                    if (this._hideOnClose)
                     {
-                        Hide();
+                        this.Hide();
                         e.Cancel = true;
                     }
                 };
 
             var mainWindow = (MetroWindow)this;
             var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
-            if (windowPlacementSettings.UpgradeSettings)
+            if (windowPlacementSettings is not null && windowPlacementSettings.UpgradeSettings)
             {
                 windowPlacementSettings.Upgrade();
                 windowPlacementSettings.UpgradeSettings = false;
@@ -41,29 +41,29 @@ namespace MetroDemo.ExampleWindows
 
         public void Launch()
         {
-            Owner = Application.Current.MainWindow;
+            this.Owner = Application.Current.MainWindow;
             // only for this window, because we allow minimizing
-            if (WindowState == WindowState.Minimized)
+            if (this.WindowState == WindowState.Minimized)
             {
-                WindowState = WindowState.Normal;
+                this.WindowState = WindowState.Normal;
             }
 
-            Show();
+            this.Show();
         }
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         protected void Dispose(bool disposing)
         {
-            if (!_disposed && disposing)
+            if (!this._disposed && disposing)
             {
-                _disposed = true;
-                _hideOnClose = false;
-                Close();
+                this._disposed = true;
+                this._hideOnClose = false;
+                this.Close();
             }
         }
 
@@ -135,7 +135,7 @@ namespace MetroDemo.ExampleWindows
 
         private void ToggleFlyout(int index)
         {
-            var flyout = this.Flyouts.Items[index] as Flyout;
+            var flyout = this.Flyouts?.Items[index] as Flyout;
             if (flyout == null)
             {
                 return;
@@ -146,13 +146,13 @@ namespace MetroDemo.ExampleWindows
 
         private void ShowSettingsLeft(object sender, RoutedEventArgs e)
         {
-            var flyout = (Flyout)this.Flyouts.Items[6];
+            var flyout = (Flyout)this.Flyouts!.Items[6];
             flyout.Position = Position.Left;
         }
 
         private void ShowSettingsRight(object sender, RoutedEventArgs e)
         {
-            var flyout = (Flyout)this.Flyouts.Items[6];
+            var flyout = (Flyout)this.Flyouts!.Items[6];
             flyout.Position = Position.Right;
         }
 
@@ -164,15 +164,15 @@ namespace MetroDemo.ExampleWindows
                          };
 
             // when the flyout is closed, remove it from the hosting FlyoutsControl
-            RoutedEventHandler closingFinishedHandler = null;
+            RoutedEventHandler? closingFinishedHandler = null;
             closingFinishedHandler = (o, args) =>
                 {
                     flyout.ClosingFinished -= closingFinishedHandler;
-                    flyoutsControl.Items.Remove(flyout);
+                    this.flyoutsControl.Items.Remove(flyout);
                 };
             flyout.ClosingFinished += closingFinishedHandler;
 
-            flyoutsControl.Items.Add(flyout);
+            this.flyoutsControl.Items.Add(flyout);
 
             flyout.IsOpen = true;
         }

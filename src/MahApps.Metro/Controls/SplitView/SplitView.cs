@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -21,22 +22,22 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PaneClipRectangle", Type = typeof(RectangleGeometry))]
     [TemplatePart(Name = "LightDismissLayer", Type = typeof(Rectangle))]
     [TemplatePart(Name = "PART_ResizingThumb", Type = typeof(MetroThumb))]
-    [TemplateVisualState(Name = "Closed                 ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "ClosedCompactLeft      ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "ClosedCompactRight     ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "OpenOverlayLeft        ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "OpenOverlayRight       ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "OpenInlineLeft         ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "OpenInlineRight        ", GroupName = "DisplayModeStates")]
-    [TemplateVisualState(Name = "OpenCompactOverlayLeft ", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "Closed", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "ClosedCompactLeft", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "ClosedCompactRight", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "OpenOverlayLeft", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "OpenOverlayRight", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "OpenInlineLeft", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "OpenInlineRight", GroupName = "DisplayModeStates")]
+    [TemplateVisualState(Name = "OpenCompactOverlayLeft", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "OpenCompactOverlayRight", GroupName = "DisplayModeStates")]
     [ContentProperty(nameof(Content))]
     [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
     public class SplitView : Control
     {
-        private Rectangle lightDismissLayer;
-        private RectangleGeometry paneClipRectangle;
-        private MetroThumb resizingThumb;
+        private Rectangle? lightDismissLayer;
+        private RectangleGeometry? paneClipRectangle;
+        private MetroThumb? resizingThumb;
 
         /// <summary>Identifies the <see cref="CompactPaneLength"/> dependency property.</summary>
         public static readonly DependencyProperty CompactPaneLengthProperty
@@ -79,9 +80,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the contents of the main panel of a <see cref="SplitView" />.
         /// </summary>
         /// <returns>The contents of the main panel of a <see cref="SplitView" />. The default is null.</returns>
-        public UIElement Content
+        public UIElement? Content
         {
-            get => (UIElement)this.GetValue(ContentProperty);
+            get => (UIElement?)this.GetValue(ContentProperty);
             set => this.SetValue(ContentProperty, value);
         }
 
@@ -123,23 +124,16 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsPaneOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var sender = d as SplitView;
-            var newValue = (bool)e.NewValue;
-            var oldValue = (bool)e.OldValue;
-
-            if (sender == null
-                || newValue == oldValue)
+            if (d is SplitView splitView && e.OldValue != e.NewValue && e.NewValue is bool isPaneOpen)
             {
-                return;
-            }
-
-            if (newValue)
-            {
-                sender.ChangeVisualState(true, false); // Open pane
-            }
-            else
-            {
-                sender.OnIsPaneOpenChanged(); // Close pane
+                if (isPaneOpen)
+                {
+                    splitView.ChangeVisualState(true, false); // Open pane
+                }
+                else
+                {
+                    splitView.OnIsPaneOpenChanged(); // Close pane
+                }
             }
         }
 
@@ -177,7 +171,8 @@ namespace MahApps.Metro.Controls
                                           typeof(SplitView),
                                           new PropertyMetadata(0d, OnOpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
 
-        private static object OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object inputValue)
+        [MustUseReturnValue]
+        private static object? OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object? inputValue)
         {
             if (dependencyObject is SplitView splitView && splitView.ActualWidth > 0 && inputValue is double openPaneLength)
             {
@@ -213,10 +208,8 @@ namespace MahApps.Metro.Controls
 
                 return openPaneLength;
             }
-            else
-            {
-                return inputValue;
-            }
+
+            return inputValue;
         }
 
         private static void OnOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -242,7 +235,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(100d, MinimumOpenPaneLengthPropertyChangedCallback));
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty
+            = DependencyProperty.Register(nameof(MinimumOpenPaneLength),
+                                          typeof(double),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(100d, MinimumOpenPaneLengthPropertyChangedCallback));
 
         private static void MinimumOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -268,7 +265,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMaximumOpenPaneLengthPropertyChangedCallback));
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty
+            = DependencyProperty.Register(nameof(MaximumOpenPaneLength),
+                                          typeof(double),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(500d, OnMaximumOpenPaneLengthPropertyChangedCallback));
 
         private static void OnMaximumOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -294,7 +295,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
-        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(BooleanBoxes.FalseBox, OnCanResizeOpenPanePropertyChangedCallback));
+        public static readonly DependencyProperty CanResizeOpenPaneProperty
+            = DependencyProperty.Register(nameof(CanResizeOpenPane),
+                                          typeof(bool),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnCanResizeOpenPanePropertyChangedCallback));
 
         private static void OnCanResizeOpenPanePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -314,14 +319,18 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="ResizeThumbStyle"/> dependency property.</summary>
-        public static readonly DependencyProperty ResizeThumbStyleProperty = DependencyProperty.Register(nameof(ResizeThumbStyle), typeof(Style), typeof(SplitView), new PropertyMetadata(null));
+        public static readonly DependencyProperty ResizeThumbStyleProperty
+            = DependencyProperty.Register(nameof(ResizeThumbStyle),
+                                          typeof(Style),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or Sets the <see cref="Style"/> for the resizing Thumb (type of <see cref="MetroThumb"/>)
         /// </summary>
-        public Style ResizeThumbStyle
+        public Style? ResizeThumbStyle
         {
-            get => (Style)this.GetValue(ResizeThumbStyleProperty);
+            get => (Style?)this.GetValue(ResizeThumbStyleProperty);
             set => this.SetValue(ResizeThumbStyleProperty, value);
         }
 
@@ -336,9 +345,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the contents of the pane of a <see cref="SplitView" />.
         /// </summary>
         /// <returns>The contents of the pane of a <see cref="SplitView" />. The default is null.</returns>
-        public UIElement Pane
+        public UIElement? Pane
         {
-            get => (UIElement)this.GetValue(PaneProperty);
+            get => (UIElement?)this.GetValue(PaneProperty);
             set => this.SetValue(PaneProperty, value);
         }
 
@@ -353,9 +362,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the Brush to apply to the background of the <see cref="Pane" /> area of the control.
         /// </summary>
         /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
-        public Brush PaneBackground
+        public Brush? PaneBackground
         {
-            get => (Brush)this.GetValue(PaneBackgroundProperty);
+            get => (Brush?)this.GetValue(PaneBackgroundProperty);
             set => this.SetValue(PaneBackgroundProperty, value);
         }
 
@@ -370,9 +379,9 @@ namespace MahApps.Metro.Controls
         ///     Gets or sets the Brush to apply to the foreground of the <see cref="Pane" /> area of the control.
         /// </summary>
         /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
-        public Brush PaneForeground
+        public Brush? PaneForeground
         {
-            get => (Brush)this.GetValue(PaneForegroundProperty);
+            get => (Brush?)this.GetValue(PaneForegroundProperty);
             set => this.SetValue(PaneForegroundProperty, value);
         }
 
@@ -418,9 +427,9 @@ namespace MahApps.Metro.Controls
         ///     templates for a <see cref="SplitView" /> control.
         /// </summary>
         /// <returns>An object that provides calculated values for templates.</returns>
-        public SplitViewTemplateSettings TemplateSettings
+        public SplitViewTemplateSettings? TemplateSettings
         {
-            get => (SplitViewTemplateSettings)this.GetValue(TemplateSettingsProperty);
+            get => (SplitViewTemplateSettings?)this.GetValue(TemplateSettingsProperty);
             private set => this.SetValue(TemplateSettingsProperty, value);
         }
 
@@ -447,12 +456,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Occurs when the <see cref="SplitView" /> pane is closed.
         /// </summary>
-        public event EventHandler PaneClosed;
+        public event EventHandler? PaneClosed;
 
         /// <summary>
         ///     Occurs when the <see cref="SplitView" /> pane is closing.
         /// </summary>
-        public event EventHandler<SplitViewPaneClosingEventArgs> PaneClosing;
+        public event EventHandler<SplitViewPaneClosingEventArgs>? PaneClosing;
 
         /// <inheritdoc />
         public override void OnApplyTemplate()
@@ -485,7 +494,7 @@ namespace MahApps.Metro.Controls
 
             this.ExecuteWhenLoaded(() =>
                 {
-                    this.TemplateSettings.Update();
+                    this.TemplateSettings?.Update();
                     this.ChangeVisualState(false, false);
                 });
         }
@@ -497,7 +506,7 @@ namespace MahApps.Metro.Controls
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (!(dependencyObject is SplitView splitView))
+            if (dependencyObject is not SplitView splitView)
             {
                 return;
             }
@@ -596,13 +605,14 @@ namespace MahApps.Metro.Controls
         protected void OnIsPaneOpenChanged()
         {
             var cancel = false;
+
             if (this.PaneClosing != null)
             {
                 var args = new SplitViewPaneClosingEventArgs();
                 foreach (var paneClosingDelegates in this.PaneClosing.GetInvocationList())
                 {
                     var eventHandler = paneClosingDelegates as EventHandler<SplitViewPaneClosingEventArgs>;
-                    if (eventHandler == null)
+                    if (eventHandler is null)
                     {
                         continue;
                     }
