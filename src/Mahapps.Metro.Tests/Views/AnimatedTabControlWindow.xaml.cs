@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Views
 {
     public partial class AnimatedTabControlWindow : MetroWindow
     {

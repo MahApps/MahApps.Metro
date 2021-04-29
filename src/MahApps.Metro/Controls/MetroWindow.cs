@@ -23,6 +23,7 @@ using ControlzEx.Behaviors;
 using ControlzEx.Native;
 using ControlzEx.Standard;
 using ControlzEx.Theming;
+using JetBrains.Annotations;
 using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
@@ -32,7 +33,7 @@ using Microsoft.Xaml.Behaviors;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// An extended, metrofied Window class.
+    /// An extended Window class.
     /// </summary>
     [TemplatePart(Name = PART_Icon, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
@@ -63,110 +64,6 @@ namespace MahApps.Metro.Controls
         private const string PART_FlyoutModal = "PART_FlyoutModal";
         private const string PART_Content = "PART_Content";
 
-        public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register(nameof(ShowIconOnTitleBar), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox, OnShowIconOnTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register(nameof(IconEdgeMode), typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
-        public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register(nameof(IconBitmapScalingMode), typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
-        public static readonly DependencyProperty IconScalingModeProperty = DependencyProperty.Register(nameof(IconScalingMode), typeof(MultiFrameImageMode), typeof(MetroWindow), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register(nameof(ShowTitleBar), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
-
-        public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register(nameof(ShowDialogsOverTitleBar), typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
-
-        internal static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        /// <summary>
-        /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty IsAnyDialogOpenProperty = IsAnyDialogOpenPropertyKey.DependencyProperty;
-
-        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register(nameof(ShowMinButton), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register(nameof(ShowMaxRestoreButton), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register(nameof(ShowCloseButton), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register(nameof(IsMinButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register(nameof(IsMaxRestoreButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register(nameof(IsCloseButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        internal static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        /// <summary>
-        /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
-
-        public static readonly DependencyProperty ShowSystemMenuProperty = DependencyProperty.Register(nameof(ShowSystemMenu), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register(nameof(ShowSystemMenuOnRightClick), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register(nameof(TitleBarHeight), typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitleBarHeightPropertyChangedCallback));
-        public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register(nameof(TitleCharacterCasing), typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
-        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register(nameof(TitleAlignment), typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, OnTitleAlignmentChanged));
-
-        public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register(nameof(SaveWindowPosition), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
-        public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register(nameof(WindowPlacementSettings), typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register(nameof(TitleForeground), typeof(Brush), typeof(MetroWindow));
-        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register(nameof(Flyouts), typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
-        public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register(nameof(WindowTransitionsEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register(nameof(MetroDialogOptions), typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(default(MetroDialogSettings)));
-
-        public static readonly DependencyProperty WindowTitleBrushProperty = DependencyProperty.Register(nameof(WindowTitleBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Transparent));
-        public static readonly DependencyProperty NonActiveWindowTitleBrushProperty = DependencyProperty.Register(nameof(NonActiveWindowTitleBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
-        public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register(nameof(NonActiveBorderBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
-
-        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register(nameof(GlowBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register(nameof(NonActiveGlowBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register(nameof(OverlayBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register(nameof(OverlayOpacity), typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
-
-        public static readonly DependencyProperty FlyoutOverlayBrushProperty = DependencyProperty.Register(nameof(FlyoutOverlayBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="OverlayFadeIn"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OverlayFadeInProperty = DependencyProperty.Register(nameof(OverlayFadeIn), typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
-        /// <summary>
-        /// Identifies the <see cref="OverlayFadeOut"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OverlayFadeOutProperty = DependencyProperty.Register(nameof(OverlayFadeOut), typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
-
-        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register(nameof(IconTemplate), typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register(nameof(TitleTemplate), typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
-
-        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register(nameof(LeftWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, OnLeftWindowCommandsPropertyChanged));
-
-        private static void OnLeftWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is WindowCommands windowCommands)
-            {
-                AutomationProperties.SetName(windowCommands, nameof(LeftWindowCommands));
-            }
-
-            UpdateLogicalChilds(d, e);
-        }
-
-        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register(nameof(RightWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, OnRightWindowCommandsPropertyChanged));
-
-        private static void OnRightWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is WindowCommands windowCommands)
-            {
-                AutomationProperties.SetName(windowCommands, nameof(RightWindowCommands));
-            }
-
-            UpdateLogicalChilds(d, e);
-        }
-
-        public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register(nameof(WindowButtonCommands), typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
-
-        public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(LeftWindowCommandsOverlayBehavior), typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(RightWindowCommandsOverlayBehavior), typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(WindowButtonCommandsOverlayBehavior), typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Always, OnShowTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register(nameof(IconOverlayBehavior), typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
-
-        public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register(nameof(UseNoneWindowStyle), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox, OnUseNoneWindowStylePropertyChangedCallback));
-        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register(nameof(OverrideDefaultWindowCommandsBrush), typeof(Brush), typeof(MetroWindow));
-
-        public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register(nameof(IsWindowDraggable), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-
         FrameworkElement? icon;
         UIElement? titleBar;
         UIElement? titleBarBackground;
@@ -183,327 +80,793 @@ namespace MahApps.Metro.Controls
         private Storyboard? overlayStoryboard;
         Rectangle? flyoutModal;
 
-        public static readonly RoutedEvent FlyoutsStatusChangedEvent = EventManager.RegisterRoutedEvent(
-            nameof(FlyoutsStatusChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
+        private EventHandler? onOverlayFadeInStoryboardCompleted = null;
+        private EventHandler? onOverlayFadeOutStoryboardCompleted = null;
 
-        // Provide CLR accessors for the event
-        public event RoutedEventHandler FlyoutsStatusChanged
-        {
-            add => AddHandler(FlyoutsStatusChangedEvent, value);
-            remove => RemoveHandler(FlyoutsStatusChangedEvent, value);
-        }
-
-        public static readonly RoutedEvent WindowTransitionCompletedEvent = EventManager.RegisterRoutedEvent(nameof(WindowTransitionCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
-
-        public event RoutedEventHandler WindowTransitionCompleted
-        {
-            add => this.AddHandler(WindowTransitionCompletedEvent, value);
-            remove => this.RemoveHandler(WindowTransitionCompletedEvent, value);
-        }
-
-        /// <summary>
-        /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
-        /// </summary>
-        public Brush? OverrideDefaultWindowCommandsBrush
-        {
-            get => (Brush?)this.GetValue(OverrideDefaultWindowCommandsBrushProperty);
-            set => this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value);
-        }
-
-        public MetroDialogSettings? MetroDialogOptions
-        {
-            get => (MetroDialogSettings?)GetValue(MetroDialogOptionsProperty);
-            set => SetValue(MetroDialogOptionsProperty, value);
-        }
-
-        public bool IsWindowDraggable
-        {
-            get => (bool)GetValue(IsWindowDraggableProperty);
-            set => SetValue(IsWindowDraggableProperty, BooleanBoxes.Box(value));
-        }
-
-        public WindowCommandsOverlayBehavior LeftWindowCommandsOverlayBehavior
-        {
-            get => (WindowCommandsOverlayBehavior)this.GetValue(LeftWindowCommandsOverlayBehaviorProperty);
-            set => SetValue(LeftWindowCommandsOverlayBehaviorProperty, value);
-        }
-
-        public WindowCommandsOverlayBehavior RightWindowCommandsOverlayBehavior
-        {
-            get => (WindowCommandsOverlayBehavior)this.GetValue(RightWindowCommandsOverlayBehaviorProperty);
-            set => SetValue(RightWindowCommandsOverlayBehaviorProperty, value);
-        }
-
-        public OverlayBehavior WindowButtonCommandsOverlayBehavior
-        {
-            get => (OverlayBehavior)this.GetValue(WindowButtonCommandsOverlayBehaviorProperty);
-            set => SetValue(WindowButtonCommandsOverlayBehaviorProperty, value);
-        }
-
-        public OverlayBehavior IconOverlayBehavior
-        {
-            get => (OverlayBehavior)this.GetValue(IconOverlayBehaviorProperty);
-            set => SetValue(IconOverlayBehaviorProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets whether the window's entrance transition animation is enabled.
-        /// </summary>
-        public bool WindowTransitionsEnabled
-        {
-            get => (bool)this.GetValue(WindowTransitionsEnabledProperty);
-            set => SetValue(WindowTransitionsEnabledProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Gets/sets the FlyoutsControl that hosts the window's flyouts.
-        /// </summary>
-        public FlyoutsControl? Flyouts
-        {
-            get => (FlyoutsControl?)GetValue(FlyoutsProperty);
-            set => SetValue(FlyoutsProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the icon content template to show a custom icon.
-        /// </summary>
-        public DataTemplate? IconTemplate
-        {
-            get => (DataTemplate?)GetValue(IconTemplateProperty);
-            set => SetValue(IconTemplateProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the title content template to show a custom title.
-        /// </summary>
-        public DataTemplate? TitleTemplate
-        {
-            get => (DataTemplate?)GetValue(TitleTemplateProperty);
-            set => SetValue(TitleTemplateProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the left window commands that hosts the user commands.
-        /// </summary>
-        public WindowCommands? LeftWindowCommands
-        {
-            get => (WindowCommands?)GetValue(LeftWindowCommandsProperty);
-            set => SetValue(LeftWindowCommandsProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the right window commands that hosts the user commands.
-        /// </summary>
-        public WindowCommands? RightWindowCommands
-        {
-            get => (WindowCommands?)GetValue(RightWindowCommandsProperty);
-            set => SetValue(RightWindowCommandsProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the window button commands that hosts the min/max/close commands.
-        /// </summary>
-        public WindowButtonCommands? WindowButtonCommands
-        {
-            get => (WindowButtonCommands?)GetValue(WindowButtonCommandsProperty);
-            set => SetValue(WindowButtonCommandsProperty, value);
-        }
-
-        /// <summary>
-        /// Defines if the Taskbar should be ignored when maximizing a Window.
-        /// This only works with WindowStyle = None.
-        /// </summary>
-        public bool IgnoreTaskbarOnMaximize
-        {
-            get => (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty);
-            set => SetValue(IgnoreTaskbarOnMaximizeProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="IgnoreTaskbarOnMaximize"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register(nameof(IgnoreTaskbarOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        /// <summary>
-        /// Gets or sets resize border thickness. This enables animation, styling, binding, etc...
-        /// </summary>
-        public Thickness ResizeBorderThickness
-        {
-            get => (Thickness)this.GetValue(ResizeBorderThicknessProperty);
-            set => this.SetValue(ResizeBorderThicknessProperty, value);
-        }
-
-        /// <summary>
-        /// <see cref="DependencyProperty"/> for <see cref="ResizeBorderThickness"/>.
-        /// </summary>
-        public static readonly DependencyProperty ResizeBorderThicknessProperty = DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(new Thickness(6D)));
-
-        /// <summary>
-        /// Gets/sets if the border thickness value should be kept on maximize
-        /// if the MaxHeight/MaxWidth of the window is less than the monitor resolution.
-        /// </summary>
-        public bool KeepBorderOnMaximize
-        {
-            get => (bool)this.GetValue(KeepBorderOnMaximizeProperty);
-            set => this.SetValue(KeepBorderOnMaximizeProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// <see cref="DependencyProperty"/> for <see cref="KeepBorderOnMaximize"/>.
-        /// </summary>
-        public static readonly DependencyProperty KeepBorderOnMaximizeProperty = DependencyProperty.Register(nameof(KeepBorderOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        /// <summary>
-        /// Gets or sets wether the resizing of the window should be tried in a way that does not cause flicker/jitter, especially when resizing from the left side.
-        /// </summary>
-        /// <remarks>
-        /// Please note that setting this to <c>true</c> may cause resize lag and black areas appearing on some systems.
-        /// </remarks>
-        public bool TryToBeFlickerFree
-        {
-            get => (bool)this.GetValue(TryToBeFlickerFreeProperty);
-            set => this.SetValue(TryToBeFlickerFreeProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// <see cref="DependencyProperty"/> for <see cref="TryToBeFlickerFree"/>.
-        /// </summary>
-        public static readonly DependencyProperty TryToBeFlickerFreeProperty = DependencyProperty.Register(nameof(TryToBeFlickerFree), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        /// <summary>
-        /// Gets/sets the brush used for the titlebar's foreground.
-        /// </summary>
-        public Brush? TitleForeground
-        {
-            get => (Brush?)GetValue(TitleForegroundProperty);
-            set => SetValue(TitleForegroundProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets whether the window will save it's position between loads.
-        /// </summary>
-        public bool SaveWindowPosition
-        {
-            get => (bool)GetValue(SaveWindowPositionProperty);
-            set => SetValue(SaveWindowPositionProperty, BooleanBoxes.Box(value));
-        }
-
-        public IWindowPlacementSettings? WindowPlacementSettings
-        {
-            get => (IWindowPlacementSettings?)GetValue(WindowPlacementSettingsProperty);
-            set => SetValue(WindowPlacementSettingsProperty, value);
-        }
-
-        /// <summary>
-        /// Gets the window placement settings (can be overwritten).
-        /// </summary>
-        public virtual IWindowPlacementSettings? GetWindowPlacementSettings()
-        {
-            return this.WindowPlacementSettings ?? new WindowApplicationSettings(this);
-        }
-
-        /// <summary>
-        /// Get/sets whether the titlebar icon is visible or not.
-        /// </summary>
-        public bool ShowIconOnTitleBar
-        {
-            get => (bool)GetValue(ShowIconOnTitleBarProperty);
-            set => SetValue(ShowIconOnTitleBarProperty, BooleanBoxes.Box(value));
-        }
+        /// <summary>Identifies the <see cref="ShowIconOnTitleBar"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowIconOnTitleBarProperty
+            = DependencyProperty.Register(nameof(ShowIconOnTitleBar),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnShowIconOnTitleBarPropertyChangedCallback));
 
         private static void OnShowIconOnTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var window = (MetroWindow)d;
             if (e.NewValue != e.OldValue)
             {
-                window.SetVisibiltyForIcon();
+                window.UpdateIconVisibility();
             }
         }
 
         /// <summary>
-        /// Get/sets whether dialogs show over the title bar.
+        /// Get or sets whether the TitleBar icon is visible or not.
         /// </summary>
-        public bool ShowDialogsOverTitleBar
+        public bool ShowIconOnTitleBar
         {
-            get => (bool)GetValue(ShowDialogsOverTitleBarProperty);
-            set => SetValue(ShowDialogsOverTitleBarProperty, BooleanBoxes.Box(value));
+            get => (bool)this.GetValue(ShowIconOnTitleBarProperty);
+            set => this.SetValue(ShowIconOnTitleBarProperty, BooleanBoxes.Box(value));
         }
 
-        /// <summary>
-        /// Gets whether one or more dialogs are shown.
-        /// </summary>
-        public bool IsAnyDialogOpen
-        {
-            get => (bool)GetValue(IsAnyDialogOpenProperty);
-            protected set => SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value));
-        }
+        /// <summary>Identifies the <see cref="IconEdgeMode"/> dependency property.</summary>
+        public static readonly DependencyProperty IconEdgeModeProperty
+            = DependencyProperty.Register(nameof(IconEdgeMode),
+                                          typeof(EdgeMode),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(EdgeMode.Aliased));
 
         /// <summary>
-        /// Gets/sets edge mode of the titlebar icon.
+        /// Gets or sets the edge mode for the TitleBar icon.
         /// </summary>
         public EdgeMode IconEdgeMode
         {
             get => (EdgeMode)this.GetValue(IconEdgeModeProperty);
-            set => SetValue(IconEdgeModeProperty, value);
+            set => this.SetValue(IconEdgeModeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="IconBitmapScalingMode"/> dependency property.</summary>
+        public static readonly DependencyProperty IconBitmapScalingModeProperty
+            = DependencyProperty.Register(nameof(IconBitmapScalingMode),
+                                          typeof(BitmapScalingMode),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BitmapScalingMode.HighQuality));
+
         /// <summary>
-        /// Gets/sets bitmap scaling mode of the titlebar icon.
+        /// Gets or sets the bitmap scaling mode for the TitleBar icon.
         /// </summary>
         public BitmapScalingMode IconBitmapScalingMode
         {
             get => (BitmapScalingMode)this.GetValue(IconBitmapScalingModeProperty);
-            set => SetValue(IconBitmapScalingModeProperty, value);
+            set => this.SetValue(IconBitmapScalingModeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="IconScalingMode"/> dependency property.</summary>
+        public static readonly DependencyProperty IconScalingModeProperty
+            = DependencyProperty.Register(nameof(IconScalingMode),
+                                          typeof(MultiFrameImageMode),
+                                          typeof(MetroWindow),
+                                          new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
+
         /// <summary>
-        /// Gets/sets icon scaling mode of the titlebar.
+        /// Gets or sets the scaling mode for the TitleBar icon.
         /// </summary>
         public MultiFrameImageMode IconScalingMode
         {
             get => (MultiFrameImageMode)this.GetValue(IconScalingModeProperty);
-            set => SetValue(IconScalingModeProperty, value);
+            set => this.SetValue(IconScalingModeProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ShowTitleBar"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowTitleBarProperty
+            = DependencyProperty.Register(nameof(ShowTitleBar),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
+
+        [MustUseReturnValue]
+        private static object? OnShowTitleBarCoerceValueCallback(DependencyObject d, object? value)
+        {
+            // if UseNoneWindowStyle = true no title bar should be shown
+            return ((MetroWindow)d).UseNoneWindowStyle ? false : value;
         }
 
         /// <summary>
-        /// Gets/sets whether the TitleBar is visible or not.
+        /// Gets or sets whether the TitleBar is visible or not.
         /// </summary>
         public bool ShowTitleBar
         {
-            get => (bool)GetValue(ShowTitleBarProperty);
-            set => SetValue(ShowTitleBarProperty, BooleanBoxes.Box(value));
+            get => (bool)this.GetValue(ShowTitleBarProperty);
+            set => this.SetValue(ShowTitleBarProperty, BooleanBoxes.Box(value));
         }
 
-        private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>Identifies the <see cref="ShowDialogsOverTitleBar"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowDialogsOverTitleBarProperty
+            = DependencyProperty.Register(nameof(ShowDialogsOverTitleBar),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Get or sets whether a dialog will be shown over the TitleBar.
+        /// </summary>
+        public bool ShowDialogsOverTitleBar
         {
-            var window = (MetroWindow)d;
+            get => (bool)this.GetValue(ShowDialogsOverTitleBarProperty);
+            set => this.SetValue(ShowDialogsOverTitleBarProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsAnyDialogOpen"/> dependency property.</summary>
+        internal static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen),
+                                                  typeof(bool),
+                                                  typeof(MetroWindow),
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>Identifies the <see cref="IsAnyDialogOpen"/> dependency property.</summary>
+        public static readonly DependencyProperty IsAnyDialogOpenProperty = IsAnyDialogOpenPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether that there are one or more dialogs open.
+        /// </summary>
+        public bool IsAnyDialogOpen
+        {
+            get => (bool)this.GetValue(IsAnyDialogOpenProperty);
+            protected set => this.SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ShowMinButton"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowMinButtonProperty
+            = DependencyProperty.Register(nameof(ShowMinButton),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether if the minimize button is visible and the minimize system menu is enabled.
+        /// </summary>
+        public bool ShowMinButton
+        {
+            get => (bool)this.GetValue(ShowMinButtonProperty);
+            set => this.SetValue(ShowMinButtonProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ShowMaxRestoreButton"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowMaxRestoreButtonProperty
+            = DependencyProperty.Register(nameof(ShowMaxRestoreButton),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether if the maximize/restore button is visible and the maximize/restore system menu is enabled.
+        /// </summary>
+        public bool ShowMaxRestoreButton
+        {
+            get => (bool)this.GetValue(ShowMaxRestoreButtonProperty);
+            set => this.SetValue(ShowMaxRestoreButtonProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ShowCloseButton"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowCloseButtonProperty
+            = DependencyProperty.Register(nameof(ShowCloseButton),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether if the close button is visible.
+        /// </summary>
+        public bool ShowCloseButton
+        {
+            get => (bool)this.GetValue(ShowCloseButtonProperty);
+            set => this.SetValue(ShowCloseButtonProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsMinButtonEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsMinButtonEnabledProperty
+            = DependencyProperty.Register(nameof(IsMinButtonEnabled),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets if the minimize button is enabled.
+        /// </summary>
+        public bool IsMinButtonEnabled
+        {
+            get => (bool)this.GetValue(IsMinButtonEnabledProperty);
+            set => this.SetValue(IsMinButtonEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsMaxRestoreButtonEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty
+            = DependencyProperty.Register(nameof(IsMaxRestoreButtonEnabled),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets if the maximize/restore button is enabled.
+        /// </summary>
+        public bool IsMaxRestoreButtonEnabled
+        {
+            get => (bool)this.GetValue(IsMaxRestoreButtonEnabledProperty);
+            set => this.SetValue(IsMaxRestoreButtonEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsCloseButtonEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsCloseButtonEnabledProperty
+            = DependencyProperty.Register(nameof(IsCloseButtonEnabled),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets if the close button is enabled.
+        /// </summary>
+        public bool IsCloseButtonEnabled
+        {
+            get => (bool)this.GetValue(IsCloseButtonEnabledProperty);
+            set => this.SetValue(IsCloseButtonEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.</summary>
+        internal static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog),
+                                                  typeof(bool),
+                                                  typeof(MetroWindow),
+                                                  new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.</summary>
+        public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether if the close button is enabled if a dialog is open.
+        /// It's true if <see cref="ShowDialogsOverTitleBar"/> or the <see cref="MetroDialogSettings.OwnerCanCloseWithDialog"/> is set to true
+        /// otherwise false.
+        /// </summary>
+        public bool IsCloseButtonEnabledWithDialog
+        {
+            get => (bool)this.GetValue(IsCloseButtonEnabledWithDialogProperty);
+            protected set => this.SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ShowSystemMenu"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowSystemMenuProperty
+            = DependencyProperty.Register(nameof(ShowSystemMenu),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the system menu should popup with left mouse click on the window icon.
+        /// </summary>
+        public bool ShowSystemMenu
+        {
+            get => (bool)this.GetValue(ShowSystemMenuProperty);
+            set => this.SetValue(ShowSystemMenuProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ShowSystemMenuOnRightClick"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty
+            = DependencyProperty.Register(nameof(ShowSystemMenuOnRightClick),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the system menu should popup with right mouse click if the mouse position is on title bar or on the entire window if it has no TitleBar (and no TitleBar height).
+        /// </summary>
+        public bool ShowSystemMenuOnRightClick
+        {
+            get => (bool)this.GetValue(ShowSystemMenuOnRightClickProperty);
+            set => this.SetValue(ShowSystemMenuOnRightClickProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="TitleBarHeight"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleBarHeightProperty
+            = DependencyProperty.Register(nameof(TitleBarHeight),
+                                          typeof(int),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(30, TitleBarHeightPropertyChangedCallback));
+
+        private static void TitleBarHeightPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
             if (e.NewValue != e.OldValue)
             {
-                window.SetVisibiltyForAllTitleElements();
+                ((MetroWindow)d).UpdateTitleBarElementsVisibility();
             }
-        }
-
-#pragma warning disable WPF0024
-        private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
-#pragma warning restore WPF0024
-        {
-            // if UseNoneWindowStyle = true no title bar should be shown
-            if (((MetroWindow)d).UseNoneWindowStyle)
-            {
-                return false;
-            }
-
-            return value;
         }
 
         /// <summary>
-        /// Gets/sets whether the WindowStyle is None or not.
+        /// Gets or sets the TitleBar's height.
         /// </summary>
-        public bool UseNoneWindowStyle
+        public int TitleBarHeight
         {
-            get => (bool)GetValue(UseNoneWindowStyleProperty);
-            set => SetValue(UseNoneWindowStyleProperty, BooleanBoxes.Box(value));
+            get => (int)this.GetValue(TitleBarHeightProperty);
+            set => this.SetValue(TitleBarHeightProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="TitleCharacterCasing"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleCharacterCasingProperty
+            = DependencyProperty.Register(nameof(TitleCharacterCasing),
+                                          typeof(CharacterCasing),
+                                          typeof(MetroWindow),
+                                          new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
+                                          value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
+
+        /// <summary>
+        /// Gets or sets the Character casing of the title.
+        /// </summary>
+        public CharacterCasing TitleCharacterCasing
+        {
+            get => (CharacterCasing)this.GetValue(TitleCharacterCasingProperty);
+            set => this.SetValue(TitleCharacterCasingProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TitleAlignment"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleAlignmentProperty
+            = DependencyProperty.Register(nameof(TitleAlignment),
+                                          typeof(HorizontalAlignment),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(HorizontalAlignment.Stretch, OnTitleAlignmentChanged));
+
+        private static void OnTitleAlignmentChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue)
+            {
+                var window = (MetroWindow)dependencyObject;
+
+                window.SizeChanged -= window.MetroWindow_SizeChanged;
+                if (e.NewValue is HorizontalAlignment horizontalAlignment && horizontalAlignment == HorizontalAlignment.Center && window.titleBar != null)
+                {
+                    window.SizeChanged += window.MetroWindow_SizeChanged;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment of the title.
+        /// </summary>
+        public HorizontalAlignment TitleAlignment
+        {
+            get => (HorizontalAlignment)this.GetValue(TitleAlignmentProperty);
+            set => this.SetValue(TitleAlignmentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="SaveWindowPosition"/> dependency property.</summary>
+        public static readonly DependencyProperty SaveWindowPositionProperty
+            = DependencyProperty.Register(nameof(SaveWindowPosition),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets whether the window will save it's position and size.
+        /// </summary>
+        public bool SaveWindowPosition
+        {
+            get => (bool)this.GetValue(SaveWindowPositionProperty);
+            set => this.SetValue(SaveWindowPositionProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="WindowPlacementSettings"/> dependency property.</summary>
+        public static readonly DependencyProperty WindowPlacementSettingsProperty
+            = DependencyProperty.Register(nameof(WindowPlacementSettings),
+                                          typeof(IWindowPlacementSettings),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        ///  Gets or sets the settings to save and load the position and size of the window.
+        /// </summary>
+        public IWindowPlacementSettings? WindowPlacementSettings
+        {
+            get => (IWindowPlacementSettings?)this.GetValue(WindowPlacementSettingsProperty);
+            set => this.SetValue(WindowPlacementSettingsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TitleForeground"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleForegroundProperty
+            = DependencyProperty.Register(nameof(TitleForeground),
+                                          typeof(Brush),
+                                          typeof(MetroWindow));
+
+        /// <summary>
+        /// Gets or sets the brush used for the TitleBar's foreground.
+        /// </summary>
+        public Brush? TitleForeground
+        {
+            get => (Brush?)this.GetValue(TitleForegroundProperty);
+            set => this.SetValue(TitleForegroundProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TitleTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleTemplateProperty
+            = DependencyProperty.Register(nameof(TitleTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="DataTemplate"/> for the <see cref="Window.Title"/>.
+        /// </summary>
+        public DataTemplate? TitleTemplate
+        {
+            get => (DataTemplate?)this.GetValue(TitleTemplateProperty);
+            set => this.SetValue(TitleTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="WindowTitleBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty WindowTitleBrushProperty
+            = DependencyProperty.Register(nameof(WindowTitleBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(Brushes.Transparent));
+
+        /// <summary>
+        /// Gets or sets the brush used for the background of the TitleBar.
+        /// </summary>
+        public Brush WindowTitleBrush
+        {
+            get => (Brush)this.GetValue(WindowTitleBrushProperty);
+            set => this.SetValue(WindowTitleBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="NonActiveWindowTitleBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty NonActiveWindowTitleBrushProperty
+            = DependencyProperty.Register(nameof(NonActiveWindowTitleBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(Brushes.Gray));
+
+        /// <summary>
+        /// Gets or sets the non-active brush used for the background of the TitleBar.
+        /// </summary>
+        public Brush NonActiveWindowTitleBrush
+        {
+            get => (Brush)this.GetValue(NonActiveWindowTitleBrushProperty);
+            set => this.SetValue(NonActiveWindowTitleBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="NonActiveBorderBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty NonActiveBorderBrushProperty
+            = DependencyProperty.Register(nameof(NonActiveBorderBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(Brushes.Gray));
+
+        /// <summary>
+        /// Gets or sets the non-active brush used for the border of the window.
+        /// </summary>
+        public Brush NonActiveBorderBrush
+        {
+            get => (Brush)this.GetValue(NonActiveBorderBrushProperty);
+            set => this.SetValue(NonActiveBorderBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="GlowBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty GlowBrushProperty
+            = DependencyProperty.Register(nameof(GlowBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the brush used for glow border of the window.
+        /// </summary>
+        public Brush? GlowBrush
+        {
+            get => (Brush?)this.GetValue(GlowBrushProperty);
+            set => this.SetValue(GlowBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="NonActiveGlowBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty NonActiveGlowBrushProperty
+            = DependencyProperty.Register(nameof(NonActiveGlowBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the non-active brush used for glow border of the window.
+        /// </summary>
+        public Brush? NonActiveGlowBrush
+        {
+            get => (Brush?)this.GetValue(NonActiveGlowBrushProperty);
+            set => this.SetValue(NonActiveGlowBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty OverlayBrushProperty
+            = DependencyProperty.Register(nameof(OverlayBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the brush used for the overlay when a dialog is open.
+        /// </summary>
+        public Brush? OverlayBrush
+        {
+            get => (Brush?)this.GetValue(OverlayBrushProperty);
+            set => this.SetValue(OverlayBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OverlayOpacity"/> dependency property.</summary>
+        public static readonly DependencyProperty OverlayOpacityProperty
+            = DependencyProperty.Register(nameof(OverlayOpacity),
+                                          typeof(double),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(0.7d));
+
+        /// <summary>
+        /// Gets or sets the opacity used for the overlay when a dialog is open.
+        /// </summary>
+        public double OverlayOpacity
+        {
+            get => (double)this.GetValue(OverlayOpacityProperty);
+            set => this.SetValue(OverlayOpacityProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="FlyoutOverlayBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty FlyoutOverlayBrushProperty
+            = DependencyProperty.Register(nameof(FlyoutOverlayBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the brush used for the overlay when a modal Flyout is open.
+        /// </summary>
+        public Brush? FlyoutOverlayBrush
+        {
+            get => (Brush?)this.GetValue(FlyoutOverlayBrushProperty);
+            set => this.SetValue(FlyoutOverlayBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OverlayFadeIn"/> dependency property.</summary>
+        public static readonly DependencyProperty OverlayFadeInProperty
+            = DependencyProperty.Register(nameof(OverlayFadeIn),
+                                          typeof(Storyboard),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(default(Storyboard)));
+
+        /// <summary>
+        /// Gets or sets the storyboard for the overlay fade in effect.
+        /// </summary>
+        public Storyboard? OverlayFadeIn
+        {
+            get => (Storyboard?)this.GetValue(OverlayFadeInProperty);
+            set => this.SetValue(OverlayFadeInProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OverlayFadeOut"/> dependency property.</summary>
+        public static readonly DependencyProperty OverlayFadeOutProperty
+            = DependencyProperty.Register(nameof(OverlayFadeOut),
+                                          typeof(Storyboard),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(default(Storyboard)));
+
+        /// <summary>
+        /// Gets or sets the storyboard for the overlay fade out effect.
+        /// </summary>
+        public Storyboard? OverlayFadeOut
+        {
+            get => (Storyboard?)this.GetValue(OverlayFadeOutProperty);
+            set => this.SetValue(OverlayFadeOutProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Flyouts"/> dependency property.</summary>
+        public static readonly DependencyProperty FlyoutsProperty
+            = DependencyProperty.Register(nameof(Flyouts),
+                                          typeof(FlyoutsControl),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null, UpdateLogicalChildren));
+
+        /// <summary>
+        /// Gets or sets a <see cref="FlyoutsControl"/> host for the <see cref="Flyout"/> controls.
+        /// </summary>
+        public FlyoutsControl? Flyouts
+        {
+            get => (FlyoutsControl?)this.GetValue(FlyoutsProperty);
+            set => this.SetValue(FlyoutsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="WindowTransitionsEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty WindowTransitionsEnabledProperty
+            = DependencyProperty.Register(nameof(WindowTransitionsEnabled),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the start animation of the window content is available.
+        /// </summary>
+        public bool WindowTransitionsEnabled
+        {
+            get => (bool)this.GetValue(WindowTransitionsEnabledProperty);
+            set => this.SetValue(WindowTransitionsEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="MetroDialogOptions"/> dependency property.</summary>
+        public static readonly DependencyProperty MetroDialogOptionsProperty
+            = DependencyProperty.Register(nameof(MetroDialogOptions),
+                                          typeof(MetroDialogSettings),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(default(MetroDialogSettings)));
+
+        /// <summary>
+        /// Gets or sets the default settings for the dialogs.
+        /// </summary>
+        public MetroDialogSettings? MetroDialogOptions
+        {
+            get => (MetroDialogSettings?)this.GetValue(MetroDialogOptionsProperty);
+            set => this.SetValue(MetroDialogOptionsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty IconTemplateProperty
+            = DependencyProperty.Register(nameof(IconTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="DataTemplate"/> for the icon on the TitleBar.
+        /// </summary>
+        public DataTemplate? IconTemplate
+        {
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="LeftWindowCommands"/> dependency property.</summary>
+        public static readonly DependencyProperty LeftWindowCommandsProperty
+            = DependencyProperty.Register(nameof(LeftWindowCommands),
+                                          typeof(WindowCommands),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null, OnLeftWindowCommandsPropertyChanged));
+
+        private static void OnLeftWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is WindowCommands windowCommands)
+            {
+                AutomationProperties.SetName(windowCommands, nameof(LeftWindowCommands));
+            }
+
+            UpdateLogicalChildren(d, e);
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="WindowCommands"/> host on the left side of the TitleBar.
+        /// </summary>
+        public WindowCommands? LeftWindowCommands
+        {
+            get => (WindowCommands?)this.GetValue(LeftWindowCommandsProperty);
+            set => this.SetValue(LeftWindowCommandsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="RightWindowCommands"/> dependency property.</summary>
+        public static readonly DependencyProperty RightWindowCommandsProperty
+            = DependencyProperty.Register(nameof(RightWindowCommands),
+                                          typeof(WindowCommands),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null, OnRightWindowCommandsPropertyChanged));
+
+        private static void OnRightWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is WindowCommands windowCommands)
+            {
+                AutomationProperties.SetName(windowCommands, nameof(RightWindowCommands));
+            }
+
+            UpdateLogicalChildren(d, e);
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="WindowCommands"/> host on the right side of the TitleBar.
+        /// </summary>
+        public WindowCommands? RightWindowCommands
+        {
+            get => (WindowCommands?)this.GetValue(RightWindowCommandsProperty);
+            set => this.SetValue(RightWindowCommandsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="WindowButtonCommands"/> dependency property.</summary>
+        public static readonly DependencyProperty WindowButtonCommandsProperty
+            = DependencyProperty.Register(nameof(WindowButtonCommands),
+                                          typeof(WindowButtonCommands),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null, UpdateLogicalChildren));
+
+        /// <summary>
+        /// Gets or sets the <see cref="WindowButtonCommands"/> host that shows the minimize/maximize/restore/close buttons.
+        /// </summary>
+        public WindowButtonCommands? WindowButtonCommands
+        {
+            get => (WindowButtonCommands?)this.GetValue(WindowButtonCommandsProperty);
+            set => this.SetValue(WindowButtonCommandsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="LeftWindowCommandsOverlayBehavior"/> dependency property.</summary>
+        public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty
+            = DependencyProperty.Register(nameof(LeftWindowCommandsOverlayBehavior),
+                                          typeof(WindowCommandsOverlayBehavior),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+
+        private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                ((MetroWindow)d).UpdateTitleBarElementsVisibility();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the overlay behavior for the <see cref="WindowCommands"/> host on the left side.
+        /// </summary>
+        public WindowCommandsOverlayBehavior LeftWindowCommandsOverlayBehavior
+        {
+            get => (WindowCommandsOverlayBehavior)this.GetValue(LeftWindowCommandsOverlayBehaviorProperty);
+            set => this.SetValue(LeftWindowCommandsOverlayBehaviorProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="RightWindowCommandsOverlayBehavior"/> dependency property.</summary>
+        public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty
+            = DependencyProperty.Register(nameof(RightWindowCommandsOverlayBehavior),
+                                          typeof(WindowCommandsOverlayBehavior),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+
+        /// <summary>
+        /// Gets or sets the overlay behavior for the <see cref="WindowCommands"/> host on the right side.
+        /// </summary>
+        public WindowCommandsOverlayBehavior RightWindowCommandsOverlayBehavior
+        {
+            get => (WindowCommandsOverlayBehavior)this.GetValue(RightWindowCommandsOverlayBehaviorProperty);
+            set => this.SetValue(RightWindowCommandsOverlayBehaviorProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="WindowButtonCommandsOverlayBehavior"/> dependency property.</summary>
+        public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty
+            = DependencyProperty.Register(nameof(WindowButtonCommandsOverlayBehavior),
+                                          typeof(OverlayBehavior),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(OverlayBehavior.Always, OnShowTitleBarPropertyChangedCallback));
+
+        /// <summary>
+        /// Gets or sets the overlay behavior for the <see cref="WindowButtonCommands"/> host.
+        /// </summary>
+        public OverlayBehavior WindowButtonCommandsOverlayBehavior
+        {
+            get => (OverlayBehavior)this.GetValue(WindowButtonCommandsOverlayBehaviorProperty);
+            set => this.SetValue(WindowButtonCommandsOverlayBehaviorProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IconOverlayBehavior"/> dependency property.</summary>
+        public static readonly DependencyProperty IconOverlayBehaviorProperty
+            = DependencyProperty.Register(nameof(IconOverlayBehavior),
+                                          typeof(OverlayBehavior),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+
+        /// <summary>
+        /// Gets or sets the overlay behavior for the <see cref="Window.Icon"/>.
+        /// </summary>
+        public OverlayBehavior IconOverlayBehavior
+        {
+            get => (OverlayBehavior)this.GetValue(IconOverlayBehaviorProperty);
+            set => this.SetValue(IconOverlayBehaviorProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="UseNoneWindowStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty UseNoneWindowStyleProperty
+            = DependencyProperty.Register(nameof(UseNoneWindowStyle),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnUseNoneWindowStylePropertyChangedCallback));
 
         private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -521,118 +884,158 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets whether if the minimize button is visible and the minimize system menu is enabled.
+        /// Gets or sets whether the window will force WindowStyle to None.
         /// </summary>
-        public bool ShowMinButton
+        public bool UseNoneWindowStyle
         {
-            get => (bool)GetValue(ShowMinButtonProperty);
-            set => SetValue(ShowMinButtonProperty, BooleanBoxes.Box(value));
+            get => (bool)this.GetValue(UseNoneWindowStyleProperty);
+            set => this.SetValue(UseNoneWindowStyleProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="OverrideDefaultWindowCommandsBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty
+            = DependencyProperty.Register(nameof(OverrideDefaultWindowCommandsBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow));
+
+        /// <summary>
+        /// Allows easy handling of <see cref="WindowCommands"/> brush. Theme is also applied based on this brush.
+        /// </summary>
+        public Brush? OverrideDefaultWindowCommandsBrush
+        {
+            get => (Brush?)this.GetValue(OverrideDefaultWindowCommandsBrushProperty);
+            set => this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IsWindowDraggable"/> dependency property.</summary>
+        public static readonly DependencyProperty IsWindowDraggableProperty
+            = DependencyProperty.Register(nameof(IsWindowDraggable),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the whole window is draggable.
+        /// </summary>
+        public bool IsWindowDraggable
+        {
+            get => (bool)this.GetValue(IsWindowDraggableProperty);
+            set => this.SetValue(IsWindowDraggableProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IgnoreTaskbarOnMaximize"/> dependency property.</summary>
+        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty
+            = DependencyProperty.Register(nameof(IgnoreTaskbarOnMaximize),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets whether if the Taskbar should be ignored when maximizing the window.
+        /// </summary>
+        public bool IgnoreTaskbarOnMaximize
+        {
+            get => (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty);
+            set => this.SetValue(IgnoreTaskbarOnMaximizeProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ResizeBorderThickness"/> dependency property.</summary>
+        public static readonly DependencyProperty ResizeBorderThicknessProperty
+            = DependencyProperty.Register(nameof(ResizeBorderThickness),
+                                          typeof(Thickness),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(new Thickness(6D)));
+
+        /// <summary>
+        /// Gets or sets resize border thickness of the window.
+        /// </summary>
+        public Thickness ResizeBorderThickness
+        {
+            get => (Thickness)this.GetValue(ResizeBorderThicknessProperty);
+            set => this.SetValue(ResizeBorderThicknessProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="KeepBorderOnMaximize"/> dependency property.</summary>
+        public static readonly DependencyProperty KeepBorderOnMaximizeProperty
+            = DependencyProperty.Register(nameof(KeepBorderOnMaximize),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether if the border thickness should be kept on maximize
+        /// if the MaxHeight/MaxWidth of the window is less than the monitor resolution.
+        /// </summary>
+        public bool KeepBorderOnMaximize
+        {
+            get => (bool)this.GetValue(KeepBorderOnMaximizeProperty);
+            set => this.SetValue(KeepBorderOnMaximizeProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="TryToBeFlickerFree"/> dependency property.</summary>
+        public static readonly DependencyProperty TryToBeFlickerFreeProperty
+            = DependencyProperty.Register(nameof(TryToBeFlickerFree),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets whether the resizing of the window should be tried in a way that does not cause flicker/jitter, especially when resizing from the left side.
+        /// </summary>
+        /// <remarks>
+        /// Please note that setting this to <c>true</c> may cause resize lag and black areas appearing on some systems.
+        /// </remarks>
+        public bool TryToBeFlickerFree
+        {
+            get => (bool)this.GetValue(TryToBeFlickerFreeProperty);
+            set => this.SetValue(TryToBeFlickerFreeProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="FlyoutsStatusChanged"/> routed event.</summary>
+        public static readonly RoutedEvent FlyoutsStatusChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(FlyoutsStatusChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(MetroWindow));
+
+        public event RoutedEventHandler FlyoutsStatusChanged
+        {
+            add => this.AddHandler(FlyoutsStatusChangedEvent, value);
+            remove => this.RemoveHandler(FlyoutsStatusChangedEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="WindowTransitionCompleted"/> routed event.</summary>
+        public static readonly RoutedEvent WindowTransitionCompletedEvent
+            = EventManager.RegisterRoutedEvent(nameof(WindowTransitionCompleted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(MetroWindow));
+
+        public event RoutedEventHandler WindowTransitionCompleted
+        {
+            add => this.AddHandler(WindowTransitionCompletedEvent, value);
+            remove => this.RemoveHandler(WindowTransitionCompletedEvent, value);
         }
 
         /// <summary>
-        /// Gets or sets whether if the maximize/restore button is visible and the maximize/restore system menu is enabled.
+        /// Gets the window placement settings (can be overwritten).
         /// </summary>
-        public bool ShowMaxRestoreButton
+        public virtual IWindowPlacementSettings? GetWindowPlacementSettings()
         {
-            get => (bool)GetValue(ShowMaxRestoreButtonProperty);
-            set => SetValue(ShowMaxRestoreButtonProperty, BooleanBoxes.Box(value));
+            return this.WindowPlacementSettings ?? new WindowApplicationSettings(this);
         }
 
-        /// <summary>
-        /// Gets or sets whether if the close button is visible.
-        /// </summary>
-        public bool ShowCloseButton
+        private void UpdateIconVisibility()
         {
-            get => (bool)GetValue(ShowCloseButtonProperty);
-            set => SetValue(ShowCloseButtonProperty, BooleanBoxes.Box(value));
+            var isVisible = (this.IconOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar)
+                            || (this.ShowIconOnTitleBar && this.ShowTitleBar);
+            this.icon?.SetCurrentValue(VisibilityProperty, isVisible ? Visibility.Visible : Visibility.Collapsed);
         }
 
-        /// <summary>
-        /// Gets/sets if the min button is enabled.
-        /// </summary>
-        public bool IsMinButtonEnabled
+        private void UpdateTitleBarElementsVisibility()
         {
-            get => (bool)GetValue(IsMinButtonEnabledProperty);
-            set => SetValue(IsMinButtonEnabledProperty, BooleanBoxes.Box(value));
-        }
+            this.UpdateIconVisibility();
 
-        /// <summary>
-        /// Gets/sets if the max/restore button is enabled.
-        /// </summary>
-        public bool IsMaxRestoreButtonEnabled
-        {
-            get => (bool)GetValue(IsMaxRestoreButtonEnabledProperty);
-            set => SetValue(IsMaxRestoreButtonEnabledProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Gets/sets if the close button is enabled.
-        /// </summary>
-        public bool IsCloseButtonEnabled
-        {
-            get => (bool)GetValue(IsCloseButtonEnabledProperty);
-            set => SetValue(IsCloseButtonEnabledProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Gets or sets whether if the close button should be enabled or not if a dialog is shown.
-        /// </summary>
-        public bool IsCloseButtonEnabledWithDialog
-        {
-            get => (bool)GetValue(IsCloseButtonEnabledWithDialogProperty);
-            protected set => SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Gets or sets a value that indicates whether the system menu should popup with left mouse click on the window icon.
-        /// </summary>
-        public bool ShowSystemMenu
-        {
-            get => (bool)GetValue(ShowSystemMenuProperty);
-            set => SetValue(ShowSystemMenuProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Gets or sets a value that indicates whether the system menu should popup with right mouse click if the mouse position is on title bar or on the entire window if it has no title bar (and no title bar height).
-        /// </summary>
-        public bool ShowSystemMenuOnRightClick
-        {
-            get => (bool)GetValue(ShowSystemMenuOnRightClickProperty);
-            set => SetValue(ShowSystemMenuOnRightClickProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Gets/sets the TitleBar's height.
-        /// </summary>
-        public int TitleBarHeight
-        {
-            get => (int)GetValue(TitleBarHeightProperty);
-            set => SetValue(TitleBarHeightProperty, value);
-        }
-
-        private static void TitleBarHeightPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var window = (MetroWindow)dependencyObject;
-            if (e.NewValue != e.OldValue)
-            {
-                window.SetVisibiltyForAllTitleElements();
-            }
-        }
-
-        private void SetVisibiltyForIcon()
-        {
-            if (this.icon != null)
-            {
-                var isVisible = (this.IconOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar)
-                                || (this.ShowIconOnTitleBar && this.ShowTitleBar);
-                var iconVisibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
-                this.icon.Visibility = iconVisibility;
-            }
-        }
-
-        private void SetVisibiltyForAllTitleElements()
-        {
-            this.SetVisibiltyForIcon();
             var newVisibility = this.TitleBarHeight > 0 && this.ShowTitleBar && !this.UseNoneWindowStyle ? Visibility.Visible : Visibility.Collapsed;
 
             this.titleBar?.SetCurrentValue(VisibilityProperty, newVisibility);
@@ -650,131 +1053,11 @@ namespace MahApps.Metro.Controls
             this.SetWindowEvents();
         }
 
-        /// <summary>
-        /// Character casing of the title
-        /// </summary>
-        public CharacterCasing TitleCharacterCasing
-        {
-            get => (CharacterCasing)GetValue(TitleCharacterCasingProperty);
-            set => SetValue(TitleCharacterCasingProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the title horizontal alignment.
-        /// </summary>
-        public HorizontalAlignment TitleAlignment
-        {
-            get => (HorizontalAlignment)GetValue(TitleAlignmentProperty);
-            set => SetValue(TitleAlignmentProperty, value);
-        }
-
-        private static void OnTitleAlignmentChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var window = dependencyObject as MetroWindow;
-            if (window != null)
-            {
-                window.SizeChanged -= window.MetroWindow_SizeChanged;
-                if (e.NewValue is HorizontalAlignment && (HorizontalAlignment)e.NewValue == HorizontalAlignment.Center && window.titleBar != null)
-                {
-                    window.SizeChanged += window.MetroWindow_SizeChanged;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the Window's title bar.
-        /// </summary>
-        public Brush WindowTitleBrush
-        {
-            get => (Brush)GetValue(WindowTitleBrushProperty);
-            set => SetValue(WindowTitleBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the Window's glow.
-        /// </summary>
-        public Brush? GlowBrush
-        {
-            get => (Brush?)GetValue(GlowBrushProperty);
-            set => SetValue(GlowBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the Window's non-active glow.
-        /// </summary>
-        public Brush? NonActiveGlowBrush
-        {
-            get => (Brush?)GetValue(NonActiveGlowBrushProperty);
-            set => SetValue(NonActiveGlowBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the Window's non-active border.
-        /// </summary>
-        public Brush NonActiveBorderBrush
-        {
-            get => (Brush)GetValue(NonActiveBorderBrushProperty);
-            set => SetValue(NonActiveBorderBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the Window's non-active title bar.
-        /// </summary>
-        public Brush NonActiveWindowTitleBrush
-        {
-            get => (Brush)GetValue(NonActiveWindowTitleBrushProperty);
-            set => SetValue(NonActiveWindowTitleBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the dialog overlay.
-        /// </summary>
-        public Brush? OverlayBrush
-        {
-            get => (Brush?)GetValue(OverlayBrushProperty);
-            set => SetValue(OverlayBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets/sets the opacity used for the dialog overlay.
-        /// </summary>
-        public double OverlayOpacity
-        {
-            get => (double)GetValue(OverlayOpacityProperty);
-            set => SetValue(OverlayOpacityProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the brush used for the Flyouts overlay.
-        /// </summary>
-        public Brush? FlyoutOverlayBrush
-        {
-            get => (Brush?)GetValue(FlyoutOverlayBrushProperty);
-            set => SetValue(FlyoutOverlayBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the overlay fade in storyboard.
-        /// </summary>
-        public Storyboard? OverlayFadeIn
-        {
-            get => (Storyboard?)GetValue(OverlayFadeInProperty);
-            set => SetValue(OverlayFadeInProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the overlay fade out storyboard.
-        /// </summary>
-        public Storyboard? OverlayFadeOut
-        {
-            get => (Storyboard?)GetValue(OverlayFadeOutProperty);
-            set => SetValue(OverlayFadeOutProperty, value);
-        }
-
         private bool CanUseOverlayFadingStoryboard([NotNullWhen(true)] Storyboard? sb, [NotNullWhen(true)] out DoubleAnimation? animation)
         {
             animation = null;
-            if (null == sb)
+
+            if (sb is null)
             {
                 return false;
             }
@@ -782,7 +1065,8 @@ namespace MahApps.Metro.Controls
             sb.Dispatcher.VerifyAccess();
 
             animation = sb.Children.OfType<DoubleAnimation>().FirstOrDefault();
-            if (null == animation)
+
+            if (animation is null)
             {
                 return false;
             }
@@ -796,53 +1080,52 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Begins to show the MetroWindow's overlay effect.
+        /// Starts the overlay fade in effect.
         /// </summary>
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task ShowOverlayAsync()
         {
-            if (overlayBox == null)
+            if (this.overlayBox is null)
             {
                 throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
             }
 
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            if (IsOverlayVisible() && overlayStoryboard == null)
+            if (this.IsOverlayVisible() && this.overlayStoryboard is null)
             {
                 //No Task.FromResult in .NET 4.
                 tcs.SetResult(null!);
                 return tcs.Task;
             }
 
-            Dispatcher.VerifyAccess();
+            this.Dispatcher.VerifyAccess();
 
-            var sb = OverlayFadeIn?.Clone();
-            overlayStoryboard = sb;
-            if (CanUseOverlayFadingStoryboard(sb, out var animation))
+            var sb = this.OverlayFadeIn?.Clone();
+            this.overlayStoryboard = sb;
+            if (this.CanUseOverlayFadingStoryboard(sb, out var animation))
             {
                 this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
 
                 animation.To = this.OverlayOpacity;
 
-                EventHandler? completionHandler = null;
-                completionHandler = (sender, args) =>
+                this.onOverlayFadeInStoryboardCompleted = (_, _) =>
                     {
-                        sb.Completed -= completionHandler;
-                        if (overlayStoryboard == sb)
+                        sb.Completed -= this.onOverlayFadeInStoryboardCompleted;
+                        if (this.overlayStoryboard == sb)
                         {
-                            overlayStoryboard = null;
+                            this.overlayStoryboard = null;
                         }
 
                         tcs.TrySetResult(null!);
                     };
 
-                sb.Completed += completionHandler;
-                overlayBox.BeginStoryboard(sb);
+                sb.Completed += this.onOverlayFadeInStoryboardCompleted;
+                this.overlayBox.BeginStoryboard(sb);
             }
             else
             {
-                ShowOverlay();
+                this.ShowOverlay();
                 tcs.TrySetResult(null!);
             }
 
@@ -850,19 +1133,19 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Begins to hide the MetroWindow's overlay effect.
+        /// Starts the overlay fade out effect.
         /// </summary>
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task HideOverlayAsync()
         {
-            if (overlayBox == null)
+            if (this.overlayBox is null)
             {
                 throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
             }
 
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity <= 0.0)
+            if (this.overlayBox.Visibility == Visibility.Visible && this.overlayBox.Opacity <= 0.0)
             {
                 //No Task.FromResult in .NET 4.
                 this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
@@ -870,33 +1153,32 @@ namespace MahApps.Metro.Controls
                 return tcs.Task;
             }
 
-            Dispatcher.VerifyAccess();
+            this.Dispatcher.VerifyAccess();
 
-            var sb = OverlayFadeOut?.Clone();
-            overlayStoryboard = sb;
-            if (CanUseOverlayFadingStoryboard(sb, out var animation))
+            var sb = this.OverlayFadeOut?.Clone();
+            this.overlayStoryboard = sb;
+            if (this.CanUseOverlayFadingStoryboard(sb, out var animation))
             {
                 animation.To = 0d;
 
-                EventHandler? completionHandler = null;
-                completionHandler = (sender, args) =>
+                this.onOverlayFadeOutStoryboardCompleted = (_, _) =>
                     {
-                        sb.Completed -= completionHandler;
-                        if (overlayStoryboard == sb)
+                        sb.Completed -= this.onOverlayFadeOutStoryboardCompleted;
+                        if (this.overlayStoryboard == sb)
                         {
                             this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
-                            overlayStoryboard = null;
+                            this.overlayStoryboard = null;
                         }
 
                         tcs.TrySetResult(null!);
                     };
 
-                sb.Completed += completionHandler;
-                overlayBox.BeginStoryboard(sb);
+                sb.Completed += this.onOverlayFadeOutStoryboardCompleted;
+                this.overlayBox.BeginStoryboard(sb);
             }
             else
             {
-                HideOverlay();
+                this.HideOverlay();
                 tcs.TrySetResult(null!);
             }
 
@@ -905,23 +1187,23 @@ namespace MahApps.Metro.Controls
 
         public bool IsOverlayVisible()
         {
-            if (overlayBox == null)
+            if (this.overlayBox is null)
             {
                 throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
             }
 
-            return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= this.OverlayOpacity;
+            return this.overlayBox.Visibility == Visibility.Visible && this.overlayBox.Opacity >= this.OverlayOpacity;
         }
 
         public void ShowOverlay()
         {
             this.overlayBox?.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-            this.overlayBox?.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
+            this.overlayBox?.SetCurrentValue(OpacityProperty, this.OverlayOpacity);
         }
 
         public void HideOverlay()
         {
-            this.overlayBox?.SetCurrentValue(Grid.OpacityProperty, 0d);
+            this.overlayBox?.SetCurrentValue(OpacityProperty, 0d);
             this.overlayBox?.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
         }
 
@@ -931,17 +1213,17 @@ namespace MahApps.Metro.Controls
         /// <param name="thisElement">The element which will be focused again.</param>
         public void StoreFocus(IInputElement? thisElement = null)
         {
-            Dispatcher.BeginInvoke(new Action(() => { restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); }));
+            this.Dispatcher.BeginInvoke(new Action(() => { this.restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); }));
         }
 
         internal void RestoreFocus()
         {
-            if (restoreFocus != null)
+            if (this.restoreFocus != null)
             {
-                Dispatcher.BeginInvoke(new Action(() =>
+                this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        Keyboard.Focus(restoreFocus);
-                        restoreFocus = null;
+                        Keyboard.Focus(this.restoreFocus);
+                        this.restoreFocus = null;
                     }));
             }
         }
@@ -951,7 +1233,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void ResetStoredFocus()
         {
-            restoreFocus = null;
+            this.restoreFocus = null;
         }
 
         static MetroWindow()
@@ -971,27 +1253,23 @@ namespace MahApps.Metro.Controls
             this.InitializeSettingsBehavior();
             this.InitializeGlowWindowBehavior();
 
-            DataContextChanged += MetroWindow_DataContextChanged;
-            Loaded += this.MetroWindow_Loaded;
+            this.DataContextChanged += this.MetroWindow_DataContextChanged;
+            this.Loaded += this.MetroWindow_Loaded;
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.Flyouts == null)
-            {
-                this.Flyouts = new FlyoutsControl();
-            }
+            this.Flyouts ??= new FlyoutsControl();
 
             this.ResetAllWindowCommandsBrush();
 
-            ThemeManager.Current.ThemeChanged += ThemeManagerOnIsThemeChanged;
-            this.Unloaded += (o, args) => ThemeManager.Current.ThemeChanged -= ThemeManagerOnIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += this.ThemeManagerOnIsThemeChanged;
+            this.Unloaded += (_, _) => ThemeManager.Current.ThemeChanged -= this.ThemeManagerOnIsThemeChanged;
         }
 
         private void InitializeWindowChromeBehavior()
         {
-            var behavior = new BorderlessWindowBehavior();
-            Interaction.GetBehaviors(this).Add(behavior);
+            Interaction.GetBehaviors(this).Add(new BorderlessWindowBehavior());
         }
 
         private void InitializeGlowWindowBehavior()
@@ -1005,33 +1283,7 @@ namespace MahApps.Metro.Controls
 
         private void InitializeSettingsBehavior()
         {
-            var behavior = new WindowsSettingBehavior();
-            Interaction.GetBehaviors(this).Add(behavior);
-        }
-
-        /// <summary>
-        /// Initializes various behaviors for the window.
-        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehavior"/> and <see cref="GlowWindowBehavior"/>.
-        /// </summary>
-        private void InitializeBehaviors()
-        {
-            // var borderlessWindowBehavior = new BorderlessWindowBehavior();
-            //
-            // var windowsSettingBehavior = new WindowsSettingBehavior();
-            //
-            // var glowWindowBehavior = new GlowWindowBehavior();
-            // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
-            // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.GlowBrushProperty, new Binding { Path = new PropertyPath(GlowBrushProperty), Source = this });
-            // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.NonActiveGlowBrushProperty, new Binding { Path = new PropertyPath(NonActiveGlowBrushProperty), Source = this });
-            //
-            // var collection = new StylizedBehaviorCollection
-            // {
-            //     borderlessWindowBehavior,
-            //     windowsSettingBehavior,
-            //     glowWindowBehavior
-            // };
-            //
-            // StylizedBehaviors.SetBehaviors(this, collection);
+            Interaction.GetBehaviors(this).Add(new WindowsSettingBehavior());
         }
 
         protected override async void OnClosing(CancelEventArgs e)
@@ -1075,7 +1327,7 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
             // this all works only for centered title
-            if (TitleAlignment != HorizontalAlignment.Center
+            if (this.TitleAlignment != HorizontalAlignment.Center
                 || this.titleBar is null)
             {
                 return;
@@ -1119,14 +1371,14 @@ namespace MahApps.Metro.Controls
         {
             this.Invoke(() =>
                 {
-                    var flyouts = this.Flyouts?.GetFlyouts().OfType<Flyout>().ToList() ?? new List<Flyout>();
+                    var flyouts = (this.Flyouts?.GetFlyouts().ToList() ?? new List<Flyout>());
+
                     // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
                     // e.g if the FlyoutsControl is hosted in a UserControl
-                    var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
-                    if (allChildFlyouts.Any())
-                    {
-                        flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts().OfType<Flyout>()));
-                    }
+                    var allChildFlyouts = (this.Content as DependencyObject)
+                                          .FindChildren<FlyoutsControl>(true)
+                                          .SelectMany(flyoutsControl => flyoutsControl.GetFlyouts());
+                    flyouts.AddRange(allChildFlyouts);
 
                     if (!flyouts.Any())
                     {
@@ -1146,8 +1398,7 @@ namespace MahApps.Metro.Controls
 
         private void FlyoutsPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var element = (e.OriginalSource as DependencyObject);
-            if (element != null)
+            if (e.OriginalSource is DependencyObject element)
             {
                 // no preview if we just clicked these elements
                 if (element.TryFindParent<Flyout>() != null
@@ -1161,38 +1412,35 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            if (Flyouts!.OverrideExternalCloseButton == null)
+            if (this.Flyouts!.OverrideExternalCloseButton is null)
             {
-                foreach (var flyout in Flyouts.GetFlyouts().OfType<Flyout>().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
+                foreach (var flyout in this.Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || this.Flyouts.OverrideIsPinned)))
                 {
-                    flyout.IsOpen = false;
+                    flyout.SetCurrentValue(Flyout.IsOpenProperty, BooleanBoxes.FalseBox);
                 }
             }
-            else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
+            else if (this.Flyouts.OverrideExternalCloseButton == e.ChangedButton)
             {
-                foreach (var flyout in Flyouts.GetFlyouts().OfType<Flyout>().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
+                foreach (var flyout in this.Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || this.Flyouts.OverrideIsPinned)))
                 {
-                    flyout.IsOpen = false;
+                    flyout.SetCurrentValue(Flyout.IsOpenProperty, BooleanBoxes.FalseBox);
                 }
             }
         }
 
-        private static void UpdateLogicalChilds(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void UpdateLogicalChildren(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var window = dependencyObject as MetroWindow;
-            if (window == null)
+            if (dependencyObject is not MetroWindow window)
             {
                 return;
             }
 
-            var oldChild = e.OldValue as FrameworkElement;
-            if (oldChild != null)
+            if (e.OldValue is FrameworkElement oldChild)
             {
                 window.RemoveLogicalChild(oldChild);
             }
 
-            var newChild = e.NewValue as FrameworkElement;
-            if (newChild != null)
+            if (e.NewValue is FrameworkElement newChild)
             {
                 window.AddLogicalChild(newChild);
                 // Yes, that's crazy. But we must do this to enable all possible scenarios for setting DataContext
@@ -1252,48 +1500,41 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
-            RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
-            WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
+            this.LeftWindowCommandsPresenter = this.GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
+            this.RightWindowCommandsPresenter = this.GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
+            this.WindowButtonCommandsPresenter = this.GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
-            if (LeftWindowCommands == null)
+            this.LeftWindowCommands ??= new WindowCommands();
+            this.RightWindowCommands ??= new WindowCommands();
+            this.WindowButtonCommands ??= new WindowButtonCommands();
+
+            this.LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            this.RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            this.WindowButtonCommands.SetValue(WindowButtonCommands.ParentWindowPropertyKey, this);
+
+            this.overlayBox = this.GetTemplateChild(PART_OverlayBox) as Grid;
+            this.metroActiveDialogContainer = this.GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
+            this.metroInactiveDialogContainer = this.GetTemplateChild(PART_MetroInactiveDialogsContainer) as Grid;
+            this.flyoutModal = this.GetTemplateChild(PART_FlyoutModal) as Rectangle;
+
+            if (this.flyoutModal is not null)
             {
-                LeftWindowCommands = new WindowCommands();
+                this.flyoutModal.PreviewMouseDown += this.FlyoutsPreviewMouseDown;
             }
 
-            if (RightWindowCommands == null)
+            this.PreviewMouseDown += this.FlyoutsPreviewMouseDown;
+
+            this.icon = this.GetTemplateChild(PART_Icon) as FrameworkElement;
+            this.titleBar = this.GetTemplateChild(PART_TitleBar) as UIElement;
+            this.titleBarBackground = this.GetTemplateChild(PART_WindowTitleBackground) as UIElement;
+            this.windowTitleThumb = this.GetTemplateChild(PART_WindowTitleThumb) as Thumb;
+            this.flyoutModalDragMoveThumb = this.GetTemplateChild(PART_FlyoutModalDragMoveThumb) as Thumb;
+
+            this.UpdateTitleBarElementsVisibility();
+
+            if (this.GetTemplateChild(PART_Content) is MetroContentControl metroContentControl)
             {
-                RightWindowCommands = new WindowCommands();
-            }
-
-            if (WindowButtonCommands == null)
-            {
-                WindowButtonCommands = new WindowButtonCommands();
-            }
-
-            LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
-            RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
-            WindowButtonCommands.SetValue(WindowButtonCommands.ParentWindowPropertyKey, this);
-
-            overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
-            metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
-            metroInactiveDialogContainer = GetTemplateChild(PART_MetroInactiveDialogsContainer) as Grid;
-            flyoutModal = (Rectangle)GetTemplateChild(PART_FlyoutModal);
-            flyoutModal.PreviewMouseDown += FlyoutsPreviewMouseDown;
-            this.PreviewMouseDown += FlyoutsPreviewMouseDown;
-
-            icon = GetTemplateChild(PART_Icon) as FrameworkElement;
-            titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
-            titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
-            this.windowTitleThumb = GetTemplateChild(PART_WindowTitleThumb) as Thumb;
-            this.flyoutModalDragMoveThumb = GetTemplateChild(PART_FlyoutModalDragMoveThumb) as Thumb;
-
-            this.SetVisibiltyForAllTitleElements();
-
-            var metroContentControl = GetTemplateChild(PART_Content) as MetroContentControl;
-            if (metroContentControl != null)
-            {
-                metroContentControl.TransitionCompleted += (sender, args) => this.RaiseEvent(new RoutedEventArgs(WindowTransitionCompletedEvent));
+                metroContentControl.TransitionCompleted += (_, _) => this.RaiseEvent(new RoutedEventArgs(WindowTransitionCompletedEvent));
             }
         }
 
@@ -1317,7 +1558,6 @@ namespace MahApps.Metro.Controls
 
         private void ClearWindowEvents()
         {
-            // clear all event handlers first:
             if (this.windowTitleThumb != null)
             {
                 this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -1326,8 +1566,7 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
-            var thumbContentControl = this.titleBar as IMetroThumb;
-            if (thumbContentControl != null)
+            if (this.titleBar is IMetroThumb thumbContentControl)
             {
                 thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
@@ -1343,9 +1582,9 @@ namespace MahApps.Metro.Controls
                 this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
-            if (icon != null)
+            if (this.icon != null)
             {
-                icon.MouseDown -= IconMouseDown;
+                this.icon.MouseDown -= this.IconMouseDown;
             }
 
             this.SizeChanged -= this.MetroWindow_SizeChanged;
@@ -1357,23 +1596,22 @@ namespace MahApps.Metro.Controls
             this.ClearWindowEvents();
 
             // set mouse down/up for icon
-            if (icon != null && icon.Visibility == Visibility.Visible)
+            if (this.icon != null && this.icon.Visibility == Visibility.Visible)
             {
-                icon.MouseDown += IconMouseDown;
+                this.icon.MouseDown += this.IconMouseDown;
             }
 
             if (this.windowTitleThumb != null)
             {
-                this.windowTitleThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.windowTitleThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
-            var thumbContentControl = this.titleBar as IMetroThumb;
-            if (thumbContentControl != null)
+            if (this.titleBar is IMetroThumb thumbContentControl)
             {
-                thumbContentControl.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 thumbContentControl.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
@@ -1381,15 +1619,14 @@ namespace MahApps.Metro.Controls
 
             if (this.flyoutModalDragMoveThumb != null)
             {
-                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.flyoutModalDragMoveThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.flyoutModalDragMoveThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.flyoutModalDragMoveThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
             // handle size if we have a Grid for the title (e.g. clean window have a centered title)
-            //if (titleBar != null && titleBar.GetType() == typeof(Grid))
-            if (titleBar != null && TitleAlignment == HorizontalAlignment.Center)
+            if (this.titleBar != null && this.TitleAlignment == HorizontalAlignment.Center)
             {
                 this.SizeChanged += this.MetroWindow_SizeChanged;
             }
@@ -1401,12 +1638,12 @@ namespace MahApps.Metro.Controls
             {
                 if (e.ClickCount == 2)
                 {
-                    Close();
+                    this.Close();
                 }
                 else if (this.ShowSystemMenu)
                 {
 #pragma warning disable 618
-                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(BorderThickness.Left, TitleBarHeight + BorderThickness.Top)));
+                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
 #pragma warning restore 618
                 }
             }
@@ -1419,7 +1656,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta((IMetroThumb)sender, this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1440,14 +1677,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta(IMetroThumb? thumb, [JetBrains.Annotations.NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta(IMetroThumb? thumb, MetroWindow? window, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            if (thumb == null)
+            if (thumb is null)
             {
                 throw new ArgumentNullException(nameof(thumb));
             }
 
-            if (window == null)
+            if (window is null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
@@ -1459,10 +1696,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            // tage from DragMove internal code
+            // This was taken from DragMove internal code
             window.VerifyAccess();
-
-            //var cursorPos = WinApiHelper.GetPhysicalCursorPos();
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
@@ -1479,24 +1714,21 @@ namespace MahApps.Metro.Controls
 
             if (windowIsMaximized)
             {
-                //var cursorXPos = cursorPos.x;
-                EventHandler? windowOnStateChanged = null;
-                windowOnStateChanged = (sender, args) =>
+                EventHandler? onWindowStateChanged = null;
+                onWindowStateChanged = (sender, args) =>
                     {
-                        //window.Top = 2;
-                        //window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
+                        window.StateChanged -= onWindowStateChanged;
 
-                        window.StateChanged -= windowOnStateChanged;
                         if (window.WindowState == WindowState.Normal)
                         {
                             Mouse.Capture(thumb, CaptureMode.Element);
                         }
                     };
-                window.StateChanged -= windowOnStateChanged;
-                window.StateChanged += windowOnStateChanged;
+
+                window.StateChanged -= onWindowStateChanged;
+                window.StateChanged += onWindowStateChanged;
             }
 
-            var criticalHandle = window.CriticalHandle;
 #pragma warning disable 618
             // these lines are from DragMove
             // NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
@@ -1505,7 +1737,7 @@ namespace MahApps.Metro.Controls
             var wpfPoint = window.PointToScreen(Mouse.GetPosition(window));
             var x = (int)wpfPoint.X;
             var y = (int)wpfPoint.Y;
-            NativeMethods.SendMessage(criticalHandle, WM.NCLBUTTONDOWN, (IntPtr)HT.CAPTION, new IntPtr(x | (y << 16)));
+            NativeMethods.SendMessage(window.CriticalHandle, WM.NCLBUTTONDOWN, (IntPtr)HT.CAPTION, new IntPtr(x | (y << 16)));
 #pragma warning restore 618
         }
 
@@ -1553,45 +1785,33 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the template child with the given name.
         /// </summary>
-        /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
+        /// <typeparam name="T">The interface type inherited from DependencyObject.</typeparam>
         /// <param name="name">The name of the template child.</param>
         internal T? GetPart<T>(string name)
             where T : class
         {
-            return GetTemplateChild(name) as T;
-        }
-
-        /// <summary>
-        /// Gets the template child with the given name.
-        /// </summary>
-        /// <param name="name">The name of the template child.</param>
-        internal DependencyObject GetPart(string name)
-        {
-            return GetTemplateChild(name);
+            return this.GetTemplateChild(name) as T;
         }
 
         internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {
-            //checks a recently opened flyout's position.
-            //if (flyout.Position == Position.Left || flyout.Position == Position.Right || flyout.Position == Position.Top)
-            {
-                //get it's zindex
-                var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
+            // Checks a recently opened Flyout's position.
+            var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
-                //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's.
-                this.icon?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.IconOverlayBehavior.HasFlag(OverlayBehavior.Flyouts) ? zIndex : 1));
-                this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : 1);
-                this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : 1);
-                this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.WindowButtonCommandsOverlayBehavior.HasFlag(OverlayBehavior.Flyouts) ? zIndex : 1));
-                this.HandleWindowCommandsForFlyouts(visibleFlyouts);
-            }
+            //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the Flyout's.
+            this.icon?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.IconOverlayBehavior.HasFlag(OverlayBehavior.Flyouts) ? zIndex : 1));
+            this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : 1);
+            this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : 1);
+            this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.WindowButtonCommandsOverlayBehavior.HasFlag(OverlayBehavior.Flyouts) ? zIndex : 1));
+
+            this.HandleWindowCommandsForFlyouts(visibleFlyouts);
 
             if (this.flyoutModal != null)
             {
                 this.flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
             }
 
-            RaiseEvent(new FlyoutStatusChangedRoutedEventArgs(FlyoutsStatusChangedEvent, this) { ChangedFlyout = flyout });
+            this.RaiseEvent(new FlyoutStatusChangedRoutedEventArgs(FlyoutsStatusChangedEvent, this) { ChangedFlyout = flyout });
         }
 
         public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs

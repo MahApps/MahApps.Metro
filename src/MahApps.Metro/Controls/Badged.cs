@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls
                 }
                 catch (Exception exception)
                 {
-                    throw new MahAppsException("Uups, it seems like there is something wrong with the given Storyboard.", exception);
+                    throw new MahAppsException("Uups, it seems like there is something wrong with the given BadgeChangedStoryboard.", exception);
                 }
             }
         }

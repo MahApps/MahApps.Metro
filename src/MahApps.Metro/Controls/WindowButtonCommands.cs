@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ControlzEx.Native;
 using ControlzEx.Theming;
-using System;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -237,7 +234,7 @@ namespace MahApps.Metro.Controls
 
             this.BeginInvoke(() =>
                                  {
-                                     if (null == this.ParentWindow)
+                                     if (this.ParentWindow is null)
                                      {
                                          var window = this.TryFindParent<Window>();
                                          this.SetValue(ParentWindowPropertyKey, window);
@@ -245,22 +242,22 @@ namespace MahApps.Metro.Controls
 
                                      if (string.IsNullOrWhiteSpace(this.Minimize))
                                      {
-                                         this.SetCurrentValue(MinimizeProperty, this.GetCaption(900));
+                                         this.SetCurrentValue(MinimizeProperty, WinApiHelper.GetCaption(900));
                                      }
 
                                      if (string.IsNullOrWhiteSpace(this.Maximize))
                                      {
-                                         this.SetCurrentValue(MaximizeProperty, this.GetCaption(901));
+                                         this.SetCurrentValue(MaximizeProperty, WinApiHelper.GetCaption(901));
                                      }
 
                                      if (string.IsNullOrWhiteSpace(this.Close))
                                      {
-                                         this.SetCurrentValue(CloseProperty, this.GetCaption(905));
+                                         this.SetCurrentValue(CloseProperty, WinApiHelper.GetCaption(905));
                                      }
 
                                      if (string.IsNullOrWhiteSpace(this.Restore))
                                      {
-                                         this.SetCurrentValue(RestoreProperty, this.GetCaption(903));
+                                         this.SetCurrentValue(RestoreProperty, WinApiHelper.GetCaption(903));
                                      }
                                  },
                              DispatcherPriority.Loaded);
@@ -305,21 +302,5 @@ namespace MahApps.Metro.Controls
                 SystemCommands.CloseWindow(this.ParentWindow);
             }
         }
-
-#pragma warning disable 618
-        private string GetCaption(int id)
-        {
-            if (this.user32 == null)
-            {
-                this.user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
-            }
-
-            var sb = new StringBuilder(256);
-            UnsafeNativeMethods.LoadString(this.user32, (uint)id, sb, sb.Capacity);
-            return sb.ToString().Replace("&", "");
-        }
-
-        private SafeLibraryHandle? user32;
-#pragma warning restore 618
     }
 }

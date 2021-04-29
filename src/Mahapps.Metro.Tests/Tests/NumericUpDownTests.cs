@@ -13,7 +13,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class NumericUpDownTests : AutomationTestBase, IClassFixture<NumericUpDownFixture>
     {

@@ -2,14 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MahApps.Metro.Tests
-{
-    using System.Threading.Tasks;
-    using System.Windows.Controls;
-    using MahApps.Metro.Controls;
-    using MahApps.Metro.Tests.TestHelpers;
-    using Xunit;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
+using Xunit;
 
+namespace MahApps.Metro.Tests.Tests
+{
     public class AnimatedTabControlTest : AutomationTestBase
     {
         [Fact]

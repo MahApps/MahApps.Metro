@@ -9,19 +9,19 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
 
-    <DataGrid ItemsSource="{Binding ThemeResources}"
-              AutoGenerateColumns="False"
+    <DataGrid AutoGenerateColumns="False"
               HeadersVisibility="Column"
+              ItemsSource="{Binding ThemeResources}"
               SelectionMode="Single">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Key"
-                                IsReadOnly="True"
+            <DataGridTextColumn Width="400"
                                 Binding="{Binding Key}"
-                                Width="400" />
+                                Header="Key"
+                                IsReadOnly="True" />
 
-            <DataGridTemplateColumn Header="Value"
-                                    IsReadOnly="True"
-                                    Width="100">
+            <DataGridTemplateColumn Width="100"
+                                    Header="Value"
+                                    IsReadOnly="True">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate DataType="local:ThemeResource">
                         <Ellipse x:Name="BrushResource"
@@ -33,15 +33,15 @@
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
 
-            <DataGridTextColumn Header="Key" 
-                                IsReadOnly="True" 
+            <DataGridTextColumn Width="200"
                                 Binding="{Binding StringValue}"
-                                Width="200" />
+                                Header="Key"
+                                IsReadOnly="True" />
 
-            <DataGridTextColumn Header="Source" 
-                                IsReadOnly="True" 
+            <DataGridTextColumn Width="600"
                                 Binding="{Binding Source}"
-                                Width="600" />
+                                Header="Source"
+                                IsReadOnly="True" />
         </DataGrid.Columns>
 
     </DataGrid>

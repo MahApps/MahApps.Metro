@@ -5,7 +5,6 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -240,9 +239,9 @@ namespace MahApps.Metro.Controls
         }
 
         [MustUseReturnValue]
-        internal static object? CoerceUpperValue(DependencyObject d, object? basevalue)
+        internal static object CoerceUpperValue(DependencyObject d, object? baseValue)
         {
-            if (d is RangeSlider rangeSlider && basevalue is double value)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
                 if (value > rangeSlider.Maximum || rangeSlider.LowerValue + rangeSlider.MinRange > rangeSlider.Maximum)
                 {
@@ -255,7 +254,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="LowerValue"/> dependency property.</summary>
@@ -362,20 +361,18 @@ namespace MahApps.Metro.Controls
             slider.ReCalculateSize();
         }
 
-#pragma warning disable WPF0024
         [MustUseReturnValue]
-        private static object CoerceMinRange(DependencyObject d, object basevalue)
-#pragma warning restore WPF0024
+        private static object CoerceMinRange(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-            var value = (double)basevalue;
-
-            if (rangeSlider.LowerValue + value > rangeSlider.Maximum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return rangeSlider.Maximum - rangeSlider.LowerValue;
+                if (rangeSlider.LowerValue + value > rangeSlider.Maximum)
+                {
+                    return rangeSlider.Maximum - rangeSlider.LowerValue;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="MinRangeWidth"/> dependency property.</summary>
@@ -401,29 +398,28 @@ namespace MahApps.Metro.Controls
             (sender as RangeSlider)?.ReCalculateSize();
         }
 
-#pragma warning disable WPF0024
         [MustUseReturnValue]
-        private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
-#pragma warning restore WPF0024
+        private static object CoerceMinRangeWidth(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-
-            if (rangeSlider._leftThumb != null && rangeSlider._rightThumb != null)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                double width;
-                if (rangeSlider.Orientation == Orientation.Horizontal)
+                if (rangeSlider._leftThumb != null && rangeSlider._rightThumb != null)
                 {
-                    width = rangeSlider.ActualWidth - rangeSlider._leftThumb.ActualWidth - rangeSlider._rightThumb.ActualWidth;
-                }
-                else
-                {
-                    width = rangeSlider.ActualHeight - rangeSlider._leftThumb.ActualHeight - rangeSlider._rightThumb.ActualHeight;
-                }
+                    double width;
+                    if (rangeSlider.Orientation == Orientation.Horizontal)
+                    {
+                        width = rangeSlider.ActualWidth - rangeSlider._leftThumb.ActualWidth - rangeSlider._rightThumb.ActualWidth;
+                    }
+                    else
+                    {
+                        width = rangeSlider.ActualHeight - rangeSlider._leftThumb.ActualHeight - rangeSlider._rightThumb.ActualHeight;
+                    }
 
-                return (double)basevalue > width / 2 ? width / 2 : (double)basevalue;
+                    return value > width / 2 ? width / 2 : value;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         private static bool IsValidMinRange(object? value)
@@ -457,7 +453,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
-        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + control button
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -475,7 +471,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
-        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// When 'true', RangeSlider will automatically move the Thumb (and/or change current value) to the closest TickMark.
         /// </summary>
         [Bindable(true)]
         [Category("Appearance")]
@@ -746,27 +742,26 @@ namespace MahApps.Metro.Controls
             (d as RangeSlider)?.CoerceValue(SelectionEndProperty);
         }
 
-#pragma warning disable WPF0024
         [MustUseReturnValue]
-        private static object CoerceSelectionStart(DependencyObject d, object value)
-#pragma warning restore WPF0024
+        private static object CoerceSelectionStart(DependencyObject d, object? baseValue)
         {
-            RangeSlider rangeSlider = (RangeSlider)d;
-            double num = (double)value;
-            double minimum = rangeSlider.Minimum;
-            double maximum = rangeSlider.Maximum;
-
-            if (num < minimum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return minimum;
+                double minimum = rangeSlider.Minimum;
+                double maximum = rangeSlider.Maximum;
+
+                if (value < minimum)
+                {
+                    return minimum;
+                }
+
+                if (value > maximum)
+                {
+                    return maximum;
+                }
             }
 
-            if (num > maximum)
-            {
-                return maximum;
-            }
-
-            return value;
+            return baseValue ?? 0D;
         }
 
         /// <summary>Identifies the <see cref="SelectionEnd"/> dependency property.</summary>
@@ -796,27 +791,26 @@ namespace MahApps.Metro.Controls
             (d as RangeSlider)?.CoerceValue(SelectionStartProperty);
         }
 
-#pragma warning disable WPF0024
         [MustUseReturnValue]
-        private static object CoerceSelectionEnd(DependencyObject d, object value)
-#pragma warning restore WPF0024
+        private static object CoerceSelectionEnd(DependencyObject d, object? baseValue)
         {
-            RangeSlider rangeSlider = (RangeSlider)d;
-            double num = (double)value;
-            double selectionStart = rangeSlider.SelectionStart;
-            double maximum = rangeSlider.Maximum;
-
-            if (num < selectionStart)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return selectionStart;
+                double selectionStart = rangeSlider.SelectionStart;
+                double maximum = rangeSlider.Maximum;
+
+                if (value < selectionStart)
+                {
+                    return selectionStart;
+                }
+
+                if (value > maximum)
+                {
+                    return maximum;
+                }
             }
 
-            if (num > maximum)
-            {
-                return maximum;
-            }
-
-            return value;
+            return baseValue ?? 0D;
         }
 
         protected double MovableRange => this.Maximum - this.Minimum - this.MinRange;
@@ -860,15 +854,15 @@ namespace MahApps.Metro.Controls
 
         public RangeSlider()
         {
-            this.CommandBindings.Add(new CommandBinding(MoveBack, (sender, e) => this.MoveSelection(true)));
-            this.CommandBindings.Add(new CommandBinding(MoveForward, (sender, e) => this.MoveSelection(false)));
-            this.CommandBindings.Add(new CommandBinding(MoveAllForward, (sender, e) => this.ResetSelection(false)));
-            this.CommandBindings.Add(new CommandBinding(MoveAllBack, (sender, e) => this.ResetSelection(true)));
+            this.CommandBindings.Add(new CommandBinding(MoveBack, (_, _) => this.MoveSelection(true)));
+            this.CommandBindings.Add(new CommandBinding(MoveForward, (_, _) => this.MoveSelection(false)));
+            this.CommandBindings.Add(new CommandBinding(MoveAllForward, (_, _) => this.ResetSelection(false)));
+            this.CommandBindings.Add(new CommandBinding(MoveAllBack, (_, _) => this.ResetSelection(true)));
 
             this.actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualWidthProperty);
-            this.actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => this.ReCalculateSize();
+            this.actualWidthPropertyChangeNotifier.ValueChanged += (_, _) => this.ReCalculateSize();
             this.actualHeightPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualHeightProperty);
-            this.actualHeightPropertyChangeNotifier.ValueChanged += (s, e) => this.ReCalculateSize();
+            this.actualHeightPropertyChangeNotifier.ValueChanged += (_, _) => this.ReCalculateSize();
 
             this._timer = new DispatcherTimer();
             this._timer.Tick += this.MoveToNextValue;
@@ -930,13 +924,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void MoveThumbHorizontal(FrameworkElement x, FrameworkElement y, double horizonalChange)
+        private static void MoveThumbHorizontal(FrameworkElement x, FrameworkElement y, double horizontalChange)
         {
             if (!double.IsNaN(x.Width) && !double.IsNaN(y.Width))
             {
-                if (horizonalChange < 0) //slider went left
+                if (horizontalChange < 0) //slider went left
                 {
-                    var change = GetChangeKeepPositive(x.Width, horizonalChange);
+                    var change = GetChangeKeepPositive(x.Width, horizontalChange);
                     if (x.Name == "PART_MiddleThumb")
                     {
                         if (x.Width > x.MinWidth)
@@ -960,9 +954,9 @@ namespace MahApps.Metro.Controls
                         y.Width -= change;
                     }
                 }
-                else if (horizonalChange > 0) //slider went right if(horizontal change == 0 do nothing)
+                else if (horizontalChange > 0) //slider went right if(horizontal change == 0 do nothing)
                 {
-                    var change = -GetChangeKeepPositive(y.Width, -horizonalChange);
+                    var change = -GetChangeKeepPositive(y.Width, -horizontalChange);
                     if (y.Name == "PART_MiddleThumb")
                     {
                         if (y.Width > y.MinWidth)
@@ -1171,7 +1165,7 @@ namespace MahApps.Metro.Controls
             RaiseValueChangedEvents(this, reCalculateLowerValue, reCalculateUpperValue);
         }
 
-        //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving separately)
+        //Method used for checking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving separately)
         private void ReCalculateRangeSelected(bool reCalculateLowerValue, bool reCalculateUpperValue, double value, Direction direction)
         {
             this._internalUpdate = true; //set flag to signal that the properties are being set by the object itself
@@ -1222,17 +1216,18 @@ namespace MahApps.Metro.Controls
             RaiseValueChangedEvents(this, reCalculateLowerValue, reCalculateUpperValue);
         }
 
-        //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
+        //Method used for checking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
         private void ReCalculateRangeSelected(double newLower, double newUpper, Direction direction)
         {
-            double lower = 0,
-                   upper = 0;
             this._internalUpdate = true; //set flag to signal that the properties are being set by the object itself
             this._oldLower = this.LowerValue;
             this._oldUpper = this.UpperValue;
 
             if (this.IsSnapToTickEnabled)
             {
+                double lower;
+                double upper;
+
                 if (direction == Direction.Increase)
                 {
                     lower = Math.Min(newLower, this.Maximum - (this.UpperValue - this.LowerValue));
@@ -1621,12 +1616,7 @@ namespace MahApps.Metro.Controls
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (this._autoToolTip == null)
-                {
-                    this._autoToolTip = new ToolTip();
-                    this._autoToolTip.Placement = PlacementMode.Custom;
-                    this._autoToolTip.CustomPopupPlacementCallback = this.PopupPlacementCallback;
-                }
+                this._autoToolTip ??= new ToolTip { Placement = PlacementMode.Custom, CustomPopupPlacementCallback = this.PopupPlacementCallback };
 
                 this._autoToolTip.SetValue(ContentControl.ContentTemplateProperty, this.AutoToolTipLowerValueTemplate);
                 this._autoToolTip.Content = this.GetToolTipNumber(this.LowerValue);
@@ -1699,12 +1689,7 @@ namespace MahApps.Metro.Controls
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (this._autoToolTip == null)
-                {
-                    this._autoToolTip = new ToolTip();
-                    this._autoToolTip.Placement = PlacementMode.Custom;
-                    this._autoToolTip.CustomPopupPlacementCallback = this.PopupPlacementCallback;
-                }
+                this._autoToolTip ??= new ToolTip { Placement = PlacementMode.Custom, CustomPopupPlacementCallback = this.PopupPlacementCallback };
 
                 this._autoToolTip.SetValue(ContentControl.ContentTemplateProperty, this.AutoToolTipUpperValueTemplate);
                 this._autoToolTip.Content = this.GetToolTipNumber(this.UpperValue);
@@ -1778,12 +1763,7 @@ namespace MahApps.Metro.Controls
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (this._autoToolTip == null)
-                {
-                    this._autoToolTip = new ToolTip();
-                    this._autoToolTip.Placement = PlacementMode.Custom;
-                    this._autoToolTip.CustomPopupPlacementCallback = this.PopupPlacementCallback;
-                }
+                this._autoToolTip ??= new ToolTip { Placement = PlacementMode.Custom, CustomPopupPlacementCallback = this.PopupPlacementCallback };
 
                 var autoToolTipRangeValuesTemplate = this.AutoToolTipRangeValuesTemplate;
                 this._autoToolTip.SetValue(ContentControl.ContentTemplateProperty, autoToolTipRangeValuesTemplate);
@@ -2149,11 +2129,11 @@ namespace MahApps.Metro.Controls
                 var x = currentValue / this.TickFrequency;
                 if (direction == Direction.Increase)
                 {
-                    var nextvalue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
+                    var nextValue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
                         ? (x * this.TickFrequency) + this.TickFrequency
                         : ((int)x * this.TickFrequency) + this.TickFrequency;
 
-                    distance = (nextvalue - Math.Abs(checkingValuePos));
+                    distance = (nextValue - Math.Abs(checkingValuePos));
                 }
                 else
                 {
@@ -2165,7 +2145,7 @@ namespace MahApps.Metro.Controls
             }
 
             //return absolute value without sign not to depend on it if value is negative 
-            //(could cause bugs in calcutaions if return not absolute value)
+            //(could cause bugs in calculations if return not absolute value)
             return Math.Abs(distance);
         }
 
@@ -2224,7 +2204,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        //Change AutotoolTipPosition to move sync with Thumb
+        //Change AutotoolTip position to move sync with Thumb
         private void RelocateAutoToolTip()
         {
             if (this._autoToolTip is null)
@@ -2255,7 +2235,7 @@ namespace MahApps.Metro.Controls
             return value.ToString("N", numberFormatInfo);
         }
 
-        //CustomPopupPlacement callback for placing autotooltip int TopLeft or BottomRight position
+        //CustomPopupPlacement callback for placing AutoToolTip int TopLeft or BottomRight position
         private CustomPopupPlacement[] PopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
         {
             switch (this.AutoToolTipPlacement)
@@ -2308,36 +2288,32 @@ namespace MahApps.Metro.Controls
 
         #region Coerce callbacks
 
-#pragma warning disable WPF0024
         [MustUseReturnValue]
-        private static object CoerceMinimum(DependencyObject d, object basevalue)
-#pragma warning restore WPF0024
+        private static object CoerceMinimum(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-            var value = (double)basevalue;
-
-            if (value > rangeSlider.Maximum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return rangeSlider.Maximum;
+                if (value > rangeSlider.Maximum)
+                {
+                    return rangeSlider.Maximum;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
-#pragma warning disable WPF0024
         [MustUseReturnValue]
-        private static object CoerceMaximum(DependencyObject d, object basevalue)
-#pragma warning restore WPF0024
+        private static object CoerceMaximum(DependencyObject d, object? baseValue)
         {
-            var rangeSlider = (RangeSlider)d;
-            var value = (double)basevalue;
-
-            if (value < rangeSlider.Minimum)
+            if (d is RangeSlider rangeSlider && baseValue is double value)
             {
-                return rangeSlider.Minimum;
+                if (value < rangeSlider.Minimum)
+                {
+                    return rangeSlider.Minimum;
+                }
             }
 
-            return basevalue;
+            return baseValue ?? 0D;
         }
 
         #endregion
@@ -2402,74 +2378,6 @@ namespace MahApps.Metro.Controls
         {
             Increase,
             Decrease
-        }
-    }
-
-    public class RangeSliderAutoTooltipValues : INotifyPropertyChanged
-    {
-        private string? lowerValue;
-
-        /// <summary>
-        /// Gets the lower value of the range selection.
-        /// </summary>
-        public string? LowerValue
-        {
-            get => this.lowerValue;
-            set
-            {
-                if (value == this.lowerValue)
-                {
-                    return;
-                }
-
-                this.lowerValue = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        private string? upperValue;
-
-        /// <summary>
-        /// Gets the upper value of the range selection.
-        /// </summary>
-        public string? UpperValue
-        {
-            get => this.upperValue;
-            set
-            {
-                if (value == this.upperValue)
-                {
-                    return;
-                }
-
-                this.upperValue = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        internal RangeSliderAutoTooltipValues(RangeSlider rangeSlider)
-        {
-            this.UpdateValues(rangeSlider);
-        }
-
-        internal void UpdateValues(RangeSlider rangeSlider)
-        {
-            this.LowerValue = rangeSlider.GetToolTipNumber(rangeSlider.LowerValue);
-            this.UpperValue = rangeSlider.GetToolTipNumber(rangeSlider.UpperValue);
-        }
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return this.LowerValue + " - " + this.UpperValue;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

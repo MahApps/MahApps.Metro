@@ -4,13 +4,13 @@
 
 using MahApps.Metro.Controls;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Views
 {
     public partial class CleanWindow : MetroWindow
     {
         public CleanWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

@@ -27,6 +27,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RevealImage.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
@@ -60,6 +61,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}" />
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RevealImage}" TargetType="{x:Type mah:RevealImage}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type mah:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipViewItem}" TargetType="{x:Type mah:FlipViewItem}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type mah:FlipView}" />

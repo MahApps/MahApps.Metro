@@ -165,7 +165,7 @@ namespace MahApps.Metro.Controls
         {
             // Cancel the drag action if we lost capture
             MetroThumbContentControl thumb = (MetroThumbContentControl)sender;
-            if (Mouse.Captured != thumb)
+            if (!ReferenceEquals(Mouse.Captured, thumb))
             {
                 thumb.CancelDragAction();
             }
@@ -197,7 +197,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 // clear some saved stuff
-                if (e.MouseDevice.Captured == this)
+                if (ReferenceEquals(e.MouseDevice.Captured, this))
                 {
                     this.ReleaseMouseCapture();
                 }

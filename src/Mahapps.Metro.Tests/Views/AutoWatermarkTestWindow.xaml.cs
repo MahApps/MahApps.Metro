@@ -7,13 +7,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using MahApps.Metro.Controls;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Views
 {
     public partial class AutoWatermarkTestWindow : MetroWindow
     {
         public AutoWatermarkTestWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 

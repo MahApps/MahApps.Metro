@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroAnimatedSingleRowTabControl()
         {
-            DefaultStyleKey = typeof(MetroAnimatedSingleRowTabControl);
+            this.DefaultStyleKey = typeof(MetroAnimatedSingleRowTabControl);
         }
     }
 }

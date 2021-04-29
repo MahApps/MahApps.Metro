@@ -9,9 +9,10 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class NumericUpDownFixture : IAsyncLifetime
     {
@@ -54,7 +55,10 @@ namespace MahApps.Metro.Tests
 
             foreach (var property in EnumerateDependencyProperties(this.Window.TheNUD))
             {
-                this.Window.TheNUD.ClearValue(property);
+                if (property.ReadOnly == false)
+                {
+                    this.Window.TheNUD.ClearValue(property);
+                }
             }
         }
 

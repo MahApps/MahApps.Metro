@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -80,32 +79,32 @@ namespace MahApps.Metro.Controls
             {
                 if (headerTemplate != null)
                 {
-                    flyout.SetValue(HeaderedContentControl.HeaderTemplateProperty, (object)headerTemplate);
+                    flyout.SetValue(HeaderedContentControl.HeaderTemplateProperty, headerTemplate);
                 }
 
                 if (headerTemplateSelector != null)
                 {
-                    flyout.SetValue(HeaderedContentControl.HeaderTemplateSelectorProperty, (object)headerTemplateSelector);
+                    flyout.SetValue(HeaderedContentControl.HeaderTemplateSelectorProperty, headerTemplateSelector);
                 }
 
                 if (headerStringFormat != null)
                 {
-                    flyout.SetValue(HeaderedContentControl.HeaderStringFormatProperty, (object)headerStringFormat);
+                    flyout.SetValue(HeaderedContentControl.HeaderStringFormatProperty, headerStringFormat);
                 }
 
                 if (this.ItemTemplate != null && null == flyout.ContentTemplate)
                 {
-                    flyout.SetValue(ContentControl.ContentTemplateProperty, (object)this.ItemTemplate);
+                    flyout.SetValue(ContentControl.ContentTemplateProperty, this.ItemTemplate);
                 }
 
                 if (this.ItemTemplateSelector != null && null == flyout.ContentTemplateSelector)
                 {
-                    flyout.SetValue(ContentControl.ContentTemplateSelectorProperty, (object)this.ItemTemplateSelector);
+                    flyout.SetValue(ContentControl.ContentTemplateSelectorProperty, this.ItemTemplateSelector);
                 }
 
                 if (this.ItemStringFormat != null && null == flyout.ContentStringFormat)
                 {
-                    flyout.SetValue(ContentControl.ContentStringFormatProperty, (object)this.ItemStringFormat);
+                    flyout.SetValue(ContentControl.ContentStringFormatProperty, this.ItemStringFormat);
                 }
             }
 
@@ -145,7 +144,10 @@ namespace MahApps.Metro.Controls
 
             this.ReorderZIndices(flyout);
 
-            var visibleFlyouts = this.GetFlyouts(this.Items).OfType<Flyout>().Where(i => i.IsOpen).OrderBy(Panel.GetZIndex).ToList();
+            var visibleFlyouts = this.GetFlyouts()
+                                     .Where(i => i.IsOpen)
+                                     .OrderBy(Panel.GetZIndex)
+                                     .ToList();
             parentWindow.HandleFlyoutStatusChange(flyout, visibleFlyouts);
         }
 
@@ -156,23 +158,28 @@ namespace MahApps.Metro.Controls
                 return flyout;
             }
 
-            return (Flyout?)this.ItemContainerGenerator.ContainerFromItem(item);
+            return this.ItemContainerGenerator.ContainerFromItem(item) as Flyout;
         }
 
-        internal IEnumerable<Flyout?> GetFlyouts()
+        internal IEnumerable<Flyout> GetFlyouts()
         {
-            return this.GetFlyouts(this.Items);
-        }
-
-        private IEnumerable<Flyout?> GetFlyouts(IEnumerable items)
-        {
-            return from object item in items
-                   select this.GetFlyout(item);
+            foreach (var item in this.Items)
+            {
+                var flyout = this.GetFlyout(item);
+                if (flyout is not null)
+                {
+                    yield return flyout;
+                }
+            }
         }
 
         private void ReorderZIndices(Flyout lastChanged)
         {
-            var openFlyouts = this.GetFlyouts(this.Items).OfType<Flyout>().Where(i => i.IsOpen && i != lastChanged).OrderBy(Panel.GetZIndex);
+            var openFlyouts = this.GetFlyouts()
+                                  .Where(f => f.IsOpen && f != lastChanged)
+                                  .OrderBy(Panel.GetZIndex)
+                                  .ToList();
+
             var index = 0;
             foreach (var openFlyout in openFlyouts)
             {

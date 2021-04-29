@@ -380,7 +380,7 @@ namespace MahApps.Metro.Controls
         [MustUseReturnValue]
         private static object? CoerceValue(DependencyObject d, object? value)
         {
-            if (value == null)
+            if (value is null)
             {
                 return null;
             }
@@ -838,14 +838,14 @@ namespace MahApps.Metro.Controls
 
             this.valueTextBox = this.GetTemplateChild(PART_TextBox) as TextBox;
 
-            if (this.repeatUp == null || this.repeatDown == null || this.valueTextBox == null)
+            if (this.repeatUp is null || this.repeatDown is null || this.valueTextBox is null)
             {
                 throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
             this.ToggleReadOnlyMode(this.IsReadOnly);
 
-            this.repeatUp.Click += (o, e) =>
+            this.repeatUp.Click += (_, _) =>
                 {
                     this.ChangeValueWithSpeedUp(true);
 
@@ -855,7 +855,7 @@ namespace MahApps.Metro.Controls
                         this.InternalSetText(this.Value);
                     }
                 };
-            this.repeatDown.Click += (o, e) =>
+            this.repeatDown.Click += (_, _) =>
                 {
                     this.ChangeValueWithSpeedUp(false);
 
@@ -866,8 +866,8 @@ namespace MahApps.Metro.Controls
                     }
                 };
 
-            this.repeatUp.PreviewMouseUp += (o, e) => this.ResetInternal();
-            this.repeatDown.PreviewMouseUp += (o, e) => this.ResetInternal();
+            this.repeatUp.PreviewMouseUp += (_, _) => this.ResetInternal();
+            this.repeatDown.PreviewMouseUp += (_, _) => this.ResetInternal();
 
             this.OnValueChanged(this.Value, this.Value);
 
@@ -876,7 +876,7 @@ namespace MahApps.Metro.Controls
 
         private void ToggleReadOnlyMode(bool isReadOnly)
         {
-            if (this.repeatUp == null || this.repeatDown == null || this.valueTextBox == null)
+            if (this.repeatUp is null || this.repeatDown is null || this.valueTextBox is null)
             {
                 return;
             }
@@ -1166,7 +1166,7 @@ namespace MahApps.Metro.Controls
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (!TryFormatHexadecimal(newValue, format, culture, out var hexValue))
+                if (!TryFormatHexadecimal(newValue, format, culture, out _))
                 {
                     var match = RegexStringFormat.Match(format);
                     if (match.Success)
@@ -1321,7 +1321,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.repeatDown != null)
             {
-                this.repeatDown.IsEnabled = this.Value == null || this.Value > this.Minimum;
+                this.repeatDown.IsEnabled = this.Value is null || this.Value > this.Minimum;
             }
         }
 
@@ -1329,7 +1329,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.repeatUp != null)
             {
-                this.repeatUp.IsEnabled = this.Value == null || this.Value < this.Maximum;
+                this.repeatUp.IsEnabled = this.Value is null || this.Value < this.Maximum;
             }
         }
 
@@ -1573,7 +1573,7 @@ namespace MahApps.Metro.Controls
                 return hexMatches.Count > 0 ? hexMatches[0].Value : text;
             }
 
-            if (this.regexNumber == null)
+            if (this.regexNumber is null)
             {
                 this.regexNumber = new Regex(RawRegexNumberString.Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
                                                                  .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),

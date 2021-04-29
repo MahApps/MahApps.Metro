@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls
         public NumericUpDownChangedRoutedEventArgs(RoutedEvent routedEvent, double interval)
             : base(routedEvent)
         {
-            Interval = interval;
+            this.Interval = interval;
         }
     }
 }

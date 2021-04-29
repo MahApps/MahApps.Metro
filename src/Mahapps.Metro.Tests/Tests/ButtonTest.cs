@@ -7,9 +7,10 @@ using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class ButtonTest : AutomationTestBase
     {

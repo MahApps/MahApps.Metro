@@ -9,9 +9,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class TextBoxHelperTest : AutomationTestBase
     {

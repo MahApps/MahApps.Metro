@@ -31,16 +31,19 @@ namespace MahApps.Metro.Controls
         {
             // get parent item
             var parentObject = GetParentObject(child);
-
-            // we've reached the end of the tree
-            if (parentObject == null)
+            while (parentObject is not null)
             {
-                return null;
+                // check if the parent matches the type we're looking for
+                if (parentObject is T objectToFind)
+                {
+                    return objectToFind;
+                }
+
+                parentObject = GetParentObject(parentObject);
             }
 
-            //check if the parent matches the type we're looking for
-            var parent = parentObject as T;
-            return parent ?? TryFindParent<T>(parentObject);
+            // we've reached the end of the tree
+            return null;
         }
 
         /// <summary>
@@ -51,7 +54,7 @@ namespace MahApps.Metro.Controls
         public static IEnumerable<DependencyObject> GetAncestors(this DependencyObject child)
         {
             var parent = VisualTreeHelper.GetParent(child);
-            while (parent != null)
+            while (parent is not null)
             {
                 yield return parent;
                 parent = VisualTreeHelper.GetParent(parent);
@@ -96,18 +99,18 @@ namespace MahApps.Metro.Controls
 
             T? foundChild = null;
 
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < childrenCount; i++)
+            var childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
+
                 // If the child is not of the request child type child
-                var childType = child as T;
-                if (childType == null)
+                if (child is not T currentChild)
                 {
                     // recursively drill down the tree
                     foundChild = FindChild<T>(child, childName);
                     // If the child is found, break so we do not overwrite the found child. 
-                    if (foundChild != null)
+                    if (foundChild is not null)
                     {
                         break;
                     }
@@ -115,78 +118,30 @@ namespace MahApps.Metro.Controls
                 else if (!string.IsNullOrEmpty(childName))
                 {
                     // If the child's name is set for search
-                    if (child is IFrameworkInputElement frameworkInputElement && frameworkInputElement.Name == childName)
+                    if (currentChild is IFrameworkInputElement frameworkInputElement && frameworkInputElement.Name == childName)
                     {
                         // if the child's name is of the request name
-                        foundChild = (T)child;
+                        foundChild = currentChild;
                         break;
                     }
-                    else
+
+                    // recursively drill down the tree
+                    foundChild = FindChild<T>(currentChild, childName);
+                    // If the child is found, break so we do not overwrite the found child. 
+                    if (foundChild is not null)
                     {
-                        // recursively drill down the tree
-                        foundChild = FindChild<T>(child, childName);
-                        // If the child is found, break so we do not overwrite the found child. 
-                        if (foundChild != null)
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
                 else
                 {
                     // child element found.
-                    foundChild = (T)child;
+                    foundChild = currentChild;
                     break;
                 }
             }
 
             return foundChild;
-        }
-
-        /// <summary>
-        /// This method is an alternative to WPF's
-        /// <see cref="VisualTreeHelper.GetParent"/> method, which also supports content elements. Keep in mind that for content element,
-        /// this method falls back to the logical tree of the element!
-        /// </summary>
-        /// <param name="child">The item to be processed.</param>
-        /// <returns>The submitted item's parent, if available. Otherwise
-        /// null.</returns>
-        public static DependencyObject? GetParentObject(this DependencyObject? child)
-        {
-            if (child == null)
-            {
-                return null;
-            }
-
-            // handle content elements separately
-            if (child is ContentElement contentElement)
-            {
-                DependencyObject parent = ContentOperations.GetParent(contentElement);
-                if (parent != null)
-                {
-                    return parent;
-                }
-
-                return contentElement is FrameworkContentElement fce ? fce.Parent : null;
-            }
-
-            var childParent = VisualTreeHelper.GetParent(child);
-            if (childParent != null)
-            {
-                return childParent;
-            }
-
-            // also try searching for parent in framework elements (such as DockPanel, etc)
-            if (child is FrameworkElement frameworkElement)
-            {
-                DependencyObject parent = frameworkElement.Parent;
-                if (parent != null)
-                {
-                    return parent;
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -201,18 +156,18 @@ namespace MahApps.Metro.Controls
         public static IEnumerable<T> FindChildren<T>(this DependencyObject? source, bool forceUsingTheVisualTreeHelper = false)
             where T : DependencyObject
         {
-            if (source != null)
+            if (source is not null)
             {
-                var childs = GetChildObjects(source, forceUsingTheVisualTreeHelper);
-                foreach (DependencyObject child in childs)
+                var childObjects = GetChildObjects(source, forceUsingTheVisualTreeHelper);
+                foreach (var child in childObjects)
                 {
-                    //analyze if children match the requested type
-                    if (child != null && child is T)
+                    // analyze if children match the requested type
+                    if (child is T childToFind)
                     {
-                        yield return (T)child;
+                        yield return childToFind;
                     }
 
-                    //recurse tree
+                    // recurse tree
                     foreach (T descendant in FindChildren<T>(child, forceUsingTheVisualTreeHelper))
                     {
                         yield return descendant;
@@ -232,29 +187,27 @@ namespace MahApps.Metro.Controls
         /// <returns>The submitted item's child elements, if available.</returns>
         public static IEnumerable<DependencyObject> GetChildObjects(this DependencyObject? parent, bool forceUsingTheVisualTreeHelper = false)
         {
-            if (parent == null)
+            if (parent is not null)
             {
-                yield break;
-            }
-
-            if (!forceUsingTheVisualTreeHelper && (parent is ContentElement || parent is FrameworkElement))
-            {
-                //use the logical tree for content / framework elements
-                foreach (var obj in LogicalTreeHelper.GetChildren(parent))
+                if (!forceUsingTheVisualTreeHelper && (parent is ContentElement || parent is FrameworkElement))
                 {
-                    if (obj is DependencyObject dependencyObject)
+                    // use the logical tree for content / framework elements
+                    foreach (var obj in LogicalTreeHelper.GetChildren(parent))
                     {
-                        yield return dependencyObject;
+                        if (obj is DependencyObject dependencyObject)
+                        {
+                            yield return dependencyObject;
+                        }
                     }
                 }
-            }
-            else if (parent is Visual || parent is Visual3D)
-            {
-                //use the visual tree per default
-                int count = VisualTreeHelper.GetChildrenCount(parent);
-                for (int i = 0; i < count; i++)
+                else if (parent is Visual || parent is Visual3D)
                 {
-                    yield return VisualTreeHelper.GetChild(parent, i);
+                    // use the visual tree per default
+                    int count = VisualTreeHelper.GetChildrenCount(parent);
+                    for (int i = 0; i < count; i++)
+                    {
+                        yield return VisualTreeHelper.GetChild(parent, i);
+                    }
                 }
             }
         }
@@ -286,16 +239,13 @@ namespace MahApps.Metro.Controls
 
         public static bool IsDescendantOf(this DependencyObject node, DependencyObject reference)
         {
-            bool success = false;
-
             DependencyObject? currentNode = node;
 
-            while (currentNode != null)
+            while (currentNode is not null)
             {
                 if (currentNode == reference)
                 {
-                    success = true;
-                    break;
+                    return true;
                 }
 
                 if (currentNode is Popup popup)
@@ -311,7 +261,53 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            return success;
+            return false;
+        }
+
+        /// <summary>
+        /// This method is an alternative to WPF's
+        /// <see cref="VisualTreeHelper.GetParent"/> method, which also supports content elements. Keep in mind that for content element,
+        /// this method falls back to the logical tree of the element!
+        /// </summary>
+        /// <param name="child">The item to be processed.</param>
+        /// <returns>The submitted item's parent, if available. Otherwise
+        /// null.</returns>
+        public static DependencyObject? GetParentObject(this DependencyObject? child)
+        {
+            if (child is null)
+            {
+                return null;
+            }
+
+            // handle content elements separately
+            if (child is ContentElement contentElement)
+            {
+                DependencyObject parent = ContentOperations.GetParent(contentElement);
+                if (parent is not null)
+                {
+                    return parent;
+                }
+
+                return contentElement is FrameworkContentElement fce ? fce.Parent : null;
+            }
+
+            var childParent = VisualTreeHelper.GetParent(child);
+            if (childParent is not null)
+            {
+                return childParent;
+            }
+
+            // also try searching for parent in framework elements (such as DockPanel, etc)
+            if (child is FrameworkElement frameworkElement)
+            {
+                DependencyObject parent = frameworkElement.Parent;
+                if (parent is not null)
+                {
+                    return parent;
+                }
+            }
+
+            return null;
         }
     }
 }

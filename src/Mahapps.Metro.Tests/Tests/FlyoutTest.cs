@@ -11,11 +11,12 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using ControlzEx.Theming;
 using ExposedObject;
-using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
 using Xunit;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
     public class FlyoutTest : AutomationTestBase
     {

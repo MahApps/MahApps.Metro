@@ -323,7 +323,7 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="colors">
-                <exampleViews:ColorExample DataContext="{Binding}" Margin="2" />
+                <exampleViews:ColorExample Margin="2" DataContext="{Binding}" />
             </TabItem>
 
             <TabItem Header="ColorPicker">
