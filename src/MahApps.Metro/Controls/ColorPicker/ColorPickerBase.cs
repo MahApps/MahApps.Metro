@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using JetBrains.Annotations;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -114,7 +115,7 @@ namespace MahApps.Metro.Controls
                 {
                     colorPicker.SetCurrentValue(SelectedColorProperty, null);
                 }
-                else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
+                else if ((colorPicker.ColorHelper ?? ColorHelper.DefaultInstance).ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is { } color)
                 {
                     if (colorPicker.SelectedColor != color)
                     {
@@ -125,7 +126,7 @@ namespace MahApps.Metro.Controls
                         colorPicker.ColorIsUpdating = true;
                         try
                         {
-                            colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(color, colorPicker.ColorNamesDictionary));
+                            colorPicker.SetCurrentValue(ColorNameProperty, (colorPicker.ColorHelper ?? ColorHelper.DefaultInstance).GetColorName(color, colorPicker.ColorNamesDictionary, colorPicker.IsAlphaChannelVisible));
                         }
                         finally
                         {
@@ -163,6 +164,39 @@ namespace MahApps.Metro.Controls
         {
             get => (Dictionary<Color, string>?)this.GetValue(ColorNamesDictionaryProperty);
             set => this.SetValue(ColorNamesDictionaryProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ColorHelper"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorHelperProperty =
+            DependencyProperty.Register(nameof(ColorHelper),
+                                        typeof(ColorHelper),
+                                        typeof(ColorPickerBase),
+                                        new PropertyMetadata(null, OnUpdateColorNameProperty));
+
+        private static void OnUpdateColorNameProperty(DependencyObject d, DependencyPropertyChangedEventArgs _)
+        {
+            if (d is ColorPickerBase colorPicker)
+            {
+                colorPicker.ColorIsUpdating = true;
+
+                try
+                {
+                    colorPicker.SetCurrentValue(ColorNameProperty, (colorPicker.ColorHelper ?? ColorHelper.DefaultInstance).GetColorName(colorPicker.SelectedColor, colorPicker.ColorNamesDictionary, colorPicker.IsAlphaChannelVisible));
+                }
+                finally
+                {
+                    colorPicker.ColorIsUpdating = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the helper class which is used to convert the color from or to string
+        /// </summary>
+        public ColorHelper? ColorHelper
+        {
+            get => (ColorHelper?)this.GetValue(ColorHelperProperty);
+            set => this.SetValue(ColorHelperProperty, value);
         }
 
         /// <summary>Identifies the <see cref="A"/> dependency property.</summary>
@@ -439,12 +473,92 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(LabelColorNameProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="AreRgbChannelsVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty AreRgbChannelsVisibleProperty
+            = DependencyProperty.Register(nameof(AreRgbChannelsVisible),
+                                          typeof(bool),
+                                          typeof(ColorPickerBase),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the RGB-Channels are visible
+        /// </summary>
+        public bool AreRgbChannelsVisible
+        {
+            get => (bool)this.GetValue(AreRgbChannelsVisibleProperty);
+            set => this.SetValue(AreRgbChannelsVisibleProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="AreHsvChannelsVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty AreHsvChannelsVisibleProperty
+            = DependencyProperty.Register(nameof(AreHsvChannelsVisible),
+                                          typeof(bool),
+                                          typeof(ColorPickerBase),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the HSV-Channels are visible
+        /// </summary>
+        public bool AreHsvChannelsVisible
+        {
+            get => (bool)this.GetValue(AreHsvChannelsVisibleProperty);
+            set => this.SetValue(AreHsvChannelsVisibleProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsAlphaChannelVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsAlphaChannelVisibleProperty
+            = DependencyProperty.Register(nameof(IsAlphaChannelVisible),
+                                          typeof(bool),
+                                          typeof(ColorPickerBase),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnUpdateColorNameProperty));
+
+        /// <summary>
+        /// Gets or sets whether the Alpha-Channel is visible
+        /// </summary>
+        public bool IsAlphaChannelVisible
+        {
+            get => (bool)this.GetValue(IsAlphaChannelVisibleProperty);
+            set => this.SetValue(IsAlphaChannelVisibleProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsColorNameVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsColorNameVisibleProperty
+            = DependencyProperty.Register(nameof(IsColorNameVisible),
+                                          typeof(bool),
+                                          typeof(ColorPickerBase),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the field for the <see cref="ColorName"/> is visible
+        /// </summary>
+        public bool IsColorNameVisible
+        {
+            get => (bool)this.GetValue(IsColorNameVisibleProperty);
+            set => this.SetValue(IsColorNameVisibleProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="IsEyeDropperVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsEyeDropperVisibleProperty
+            = DependencyProperty.Register(nameof(IsEyeDropperVisible),
+                                          typeof(bool),
+                                          typeof(ColorPickerBase),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the <see cref="ColorEyeDropper"/> is visible
+        /// </summary>
+        public bool IsEyeDropperVisible
+        {
+            get => (bool)this.GetValue(IsEyeDropperVisibleProperty);
+            set => this.SetValue(IsEyeDropperVisibleProperty, BooleanBoxes.Box(value));
+        }
+
         /// <summary>Identifies the <see cref="SelectedColorChanged"/> routed event.</summary>
-        public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
-            nameof(SelectedColorChanged),
-            RoutingStrategy.Bubble,
-            typeof(RoutedPropertyChangedEventHandler<Color?>),
-            typeof(ColorPickerBase));
+        public static readonly RoutedEvent SelectedColorChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(SelectedColorChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedPropertyChangedEventHandler<Color?>),
+                                               typeof(ColorPickerBase));
 
         /// <summary>
         ///     Occurs when the <see cref="SelectedColor" /> property is changed.
@@ -457,7 +571,7 @@ namespace MahApps.Metro.Controls
 
         internal virtual void OnSelectedColorChanged(Color? oldValue, Color? newValue)
         {
-            this.SetCurrentValue(ColorNameProperty, newValue is null ? null : ColorHelper.GetColorName(newValue.Value, this.ColorNamesDictionary));
+            this.SetCurrentValue(ColorNameProperty, (this.ColorHelper ?? ColorHelper.DefaultInstance).GetColorName(newValue, this.ColorNamesDictionary, this.IsAlphaChannelVisible));
 
             // We just update the following lines if we have a Color.
             if (newValue != null)

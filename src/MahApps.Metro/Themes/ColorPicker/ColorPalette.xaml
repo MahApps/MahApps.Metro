@@ -109,6 +109,8 @@
                 <MultiBinding Converter="{converters:ColorToNameConverter}">
                     <Binding />
                     <Binding Path="ColorNamesDictionary" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
+                    <Binding Path="ColorHelper" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
+                    <Binding Path="IsAlphaChannelVisible" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
                 </MultiBinding>
             </Border.ToolTip>
             <Grid Background="{Binding Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
