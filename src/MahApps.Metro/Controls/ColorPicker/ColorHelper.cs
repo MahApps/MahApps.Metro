@@ -17,8 +17,14 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// A Helper class for the Color-Struct
     /// </summary>
-    public static class ColorHelper
+    public class ColorHelper
     {
+        static ColorHelper _DefaultInstance;
+        /// <summary>
+        /// This is the default Instance of the color Helper.
+        /// </summary>
+        public static ColorHelper DefaultInstance => _DefaultInstance ??= new ColorHelper();
+        
         static ColorHelper()
         {
             ColorNamesDictionary = new Dictionary<Color, string>();
@@ -54,7 +60,7 @@ namespace MahApps.Metro.Controls
         /// <param name="colorName">The localized name of the color, the hex-code of the color or the internal color name</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
         /// <returns>the Color if successful, else null</returns>
-        public static Color? ColorFromString(string? colorName, Dictionary<Color, string>? colorNamesDictionary)
+        public virtual Color? ColorFromString(string? colorName, Dictionary<Color, string>? colorNamesDictionary)
         {
             Color? result = null;
 
@@ -98,7 +104,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="colorName">The localized name of the color, the hex-code of the color or the internal color name</param>
         /// <returns>the Color if successful, else null</returns>
-        public static Color? ColorFromString(string colorName)
+        public Color? ColorFromString(string colorName)
         {
             return ColorFromString(colorName, null);
         }
@@ -113,8 +119,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
+        /// <param name="useAlphaChannel">Set this value to <see langword="false"/> if the alpha-channel should be ommited</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string? GetColorName(Color? color, Dictionary<Color, string>? colorNamesDictionary)
+        public virtual string? GetColorName(Color? color, Dictionary<Color, string>? colorNamesDictionary, bool useAlphaChannel)
         {
             if (color is null)
             {
@@ -123,7 +130,11 @@ namespace MahApps.Metro.Controls
 
             colorNamesDictionary ??= ColorNamesDictionary;
 
-            return colorNamesDictionary.TryGetValue(color.Value, out var name) ? $"{name} ({color})" : $"{color}";
+            var colorHex = useAlphaChannel
+                ? color.ToString()
+                : $"#{color?.R.ToString("X2")}{color?.G.ToString("X2")}{color?.B.ToString("X2")}";
+
+            return colorNamesDictionary.TryGetValue(color, out var name) ? $"{name} ({colorHex})" : $"{colorHex}";
         }
 
         /// <summary>
@@ -131,9 +142,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string? GetColorName(Color color)
+        public string? GetColorName(Color? color)
         {
-            return GetColorName(color, null);
+            return GetColorName(color, null, true);
         }
     }
 }

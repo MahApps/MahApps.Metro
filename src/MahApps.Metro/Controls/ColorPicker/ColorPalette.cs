@@ -64,6 +64,40 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ColorNamesDictionaryProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="IsAlphaChannelVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsAlphaChannelVisibleProperty =
+            DependencyProperty.Register(nameof(IsAlphaChannelVisible),
+                                        typeof(bool),
+                                        typeof(ColorPalette),
+                                        new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or Sets wether the Alpha-Channel is visible
+        /// </summary>
+        public bool IsAlphaChannelVisible
+        {
+            get { return (bool)GetValue(IsAlphaChannelVisibleProperty); }
+            set { SetValue(IsAlphaChannelVisibleProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="ColorHelper"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorHelperProperty =
+            DependencyProperty.Register(nameof(ColorHelper),
+                                        typeof(ColorHelper),
+                                        typeof(ColorPalette),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the helper class which is used to convert the color from or to string
+        /// </summary>
+        public ColorHelper ColorHelper
+        {
+            get { return (ColorHelper)GetValue(ColorHelperProperty); }
+            set { SetValue(ColorHelperProperty, value); }
+        }
+
+
         internal bool FocusSelectedItem()
         {
             ListBoxItem? listBoxItem = null;

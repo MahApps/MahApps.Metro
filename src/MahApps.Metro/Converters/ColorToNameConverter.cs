@@ -18,6 +18,8 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(Color), typeof(string))]
     public class ColorToNameConverter : MarkupMultiConverter
     {
+        public ColorHelper ColorHelper { get; set; }
+
         /// <summary>
         /// Converts a given <see cref="Color"/> to its Name
         /// </summary>
@@ -28,24 +30,35 @@ namespace MahApps.Metro.Converters
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return ColorHelper.GetColorName(value as Color?, parameter as Dictionary<Color, string>);
+            return (ColorHelper ?? ColorHelper.DefaultInstance).GetColorName(value as Color?, parameter as Dictionary<Color, string>, true);
         }
 
         /// <summary>
         /// Converts a given <see cref="Color"/> to its Name
         /// </summary>
-        /// <param name="values">Needed: The <see cref="Color"/>. Optional: A <see cref="Dictionary{TKey, TValue}"/></param>
+        /// <param name="values">
+        /// Needed: The <see cref="Color"/>. 
+        /// Optional: A <see cref="Dictionary{TKey, TValue}"/>. 
+        /// Optional: A <see cref="bool"/> if the alpha channel is visible.
+        /// Optional: A culstom <see cref="ColorHelper"/> used to get the color name. 
+        /// </param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
-            var color = values?.OfType<Color>().FirstOrDefault();
-
+            var color = values?.FirstOrDefault(x => x?.GetType() == typeof(Color)) as Color?;
             var colorNamesDictionary = values?.FirstOrDefault(x => x?.GetType() == typeof(Dictionary<Color, string>)) as Dictionary<Color, string>;
+            var useAlphaChannel = values?.FirstOrDefault(x => x?.GetType() == typeof(bool)) as bool?;
+            var colorHelper = values?.FirstOrDefault(x => x is ColorHelper) as ColorHelper;
 
-            return ColorHelper.GetColorName(color, colorNamesDictionary);
+            if (colorHelper is null)
+            {
+                colorHelper = ColorHelper ?? ColorHelper.DefaultInstance;
+            }
+
+            return colorHelper.GetColorName(color, colorNamesDictionary, useAlphaChannel ?? true);
         }
 
         /// <summary>
@@ -60,7 +73,7 @@ namespace MahApps.Metro.Converters
         {
             if (value is string text)
             {
-                return ColorHelper.ColorFromString(text, parameter as Dictionary<Color, string>) ?? Binding.DoNothing;
+                return (ColorHelper ?? ColorHelper.DefaultInstance).ColorFromString(text, parameter as Dictionary<Color, string>) ?? Binding.DoNothing;
             }
             else
             {

@@ -8,6 +8,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorComponentSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <DrawingBrush x:Key="MahApps.Brushes.Tile"
                   TileMode="Tile"
                   Viewport="0,0,20,20"
@@ -205,7 +207,7 @@
                                           HorizontalScrollBarVisibility="Auto"
                                           VerticalScrollBarVisibility="Auto">
                                 <StackPanel UseLayoutRounding="True">
-                                    <Grid>
+                                    <Grid Visibility="{TemplateBinding AreRgbChannelsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"
                                                               MinWidth="{DynamicResource MahApps.Font.Size.Content}"
@@ -290,7 +292,7 @@
                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
                                     </Grid>
 
-                                    <Grid Margin="0 10 0 0">
+                                    <Grid Margin="0 10 0 0" Visibility="{TemplateBinding AreHsvChannelsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"
                                                               MinWidth="{DynamicResource MahApps.Font.Size.Content}"
@@ -373,7 +375,7 @@
                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
                                     </Grid>
 
-                                    <Grid Margin="0 10 0 0">
+                                    <Grid Margin="0 10 0 0" Visibility="{TemplateBinding IsAlphaChannelVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"
                                                               MinWidth="{DynamicResource MahApps.Font.Size.Content}"
@@ -411,10 +413,10 @@
 
                             <!--  HTML String und Name  -->
 
-                            <Grid Grid.Row="1"
+                            <Grid x:Name="Part_ColorNameAndEyeDropperPresenter" Grid.Row="1"
                                   Grid.Column="1"
                                   Margin="0 0 5 5"
-                                  VerticalAlignment="Top">
+                                  VerticalAlignment="Top" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                                     <ColumnDefinition Width="*" />
@@ -426,7 +428,8 @@
                                                   Content="{TemplateBinding LabelColorName}" />
 
                                 <TextBox Grid.Column="1"
-                                         Margin="2 0 0 0"
+                                         Margin="2 0"
+                                         Visibility="{TemplateBinding IsColorNameVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                          mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                          mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                          mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
@@ -447,8 +450,9 @@
                                          Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}" />
 
                                 <mah:ColorEyeDropper x:Name="PART_ColorEyeDropper"
+                                                     Visibility="{TemplateBinding IsEyeDropperVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                      Grid.Column="2"
-                                                     Margin="2 0"
+                                                     Margin="0 0 2 0"
                                                      SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
                                                      Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}" />
                             </Grid>
@@ -458,6 +462,21 @@
                         <Trigger Property="SelectedColor" Value="{x:Null}">
                             <Setter TargetName="PART_NoColorPreview" Property="Visibility" Value="Visible" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsColorNameVisible" Value="False" />
+                                <Condition Property="IsEyeDropperVisible" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ColorEyeDropper" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_ColorEyeDropper" Property="Margin" Value="2 0" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsColorNameVisible" Value="False" />
+                                <Condition Property="IsEyeDropperVisible" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Part_ColorNameAndEyeDropperPresenter" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
