@@ -19,12 +19,12 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class ColorHelper
     {
-        static ColorHelper _DefaultInstance;
         /// <summary>
-        /// This is the default Instance of the color Helper.
+        /// Gets a static default instance of <see cref="ColorHelper"/>.
         /// </summary>
-        public static ColorHelper DefaultInstance => _DefaultInstance ??= new ColorHelper();
-        
+        public static readonly ColorHelper DefaultInstance = new();
+
+        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
         static ColorHelper()
         {
             ColorNamesDictionary = new Dictionary<Color, string>();
@@ -77,7 +77,7 @@ namespace MahApps.Metro.Controls
                 if (!colorName!.StartsWith("#"))
                 {
                     // We need to check with any first as the key is of type Color, which is a struct.
-                    if (colorNamesDictionary?.Any(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)) == true)
+                    if (colorNamesDictionary.Any(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)) == true)
                     {
                         result = colorNamesDictionary.FirstOrDefault(x => string.Equals(x.Value, colorName, StringComparison.OrdinalIgnoreCase)).Key;
                     }
@@ -89,7 +89,7 @@ namespace MahApps.Metro.Controls
             {
                 if (colorName != null && !result.HasValue && !colorName.StartsWith("#"))
                 {
-                    result = ColorFromString("#" + colorName);
+                    result = this.ColorFromString("#" + colorName);
                 }
             }
 
@@ -106,7 +106,7 @@ namespace MahApps.Metro.Controls
         /// <returns>the Color if successful, else null</returns>
         public Color? ColorFromString(string colorName)
         {
-            return ColorFromString(colorName, null);
+            return this.ColorFromString(colorName, null);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <param name="colorNamesDictionary">Optional: The dictionary where the ColorName should be looked up</param>
-        /// <param name="useAlphaChannel">Set this value to <see langword="false"/> if the alpha-channel should be ommited</param>
+        /// <param name="useAlphaChannel">Set this value to <see langword="false"/> if the alpha-channel should be omitted</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
         public virtual string? GetColorName(Color? color, Dictionary<Color, string>? colorNamesDictionary, bool useAlphaChannel)
         {
@@ -130,11 +130,9 @@ namespace MahApps.Metro.Controls
 
             colorNamesDictionary ??= ColorNamesDictionary;
 
-            var colorHex = useAlphaChannel
-                ? color.ToString()
-                : $"#{color?.R.ToString("X2")}{color?.G.ToString("X2")}{color?.B.ToString("X2")}";
+            var colorHex = useAlphaChannel ? color.ToString() : $"#{color.Value.R:X2}{color.Value.G:X2}{color.Value.B:X2}";
 
-            return colorNamesDictionary.TryGetValue(color, out var name) ? $"{name} ({colorHex})" : $"{colorHex}";
+            return colorNamesDictionary.TryGetValue(color.Value, out var name) ? $"{name} ({colorHex})" : $"{colorHex}";
         }
 
         /// <summary>
@@ -144,7 +142,7 @@ namespace MahApps.Metro.Controls
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
         public string? GetColorName(Color? color)
         {
-            return GetColorName(color, null, true);
+            return this.GetColorName(color, null, true);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -65,38 +66,36 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="IsAlphaChannelVisible"/> dependency property.</summary>
-        public static readonly DependencyProperty IsAlphaChannelVisibleProperty =
-            DependencyProperty.Register(nameof(IsAlphaChannelVisible),
-                                        typeof(bool),
-                                        typeof(ColorPalette),
-                                        new PropertyMetadata(true));
+        public static readonly DependencyProperty IsAlphaChannelVisibleProperty
+            = DependencyProperty.Register(nameof(IsAlphaChannelVisible),
+                                          typeof(bool),
+                                          typeof(ColorPalette),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
-        /// Gets or Sets wether the Alpha-Channel is visible
+        /// Gets or sets whether the Alpha-Channel is visible
         /// </summary>
         public bool IsAlphaChannelVisible
         {
-            get { return (bool)GetValue(IsAlphaChannelVisibleProperty); }
-            set { SetValue(IsAlphaChannelVisibleProperty, value); }
+            get => (bool)this.GetValue(IsAlphaChannelVisibleProperty);
+            set => this.SetValue(IsAlphaChannelVisibleProperty, BooleanBoxes.Box(value));
         }
 
-
         /// <summary>Identifies the <see cref="ColorHelper"/> dependency property.</summary>
-        public static readonly DependencyProperty ColorHelperProperty =
-            DependencyProperty.Register(nameof(ColorHelper),
-                                        typeof(ColorHelper),
-                                        typeof(ColorPalette),
-                                        new PropertyMetadata(null));
+        public static readonly DependencyProperty ColorHelperProperty
+            = DependencyProperty.Register(nameof(ColorHelper),
+                                          typeof(ColorHelper),
+                                          typeof(ColorPalette),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or Sets the helper class which is used to convert the color from or to string
         /// </summary>
-        public ColorHelper ColorHelper
+        public ColorHelper? ColorHelper
         {
-            get { return (ColorHelper)GetValue(ColorHelperProperty); }
-            set { SetValue(ColorHelperProperty, value); }
+            get => (ColorHelper?)this.GetValue(ColorHelperProperty);
+            set => this.SetValue(ColorHelperProperty, value);
         }
-
 
         internal bool FocusSelectedItem()
         {

@@ -18,7 +18,7 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(Color), typeof(string))]
     public class ColorToNameConverter : MarkupMultiConverter
     {
-        public ColorHelper ColorHelper { get; set; }
+        public ColorHelper? ColorHelper { get; set; }
 
         /// <summary>
         /// Converts a given <see cref="Color"/> to its Name
@@ -30,7 +30,7 @@ namespace MahApps.Metro.Converters
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return (ColorHelper ?? ColorHelper.DefaultInstance).GetColorName(value as Color?, parameter as Dictionary<Color, string>, true);
+            return (this.ColorHelper ?? ColorHelper.DefaultInstance).GetColorName(value as Color?, parameter as Dictionary<Color, string>, true);
         }
 
         /// <summary>
@@ -51,12 +51,7 @@ namespace MahApps.Metro.Converters
             var color = values?.FirstOrDefault(x => x?.GetType() == typeof(Color)) as Color?;
             var colorNamesDictionary = values?.FirstOrDefault(x => x?.GetType() == typeof(Dictionary<Color, string>)) as Dictionary<Color, string>;
             var useAlphaChannel = values?.FirstOrDefault(x => x?.GetType() == typeof(bool)) as bool?;
-            var colorHelper = values?.FirstOrDefault(x => x is ColorHelper) as ColorHelper;
-
-            if (colorHelper is null)
-            {
-                colorHelper = ColorHelper ?? ColorHelper.DefaultInstance;
-            }
+            var colorHelper = values?.FirstOrDefault(x => x is ColorHelper) as ColorHelper ?? (this.ColorHelper ?? ColorHelper.DefaultInstance);
 
             return colorHelper.GetColorName(color, colorNamesDictionary, useAlphaChannel ?? true);
         }
@@ -73,7 +68,7 @@ namespace MahApps.Metro.Converters
         {
             if (value is string text)
             {
-                return (ColorHelper ?? ColorHelper.DefaultInstance).ColorFromString(text, parameter as Dictionary<Color, string>) ?? Binding.DoNothing;
+                return (this.ColorHelper ?? ColorHelper.DefaultInstance).ColorFromString(text, parameter as Dictionary<Color, string>) ?? Binding.DoNothing;
             }
             else
             {
