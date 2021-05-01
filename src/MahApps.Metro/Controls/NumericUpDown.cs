@@ -378,32 +378,32 @@ namespace MahApps.Metro.Controls
         }
 
         [MustUseReturnValue]
-        private static object? CoerceValue(DependencyObject d, object? value)
+        private static object? CoerceValue(DependencyObject d, object? baseValue)
         {
             var numericUpDown = (NumericUpDown)d;
-            if (value is null)
+            if (baseValue is null)
             {
                 return numericUpDown.DefaultValue;
             }
 
-            double val = ((double?)value).Value;
+            var value = ((double?)baseValue).Value;
 
             if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
             {
-                val = Math.Truncate(val);
+                value = Math.Truncate(value);
             }
 
-            if (val < numericUpDown.Minimum)
+            if (value < numericUpDown.Minimum)
             {
                 return numericUpDown.Minimum;
             }
 
-            if (val > numericUpDown.Maximum)
+            if (value > numericUpDown.Maximum)
             {
                 return numericUpDown.Maximum;
             }
 
-            return val;
+            return value;
         }
 
         /// <summary>
@@ -418,25 +418,12 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ValueProperty, value);
         }
 
-
         /// <summary>Identifies the <see cref="DefaultValue"/> dependency property.</summary>
-        public static readonly DependencyProperty DefaultValueProperty 
-            = DependencyProperty.Register(nameof(DefaultValue), 
-                                          typeof(double?), 
-                                          typeof(NumericUpDown), 
+        public static readonly DependencyProperty DefaultValueProperty
+            = DependencyProperty.Register(nameof(DefaultValue),
+                                          typeof(double?),
+                                          typeof(NumericUpDown),
                                           new PropertyMetadata(null, OnDefaultValuePropertyChanged, CoerceDefaultValue));
-
-        /// <summary>
-        /// Gets or sets the default value of the NumericUpDown which will be used if the <see cref="Value"/> is <see langword="null"/>.
-        /// </summary>
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(null)]
-        public double? DefaultValue
-        {
-            get { return (double?)GetValue(DefaultValueProperty); }
-            set { SetValue(DefaultValueProperty, value); }
-        }
 
         private static void OnDefaultValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -448,12 +435,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceDefaultValue(DependencyObject d, object value)
+        [MustUseReturnValue]
+        private static object? CoerceDefaultValue(DependencyObject d, object? baseValue)
         {
-            if (value is double val)
+            if (baseValue is double val)
             {
-                double minimum = ((NumericUpDown)d).Minimum;
-                double maximum = ((NumericUpDown)d).Maximum;
+                var minimum = ((NumericUpDown)d).Minimum;
+                var maximum = ((NumericUpDown)d).Maximum;
 
                 if (val < minimum)
                 {
@@ -464,10 +452,21 @@ namespace MahApps.Metro.Controls
                     return maximum;
                 }
             }
-           
-            return value;
+
+            return baseValue;
         }
 
+        /// <summary>
+        /// Gets or sets the default value of the NumericUpDown which will be used if the <see cref="Value"/> is <see langword="null"/>.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(null)]
+        public double? DefaultValue
+        {
+            get => (double?)this.GetValue(DefaultValueProperty);
+            set => this.SetValue(DefaultValueProperty, value);
+        }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty
@@ -1487,7 +1486,7 @@ namespace MahApps.Metro.Controls
                 }
                 else if (this.DefaultValue.HasValue)
                 {
-                    this.SetValueTo(DefaultValue.Value);
+                    this.SetValueTo(this.DefaultValue.Value);
                 }
             }
 
@@ -1503,12 +1502,12 @@ namespace MahApps.Metro.Controls
 
             if (string.IsNullOrEmpty(((TextBox)sender).Text))
             {
-                if (DefaultValue.HasValue)
+                if (this.DefaultValue.HasValue)
                 {
-                    this.SetValueTo(DefaultValue.Value);
+                    this.SetValueTo(this.DefaultValue.Value);
                     if (!this.manualChange)
                     {
-                        this.InternalSetText(DefaultValue.Value);
+                        this.InternalSetText(this.DefaultValue.Value);
                     }
                 }
                 else

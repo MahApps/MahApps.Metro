@@ -332,7 +332,6 @@ namespace MahApps.Metro.Tests.Tests
             theTextBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
-
         [Fact]
         public async Task ShouldSetDefaultValue()
         {
@@ -351,7 +350,6 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Equal(nud.Value, nud.DefaultValue);
 
-
             // 2. Test: There is no default value, so we should be able to set it to null
 
             nud.DefaultValue = null;
@@ -359,14 +357,12 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Equal(nud.Value, nud.DefaultValue);
 
-
             // 3. Test: We set the Default Value greater than the Maximum. It should be corrected by the control
             nud.DefaultValue = 100;
             nud.Value = null;
 
             Assert.Equal(nud.Maximum, nud.DefaultValue);
             Assert.Equal(nud.Maximum, nud.Value);
-
 
             // 4. Test: We set the Default Value lower than the Minimum. It should be corrected by the control
             nud.DefaultValue = -100;
