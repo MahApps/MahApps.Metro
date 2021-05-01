@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="input">The input string to parse</param>
         /// <param name="culture">The culture which should be used to parse</param>
-        /// <param name="stringFormat">The string format to applay</param>
+        /// <param name="stringFormat">The string format to apply</param>
         /// <returns>The object if successful, otherwise null</returns>
         object CreateObjectFromString(string input, CultureInfo culture, string stringFormat);
     }

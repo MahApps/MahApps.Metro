@@ -258,16 +258,7 @@ namespace MetroDemo
 
         public int SelectedIndex { get; set; }
 
-
         public ICollection<Album> Albums { get; set; }
-
-        private Album _MultiSelectionComboBoxSelectedAlbum;
-        [Display(Prompt = "Select an Album")]
-        public Album MultiSelectionComboBoxSelectedAlbum
-        {
-            get { return _MultiSelectionComboBoxSelectedAlbum; }
-            set { _MultiSelectionComboBoxSelectedAlbum = value; OnPropertyChanged(nameof(MultiSelectionComboBoxSelectedAlbum)); }
-        }
 
         public List<Artist>? Artists { get; set; }
 
@@ -563,7 +554,7 @@ namespace MetroDemo
 
         public bool IsToggleSwitchVisible { get; set; }
 
-        public ObservableCollection<string> Animals { get; } = new ObservableCollection<string>()
+        public ObservableCollection<string> Animals { get; } = new ObservableCollection<string>
         {
             "African elephant",
             "Ant",
@@ -708,8 +699,14 @@ namespace MetroDemo
             "Zebra"
         };
 
-        [Display(Prompt = "Select your favoite animal(s)")]
-        public string MyFavoriteAnimal { get; set; }
+        private object myFavoriteAnimal;
+
+        [Display(Prompt = "Select your favorite animal(s)")]
+        public object MyFavoriteAnimal
+        {
+            get => this.myFavoriteAnimal;
+            set => this.Set(ref this.myFavoriteAnimal, value);
+        }
 
         public ObjectParser MyObjectParser {get;} 
     }

@@ -19,17 +19,14 @@ namespace MahApps.Metro.Controls
         /// <param name="input">The string to compare</param>
         /// <param name="objectToCompare">The object to compare</param>
         /// <param name="stringComparison">The <see cref="StringComparison"/> used to check if the string matches</param>
-        /// <param name="stringFormat">The string format to applay</param>
-        /// <returns>true if the string represents the object, otherwise fase.</returns>
+        /// <param name="stringFormat">The string format to apply</param>
+        /// <returns>true if the string represents the object, otherwise false.</returns>
         public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat);
     }
-
 
     [MarkupExtensionReturnType(typeof(DefaultObjectToStringComparer))]
     public class DefaultObjectToStringComparer : MarkupExtension, ICompareObjectToString
     {
-        static DefaultObjectToStringComparer _Instance; 
-
         /// <inheritdoc/>
         public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat)
         {
@@ -48,7 +45,7 @@ namespace MahApps.Metro.Controls
             {
                 objectText = objectToCompare.ToString();
             }
-            else if (stringFormat.Contains('{') && stringFormat.Contains('{'))
+            else if (stringFormat.Contains('{') && stringFormat.Contains('}'))
             {
                 objectText = string.Format(stringFormat, objectToCompare);
             }
@@ -63,7 +60,7 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc/>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _Instance ??= new DefaultObjectToStringComparer();
+            return this;
         }
     }
 }

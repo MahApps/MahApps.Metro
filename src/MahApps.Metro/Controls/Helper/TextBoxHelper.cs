@@ -1115,6 +1115,8 @@ namespace MahApps.Metro.Controls
                             case SelectionMode.Extended:
                                 multiSelectionComboBox.SelectedItems.Clear();
                                 break;
+                            default:
+                                throw new NotSupportedException("Unknown SelectionMode");
                         }
                     }
                 }
