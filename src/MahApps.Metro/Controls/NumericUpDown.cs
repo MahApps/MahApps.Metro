@@ -378,32 +378,32 @@ namespace MahApps.Metro.Controls
         }
 
         [MustUseReturnValue]
-        private static object? CoerceValue(DependencyObject d, object? value)
+        private static object? CoerceValue(DependencyObject d, object? baseValue)
         {
-            if (value is null)
+            var numericUpDown = (NumericUpDown)d;
+            if (baseValue is null)
             {
-                return null;
+                return numericUpDown.DefaultValue;
             }
 
-            var numericUpDown = (NumericUpDown)d;
-            double val = ((double?)value).Value;
+            var value = ((double?)baseValue).Value;
 
             if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
             {
-                val = Math.Truncate(val);
+                value = Math.Truncate(value);
             }
 
-            if (val < numericUpDown.Minimum)
+            if (value < numericUpDown.Minimum)
             {
                 return numericUpDown.Minimum;
             }
 
-            if (val > numericUpDown.Maximum)
+            if (value > numericUpDown.Maximum)
             {
                 return numericUpDown.Maximum;
             }
 
-            return val;
+            return value;
         }
 
         /// <summary>
@@ -416,6 +416,56 @@ namespace MahApps.Metro.Controls
         {
             get => (double?)this.GetValue(ValueProperty);
             set => this.SetValue(ValueProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="DefaultValue"/> dependency property.</summary>
+        public static readonly DependencyProperty DefaultValueProperty
+            = DependencyProperty.Register(nameof(DefaultValue),
+                                          typeof(double?),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(null, OnDefaultValuePropertyChanged, CoerceDefaultValue));
+
+        private static void OnDefaultValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            if (!numericUpDown.Value.HasValue && numericUpDown.DefaultValue.HasValue)
+            {
+                numericUpDown.SetValueTo(numericUpDown.DefaultValue.Value);
+            }
+        }
+
+        [MustUseReturnValue]
+        private static object? CoerceDefaultValue(DependencyObject d, object? baseValue)
+        {
+            if (baseValue is double val)
+            {
+                var minimum = ((NumericUpDown)d).Minimum;
+                var maximum = ((NumericUpDown)d).Maximum;
+
+                if (val < minimum)
+                {
+                    return minimum;
+                }
+                else if (val > maximum)
+                {
+                    return maximum;
+                }
+            }
+
+            return baseValue;
+        }
+
+        /// <summary>
+        /// Gets or sets the default value of the NumericUpDown which will be used if the <see cref="Value"/> is <see langword="null"/>.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(null)]
+        public double? DefaultValue
+        {
+            get => (double?)this.GetValue(DefaultValueProperty);
+            set => this.SetValue(DefaultValueProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
@@ -431,6 +481,7 @@ namespace MahApps.Metro.Controls
 
             numericUpDown.CoerceValue(MaximumProperty);
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(DefaultValueProperty);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -459,6 +510,7 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(DefaultValueProperty);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -1432,6 +1484,10 @@ namespace MahApps.Metro.Controls
                     convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
+                else if (this.DefaultValue.HasValue)
+                {
+                    this.SetValueTo(this.DefaultValue.Value);
+                }
             }
 
             this.OnValueChanged(this.Value, this.Value);
@@ -1446,7 +1502,18 @@ namespace MahApps.Metro.Controls
 
             if (string.IsNullOrEmpty(((TextBox)sender).Text))
             {
-                this.Value = null;
+                if (this.DefaultValue.HasValue)
+                {
+                    this.SetValueTo(this.DefaultValue.Value);
+                    if (!this.manualChange)
+                    {
+                        this.InternalSetText(this.DefaultValue.Value);
+                    }
+                }
+                else
+                {
+                    this.SetCurrentValue(ValueProperty, null);
+                }
             }
             else if (this.manualChange || e.UndoAction == UndoAction.Undo || e.UndoAction == UndoAction.Redo)
             {
