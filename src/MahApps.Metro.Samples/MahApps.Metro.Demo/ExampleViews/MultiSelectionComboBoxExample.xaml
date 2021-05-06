@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MetroDemo.ExampleViews.MultiSelectionComboBoxExample"
+<UserControl x:Class="MetroDemo.ExampleViews.MultiSelectionComboBoxExample"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -153,6 +153,7 @@
                                       SelectedValue="{Binding ElementName=mscb_Example, Path=StringToObjectParser}"
                                       SelectedValuePath="Tag">
                                 <ComboBoxItem Content="None" Tag="{x:Null}" />
+                                <ComboBoxItem Content="BuildIn" Tag="{x:Static mah:BuildinStringToObjectParser.Instance}" />
                                 <ComboBoxItem Content="Example from the Demo with Dialog" Tag="{Binding MyObjectParser}" />
                             </ComboBox>
                         </mah:MetroHeader>
@@ -286,7 +287,7 @@
                                             ItemContainerStyle="{Binding ElementName=Cmb_ItemContainerStyle, Path=SelectedItem.Tag}"
                                             ItemsSource="{Binding Animals}"
                                             ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
-                                            SelectedItem="{Binding MyFavoriteAnimal}"
+                                            StringToObjectParser="{x:Static mah:BuildinStringToObjectParser.Instance}"
                                             SelectedItemContainerStyle="{Binding ElementName=Cmb_SelectedItemContainerStyle, Path=SelectedItem.Tag}"
                                             Separator=", "
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"

@@ -658,10 +658,11 @@ namespace MahApps.Metro.Controls
 
                     if (!foundItem)
                     {
-                        var result = TryAddObjectFromString(Text);
-                        if (!(result is null))
+                        // We try to add a new item. If we were able to do so we need to update the text as it may differ. 
+                        if (TryAddObjectFromString(Text, out object result))
                         {
                             SelectedItem = result;
+                            ResetEditableText();
                         }
                     }
 
@@ -669,6 +670,8 @@ namespace MahApps.Metro.Controls
 
                 case SelectionMode.Multiple:
                 case SelectionMode.Extended:
+
+                    bool shouldDoTextReset = true;
 
                     var strings = Text.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -688,11 +691,20 @@ namespace MahApps.Metro.Controls
 
                         if (!foundItem)
                         {
-                            var result = TryAddObjectFromString(strings[i]);
-                            if (!(result is null))
+                            if (TryAddObjectFromString(strings[i], out object result))
                             {
                                 SelectedItems.Add(result);
                             }
+                            else
+                            {
+                                shouldDoTextReset = false;
+                            }
+                        }
+
+                        // We do a text reset if all items were successfully found
+                        if (shouldDoTextReset)
+                        {
+                            ResetEditableText();
                         }
                     }
                     break;
@@ -718,25 +730,36 @@ namespace MahApps.Metro.Controls
             this.isUserdefinedTextInputPending = false;
         }
 
-        private object TryAddObjectFromString(string input)
+        private bool TryAddObjectFromString(string input, out object result)
         {
-            var item = this.StringToObjectParser?.CreateObjectFromString(input, this.Language.GetEquivalentCulture(), this.SelectedItemStringFormat);
-
-            if (item is null)
+            try
             {
-                return null;
-            }
+                if (StringToObjectParser is null)
+                {
+                    result = null;
+                    return false;
+                }
 
-            if (this.ReadLocalValue(ItemsSourceProperty) == DependencyProperty.UnsetValue)
-            {
-                this.Items.Add(item);
-            }
-            else if (this.ItemsSource is IList list)
-            {
-                list.Add(item);
-            }
+                var elementType = BuildinStringToObjectParser.Instance.GetElementType(ItemsSource);
 
-            return item;
+                var foundItem = this.StringToObjectParser.TryCreateObjectFromString(input, out result, this.Language.GetEquivalentCulture(), this.SelectedItemStringFormat, elementType);
+
+                if (foundItem && this.ReadLocalValue(ItemsSourceProperty) == DependencyProperty.UnsetValue)
+                {
+                    this.Items.Add(result);
+                }
+                else if (foundItem && this.ItemsSource is IList list && !list.IsReadOnly)
+                {
+                    list.Add(result);
+                }
+
+                return foundItem;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
         }
 
         #endregion

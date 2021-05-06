@@ -4,6 +4,7 @@
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Globalization;
 
 namespace MetroDemo.Models
@@ -19,11 +20,12 @@ namespace MetroDemo.Models
             this._dialogCoordinator = dialogCoordinator;
         }
         
-        public object CreateObjectFromString(string input, CultureInfo culture, string stringFormat)
+        public bool TryCreateObjectFromString(string input, out object result, CultureInfo culture = null, string stringFormat = null, Type elementType = null)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
-                return null;
+                result = null;
+                return false;
             }
 
             MetroDialogSettings dialogSettings = new MetroDialogSettings
@@ -35,11 +37,13 @@ namespace MetroDemo.Models
 
             if (this._dialogCoordinator.ShowModalMessageExternal(this._mainWindowViewModel, "Add Animal", $"Do you want to add \"{input}\" to the animals list?",  MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
             {
-                return input.Trim();
+                result = input.Trim();
+                return true;
             }
             else
             {
-                return null;
+                result = null;
+                return false;
             }
         }
     }
