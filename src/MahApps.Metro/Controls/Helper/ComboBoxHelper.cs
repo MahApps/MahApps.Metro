@@ -80,7 +80,6 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
-        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static bool GetInterceptMouseWheelSelection(DependencyObject obj)
         {
             return (bool)obj.GetValue(InterceptMouseWheelSelectionProperty);
@@ -91,7 +90,6 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
-        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static void SetInterceptMouseWheelSelection(ComboBox obj, bool value)
         {
             obj.SetValue(InterceptMouseWheelSelectionProperty, BooleanBoxes.Box(value));
@@ -117,7 +115,7 @@ namespace MahApps.Metro.Controls
             {
                 // This will be handled by MultiSelectionComboBox directly so we don't need to do anything here. 
             }
-            else if (sender is ComboBox comboBox )
+            else if (sender is ComboBox comboBox)
             {
                 // mark the event as handled to cancel selection. We should not handle it if the drop down is open. 
                 e.Handled = !comboBox.IsDropDownOpen;

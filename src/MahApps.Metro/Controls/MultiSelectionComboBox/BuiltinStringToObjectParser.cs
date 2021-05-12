@@ -14,10 +14,10 @@ namespace MahApps.Metro.Controls
     ///   It uses the <see cref="TypeConverter"/> for the elements <see cref="Type"/>. If you need more control
     ///   over the conversion you should create your own class which implements <see cref="IParseStringToObject"/>
     /// </summary>
-    public class BuildinStringToObjectParser : IParseStringToObject
+    public class BuiltInStringToObjectParser : IParseStringToObject
     {
-        private static BuildinStringToObjectParser instance;
-        public static BuildinStringToObjectParser Instance => instance ??= new BuildinStringToObjectParser();
+        private static BuiltInStringToObjectParser instance;
+        public static BuiltInStringToObjectParser Instance => instance ??= new BuiltInStringToObjectParser();
 
         public bool TryCreateObjectFromString(string input, out object result,  CultureInfo culture = null, string stringFormat = null, Type targetType = null)
         {

@@ -699,6 +699,13 @@ namespace MetroDemo
             "Zebra"
         };
 
+        public ObservableCollection<string> SelectedAnimals { get; } = new ObservableCollection<string>()
+        {
+            "Dog",
+            "Cat",
+            "Zebra"
+        };
+
         private object myFavoriteAnimal;
 
         [Display(Prompt = "Select your favorite animal(s)")]

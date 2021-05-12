@@ -658,6 +658,7 @@
                                     <Grid>
                                         <ListBox x:Name="PART_PopupListBox"
                                                  AlternationCount="{TemplateBinding AlternationCount}"
+                                                 Focusable="False"
                                                  ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                                  ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
                                                  ItemStringFormat="{TemplateBinding ItemStringFormat}"

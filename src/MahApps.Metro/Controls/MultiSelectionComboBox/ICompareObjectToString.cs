@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
         {
             if (input is null)
             {
-                throw new ArgumentNullException(nameof(input));
+                return objectToCompare is null;
             }
 
             if (objectToCompare is null)

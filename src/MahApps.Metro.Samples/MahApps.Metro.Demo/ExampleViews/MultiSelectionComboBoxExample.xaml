@@ -145,7 +145,7 @@
                         <mah:MetroHeader Header="ObjectToStringComparer">
                             <ComboBox SelectedValue="{Binding ElementName=mscb_Example, Path=ObjectToStringComparer}" SelectedValuePath="Tag">
                                 <ComboBoxItem Content="None" Tag="{x:Null}" />
-                                <ComboBoxItem Content="Build-In" Tag="{mah:DefaultObjectToStringComparer}" />
+                                <ComboBoxItem Content="Built-In" Tag="{mah:DefaultObjectToStringComparer}" />
                             </ComboBox>
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="StringToObjectParser">
@@ -153,7 +153,7 @@
                                       SelectedValue="{Binding ElementName=mscb_Example, Path=StringToObjectParser}"
                                       SelectedValuePath="Tag">
                                 <ComboBoxItem Content="None" Tag="{x:Null}" />
-                                <ComboBoxItem Content="BuildIn" Tag="{x:Static mah:BuildinStringToObjectParser.Instance}" />
+                                <ComboBoxItem Content="Built-In" Tag="{x:Static mah:BuiltInStringToObjectParser.Instance}" />
                                 <ComboBoxItem Content="Example from the Demo with Dialog" Tag="{Binding MyObjectParser}" />
                             </ComboBox>
                         </mah:MetroHeader>
@@ -228,10 +228,13 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="MahApps ComboBox-Helper">
+                <GroupBox Header="Advanced Selection">
                     <StackPanel>
                         <mah:MetroHeader Header="InterceptMouseWheelSelection">
-                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:ComboBoxHelper.InterceptMouseWheelSelection)}" />
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=InterceptMouseWheelSelection}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="InterceptKeyboardSelection">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=InterceptKeyboardSelection}" />
                         </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
@@ -280,18 +283,22 @@
                 <mah:MultiSelectionComboBox x:Name="mscb_Example"
                                             Margin="5"
                                             VerticalAlignment="Center"
-                                            mah:ComboBoxHelper.InterceptMouseWheelSelection="False"
+                                            InterceptMouseWheelSelection="False"
                                             mah:TextBoxHelper.AutoWatermark="True"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
                                             EditableTextStringComparision="CurrentCultureIgnoreCase"
                                             ItemContainerStyle="{Binding ElementName=Cmb_ItemContainerStyle, Path=SelectedItem.Tag}"
                                             ItemsSource="{Binding Animals}"
                                             ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
-                                            StringToObjectParser="{x:Static mah:BuildinStringToObjectParser.Instance}"
+                                            StringToObjectParser="{x:Static mah:BuiltInStringToObjectParser.Instance}"
                                             SelectedItemContainerStyle="{Binding ElementName=Cmb_SelectedItemContainerStyle, Path=SelectedItem.Tag}"
                                             Separator=", "
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
-                                            TextWrapping="Wrap" />
+                                            TextWrapping="Wrap" 
+                                            AddingItem="Mscb_Example_AddingItem"
+                                            AddedItem="Mscb_Example_AddedItem"
+                                            mah:MultiSelectorHelper.SelectedItems="{Binding SelectedAnimals}" 
+                                            SelectionChanged="mscb_Example_SelectionChanged"/>
             </Grid>
         </GroupBox>
     </Grid>
