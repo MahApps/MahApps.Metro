@@ -26,10 +26,6 @@ namespace MetroDemo
             this.DataContext = this._viewModel;
 
             this.InitializeComponent();
-
-            this.flyoutDemo = new FlyoutDemo();
-            this.flyoutDemo.ApplyTemplate();
-            this.flyoutDemo.Closed += (o, e) => this.flyoutDemo = null;
         }
 
         public static readonly DependencyProperty ToggleFullScreenProperty =
@@ -105,7 +101,7 @@ namespace MetroDemo
 
         private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
         {
-            if (this.flyoutDemo == null)
+            if (this.flyoutDemo is null)
             {
                 this.flyoutDemo = new FlyoutDemo();
                 this.flyoutDemo.Closed += (o, args) => this.flyoutDemo = null;
