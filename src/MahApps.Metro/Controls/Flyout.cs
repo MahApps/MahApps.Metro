@@ -612,6 +612,11 @@ namespace MahApps.Metro.Controls
 
         private void UpdateFlyoutTheme()
         {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+
             var flyoutsControl = this.Owner ?? this.TryFindParent<FlyoutsControl>();
 
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
