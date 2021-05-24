@@ -277,17 +277,17 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void BaseMetroDialogLoaded(object? sender, RoutedEventArgs e)
         {
-            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
-            ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged -= this.HandleThemeManagerThemeChanged;
+            ThemeManager.Current.ThemeChanged += this.HandleThemeManagerThemeChanged;
             this.OnLoaded();
         }
 
         private void BaseMetroDialogUnloaded(object? sender, RoutedEventArgs e)
         {
-            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged -= this.HandleThemeManagerThemeChanged;
         }
 
-        private void ThemeManagerIsThemeChanged(object? sender, ThemeChangedEventArgs e)
+        private void HandleThemeManagerThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
             this.Invoke(this.HandleThemeChange);
         }
