@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
         /// <param name="source">The source object</param>
         /// <param name="input">The input string to parse</param>
         /// <param name="parsedObject">The parsed object</param>
-        /// <param name="accepted"><see langword="true"/> if the <see cref="ParsedObject"/> is accepted otherwise <see langword="false"/>/param>
+        /// <param name="accepted"><see langword="true"/> if the <see cref="ParsedObject"/> is accepted otherwise <see langword="false"/></param>
         /// <param name="targetList">The target <see cref="IList"/> where the <see cref="ParsedObject"/> should be added</param>
         /// <param name="targetType">the target <see cref="Type"/> to which the <see cref="Input"/> should be converted to</param>
         /// <param name="stringFormat">the string format which can be used to control the <see cref="Parser"/></param>
