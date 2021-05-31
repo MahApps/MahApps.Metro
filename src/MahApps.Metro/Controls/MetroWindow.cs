@@ -1263,8 +1263,8 @@ namespace MahApps.Metro.Controls
 
             this.ResetAllWindowCommandsBrush();
 
-            ThemeManager.Current.ThemeChanged += this.ThemeManagerOnIsThemeChanged;
-            this.Unloaded += (_, _) => ThemeManager.Current.ThemeChanged -= this.ThemeManagerOnIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += this.HandleThemeManagerThemeChanged;
+            this.Unloaded += (_, _) => ThemeManager.Current.ThemeChanged -= this.HandleThemeManagerThemeChanged;
         }
 
         private void InitializeWindowChromeBehavior()
@@ -1367,7 +1367,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ThemeManagerOnIsThemeChanged(object? sender, ThemeChangedEventArgs e)
+        private void HandleThemeManagerThemeChanged(object? sender, ThemeChangedEventArgs e)
         {
             this.Invoke(() =>
                 {
@@ -1387,9 +1387,18 @@ namespace MahApps.Metro.Controls
                         return;
                     }
 
+                    var newTheme = ReferenceEquals(e.Target, this)
+                        ? e.NewTheme
+                        : ThemeManager.Current.DetectTheme(this);
+
+                    if (newTheme is null)
+                    {
+                        return;
+                    }
+
                     foreach (var flyout in flyouts)
                     {
-                        flyout.ChangeFlyoutTheme(e.NewTheme);
+                        flyout.ChangeFlyoutTheme(newTheme);
                     }
 
                     this.HandleWindowCommandsForFlyouts(flyouts);

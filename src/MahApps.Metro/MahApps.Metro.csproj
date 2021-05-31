@@ -16,8 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ControlzEx" version="4.*" />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" PrivateAssets="All" IncludeAssets="build" />
+        <PackageReference Include="ControlzEx" Version="4.*" />
+        <PackageReference Include="XamlColorSchemeGenerator" Version="4-*" PrivateAssets="All" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

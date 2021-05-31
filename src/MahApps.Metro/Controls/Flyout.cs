@@ -612,6 +612,11 @@ namespace MahApps.Metro.Controls
 
         private void UpdateFlyoutTheme()
         {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+
             var flyoutsControl = this.Owner ?? this.TryFindParent<FlyoutsControl>();
 
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
@@ -669,6 +674,11 @@ namespace MahApps.Metro.Controls
 
         internal void ChangeFlyoutTheme(ControlzEx.Theming.Theme windowTheme)
         {
+            if (windowTheme == ThemeManager.Current.DetectTheme(this.Resources))
+            {
+                return;
+            }
+
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
