@@ -450,7 +450,6 @@
                     <mah:FontIcon x:Name="CheckGlyph"
                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
                                   FontSize="20"
-                                  Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
                                   Glyph="&#xE001;"
                                   UseLayoutRounding="False" />
                 </DataTemplate>
@@ -474,7 +473,6 @@
                     <mah:FontIcon x:Name="CheckGlyph"
                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
                                   FontSize="20"
-                                  Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
                                   Glyph="&#xE73C;"
                                   UseLayoutRounding="False" />
                 </DataTemplate>
