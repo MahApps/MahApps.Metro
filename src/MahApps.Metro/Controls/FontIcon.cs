@@ -3,12 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
     /// <summary>
     /// Represents an icon that uses a glyph from the specified font.
     /// </summary>
+    [TemplatePart(Name = nameof(PART_Glyph), Type = typeof(TextBlock))]
     public class FontIcon : IconElement
     {
         /// <summary>Identifies the <see cref="Glyph"/> dependency property.</summary>
@@ -31,6 +34,47 @@ namespace MahApps.Metro.Controls
         static FontIcon()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FontIcon), new FrameworkPropertyMetadata(typeof(FontIcon)));
+        }
+
+        private TextBlock? PART_Glyph { get; set; }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.PART_Glyph = this.GetTemplateChild(nameof(this.PART_Glyph)) as TextBlock;
+
+            if (this.PART_Glyph is not null && this.InheritsForegroundFromVisualParent)
+            {
+                this.PART_Glyph.Foreground = this.VisualParentForeground;
+            }
+        }
+
+        protected override void OnInheritsForegroundFromVisualParentPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnInheritsForegroundFromVisualParentPropertyChanged(e);
+
+            if (this.PART_Glyph is not null)
+            {
+                if (this.InheritsForegroundFromVisualParent)
+                {
+                    this.PART_Glyph.Foreground = this.VisualParentForeground;
+                }
+                else
+                {
+                    this.PART_Glyph.ClearValue(TextBlock.ForegroundProperty);
+                }
+            }
+        }
+
+        protected override void OnVisualParentForegroundPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnVisualParentForegroundPropertyChanged(e);
+
+            if (this.PART_Glyph is not null && this.InheritsForegroundFromVisualParent)
+            {
+                this.PART_Glyph.Foreground = e.NewValue as Brush;
+            }
         }
     }
 }
