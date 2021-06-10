@@ -2,7 +2,6 @@
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
             xmlns:local="clr-namespace:MetroDemo"
             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,7 +12,7 @@
             d:DesignHeight="300"
             d:DesignWidth="400"
             CloseCommand="{Binding CloseCmd}"
-            Header="{Binding}"
+            Header="{Binding Title, Mode=OneWay}"
             Position="Right"
             Theme="Dark"
             mc:Ignorable="d">
@@ -29,69 +28,6 @@
             </ObjectDataProvider>
         </ResourceDictionary>
     </mah:Flyout.Resources>
-
-    <mah:Flyout.HeaderTemplate>
-        <DataTemplate DataType="{x:Type local:MainWindowViewModel}">
-            <DockPanel x:Name="dpHeader"
-                       VerticalAlignment="Center"
-                       LastChildFill="True">
-                <Button x:Name="PART_BackButton"
-                        Width="34"
-                        Height="34"
-                        Margin="2 4 2 2"
-                        VerticalAlignment="Bottom"
-                        DockPanel.Dock="Left"
-                        FontFamily="Segoe UI Symbol"
-                        FontSize="16"
-                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=Foreground}"
-                        IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonIsCancel}"
-                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
-                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonVisibility}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <mah:CloseFlyoutAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=CloseCommand, Mode=OneWay}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <ContentControl Width="20"
-                                    Height="20"
-                                    Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
-                                    FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=FlowDirection}"
-                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
-                </Button>
-                <TextBlock x:Name="PART_BackHeaderText"
-                           Margin="15 0 0 0"
-                           VerticalAlignment="Center"
-                           Text="{Binding Title, Mode=OneWay}"
-                           Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=TitleVisibility}" />
-            </DockPanel>
-            <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Left">
-                    <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
-                    <Setter TargetName="PART_BackButton" Property="LayoutTransform">
-                        <Setter.Value>
-                            <ScaleTransform ScaleX="-1" />
-                        </Setter.Value>
-                    </Setter>
-                    <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
-                    <Setter TargetName="PART_BackHeaderText" Property="TextAlignment" Value="Right" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Top">
-                    <Setter TargetName="PART_BackButton" Property="LayoutTransform">
-                        <Setter.Value>
-                            <RotateTransform Angle="-90" />
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Bottom">
-                    <Setter TargetName="PART_BackButton" Property="LayoutTransform">
-                        <Setter.Value>
-                            <RotateTransform Angle="90" />
-                        </Setter.Value>
-                    </Setter>
-                </DataTrigger>
-            </DataTemplate.Triggers>
-        </DataTemplate>
-    </mah:Flyout.HeaderTemplate>
 
     <ScrollViewer>
         <StackPanel Margin="2" Orientation="Vertical">

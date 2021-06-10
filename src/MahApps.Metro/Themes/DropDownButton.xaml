@@ -63,17 +63,16 @@
                                            Focusable="False"
                                            LastChildFill="True">
                                     <!--  Material - ChevronDown  -->
-                                    <ContentControl x:Name="PART_Arrow"
-                                                    Width="9"
-                                                    Height="9"
-                                                    Margin="0 0 3 0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                                    DockPanel.Dock="Right"
-                                                    Foreground="{TemplateBinding ArrowBrush}"
-                                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}"
-                                                    Visibility="{TemplateBinding ArrowVisibility}" />
+                                    <mah:PathIcon x:Name="PART_Arrow"
+                                                  Width="9"
+                                                  Height="9"
+                                                  Margin="0 0 3 0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+                                                  DockPanel.Dock="Right"
+                                                  Foreground="{TemplateBinding ArrowBrush}"
+                                                  Visibility="{TemplateBinding ArrowVisibility}" />
                                     <StackPanel x:Name="PART_ContentOrientation"
                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

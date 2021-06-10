@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using MahApps.Metro.ValueBoxes;
 
+// ReSharper disable once CheckNamespace
 namespace MahApps.Metro.Controls
 {
     /// <summary>

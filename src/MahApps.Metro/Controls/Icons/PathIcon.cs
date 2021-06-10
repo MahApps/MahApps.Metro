@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+// ReSharper disable once CheckNamespace
 namespace MahApps.Metro.Controls
 {
     /// <summary>
