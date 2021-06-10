@@ -69,10 +69,11 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Style="{TemplateBinding ButtonArrowStyle}">
                             <!--  Material - ChevronDown  -->
-                            <ContentControl Width="9"
-                                            Height="9"
-                                            Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                            Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
+                            <mah:PathIcon Width="9"
+                                          Height="9"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
                         </Button>
                     </Grid>
                 </mah:ClipBorder>
@@ -194,10 +195,11 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Style="{TemplateBinding ButtonArrowStyle}">
                             <!--  Material - ChevronDown  -->
-                            <ContentControl Width="9"
-                                            Height="9"
-                                            Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                            Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
+                            <mah:PathIcon Width="9"
+                                          Height="9"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
                         </Button>
                     </Grid>
                 </mah:ClipBorder>

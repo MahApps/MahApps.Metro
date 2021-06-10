@@ -495,18 +495,15 @@
     <Style x:Key="MahApps.Styles.TextBox.Search"
            BasedOn="{StaticResource MahApps.Styles.TextBox.Button}"
            TargetType="{x:Type TextBox}">
+        <!--  Modern - Magnify  -->
+        <Setter Property="mah:TextBoxHelper.ButtonContent" Value="M 42.5,22C 49.4036,22 55,27.5964 55,34.5C 55,41.4036 49.4036,47 42.5,47C 40.1356,47 37.9245,46.3435 36,45.2426L 26.9749,54.2678C 25.8033,55.4393 23.9038,55.4393 22.7322,54.2678C 21.5607,53.0962 21.5607,51.1967 22.7322,50.0251L 31.7971,40.961C 30.6565,39.0755 30,36.8644 30,34.5C 30,27.5964 35.5964,22 42.5,22 Z M 42.5,26C 37.8056,26 34,29.8056 34,34.5C 34,39.1944 37.8056,43 42.5,43C 47.1944,43 51,39.1944 51,34.5C 51,29.8056 47.1944,26 42.5,26 Z" />
         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <!--  Modern - Magnify  -->
-                    <ContentControl x:Name="PART_PackIcon"
-                                    Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                    Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                    Padding="3"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Content="M42.5,22A12.5,12.5 0 0,1 55,34.5A12.5,12.5 0 0,1 42.5,47C40.14,47 37.92,46.34 36,45.24L26.97,54.27C25.8,55.44 23.9,55.44 22.73,54.27C21.56,53.1 21.56,51.2 22.73,50.03L31.8,40.96C30.66,39.08 30,36.86 30,34.5A12.5,12.5 0 0,1 42.5,22M42.5,26A8.5,8.5 0 0,0 34,34.5A8.5,8.5 0 0,0 42.5,43A8.5,8.5 0 0,0 51,34.5A8.5,8.5 0 0,0 42.5,26Z"
-                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
+                    <mah:PathIcon Data="{Binding Mode=OneWay}"
+                                  Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                  Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                  Padding="3" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>

@@ -517,17 +517,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Grid Background="{TemplateBinding Background}">
-                        <ContentControl x:Name="PART_Arrow"
-                                        Width="12"
-                                        Height="12"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Content="{TemplateBinding Content}"
-                                        FlowDirection="{TemplateBinding FlowDirection}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
+                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:PathIcon x:Name="PART_Arrow"
+                                      Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+                                      Width="12"
+                                      Height="12"
+                                      FlowDirection="{TemplateBinding FlowDirection}"
+                                      Foreground="{TemplateBinding Foreground}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
