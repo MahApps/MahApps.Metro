@@ -59,6 +59,47 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Returns full visual ancestry, starting at the leaf.
+        /// <para>If element is not of <see cref="Visual"/> or <see cref="Visual3D"/> the logical ancestry is used.</para>
+        /// </summary>
+        /// <param name="leaf">The starting object.</param>
+        /// <returns></returns>
+        public static IEnumerable<DependencyObject> GetVisualAncestry(this DependencyObject? leaf)
+        {
+            while (leaf != null)
+            {
+                yield return leaf;
+                leaf = leaf is Visual || leaf is Visual3D
+                    ? VisualTreeHelper.GetParent(leaf)
+                    : LogicalTreeHelper.GetParent(leaf);
+            }
+        }
+
+        /// <summary>
+        /// Tries to find and returns a visual ancestor, starting at the leaf.
+        /// <para>If element is not of <see cref="Visual"/> or <see cref="Visual3D"/> the logical ancestry is used.</para>
+        /// </summary>
+        /// <param name="leaf">The starting object.</param>
+        /// <returns></returns>
+        public static T GetVisualAncestor<T>(this DependencyObject? leaf)
+            where T : DependencyObject
+        {
+            while (leaf != null)
+            {
+                if (leaf is T ancestor)
+                {
+                    return ancestor;
+                }
+
+                leaf = leaf is Visual || leaf is Visual3D
+                    ? VisualTreeHelper.GetParent(leaf)
+                    : LogicalTreeHelper.GetParent(leaf);
+            }
+
+            return default(T);
+        }
+
+        /// <summary>
         /// Finds a Child of a given item in the visual tree. 
         /// </summary>
         /// <param name="parent">A direct parent of the queried item.</param>

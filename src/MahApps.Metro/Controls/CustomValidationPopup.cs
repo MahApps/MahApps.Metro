@@ -144,7 +144,7 @@ namespace MahApps.Metro.Controls
                 this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
             }
 
-            this.scrollViewer = adornedElement.TryFindParent<ScrollViewer>();
+            this.scrollViewer = adornedElement.GetVisualAncestor<ScrollViewer>();
             if (this.scrollViewer != null)
             {
                 this.scrollViewer.ScrollChanged += this.ScrollViewer_ScrollChanged;
