@@ -260,10 +260,10 @@ namespace MahApps.Metro.Controls
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            this.RefreshPosition();
-
             if (e.VerticalChange > 0 || e.VerticalChange < 0 || e.HorizontalChange > 0 || e.HorizontalChange < 0)
             {
+                this.RefreshPosition();
+
                 if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
                 {
                     var adornedElement = this.AdornedElement;
