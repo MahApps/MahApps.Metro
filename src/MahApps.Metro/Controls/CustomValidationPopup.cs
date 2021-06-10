@@ -144,7 +144,7 @@ namespace MahApps.Metro.Controls
                 this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
             }
 
-            this.scrollViewer = adornedElement.TryFindParent<ScrollViewer>();
+            this.scrollViewer = adornedElement.GetVisualAncestor<ScrollViewer>();
             if (this.scrollViewer != null)
             {
                 this.scrollViewer.ScrollChanged += this.ScrollViewer_ScrollChanged;
@@ -260,10 +260,10 @@ namespace MahApps.Metro.Controls
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            this.RefreshPosition();
-
             if (e.VerticalChange > 0 || e.VerticalChange < 0 || e.HorizontalChange > 0 || e.HorizontalChange < 0)
             {
+                this.RefreshPosition();
+
                 if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
                 {
                     var adornedElement = this.AdornedElement;
