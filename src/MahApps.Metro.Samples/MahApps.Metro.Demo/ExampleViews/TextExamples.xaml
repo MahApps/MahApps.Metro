@@ -161,7 +161,7 @@
                              Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.Watermark="Number smaller than 10"
-                             Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                             Text="{Binding IntegerGreater10Property, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
                              Text="Select all on focus" />
