@@ -242,7 +242,6 @@
                               Margin="{TemplateBinding Padding}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Opacity="0.75"
                               RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
@@ -251,7 +250,7 @@
                 <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="False">
-                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value=".5" />
+                <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.5" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="#ADADAD" />
@@ -261,7 +260,7 @@
 
     <Style x:Key="MahApps.Styles.Button.Chromeless" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Chromeless}" />

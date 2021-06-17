@@ -39,7 +39,6 @@
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Opacity="0.75"
                                           RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
@@ -50,7 +49,7 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="False">
                             <Setter TargetName="PART_Background" Property="Opacity" Value="0" />
-                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.75" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="#ADADAD" />
