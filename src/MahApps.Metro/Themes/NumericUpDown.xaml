@@ -11,15 +11,13 @@
     <Thickness x:Key="NumericUpDownSelectedBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="NumericUpDownSpinButtonBorderThickness">0,0,0,0</Thickness>
 
-    <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin"
-           TargetType="{x:Type ButtonBase}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-        <Setter Property="IsTabStop" Value="False" />
+    <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonBorderThickness}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -56,6 +54,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
@@ -303,5 +302,74 @@
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.NumericUpDown.Fluent"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDown}"
+           TargetType="{x:Type mah:NumericUpDown}">
+        <Style.Resources>
+            <Thickness x:Key="NumericUpDownSelectedBorderThickness">2,2,2,2</Thickness>
+            <Thickness x:Key="NumericUpDownSpinButtonBorderThickness">1,0,0,0</Thickness>
+        </Style.Resources>
+        <Setter Property="ButtonDownContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:PathIcon Width="14"
+                                  Height="14"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M 18.935547 4.560547 L 19.814453 5.439453 L 10 15.253906 L 0.185547 5.439453 L 1.064453 4.560547 L 10 13.496094 Z" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonUpContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:PathIcon Width="14"
+                                  Height="14"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M 19.091797 14.970703 L 10 5.888672 L 0.908203 14.970703 L 0.029297 14.091797 L 10 4.111328 L 19.970703 14.091797 Z" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="10 5 5 5" />
+        <Setter Property="SpinButtonStyle">
+            <Setter.Value>
+                <Style BasedOn="{StaticResource MahApps.Styles.Button.NumericUpDown.Spin}" TargetType="{x:Type ButtonBase}">
+                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="UpDownButtonsFocusable" Value="False" />
+        <Setter Property="UpDownButtonsWidth" Value="34" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="2" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
+        <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:PathIcon Width="12"
+                                  Height="12"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="F1 M 11.416016 10 L 20 18.583984 L 18.583984 20 L 10 11.416016 L 1.416016 20 L 0 18.583984 L 8.583984 10 L 0 1.416016 L 1.416016 0 L 10 8.583984 L 18.583984 0 L 20 1.416016 Z" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="34" />
     </Style>
 </ResourceDictionary>
