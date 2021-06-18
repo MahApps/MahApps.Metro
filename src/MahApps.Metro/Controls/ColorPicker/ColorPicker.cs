@@ -686,6 +686,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(IsAdvancedTabVisibleProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="CloseOnSelectedColorChanged"/> dependency property.</summary>
+        public static readonly DependencyProperty CloseOnSelectedColorChangedProperty =
+            DependencyProperty.Register(nameof(CloseOnSelectedColorChanged),
+                                        typeof(bool),
+                                        typeof(ColorPicker),
+                                        new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets the visibility of the standard <see cref="ColorPalette"/>.
+        /// </summary>
+        public bool CloseOnSelectedColorChanged
+        {
+            get => (bool)this.GetValue(CloseOnSelectedColorChangedProperty);
+            set => this.SetValue(CloseOnSelectedColorChangedProperty, BooleanBoxes.Box(value));
+        }
+
         public override void OnApplyTemplate()
         {
             if (this.PART_ColorPaletteStandard != null)
@@ -776,6 +792,11 @@ namespace MahApps.Metro.Controls
             if (sender is ColorPalette colorPalette && !this.ColorIsUpdating)
             {
                 this.SetCurrentValue(SelectedColorProperty, colorPalette.SelectedItem as Color?);
+
+                if (CloseOnSelectedColorChanged)
+                {
+                    Close();
+                }
             }
         }
 
