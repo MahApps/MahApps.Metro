@@ -694,7 +694,7 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
-        /// Gets or sets the visibility of the standard <see cref="ColorPalette"/>.
+        /// Gets or sets whether the DropDown should close after a color was selected from a <see cref="ColorPalette"/>. The default is <see langword="false" />
         /// </summary>
         public bool CloseOnSelectedColorChanged
         {
