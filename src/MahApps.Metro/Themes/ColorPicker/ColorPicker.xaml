@@ -328,6 +328,7 @@
                                                                       Style="{TemplateBinding StandardColorPaletteStyle}"
                                                                       IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
+                                                                      ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
                                                                       Visibility="{TemplateBinding IsStandardColorPaletteVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteAvailable"
@@ -337,6 +338,7 @@
                                                                       Style="{TemplateBinding AvailableColorPaletteStyle}"
                                                                       IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
+                                                                      ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
                                                                       Visibility="{TemplateBinding IsAvailableColorPaletteVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteCustom01"
@@ -346,6 +348,7 @@
                                                                       Style="{TemplateBinding CustomColorPalette01Style}"
                                                                       IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
+                                                                      ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
                                                                       Visibility="{TemplateBinding IsCustomColorPalette01Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteCustom02"
@@ -355,6 +358,7 @@
                                                                       Style="{TemplateBinding CustomColorPalette02Style}"
                                                                       IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
+                                                                      ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
                                                                       Visibility="{TemplateBinding IsCustomColorPalette02Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteRecent"
@@ -364,6 +368,7 @@
                                                                       Style="{TemplateBinding RecentColorPaletteStyle}"
                                                                       IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
+                                                                      ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
                                                                       Visibility="{TemplateBinding IsRecentColorPaletteVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                                 </VirtualizingStackPanel>
                                             </ScrollViewer>
