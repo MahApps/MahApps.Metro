@@ -25,6 +25,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_NumericUp, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_NumericDown, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
+    [StyleTypedProperty(Property = nameof(SpinButtonStyle), StyleTargetType = typeof(ButtonBase))]
     public class NumericUpDown : Control
     {
         private const string PART_NumericDown = "PART_NumericDown";
@@ -584,6 +585,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(TrackMouseWheelWhenMouseOverProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="SpinButtonStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty SpinButtonStyleProperty
+            = DependencyProperty.Register(nameof(SpinButtonStyle),
+                                          typeof(Style),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> for the spin buttons.
+        /// </summary>
+        public Style? SpinButtonStyle
+        {
+            get => (Style?)this.GetValue(SpinButtonStyleProperty);
+            set => this.SetValue(SpinButtonStyleProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="ButtonsAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty ButtonsAlignmentProperty
             = DependencyProperty.Register(nameof(ButtonsAlignment),
@@ -690,6 +707,114 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(SwitchUpDownButtonsProperty);
             set => this.SetValue(SwitchUpDownButtonsProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentProperty
+            = DependencyProperty.Register(nameof(ButtonUpContent),
+                                          typeof(object),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Up Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object? ButtonUpContent
+        {
+            get => (object?)this.GetValue(ButtonUpContentProperty);
+            set => this.SetValue(ButtonUpContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonUpContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(NumericUpDown));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Up button's content.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public DataTemplate? ButtonUpContentTemplate
+        {
+            get => (DataTemplate?)this.GetValue(ButtonUpContentTemplateProperty);
+            set => this.SetValue(ButtonUpContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonUpContentStringFormat),
+                                          typeof(string),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonUpContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ButtonUpContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string? ButtonUpContentStringFormat
+        {
+            get => (string?)this.GetValue(ButtonUpContentStringFormatProperty);
+            set => this.SetValue(ButtonUpContentStringFormatProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentProperty
+            = DependencyProperty.Register(nameof(ButtonDownContent),
+                                          typeof(object),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Down Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object? ButtonDownContent
+        {
+            get => (object?)this.GetValue(ButtonDownContentProperty);
+            set => this.SetValue(ButtonDownContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonDownContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(NumericUpDown));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Down button's content.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public DataTemplate? ButtonDownContentTemplate
+        {
+            get => (DataTemplate?)this.GetValue(ButtonDownContentTemplateProperty);
+            set => this.SetValue(ButtonDownContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonDownContentStringFormat),
+                                          typeof(string),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonDownContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ButtonDownContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string? ButtonDownContentStringFormat
+        {
+            get => (string?)this.GetValue(ButtonDownContentStringFormatProperty);
+            set => this.SetValue(ButtonDownContentStringFormatProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ChangeValueOnTextChanged"/> dependency property.</summary>
