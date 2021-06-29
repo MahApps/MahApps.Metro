@@ -75,7 +75,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.GroupBox}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />

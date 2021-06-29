@@ -283,7 +283,7 @@
         <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.WindowCommands}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.WindowCommands"

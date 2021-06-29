@@ -464,7 +464,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Expander}" />
         <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse}" />
         <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Expand}" />
         <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}" />

@@ -54,7 +54,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.GroupBox.VisualStudio}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.GroupBox.HeaderThemeFont}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />

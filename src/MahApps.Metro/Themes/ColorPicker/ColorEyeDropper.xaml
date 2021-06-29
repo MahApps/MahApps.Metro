@@ -124,7 +124,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.ColorEyeDropper}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
         <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="2" />

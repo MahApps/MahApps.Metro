@@ -16,7 +16,7 @@
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button.Dialogs}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.Accent"
@@ -25,7 +25,7 @@
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button.Dialogs.Accent}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.AccentHighlight"
@@ -34,7 +34,7 @@
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button.Dialogs.AccentHighlight}" />
     </Style>
 
     <Storyboard x:Key="MahApps.Storyboard.Dialogs.Show" po:Freeze="True">
