@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 using System.Windows.Media;
 
@@ -24,28 +25,77 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly ColorHelper DefaultInstance = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static ColorHelper()
+        /// <summary>
+        /// Gets a static default instance of <see cref="ColorHelper"/> with the original WPF color names.
+        /// </summary>
+        public static readonly ColorHelper DefaultInstanceInvariant = new(CultureInfo.InvariantCulture);
+
+        /// <summary>
+        /// Creates a new Instance of the ColorHelper with the default translations.
+        /// </summary>
+        public ColorHelper()
+            : this(CultureInfo.CurrentUICulture, typeof(ColorNames))
         {
-            ColorNamesDictionary = new Dictionary<Color, string>();
+            // Empty
+        }
 
-            var rm = new ResourceManager(typeof(ColorNames));
-            var resourceSet = rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+        /// <summary>
+        /// Creates a new Instance of the ColorHelper
+        /// </summary>
+        /// <param name="culture">The <see cref="CultureInfo"/> used to get the local color names</param>
+        public ColorHelper(CultureInfo? culture)
+            : this(culture, typeof(ColorNames))
+        {
+            // Empty
+        }
 
-            if (resourceSet != null)
+        /// <summary>
+        /// Creates a new Instance of the ColorHelper
+        /// </summary>
+        /// <param name="culture">The <see cref="CultureInfo"/> used to get the local color names</param>
+        /// <param name="resourceDictionaryType">A type from which the <see cref="ResourceManager"/> derives all information for finding .resources files.</param>
+        public ColorHelper(CultureInfo? culture, Type? resourceDictionaryType)
+        {
+            this.ColorNamesDictionary = new Dictionary<Color, string>();
+
+            if (culture is null || resourceDictionaryType is null)
             {
-                foreach (var entry in resourceSet.OfType<DictionaryEntry>())
+                foreach (var propertyInfo in typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public))
                 {
                     try
                     {
-                        if (ColorConverter.ConvertFromString(entry.Key.ToString()) is Color color)
+                        var color = (Color)(propertyInfo.GetValue(null) ?? default(Color));
+                        if (!this.ColorNamesDictionary.ContainsKey(color))
                         {
-                            ColorNamesDictionary.Add(color, entry.Value!.ToString()!);
+                            this.ColorNamesDictionary.Add(color, propertyInfo.Name);
                         }
                     }
                     catch (Exception)
                     {
-                        Trace.TraceError($"{entry.Key} is not a valid color key!");
+                        Trace.TraceError($"Color from {propertyInfo.Name} could not be added to dictionary!");
+                    }
+                }
+            }
+            else
+            {
+                var rm = new ResourceManager(resourceDictionaryType);
+                var resourceSet = rm.GetResourceSet(culture, true, true);
+
+                if (resourceSet is not null)
+                {
+                    foreach (var entry in resourceSet.OfType<DictionaryEntry>())
+                    {
+                        try
+                        {
+                            if (ColorConverter.ConvertFromString(entry.Key.ToString()) is Color color)
+                            {
+                                this.ColorNamesDictionary.Add(color, entry.Value!.ToString()!);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            Trace.TraceError($"{entry.Key} is not a valid color key!");
+                        }
                     }
                 }
             }
@@ -72,7 +122,7 @@ namespace MahApps.Metro.Controls
                     return null;
                 }
 
-                colorNamesDictionary ??= ColorNamesDictionary;
+                colorNamesDictionary ??= this.ColorNamesDictionary;
 
                 if (!colorName!.StartsWith("#"))
                 {
@@ -112,7 +162,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// A Dictionary with localized Color Names
         /// </summary>
-        public static Dictionary<Color, string> ColorNamesDictionary { get; set; }
+        public Dictionary<Color, string> ColorNamesDictionary { get; }
 
         /// <summary>
         /// Searches for the localized name of a given <paramref name="color"/>
@@ -128,7 +178,7 @@ namespace MahApps.Metro.Controls
                 return null;
             }
 
-            colorNamesDictionary ??= ColorNamesDictionary;
+            colorNamesDictionary ??= this.ColorNamesDictionary;
 
             var colorHex = useAlphaChannel ? color.ToString() : $"#{color.Value.R:X2}{color.Value.G:X2}{color.Value.B:X2}";
 
