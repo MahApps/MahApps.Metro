@@ -9,11 +9,12 @@
 
     <Thickness x:Key="NumericUpDownBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="NumericUpDownSelectedBorderThickness">1,1,1,1</Thickness>
-    <Thickness x:Key="NumericUpDownSpinButtonBorderThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="NumericUpDownSpinButtonRightBorderThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="NumericUpDownSpinButtonLeftBorderThickness">0,0,0,0</Thickness>
 
     <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
-        <Setter Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonBorderThickness}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="IsTabStop" Value="False" />
@@ -164,6 +165,7 @@
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0"
                                           mah:ControlsHelper.CornerRadius="0"
+                                          BorderThickness="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}"
                                           Content="{TemplateBinding ButtonUpContent}"
                                           ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
                                           ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
@@ -175,6 +177,7 @@
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0"
                                           mah:ControlsHelper.CornerRadius="0"
+                                          BorderThickness="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}"
                                           Content="{TemplateBinding ButtonDownContent}"
                                           ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
                                           ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
@@ -206,7 +209,9 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_NumericDown" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonLeftBorderThickness}" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_NumericUp" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonLeftBorderThickness}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
@@ -218,7 +223,9 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_NumericDown" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonLeftBorderThickness}" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_NumericUp" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonLeftBorderThickness}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
@@ -231,7 +238,9 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
+                            <Setter TargetName="PART_NumericDown" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="PART_NumericUp" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonLeftBorderThickness}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
@@ -243,7 +252,9 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
+                            <Setter TargetName="PART_NumericDown" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonLeftBorderThickness}" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_NumericUp" Property="BorderThickness" Value="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="2" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
@@ -309,7 +320,8 @@
            TargetType="{x:Type mah:NumericUpDown}">
         <Style.Resources>
             <Thickness x:Key="NumericUpDownSelectedBorderThickness">2,2,2,2</Thickness>
-            <Thickness x:Key="NumericUpDownSpinButtonBorderThickness">1,0,0,0</Thickness>
+            <Thickness x:Key="NumericUpDownSpinButtonRightBorderThickness">1,0,0,0</Thickness>
+            <Thickness x:Key="NumericUpDownSpinButtonLeftBorderThickness">0,0,1,0</Thickness>
         </Style.Resources>
         <Setter Property="ButtonDownContentTemplate">
             <Setter.Value>
@@ -335,7 +347,7 @@
         </Setter>
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="10 5 5 5" />
+        <Setter Property="Padding" Value="10 5" />
         <Setter Property="SpinButtonStyle">
             <Setter.Value>
                 <Style BasedOn="{StaticResource MahApps.Styles.Button.NumericUpDown.Spin}" TargetType="{x:Type ButtonBase}">
