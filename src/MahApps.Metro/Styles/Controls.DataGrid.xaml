@@ -312,7 +312,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.DataGridColumnHeader}" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>

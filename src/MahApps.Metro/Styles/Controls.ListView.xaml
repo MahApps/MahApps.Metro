@@ -370,7 +370,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.GridViewColumnHeader}" />
         <Style.Triggers>
             <Trigger Property="Role" Value="Floating">
                 <Setter Property="Opacity" Value="0.7" />

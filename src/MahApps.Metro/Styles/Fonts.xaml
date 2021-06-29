@@ -36,4 +36,21 @@
 
     <system:Double x:Key="MahApps.Font.Size.ColorPicker.TabItemHeader">16</system:Double>
 
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Button">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Square">Lower</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Dialogs">Normal</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Dialogs.Accent">Normal</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Dialogs.AccentHighlight">Normal</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.DataGridColumnHeader">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Expander">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.Expander.VisualStudio">Normal</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.GroupBox">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.GroupBox.VisualStudio">Normal</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.GridViewColumnHeader">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.ColorEyeDropper">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.ColorPalette">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.HotKeyBox">Upper</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.WindowCommands">Normal</CharacterCasing>
+    <CharacterCasing x:Key="MahApps.CharacterCasing.WindowCommands.Clean">Upper</CharacterCasing>
+
 </ResourceDictionary>
