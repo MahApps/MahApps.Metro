@@ -311,8 +311,8 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 case MetroDialogColorScheme.Theme:
                     ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
-                    this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
-                    this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
+                    this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
+                    this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
                 case MetroDialogColorScheme.Inverted:
                     theme = ThemeManager.Current.GetInverseTheme(theme);
@@ -323,23 +323,23 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
 
                     ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
-                    this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
-                    this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
+                    this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
+                    this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
                 case MetroDialogColorScheme.Accented:
                     ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
-                    this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Highlight"));
-                    this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.IdealForeground"));
+                    this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background.Accent"));
+                    this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground.Accent"));
                     break;
             }
 
             if (this.ParentDialogWindow != null)
             {
-                this.ParentDialogWindow.SetValue(BackgroundProperty, this.Background);
-                var glowBrush = TryGetResource(theme, "MahApps.Brushes.Accent");
+                this.ParentDialogWindow.SetCurrentValue(BackgroundProperty, this.Background);
+                var glowBrush = TryGetResource(theme, "MahApps.Brushes.Dialog.Glow");
                 if (glowBrush != null)
                 {
-                    this.ParentDialogWindow.SetValue(MetroWindow.GlowBrushProperty, glowBrush);
+                    this.ParentDialogWindow.SetCurrentValue(MetroWindow.GlowBrushProperty, glowBrush);
                 }
             }
         }
