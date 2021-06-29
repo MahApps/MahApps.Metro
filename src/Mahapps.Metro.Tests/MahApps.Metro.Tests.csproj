@@ -25,7 +25,7 @@
     <!-- Items include -->
     <ItemGroup>
         <None Remove="TestApp.config" />
-        <AppConfigWithTargetPath Include="TestApp.$(TargetFramework).config">
+        <AppConfigWithTargetPath Include="TestApp.$(TargetFramework).config" Condition="!$(DefineConstants.Contains(NET5_0))">
             <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>

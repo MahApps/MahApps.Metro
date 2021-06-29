@@ -75,7 +75,11 @@ namespace MahApps.Metro.Controls
             this.dataGridReference = null;
         }
 
+#if NET5_0_OR_GREATER
+        private void OnColumnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
         private void OnColumnsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
         {
             if (e.OldItems != null)
             {

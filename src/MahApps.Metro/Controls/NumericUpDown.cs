@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
-        private Lazy<PropertyInfo> handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
+        private Lazy<PropertyInfo?> handlesMouseWheelScrolling = new Lazy<PropertyInfo?>();
         private double internalIntervalMultiplierForCalculation = DefaultInterval;
         private double internalLargeChange = DefaultInterval * 100;
         private double intervalValueSinceReset;
@@ -1184,7 +1184,7 @@ namespace MahApps.Metro.Controls
 
             var sv = this.TryFindScrollViewer();
 
-            if (sv != null && this.handlesMouseWheelScrolling.Value != null)
+            if (sv != null && this.handlesMouseWheelScrolling.Value is not null)
             {
                 if (this.TrackMouseWheelWhenMouseOver)
                 {
@@ -1409,7 +1409,7 @@ namespace MahApps.Metro.Controls
             this.scrollViewer = this.valueTextBox?.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
             if (this.scrollViewer != null)
             {
-                this.handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
+                this.handlesMouseWheelScrolling = new Lazy<PropertyInfo?>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
 
             return this.scrollViewer;

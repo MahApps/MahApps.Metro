@@ -86,9 +86,9 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData(0.25d, "{0:0.0000}%", "0.2500%")] // 3376 Case 3
         [InlineData(0.25d, "{}{0:0.00000}‰", "0.25000‰")] // 3376 Case 4
         [InlineData(0.25d, "{0:0.00000}‰", "0.25000‰")] // 3376 Case 4
-        [InlineData(0.25d, "{}{0:P}", "25.00%")] // 3376 Case 5
-        [InlineData(0.25d, "{0:P}", "25.00%")] // 3376 Case 5
-        [InlineData(0.25d, "P", "25.00%")] // 3376 Case 5
+        [InlineData(0.25d, "{}{0:P}", "25.00 %")] // 3376 Case 5
+        [InlineData(0.25d, "{0:P}", "25.00 %")] // 3376 Case 5
+        [InlineData(0.25d, "P", "25.00 %")] // 3376 Case 5
         [InlineData(123456789d, "X", "75BCD15")]
         [InlineData(123456789d, "X2", "75BCD15")]
         [InlineData(255d, "X", "FF")]
@@ -101,6 +101,7 @@ namespace MahApps.Metro.Tests.Tests
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
+            this.fixture.Window.TheNUD.Culture = CultureInfo.InvariantCulture;
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
             this.fixture.Window.TheNUD.StringFormat = format;
 

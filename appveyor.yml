@@ -4,6 +4,7 @@ branches:
   only:
     - develop
     - main
+    - /\d*\.\d*\.\d*/
 
 environment:
   azure-key-vault-url:
@@ -20,12 +21,14 @@ image: Visual Studio 2019
 test: off
 
 install:
-  #- cinst dotnetcore-sdk --version=3.1.100
+  - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
+  - ps: ./dotnet-install.ps1 -Version 5.0.301 -InstallDir "C:\Program Files\dotnet"
 
 pull_requests:
   do_not_increment_build_number: false
 
 build_script:
+  - ps: dotnet --list-sdks
   - ps: .\build.ps1 -target appveyor
 
 after_build:

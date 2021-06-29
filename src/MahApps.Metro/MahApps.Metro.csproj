@@ -16,8 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ControlzEx" Version="4.*" />
-        <PackageReference Include="XamlColorSchemeGenerator" Version="4-*" PrivateAssets="All" IncludeAssets="build" />
+        <PackageReference Include="ControlzEx" version="5.*" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" PrivateAssets="all" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -45,20 +45,13 @@
         </EmbeddedResource>
     </ItemGroup>
 
-    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
+    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;PrepareResources;MarkupCompilePass1;MarkupCompilePass2">
         <PropertyGroup>
             <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
-            <!-- <XamlCombinePath>C:/DEV/OSS_Own/FluentRibbon/XamlCombine/bin/Debug/netcoreapp3.0/XamlCombine.exe</XamlCombinePath> -->
         </PropertyGroup>       
         <!-- Generate theme files -->
         <Message Text="$(XamlColorSchemeGeneratorExecutable)" />
         <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
-        <!-- Combine xaml files -->
-        <!-- <Exec Command="&quot;$(XamlCombinePath)&quot; &quot;Styles.txt&quot; &quot;Styles.xaml&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Themes" /> -->
     </Target>
 
-    <!-- <ItemGroup> -->
-    <!--     <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" /> -->
-    <!--     <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" /> -->
-    <!-- </ItemGroup> -->
 </Project>

@@ -36,7 +36,7 @@ namespace MahApps.Metro.Behaviors
             base.OnDetaching();
         }
 
-        protected override void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
+        protected override void AssociatedObject_Loaded(object? sender, RoutedEventArgs e)
         {
             if (sender is MetroWindow window)
             {
