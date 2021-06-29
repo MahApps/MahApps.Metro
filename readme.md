@@ -7,7 +7,7 @@
     A toolkit for creating modern WPF applications. Lots of goodness out-of-the box.
   </p>
   <p>
-    Supporting .NET Framework (4.5+) and .NET Core (3.0 and 3.1)
+    Supporting .NET Framework (4.5.2 and greater), .NET Core (3.1) and .NET 5 (on Windows)
   </p>
   <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">
@@ -152,6 +152,7 @@ Does your company use MahApps.Metro?  Ask your manager or marketing team if your
 If you're looking for another awesome libraries which are compatible with MahApps, check them out:
 
 - [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) Google Material Design in XAML & WPF, for C# & VB.Net [http://materialdesigninxaml.net](http://materialdesigninxaml.net)
+- [Fluent.Ribbon](https://github.com/fluentribbon/Fluent.Ribbon) a library that implements an Office-like user interface for the Windows Presentation Foundation (WPF)
 - [MahApps.Metro.SimpleChildWindow](https://github.com/punker76/MahApps.Metro.SimpleChildWindow) A simple child window for MahApps.Metro
 - [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
 - [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)

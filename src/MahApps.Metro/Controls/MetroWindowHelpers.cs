@@ -36,7 +36,7 @@ namespace MahApps.Metro.Controls
 
             var inputElement = window.GetPart<T>(name) as IInputElement;
             Debug.Assert(inputElement != null, $"{name} is not a IInputElement");
-            if (WindowChrome.GetIsHitTestVisibleInChrome(inputElement) != hitTestVisible)
+            if (inputElement is not null && WindowChrome.GetIsHitTestVisibleInChrome(inputElement) != hitTestVisible)
             {
                 WindowChrome.SetIsHitTestVisibleInChrome(inputElement, hitTestVisible);
             }
@@ -57,7 +57,7 @@ namespace MahApps.Metro.Controls
 
             var inputElement = window.GetPart<IInputElement>(name);
             Debug.Assert(inputElement != null, $"{name} is not a IInputElement");
-            if (WindowChrome.GetResizeGripDirection(inputElement) != direction)
+            if (inputElement is not null && WindowChrome.GetResizeGripDirection(inputElement) != direction)
             {
                 WindowChrome.SetResizeGripDirection(inputElement, direction);
             }

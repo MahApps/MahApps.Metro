@@ -198,7 +198,11 @@ namespace MahApps.Metro.Controls
             /// <summary>
             /// Updates the selector with changes made in the collection
             /// </summary>
+#if NET5_0_OR_GREATER
+            private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
             private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
             {
                 this._selector.SelectionChanged -= this.OnSelectionChanged;
 
@@ -209,16 +213,22 @@ namespace MahApps.Metro.Controls
                         switch (e.Action)
                         {
                             case NotifyCollectionChangedAction.Add:
-                                foreach (var newItem in e.NewItems)
+                                if (e.NewItems is not null)
                                 {
-                                    listBox.SelectedItems.Add(newItem);
+                                    foreach (var newItem in e.NewItems)
+                                    {
+                                        listBox.SelectedItems.Add(newItem);
+                                    }
                                 }
 
                                 break;
                             case NotifyCollectionChangedAction.Remove:
-                                foreach (var oldItem in e.OldItems)
+                                if (e.OldItems is not null)
                                 {
-                                    listBox.SelectedItems.Remove(oldItem);
+                                    foreach (var oldItem in e.OldItems)
+                                    {
+                                        listBox.SelectedItems.Remove(oldItem);
+                                    }
                                 }
 
                                 break;
@@ -237,16 +247,22 @@ namespace MahApps.Metro.Controls
                         switch (e.Action)
                         {
                             case NotifyCollectionChangedAction.Add:
-                                foreach (var newItem in e.NewItems)
+                                if (e.NewItems is not null)
                                 {
-                                    multiSelector.SelectedItems.Add(newItem);
+                                    foreach (var newItem in e.NewItems)
+                                    {
+                                        multiSelector.SelectedItems.Add(newItem);
+                                    }
                                 }
 
                                 break;
                             case NotifyCollectionChangedAction.Remove:
-                                foreach (var oldItem in e.OldItems)
+                                if (e.OldItems is not null)
                                 {
-                                    multiSelector.SelectedItems.Remove(oldItem);
+                                    foreach (var oldItem in e.OldItems)
+                                    {
+                                        multiSelector.SelectedItems.Remove(oldItem);
+                                    }
                                 }
 
                                 break;
@@ -267,33 +283,39 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            private static void RemoveItems(IList list, NotifyCollectionChangedEventArgs e)
+            private static void RemoveItems(IList? list, NotifyCollectionChangedEventArgs e)
             {
-                var itemCount = e.OldItems.Count;
-
-                // For the number of items being removed, remove the item from the old starting index
-                // (this will cause following items to be shifted down to fill the hole).
-                for (var i = 0; i < itemCount; i++)
+                if (e.OldItems is not null && list is not null)
                 {
-                    list.RemoveAt(e.OldStartingIndex);
+                    var itemCount = e.OldItems.Count;
+
+                    // For the number of items being removed, remove the item from the old starting index
+                    // (this will cause following items to be shifted down to fill the hole).
+                    for (var i = 0; i < itemCount; i++)
+                    {
+                        list.RemoveAt(e.OldStartingIndex);
+                    }
                 }
             }
 
-            private static void AddItems(IList list, NotifyCollectionChangedEventArgs e)
+            private static void AddItems(IList? list, NotifyCollectionChangedEventArgs e)
             {
-                var itemCount = e.NewItems.Count;
-
-                for (var i = 0; i < itemCount; i++)
+                if (e.NewItems is not null && list is not null)
                 {
-                    var insertionPoint = e.NewStartingIndex + i;
+                    var itemCount = e.NewItems.Count;
 
-                    if (insertionPoint > list.Count)
+                    for (var i = 0; i < itemCount; i++)
                     {
-                        list.Add(e.NewItems[i]);
-                    }
-                    else
-                    {
-                        list.Insert(insertionPoint, e.NewItems[i]);
+                        var insertionPoint = e.NewStartingIndex + i;
+
+                        if (insertionPoint > list.Count)
+                        {
+                            list.Add(e.NewItems[i]);
+                        }
+                        else
+                        {
+                            list.Insert(insertionPoint, e.NewItems[i]);
+                        }
                     }
                 }
             }

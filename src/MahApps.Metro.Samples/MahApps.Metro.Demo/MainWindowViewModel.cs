@@ -39,27 +39,27 @@ namespace MetroDemo
 
         public AccentColorMenuData()
         {
-            this.ChangeAccentCommand = new SimpleCommand(o => true, this.DoChangeTheme);
+            this.ChangeAccentCommand = new SimpleCommand<string?>(o => true, this.DoChangeTheme);
         }
 
         public ICommand ChangeAccentCommand { get; }
 
-        protected virtual void DoChangeTheme(object sender)
+        protected virtual void DoChangeTheme(string? name)
         {
-            if (this.Name is not null)
+            if (name is not null)
             {
-                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
+                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, name);
             }
         }
     }
 
     public class AppThemeMenuData : AccentColorMenuData
     {
-        protected override void DoChangeTheme(object sender)
+        protected override void DoChangeTheme(string? name)
         {
-            if (this.Name is not null)
+            if (name is not null)
             {
-                ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
+                ThemeManager.Current.ChangeThemeBaseColor(Application.Current, name);
             }
         }
     }
@@ -90,7 +90,7 @@ namespace MetroDemo
                                          .Select(a => new AppThemeMenuData { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
                                          .ToList();
 
-            this.Albums = new ObservableCollection<Album>(SampleData.Albums);
+            this.Albums = new ObservableCollection<Album>(SampleData.Albums!);
             var cvs = CollectionViewSource.GetDefaultView(this.Albums);
             cvs.GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
 
@@ -122,89 +122,95 @@ namespace MetroDemo
                 System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
             }
 
-            this.EndOfScrollReachedCmdWithParameter = new SimpleCommand(o => true, async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("End of scroll reached!", $"Parameter: {x}"); });
+            this.EndOfScrollReachedCmdWithParameter = new SimpleCommand<object>(o => true, async x => { await this._dialogCoordinator.ShowMessageAsync(this, "End of scroll reached!", $"Parameter: {x}"); });
 
-            this.CloseCmd = new SimpleCommand(o => this.CanCloseFlyout, x => ((Flyout)x).IsOpen = false);
+            this.CloseCmd = new SimpleCommand<Flyout>(f => f is not null && this.CanCloseFlyout, f => f!.IsOpen = false);
 
-            this.TextBoxButtonCmd = new SimpleCommand(
+            this.TextBoxButtonCmd = new SimpleCommand<object>(
                 o => true,
                 async x =>
                     {
                         if (x is string s)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", s).ConfigureAwait(false);
+                            await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
                         }
                         else if (x is RichTextBox richTextBox)
                         {
                             var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text).ConfigureAwait(false);
+                            await this._dialogCoordinator.ShowMessageAsync(this, "RichTextBox Button was clicked!", text).ConfigureAwait(false);
                         }
                         else if (x is TextBox textBox)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
+                            await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
                         }
                         else if (x is PasswordBox passwordBox)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
+                            await this._dialogCoordinator.ShowMessageAsync(this, "PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
                         }
                         else if (x is DatePicker datePicker)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
+                            await this._dialogCoordinator.ShowMessageAsync(this, "DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
                         }
                     }
             );
 
-            this.TextBoxButtonCmdWithParameter = new SimpleCommand(
+            this.TextBoxButtonCmdWithParameter = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
             );
 
-            this.SingleCloseTabCommand = new SimpleCommand(
+            this.SingleCloseTabCommand = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Closing tab!", $"You are now closing the '{x}' tab"); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "Closing tab!", $"You are now closing the '{x}' tab"); }
             );
 
-            this.NeverCloseTabCommand = new SimpleCommand(o => false);
+            this.NeverCloseTabCommand = new SimpleCommand<object>(o => false);
 
-            this.ShowInputDialogCommand = new SimpleCommand(
+            this.ShowInputDialogCommand = new SimpleCommand<object>(
                 o => true,
                 async x => { await this._dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result)); }
             );
 
-            this.ShowLoginDialogCommand = new SimpleCommand(
+            this.ShowLoginDialogCommand = new SimpleCommand<object>(
                 o => true,
                 async x => { await this._dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result)); }
             );
 
-            this.ShowMessageDialogCommand = new SimpleCommand(
-                o => true,
-                x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
+            this.ShowMessageDialogCommand = new SimpleCommand<string>(
+                x => !string.IsNullOrEmpty(x),
+                x => PerformDialogCoordinatorAction(this.ShowMessage(x!), x == "DISPATCHER_THREAD")
             );
 
-            this.ShowProgressDialogCommand = new SimpleCommand(o => true, x => this.RunProgressFromVm());
+            this.ShowProgressDialogCommand = new SimpleCommand<object>(o => true, x => this.RunProgressFromVm());
 
-            this.ShowCustomDialogCommand = new SimpleCommand(o => true, x => this.RunCustomFromVm());
+            this.ShowCustomDialogCommand = new SimpleCommand<object>(o => true, x => this.RunCustomFromVm());
 
-            this.ToggleIconScalingCommand = new SimpleCommand(o => true, this.ToggleIconScaling);
+            this.ToggleIconScalingCommand = new SimpleCommand<MultiFrameImageMode?>(m => m is not null, this.ToggleIconScaling);
 
-            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => ((Flyout)o).IsOpen = !((Flyout)o).IsOpen);
+            this.OpenFirstFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, !f.IsOpen));
 
-            this.ArtistsDropDownCommand = new SimpleCommand(o => false);
+            this.ArtistsDropDownCommand = new SimpleCommand<object>(o => false);
 
-            this.GenreDropDownMenuItemCommand = new SimpleCommand(
+            this.GenreDropDownMenuItemCommand = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
             );
 
-            this.GenreSplitButtonItemCommand = new SimpleCommand(
+            this.GenreSplitButtonItemCommand = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Split Button", $"The selected item is '{x}'."); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "Split Button", $"The selected item is '{x}'."); }
             );
 
             this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
 
-            this.ToggleSwitchCommand = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", $"The ToggleSwitch is now {((ToggleSwitch)x).IsOn}."); },
-                                                         canExecute: x => this.CanUseToggleSwitch);
+            this.ToggleSwitchCommand = new SimpleCommand<ToggleSwitch?>(x => x is not null && this.CanUseToggleSwitch,
+                                                                        async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", $"The ToggleSwitch is now {x!.IsOn}."); });
+
+            this.ToggleSwitchOnCommand = new SimpleCommand<MainWindowViewModel?>(x => x is not null && x.CanUseToggleSwitch,
+                                                                                 async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now On."); });
+
+            this.ToggleSwitchOffCommand = new SimpleCommand<MainWindowViewModel?>(x => x is not null && x.CanUseToggleSwitch,
+                                                                                  async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now Off."); });
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -217,13 +223,15 @@ namespace MetroDemo
 
         public ICommand OpenFirstFlyoutCommand { get; }
 
-        public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand(execute: x =>
-            {
-                ThemeManager.Current.ThemeSyncMode = (ThemeSyncMode)x;
-                ThemeManager.Current.SyncTheme();
-            });
+        public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand<ThemeSyncMode?>(
+            x => x is not null,
+            x =>
+                {
+                    ThemeManager.Current.ThemeSyncMode = x!.Value;
+                    ThemeManager.Current.SyncTheme();
+                });
 
-        public ICommand SyncThemeNowCommand { get; } = new SimpleCommand(execute: x => ThemeManager.Current.SyncTheme());
+        public ICommand SyncThemeNowCommand { get; } = new SimpleCommand<object>(execute: x => ThemeManager.Current.SyncTheme());
 
         public ICommand ToggleSwitchCommand { get; }
 
@@ -235,11 +243,9 @@ namespace MetroDemo
             set => this.Set(ref this.canUseToggleSwitch, value);
         }
 
-        public ICommand ToggleSwitchOnCommand { get; } = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", "The ToggleSwitch is now On."); },
-                                                                           canExecute: x => x is MainWindowViewModel viewModel && viewModel.CanUseToggleSwitch);
+        public ICommand ToggleSwitchOnCommand { get; }
 
-        public ICommand ToggleSwitchOffCommand { get; } = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", "The ToggleSwitch is now Off."); },
-                                                                            canExecute: x => x is MainWindowViewModel viewModel && viewModel.CanUseToggleSwitch);
+        public ICommand ToggleSwitchOffCommand { get; }
 
         public void Dispose()
         {
@@ -291,7 +297,6 @@ namespace MetroDemo
             get => this.nullableNumericUpDownValue;
             set => this.Set(ref this.nullableNumericUpDownValue, value);
         }
-
 
         public ICommand EndOfScrollReachedCmdWithParameter { get; }
 
@@ -527,17 +532,16 @@ namespace MetroDemo
 
         private async Task OnHotKey(object? sender, HotkeyEventArgs e)
         {
-            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
-                "Hotkey pressed",
-                "You pressed the hotkey '" + this.HotKey + "' registered with the name '" + e.Name + "'");
+            await this._dialogCoordinator.ShowMessageAsync(this,
+                                                           "Hotkey pressed",
+                                                           "You pressed the hotkey '" + this.HotKey + "' registered with the name '" + e.Name + "'");
         }
 
         public ICommand ToggleIconScalingCommand { get; }
 
-        private void ToggleIconScaling(object obj)
+        private void ToggleIconScaling(MultiFrameImageMode? multiFrameImageMode)
         {
-            var multiFrameImageMode = (MultiFrameImageMode)obj;
-            ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
+            ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode!.Value;
             this.OnPropertyChanged(nameof(this.IsScaleDownLargerFrame));
             this.OnPropertyChanged(nameof(this.IsNoScaleSmallerFrame));
         }

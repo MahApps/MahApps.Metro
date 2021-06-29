@@ -15,7 +15,7 @@ namespace MetroDemo.Models
 
         public CustomDialogExampleContent(Action<CustomDialogExampleContent> closeHandler)
         {
-            this.CloseCommand = new SimpleCommand(o => true, o => closeHandler(this));
+            this.CloseCommand = new SimpleCommand<object>(o => true, o => closeHandler(this));
         }
 
         public string? FirstName

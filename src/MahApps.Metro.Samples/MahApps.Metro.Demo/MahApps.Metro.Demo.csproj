@@ -5,7 +5,7 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
-        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
+        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) or $(TargetFramework.StartsWith('net5')) ">true</DisableFody>
         <UseWindowsForms>true</UseWindowsForms>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
@@ -38,7 +38,7 @@
     <ItemGroup>
         <None Include="app.manifest" />
         <None Remove="App.config" />
-        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config" Condition="!$(DefineConstants.Contains(NET5_0))">
             <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>

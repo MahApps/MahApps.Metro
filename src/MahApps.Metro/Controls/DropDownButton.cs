@@ -463,7 +463,11 @@ namespace MahApps.Metro.Controls
             }
         }
 
+#if NET5_0_OR_GREATER
+        private void OnGroupStyleCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
         private void OnGroupStyleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
         {
             if (e.OldItems != null)
             {

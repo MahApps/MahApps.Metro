@@ -58,6 +58,7 @@
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="CommandParameter" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Icon" Value="{StaticResource AppThemeMenuIcon}" />
             </Style>
@@ -66,6 +67,7 @@
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="CommandParameter" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
             </Style>
