@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ControlzEx.Theming;
-using ExposedObject;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
@@ -33,7 +32,7 @@ namespace MahApps.Metro.Tests.Tests
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.Current.GetTheme("Dark.Blue").Resources["MahApps.Brushes.ThemeForeground"]).Color;
+            var expectedColor = ((SolidColorBrush)ThemeManager.Current.GetTheme("Dark.Blue").Resources["MahApps.Brushes.ThemeForeground"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
         }
@@ -82,11 +81,13 @@ namespace MahApps.Metro.Tests.Tests
             window.IconOverlayBehavior = OverlayBehavior.Never;
             window.LeftFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int iconZIndex = Panel.GetZIndex(exposedWindow.icon);
-            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+            var icon = window.FindChild<FrameworkElement>("PART_Icon");
+            Assert.NotNull(icon);
 
-            Assert.True(flyoutindex < iconZIndex);
+            var iconZIndex = Panel.GetZIndex(icon);
+            var flyoutZIndex = Panel.GetZIndex(window.LeftFlyout);
+
+            Assert.True(flyoutZIndex < iconZIndex);
         }
 
         [Fact]
@@ -99,11 +100,13 @@ namespace MahApps.Metro.Tests.Tests
             window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
             window.LeftFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.LeftWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_LeftWindowCommands");
+            Assert.NotNull(windowCommands);
 
-            Assert.True(flyoutindex < windowCommandsZIndex);
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(window.LeftFlyout);
+
+            Assert.True(flyoutZIndex < windowCommandsZIndex);
         }
 
         [Fact]
@@ -116,11 +119,13 @@ namespace MahApps.Metro.Tests.Tests
             window.RightWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
             window.RightFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.RightWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_RightWindowCommands");
+            Assert.NotNull(windowCommands);
 
-            Assert.True(flyoutindex < windowCommandsZIndex);
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(flyoutZIndex < windowCommandsZIndex);
         }
 
         [Fact]
@@ -132,11 +137,13 @@ namespace MahApps.Metro.Tests.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.LeftFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.LeftWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_LeftWindowCommands");
+            Assert.NotNull(windowCommands);
 
-            Assert.True(windowCommandsZIndex > flyoutindex);
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(window.LeftFlyout);
+
+            Assert.True(windowCommandsZIndex > flyoutZIndex);
         }
 
         [Fact]
@@ -148,11 +155,13 @@ namespace MahApps.Metro.Tests.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.RightFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.RightWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_RightWindowCommands");
+            Assert.NotNull(windowCommands);
 
-            Assert.True(windowCommandsZIndex > flyoutindex);
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(windowCommandsZIndex > flyoutZIndex);
         }
 
         [Fact]
@@ -164,10 +173,13 @@ namespace MahApps.Metro.Tests.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.RightFlyout.IsOpen = true;
 
-            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands.TryFindParent<ContentPresenter>());
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_WindowButtonCommands");
+            Assert.NotNull(windowCommands);
 
-            Assert.True(windowCommandsZIndex > flyoutindex);
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(windowCommandsZIndex > flyoutZIndex);
         }
 
         [Fact]
@@ -178,7 +190,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            bool eventRaised = false;
+            var eventRaised = false;
 
             window.RightFlyout.IsOpenChanged += (sender, args) => { eventRaised = true; };
 

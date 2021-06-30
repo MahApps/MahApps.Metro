@@ -4,31 +4,31 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Tests</AssemblyName>
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
+
+        <IsTestProject>true</IsTestProject>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
+        
         <Nullable>annotations</Nullable>
     </PropertyGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
+
     <ItemGroup>
-        <PackageReference Include="ExposedObject" Version="1.2.*" PrivateAssets="All" Condition=" $(TargetFramework.StartsWith('net45')) or $(TargetFramework.StartsWith('net46')) " />
-        <PackageReference Include="ExposedObject" Version="2.*" PrivateAssets="All" Condition=" !$(TargetFramework.StartsWith('net45')) and !$(TargetFramework.StartsWith('net46'))  " />
         <PackageReference Include="xunit" Version="2.4.*" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.*" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
     </ItemGroup>
-    <!-- Items include -->
-    <ItemGroup>
-        <None Remove="TestApp.config" />
-        <AppConfigWithTargetPath Include="TestApp.$(TargetFramework).config" Condition="!$(DefineConstants.Contains(NET5_0))">
-            <TargetPath>$(AssemblyName).exe.config</TargetPath>
-        </AppConfigWithTargetPath>
-    </ItemGroup>
+
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />

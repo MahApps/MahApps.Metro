@@ -1,47 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
-        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) or $(TargetFramework.StartsWith('net5')) ">true</DisableFody>
+        <DisableFody Condition=" '$(Configuration)' == 'Debug' ">true</DisableFody>
         <UseWindowsForms>true</UseWindowsForms>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
     </PropertyGroup>
+
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
-        <PackageReference Include="MaterialDesignThemes" Version="3.0.*" Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " />
-        <PackageReference Include="MaterialDesignThemes" Version="3.*" Condition=" '$(TargetFramework)' != 'netcoreapp3.0' " />
-        <PackageReference Include="MaterialDesignColors" Version="1.2.2" Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " />
-        <PackageReference Include="MaterialDesignColors" Version="1.*" Condition=" '$(TargetFramework)' != 'netcoreapp3.0' " />
-        <PackageReference Include="NHotkey.Wpf" Version="2.*" />
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+        <PackageReference Include="MaterialDesignThemes" Version="3.0.1" />
+        <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
         <PackageReference Include="Fody" Version="6.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
     </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
+        <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
+        <PackageReference Include="MaterialDesignColors" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
+        <PackageReference Include="NHotkey.Wpf" Version="2.*" />
+    </ItemGroup>
+
     <ItemGroup>
         <None Include="app.manifest" />
         <None Remove="App.config" />
-        <AppConfigWithTargetPath Include="App.$(TargetFramework).config" Condition="!$(DefineConstants.Contains(NET5_0))">
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config" Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
             <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
+
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />

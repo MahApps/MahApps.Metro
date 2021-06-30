@@ -10,14 +10,14 @@
         <DefineConstants>$(DefineConstants);INTERNAL_NULLABLE_ATTRIBUTES</DefineConstants>
     </PropertyGroup>
 
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="5.*" />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" PrivateAssets="all" IncludeAssets="build" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="all" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -31,6 +31,7 @@
         <None Remove="Assets\Eyedropper.cur" />
         <Resource Include="Assets\Eyedropper.cur" />
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
+        <UpToDateCheckInput Include="**/*.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -45,12 +46,9 @@
         </EmbeddedResource>
     </ItemGroup>
 
-    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;PrepareForBuild" Condition="'$(IsBuildingWpfTempProj)' != 'true'">
-        <PropertyGroup>
-            <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
-        </PropertyGroup>       
-        <Message Text="Generating XAML files ($(TargetFramework))" Importance="high" />
+    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;PrepareForBuild" Condition=" '$(IsBuildingWpfTempProj)' != 'true' ">
         <!-- Generate theme files -->
+        <Message Text="Generating XAML files ($(TargetFramework))" Importance="high" />
         <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
     </Target>
 

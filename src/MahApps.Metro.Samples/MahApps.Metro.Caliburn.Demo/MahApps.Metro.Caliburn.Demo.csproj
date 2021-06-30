@@ -9,18 +9,22 @@
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
     </PropertyGroup>
+
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
+
     <ItemGroup>
         <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
         <PackageReference Include="Caliburn.Micro" Version="3.*" />
@@ -30,6 +34,7 @@
         </PackageReference>
         <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
     </ItemGroup>
+
     <ItemGroup>
         <None Include="app.manifest" />
         <None Remove="App.config" />
@@ -37,6 +42,7 @@
             <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
+
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
