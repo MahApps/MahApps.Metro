@@ -185,6 +185,13 @@ namespace MahApps.Metro.Behaviors
                     RECT rect;
                     if (UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
                     {
+                        var monitor = NativeMethods.MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                        if (monitor != IntPtr.Zero)
+                        {
+                            var monitorInfo = NativeMethods.GetMonitorInfo(monitor);
+                            rect.Offset(monitorInfo.rcMonitor.Left - monitorInfo.rcWork.Left, monitorInfo.rcMonitor.Top - monitorInfo.rcWork.Top);
+                        }
+
                         wp.normalPosition = rect;
                     }
                 }
