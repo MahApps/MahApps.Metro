@@ -46,7 +46,7 @@
         </EmbeddedResource>
     </ItemGroup>
 
-    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;PrepareForBuild" Condition=" '$(IsBuildingWpfTempProj)' != 'true' ">
+    <Target Name="GenerateXamlFiles" BeforeTargets="PrepareForBuild" Condition=" '$(IsBuildingWpfTempProj)' != 'true' ">
         <!-- Generate theme files -->
         <Message Text="Generating XAML files ($(TargetFramework))" Importance="high" />
         <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
