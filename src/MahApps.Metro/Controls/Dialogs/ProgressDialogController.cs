@@ -3,8 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -14,6 +16,8 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public class ProgressDialogController
     {
+        private CancellationTokenRegistration cancellationTokenRegistration;
+
         private ProgressDialog WrappedDialog { get; }
 
         private Func<Task> CloseCallback { get; }
@@ -45,21 +49,37 @@ namespace MahApps.Metro.Controls.Dialogs
 
             this.IsOpen = dialog.IsVisible;
 
-            this.WrappedDialog.Invoke(() => { this.WrappedDialog.PART_NegativeButton.Click += this.PART_NegativeButton_Click; });
+            this.WrappedDialog.Invoke(() =>
+                {
+                    this.WrappedDialog.KeyDown += this.WrappedDialog_KeyDown;
+                    this.WrappedDialog.PART_NegativeButton.Click += this.PART_NegativeButton_Click;
+                });
 
-            dialog.CancellationToken.Register(() => { this.WrappedDialog.BeginInvoke(this.Abort); });
+            this.cancellationTokenRegistration = dialog.CancellationToken.Register(() => { this.WrappedDialog.BeginInvoke(this.Abort); });
+        }
+
+        private void WrappedDialog_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
+            {
+                this.WrappedDialog.Invoke(this.Abort);
+            }
         }
 
         private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
         {
             this.WrappedDialog.Invoke(this.Abort);
+            e.Handled = true;
         }
 
         private void Abort()
         {
-            this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
-            this.IsCanceled = true;
-            this.Canceled?.Invoke(this, EventArgs.Empty);
+            if (this.WrappedDialog.IsCancelable)
+            {
+                this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
+                this.IsCanceled = true;
+                this.Canceled?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -85,7 +105,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="value">The percentage to set as the value.</param>
         public void SetProgress(double value)
         {
-            Action action = () =>
+            this.WrappedDialog.Invoke(() =>
                 {
                     if (value < this.WrappedDialog.Minimum || value > this.WrappedDialog.Maximum)
                     {
@@ -93,8 +113,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
 
                     this.WrappedDialog.ProgressValue = value;
-                };
-            this.WrappedDialog.Invoke(action);
+                });
         }
 
         /// <summary>
@@ -148,7 +167,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>A task representing the operation.</returns>
         public Task CloseAsync()
         {
-            Action action = () =>
+            this.WrappedDialog.Invoke(() =>
                 {
                     if (!this.WrappedDialog.IsVisible)
                     {
@@ -156,10 +175,11 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
 
                     this.WrappedDialog.Dispatcher.VerifyAccess();
+                    this.WrappedDialog.KeyDown -= this.WrappedDialog_KeyDown;
                     this.WrappedDialog.PART_NegativeButton.Click -= this.PART_NegativeButton_Click;
-                };
 
-            this.WrappedDialog.Invoke(action);
+                    this.cancellationTokenRegistration.Dispose();
+                });
 
             return this.CloseCallback()
                        .ContinueWith(_ => this.WrappedDialog.Invoke(() =>

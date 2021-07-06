@@ -299,24 +299,25 @@ namespace MetroDemo
                                  ColorScheme = this.MetroDialogOptions!.ColorScheme
                              };
 
-            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
-            controller.SetIndeterminate();
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking now some cupcakes!", settings: mySettings);
 
-            await Task.Delay(5000);
+            controller.SetIndeterminate();
+            
+            await Task.Delay(3000);
 
             controller.SetCancelable(true);
 
             double i = 0.0;
             while (i < 6.0)
             {
-                double val = (i / 100.0) * 20.0;
-                controller.SetProgress(val);
-                controller.SetMessage("Baking cupcake: " + i + "...");
-
                 if (controller.IsCanceled)
                 {
-                    break; //canceled progressdialog auto closes.
+                    break;
                 }
+
+                var val = (i / 100.0) * 20.0;
+                controller.SetProgress(val);
+                controller.SetMessage("Baking cupcake: " + i + "...");
 
                 i += 1.0;
 
