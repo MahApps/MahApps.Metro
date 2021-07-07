@@ -34,19 +34,18 @@ namespace MahApps.Metro.Controls
         static MultiSelectionComboBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(typeof(MultiSelectionComboBox)));
-            TextProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, OnTextChanged));
+            TextProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, OnTextChanged));
             CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(ClearContentCommand, ExecutedClearContentCommand, CanExecuteClearContentCommand));
             CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(RemoveItemCommand, RemoveItemCommand_Executed, RemoveItemCommand_CanExecute));
         }
 
-        public MultiSelectionComboBox() : base()
+        public MultiSelectionComboBox()
         {
             var selectedItemsImpl = new ObservableCollection<object>();
-            SetValue(SelectedItemsPropertyKey, selectedItemsImpl);
+            this.SetValue(SelectedItemsPropertyKey, selectedItemsImpl);
 
-            selectedItemsImpl.CollectionChanged += SelectedItemsImpl_CollectionChanged;
+            selectedItemsImpl.CollectionChanged += this.SelectedItemsImpl_CollectionChanged;
         }
-
 
         #endregion
 
@@ -58,16 +57,16 @@ namespace MahApps.Metro.Controls
 
         #region private Members
 
-        private Popup PART_Popup;
-        private ListBox PART_PopupListBox;
-        private TextBox PART_EditableTextBox;
-        private ListBox PART_SelectedItemsPresenter;
+        private Popup? PART_Popup;
+        private ListBox? PART_PopupListBox;
+        private TextBox? PART_EditableTextBox;
+        private ListBox? PART_SelectedItemsPresenter;
 
         private bool isUserdefinedTextInputPending;
         private bool shouldDoTextReset; // Defines if the Text should be reset after selecting items from string
         private bool shouldAddItems; // Defines if the MSCB should add new items from text input. Don't set this to true while input is pending. We cannot know how long the user needs for typing.
         private bool IsSyncingSelectedItems; // true if syncing in one or the other direction already running
-        private DispatcherTimer _updateSelectedItemsFromTextTimer;
+        private DispatcherTimer? _updateSelectedItemsFromTextTimer;
 
         #endregion
 
@@ -85,15 +84,13 @@ namespace MahApps.Metro.Controls
                                           typeof(SelectionMode),
                                           typeof(MultiSelectionComboBox),
                                           new PropertyMetadata(SelectionMode.Single),
-                                          IsValidSelectionMode);
-
-        private static bool IsValidSelectionMode(object o)
-        {
-            SelectionMode value = (SelectionMode)o;
-            return value == SelectionMode.Single
-                   || value == SelectionMode.Multiple
-                   || value == SelectionMode.Extended;
-        }
+                                          o =>
+                                              {
+                                                  var value = (SelectionMode)o;
+                                                  return value == SelectionMode.Single
+                                                         || value == SelectionMode.Multiple
+                                                         || value == SelectionMode.Extended;
+                                              });
 
         /// <summary>
         ///     Indicates the selection behavior for the ListBox.
@@ -105,51 +102,51 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="SelectedItem"/> dependency property.</summary>
-        public static new readonly DependencyProperty SelectedItemProperty =
-             DependencyProperty.Register(
-                 nameof(SelectedItem),
-                 typeof(object),
-                 typeof(MultiSelectionComboBox),
-                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public new static readonly DependencyProperty SelectedItemProperty
+            = DependencyProperty.Register(nameof(SelectedItem),
+                                          typeof(object),
+                                          typeof(MultiSelectionComboBox),
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Gets or Sets the selectedItem
         /// </summary>
-        public new object SelectedItem
+        public new object? SelectedItem
         {
-            get { return (object)GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get => (object?)this.GetValue(SelectedItemProperty);
+            set => this.SetValue(SelectedItemProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SelectedIndex"/> dependency property.</summary>
-        public static new readonly DependencyProperty SelectedIndexProperty =
-            DependencyProperty.Register(
-                nameof(SelectedIndex), typeof(int), typeof(MultiSelectionComboBox),
-                new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public new static readonly DependencyProperty SelectedIndexProperty
+            = DependencyProperty.Register(nameof(SelectedIndex),
+                                          typeof(int),
+                                          typeof(MultiSelectionComboBox),
+                                          new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Gets or Sets the SelectedIndex
         /// </summary>
         public new int SelectedIndex
         {
-            get { return (int)GetValue(SelectedIndexProperty); }
-            set { SetValue(SelectedIndexProperty, value); }
+            get => (int)this.GetValue(SelectedIndexProperty);
+            set => this.SetValue(SelectedIndexProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SelectedValue"/> dependency property.</summary>
-        public static new readonly DependencyProperty SelectedValueProperty =
-            DependencyProperty.Register(nameof(SelectedValue),
-                typeof(object),
-                typeof(MultiSelectionComboBox),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public new static readonly DependencyProperty SelectedValueProperty
+            = DependencyProperty.Register(nameof(SelectedValue),
+                                          typeof(object),
+                                          typeof(MultiSelectionComboBox),
+                                          new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Gets or Sets the SelectedValue
         /// </summary>
-        public new object SelectedValue
+        public new object? SelectedValue
         {
-            get { return (object)GetValue(SelectedValueProperty); }
-            set { SetValue(SelectedValueProperty, value); }
+            get => (object?)this.GetValue(SelectedValueProperty);
+            set => this.SetValue(SelectedValueProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SelectedItems"/> dependency property.</summary>
@@ -157,7 +154,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(SelectedItems),
                                                   typeof(IList),
                                                   typeof(MultiSelectionComboBox),
-                                                  new PropertyMetadata((IList)null));
+                                                  new PropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="SelectedItems"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedItemsProperty = SelectedItemsPropertyKey.DependencyProperty;
@@ -166,9 +163,9 @@ namespace MahApps.Metro.Controls
         /// The currently selected items.
         /// </summary>
         [Bindable(true), Category("Appearance"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IList SelectedItems
+        public IList? SelectedItems
         {
-            get => (IList)this.GetValue(SelectedItemsProperty);
+            get => (IList?)this.GetValue(SelectedItemsProperty);
             protected set => this.SetValue(SelectedItemsPropertyKey, value);
         }
 
@@ -177,7 +174,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(DisplaySelectedItems),
                                                   typeof(IEnumerable),
                                                   typeof(MultiSelectionComboBox),
-                                                  new PropertyMetadata((IEnumerable)null));
+                                                  new PropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="DisplaySelectedItems"/> dependency property.</summary>
         public static readonly DependencyProperty DisplaySelectedItemsProperty = DisplaySelectedItemsPropertyKey.DependencyProperty;
@@ -185,9 +182,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the <see cref="SelectedItems"/> in the specified order which was set via <see cref="OrderSelectedItemsBy"/>
         /// </summary>
-        public IEnumerable DisplaySelectedItems
+        public IEnumerable? DisplaySelectedItems
         {
-            get => (IEnumerable)this.GetValue(DisplaySelectedItemsProperty);
+            get => (IEnumerable?)this.GetValue(DisplaySelectedItemsProperty);
             protected set => this.SetValue(DisplaySelectedItemsPropertyKey, value);
         }
 
@@ -217,9 +214,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> for the <see cref="SelectedItems"/>
         /// </summary>
-        public Style SelectedItemContainerStyle
+        public Style? SelectedItemContainerStyle
         {
-            get => (Style)this.GetValue(SelectedItemContainerStyleProperty);
+            get => (Style?)this.GetValue(SelectedItemContainerStyleProperty);
             set => this.SetValue(SelectedItemContainerStyleProperty, value);
         }
 
@@ -233,9 +230,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="StyleSelector"/> for the <see cref="SelectedItemContainerStyle"/>
         /// </summary>
-        public StyleSelector SelectedItemContainerStyleSelector
+        public StyleSelector? SelectedItemContainerStyleSelector
         {
-            get => (StyleSelector)this.GetValue(SelectedItemContainerStyleSelectorProperty);
+            get => (StyleSelector?)this.GetValue(SelectedItemContainerStyleSelectorProperty);
             set => this.SetValue(SelectedItemContainerStyleSelectorProperty, value);
         }
 
@@ -249,9 +246,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the Separator which will be used if the ComboBox is editable.
         /// </summary>
-        public string Separator
+        public string? Separator
         {
-            get => (string)this.GetValue(SeparatorProperty);
+            get => (string?)this.GetValue(SeparatorProperty);
             set => this.SetValue(SeparatorProperty, value);
         }
 
@@ -313,9 +310,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets a function that is used to check if the entered Text is an object that should be selected.
         /// </summary>
-        public ICompareObjectToString ObjectToStringComparer
+        public ICompareObjectToString? ObjectToStringComparer
         {
-            get => (ICompareObjectToString)this.GetValue(ObjectToStringComparerProperty);
+            get => (ICompareObjectToString?)this.GetValue(ObjectToStringComparerProperty);
             set => this.SetValue(ObjectToStringComparerProperty, value);
         }
 
@@ -345,9 +342,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets a parser-class that implements <see cref="IParseStringToObject"/> 
         /// </summary>
-        public IParseStringToObject StringToObjectParser
+        public IParseStringToObject? StringToObjectParser
         {
-            get => (IParseStringToObject)this.GetValue(StringToObjectParserProperty);
+            get => (IParseStringToObject?)this.GetValue(StringToObjectParserProperty);
             set => this.SetValue(StringToObjectParserProperty, value);
         }
 
@@ -361,9 +358,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the DisabledPopupOverlayContent
         /// </summary>
-        public object DisabledPopupOverlayContent
+        public object? DisabledPopupOverlayContent
         {
-            get => (object)this.GetValue(DisabledPopupOverlayContentProperty);
+            get => (object?)this.GetValue(DisabledPopupOverlayContentProperty);
             set => this.SetValue(DisabledPopupOverlayContentProperty, value);
         }
 
@@ -377,9 +374,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the DisabledPopupOverlayContentTemplate
         /// </summary>
-        public DataTemplate DisabledPopupOverlayContentTemplate
+        public DataTemplate? DisabledPopupOverlayContentTemplate
         {
-            get => (DataTemplate)this.GetValue(DisabledPopupOverlayContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(DisabledPopupOverlayContentTemplateProperty);
             set => this.SetValue(DisabledPopupOverlayContentTemplateProperty, value);
         }
 
@@ -393,9 +390,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the SelectedItemTemplate
         /// </summary>
-        public DataTemplate SelectedItemTemplate
+        public DataTemplate? SelectedItemTemplate
         {
-            get => (DataTemplate)this.GetValue(SelectedItemTemplateProperty);
+            get => (DataTemplate?)this.GetValue(SelectedItemTemplateProperty);
             set => this.SetValue(SelectedItemTemplateProperty, value);
         }
 
@@ -409,9 +406,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the SelectedItemTemplateSelector
         /// </summary>
-        public DataTemplateSelector SelectedItemTemplateSelector
+        public DataTemplateSelector? SelectedItemTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(SelectedItemTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(SelectedItemTemplateSelectorProperty);
             set => this.SetValue(SelectedItemTemplateSelectorProperty, value);
         }
 
@@ -425,9 +422,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the string format for the selected items
         /// </summary>
-        public string SelectedItemStringFormat
+        public string? SelectedItemStringFormat
         {
-            get => (string)this.GetValue(SelectedItemStringFormatProperty);
+            get => (string?)this.GetValue(SelectedItemStringFormatProperty);
             set => this.SetValue(SelectedItemStringFormatProperty, value);
         }
 
@@ -473,9 +470,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ItemsPanelTemplate"/> for the selected items.
         /// </summary>
-        public ItemsPanelTemplate SelectedItemsPanelTemplate
+        public ItemsPanelTemplate? SelectedItemsPanelTemplate
         {
-            get => (ItemsPanelTemplate)this.GetValue(SelectedItemsPanelTemplateProperty);
+            get => (ItemsPanelTemplate?)this.GetValue(SelectedItemsPanelTemplateProperty);
             set => this.SetValue(SelectedItemsPanelTemplateProperty, value);
         }
 
@@ -497,7 +494,6 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(SelectItemsFromTextInputDelayProperty, value);
         }
 
-
         /// <summary>Identifies the <see cref="InterceptKeyboardSelection"/> dependency property.</summary>
         public static readonly DependencyProperty InterceptKeyboardSelectionProperty
             = DependencyProperty.Register(nameof(InterceptKeyboardSelection),
@@ -506,8 +502,8 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
-        /// Gets or Sets if the user can select items from the keyborad, e.g. with the ▲ ▼ Keys. 
-        /// This property is only applied when the <see cref="SelectionMode"/> is <see cref="SelectionMode.Single"/>
+        /// Gets or Sets if the user can select items from the keyboard, e.g. with the ▲ ▼ Keys. 
+        /// This property is only applied when the <see cref="System.Windows.Controls.SelectionMode"/> is <see cref="System.Windows.Controls.SelectionMode.Single"/>
         /// </summary>
         public bool InterceptKeyboardSelection
         {
@@ -524,7 +520,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// Gets or Sets if the user can select items by mouse wheel. 
-        /// This property is only applied when the <see cref="SelectionMode"/> is <see cref="SelectionMode.Single"/>
+        /// This property is only applied when the <see cref="System.Windows.Controls.SelectionMode"/> is <see cref="System.Windows.Controls.SelectionMode.Single"/>
         /// </summary>
         public bool InterceptMouseWheelSelection
         {
@@ -537,14 +533,17 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void ResetEditableText()
         {
-            var oldSelectionStart = this.PART_EditableTextBox.SelectionStart;
-            var oldSelectionLength = this.PART_EditableTextBox.SelectionLength;
+            if (this.PART_EditableTextBox is not null)
+            {
+                var oldSelectionStart = this.PART_EditableTextBox.SelectionStart;
+                var oldSelectionLength = this.PART_EditableTextBox.SelectionLength;
 
-            this.SetValue(HasCustomTextPropertyKey, false);
-            this.UpdateEditableText();
+                this.SetValue(HasCustomTextPropertyKey, false);
+                this.UpdateEditableText();
 
-            this.PART_EditableTextBox.SelectionStart = oldSelectionStart;
-            this.PART_EditableTextBox.SelectionLength = oldSelectionLength;
+                this.PART_EditableTextBox.SelectionStart = oldSelectionStart;
+                this.PART_EditableTextBox.SelectionLength = oldSelectionLength;
+            }
         }
 
         #endregion
@@ -552,19 +551,19 @@ namespace MahApps.Metro.Controls
         #region Methods
 
         /// <summary>
-        /// Updates the Text of the editable Textbox.
+        /// Updates the Text of the editable TextBox.
         /// Sets the custom Text if any otherwise the concatenated string.
         /// </summary>
         private void UpdateEditableText(bool forceUpdate = false)
         {
-            if (this.PART_EditableTextBox is null || (PART_EditableTextBox.IsKeyboardFocused && !forceUpdate))
+            if (this.PART_EditableTextBox is null || (this.PART_EditableTextBox.IsKeyboardFocused && !forceUpdate))
             {
                 return;
             }
 
-            var oldSelectionStart = PART_EditableTextBox.SelectionStart;
-            var oldSelectionLength = PART_EditableTextBox.SelectionLength;
-            var oldTextLenth = PART_EditableTextBox.Text.Length;
+            var oldSelectionStart = this.PART_EditableTextBox.SelectionStart;
+            var oldSelectionLength = this.PART_EditableTextBox.SelectionLength;
+            var oldTextLength = this.PART_EditableTextBox.Text.Length;
 
             var selectedItemsText = this.GetSelectedItemsText();
 
@@ -575,19 +574,19 @@ namespace MahApps.Metro.Controls
 
             this.UpdateHasCustomText(selectedItemsText);
 
-            if (oldSelectionLength == oldTextLenth) // We had all Text selected, so we select all again
+            if (oldSelectionLength == oldTextLength) // We had all Text selected, so we select all again
             {
-                PART_EditableTextBox.SelectionStart = 0;
-                PART_EditableTextBox.SelectionLength = PART_EditableTextBox.Text.Length;
+                this.PART_EditableTextBox.SelectionStart = 0;
+                this.PART_EditableTextBox.SelectionLength = this.PART_EditableTextBox.Text.Length;
             }
-            else if (oldSelectionStart == oldTextLenth) // we had the cursor at the last position, so we move the cursor to the end again
+            else if (oldSelectionStart == oldTextLength) // we had the cursor at the last position, so we move the cursor to the end again
             {
-                PART_EditableTextBox.SelectionStart = PART_EditableTextBox.Text.Length;
+                this.PART_EditableTextBox.SelectionStart = this.PART_EditableTextBox.Text.Length;
             }
-            else // we retore the old selection
+            else // we restore the old selection
             {
-                PART_EditableTextBox.SelectionStart = oldSelectionStart;
-                PART_EditableTextBox.SelectionLength = oldSelectionLength;
+                this.PART_EditableTextBox.SelectionStart = oldSelectionStart;
+                this.PART_EditableTextBox.SelectionLength = oldSelectionLength;
             }
         }
 
@@ -596,7 +595,7 @@ namespace MahApps.Metro.Controls
             this.UpdateDisplaySelectedItems(this.OrderSelectedItemsBy);
         }
 
-        public string GetSelectedItemsText()
+        public string? GetSelectedItemsText()
         {
             switch (this.SelectionMode)
             {
@@ -613,16 +612,16 @@ namespace MahApps.Metro.Controls
 
                 case SelectionMode.Multiple:
                 case SelectionMode.Extended:
-                    IEnumerable<object> values;
+                    IEnumerable<object>? values;
 
                     if (this.ReadLocalValue(DisplayMemberPathProperty) != DependencyProperty.UnsetValue
                         || this.ReadLocalValue(SelectedItemStringFormatProperty) != DependencyProperty.UnsetValue)
                     {
-                        values = ((IEnumerable<object>)this.DisplaySelectedItems)?.Select(o => BindingHelper.Eval(o, this.DisplayMemberPath ?? string.Empty, this.SelectedItemStringFormat));
+                        values = this.DisplaySelectedItems?.OfType<object>().Select(o => BindingHelper.Eval(o, this.DisplayMemberPath ?? string.Empty, this.SelectedItemStringFormat)) as IEnumerable<object>;
                     }
                     else
                     {
-                        values = (IEnumerable<object>)this.DisplaySelectedItems;
+                        values = this.DisplaySelectedItems as IEnumerable<object>;
                     }
 
                     return values is null ? null : string.Join(this.Separator ?? string.Empty, values);
@@ -632,7 +631,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void UpdateHasCustomText(string selectedItemsText)
+        private void UpdateHasCustomText(string? selectedItemsText)
         {
             // if the parameter was null lets get the text on our own.
             selectedItemsText ??= this.GetSelectedItemsText();
@@ -646,7 +645,7 @@ namespace MahApps.Metro.Controls
             var displaySelectedItems = selectedItemsOrderType switch
             {
                 SelectedItemsOrderType.SelectedOrder => this.SelectedItems,
-                SelectedItemsOrderType.ItemsSourceOrder => ((IEnumerable<object>)this.SelectedItems).OrderBy(o => this.Items.IndexOf(o)),
+                SelectedItemsOrderType.ItemsSourceOrder => (this.SelectedItems as IEnumerable<object>)?.OrderBy(o => this.Items.IndexOf(o)),
                 _ => this.DisplaySelectedItems
             };
 
@@ -661,8 +660,8 @@ namespace MahApps.Metro.Controls
             }
 
             // We want to do a text reset or add items only if we don't need to wait for more input. 
-            shouldDoTextReset = millisecondsToWait == 0;
-            shouldAddItems = millisecondsToWait == 0;
+            this.shouldDoTextReset = millisecondsToWait == 0;
+            this.shouldAddItems = millisecondsToWait == 0;
 
             if (this._updateSelectedItemsFromTextTimer is null)
             {
@@ -675,20 +674,23 @@ namespace MahApps.Metro.Controls
                 this._updateSelectedItemsFromTextTimer.Stop();
             }
 
-            if (!(this.ObjectToStringComparer is null) && (!string.IsNullOrEmpty(this.Separator) || this.SelectionMode == SelectionMode.Single))
+            if (this.ObjectToStringComparer is not null && (!string.IsNullOrEmpty(this.Separator) || this.SelectionMode == SelectionMode.Single))
             {
                 this._updateSelectedItemsFromTextTimer.Interval = TimeSpan.FromMilliseconds(millisecondsToWait > 0 ? millisecondsToWait : 0);
                 this._updateSelectedItemsFromTextTimer.Start();
             }
         }
 
-
+#if NET5_0_OR_GREATER || NETCOREAPP
+        private void UpdateSelectedItemsFromTextTimer_Tick(object? sender, EventArgs e)
+#else
         private void UpdateSelectedItemsFromTextTimer_Tick(object sender, EventArgs e)
+#endif
         {
-            this._updateSelectedItemsFromTextTimer.Stop();
+            this._updateSelectedItemsFromTextTimer?.Stop();
 
             // We clear the selection if there is no text available. 
-            if (string.IsNullOrEmpty(this.Text) )
+            if (string.IsNullOrEmpty(this.Text))
             {
                 switch (this.SelectionMode)
                 {
@@ -697,7 +699,7 @@ namespace MahApps.Metro.Controls
                         break;
                     case SelectionMode.Multiple:
                     case SelectionMode.Extended:
-                        this.SelectedItems.Clear();
+                        this.SelectedItems?.Clear();
                         break;
                     default:
                         throw new NotSupportedException("Unknown SelectionMode");
@@ -711,63 +713,75 @@ namespace MahApps.Metro.Controls
             switch (this.SelectionMode)
             {
                 case SelectionMode.Single:
+                    this.SetCurrentValue(SelectedItemProperty, null);
+
                     foundItem = false;
-                    SetCurrentValue(SelectedItemProperty, null);
-                    for (int i = 0; i < Items.Count; i++)
+                    if (this.ObjectToStringComparer is not null)
                     {
-                        if (ObjectToStringComparer.CheckIfStringMatchesObject(Text, Items[i], EditableTextStringComparision, SelectedItemStringFormat))
+                        foreach (var item in this.Items)
                         {
-                            SetCurrentValue(SelectedItemProperty, Items[i]);
-                            foundItem = true;
-                            break;
+                            if (this.ObjectToStringComparer.CheckIfStringMatchesObject(this.Text, item, this.EditableTextStringComparision, this.SelectedItemStringFormat))
+                            {
+                                this.SetCurrentValue(SelectedItemProperty, item);
+                                foundItem = true;
+                                break;
+                            }
                         }
                     }
 
                     if (!foundItem)
                     {
                         // We try to add a new item. If we were able to do so we need to update the text as it may differ. 
-                        if (shouldAddItems && TryAddObjectFromString(Text, out object result))
+                        if (this.shouldAddItems && this.TryAddObjectFromString(this.Text, out var result))
                         {
-                            SelectedItem = result;
+                            this.SetCurrentValue(SelectedItemProperty, result);
                         }
                         else
                         {
-                            shouldDoTextReset = false; // We did not find the needed item so we should not do the text reset.
+                            this.shouldDoTextReset = false; // We did not find the needed item so we should not do the text reset.
                         }
                     }
+
                     break;
 
                 case SelectionMode.Multiple:
                 case SelectionMode.Extended:
+                    var strings = !string.IsNullOrEmpty(this.Separator) ? this.Text?.Split(new[] { this.Separator }, StringSplitOptions.RemoveEmptyEntries) : null;
 
-                    var strings = Text.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
-
-                    SelectedItems.Clear();
-
-                    for (int i = 0; i < strings.Length; i++)
+                    // clear items here, so we can use the text before.
+                    this.SelectedItems?.Clear();
+                    
+                    if (strings is not null)
                     {
-                        foundItem = false;
-                        for (int j = 0; j < Items.Count; j++)
+                        foreach (var stringObject in strings)
                         {
-                            if (ObjectToStringComparer.CheckIfStringMatchesObject(strings[i], Items[j], EditableTextStringComparision, SelectedItemStringFormat))
+                            foundItem = false;
+                            if (this.ObjectToStringComparer is not null)
                             {
-                                SelectedItems.Add(Items[j]);
-                                foundItem = true;
+                                foreach (var item in this.Items)
+                                {
+                                    if (this.ObjectToStringComparer.CheckIfStringMatchesObject(stringObject, item, this.EditableTextStringComparision, this.SelectedItemStringFormat))
+                                    {
+                                        this.SelectedItems?.Add(item);
+                                        foundItem = true;
+                                    }
+                                }
                             }
-                        }
 
-                        if (!foundItem)
-                        {
-                            if (shouldAddItems && TryAddObjectFromString(strings[i], out object result))
+                            if (!foundItem)
                             {
-                                SelectedItems.Add(result);
-                            }
-                            else
-                            {
-                                shouldDoTextReset = false;
+                                if (this.shouldAddItems && this.TryAddObjectFromString(stringObject, out var result))
+                                {
+                                    this.SelectedItems?.Add(result);
+                                }
+                                else
+                                {
+                                    this.shouldDoTextReset = false;
+                                }
                             }
                         }
                     }
+
                     break;
 
                 default:
@@ -778,45 +792,48 @@ namespace MahApps.Metro.Controls
             this.UpdateDisplaySelectedItems(SelectedItemsOrderType.SelectedOrder);
             this.UpdateHasCustomText(null);
 
-            // If the items should be ordered differntly than above we need to reoder them accordingly.
+            // If the items should be ordered differently than above we need to reorder them accordingly.
             if (this.OrderSelectedItemsBy != SelectedItemsOrderType.SelectedOrder)
             {
                 this.UpdateDisplaySelectedItems();
             }
 
-            // We do a text reset if all items were successfully found and we don't have to wait for more input.
-            if (shouldDoTextReset)
+            if (this.PART_EditableTextBox is not null)
             {
-                var oldCaretPos = this.PART_EditableTextBox.CaretIndex;
-                this.ResetEditableText();
-                this.PART_EditableTextBox.CaretIndex = oldCaretPos;
-            }
+                // We do a text reset if all items were successfully found and we don't have to wait for more input.
+                if (this.shouldDoTextReset)
+                {
+                    var oldCaretPos = this.PART_EditableTextBox.CaretIndex;
+                    this.ResetEditableText();
+                    this.PART_EditableTextBox.CaretIndex = oldCaretPos;
+                }
 
-            // If we have the KeyboardFocus we need to update the text later in order to not inerrupt the user.
-            // Therefore we connect this flag to the KeyboardFocus of the TextBox.
-            this.isUserdefinedTextInputPending = PART_EditableTextBox.IsKeyboardFocused;
+                // If we have the KeyboardFocus we need to update the text later in order to not interrupt the user.
+                // Therefore we connect this flag to the KeyboardFocus of the TextBox.
+                this.isUserdefinedTextInputPending = this.PART_EditableTextBox.IsKeyboardFocused;
+            }
         }
 
-        private bool TryAddObjectFromString(string input, out object result)
+        private bool TryAddObjectFromString(string? input, out object? result)
         {
             try
             {
-                if (StringToObjectParser is null)
+                if (this.StringToObjectParser is null)
                 {
                     result = null;
                     return false;
                 }
 
-                var elementType = BuiltInStringToObjectParser.Instance.GetElementType(ItemsSource);
+                var elementType = BuiltInStringToObjectParser.Instance.GetElementType(this.ItemsSource);
 
                 var foundItem = this.StringToObjectParser.TryCreateObjectFromString(input, out result, this.Language.GetEquivalentCulture(), this.SelectedItemStringFormat, elementType);
 
-                var addingItemEventArgs = new AddingItemEventArgs(AddingItemEvent, 
-                                                                  this, 
+                var addingItemEventArgs = new AddingItemEventArgs(AddingItemEvent,
+                                                                  this,
                                                                   input,
                                                                   result,
                                                                   foundItem,
-                                                                  this.ReadLocalValue(ItemsSourceProperty) == DependencyProperty.UnsetValue ? this.ItemsSource as IList : this.ItemsSource as IList,
+                                                                  this.ItemsSource as IList,
                                                                   elementType,
                                                                   this.SelectedItemStringFormat,
                                                                   this.Language.GetEquivalentCulture(),
@@ -829,10 +846,10 @@ namespace MahApps.Metro.Controls
                     addingItemEventArgs.Accepted = false;
                 }
 
-                // If the adding event was not handled and the item is markeed as accepted and we are allowed to modify the items list we can add the pared item
+                // If the adding event was not handled and the item is marked as accepted and we are allowed to modify the items list we can add the pared item
                 if (addingItemEventArgs.Accepted && (!addingItemEventArgs.TargetList?.IsReadOnly ?? false))
                 {
-                    addingItemEventArgs.TargetList.Add(addingItemEventArgs.ParsedObject);
+                    addingItemEventArgs.TargetList?.Add(addingItemEventArgs.ParsedObject);
 
                     this.RaiseEvent(new AddedItemEventArgs(AddedItemEvent, this, addingItemEventArgs.ParsedObject, addingItemEventArgs.TargetList));
                 }
@@ -872,7 +889,7 @@ namespace MahApps.Metro.Controls
                             break;
                         case SelectionMode.Multiple:
                         case SelectionMode.Extended:
-                            multiSelectionCombo.SelectedItems.Clear();
+                            multiSelectionCombo.SelectedItems?.Clear();
                             break;
                         default:
                             throw new NotSupportedException("Unknown SelectionMode");
@@ -886,7 +903,7 @@ namespace MahApps.Metro.Controls
             e.CanExecute = false;
             if (sender is MultiSelectionComboBox multiSelectionComboBox)
             {
-                e.CanExecute = !string.IsNullOrEmpty(multiSelectionComboBox.Text) || multiSelectionComboBox.SelectedItems.Count > 0;
+                e.CanExecute = !string.IsNullOrEmpty(multiSelectionComboBox.Text) || multiSelectionComboBox.SelectedItems?.Count > 0;
             }
         }
 
@@ -902,7 +919,7 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
-                if (multiSelectionCombo.SelectedItems.Contains(e.Parameter))
+                if (multiSelectionCombo.SelectedItems is not null && multiSelectionCombo.SelectedItems.Contains(e.Parameter))
                 {
                     multiSelectionCombo.SelectedItems.Remove(e.Parameter);
                 }
@@ -927,52 +944,28 @@ namespace MahApps.Metro.Controls
             base.OnApplyTemplate();
 
             // Init SelectedItemsPresenter
-            this.PART_SelectedItemsPresenter = this.GetTemplateChild(nameof(this.PART_SelectedItemsPresenter)) as ListBox;
+            var selectedItemsPresenterName = nameof(this.PART_SelectedItemsPresenter);
+            this.PART_SelectedItemsPresenter = this.GetTemplateChild(selectedItemsPresenterName) as ListBox ?? throw new MissingRequiredTemplatePartException(this, selectedItemsPresenterName);
 
-            if (!(this.PART_SelectedItemsPresenter is null))
-            {
-                this.PART_SelectedItemsPresenter.MouseLeftButtonUp -= this.PART_SelectedItemsPresenter_MouseLeftButtonUp;
-                this.PART_SelectedItemsPresenter.SelectionChanged -= this.PART_SelectedItemsPresenter_SelectionChanged;
-
-                this.PART_SelectedItemsPresenter.MouseLeftButtonUp += this.PART_SelectedItemsPresenter_MouseLeftButtonUp;
-                this.PART_SelectedItemsPresenter.SelectionChanged += this.PART_SelectedItemsPresenter_SelectionChanged;
-            }
-            else
-            {
-                throw new MahAppsException($"The template part \"{nameof(this.PART_SelectedItemsPresenter)}\" could not be found.");
-            }
+            this.PART_SelectedItemsPresenter.MouseLeftButtonUp -= this.PART_SelectedItemsPresenter_MouseLeftButtonUp;
+            this.PART_SelectedItemsPresenter.MouseLeftButtonUp += this.PART_SelectedItemsPresenter_MouseLeftButtonUp;
+            this.PART_SelectedItemsPresenter.SelectionChanged -= this.PART_SelectedItemsPresenter_SelectionChanged;
+            this.PART_SelectedItemsPresenter.SelectionChanged += this.PART_SelectedItemsPresenter_SelectionChanged;
 
             // Init EditableTextBox
-            this.PART_EditableTextBox = this.GetTemplateChild(nameof(this.PART_EditableTextBox)) as TextBox;
+            this.PART_EditableTextBox = this.GetTemplateChild(nameof(PART_EditableTextBox)) as TextBox ?? throw new MissingRequiredTemplatePartException(this, nameof(PART_EditableTextBox));
 
-            if (!(this.PART_EditableTextBox is null))
-            {
-                this.PART_EditableTextBox.LostFocus -= this.PART_EditableTextBox_LostFocus;
-                this.PART_EditableTextBox.LostFocus += this.PART_EditableTextBox_LostFocus;
-            }
-            else
-            {
-                throw new MahAppsException($"The template part \"{nameof(this.PART_EditableTextBox)}\" could not be found.");
-            }
+            this.PART_EditableTextBox.LostFocus -= this.PART_EditableTextBox_LostFocus;
+            this.PART_EditableTextBox.LostFocus += this.PART_EditableTextBox_LostFocus;
 
             // Init Popup
-            this.PART_Popup = this.GetTemplateChild(nameof(this.PART_Popup)) as Popup;
+            this.PART_Popup = this.GetTemplateChild(nameof(PART_Popup)) as Popup ?? throw new MissingRequiredTemplatePartException(this, nameof(PART_Popup));
+            this.PART_PopupListBox = this.GetTemplateChild(nameof(PART_PopupListBox)) as ListBox ?? throw new MissingRequiredTemplatePartException(this, nameof(PART_PopupListBox));
 
-            if (this.PART_Popup is null)
+            if (this.PART_PopupListBox.SelectedItems is INotifyCollectionChanged selectedItemsCollection)
             {
-                throw new MahAppsException($"The template part \"{nameof(this.PART_Popup)}\" could not be found.");
-            }
-
-            this.PART_PopupListBox = this.GetTemplateChild(nameof(this.PART_PopupListBox)) as ListBox;
-
-            if (!(this.PART_PopupListBox is null) && this.PART_PopupListBox.SelectedItems is INotifyCollectionChanged selectedItemsCollection)
-            {
-                selectedItemsCollection.CollectionChanged -= PART_PopupListBox_SelectedItems_CollectionChanged;
-                selectedItemsCollection.CollectionChanged += PART_PopupListBox_SelectedItems_CollectionChanged;
-            }
-            else
-            {
-                throw new MahAppsException($"The template part \"{nameof(this.PART_PopupListBox)}\" could not be found.");
+                selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged;
+                selectedItemsCollection.CollectionChanged += this.PART_PopupListBox_SelectedItems_CollectionChanged;
             }
 
             // Do update the text 
@@ -980,9 +973,13 @@ namespace MahApps.Metro.Controls
             this.UpdateEditableText(true);
         }
 
+#if NET5_0_OR_GREATER
+        private void PART_PopupListBox_SelectedItems_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
         private void PART_PopupListBox_SelectedItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
         {
-            SyncSelectedItems(PART_PopupListBox.SelectedItems, SelectedItems, e);
+            this.SyncSelectedItems(this.PART_PopupListBox?.SelectedItems, this.SelectedItems, e);
         }
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
@@ -990,6 +987,26 @@ namespace MahApps.Metro.Controls
             base.OnSelectionChanged(e);
             this.UpdateEditableText();
             this.UpdateDisplaySelectedItems();
+        }
+
+        private void MultiSelectionComboBox_Loaded(object sender, EventArgs e)
+        {
+            this.Loaded -= this.MultiSelectionComboBox_Loaded;
+
+            if (this.PART_PopupListBox is not null)
+            {
+                // If we have the ItemsSource set, we need to exit here. 
+                if (((this.PART_PopupListBox.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this.PART_PopupListBox, ItemsSourceProperty))
+                {
+                    return;
+                }
+
+                this.PART_PopupListBox.Items.Clear();
+                foreach (var item in this.Items)
+                {
+                    this.PART_PopupListBox.Items.Add(item);
+                }
+            }
         }
 
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
@@ -1003,7 +1020,7 @@ namespace MahApps.Metro.Controls
             }
 
             // If we have the ItemsSource set, we need to exit here. 
-            if (((PART_PopupListBox?.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this, ItemsSourceProperty))
+            if (this.PART_PopupListBox is null || ((this.PART_PopupListBox.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this.PART_PopupListBox, ItemsSourceProperty))
             {
                 return;
             }
@@ -1011,17 +1028,23 @@ namespace MahApps.Metro.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (var item in e.NewItems)
+                    if (e.NewItems is not null)
                     {
-                        this.PART_PopupListBox.Items.Add(item);
+                        foreach (var item in e.NewItems)
+                        {
+                            this.PART_PopupListBox.Items.Add(item);
+                        }
                     }
 
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    foreach (var item in e.OldItems)
+                    if (e.OldItems is not null)
                     {
-                        this.PART_PopupListBox.Items.Remove(item);
+                        foreach (var item in e.OldItems)
+                        {
+                            this.PART_PopupListBox.Items.Remove(item);
+                        }
                     }
 
                     break;
@@ -1045,18 +1068,17 @@ namespace MahApps.Metro.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
 
-            // For now we only want to update our poition if the height changed. Else we will get a flickering in SharedGridColumns
-            if (this.IsDropDownOpen && sizeInfo.HeightChanged && !(this.PART_Popup is null))
+            // For now we only want to update our position if the height changed. Else we will get a flickering in SharedGridColumns
+            if (this.IsDropDownOpen && sizeInfo.HeightChanged)
             {
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                                            (DispatcherOperationCallback)((object arg) =>
-                                                {
-                                                    MultiSelectionComboBox mscb = (MultiSelectionComboBox)arg;
-                                                    mscb.PART_Popup.HorizontalOffset++;
-                                                    mscb.PART_Popup.HorizontalOffset--;
-
-                                                    return null;
-                                                }), this);
+                this.BeginInvoke(multiSelectionComboBox =>
+                    {
+                        if (multiSelectionComboBox.PART_Popup is not null)
+                        {
+                            multiSelectionComboBox.PART_Popup.HorizontalOffset++;
+                            multiSelectionComboBox.PART_Popup.HorizontalOffset--;
+                        }
+                    });
             }
         }
 
@@ -1064,14 +1086,17 @@ namespace MahApps.Metro.Controls
         {
             base.OnDropDownOpened(e);
 
-            this.PART_PopupListBox.Focus();
-
-            if (this.PART_PopupListBox.Items.Count == 0)
+            if (this.PART_PopupListBox is not null)
             {
-                return;
+                this.PART_PopupListBox.Focus();
+
+                if (this.PART_PopupListBox.Items.Count == 0)
+                {
+                    return;
+                }
             }
 
-            MoveFocusToDropDown();
+            this.MoveFocusToDropDown();
 
             this.SelectItemsFromText(0);
         }
@@ -1081,33 +1106,38 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private void MoveFocusToDropDown()
         {
+            if (this.PART_PopupListBox is null || this.PART_Popup is null)
+            {
+                return;
+            }
+
             var index = this.PART_PopupListBox.SelectedIndex;
             if (index < 0)
             {
                 index = 0;
             }
 
-            Action action = () =>
-            {
-                ListBoxItem item = null;
-                if (index >= 0)
-                {
-                    PART_PopupListBox.ScrollIntoView(PART_PopupListBox.Items[index]);
-                    item = this.PART_PopupListBox.ItemContainerGenerator.ContainerFromIndex(index) as ListBoxItem;
-                }
+            this.BeginInvoke(() =>
+                                 {
+                                     ListBoxItem? item = null;
+                                     if (index >= 0)
+                                     {
+                                         this.PART_PopupListBox.ScrollIntoView(this.PART_PopupListBox.Items[index]);
+                                         item = this.PART_PopupListBox.ItemContainerGenerator.ContainerFromIndex(index) as ListBoxItem;
+                                     }
 
-                if (item != null)
-                {
-                    item.Focus();
-                    KeyboardNavigationEx.Focus(item);
-                    this.PART_PopupListBox.ScrollIntoView(item);
-                }
-                else
-                {
-                    this.PART_Popup.Focus();
-                }
-            };
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+                                     if (item is not null)
+                                     {
+                                         item.Focus();
+                                         KeyboardNavigationEx.Focus(item);
+                                         this.PART_PopupListBox.ScrollIntoView(item);
+                                     }
+                                     else
+                                     {
+                                         this.PART_Popup.Focus();
+                                     }
+                                 },
+                             DispatcherPriority.Send);
         }
 
         /// <summary>
@@ -1126,7 +1156,12 @@ namespace MahApps.Metro.Controls
 
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
-            if (this.IsEditable && !this.IsDropDownOpen && !(this.PART_EditableTextBox is null) && !this.InterceptKeyboardSelection)
+            if (this.PART_PopupListBox is null || this.PART_EditableTextBox is null)
+            {
+                return;
+            }
+
+            if (this.IsEditable && !this.IsDropDownOpen && !this.InterceptKeyboardSelection)
             {
                 if (this.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled && ScrollViewerHelper.GetIsHorizontalScrollWheelEnabled(this))
                 {
@@ -1151,9 +1186,9 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
-            else if (! IsEditable && !this.IsDropDownOpen && !(this.PART_SelectedItemsPresenter is null) && !this.InterceptMouseWheelSelection)
+            else if (!this.IsEditable && !this.IsDropDownOpen && !this.InterceptMouseWheelSelection)
             {
-                var scrollViewer = PART_SelectedItemsPresenter.FindChild<ScrollViewer>();
+                var scrollViewer = this.PART_SelectedItemsPresenter.FindChild<ScrollViewer>();
                 if (scrollViewer?.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled && ScrollViewerHelper.GetIsHorizontalScrollWheelEnabled(this))
                 {
                     if (e.Delta > 0)
@@ -1201,9 +1236,9 @@ namespace MahApps.Metro.Controls
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             // Only process preview key events if they going to our editable text box
-            if (IsEditable && e.OriginalSource == PART_EditableTextBox)
+            if (this.IsEditable && this.PART_EditableTextBox is not null && ReferenceEquals(e.OriginalSource, this.PART_EditableTextBox))
             {
-                KeyDownHandler(e);
+                this.KeyDownHandler(e);
             }
         }
 
@@ -1212,13 +1247,13 @@ namespace MahApps.Metro.Controls
         /// </summary>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            KeyDownHandler(e);
+            this.KeyDownHandler(e);
         }
 
         private void KeyDownHandler(KeyEventArgs e)
         {
-            bool handled = false;
-            Key key = e.Key;
+            var handled = false;
+            var key = e.Key;
 
             // We want to handle Alt key. Get the real key if it is Key.System.
             if (key == Key.System)
@@ -1227,7 +1262,7 @@ namespace MahApps.Metro.Controls
             }
 
             // In Right to Left mode we switch Right and Left keys
-            bool isRTL = (FlowDirection == FlowDirection.RightToLeft);
+            var isRightToLeft = (this.FlowDirection == FlowDirection.RightToLeft);
 
             switch (key)
             {
@@ -1241,11 +1276,11 @@ namespace MahApps.Metro.Controls
                     {
                         // When the drop down isn't open then focus is on the ComboBox
                         // and we can't use KeyboardNavigation.
-                        if (IsDropDownOpen)
+                        if (this.IsDropDownOpen)
                         {
-                            MoveFocusToDropDown();
+                            this.MoveFocusToDropDown();
                         }
-                        else if (!IsDropDownOpen && InterceptKeyboardSelection && SelectionMode == SelectionMode.Single)
+                        else if (!this.IsDropDownOpen && this.InterceptKeyboardSelection && this.SelectionMode == SelectionMode.Single)
                         {
                             this.SelectPrev();
                         }
@@ -1263,11 +1298,11 @@ namespace MahApps.Metro.Controls
                     {
                         // When the drop down isn't open then focus is on the ComboBox
                         // and we can't use KeyboardNavigation.
-                        if (IsDropDownOpen)
+                        if (this.IsDropDownOpen)
                         {
-                            MoveFocusToDropDown();
+                            this.MoveFocusToDropDown();
                         }
-                        else if (!IsDropDownOpen && InterceptKeyboardSelection && SelectionMode == SelectionMode.Single)
+                        else if (!this.IsDropDownOpen && this.InterceptKeyboardSelection && this.SelectionMode == SelectionMode.Single)
                         {
                             this.SelectNext();
                         }
@@ -1281,6 +1316,7 @@ namespace MahApps.Metro.Controls
                         this.IsDropDownOpen = !this.IsDropDownOpen;
                         handled = true;
                     }
+
                     break;
 
                 case Key.Escape:
@@ -1288,94 +1324,105 @@ namespace MahApps.Metro.Controls
                     break;
 
                 case Key.Enter:
-                    if (IsDropDownOpen)
+                    if (this.IsDropDownOpen)
                     {
                         base.OnKeyDown(e);
                     }
+
                     break;
 
                 case Key.Home:
-                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !IsEditable)
+                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !this.IsEditable)
                     {
-                        if (!IsDropDownOpen && InterceptKeyboardSelection && SelectionMode == SelectionMode.Single) 
-                        { 
-                            SelectFirst();
+                        if (!this.IsDropDownOpen && this.InterceptKeyboardSelection && this.SelectionMode == SelectionMode.Single)
+                        {
+                            this.SelectFirst();
                         }
+
                         handled = true;
                     }
+
                     break;
 
                 case Key.End:
-                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !IsEditable)
+                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !this.IsEditable)
                     {
-                        if (!IsDropDownOpen && InterceptKeyboardSelection && SelectionMode == SelectionMode.Single)
+                        if (!this.IsDropDownOpen && this.InterceptKeyboardSelection && this.SelectionMode == SelectionMode.Single)
                         {
-                            SelectLast();
+                            this.SelectLast();
                         }
+
                         handled = true;
                     }
+
                     break;
 
                 case Key.Right:
-                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !IsEditable)
+                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !this.IsEditable)
                     {
-                        if (IsDropDownOpen)
+                        if (this.IsDropDownOpen)
                         {
-                            MoveFocusToDropDown();
+                            this.MoveFocusToDropDown();
                         }
                         else
                         {
-                            if (!isRTL)
+                            if (!isRightToLeft)
                             {
-                                SelectNext();
+                                this.SelectNext();
                             }
-                            else if (!IsDropDownOpen && InterceptKeyboardSelection && SelectionMode == SelectionMode.Single)
+                            else if (!this.IsDropDownOpen && this.InterceptKeyboardSelection && this.SelectionMode == SelectionMode.Single)
                             {
                                 // If it's RTL then Right should go backwards
-                                SelectPrev();
+                                this.SelectPrev();
                             }
                         }
+
                         handled = true;
                     }
+
                     break;
 
                 case Key.Left:
-                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !IsEditable)
+                    if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt && !this.IsEditable)
                     {
-                        if (IsDropDownOpen)
+                        if (this.IsDropDownOpen)
                         {
-                            MoveFocusToDropDown();
+                            this.MoveFocusToDropDown();
                         }
-                        else if (!IsDropDownOpen && InterceptKeyboardSelection && SelectionMode == SelectionMode.Single)
+                        else if (!this.IsDropDownOpen && this.InterceptKeyboardSelection && this.SelectionMode == SelectionMode.Single)
                         {
-                            if (!isRTL)
+                            if (!isRightToLeft)
                             {
-                                SelectPrev();
+                                this.SelectPrev();
                             }
                             else
                             {
                                 // If it's RTL then Left should go the other direction
-                                SelectNext();
+                                this.SelectNext();
                             }
                         }
+
                         handled = true;
                     }
+
                     break;
 
                 case Key.PageUp:
-                    if (IsDropDownOpen)
+                    if (this.IsDropDownOpen)
                     {
                         // At the moment this feature is not implemented for this control.
                         handled = true;
                     }
+
                     break;
 
                 case Key.PageDown:
-                    if (IsDropDownOpen)
+                    if (this.IsDropDownOpen)
                     {
                         // At the moment this feature is not implemented for this control.
                         handled = true;
                     }
+
                     break;
 
                 case Key.Oem5:
@@ -1384,12 +1431,14 @@ namespace MahApps.Metro.Controls
                         // At the moment this feature is not implemented for this control.
                         handled = true;
                     }
+
                     break;
 
                 default:
                     handled = false;
                     break;
             }
+
             if (handled)
             {
                 e.Handled = true;
@@ -1399,30 +1448,29 @@ namespace MahApps.Metro.Controls
         // adopted from original ComoBox
         private void SelectPrev()
         {
-            if (!Items.IsEmpty)
+            if (!this.Items.IsEmpty)
             {
                 // Search backwards from SelectedIndex - 1 but don't start before the beginning.
                 // If SelectedIndex is less than 0, there is nothing to select before this item.
-                if (SelectedIndex > 0)
+                if (this.SelectedIndex > 0)
                 {
-                    SelectItemHelper(SelectedIndex - 1, -1, -1);
+                    this.SelectItemHelper(this.SelectedIndex - 1, -1, -1);
                 }
             }
         }
 
-
         // adopted from original ComoBox
         private void SelectNext()
         {
-            int count = Items.Count;
+            var count = this.Items.Count;
             if (count > 0)
             {
                 // Search forwards from SelectedIndex + 1 but don't start past the end.
                 // If SelectedIndex is before the last item then there is potentially
                 // something afterwards that we could select.
-                if (SelectedIndex < count - 1)
+                if (this.SelectedIndex < count - 1)
                 {
-                    SelectItemHelper(SelectedIndex + 1, +1, count);
+                    this.SelectItemHelper(this.SelectedIndex + 1, +1, count);
                 }
             }
         }
@@ -1430,13 +1478,13 @@ namespace MahApps.Metro.Controls
         // adopted from original ComoBox
         private void SelectFirst()
         {
-            SelectItemHelper(0, +1, Items.Count);
+            this.SelectItemHelper(0, +1, this.Items.Count);
         }
 
         // adopted from original ComoBox
         private void SelectLast()
         {
-            SelectItemHelper(Items.Count - 1, -1, -1);
+            this.SelectItemHelper(this.Items.Count - 1, -1, -1);
         }
 
         // adopted from original ComoBox
@@ -1447,17 +1495,17 @@ namespace MahApps.Metro.Controls
         {
             Debug.Assert((increment > 0 && startIndex <= stopIndex) || (increment < 0 && startIndex >= stopIndex), "Infinite loop detected");
 
-            for (int i = startIndex; i != stopIndex; i += increment)
+            for (var i = startIndex; i != stopIndex; i += increment)
             {
                 // If the item is selectable and the wrapper is selectable, select it.
                 // Need to check both because the user could set any combination of
                 // IsSelectable and IsEnabled on the item and wrapper.
-                object item = Items[i];
-                DependencyObject container = ItemContainerGenerator.ContainerFromIndex(i);
-                if (IsSelectableHelper(item) && IsSelectableHelper(container))
+                var item = this.Items[i];
+                var container = this.ItemContainerGenerator.ContainerFromIndex(i);
+                if (this.IsSelectableHelper(item) && this.IsSelectableHelper(container))
                 {
-                    SelectedIndex = i;
-                    UpdateEditableText(true); // We force the update of the text
+                    this.SelectedIndex = i;
+                    this.UpdateEditableText(true); // We force the update of the text
                     this.isUserdefinedTextInputPending = false;
                     break;
                 }
@@ -1467,13 +1515,14 @@ namespace MahApps.Metro.Controls
         // adopted from original ComoBox
         private bool IsSelectableHelper(object o)
         {
-            DependencyObject d = o as DependencyObject;
+            var d = o as DependencyObject;
             // If o is not a DependencyObject, it is just a plain
             // object and must be selectable and enabled.
             if (d == null)
             {
                 return true;
             }
+
             // It's selectable if IsSelectable is true and IsEnabled is true.
             return (bool)d.GetValue(IsEnabledProperty);
         }
@@ -1482,79 +1531,117 @@ namespace MahApps.Metro.Controls
 
         #region Events
 
+#if NET5_0_OR_GREATER
+        private void SelectedItemsImpl_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
         private void SelectedItemsImpl_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
         {
-
-            SyncSelectedItems(sender as IList, PART_PopupListBox?.SelectedItems, e);
+            this.SyncSelectedItems(sender as IList, this.PART_PopupListBox?.SelectedItems, e);
         }
 
-
-        private void SyncSelectedItems(IList sourceCollection, IList targetCollection, NotifyCollectionChangedEventArgs e)
+        private void SyncSelectedItems(IList? sourceCollection, IList? targetCollection, NotifyCollectionChangedEventArgs e)
         {
-            if (IsSyncingSelectedItems || sourceCollection is null || targetCollection is null)
+            if (this.IsSyncingSelectedItems || sourceCollection is null || targetCollection is null)
             {
                 return;
             }
 
-            IsSyncingSelectedItems = true;
+            this.IsSyncingSelectedItems = true;
 
-            switch (e.Action)
+            try
             {
-                case NotifyCollectionChangedAction.Add:
-                    foreach (var item in e.NewItems)
-                    {
-                        targetCollection.Add(item);
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    foreach (var item in e.OldItems)
-                    {
-                        targetCollection.Remove(item);
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    foreach (var item in e.NewItems)
-                    {
-                        targetCollection.Add(item);
-                    }
-                    foreach (var item in e.OldItems)
-                    {
-                        targetCollection.Remove(item);
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    targetCollection.Clear();
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        if (e.NewItems is not null)
+                        {
+                            foreach (var item in e.NewItems)
+                            {
+                                targetCollection.Add(item);
+                            }
+                        }
 
-                    for (int i = 0; i < sourceCollection.Count; i++)
-                    {
-                        targetCollection.Add(sourceCollection[i]);
-                    }
-                    break;
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+                        if (e.OldItems is not null)
+                        {
+                            foreach (var item in e.OldItems)
+                            {
+                                targetCollection.Remove(item);
+                            }
+                        }
+
+                        break;
+                    case NotifyCollectionChangedAction.Replace:
+                        if (e.NewItems is not null)
+                        {
+                            foreach (var item in e.NewItems)
+                            {
+                                targetCollection.Add(item);
+                            }
+                        }
+
+                        if (e.OldItems is not null)
+                        {
+                            foreach (var item in e.OldItems)
+                            {
+                                targetCollection.Remove(item);
+                            }
+                        }
+
+                        break;
+                    case NotifyCollectionChangedAction.Move:
+                        if (e.OldItems is not null)
+                        {
+                            var itemCount = e.OldItems.Count;
+
+                            // for the number of items being removed, remove the item from the Old Starting Index
+                            // (this will cause following items to be shifted down to fill the hole).
+                            for (var i = 0; i < itemCount; i++)
+                            {
+                                targetCollection.RemoveAt(e.OldStartingIndex);
+                            }
+                        }
+
+                        if (e.NewItems is not null)
+                        {
+                            var itemCount = e.NewItems.Count;
+
+                            for (var i = 0; i < itemCount; i++)
+                            {
+                                var insertionPoint = e.NewStartingIndex + i;
+
+                                if (insertionPoint > targetCollection.Count)
+                                {
+                                    targetCollection.Add(e.NewItems[i]);
+                                }
+                                else
+                                {
+                                    targetCollection.Insert(insertionPoint, e.NewItems[i]);
+                                }
+                            }
+                        }
+
+                        break;
+                    case NotifyCollectionChangedAction.Reset:
+                        targetCollection.Clear();
+
+                        foreach (var item in sourceCollection)
+                        {
+                            targetCollection.Add(item);
+                        }
+
+                        break;
+                }
+
+                this.UpdateDisplaySelectedItems();
+                this.UpdateEditableText();
+                this.UpdateHasCustomText(null);
             }
-
-            this.UpdateDisplaySelectedItems();
-            this.UpdateEditableText();
-            this.UpdateHasCustomText(null);
-
-            IsSyncingSelectedItems = false;
-        }
-
-        private void MultiSelectionComboBox_Loaded(object sender, EventArgs e)
-        {
-            this.Loaded -= this.MultiSelectionComboBox_Loaded;
-
-            // If we have the ItemsSource set, we need to exit here. 
-            if (PART_PopupListBox is null || ((PART_PopupListBox?.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(PART_PopupListBox, ItemsSourceProperty))
+            finally
             {
-                return;
-            }
-
-            this.PART_PopupListBox.Items.Clear();
-            foreach (var item in this.Items)
-            {
-                this.PART_PopupListBox.Items.Add(item);
+                this.IsSyncingSelectedItems = false;
             }
         }
 
@@ -1571,8 +1658,8 @@ namespace MahApps.Metro.Controls
 
         private void PART_SelectedItemsPresenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // We don't want the SelctedItems to be selectable. So anytime the selection will be changed we will reset it. 
-            this.PART_SelectedItemsPresenter.SetCurrentValue(SelectedItemProperty, null);
+            // We don't want the SelectedItems to be selectable. So anytime the selection will be changed we will reset it. 
+            this.PART_SelectedItemsPresenter?.SetCurrentValue(SelectedItemProperty, null);
         }
 
         private static void UpdateText(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1616,8 +1703,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event AddingItemEventArgsHandler AddingItem
         {
-            add { AddHandler(AddingItemEvent, value); }
-            remove { RemoveHandler(AddingItemEvent, value); }
+            add => this.AddHandler(AddingItemEvent, value);
+            remove => this.RemoveHandler(AddingItemEvent, value);
         }
 
         /// <summary>Identifies the <see cref="AddedItem"/> routed event.</summary>
@@ -1629,8 +1716,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event AddedItemEventArgsHandler AddedItem
         {
-            add { AddHandler(AddedItemEvent, value); }
-            remove { RemoveHandler(AddedItemEvent, value); }
+            add => this.AddHandler(AddedItemEvent, value);
+            remove => this.RemoveHandler(AddedItemEvent, value);
         }
 
         #endregion

@@ -37,7 +37,7 @@ namespace MahApps.Metro.Controls.Helper
         /// <param name="source">the object to evaluate</param>
         /// <param name="expression">the binding expression to evaluate</param>
         /// <returns>the result of the <see cref="Binding"/></returns>
-        public static object Eval(object source, string expression)
+        public static object? Eval(object? source, string? expression)
         {
             Binding binding = new Binding(expression) { Source = source };
             return Eval(binding);
@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls.Helper
         /// <param name="expression">the binding expression to evaluate</param>
         /// <param name="format">the string format to use</param>
         /// <returns>the result of the <see cref="Binding"/></returns>
-        public static object Eval(object source, string expression, string format)
+        public static object? Eval(object? source, string? expression, string? format)
         {
             Binding binding = new Binding(expression) { Source = source, StringFormat = format };
             return Eval(binding);
@@ -62,7 +62,7 @@ namespace MahApps.Metro.Controls.Helper
         /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
         /// <param name="source">the object to evaluate</param>
         /// <returns></returns>
-        public static object Eval(Binding binding, object source)
+        public static object? Eval(Binding? binding, object? source)
         {
             if (binding is null)
             {
@@ -85,6 +85,7 @@ namespace MahApps.Metro.Controls.Helper
                                      StringFormat = binding.StringFormat,
                                      TargetNullValue = binding.TargetNullValue
                                  };
+
             return Eval(newBinding);
         }
 
@@ -94,8 +95,13 @@ namespace MahApps.Metro.Controls.Helper
         /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
         /// <param name="dependencyObject">optional: The <see cref="DependencyObject"/> to evaluate</param>
         /// <returns>The resulting object</returns>
-        public static object Eval(Binding binding, DependencyObject dependencyObject)
+        public static object? Eval(Binding? binding, DependencyObject? dependencyObject)
         {
+            if (binding is null)
+            {
+                throw new ArgumentNullException(nameof(binding));
+            }
+
             dependencyObject ??= new DependencyObject();
 
             if (string.IsNullOrEmpty(binding.StringFormat))
@@ -115,7 +121,7 @@ namespace MahApps.Metro.Controls.Helper
         /// </summary>
         /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
         /// <returns>The resulting object</returns>
-        public static object Eval(Binding binding)
+        public static object? Eval(Binding? binding)
         {
             return Eval(binding, null);
         }

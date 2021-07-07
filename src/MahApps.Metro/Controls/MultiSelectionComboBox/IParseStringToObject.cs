@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
 using System.Globalization;
 
 namespace MahApps.Metro.Controls
@@ -22,6 +21,10 @@ namespace MahApps.Metro.Controls
         /// <param name="stringFormat">The string format to apply. This parameter is optional</param>
         /// <param name="targetType">the <see cref="Type"/> to which the input should be converted to. This parameter is optional</param>
         /// <returns><see langword="true"/> if converting successful, otherwise <see langword="false"/></returns>
-        bool TryCreateObjectFromString(string input, out object result, CultureInfo culture = null, string stringFormat = null, Type targetType = null);
+        bool TryCreateObjectFromString(string? input,
+                                       out object? result,
+                                       CultureInfo? culture = null,
+                                       string? stringFormat = null,
+                                       Type? targetType = null);
     }
 }

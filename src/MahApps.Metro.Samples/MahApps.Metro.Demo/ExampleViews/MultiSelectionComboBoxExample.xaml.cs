@@ -16,18 +16,24 @@ namespace MetroDemo.ExampleViews
     {
         public MultiSelectionComboBoxExample()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        private void Mscb_Example_AddingItem(object sender, AddingItemEventArgs args)
+        private void Mscb_Example_AddingItem(object? sender, AddingItemEventArgs args)
         {
             // We don't want to get double entries so let`s check if we already have one.
-            args.Accepted = !args.TargetList.Contains(args.ParsedObject);
+            args.Accepted = args.TargetList is not null && !args.TargetList.Contains(args.ParsedObject);
         }
 
-        private async void Mscb_Example_AddedItem(object sender, AddedItemEventArgs args)
+        private async void Mscb_Example_AddedItem(object? sender, AddedItemEventArgs args)
         {
-            await this.TryFindParent<MetroWindow>()?.ShowMessageAsync("Added Item", $"Successfully added \"{args.AddedItem}\" to your Items-Collection");
+            var window = this.TryFindParent<MetroWindow>();
+            if (window is null)
+            {
+                return;
+            }
+
+            await window.ShowMessageAsync("Added Item", $"Successfully added \"{args.AddedItem}\" to your Items-Collection");
         }
 
         private void mscb_Example_SelectionChanged(object sender, SelectionChangedEventArgs e)

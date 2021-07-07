@@ -76,7 +76,7 @@ namespace MetroDemo.Models
 
         public override string ToString()
         {
-            return $"{Artist}: {Title} ({Price.ToString("C")})";
+            return $"{this.Artist}: {this.Title} ({this.Price.ToString("C")})";
         }
 
     }

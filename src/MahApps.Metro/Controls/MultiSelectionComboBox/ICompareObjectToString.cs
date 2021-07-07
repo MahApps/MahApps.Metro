@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Linq;
 using System.Windows.Markup;
 
 namespace MahApps.Metro.Controls
@@ -21,14 +20,14 @@ namespace MahApps.Metro.Controls
         /// <param name="stringComparison">The <see cref="StringComparison"/> used to check if the string matches</param>
         /// <param name="stringFormat">The string format to apply</param>
         /// <returns>true if the string represents the object, otherwise false.</returns>
-        public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat);
+        public bool CheckIfStringMatchesObject(string? input, object? objectToCompare, StringComparison stringComparison, string? stringFormat);
     }
 
     [MarkupExtensionReturnType(typeof(DefaultObjectToStringComparer))]
     public class DefaultObjectToStringComparer : MarkupExtension, ICompareObjectToString
     {
         /// <inheritdoc/>
-        public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat)
+        public bool CheckIfStringMatchesObject(string? input, object? objectToCompare, StringComparison stringComparison, string? stringFormat)
         {
             if (input is null)
             {
@@ -40,14 +39,14 @@ namespace MahApps.Metro.Controls
                 return false;
             }
 
-            string objectText;
+            string? objectText;
             if (string.IsNullOrEmpty(stringFormat))
             {
                 objectText = objectToCompare.ToString();
             }
-            else if (stringFormat.Contains('{') && stringFormat.Contains('}'))
+            else if (stringFormat!.Contains("{") && stringFormat!.Contains("}"))
             {
-                objectText = string.Format(stringFormat, objectToCompare);
+                objectText = string.Format(stringFormat!, objectToCompare!);
             }
             else
             {

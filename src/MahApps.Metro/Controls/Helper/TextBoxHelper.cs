@@ -1109,11 +1109,11 @@ namespace MahApps.Metro.Controls
                         switch (multiSelectionComboBox.SelectionMode)
                         {
                             case SelectionMode.Single:
-                                multiSelectionComboBox.SelectedItem = null;
+                                multiSelectionComboBox.SetCurrentValue(MultiSelectionComboBox.SelectedItemProperty, null);
                                 break;
                             case SelectionMode.Multiple:
                             case SelectionMode.Extended:
-                                multiSelectionComboBox.SelectedItems.Clear();
+                                multiSelectionComboBox.SelectedItems?.Clear();
                                 break;
                             default:
                                 throw new NotSupportedException("Unknown SelectionMode");
@@ -1135,7 +1135,6 @@ namespace MahApps.Metro.Controls
                 {
                     colorPicker.SetCurrentValue(ColorPickerBase.SelectedColorProperty, null);
                 }
-                
             }
         }
 
