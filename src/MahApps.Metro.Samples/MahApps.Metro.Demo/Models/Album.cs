@@ -73,6 +73,12 @@ namespace MetroDemo.Models
             get => this._artist;
             set => this.Set(ref this._artist, value);
         }
+
+        public override string ToString()
+        {
+            return $"{this.Artist}: {this.Title} ({this.Price.ToString("C")})";
+        }
+
     }
 
     public static class SampleData
