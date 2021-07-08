@@ -63,6 +63,7 @@ namespace MahApps.Metro.Controls
         private ListBox? PART_SelectedItemsPresenter;
 
         private bool isUserdefinedTextInputPending;
+        private bool isTextChanging; // This flag indicates if the text is changed by us, so we don't want to refire the TextChangedEvent.
         private bool shouldDoTextReset; // Defines if the Text should be reset after selecting items from string
         private bool shouldAddItems; // Defines if the MSCB should add new items from text input. Don't set this to true while input is pending. We cannot know how long the user needs for typing.
         private bool IsSyncingSelectedItems; // true if syncing in one or the other direction already running
@@ -553,13 +554,16 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Updates the Text of the editable TextBox.
         /// Sets the custom Text if any otherwise the concatenated string.
-        /// </summary>
+        /// </summary> 
+
         private void UpdateEditableText(bool forceUpdate = false)
         {
             if (this.PART_EditableTextBox is null || (this.PART_EditableTextBox.IsKeyboardFocused && !forceUpdate))
             {
                 return;
             }
+
+            this.isTextChanging = true;
 
             var oldSelectionStart = this.PART_EditableTextBox.SelectionStart;
             var oldSelectionLength = this.PART_EditableTextBox.SelectionLength;
@@ -588,6 +592,8 @@ namespace MahApps.Metro.Controls
                 this.PART_EditableTextBox.SelectionStart = oldSelectionStart;
                 this.PART_EditableTextBox.SelectionLength = oldSelectionLength;
             }
+
+            this.isTextChanging = false;
         }
 
         private void UpdateDisplaySelectedItems()
@@ -654,7 +660,7 @@ namespace MahApps.Metro.Controls
 
         private void SelectItemsFromText(int millisecondsToWait)
         {
-            if (!this.isUserdefinedTextInputPending)
+            if (!this.isUserdefinedTextInputPending || this.isTextChanging)
             {
                 return;
             }
@@ -746,10 +752,16 @@ namespace MahApps.Metro.Controls
 
                 case SelectionMode.Multiple:
                 case SelectionMode.Extended:
+                    if (this.SelectedItems is null)
+                    {
+                        break; // Exit here if we have no SelectedItems yet
+                    }
+
                     var strings = !string.IsNullOrEmpty(this.Separator) ? this.Text?.Split(new[] { this.Separator }, StringSplitOptions.RemoveEmptyEntries) : null;
 
-                    // clear items here, so we can use the text before.
-                    this.SelectedItems?.Clear();
+                    int position = 0;
+
+                    // this.SelectedItems?.Clear();
                     
                     if (strings is not null)
                     {
@@ -762,8 +774,27 @@ namespace MahApps.Metro.Controls
                                 {
                                     if (this.ObjectToStringComparer.CheckIfStringMatchesObject(stringObject, item, this.EditableTextStringComparision, this.SelectedItemStringFormat))
                                     {
-                                        this.SelectedItems?.Add(item);
-                                        foundItem = true;
+                                        var oldPosition = this.SelectedItems.IndexOf(item);
+
+                                        if (oldPosition < 0) // if old index is <0 the item is not in list yet. let's add it.
+                                        {
+                                            this.SelectedItems.Insert(position,item);
+                                            foundItem = true;
+                                            position++;
+                                        }
+                                        else if (oldPosition > position) // if the item has a wrong position in list we need to swap it accordingly.
+                                        {
+                                            this.SelectedItems.RemoveAt(oldPosition);
+                                            this.SelectedItems.Insert(position, item);
+
+                                            foundItem = true;
+                                            position++;
+                                        }
+                                        else if (oldPosition == position)
+                                        {
+                                            foundItem = true;
+                                            position++;
+                                        }
                                     }
                                 }
                             }
@@ -772,7 +803,8 @@ namespace MahApps.Metro.Controls
                             {
                                 if (this.shouldAddItems && this.TryAddObjectFromString(stringObject, out var result))
                                 {
-                                    this.SelectedItems?.Add(result);
+                                    this.SelectedItems.Insert(position,result);
+                                    position++;
                                 }
                                 else
                                 {
@@ -780,6 +812,12 @@ namespace MahApps.Metro.Controls
                                 }
                             }
                         }
+                    }
+
+                    // Remove Items if needed.
+                    while (this.SelectedItems.Count > position)
+                    {
+                        this.SelectedItems.RemoveAt(position);
                     }
 
                     break;
@@ -865,9 +903,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        #endregion
+#endregion
 
-        #region Commands
+#region Commands
 
         // Clear Text Command
         public static RoutedUICommand ClearContentCommand { get; } = new RoutedUICommand("ClearContent", nameof(ClearContentCommand), typeof(MultiSelectionComboBox));
@@ -935,9 +973,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        #endregion
+#endregion
 
-        #region Overrides
+#region Overrides
 
         public override void OnApplyTemplate()
         {
@@ -966,6 +1004,8 @@ namespace MahApps.Metro.Controls
             {
                 selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged;
                 selectedItemsCollection.CollectionChanged += this.PART_PopupListBox_SelectedItems_CollectionChanged;
+
+                PART_PopupListBox.Unloaded += (s, e) => { selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged; };
             }
 
             // Do update the text 
@@ -985,8 +1025,8 @@ namespace MahApps.Metro.Controls
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             base.OnSelectionChanged(e);
-            this.UpdateEditableText();
             this.UpdateDisplaySelectedItems();
+            this.UpdateEditableText();
         }
 
         private void MultiSelectionComboBox_Loaded(object sender, EventArgs e)
@@ -1112,7 +1152,7 @@ namespace MahApps.Metro.Controls
             }
 
             var index = this.PART_PopupListBox.SelectedIndex;
-            if (index < 0)
+            if (index < 0 && this.PART_PopupListBox.Items.Count > 0)
             {
                 index = 0;
             }
@@ -1527,9 +1567,9 @@ namespace MahApps.Metro.Controls
             return (bool)d.GetValue(IsEnabledProperty);
         }
 
-        #endregion
+#endregion
 
-        #region Events
+#region Events
 
 #if NET5_0_OR_GREATER
         private void SelectedItemsImpl_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -1537,6 +1577,11 @@ namespace MahApps.Metro.Controls
         private void SelectedItemsImpl_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 #endif
         {
+            if (this.PART_PopupListBox is null)
+            {
+                this.ApplyTemplate();
+            }
+
             this.SyncSelectedItems(sender as IList, this.PART_PopupListBox?.SelectedItems, e);
         }
 
@@ -1672,7 +1717,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is MultiSelectionComboBox multiSelectionComboBox)
+            if (d is MultiSelectionComboBox multiSelectionComboBox && !multiSelectionComboBox.isTextChanging)
             {
                 multiSelectionComboBox.UpdateHasCustomText(null);
                 multiSelectionComboBox.isUserdefinedTextInputPending = true;
@@ -1720,6 +1765,6 @@ namespace MahApps.Metro.Controls
             remove => this.RemoveHandler(AddedItemEvent, value);
         }
 
-        #endregion
+#endregion
     }
 }
