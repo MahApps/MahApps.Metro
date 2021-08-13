@@ -532,7 +532,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Resets the custom Text to the selected Items text 
         /// </summary>
-        public void ResetEditableText()
+        public void ResetEditableText(bool forceUpdate = false)
         {
             if (this.PART_EditableTextBox is not null)
             {
@@ -540,7 +540,7 @@ namespace MahApps.Metro.Controls
                 var oldSelectionLength = this.PART_EditableTextBox.SelectionLength;
 
                 this.SetValue(HasCustomTextPropertyKey, false);
-                this.UpdateEditableText();
+                this.UpdateEditableText(forceUpdate);
 
                 this.PART_EditableTextBox.SelectionStart = oldSelectionStart;
                 this.PART_EditableTextBox.SelectionLength = oldSelectionLength;
@@ -761,8 +761,6 @@ namespace MahApps.Metro.Controls
 
                     int position = 0;
 
-                    // this.SelectedItems?.Clear();
-                    
                     if (strings is not null)
                     {
                         foreach (var stringObject in strings)
@@ -916,7 +914,7 @@ namespace MahApps.Metro.Controls
             {
                 if (multiSelectionCombo.HasCustomText)
                 {
-                    multiSelectionCombo.ResetEditableText();
+                    multiSelectionCombo.ResetEditableText(true);
                 }
                 else
                 {
@@ -933,6 +931,7 @@ namespace MahApps.Metro.Controls
                             throw new NotSupportedException("Unknown SelectionMode");
                     }
                 }
+                multiSelectionCombo.ResetEditableText(true);
             }
         }
 
@@ -1004,11 +1003,11 @@ namespace MahApps.Metro.Controls
             {
                 selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged;
                 selectedItemsCollection.CollectionChanged += this.PART_PopupListBox_SelectedItems_CollectionChanged;
-
-                PART_PopupListBox.Unloaded += (s, e) => { selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged; };
             }
 
-            // Do update the text 
+            this.SyncSelectedItems(this.SelectedItems, PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+            // Do update the text and selection
             this.UpdateDisplaySelectedItems();
             this.UpdateEditableText(true);
         }
@@ -1060,7 +1059,7 @@ namespace MahApps.Metro.Controls
             }
 
             // If we have the ItemsSource set, we need to exit here. 
-            if (this.PART_PopupListBox is null || ((this.PART_PopupListBox.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this.PART_PopupListBox, ItemsSourceProperty))
+            if (((PART_PopupListBox?.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this, ItemsSourceProperty))
             {
                 return;
             }
@@ -1072,7 +1071,7 @@ namespace MahApps.Metro.Controls
                     {
                         foreach (var item in e.NewItems)
                         {
-                            this.PART_PopupListBox.Items.Add(item);
+                            this.PART_PopupListBox?.Items?.Add(item);
                         }
                     }
 
@@ -1083,7 +1082,7 @@ namespace MahApps.Metro.Controls
                     {
                         foreach (var item in e.OldItems)
                         {
-                            this.PART_PopupListBox.Items.Remove(item);
+                            this.PART_PopupListBox?.Items?.Remove(item);
                         }
                     }
 
@@ -1092,10 +1091,10 @@ namespace MahApps.Metro.Controls
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Move:
                 case NotifyCollectionChangedAction.Reset:
-                    this.PART_PopupListBox.Items.Clear();
+                    this.PART_PopupListBox?.Items?.Clear();
                     foreach (var item in this.Items)
                     {
-                        this.PART_PopupListBox.Items.Add(item);
+                        this.PART_PopupListBox?.Items?.Add(item);
                     }
 
                     break;
@@ -1579,15 +1578,15 @@ namespace MahApps.Metro.Controls
         {
             if (this.PART_PopupListBox is null)
             {
-                this.ApplyTemplate();
+                return;
             }
 
-            this.SyncSelectedItems(sender as IList, this.PART_PopupListBox?.SelectedItems, e);
+            this.SyncSelectedItems(sender as IList, this.PART_PopupListBox.SelectedItems, e);
         }
 
         private void SyncSelectedItems(IList? sourceCollection, IList? targetCollection, NotifyCollectionChangedEventArgs e)
         {
-            if (this.IsSyncingSelectedItems || sourceCollection is null || targetCollection is null)
+            if (this.IsSyncingSelectedItems || sourceCollection is null || targetCollection is null || !this.IsInitialized)
             {
                 return;
             }

@@ -1102,7 +1102,7 @@ namespace MahApps.Metro.Controls
                 {
                     if (multiSelectionComboBox.HasCustomText)
                     {
-                        multiSelectionComboBox.ResetEditableText();
+                        multiSelectionComboBox.ResetEditableText(true);
                     }
                     else
                     {
@@ -1118,6 +1118,7 @@ namespace MahApps.Metro.Controls
                             default:
                                 throw new NotSupportedException("Unknown SelectionMode");
                         }
+                        multiSelectionComboBox.ResetEditableText(true);
                     }
                 }
                 else if (parent is ComboBox comboBox)

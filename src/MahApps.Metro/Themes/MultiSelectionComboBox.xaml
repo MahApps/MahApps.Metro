@@ -22,7 +22,7 @@
             </Border.Background>
             <DockPanel LastChildFill="True">
                 <Button VerticalAlignment="Bottom"
-                        Command="mah:MultiSelectionComboBox.ClearContentCommand"
+                        Command="{x:Static mah:MultiSelectionComboBox.ClearContentCommand}"
                         Content="{x:Static lang:MultiSelectionComboBox.ResetTextToSelectedItems}"
                         DockPanel.Dock="Bottom" />
                 <Path Margin="50"
