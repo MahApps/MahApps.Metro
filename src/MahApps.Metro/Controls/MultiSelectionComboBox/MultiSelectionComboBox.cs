@@ -37,6 +37,8 @@ namespace MahApps.Metro.Controls
             TextProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, OnTextChanged));
             CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(ClearContentCommand, ExecutedClearContentCommand, CanExecuteClearContentCommand));
             CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(RemoveItemCommand, RemoveItemCommand_Executed, RemoveItemCommand_CanExecute));
+
+            CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(SelectAllCommand, new ExecutedRoutedEventHandler(OnSelectAll), new CanExecuteRoutedEventHandler(OnQueryStatusSelectAll)));
         }
 
         public MultiSelectionComboBox()
@@ -68,6 +70,11 @@ namespace MahApps.Metro.Controls
         private bool shouldAddItems; // Defines if the MSCB should add new items from text input. Don't set this to true while input is pending. We cannot know how long the user needs for typing.
         private bool IsSyncingSelectedItems; // true if syncing in one or the other direction already running
         private DispatcherTimer? _updateSelectedItemsFromTextTimer;
+        private static readonly RoutedUICommand SelectAllCommand 
+            = new RoutedUICommand("Select All",
+                                  nameof(SelectAllCommand),
+                                  typeof(MultiSelectionComboBox),
+                                  new InputGestureCollection() { new KeyGesture(Key.A, ModifierKeys.Control) });
 
         #endregion
 
@@ -545,6 +552,193 @@ namespace MahApps.Metro.Controls
                 this.PART_EditableTextBox.SelectionStart = oldSelectionStart;
                 this.PART_EditableTextBox.SelectionLength = oldSelectionLength;
             }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="IsDropDownHeaderVisible"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsDropDownHeaderVisibleProperty =
+            DependencyProperty.Register(nameof(IsDropDownHeaderVisible),
+                                        typeof(bool),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or Sets if the Header in the DropDown is visible
+        /// </summary>
+        public bool IsDropDownHeaderVisible
+        {
+            get { return (bool)GetValue(IsDropDownHeaderVisibleProperty); }
+            set { SetValue(IsDropDownHeaderVisibleProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownHeaderContent"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownHeaderContentProperty =
+            DependencyProperty.Register(nameof(DropDownHeaderContent),
+                                        typeof(object),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content of the DropDown-Header
+        /// </summary>
+        public object? DropDownHeaderContent
+        {
+            get { return (object?)GetValue(DropDownHeaderContentProperty); }
+            set { SetValue(DropDownHeaderContentProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownHeaderContentTemplate"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownHeaderContentTemplateProperty =
+            DependencyProperty.Register(nameof(DropDownHeaderContentTemplate),
+                                        typeof(DataTemplate),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content template of the DropDown-Header
+        /// </summary>
+        public DataTemplate? DropDownHeaderContentTemplate
+        {
+            get { return (DataTemplate?)GetValue(DropDownHeaderContentTemplateProperty); }
+            set { SetValue(DropDownHeaderContentTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownHeaderContentTemplateSelector"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownHeaderContentTemplateSelectorProperty =
+            DependencyProperty.Register(nameof(DropDownHeaderContentTemplateSelector),
+                                        typeof(DataTemplateSelector),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content template selector of the DropDown-Header
+        /// </summary>
+        public DataTemplateSelector? DropDownHeaderContentTemplateSelector
+        {
+            get { return (DataTemplateSelector?)GetValue(DropDownHeaderContentTemplateSelectorProperty); }
+            set { SetValue(DropDownHeaderContentTemplateSelectorProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownHeaderContentStringFormat"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownHeaderContentStringFormatProperty =
+            DependencyProperty.Register(nameof(DropDownHeaderContentStringFormat),
+                                        typeof(string),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content string format of the DropDown-Header
+        /// </summary>
+        public string? DropDownHeaderContentStringFormat
+        {
+            get { return (string?)GetValue(DropDownHeaderContentStringFormatProperty); }
+            set { SetValue(DropDownHeaderContentStringFormatProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="IsDropDownFooterVisible"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsDropDownFooterVisibleProperty =
+            DependencyProperty.Register(nameof(IsDropDownFooterVisible),
+                                        typeof(bool),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or Sets if the Footer in the DropDown is visible
+        /// </summary>
+        public bool IsDropDownFooterVisible
+        {
+            get { return (bool)GetValue(IsDropDownFooterVisibleProperty); }
+            set { SetValue(IsDropDownFooterVisibleProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownFooterContent"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownFooterContentProperty =
+            DependencyProperty.Register(nameof(DropDownFooterContent),
+                                        typeof(object),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content of the DropDown-Footer
+        /// </summary>
+        public object? DropDownFooterContent
+        {
+            get { return (object?)GetValue(DropDownFooterContentProperty); }
+            set { SetValue(DropDownFooterContentProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownFooterContentTemplate"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownFooterContentTemplateProperty =
+            DependencyProperty.Register(nameof(DropDownFooterContentTemplate),
+                                        typeof(DataTemplate),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content template of the DropDown-Footer
+        /// </summary>
+        public DataTemplate? DropDownFooterContentTemplate
+        {
+            get { return (DataTemplate?)GetValue(DropDownFooterContentTemplateProperty); }
+            set { SetValue(DropDownFooterContentTemplateProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownFooterContentTemplateSelector"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownFooterContentTemplateSelectorProperty =
+            DependencyProperty.Register(nameof(DropDownFooterContentTemplateSelector),
+                                        typeof(DataTemplateSelector),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content template selector of the DropDown-Footer
+        /// </summary>
+        public DataTemplateSelector? DropDownFooterContentTemplateSelector
+        {
+            get { return (DataTemplateSelector?)GetValue(DropDownFooterContentTemplateSelectorProperty); }
+            set { SetValue(DropDownFooterContentTemplateSelectorProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="DropDownFooterContentStringFormat"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty DropDownFooterContentStringFormatProperty =
+            DependencyProperty.Register(nameof(DropDownFooterContentStringFormat),
+                                        typeof(string),
+                                        typeof(MultiSelectionComboBox),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the content string format of the DropDown-Footer
+        /// </summary>
+        public string? DropDownFooterContentStringFormat
+        {
+            get { return (string?)GetValue(DropDownFooterContentStringFormatProperty); }
+            set { SetValue(DropDownFooterContentStringFormatProperty, value); }
         }
 
         #endregion
@@ -1541,7 +1735,7 @@ namespace MahApps.Metro.Controls
                 // IsSelectable and IsEnabled on the item and wrapper.
                 var item = this.Items[i];
                 var container = this.ItemContainerGenerator.ContainerFromIndex(i);
-                if (this.IsSelectableHelper(item) && this.IsSelectableHelper(container))
+                if (IsSelectableHelper(item) && IsSelectableHelper(container))
                 {
                     this.SelectedIndex = i;
                     this.UpdateEditableText(true); // We force the update of the text
@@ -1552,7 +1746,7 @@ namespace MahApps.Metro.Controls
         }
 
         // adopted from original ComoBox
-        private bool IsSelectableHelper(object o)
+        private static bool IsSelectableHelper(object o)
         {
             var d = o as DependencyObject;
             // If o is not a DependencyObject, it is just a plain
@@ -1566,9 +1760,44 @@ namespace MahApps.Metro.Controls
             return (bool)d.GetValue(IsEnabledProperty);
         }
 
-#endregion
+        /// <summary>
+        ///     Select all the items
+        /// </summary>
+        public void SelectAll()
+        {
+            PART_PopupListBox?.SelectAll();
+        }
 
-#region Events
+        private static void OnSelectAll(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is MultiSelectionComboBox comboBox)
+            {
+                comboBox.SelectAll();
+            }
+        }
+
+        private static void OnQueryStatusSelectAll(object target, CanExecuteRoutedEventArgs args)
+{
+            if (target is MultiSelectionComboBox comboBox)
+            {
+                args.CanExecute 
+                    = comboBox.SelectionMode == SelectionMode.Extended 
+                    && comboBox.IsDropDownOpen 
+                    && !(comboBox.PART_EditableTextBox?.IsKeyboardFocused ?? false);
+            }
+        }
+
+        /// <summary>
+        ///     Clears all of the selected items.
+        /// </summary>
+        public void UnselectAll()
+        {
+            PART_PopupListBox?.UnselectAll();
+        }
+
+        #endregion
+
+        #region Events
 
 #if NET5_0_OR_GREATER
         private void SelectedItemsImpl_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

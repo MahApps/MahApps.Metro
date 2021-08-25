@@ -656,6 +656,19 @@
                                         BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        
+                                        <ContentControl Content="{TemplateBinding DropDownHeaderContent}"
+                                                        ContentTemplate="{TemplateBinding DropDownHeaderContentTemplate}"
+                                                        ContentTemplateSelector="{TemplateBinding DropDownHeaderContentTemplateSelector}"
+                                                        ContentStringFormat="{TemplateBinding DropDownHeaderContentStringFormat}"
+                                                        Visibility="{TemplateBinding IsDropDownHeaderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                        Grid.Row="0" />
+                                        
                                         <ListBox x:Name="PART_PopupListBox"
                                                  AlternationCount="{TemplateBinding AlternationCount}"
                                                  Focusable="False"
@@ -670,13 +683,23 @@
                                                  SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedValue, Mode=TwoWay}"
                                                  SelectedValuePath="{TemplateBinding SelectedValuePath}"
                                                  SelectionMode="{TemplateBinding SelectionMode}"
-                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                 Grid.Row="1" />
+
+                                        <ContentControl Content="{TemplateBinding DropDownFooterContent}"
+                                                        ContentTemplate="{TemplateBinding DropDownFooterContentTemplate}"
+                                                        ContentTemplateSelector="{TemplateBinding DropDownFooterContentTemplateSelector}"
+                                                        ContentStringFormat="{TemplateBinding DropDownFooterContentStringFormat}"
+                                                        Visibility="{TemplateBinding IsDropDownFooterVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                        Grid.Row="2" />
+                                        
                                         <ContentControl x:Name="PART_PopupOverlay"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         Content="{TemplateBinding DisabledPopupOverlayContent}"
                                                         ContentTemplate="{TemplateBinding DisabledPopupOverlayContentTemplate}"
-                                                        Visibility="Collapsed" />
+                                                        Visibility="Collapsed"
+                                                        Grid.RowSpan="3" />
                                     </Grid>
                                 </Border>
                             </Grid>
