@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
+<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -73,7 +73,7 @@
                         <mah:MetroHeader.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="FaceProfile" />
+                                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="TextBox" />
                                     <TextBlock Margin="2 0 0 0"
                                                VerticalAlignment="Center"
                                                Text="{Binding}" />
