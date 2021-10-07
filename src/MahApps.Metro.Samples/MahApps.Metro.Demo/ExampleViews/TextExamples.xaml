@@ -1,4 +1,4 @@
-<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
+﻿<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -464,6 +464,12 @@
                               SelectedItem="{Binding ElementName=NUD, Path=TextAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </mah:MetroHeader>
 
+                <mah:MetroHeader Header="WatermarkAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
+                              SelectedItem="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
                 <mah:MetroHeader Header="ButtonsAlignment">
                     <ComboBox Margin="{StaticResource ControlMargin}"
                               ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
@@ -529,6 +535,7 @@
                                        Style="{DynamicResource MahApps.Styles.NumericUpDown.Fluent}"
                                        SwitchUpDownButtons="{Binding ElementName=NUD, Path=SwitchUpDownButtons}"
                                        TextAlignment="{Binding ElementName=NUD, Path=TextAlignment}"
+                                       mah:TextBoxHelper.WatermarkAlignment="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment)}"
                                        Value="{Binding NullableNumericUpDownValue}" />
                 </mah:MetroHeader>
             </StackPanel>
