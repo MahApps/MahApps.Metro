@@ -6,6 +6,7 @@ branches:
     - main
 
 environment:
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   azure-key-vault-url:
     secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
   azure-key-vault-client-id:
