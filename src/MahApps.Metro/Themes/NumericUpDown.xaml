@@ -99,7 +99,7 @@
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-        <Setter Property="HorizontalContentAlignment" Value="Right" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="MinWidth" Value="62" />
         <Setter Property="Padding" Value="4" />
@@ -313,6 +313,7 @@
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
+        <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="Right" />
     </Style>
 
     <Style x:Key="MahApps.Styles.NumericUpDown.Fluent"
