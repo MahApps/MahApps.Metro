@@ -22,13 +22,13 @@
         <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
         <PackageReference Include="Caliburn.Micro" Version="3.*" />
-        <PackageReference Include="Fody" Version="6.*">
+        <PackageReference Include="Fody" Version="6.5.*">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
+        <PackageReference Include="Costura.Fody" Version="5.6.*" PrivateAssets="All" />
     </ItemGroup>
     <ItemGroup>
         <None Include="app.manifest" />
