@@ -25,8 +25,7 @@
                 <Rectangle Fill="{Binding Converter={x:Static converters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
             </Border>
 
-            <TextBlock Grid.Column="1"
-                       Margin="2 0 0 0" >
+            <TextBlock Grid.Column="1" Margin="2 0 0 0">
                 <TextBlock.Text>
                     <MultiBinding Converter="{converters:ColorToNameConverter}">
                         <Binding />
@@ -36,7 +35,7 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
-                       
+
         </Grid>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding}" Value="{x:Null}">
@@ -322,53 +321,53 @@
                                                           VerticalScrollBarVisibility="Auto">
                                                 <VirtualizingStackPanel>
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteStandard"
-                                                                      Header="{TemplateBinding StandardColorPaletteHeader}"
-                                                                      HeaderTemplate="{TemplateBinding StandardColorPaletteHeaderTemplate}"
-                                                                      ItemsSource="{TemplateBinding StandardColorPaletteItemsSource}"
-                                                                      Style="{TemplateBinding StandardColorPaletteStyle}"
-                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
                                                                       ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                      Header="{TemplateBinding StandardColorPaletteHeader}"
+                                                                      HeaderTemplate="{TemplateBinding StandardColorPaletteHeaderTemplate}"
+                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
+                                                                      ItemsSource="{TemplateBinding StandardColorPaletteItemsSource}"
+                                                                      Style="{TemplateBinding StandardColorPaletteStyle}"
                                                                       Visibility="{TemplateBinding IsStandardColorPaletteVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteAvailable"
-                                                                      Header="{TemplateBinding AvailableColorPaletteHeader}"
-                                                                      HeaderTemplate="{TemplateBinding AvailableColorPaletteHeaderTemplate}"
-                                                                      ItemsSource="{TemplateBinding AvailableColorPaletteItemsSource}"
-                                                                      Style="{TemplateBinding AvailableColorPaletteStyle}"
-                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
                                                                       ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                      Header="{TemplateBinding AvailableColorPaletteHeader}"
+                                                                      HeaderTemplate="{TemplateBinding AvailableColorPaletteHeaderTemplate}"
+                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
+                                                                      ItemsSource="{TemplateBinding AvailableColorPaletteItemsSource}"
+                                                                      Style="{TemplateBinding AvailableColorPaletteStyle}"
                                                                       Visibility="{TemplateBinding IsAvailableColorPaletteVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteCustom01"
-                                                                      Header="{TemplateBinding CustomColorPalette01Header}"
-                                                                      HeaderTemplate="{TemplateBinding CustomColorPalette01HeaderTemplate}"
-                                                                      ItemsSource="{TemplateBinding CustomColorPalette01ItemsSource}"
-                                                                      Style="{TemplateBinding CustomColorPalette01Style}"
-                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
                                                                       ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                      Header="{TemplateBinding CustomColorPalette01Header}"
+                                                                      HeaderTemplate="{TemplateBinding CustomColorPalette01HeaderTemplate}"
+                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
+                                                                      ItemsSource="{TemplateBinding CustomColorPalette01ItemsSource}"
+                                                                      Style="{TemplateBinding CustomColorPalette01Style}"
                                                                       Visibility="{TemplateBinding IsCustomColorPalette01Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteCustom02"
-                                                                      Header="{TemplateBinding CustomColorPalette02Header}"
-                                                                      HeaderTemplate="{TemplateBinding CustomColorPalette02HeaderTemplate}"
-                                                                      ItemsSource="{TemplateBinding CustomColorPalette02ItemsSource}"
-                                                                      Style="{TemplateBinding CustomColorPalette02Style}"
-                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
                                                                       ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                      Header="{TemplateBinding CustomColorPalette02Header}"
+                                                                      HeaderTemplate="{TemplateBinding CustomColorPalette02HeaderTemplate}"
+                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
+                                                                      ItemsSource="{TemplateBinding CustomColorPalette02ItemsSource}"
+                                                                      Style="{TemplateBinding CustomColorPalette02Style}"
                                                                       Visibility="{TemplateBinding IsCustomColorPalette02Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                                     <mah:ColorPalette x:Name="PART_ColorPaletteRecent"
-                                                                      Header="{TemplateBinding RecentColorPaletteHeader}"
-                                                                      HeaderTemplate="{TemplateBinding RecentColorPaletteHeaderTemplate}"
-                                                                      ItemsSource="{TemplateBinding RecentColorPaletteItemsSource}"
-                                                                      Style="{TemplateBinding RecentColorPaletteStyle}"
-                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
                                                                       ColorHelper="{TemplateBinding ColorHelper}"
                                                                       ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                      Header="{TemplateBinding RecentColorPaletteHeader}"
+                                                                      HeaderTemplate="{TemplateBinding RecentColorPaletteHeaderTemplate}"
+                                                                      IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
+                                                                      ItemsSource="{TemplateBinding RecentColorPaletteItemsSource}"
+                                                                      Style="{TemplateBinding RecentColorPaletteStyle}"
                                                                       Visibility="{TemplateBinding IsRecentColorPaletteVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                                 </VirtualizingStackPanel>
                                             </ScrollViewer>
@@ -394,7 +393,13 @@
                                                                  mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
                                                                  mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
                                                                  mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
+                                                                 AreHsvChannelsVisible="{TemplateBinding AreHsvChannelsVisible}"
+                                                                 AreRgbChannelsVisible="{TemplateBinding AreRgbChannelsVisible}"
+                                                                 ColorHelper="{TemplateBinding ColorHelper}"
                                                                  ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}"
+                                                                 IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
+                                                                 IsColorNameVisible="{TemplateBinding IsColorNameVisible}"
+                                                                 IsEyeDropperVisible="{TemplateBinding IsEyeDropperVisible}"
                                                                  LabelAlphaChannel="{TemplateBinding LabelAlphaChannel}"
                                                                  LabelBlueChannel="{TemplateBinding LabelBlueChannel}"
                                                                  LabelColorName="{TemplateBinding LabelColorName}"
@@ -404,12 +409,6 @@
                                                                  LabelRedChannel="{TemplateBinding LabelRedChannel}"
                                                                  LabelSaturationChannel="{TemplateBinding LabelSaturationChannel}"
                                                                  LabelValueChannel="{TemplateBinding LabelValueChannel}"
-                                                                 AreRgbChannelsVisible="{TemplateBinding AreRgbChannelsVisible}"
-                                                                 AreHsvChannelsVisible="{TemplateBinding AreHsvChannelsVisible}"
-                                                                 IsAlphaChannelVisible="{TemplateBinding IsAlphaChannelVisible}"
-                                                                 IsColorNameVisible="{TemplateBinding IsColorNameVisible}"
-                                                                 IsEyeDropperVisible="{TemplateBinding IsEyeDropperVisible}"
-                                                                 ColorHelper="{TemplateBinding ColorHelper}"
                                                                  SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
                                             </ScrollViewer>
                                         </TabItem>

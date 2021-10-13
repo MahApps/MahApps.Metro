@@ -491,10 +491,10 @@
         <Setter Property="mah:DatePickerHelper.DropDownButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <mah:PathIcon Data="{Binding Mode=OneWay}"
-                                  Width="{Binding RelativeSource={RelativeSource AncestorType=mah:TimePickerBase}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                    <mah:PathIcon Width="{Binding RelativeSource={RelativeSource AncestorType=mah:TimePickerBase}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
                                   Height="{Binding RelativeSource={RelativeSource AncestorType=mah:TimePickerBase}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                  Padding="3" />
+                                  Padding="3"
+                                  Data="{Binding Mode=OneWay}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>

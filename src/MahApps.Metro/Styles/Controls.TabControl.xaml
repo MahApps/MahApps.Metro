@@ -519,9 +519,9 @@
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <mah:PathIcon x:Name="PART_Arrow"
-                                      Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
                                       Width="12"
                                       Height="12"
+                                      Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
                                       FlowDirection="{TemplateBinding FlowDirection}"
                                       Foreground="{TemplateBinding Foreground}" />
                     </Grid>
