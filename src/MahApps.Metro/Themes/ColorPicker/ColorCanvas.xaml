@@ -375,10 +375,11 @@
 
                             <!--  HTML String und Name  -->
 
-                            <Grid x:Name="Part_ColorNameAndEyeDropperPresenter" Grid.Row="1"
+                            <Grid x:Name="Part_ColorNameAndEyeDropperPresenter"
+                                  Grid.Row="1"
                                   Grid.Column="1"
                                   Margin="0 0 5 5"
-                                  VerticalAlignment="Top" >
+                                  VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                                     <ColumnDefinition Width="*" />
@@ -391,7 +392,6 @@
 
                                 <TextBox Grid.Column="1"
                                          Margin="2 0"
-                                         Visibility="{TemplateBinding IsColorNameVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                          mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                          mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                          mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
@@ -409,14 +409,15 @@
                                          mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
                                          mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
                                          mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
-                                         Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}" />
+                                         Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}"
+                                         Visibility="{TemplateBinding IsColorNameVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                 <mah:ColorEyeDropper x:Name="PART_ColorEyeDropper"
-                                                     Visibility="{TemplateBinding IsEyeDropperVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                      Grid.Column="2"
                                                      Margin="0 0 2 0"
                                                      SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
-                                                     Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}" />
+                                                     Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}"
+                                                     Visibility="{TemplateBinding IsEyeDropperVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
                         </Grid>
                     </Border>

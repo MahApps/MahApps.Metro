@@ -516,6 +516,7 @@
                                        Margin="{StaticResource ControlMargin}"
                                        mah:TextBoxHelper.ClearTextButton="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.ClearTextButton)}"
                                        mah:TextBoxHelper.Watermark="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.Watermark)}"
+                                       mah:TextBoxHelper.WatermarkAlignment="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment)}"
                                        ButtonsAlignment="{Binding ElementName=NUD, Path=ButtonsAlignment}"
                                        Culture="{Binding ElementName=NUD, Path=Culture}"
                                        DecimalPointCorrection="{Binding ElementName=NUD, Path=DecimalPointCorrection}"
@@ -535,7 +536,6 @@
                                        Style="{DynamicResource MahApps.Styles.NumericUpDown.Fluent}"
                                        SwitchUpDownButtons="{Binding ElementName=NUD, Path=SwitchUpDownButtons}"
                                        TextAlignment="{Binding ElementName=NUD, Path=TextAlignment}"
-                                       mah:TextBoxHelper.WatermarkAlignment="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment)}"
                                        Value="{Binding NullableNumericUpDownValue}" />
                 </mah:MetroHeader>
             </StackPanel>

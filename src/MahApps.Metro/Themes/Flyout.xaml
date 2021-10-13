@@ -10,12 +10,12 @@
                    LastChildFill="True">
             <!--  Material - ChevronLeft  -->
             <Button x:Name="PART_BackButton"
-                    Content="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
                     Width="34"
                     Height="34"
                     Margin="2 4 2 2"
                     Padding="2 0 0 0"
                     VerticalAlignment="Bottom"
+                    Content="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
                     DockPanel.Dock="Left"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}, Path=Foreground}"
                     IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=CloseButtonIsCancel}"
@@ -30,8 +30,8 @@
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <mah:PathIcon Data="{Binding}"
-                                      UseLayoutRounding="True"
-                                      FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=FlowDirection}" />
+                                      FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:Flyout}}, Path=FlowDirection}"
+                                      UseLayoutRounding="True" />
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
@@ -45,9 +45,9 @@
         </DockPanel>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type mah:Flyout}}}" Value="Left">
-                <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
                 <!--  Material - ChevronLeft  -->
                 <Setter TargetName="PART_BackButton" Property="Content" Value="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+                <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_BackButton" Property="Padding" Value="0 0 2 0" />
                 <Setter TargetName="PART_BackHeaderText" Property="HorizontalAlignment" Value="Right" />
                 <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
