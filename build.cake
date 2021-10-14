@@ -6,7 +6,7 @@
 #tool dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28
 #tool dotnet:?package=AzureSignTool&version=2.0.17
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.12.0
-#tool dotnet:?package=GitVersion.Tool&version=5.7.0
+#tool dotnet:?package=GitVersion.Tool&version=5.6.6
 
 #tool xunit.runner.console&version=2.4.1
 #tool vswhere&version=2.8.4
@@ -28,16 +28,16 @@ var repoName = "MahApps.Metro";
 var isLocal = BuildSystem.IsLocalBuild;
 
 // Set build version
+var gitVersionPath = Context.Tools.Resolve("gitversion.exe");
 if (isLocal == false || verbosity == Verbosity.Verbose)
 {
-    GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
+    GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.BuildServer });
 }
-GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
+GitVersion gitVersion = GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.Json });
 
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
-var branchName = gitVersion.BranchName;
-var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
-var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("main", branchName);
+var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", gitVersion.BranchName);
+var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("main", gitVersion.BranchName);
 var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });
@@ -73,8 +73,9 @@ Setup(ctx =>
     Information("MajorMinorPatch Version: {0}", gitVersion.MajorMinorPatch);
     Information("NuGet           Version: {0}", gitVersion.NuGetVersion);
     Information("IsLocalBuild           : {0}", isLocal);
-    Information("Branch                 : {0}", branchName);
+    Information("Branch                 : {0}", gitVersion.BranchName);
     Information("Configuration          : {0}", configuration);
+    Information("GitVersion             : {0}", gitVersionPath);
     Information("MSBuildPath            : {0}", msBuildPath);
 });
 
@@ -141,7 +142,7 @@ Task("Pack")
       .WithProperty("NoBuild", "true")
       .WithProperty("IncludeBuildOutput", "true")
       .WithProperty("PackageOutputPath", "../../" + publishDir)
-      .WithProperty("RepositoryBranch", branchName)
+      .WithProperty("RepositoryBranch", gitVersion.BranchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
       .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
       .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
@@ -347,7 +348,7 @@ Task("CreateRelease")
         Milestone         = gitVersion.MajorMinorPatch,
         Name              = gitVersion.AssemblySemFileVer,
         Prerelease        = isDevelopBranch,
-        TargetCommitish   = branchName,
+        TargetCommitish   = gitVersion.BranchName,
         WorkingDirectory  = "."
     });
 });

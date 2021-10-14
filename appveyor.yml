@@ -29,6 +29,7 @@ pull_requests:
 
 build_script:
   - ps: dotnet --list-sdks
+  - ps: gitversion /version
   - ps: .\build.ps1 -target appveyor
 
 after_build:
