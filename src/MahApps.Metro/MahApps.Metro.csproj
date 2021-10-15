@@ -15,7 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ControlzEx" version="[4.*, 5)" />
+        <PackageReference Include="ControlzEx" version="[4.*, 5)" Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " />
+        <PackageReference Include="ControlzEx" version="[4.*, 6)" Condition=" '$(TargetFramework)' != 'netcoreapp3.0' " />
         <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="All" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
             <PrivateAssets>all</PrivateAssets>
