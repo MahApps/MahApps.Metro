@@ -7,6 +7,8 @@ branches:
     - /\d*\.\d*\.\d*/
 
 environment:
+  # bad, but without this, gitversion doesn't work anymore
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   azure-key-vault-url:
     secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
   azure-key-vault-client-id:
@@ -16,17 +18,9 @@ environment:
   azure-key-vault-certificate:
     secure: BSPdW2TgnQtoQXXbeDECug==
 
-skip_tags: true
-image: Visual Studio 2019
-test: off
-shallow_clone: true
-
-install:
-  - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
-  - ps: ./dotnet-install.ps1 -Version 5.0.301 -InstallDir "C:\Program Files\dotnet"
-
-pull_requests:
-  do_not_increment_build_number: false
+# install:
+  # - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
+  # - ps: ./dotnet-install.ps1 -Version 5.0.301 -InstallDir "C:\Program Files\dotnet"
 
 build_script:
   - ps: dotnet --list-sdks
@@ -35,6 +29,13 @@ build_script:
 
 after_build:
   - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
+
+image: Visual Studio 2019
+skip_tags: true
+test: off
+
+pull_requests:
+  do_not_increment_build_number: false
 
 artifacts:
   - path: \Publish\*.*
