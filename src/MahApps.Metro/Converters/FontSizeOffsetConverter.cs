@@ -19,11 +19,6 @@ namespace MahApps.Metro.Converters
         /// </summary>
         public static readonly FontSizeOffsetConverter Instance = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static FontSizeOffsetConverter()
-        {
-        }
-
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is double orgValue && parameter is double offset)

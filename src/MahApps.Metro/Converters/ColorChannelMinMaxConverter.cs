@@ -36,11 +36,6 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(Color), typeof(Color), ParameterType = typeof(ColorChannelType))]
     public sealed class ColorChannelMinMaxConverter : IValueConverter
     {
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static ColorChannelMinMaxConverter()
-        {
-        }
-
         /// <summary>
         /// Gets a static default instance of <see cref="ColorChannelMinMaxConverter"/>.
         /// </summary>
@@ -83,11 +78,6 @@ namespace MahApps.Metro.Converters
     [ValueConversion(typeof(Color), typeof(Brush))]
     public sealed class ColorChannel2GradientBrushConverter : IValueConverter
     {
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static ColorChannel2GradientBrushConverter()
-        {
-        }
-
         /// <summary> Gets the default instance </summary>
         public static ColorChannel2GradientBrushConverter Default { get; } = new();
 

@@ -17,11 +17,6 @@ namespace MahApps.Metro.Converters
         /// </summary>
         internal static readonly HamburgerMenuItemAccessibleConverter Default = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static HamburgerMenuItemAccessibleConverter()
-        {
-        }
-
         public object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             if (values is null)

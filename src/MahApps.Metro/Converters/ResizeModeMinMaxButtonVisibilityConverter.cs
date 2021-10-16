@@ -17,11 +17,6 @@ namespace MahApps.Metro.Converters
         /// </summary>
         public static readonly ResizeModeMinMaxButtonVisibilityConverter Instance = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static ResizeModeMinMaxButtonVisibilityConverter()
-        {
-        }
-
         public object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
         {
             if (values != null && parameter is ResizeModeButtonType whichButton)

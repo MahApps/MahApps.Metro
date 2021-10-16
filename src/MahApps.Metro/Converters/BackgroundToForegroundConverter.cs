@@ -19,11 +19,6 @@ namespace MahApps.Metro.Converters
         /// </summary>
         public static readonly BackgroundToForegroundConverter Instance = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static BackgroundToForegroundConverter()
-        {
-        }
-
         /// <summary>
         /// Determining Ideal Text Color Based on Specified Background Color
         /// http://www.codeproject.com/KB/GDI-plus/IdealTextColor.aspx

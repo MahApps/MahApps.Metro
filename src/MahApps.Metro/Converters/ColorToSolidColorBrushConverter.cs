@@ -16,11 +16,6 @@ namespace MahApps.Metro.Converters
         /// </summary>
         public static readonly ColorToSolidColorBrushConverter DefaultInstance = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static ColorToSolidColorBrushConverter()
-        {
-        }
-
         /// <summary>
         /// Gets or Sets the brush which will be used if the conversion fails.
         /// </summary>
