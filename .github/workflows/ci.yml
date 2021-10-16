@@ -1,0 +1,35 @@
+
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: List dotnet sdks
+        run: dotnet --list-sdks
+      - name: Run the Cake script
+        uses: cake-build/cake-action@v1
+        with:
+          cake-version: 1.3.0
+          cake-bootstrap: true
+          verbosity: Normal
+          script-path: build.cake
+          target: appveyor
+        env:
+          azure-key-vault-url: ${{ secrets.AZURE_KEY_VAULT_URL }}
+          azure-key-vault-client-id: ${{ secrets.AZURE_KEY_VAULT_CLIENT_ID }}
+          azure-key-vault-client-secret: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
+          azure-key-vault-certificate: ${{ secrets.AZURE_KEY_VAULT_CERTIFICATE }}
