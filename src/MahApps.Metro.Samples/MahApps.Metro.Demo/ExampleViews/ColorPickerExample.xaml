@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
         <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox">
-            <Setter Property="Margin" Value="5,5,5,0" />
+            <Setter Property="Margin" Value="5 5 5 0" />
         </Style>
     </UserControl.Resources>
 
@@ -94,12 +94,10 @@
                         <mah:MetroHeader Header="Recent Palette Header">
                             <TextBox Text="{Binding ElementName=colorPickerExample, Path=RecentColorPaletteHeader}" />
                         </mah:MetroHeader>
-
-                        
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Behavior" >
+                <GroupBox Header="Behavior">
                     <StackPanel>
                         <mah:MetroHeader Header="AddToRecentColorTrigger">
                             <ComboBox x:Name="cmbAddToRecentTrigger" SelectedIndex="0">
@@ -108,13 +106,12 @@
                                 <ComboBoxItem Tag="{x:Static mah:AddToRecentColorsTrigger.Never}">Never</ComboBoxItem>
                             </ComboBox>
                         </mah:MetroHeader>
-
                         <mah:MetroHeader Header="CloseOnSelectedColorChanged">
                             <mah:ToggleSwitch IsOn="{Binding ElementName=colorPickerExample, Path=CloseOnSelectedColorChanged}" />
                         </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
-                
+
             </StackPanel>
         </ScrollViewer>
 
@@ -124,7 +121,7 @@
 
         <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <GroupBox Margin="5,5,5,0" Header="Eye Dropper">
+                <GroupBox Margin="5 5 5 0" Header="Eye Dropper">
                     <mah:ColorEyeDropper Height="Auto"
                                          HorizontalContentAlignment="Center"
                                          mah:ControlsHelper.CornerRadius="3"
@@ -138,7 +135,7 @@
                     </mah:ColorEyeDropper>
                 </GroupBox>
 
-                <GroupBox Margin="5,5,5,0" Header="Color Canvas">
+                <GroupBox Margin="5 5 5 0" Header="Color Canvas">
                     <mah:ColorCanvas x:Name="ColorCanvasExample"
                                      ColorHelper="{Binding ElementName=cmbColorHelper, Path=SelectedItem.Tag}"
                                      DefaultColor="{DynamicResource MahApps.Colors.AccentBase}" />

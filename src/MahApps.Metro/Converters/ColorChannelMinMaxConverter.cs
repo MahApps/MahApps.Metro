@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Media;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace MahApps.Metro.Converters
@@ -17,12 +18,16 @@ namespace MahApps.Metro.Converters
     {
         RMin,
         RMax,
+        R,
         GMin,
         GMax,
+        G,
         BMin,
         BMax,
+        B,
         AMin,
-        AMax
+        AMax,
+        A
     }
 
     /// <summary>
@@ -35,11 +40,6 @@ namespace MahApps.Metro.Converters
         /// Gets a static default instance of <see cref="ColorChannelMinMaxConverter"/>.
         /// </summary>
         public static readonly ColorChannelMinMaxConverter Default = new();
-
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static ColorChannelMinMaxConverter()
-        {
-        }
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -67,6 +67,70 @@ namespace MahApps.Metro.Converters
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// Converts a given Color to a new LinearGradientBrush with the specified Channel.
+    /// </summary>
+    [ValueConversion(typeof(Color), typeof(Brush))]
+    public sealed class ColorChannel2GradientBrushConverter : IValueConverter
+    {
+        /// <summary> Gets the default instance </summary>
+        public static ColorChannel2GradientBrushConverter Default { get; } = new();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (parameter is ColorChannelType channel)
+            {
+                object? minResult;
+                object? maxResult;
+
+                switch (channel)
+                {
+                    case ColorChannelType.R:
+                        minResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.RMin, culture);
+                        maxResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.RMax, culture);
+                        break;
+                    case ColorChannelType.G:
+                        minResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.GMin, culture);
+                        maxResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.GMax, culture);
+                        break;
+                    case ColorChannelType.B:
+                        minResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.BMin, culture);
+                        maxResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.BMax, culture);
+                        break;
+                    case ColorChannelType.A:
+                        minResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.AMin, culture);
+                        maxResult = ColorChannelMinMaxConverter.Default.Convert(value, targetType, ColorChannelType.AMax, culture);
+                        break;
+                    default:
+                    {
+                        Trace.TraceWarning($"Unexpected value {nameof(parameter)} = {channel}");
+                        return Binding.DoNothing;
+                    }
+                }
+
+                if (minResult is Color minColor && maxResult is Color maxColor)
+                {
+                    var brush = new LinearGradientBrush
+                                {
+                                    StartPoint = new Point(0, 0.5),
+                                    EndPoint = new Point(1, 0.5)
+                                };
+                    brush.GradientStops.Add(new GradientStop(minColor, 0));
+                    brush.GradientStops.Add(new GradientStop(maxColor, 1));
+                    brush.Freeze();
+                    return brush;
+                }
+            }
+
+            return Binding.DoNothing;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

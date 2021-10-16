@@ -103,11 +103,9 @@
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Margin="5"
+                                    Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannel2BrushConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SVMax}}"
                                     BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                     BorderThickness="1">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SVMax}}" />
-                                </Border.Background>
                                 <Grid SnapsToDevicePixels="True" UseLayoutRounding="False">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static converters:PercentageToGridLengthConverter.Default}}" />
@@ -229,15 +227,9 @@
                                                           Content="{TemplateBinding LabelRedChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.R}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.RMin}}" />
-                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.RMax}}" />
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
                                         <mah:NumericUpDown Grid.Row="0"
                                                            Grid.Column="2"
                                                            Margin="2"
@@ -252,15 +244,9 @@
                                                           Content="{TemplateBinding LabelGreenChannel}" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
+                                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.G}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.GMin}}" />
-                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.GMax}}" />
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
                                         <mah:NumericUpDown Grid.Row="1"
                                                            Grid.Column="2"
                                                            Margin="2"
@@ -275,15 +261,9 @@
                                                           Content="{TemplateBinding LabelBlueChannel}" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
+                                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.B}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.BMin}}" />
-                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.BMax}}" />
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
                                         <mah:NumericUpDown Grid.Row="2"
                                                            Grid.Column="2"
                                                            Margin="2"
@@ -331,15 +311,9 @@
                                                           Content="{TemplateBinding LabelSaturationChannel}" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
+                                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.S}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SMin}}" />
-                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.SMax}}" />
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
                                         <mah:NumericUpDown Grid.Row="1"
                                                            Grid.Column="2"
                                                            Margin="2"
@@ -356,15 +330,9 @@
                                                           Content="{TemplateBinding LabelValueChannel}" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
+                                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.V}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.VMin}}" />
-                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static converters:HSVColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:HSVColorChannelType.VMax}}" />
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
                                         <mah:NumericUpDown Grid.Row="2"
                                                            Grid.Column="2"
                                                            Margin="2"
@@ -391,15 +359,9 @@
                                                           Content="{TemplateBinding LabelAlphaChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.A}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.AMin}}" />
-                                                    <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static converters:ColorChannelMinMaxConverter.Default}, ConverterParameter={x:Static converters:ColorChannelType.AMax}}" />
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
+                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
                                         <mah:NumericUpDown Grid.Row="0"
                                                            Grid.Column="2"
                                                            Margin="2"
@@ -413,10 +375,11 @@
 
                             <!--  HTML String und Name  -->
 
-                            <Grid x:Name="Part_ColorNameAndEyeDropperPresenter" Grid.Row="1"
+                            <Grid x:Name="Part_ColorNameAndEyeDropperPresenter"
+                                  Grid.Row="1"
                                   Grid.Column="1"
                                   Margin="0 0 5 5"
-                                  VerticalAlignment="Top" >
+                                  VerticalAlignment="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                                     <ColumnDefinition Width="*" />
@@ -429,7 +392,6 @@
 
                                 <TextBox Grid.Column="1"
                                          Margin="2 0"
-                                         Visibility="{TemplateBinding IsColorNameVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                          mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                          mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                          mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
@@ -447,14 +409,15 @@
                                          mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
                                          mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
                                          mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
-                                         Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}" />
+                                         Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}"
+                                         Visibility="{TemplateBinding IsColorNameVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                 <mah:ColorEyeDropper x:Name="PART_ColorEyeDropper"
-                                                     Visibility="{TemplateBinding IsEyeDropperVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                      Grid.Column="2"
                                                      Margin="0 0 2 0"
                                                      SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, TargetNullValue=Transparent}"
-                                                     Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}" />
+                                                     Style="{DynamicResource MahApps.Styles.ColorEyeDropper.ColorCanvas}"
+                                                     Visibility="{TemplateBinding IsEyeDropperVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Grid>
                         </Grid>
                     </Border>

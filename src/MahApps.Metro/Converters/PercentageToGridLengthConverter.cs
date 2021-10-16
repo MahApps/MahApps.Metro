@@ -17,11 +17,6 @@ namespace MahApps.Metro.Converters
         /// </summary>
         public static readonly PercentageToGridLengthConverter Default = new();
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
-        static PercentageToGridLengthConverter()
-        {
-        }
-
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is double percent)
