@@ -2,15 +2,14 @@
 // TOOLS / ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
-#module nuget:?package=Cake.DotNetTool.Module&version=1.0.1
 #tool dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28
 #tool dotnet:?package=AzureSignTool&version=2.0.17
-#tool dotnet:?package=GitReleaseManager.Tool&version=0.12.0
+#tool dotnet:?package=GitReleaseManager.Tool&version=0.12.1
 #tool dotnet:?package=GitVersion.Tool&version=5.6.6
 
 #tool xunit.runner.console&version=2.4.1
 #tool vswhere&version=2.8.4
-#addin nuget:?package=Cake.Figlet&version=1.4.0
+#addin nuget:?package=Cake.Figlet&version=2.0.1
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -361,7 +360,6 @@ Task("Tests")
             Configuration = data.Configuration,
             NoBuild = true,
             NoRestore = true,
-            Logger = "trx",
             ResultsDirectory = testResultsDir,
             Verbosity = DotNetCoreVerbosity.Normal
         };

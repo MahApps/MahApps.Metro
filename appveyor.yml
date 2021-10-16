@@ -19,6 +19,7 @@ environment:
 skip_tags: true
 image: Visual Studio 2019
 test: off
+shallow_clone: true
 
 install:
   - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
@@ -30,7 +31,7 @@ pull_requests:
 build_script:
   - ps: dotnet --list-sdks
   - ps: gitversion /version
-  - ps: .\build.ps1 -target appveyor
+  - ps: .\build.ps1 --target=appveyor -v verbose
 
 after_build:
   - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
