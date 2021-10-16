@@ -32,7 +32,6 @@ public class BuildData
     public Verbosity Verbosity { get; }
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
-    public bool IsTagged { get; set; }
     public bool IsDevelopBranch { get; set; }
     public bool IsReleaseBranch { get; set; }
     public GitVersion GitVersion { get; set; }
@@ -85,8 +84,9 @@ Setup<BuildData>(ctx =>
     )
     {
         IsLocalBuild = BuildSystem.IsLocalBuild,
-        IsPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest,
-        IsTagged = AppVeyor.Environment.Repository.Tag.IsTag
+        IsPullRequest =
+            (BuildSystem.GitHubActions.IsRunningOnGitHubActions && BuildSystem.GitHubActions.Environment.PullRequest.IsPullRequest)
+            || (BuildSystem.AppVeyor.IsRunningOnAppVeyor && BuildSystem.AppVeyor.Environment.PullRequest.IsPullRequest)
     };
 
     // Set build version
@@ -368,7 +368,7 @@ Task("Tests")
 });
 
 Task("CreateRelease")
-    .WithCriteria<BuildData>((context, data) => !data.IsTagged && !data.IsPullRequest)
+    .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
     .Does<BuildData>(data =>
 {
     var token = EnvironmentVariable("GITHUB_TOKEN");
@@ -394,9 +394,10 @@ Task("Default")
     .IsDependentOn("Clean")
     .IsDependentOn("Restore")
     .IsDependentOn("Build")
-    .IsDependentOn("Tests");
+    .IsDependentOn("Tests")
+    ;
 
-Task("appveyor")
+Task("ci")
     .IsDependentOn("Default")
     .IsDependentOn("Sign")
     .IsDependentOn("Pack")
