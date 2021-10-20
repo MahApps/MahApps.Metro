@@ -13,6 +13,8 @@ environment:
     secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
   azure-key-vault-client-id:
     secure: JfSqzmsJdXB6uIxttCRoQw1NygwxqXHDj9uIqQnWOb9VCnQYlRPlAnxgW0yTSX4b
+  azure-key-vault-tenant-id:
+    secure: FxjkcqtpulfpDpfSAu4onaLVP/H1S1ORRCQCqsZkDC6YhCSmFoMxYNsWv5uGe3ah
   azure-key-vault-client-secret:
     secure: CUpRJxMLeUZwNPMcqI0wECaWfy5AMnWn1UZhBd9WnQ3Z16lJP1Vzrkf24mccbhUD
   azure-key-vault-certificate:
