@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #tool dotnet:?package=NuGetKeyVaultSignTool&version=1.2.28
-#tool dotnet:?package=AzureSignTool&version=2.0.17
+#tool dotnet:?package=AzureSignTool&version=3.0.0
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.12.1
 #tool dotnet:?package=GitVersion.Tool&version=5.6.6
 
@@ -201,6 +201,12 @@ void SignFiles(IEnumerable<FilePath> files, string description)
         return;
     }
 
+    var vctid = EnvironmentVariable("azure-key-vault-tenant-id");
+    if(string.IsNullOrWhiteSpace(vctid)) {
+        Error("Could not resolve signing client tenant id.");
+        return;
+    }
+
     var vcs = EnvironmentVariable("azure-key-vault-client-secret");
     if(string.IsNullOrWhiteSpace(vcs)) {
         Error("Could not resolve signing client secret.");
@@ -213,44 +219,43 @@ void SignFiles(IEnumerable<FilePath> files, string description)
         return;
     }
 
-    foreach(var file in files)
+    var filesToSign = string.Join(" ", files.Select(f => MakeAbsolute(f).FullPath));
+
+    var processSettings = new ProcessSettings {
+        RedirectStandardOutput = true,
+        RedirectStandardError = true,
+        Arguments = new ProcessArgumentBuilder()
+            .Append("sign")
+            .Append(filesToSign)
+            .AppendSwitchQuoted("--file-digest", "sha256")
+            .AppendSwitchQuoted("--description", description)
+            .AppendSwitchQuoted("--description-url", "https://github.com/MahApps/MahApps.Metro")
+            .Append("--no-page-hashing")
+            .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+            .AppendSwitchQuoted("--timestamp-digest", "sha256")
+            .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+            .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+            .AppendSwitchQuotedSecret("--azure-key-vault-tenant-id", vctid)
+            .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+            .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
+    };
+
+    using(var process = StartAndReturnProcess("tools/AzureSignTool", processSettings))
     {
-        Information($"Sign file: {file}");
-        var processSettings = new ProcessSettings {
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            Arguments = new ProcessArgumentBuilder()
-                .Append("sign")
-                .Append(MakeAbsolute(file).FullPath)
-                .AppendSwitchQuoted("--file-digest", "sha256")
-                .AppendSwitchQuoted("--description", description)
-                .AppendSwitchQuoted("--description-url", "https://github.com/MahApps/MahApps.Metro")
-                .Append("--no-page-hashing")
-                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
-                .AppendSwitchQuoted("--timestamp-digest", "sha256")
-                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
-                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
-                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
-                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
-        };
+        process.WaitForExit();
 
-        using(var process = StartAndReturnProcess("tools/AzureSignTool", processSettings))
+        if (process.GetStandardOutput().Any())
         {
-            process.WaitForExit();
-
-            if (process.GetStandardOutput().Any())
-            {
-                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
-            }
-
-            if (process.GetStandardError().Any())
-            {
-                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
-            }
-
-            // This should output 0 as valid arguments supplied
-            Information("Exit code: {0}", process.GetExitCode());
+            Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
         }
+
+        if (process.GetStandardError().Any())
+        {
+            Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+        }
+
+        // This should output 0 as valid arguments supplied
+        Information("Exit code: {0}", process.GetExitCode());
     }
 }
 
