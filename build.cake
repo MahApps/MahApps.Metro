@@ -6,6 +6,7 @@
 #tool dotnet:?package=AzureSignTool&version=3.0.0
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.12.1
 #tool dotnet:?package=GitVersion.Tool&version=5.6.6
+#tool dotnet:?package=XamlStyler.Console&version=3.2008.4
 
 #tool xunit.runner.console&version=2.4.1
 #tool vswhere&version=2.8.4
@@ -22,9 +23,14 @@ var target = Argument("target", "Default");
 ///////////////////////////////////////////////////////////////////////////////
 
 var repoName = "MahApps.Metro";
-var solution = "./src/MahApps.Metro.sln";
-var publishDir = "./Publish";
-var testResultsDir = Directory("./TestResults");
+var baseDir = MakeAbsolute(Directory(".")).ToString();
+var srcDir = baseDir + "/src";
+var solution = srcDir + "/MahApps.Metro.sln";
+var publishDir = baseDir + "/Publish";
+var testResultsDir = Directory(baseDir + "/TestResults");
+
+var styler = Context.Tools.Resolve("xstyler.exe");
+var stylerFile = baseDir + "/Settings.XAMLStyler";
 
 public class BuildData
 {
@@ -372,6 +378,18 @@ Task("Tests")
     DotNetCoreTest("./src/Mahapps.Metro.Tests/Mahapps.Metro.Tests.csproj", settings);
 });
 
+Task("StyleXaml")
+    .Description("Ensures XAML Formatting is Clean")
+    .Does(() =>
+{
+    Func<IFileSystemInfo, bool> exclude_Dir =
+        fileSystemInfo => !fileSystemInfo.Path.Segments.Contains("obj") && !fileSystemInfo.Path.ToString().Contains("Styles/Themes");
+
+    var files = GetFiles(srcDir + "/**/*.xaml", new GlobberSettings { Predicate = exclude_Dir });
+    Information("\nChecking " + files.Count() + " file(s) for XAML Structure");
+    StartProcess(styler, "-f \"" + string.Join(",", files.Select(f => f.ToString())) + "\" -c \"" + stylerFile + "\"");
+});
+
 Task("CreateRelease")
     .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
     .Does<BuildData>(data =>
@@ -398,6 +416,7 @@ Task("CreateRelease")
 Task("Default")
     .IsDependentOn("Clean")
     .IsDependentOn("Restore")
+    .IsDependentOn("StyleXaml")
     .IsDependentOn("Build")
     .IsDependentOn("Tests")
     ;

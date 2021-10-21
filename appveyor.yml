@@ -4,7 +4,6 @@ branches:
   only:
     - develop
     - main
-    - /\d*\.\d*\.\d*/
 
 environment:
   # bad, but without this, gitversion doesn't work anymore
@@ -48,3 +47,10 @@ nuget:
 skip_commits:
   files:
     - '**/*.md'
+
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/3065442a8d5860a11008
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: false
