@@ -661,15 +661,16 @@
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        
-                                        <ContentControl Content="{TemplateBinding DropDownHeaderContent}"
+
+                                        <ContentControl Grid.Row="0"
+                                                        Content="{TemplateBinding DropDownHeaderContent}"
+                                                        ContentStringFormat="{TemplateBinding DropDownHeaderContentStringFormat}"
                                                         ContentTemplate="{TemplateBinding DropDownHeaderContentTemplate}"
                                                         ContentTemplateSelector="{TemplateBinding DropDownHeaderContentTemplateSelector}"
-                                                        ContentStringFormat="{TemplateBinding DropDownHeaderContentStringFormat}"
-                                                        Visibility="{TemplateBinding IsDropDownHeaderVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                        Grid.Row="0" />
-                                        
+                                                        Visibility="{TemplateBinding IsDropDownHeaderVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
                                         <ListBox x:Name="PART_PopupListBox"
+                                                 Grid.Row="1"
                                                  AlternationCount="{TemplateBinding AlternationCount}"
                                                  Focusable="False"
                                                  ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
@@ -683,23 +684,22 @@
                                                  SelectedValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedValue, Mode=TwoWay}"
                                                  SelectedValuePath="{TemplateBinding SelectedValuePath}"
                                                  SelectionMode="{TemplateBinding SelectionMode}"
-                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                                 Grid.Row="1" />
+                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
-                                        <ContentControl Content="{TemplateBinding DropDownFooterContent}"
+                                        <ContentControl Grid.Row="2"
+                                                        Content="{TemplateBinding DropDownFooterContent}"
+                                                        ContentStringFormat="{TemplateBinding DropDownFooterContentStringFormat}"
                                                         ContentTemplate="{TemplateBinding DropDownFooterContentTemplate}"
                                                         ContentTemplateSelector="{TemplateBinding DropDownFooterContentTemplateSelector}"
-                                                        ContentStringFormat="{TemplateBinding DropDownFooterContentStringFormat}"
-                                                        Visibility="{TemplateBinding IsDropDownFooterVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                        Grid.Row="2" />
-                                        
+                                                        Visibility="{TemplateBinding IsDropDownFooterVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
                                         <ContentControl x:Name="PART_PopupOverlay"
+                                                        Grid.RowSpan="3"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         Content="{TemplateBinding DisabledPopupOverlayContent}"
                                                         ContentTemplate="{TemplateBinding DisabledPopupOverlayContentTemplate}"
-                                                        Visibility="Collapsed"
-                                                        Grid.RowSpan="3" />
+                                                        Visibility="Collapsed" />
                                     </Grid>
                                 </Border>
                             </Grid>

@@ -1,4 +1,4 @@
-<UserControl x:Class="MetroDemo.ExampleViews.MultiSelectionComboBoxExample"
+﻿<UserControl x:Class="MetroDemo.ExampleViews.MultiSelectionComboBoxExample"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -283,22 +283,22 @@
                 <mah:MultiSelectionComboBox x:Name="mscb_Example"
                                             Margin="5"
                                             VerticalAlignment="Center"
-                                            InterceptMouseWheelSelection="False"
+                                            mah:MultiSelectorHelper.SelectedItems="{Binding SelectedAnimals}"
                                             mah:TextBoxHelper.AutoWatermark="True"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
+                                            AddedItem="Mscb_Example_AddedItem"
+                                            AddingItem="Mscb_Example_AddingItem"
                                             EditableTextStringComparision="CurrentCultureIgnoreCase"
+                                            InterceptMouseWheelSelection="False"
                                             ItemContainerStyle="{Binding ElementName=Cmb_ItemContainerStyle, Path=SelectedItem.Tag}"
                                             ItemsSource="{Binding Animals}"
                                             ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
-                                            StringToObjectParser="{x:Static mah:BuiltInStringToObjectParser.Instance}"
                                             SelectedItemContainerStyle="{Binding ElementName=Cmb_SelectedItemContainerStyle, Path=SelectedItem.Tag}"
+                                            SelectionChanged="mscb_Example_SelectionChanged"
                                             Separator=", "
+                                            StringToObjectParser="{x:Static mah:BuiltInStringToObjectParser.Instance}"
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
-                                            TextWrapping="Wrap" 
-                                            AddingItem="Mscb_Example_AddingItem"
-                                            AddedItem="Mscb_Example_AddedItem"
-                                            mah:MultiSelectorHelper.SelectedItems="{Binding SelectedAnimals}" 
-                                            SelectionChanged="mscb_Example_SelectionChanged"/>
+                                            TextWrapping="Wrap" />
             </Grid>
         </GroupBox>
     </Grid>
