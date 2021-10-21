@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
@@ -105,8 +106,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private class MultiSelectorBinding
         {
-            private readonly Selector _selector;
-            private readonly IList _collection;
+            private readonly Selector selector;
+            private readonly IList collection;
 
             /// <summary>
             /// Creates an instance of <see cref="MultiSelectorBinding"/>
@@ -115,8 +116,8 @@ namespace MahApps.Metro.Controls
             /// <param name="collection">The bound collection</param>
             public MultiSelectorBinding(Selector selector, IList collection)
             {
-                this._selector = selector;
-                this._collection = collection;
+                this.selector = selector;
+                this.collection = collection;
 
                 if (selector is ListBox listbox)
                 {
@@ -126,7 +127,7 @@ namespace MahApps.Metro.Controls
                         listbox.SelectedItems.Add(newItem);
                     }
                 }
-                else if (this._selector is MultiSelector multiSelector)
+                else if (selector is MultiSelector multiSelector)
                 {
                     multiSelector.SelectedItems.Clear();
                     foreach (var newItem in collection)
@@ -144,8 +145,8 @@ namespace MahApps.Metro.Controls
                 // prevent multiple event registration
                 this.UnBind();
 
-                this._selector.SelectionChanged += this.OnSelectionChanged;
-                if (this._collection is INotifyCollectionChanged notifyCollection)
+                this.selector.SelectionChanged += this.OnSelectionChanged;
+                if (this.collection is INotifyCollectionChanged notifyCollection)
                 {
                     notifyCollection.CollectionChanged += this.OnCollectionChanged;
                 }
@@ -156,8 +157,8 @@ namespace MahApps.Metro.Controls
             /// </summary>
             public void UnBind()
             {
-                this._selector.SelectionChanged -= this.OnSelectionChanged;
-                if (this._collection is INotifyCollectionChanged notifyCollection)
+                this.selector.SelectionChanged -= this.OnSelectionChanged;
+                if (this.collection is INotifyCollectionChanged notifyCollection)
                 {
                     notifyCollection.CollectionChanged -= this.OnCollectionChanged;
                 }
@@ -168,27 +169,35 @@ namespace MahApps.Metro.Controls
             /// </summary>
             private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
             {
-                var notifyCollection = this._collection as INotifyCollectionChanged;
-                if (notifyCollection != null)
+                var notifyCollection = this.collection as INotifyCollectionChanged;
+                if (notifyCollection is not null)
                 {
                     notifyCollection.CollectionChanged -= this.OnCollectionChanged;
                 }
 
                 try
                 {
-                    foreach (var oldItem in e.RemovedItems)
+                    var removedItems = e.RemovedItems;
+                    if (removedItems is not null)
                     {
-                        this._collection.Remove(oldItem);
+                        foreach (var oldItem in removedItems)
+                        {
+                            this.collection.Remove(oldItem);
+                        }
                     }
 
-                    foreach (var newItem in e.AddedItems)
+                    var addedItems = e.AddedItems;
+                    if (addedItems is not null)
                     {
-                        this._collection.Add(newItem);
+                        foreach (var newItem in addedItems)
+                        {
+                            this.collection.Add(newItem);
+                        }
                     }
                 }
                 finally
                 {
-                    if (notifyCollection != null)
+                    if (notifyCollection is not null)
                     {
                         notifyCollection.CollectionChanged += this.OnCollectionChanged;
                     }
@@ -204,20 +213,22 @@ namespace MahApps.Metro.Controls
             private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 #endif
             {
-                this._selector.SelectionChanged -= this.OnSelectionChanged;
+                this.selector.SelectionChanged -= this.OnSelectionChanged;
 
                 try
                 {
-                    if (this._selector is ListBox listBox)
+                    var selectedItems = (this.selector as ListBox)?.SelectedItems ?? (this.selector as MultiSelector)?.SelectedItems;
+
+                    if (selectedItems is not null)
                     {
                         switch (e.Action)
                         {
                             case NotifyCollectionChangedAction.Add:
                                 if (e.NewItems is not null)
                                 {
-                                    foreach (var newItem in e.NewItems)
+                                    foreach (var item in e.NewItems)
                                     {
-                                        listBox.SelectedItems.Add(newItem);
+                                        selectedItems.Add(item);
                                     }
                                 }
 
@@ -225,97 +236,92 @@ namespace MahApps.Metro.Controls
                             case NotifyCollectionChangedAction.Remove:
                                 if (e.OldItems is not null)
                                 {
-                                    foreach (var oldItem in e.OldItems)
+                                    foreach (var item in e.OldItems)
                                     {
-                                        listBox.SelectedItems.Remove(oldItem);
+                                        selectedItems.Remove(item);
                                     }
                                 }
 
                                 break;
                             case NotifyCollectionChangedAction.Move:
+                                Move(selectedItems, e);
+                                break;
                             case NotifyCollectionChangedAction.Replace:
-                                RemoveItems(listBox.SelectedItems, e);
-                                AddItems(listBox.SelectedItems, e);
+                                RemoveItems(selectedItems, e);
+                                AddItems(selectedItems, e);
                                 break;
                             case NotifyCollectionChangedAction.Reset:
-                                listBox.SelectedItems.Clear();
-                                break;
-                        }
-                    }
-                    else if (this._selector is MultiSelector multiSelector)
-                    {
-                        switch (e.Action)
-                        {
-                            case NotifyCollectionChangedAction.Add:
-                                if (e.NewItems is not null)
-                                {
-                                    foreach (var newItem in e.NewItems)
-                                    {
-                                        multiSelector.SelectedItems.Add(newItem);
-                                    }
-                                }
-
-                                break;
-                            case NotifyCollectionChangedAction.Remove:
-                                if (e.OldItems is not null)
-                                {
-                                    foreach (var oldItem in e.OldItems)
-                                    {
-                                        multiSelector.SelectedItems.Remove(oldItem);
-                                    }
-                                }
-
-                                break;
-                            case NotifyCollectionChangedAction.Move:
-                            case NotifyCollectionChangedAction.Replace:
-                                RemoveItems(multiSelector.SelectedItems, e);
-                                AddItems(multiSelector.SelectedItems, e);
-                                break;
-                            case NotifyCollectionChangedAction.Reset:
-                                multiSelector.SelectedItems.Clear();
+                                selectedItems.Clear();
                                 break;
                         }
                     }
                 }
                 finally
                 {
-                    this._selector.SelectionChanged += this.OnSelectionChanged;
+                    this.selector.SelectionChanged += this.OnSelectionChanged;
                 }
             }
 
-            private static void RemoveItems(IList? list, NotifyCollectionChangedEventArgs e)
+            private static void RemoveItems(IList? selectedItems, NotifyCollectionChangedEventArgs e)
             {
-                if (e.OldItems is not null && list is not null)
+                if (e.OldItems is not null && selectedItems is not null)
                 {
-                    var itemCount = e.OldItems.Count;
-
-                    // For the number of items being removed, remove the item from the old starting index
-                    // (this will cause following items to be shifted down to fill the hole).
-                    for (var i = 0; i < itemCount; i++)
+                    foreach (var item in e.OldItems)
                     {
-                        list.RemoveAt(e.OldStartingIndex);
+                        selectedItems.Remove(item);
                     }
                 }
             }
 
-            private static void AddItems(IList? list, NotifyCollectionChangedEventArgs e)
+            private static void AddItems(IList? selectedItems, NotifyCollectionChangedEventArgs e)
             {
-                if (e.NewItems is not null && list is not null)
+                if (e.NewItems is not null && selectedItems is not null)
                 {
-                    var itemCount = e.NewItems.Count;
-
-                    for (var i = 0; i < itemCount; i++)
+                    for (var i = 0; i < e.NewItems.Count; i++)
                     {
                         var insertionPoint = e.NewStartingIndex + i;
 
-                        if (insertionPoint > list.Count)
+                        if (insertionPoint > selectedItems.Count)
                         {
-                            list.Add(e.NewItems[i]);
+                            selectedItems.Add(e.NewItems[i]);
                         }
                         else
                         {
-                            list.Insert(insertionPoint, e.NewItems[i]);
+                            selectedItems.Insert(insertionPoint, e.NewItems[i]);
                         }
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Checks if the given collection is a ObservableCollection&lt;&gt;
+            /// </summary>
+            /// <param name="collection">The collection to test.</param>
+            /// <returns>True if the collection is a ObservableCollection&lt;&gt;</returns>
+            private static bool IsObservableCollection(IList? collection)
+            {
+                return collection is not null
+                       && collection.GetType().IsGenericType
+                       && collection.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>);
+            }
+
+            private static void Move(IList? selectedItems, NotifyCollectionChangedEventArgs e)
+            {
+                if (selectedItems is not null && e.OldStartingIndex != e.NewStartingIndex)
+                {
+                    if (selectedItems is ObservableCollection<object> observableCollection)
+                    {
+                        observableCollection.Move(e.OldStartingIndex, e.NewStartingIndex);
+                    }
+                    else if (IsObservableCollection(selectedItems))
+                    {
+                        var method = selectedItems.GetType().GetMethod("Move", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+                        _ = method?.Invoke(selectedItems, new object[] { e.OldStartingIndex, e.NewStartingIndex });
+                    }
+                    else
+                    {
+                        RemoveItems(selectedItems, e);
+                        AddItems(selectedItems, e);
                     }
                 }
             }
