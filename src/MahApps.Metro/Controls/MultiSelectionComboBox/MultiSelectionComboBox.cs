@@ -1054,7 +1054,7 @@ namespace MahApps.Metro.Controls
                     return false;
                 }
 
-                var elementType = BuiltInStringToObjectParser.Instance.GetElementType(this.ItemsSource);
+                var elementType = DefaultStringToObjectParser.Instance.GetElementType(this.ItemsSource);
 
                 var foundItem = this.StringToObjectParser.TryCreateObjectFromString(input, out result, this.Language.GetEquivalentCulture(), this.SelectedItemStringFormat, elementType);
 

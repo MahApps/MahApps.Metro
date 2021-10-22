@@ -15,9 +15,9 @@ namespace MahApps.Metro.Controls
     ///   It uses the <see cref="TypeConverter"/> for the elements <see cref="Type"/>. If you need more control
     ///   over the conversion you should create your own class which implements <see cref="IParseStringToObject"/>
     /// </summary>
-    public class BuiltInStringToObjectParser : IParseStringToObject
+    public class DefaultStringToObjectParser : IParseStringToObject
     {
-        public static readonly BuiltInStringToObjectParser Instance = new();
+        public static readonly DefaultStringToObjectParser Instance = new();
 
         /// <inheritdoc />
         public bool TryCreateObjectFromString(string? input,
@@ -43,7 +43,7 @@ namespace MahApps.Metro.Controls
                     return false;
                 }
 
-                result = TypeDescriptor.GetConverter(targetType).ConvertFromString(null, culture ?? CultureInfo.InvariantCulture, input);
+                result = TypeDescriptor.GetConverter(targetType).ConvertFromString(default!, culture ?? CultureInfo.InvariantCulture, input);
                 return true;
             }
             catch

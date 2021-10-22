@@ -153,7 +153,7 @@
                                       SelectedValue="{Binding ElementName=mscb_Example, Path=StringToObjectParser}"
                                       SelectedValuePath="Tag">
                                 <ComboBoxItem Content="None" Tag="{x:Null}" />
-                                <ComboBoxItem Content="Built-In" Tag="{x:Static mah:BuiltInStringToObjectParser.Instance}" />
+                                <ComboBoxItem Content="Built-In" Tag="{x:Static mah:DefaultStringToObjectParser.Instance}" />
                                 <ComboBoxItem Content="Example from the Demo with Dialog" Tag="{Binding MyObjectParser}" />
                             </ComboBox>
                         </mah:MetroHeader>
@@ -296,7 +296,7 @@
                                             SelectedItemContainerStyle="{Binding ElementName=Cmb_SelectedItemContainerStyle, Path=SelectedItem.Tag}"
                                             SelectionChanged="mscb_Example_SelectionChanged"
                                             Separator=", "
-                                            StringToObjectParser="{x:Static mah:BuiltInStringToObjectParser.Instance}"
+                                            StringToObjectParser="{x:Static mah:DefaultStringToObjectParser.Instance}"
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
                                             TextWrapping="Wrap" />
             </Grid>
