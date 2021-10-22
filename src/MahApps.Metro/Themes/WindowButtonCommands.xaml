@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <!--  WindowButtonCommands control templates  -->
 
@@ -15,7 +15,7 @@
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static converters:ResizeModeButtonType.Min}">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Min}">
                         <Binding Mode="OneWay"
                                  Path="ShowMinButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
@@ -39,7 +39,7 @@
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static converters:ResizeModeButtonType.Max}">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Max}">
                         <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
@@ -68,7 +68,7 @@
                     RenderOptions.EdgeMode="Aliased"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static converters:ResizeModeButtonType.Close}">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Close}">
                         <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
@@ -135,7 +135,7 @@
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static converters:ResizeModeButtonType.Min}">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Min}">
                         <Binding Mode="OneWay"
                                  Path="ShowMinButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
@@ -167,7 +167,7 @@
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static converters:ResizeModeButtonType.Max}">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Max}">
                         <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
@@ -201,7 +201,7 @@
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static converters:ResizeModeButtonType.Close}">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Close}">
                         <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />

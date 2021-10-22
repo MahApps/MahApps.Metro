@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <converters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
+    <mahConverters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
 
     <Style x:Key="MahApps.Styles.CustomValidationPopup" TargetType="{x:Type mah:CustomValidationPopup}">
         <Setter Property="HorizontalAlignment" Value="Right" />
@@ -23,7 +23,7 @@
                 <Border x:Name="ValidationErrorElement"
                         BorderBrush="{DynamicResource MahApps.Brushes.Control.Validation}"
                         BorderThickness="{Binding ElementName=placeholder, Path=AdornedElement.BorderThickness, FallbackValue=1, TargetNullValue=1}"
-                        CornerRadius="{Binding ElementName=placeholder, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.TopRight}}"
+                        CornerRadius="{Binding ElementName=placeholder, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.TopRight}}"
                         DataContext="{Binding ElementName=placeholder}"
                         SnapsToDevicePixels="{Binding ElementName=placeholder, Path=AdornedElement.SnapsToDevicePixels, FallbackValue=true, TargetNullValue=true}">
 

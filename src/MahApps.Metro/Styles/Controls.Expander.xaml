@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
-    <converters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
+    <mahConverters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
+    <mahConverters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
 
     <Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
     <system:Double x:Key="ExpanderToggleButtonEllipseThemeSize">18</system:Double>
@@ -346,7 +346,7 @@
                                     Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Bottom}}"
+                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Bottom}}"
                                     DockPanel.Dock="Top"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     UseLayoutRounding="True">
@@ -364,7 +364,7 @@
                                               Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderDownStyle)}"
                                               UseLayoutRounding="False">
                                     <ToggleButton.Foreground>
-                                        <MultiBinding Converter="{x:Static converters:BackgroundToForegroundConverter.Instance}">
+                                        <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
                                             <Binding Mode="OneWay"
                                                      Path="(mah:HeaderedControlHelper.HeaderBackground)"
                                                      RelativeSource="{RelativeSource TemplatedParent}" />
@@ -380,8 +380,8 @@
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}"
-                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Top}}"
+                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
+                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="false"
                                     Opacity="0"
@@ -431,26 +431,26 @@
                         </MultiDataTrigger>
 
                         <Trigger Property="ExpandDirection" Value="Right">
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Left}}" />
-                            <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Left}}" />
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
+                            <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Left}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
-                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Right}}" />
+                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Right}}" />
                             <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Left" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderRightStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Up">
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Bottom}}" />
-                            <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Bottom}}" />
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Bottom}}" />
+                            <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Bottom}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
-                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Top}}" />
+                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Top}}" />
                             <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Bottom" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderUpStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Left">
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Right}}" />
-                            <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Right}}" />
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
+                            <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Right}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
-                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Left}}" />
+                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Left}}" />
                             <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Right" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderLeftStyle)}" />
                         </Trigger>
