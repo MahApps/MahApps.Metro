@@ -19,6 +19,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
@@ -37,8 +38,7 @@ namespace MahApps.Metro.Controls
             TextProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, OnTextChanged));
             CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(ClearContentCommand, ExecutedClearContentCommand, CanExecuteClearContentCommand));
             CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(RemoveItemCommand, RemoveItemCommand_Executed, RemoveItemCommand_CanExecute));
-
-            CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(SelectAllCommand, new ExecutedRoutedEventHandler(OnSelectAll), new CanExecuteRoutedEventHandler(OnQueryStatusSelectAll)));
+            CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(SelectAllCommand, OnSelectAll, OnQueryStatusSelectAll));
         }
 
         public MultiSelectionComboBox()
@@ -65,12 +65,12 @@ namespace MahApps.Metro.Controls
         private ListBox? PART_SelectedItemsPresenter;
 
         private bool isUserdefinedTextInputPending;
-        private bool isTextChanging; // This flag indicates if the text is changed by us, so we don't want to refire the TextChangedEvent.
+        private bool isTextChanging; // This flag indicates if the text is changed by us, so we don't want to re-fire the TextChangedEvent.
         private bool shouldDoTextReset; // Defines if the Text should be reset after selecting items from string
-        private bool shouldAddItems; // Defines if the MSCB should add new items from text input. Don't set this to true while input is pending. We cannot know how long the user needs for typing.
-        private bool IsSyncingSelectedItems; // true if syncing in one or the other direction already running
-        private DispatcherTimer? _updateSelectedItemsFromTextTimer;
-        private static readonly RoutedUICommand SelectAllCommand 
+        private bool shouldAddItems; // Defines if the MultiSelectionComboBox should add new items from text input. Don't set this to true while input is pending. We cannot know how long the user needs for typing.
+        private bool isSyncingSelectedItems; // true if syncing in one or the other direction already running
+        private DispatcherTimer? updateSelectedItemsFromTextTimer;
+        private static readonly RoutedUICommand SelectAllCommand
             = new RoutedUICommand("Select All",
                                   nameof(SelectAllCommand),
                                   typeof(MultiSelectionComboBox),
@@ -554,7 +554,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-
         /// <summary>
         /// Identifies the <see cref="IsDropDownHeaderVisible"/> dependency property.
         /// </summary>
@@ -569,10 +568,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsDropDownHeaderVisible
         {
-            get { return (bool)GetValue(IsDropDownHeaderVisibleProperty); }
-            set { SetValue(IsDropDownHeaderVisibleProperty, value); }
+            get => (bool)this.GetValue(IsDropDownHeaderVisibleProperty);
+            set => this.SetValue(IsDropDownHeaderVisibleProperty, value);
         }
-
 
         /// <summary>
         /// Identifies the <see cref="DropDownHeaderContent"/> dependency property.
@@ -588,10 +586,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? DropDownHeaderContent
         {
-            get { return (object?)GetValue(DropDownHeaderContentProperty); }
-            set { SetValue(DropDownHeaderContentProperty, value); }
+            get => (object?)this.GetValue(DropDownHeaderContentProperty);
+            set => this.SetValue(DropDownHeaderContentProperty, value);
         }
-
 
         /// <summary>
         /// Identifies the <see cref="DropDownHeaderContentTemplate"/> dependency property.
@@ -607,8 +604,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplate? DropDownHeaderContentTemplate
         {
-            get { return (DataTemplate?)GetValue(DropDownHeaderContentTemplateProperty); }
-            set { SetValue(DropDownHeaderContentTemplateProperty, value); }
+            get => (DataTemplate?)this.GetValue(DropDownHeaderContentTemplateProperty);
+            set => this.SetValue(DropDownHeaderContentTemplateProperty, value);
         }
 
         /// <summary>
@@ -625,8 +622,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplateSelector? DropDownHeaderContentTemplateSelector
         {
-            get { return (DataTemplateSelector?)GetValue(DropDownHeaderContentTemplateSelectorProperty); }
-            set { SetValue(DropDownHeaderContentTemplateSelectorProperty, value); }
+            get => (DataTemplateSelector?)this.GetValue(DropDownHeaderContentTemplateSelectorProperty);
+            set => this.SetValue(DropDownHeaderContentTemplateSelectorProperty, value);
         }
 
         /// <summary>
@@ -643,10 +640,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string? DropDownHeaderContentStringFormat
         {
-            get { return (string?)GetValue(DropDownHeaderContentStringFormatProperty); }
-            set { SetValue(DropDownHeaderContentStringFormatProperty, value); }
+            get => (string?)this.GetValue(DropDownHeaderContentStringFormatProperty);
+            set => this.SetValue(DropDownHeaderContentStringFormatProperty, value);
         }
-
 
         /// <summary>
         /// Identifies the <see cref="IsDropDownFooterVisible"/> dependency property.
@@ -662,10 +658,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsDropDownFooterVisible
         {
-            get { return (bool)GetValue(IsDropDownFooterVisibleProperty); }
-            set { SetValue(IsDropDownFooterVisibleProperty, value); }
+            get => (bool)this.GetValue(IsDropDownFooterVisibleProperty);
+            set => this.SetValue(IsDropDownFooterVisibleProperty, value);
         }
-
 
         /// <summary>
         /// Identifies the <see cref="DropDownFooterContent"/> dependency property.
@@ -681,10 +676,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object? DropDownFooterContent
         {
-            get { return (object?)GetValue(DropDownFooterContentProperty); }
-            set { SetValue(DropDownFooterContentProperty, value); }
+            get => (object?)this.GetValue(DropDownFooterContentProperty);
+            set => this.SetValue(DropDownFooterContentProperty, value);
         }
-
 
         /// <summary>
         /// Identifies the <see cref="DropDownFooterContentTemplate"/> dependency property.
@@ -700,10 +694,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplate? DropDownFooterContentTemplate
         {
-            get { return (DataTemplate?)GetValue(DropDownFooterContentTemplateProperty); }
-            set { SetValue(DropDownFooterContentTemplateProperty, value); }
+            get => (DataTemplate?)this.GetValue(DropDownFooterContentTemplateProperty);
+            set => this.SetValue(DropDownFooterContentTemplateProperty, value);
         }
-
 
         /// <summary>
         /// Identifies the <see cref="DropDownFooterContentTemplateSelector"/> dependency property.
@@ -719,8 +712,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplateSelector? DropDownFooterContentTemplateSelector
         {
-            get { return (DataTemplateSelector?)GetValue(DropDownFooterContentTemplateSelectorProperty); }
-            set { SetValue(DropDownFooterContentTemplateSelectorProperty, value); }
+            get => (DataTemplateSelector?)this.GetValue(DropDownFooterContentTemplateSelectorProperty);
+            set => this.SetValue(DropDownFooterContentTemplateSelectorProperty, value);
         }
 
         /// <summary>
@@ -737,8 +730,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string? DropDownFooterContentStringFormat
         {
-            get { return (string?)GetValue(DropDownFooterContentStringFormatProperty); }
-            set { SetValue(DropDownFooterContentStringFormatProperty, value); }
+            get => (string?)this.GetValue(DropDownFooterContentStringFormatProperty);
+            set => this.SetValue(DropDownFooterContentStringFormatProperty, value);
         }
 
         #endregion
@@ -749,7 +742,6 @@ namespace MahApps.Metro.Controls
         /// Updates the Text of the editable TextBox.
         /// Sets the custom Text if any otherwise the concatenated string.
         /// </summary> 
-
         private void UpdateEditableText(bool forceUpdate = false)
         {
             if (this.PART_EditableTextBox is null || (this.PART_EditableTextBox.IsKeyboardFocused && !forceUpdate))
@@ -863,21 +855,21 @@ namespace MahApps.Metro.Controls
             this.shouldDoTextReset = millisecondsToWait == 0;
             this.shouldAddItems = millisecondsToWait == 0;
 
-            if (this._updateSelectedItemsFromTextTimer is null)
+            if (this.updateSelectedItemsFromTextTimer is null)
             {
-                this._updateSelectedItemsFromTextTimer = new DispatcherTimer(DispatcherPriority.Background);
-                this._updateSelectedItemsFromTextTimer.Tick += this.UpdateSelectedItemsFromTextTimer_Tick;
+                this.updateSelectedItemsFromTextTimer = new DispatcherTimer(DispatcherPriority.Background);
+                this.updateSelectedItemsFromTextTimer.Tick += this.UpdateSelectedItemsFromTextTimer_Tick;
             }
 
-            if (this._updateSelectedItemsFromTextTimer.IsEnabled)
+            if (this.updateSelectedItemsFromTextTimer.IsEnabled)
             {
-                this._updateSelectedItemsFromTextTimer.Stop();
+                this.updateSelectedItemsFromTextTimer.Stop();
             }
 
             if (this.ObjectToStringComparer is not null && (!string.IsNullOrEmpty(this.Separator) || this.SelectionMode == SelectionMode.Single))
             {
-                this._updateSelectedItemsFromTextTimer.Interval = TimeSpan.FromMilliseconds(millisecondsToWait > 0 ? millisecondsToWait : 0);
-                this._updateSelectedItemsFromTextTimer.Start();
+                this.updateSelectedItemsFromTextTimer.Interval = TimeSpan.FromMilliseconds(millisecondsToWait > 0 ? millisecondsToWait : 0);
+                this.updateSelectedItemsFromTextTimer.Start();
             }
         }
 
@@ -887,7 +879,7 @@ namespace MahApps.Metro.Controls
         private void UpdateSelectedItemsFromTextTimer_Tick(object sender, EventArgs e)
 #endif
         {
-            this._updateSelectedItemsFromTextTimer?.Stop();
+            this.updateSelectedItemsFromTextTimer?.Stop();
 
             // We clear the selection if there is no text available. 
             if (string.IsNullOrEmpty(this.Text))
@@ -970,7 +962,7 @@ namespace MahApps.Metro.Controls
 
                                         if (oldPosition < 0) // if old index is <0 the item is not in list yet. let's add it.
                                         {
-                                            this.SelectedItems.Insert(position,item);
+                                            this.SelectedItems.Insert(position, item);
                                             foundItem = true;
                                             position++;
                                         }
@@ -995,7 +987,7 @@ namespace MahApps.Metro.Controls
                             {
                                 if (this.shouldAddItems && this.TryAddObjectFromString(stringObject, out var result))
                                 {
-                                    this.SelectedItems.Insert(position,result);
+                                    this.SelectedItems.Insert(position, result);
                                     position++;
                                 }
                                 else
@@ -1095,9 +1087,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-#endregion
+        #endregion
 
-#region Commands
+        #region Commands
 
         // Clear Text Command
         public static RoutedUICommand ClearContentCommand { get; } = new RoutedUICommand("ClearContent", nameof(ClearContentCommand), typeof(MultiSelectionComboBox));
@@ -1125,6 +1117,7 @@ namespace MahApps.Metro.Controls
                             throw new NotSupportedException("Unknown SelectionMode");
                     }
                 }
+
                 multiSelectionCombo.ResetEditableText(true);
             }
         }
@@ -1166,9 +1159,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-#endregion
+        #endregion
 
-#region Overrides
+        #region Overrides
 
         public override void OnApplyTemplate()
         {
@@ -1184,14 +1177,14 @@ namespace MahApps.Metro.Controls
             this.PART_SelectedItemsPresenter.SelectionChanged += this.PART_SelectedItemsPresenter_SelectionChanged;
 
             // Init EditableTextBox
-            this.PART_EditableTextBox = this.GetTemplateChild(nameof(PART_EditableTextBox)) as TextBox ?? throw new MissingRequiredTemplatePartException(this, nameof(PART_EditableTextBox));
+            this.PART_EditableTextBox = this.GetTemplateChild(nameof(this.PART_EditableTextBox)) as TextBox ?? throw new MissingRequiredTemplatePartException(this, nameof(this.PART_EditableTextBox));
 
             this.PART_EditableTextBox.LostFocus -= this.PART_EditableTextBox_LostFocus;
             this.PART_EditableTextBox.LostFocus += this.PART_EditableTextBox_LostFocus;
 
             // Init Popup
-            this.PART_Popup = this.GetTemplateChild(nameof(PART_Popup)) as Popup ?? throw new MissingRequiredTemplatePartException(this, nameof(PART_Popup));
-            this.PART_PopupListBox = this.GetTemplateChild(nameof(PART_PopupListBox)) as ListBox ?? throw new MissingRequiredTemplatePartException(this, nameof(PART_PopupListBox));
+            this.PART_Popup = this.GetTemplateChild(nameof(this.PART_Popup)) as Popup ?? throw new MissingRequiredTemplatePartException(this, nameof(this.PART_Popup));
+            this.PART_PopupListBox = this.GetTemplateChild(nameof(this.PART_PopupListBox)) as ListBox ?? throw new MissingRequiredTemplatePartException(this, nameof(this.PART_PopupListBox));
 
             if (this.PART_PopupListBox.SelectedItems is INotifyCollectionChanged selectedItemsCollection)
             {
@@ -1199,7 +1192,7 @@ namespace MahApps.Metro.Controls
                 selectedItemsCollection.CollectionChanged += this.PART_PopupListBox_SelectedItems_CollectionChanged;
             }
 
-            this.SyncSelectedItems(this.SelectedItems, PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
             // Do update the text and selection
             this.UpdateDisplaySelectedItems();
@@ -1253,7 +1246,7 @@ namespace MahApps.Metro.Controls
             }
 
             // If we have the ItemsSource set, we need to exit here. 
-            if (((PART_PopupListBox?.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this, ItemsSourceProperty))
+            if (((this.PART_PopupListBox?.Items as IList)?.IsReadOnly ?? false) || BindingOperations.IsDataBound(this, ItemsSourceProperty))
             {
                 return;
             }
@@ -1285,7 +1278,7 @@ namespace MahApps.Metro.Controls
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Move:
                 case NotifyCollectionChangedAction.Reset:
-                    this.PART_PopupListBox?.Items?.Clear();
+                    this.PART_PopupListBox?.Items.Clear();
                     foreach (var item in this.Items)
                     {
                         this.PART_PopupListBox?.Items?.Add(item);
@@ -1765,7 +1758,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void SelectAll()
         {
-            PART_PopupListBox?.SelectAll();
+            this.PART_PopupListBox?.SelectAll();
         }
 
         private static void OnSelectAll(object target, ExecutedRoutedEventArgs args)
@@ -1777,22 +1770,23 @@ namespace MahApps.Metro.Controls
         }
 
         private static void OnQueryStatusSelectAll(object target, CanExecuteRoutedEventArgs args)
-{
+        {
             if (target is MultiSelectionComboBox comboBox)
             {
-                args.CanExecute 
-                    = comboBox.SelectionMode == SelectionMode.Extended 
-                    && comboBox.IsDropDownOpen 
-                    && !(comboBox.PART_EditableTextBox?.IsKeyboardFocused ?? false);
+                args.CanExecute
+                    = comboBox.SelectionMode == SelectionMode.Extended
+                      && comboBox.IsDropDownOpen
+                      && !(comboBox.PART_EditableTextBox?.IsKeyboardFocused ?? false);
             }
         }
 
         /// <summary>
         ///     Clears all of the selected items.
         /// </summary>
+        [PublicAPI]
         public void UnselectAll()
         {
-            PART_PopupListBox?.UnselectAll();
+            this.PART_PopupListBox?.UnselectAll();
         }
 
         #endregion
@@ -1815,12 +1809,12 @@ namespace MahApps.Metro.Controls
 
         private void SyncSelectedItems(IList? sourceCollection, IList? targetCollection, NotifyCollectionChangedEventArgs e)
         {
-            if (this.IsSyncingSelectedItems || sourceCollection is null || targetCollection is null || !this.IsInitialized)
+            if (this.isSyncingSelectedItems || sourceCollection is null || targetCollection is null || !this.IsInitialized)
             {
                 return;
             }
 
-            this.IsSyncingSelectedItems = true;
+            this.isSyncingSelectedItems = true;
 
             try
             {
@@ -1914,7 +1908,7 @@ namespace MahApps.Metro.Controls
             }
             finally
             {
-                this.IsSyncingSelectedItems = false;
+                this.isSyncingSelectedItems = false;
             }
         }
 
@@ -1993,6 +1987,6 @@ namespace MahApps.Metro.Controls
             remove => this.RemoveHandler(AddedItemEvent, value);
         }
 
-#endregion
+        #endregion
     }
 }
