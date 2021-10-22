@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="{x:Type mah:PathIcon}">
         <Setter Property="FlowDirection" Value="LeftToRight" />
@@ -21,7 +21,7 @@
                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                              UseLayoutRounding="True">
                         <Path x:Name="PART_Path"
-                              Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                              Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={mahConverters:NullToUnsetValueConverter}}"
                               Fill="{TemplateBinding Foreground}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               Stretch="Uniform"

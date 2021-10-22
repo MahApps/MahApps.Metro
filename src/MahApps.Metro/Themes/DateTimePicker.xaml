@@ -2,17 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
                     xmlns:controlzex="urn:controlzex"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
-    <converters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
+    <mahConverters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
+    <mahConverters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
 
     <DataTemplate x:Key="MahApps.Templates.DateTimePicker.FiveMinuteIndicator">
         <StackPanel Height="57"
@@ -173,7 +173,7 @@
                                             Margin="4 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
-                                    <MultiBinding Converter="{converters:MathMultiplyConverter}">
+                                    <MultiBinding Converter="{mahConverters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
                                                  Mode="OneWay"
                                                  Path="ActualHeight" />
@@ -193,7 +193,7 @@
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform x:Name="FloatingMessageTransform">
                                             <TranslateTransform.Y>
-                                                <MultiBinding Converter="{converters:MathSubtractConverter}">
+                                                <MultiBinding Converter="{mahConverters:MathSubtractConverter}">
                                                     <Binding ElementName="PART_FloatingMessage"
                                                              Mode="OneWay"
                                                              Path="ActualHeight" />
@@ -470,6 +470,7 @@
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(mah:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(mah:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(mah:TextBoxHelper.Watermark), RelativeSource={RelativeSource Self}, Converter={x:Static mahConverters:StringIsNullOrEmptyConverter.Default}}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />

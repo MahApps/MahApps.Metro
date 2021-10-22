@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:mahConverter="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
@@ -140,7 +140,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={mahConverter:SizeToCornerRadiusConverter}}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={mahConverters:SizeToCornerRadiusConverter}}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.MulitselectionComboBoxSelectedItem.RemoveItem"
@@ -160,7 +160,7 @@
         <Setter Property="Margin" Value="0 0 4 0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Width" Value="10" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={mahConverter:SizeToCornerRadiusConverter}}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={mahConverters:SizeToCornerRadiusConverter}}" />
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -255,7 +255,7 @@
                                             Margin="4 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
-                                    <MultiBinding Converter="{mahConverter:MathMultiplyConverter}">
+                                    <MultiBinding Converter="{mahConverters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
                                                  Mode="OneWay"
                                                  Path="ActualHeight" />
@@ -275,7 +275,7 @@
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform x:Name="FloatingMessageTransform">
                                             <TranslateTransform.Y>
-                                                <MultiBinding Converter="{mahConverter:MathSubtractConverter}">
+                                                <MultiBinding Converter="{mahConverters:MathSubtractConverter}">
                                                     <Binding ElementName="PART_FloatingMessage"
                                                              Mode="OneWay"
                                                              Path="ActualHeight" />
@@ -318,6 +318,7 @@
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(mah:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(mah:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(mah:TextBoxHelper.Watermark), RelativeSource={RelativeSource Self}, Converter={x:Static mahConverters:StringIsNullOrEmptyConverter.Default}}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
@@ -593,7 +594,7 @@
                                             Margin="4 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
-                                    <MultiBinding Converter="{mahConverter:MathMultiplyConverter}">
+                                    <MultiBinding Converter="{mahConverters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
                                                  Mode="OneWay"
                                                  Path="ActualHeight" />
@@ -613,7 +614,7 @@
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform x:Name="FloatingMessageTransform">
                                             <TranslateTransform.Y>
-                                                <MultiBinding Converter="{mahConverter:MathSubtractConverter}">
+                                                <MultiBinding Converter="{mahConverters:MathSubtractConverter}">
                                                     <Binding ElementName="PART_FloatingMessage"
                                                              Mode="OneWay"
                                                              Path="ActualHeight" />
@@ -728,7 +729,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="True" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ContextMenu, Converter={x:Static mahConverter:IsNullConverter.Instance}}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ContextMenu, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_EditableTextBox" Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContextMenu}" />
                         </MultiDataTrigger>
@@ -743,7 +744,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverter:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocusWithin}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                             </MultiDataTrigger.Conditions>
@@ -757,7 +758,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverter:IsNullConverter.Instance}}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
@@ -773,7 +774,8 @@
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(mah:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverter:IsNullConverter.Instance}}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False" />
+                                <Condition Binding="{Binding Path=(mah:TextBoxHelper.Watermark), RelativeSource={RelativeSource Self}, Converter={x:Static mahConverters:StringIsNullOrEmptyConverter.Default}}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />

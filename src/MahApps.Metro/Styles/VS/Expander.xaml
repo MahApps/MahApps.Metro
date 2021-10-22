@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
+    <mahConverters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
     <Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
     <system:Double x:Key="ExpanderHeaderThemeFontSize">16</system:Double>
@@ -363,7 +363,7 @@
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}"
+                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="False"
                                     Opacity="0"
@@ -413,19 +413,19 @@
                         </MultiDataTrigger>
 
                         <Trigger Property="ExpandDirection" Value="Right">
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Left}}" />
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
                             <Setter TargetName="ToggleSite" Property="DockPanel.Dock" Value="Left" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderRightStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Up">
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Bottom}}" />
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Bottom}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
                             <Setter TargetName="ToggleSite" Property="DockPanel.Dock" Value="Bottom" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderUpStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Left">
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Right}}" />
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
                             <Setter TargetName="ToggleSite" Property="DockPanel.Dock" Value="Right" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderLeftStyle)}" />

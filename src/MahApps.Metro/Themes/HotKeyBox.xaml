@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="{x:Type mah:HotKeyBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
@@ -59,10 +59,10 @@
                             <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper">
-                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Converter={converters:ToUpperConverter}, Mode=OneWay}" />
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Converter={mahConverters:ToUpperConverter}, Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="mah:ControlsHelper.ContentCharacterCasing" Value="Lower">
-                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Converter={converters:ToLowerConverter}, Mode=OneWay}" />
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Converter={mahConverters:ToLowerConverter}, Mode=OneWay}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

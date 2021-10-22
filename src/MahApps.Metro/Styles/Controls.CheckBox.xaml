@@ -1,14 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  ********************************** CheckBoxStyle **********************************  -->
     <system:Double x:Key="CheckBoxBorderThemeThickness">2</system:Double>
     <system:Double x:Key="CheckBoxCheckedStrokeThickness">0</system:Double>
-    <converters:CornerRadiusFilterConverter x:Key="CornerRadiusTopLeftConverter" Filter="TopLeft" />
-    <converters:CornerRadiusFilterConverter x:Key="CornerRadiusBottomRightConverter" Filter="BottomRight" />
+    <mahConverters:CornerRadiusFilterConverter x:Key="CornerRadiusTopLeftConverter" Filter="TopLeft" />
+    <mahConverters:CornerRadiusFilterConverter x:Key="CornerRadiusBottomRightConverter" Filter="BottomRight" />
 
     <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <!--  ===============================================================================  -->
     <!--  Metro styled TreeView  -->
@@ -65,7 +65,7 @@
         <Setter Property="Width" Value="16" />
     </Style>
 
-    <converters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
+    <mahConverters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
 
     <Style x:Key="MahApps.Styles.TreeViewItem" TargetType="{x:Type TreeViewItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
