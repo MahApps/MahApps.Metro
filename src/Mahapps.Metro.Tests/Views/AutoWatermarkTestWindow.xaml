@@ -4,9 +4,8 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:tests="clr-namespace:MahApps.Metro.Tests"
                  xmlns:views="clr-namespace:MahApps.Metro.Tests.Views"
-                 d:DataContext="{d:DesignInstance tests:AutoWatermarkTestModel}"
+                 d:DataContext="{d:DesignInstance views:AutoWatermarkTestModel}"
                  d:DesignHeight="300"
                  d:DesignWidth="300"
                  mc:Ignorable="d">

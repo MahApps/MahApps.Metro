@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using MahApps.Metro.ValueBoxes;
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
