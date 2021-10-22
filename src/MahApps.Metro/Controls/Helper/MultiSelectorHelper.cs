@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,9 +30,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ListBox || d is MultiSelector))
+            if (!(d is ListBox || d is MultiSelector || d is MultiSelectionComboBox))
             {
-                throw new ArgumentException("The property 'SelectedItems' may only be set on ListBox or MultiSelector elements.");
+                throw new ArgumentException("The property 'SelectedItems' may only be set on ListBox, MultiSelector or MultiSelectionComboBox elements.");
             }
 
             if (e.OldValue != e.NewValue)
@@ -133,6 +133,17 @@ namespace MahApps.Metro.Controls
                     foreach (var newItem in collection)
                     {
                         multiSelector.SelectedItems.Add(newItem);
+                    }
+                }
+                else if (selector is MultiSelectionComboBox multiSelectionComboBox)
+                {
+                    if (multiSelectionComboBox.SelectedItems is not null)
+                    {
+                        multiSelectionComboBox.SelectedItems.Clear();
+                        foreach (var newItem in collection)
+                        {
+                            multiSelectionComboBox.SelectedItems.Add(newItem);
+                        }
                     }
                 }
             }

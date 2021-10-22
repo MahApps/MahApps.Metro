@@ -24,6 +24,8 @@
                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ScrollViewer Padding="{TemplateBinding Padding}"
+                                      mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer="{TemplateBinding mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer}"
+                                      mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                                       CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
                                       Focusable="False"
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"

@@ -77,6 +77,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -91,6 +92,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -118,6 +120,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -135,6 +138,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -162,6 +166,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -179,6 +184,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -229,6 +235,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
@@ -241,6 +248,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
@@ -328,6 +336,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -355,6 +364,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
@@ -376,7 +386,8 @@ namespace MahApps.Metro.Controls
                   { typeof(TimePicker), TimePickerBase.SelectedDateTimeProperty },
                   { typeof(DateTimePicker), TimePickerBase.SelectedDateTimeProperty },
                   { typeof(ColorPicker), ColorPickerBase.SelectedColorProperty },
-                  { typeof(ColorCanvas), ColorPickerBase.SelectedColorProperty }
+                  { typeof(ColorCanvas), ColorPickerBase.SelectedColorProperty },
+                  { typeof(MultiSelectionComboBox), MultiSelectionComboBox.SelectedItemProperty }
               };
 
         internal static readonly DependencyPropertyKey TextLengthPropertyKey
@@ -408,6 +419,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static bool GetHasText(DependencyObject obj)
@@ -419,6 +431,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static void SetHasText(DependencyObject obj, bool value)
@@ -1050,7 +1063,7 @@ namespace MahApps.Metro.Controls
         {
             var button = (Button)sender;
 
-            var parent = button.GetAncestors().FirstOrDefault(a => a is RichTextBox || a is TextBox || a is PasswordBox || a is ComboBox || a is ColorPickerBase);
+            var parent = button.GetAncestors().FirstOrDefault(a => a is RichTextBox || a is TextBox || a is PasswordBox || a is ComboBox || a is ColorPickerBase || a is MultiSelectionComboBox);
             if (parent is null)
             {
                 return;
@@ -1084,6 +1097,29 @@ namespace MahApps.Metro.Controls
                 {
                     passwordBox.Clear();
                     passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                }
+                else if (parent is MultiSelectionComboBox multiSelectionComboBox)
+                {
+                    if (multiSelectionComboBox.HasCustomText)
+                    {
+                        multiSelectionComboBox.ResetEditableText(true);
+                    }
+                    else
+                    {
+                        switch (multiSelectionComboBox.SelectionMode)
+                        {
+                            case SelectionMode.Single:
+                                multiSelectionComboBox.SetCurrentValue(MultiSelectionComboBox.SelectedItemProperty, null);
+                                break;
+                            case SelectionMode.Multiple:
+                            case SelectionMode.Extended:
+                                multiSelectionComboBox.SelectedItems?.Clear();
+                                break;
+                            default:
+                                throw new NotSupportedException("Unknown SelectionMode");
+                        }
+                        multiSelectionComboBox.ResetEditableText(true);
+                    }
                 }
                 else if (parent is ComboBox comboBox)
                 {

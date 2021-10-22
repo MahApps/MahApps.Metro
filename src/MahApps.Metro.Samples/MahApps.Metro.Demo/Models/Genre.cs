@@ -37,5 +37,14 @@ namespace MetroDemo.Models
             get => this._albums;
             set => this.Set(ref this._albums, value);
         }
+
+#if NET5_0_OR_GREATER || NETCOREAPP
+        public override string? ToString()
+#else
+        public override string ToString()
+#endif
+        {
+            return this.Name ?? base.ToString();
+        }
     }
 }

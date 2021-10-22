@@ -211,6 +211,8 @@ namespace MetroDemo
 
             this.ToggleSwitchOffCommand = new SimpleCommand<MainWindowViewModel?>(x => x is not null && x.CanUseToggleSwitch,
                                                                                   async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now Off."); });
+
+            this.MyObjectParser = new ObjectParser(this, this._dialogCoordinator);
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -551,5 +553,168 @@ namespace MetroDemo
         public bool IsNoScaleSmallerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame;
 
         public bool IsToggleSwitchVisible { get; set; }
+
+        public ObservableCollection<string> Animals { get; } = new()
+                                                               {
+                                                                   "African elephant",
+                                                                   "Ant",
+                                                                   "Antelope",
+                                                                   "Aphid",
+                                                                   "Arctic wolf",
+                                                                   "Badger",
+                                                                   "Bald eagle",
+                                                                   "Bat",
+                                                                   "Bear",
+                                                                   "Bee",
+                                                                   "Beetle",
+                                                                   "Bengal tiger",
+                                                                   "Bison",
+                                                                   "Butterfly",
+                                                                   "Camel",
+                                                                   "Cat",
+                                                                   "Caterpillar",
+                                                                   "Chicken",
+                                                                   "Chimpanzee",
+                                                                   "Chipmunk",
+                                                                   "Cicada",
+                                                                   "Clam",
+                                                                   "Cockroach",
+                                                                   "Cormorant",
+                                                                   "Cow",
+                                                                   "Coyote",
+                                                                   "Crab",
+                                                                   "Crow",
+                                                                   "Cuckoo",
+                                                                   "Deer",
+                                                                   "Dog",
+                                                                   "Dolphin",
+                                                                   "Donkey",
+                                                                   "Dove",
+                                                                   "Dragonfly",
+                                                                   "Duck",
+                                                                   "Elephant",
+                                                                   "Elk",
+                                                                   "Finch",
+                                                                   "Fish",
+                                                                   "Flamingo",
+                                                                   "Flea",
+                                                                   "Fly",
+                                                                   "Fox",
+                                                                   "Frigatebird",
+                                                                   "Giraffe",
+                                                                   "Goat",
+                                                                   "Goldfish",
+                                                                   "Goose",
+                                                                   "Gorilla",
+                                                                   "Grasshopper",
+                                                                   "Great horned owl",
+                                                                   "Guinea pig",
+                                                                   "Hamster",
+                                                                   "Hare",
+                                                                   "Hawk",
+                                                                   "Hedgehog",
+                                                                   "Hippopotamus",
+                                                                   "Hornbill",
+                                                                   "Horse",
+                                                                   "Horse-fly",
+                                                                   "Howler monkey",
+                                                                   "Hummingbird",
+                                                                   "Hyena",
+                                                                   "Ibis",
+                                                                   "Jackal",
+                                                                   "Jellyfish",
+                                                                   "Kangaroo",
+                                                                   "Koala",
+                                                                   "Ladybugs(NAmE) /ladybirds(BrE)",
+                                                                   "Leopard",
+                                                                   "Lion",
+                                                                   "Lizard",
+                                                                   "Lobster",
+                                                                   "Lynxes",
+                                                                   "Mantis",
+                                                                   "Marten",
+                                                                   "Mole",
+                                                                   "Monkey",
+                                                                   "Mosquito",
+                                                                   "Moth",
+                                                                   "Mouse",
+                                                                   "Octopus",
+                                                                   "Okapi",
+                                                                   "Orangutan",
+                                                                   "Otter",
+                                                                   "Owl",
+                                                                   "Ox",
+                                                                   "Oyster",
+                                                                   "Panda",
+                                                                   "Parrot",
+                                                                   "Pelecaniformes",
+                                                                   "Pelican",
+                                                                   "Penguin",
+                                                                   "Pig",
+                                                                   "Pigeon",
+                                                                   "Porcupine",
+                                                                   "Possum",
+                                                                   "Puma",
+                                                                   "Rabbit",
+                                                                   "Raccoon",
+                                                                   "Rat",
+                                                                   "Raven",
+                                                                   "Red dear",
+                                                                   "Red panda",
+                                                                   "Red squirrel",
+                                                                   "Reindeer",
+                                                                   "Rhinoceros",
+                                                                   "Robin",
+                                                                   "Sandpiper",
+                                                                   "Sea turtle",
+                                                                   "Seahorse",
+                                                                   "Seal",
+                                                                   "Shark",
+                                                                   "Sheep",
+                                                                   "Shell",
+                                                                   "Shrimp",
+                                                                   "Snake",
+                                                                   "Sparrow",
+                                                                   "Squid",
+                                                                   "Squirrel",
+                                                                   "Squirrel monkey",
+                                                                   "Starfish",
+                                                                   "Stork",
+                                                                   "Swallow",
+                                                                   "Swan",
+                                                                   "Termite",
+                                                                   "Tern",
+                                                                   "Tick",
+                                                                   "Tiger",
+                                                                   "Turkey",
+                                                                   "Turtle",
+                                                                   "Walrus",
+                                                                   "Wasp",
+                                                                   "Whale",
+                                                                   "Whitefly",
+                                                                   "Wild boar",
+                                                                   "Wolf",
+                                                                   "Wombat",
+                                                                   "Woodpecker",
+                                                                   "Zebra"
+                                                               };
+
+        public ObservableCollection<string> SelectedAnimals { get; } = new()
+                                                                       {
+                                                                           "Dog",
+                                                                           "Cat",
+                                                                           "Zebra"
+                                                                       };
+
+        private object? myFavoriteAnimal;
+
+        [Display(Prompt = "Select your favorite animal(s)")]
+        public object? MyFavoriteAnimal
+        {
+            get => this.myFavoriteAnimal;
+            set => this.Set(ref this.myFavoriteAnimal, value);
+        }
+
+        public ObjectParser? MyObjectParser { get; }
     }
 }

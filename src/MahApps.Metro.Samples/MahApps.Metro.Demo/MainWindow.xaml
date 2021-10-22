@@ -332,6 +332,10 @@
                 <exampleViews:ColorPickerExample />
             </TabItem>
 
+            <TabItem Header="MultiSelectionComboBox">
+                <exampleViews:MultiSelectionComboBoxExample />
+            </TabItem>
+
             <TabItem Header="others">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
