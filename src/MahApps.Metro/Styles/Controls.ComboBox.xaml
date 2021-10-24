@@ -8,6 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Thickness x:Key="ComboBoxBorderThemeThickness">1</Thickness>
+    <CornerRadius x:Key="ComboBoxPopupBorderThemeCornerRadius">0</CornerRadius>
     <Thickness x:Key="ComboBoxPopupBorderThemeThickness">1</Thickness>
     <Thickness x:Key="ComboBoxPopupBorderThemePadding">1</Thickness>
 
@@ -425,17 +426,18 @@
                                Placement="Bottom"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                             <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
-                                <Border x:Name="PopupBorder"
-                                        Height="Auto"
-                                        HorizontalAlignment="Stretch"
-                                        Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
-                                        BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <mah:ClipBorder x:Name="PopupBorder"
+                                                Height="Auto"
+                                                HorizontalAlignment="Stretch"
+                                                Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
+                                                BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
+                                                CornerRadius="{DynamicResource ComboBoxPopupBorderThemeCornerRadius}"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <ScrollViewer Padding="{DynamicResource ComboBoxPopupBorderThemePadding}" BorderThickness="0">
                                         <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
                                     </ScrollViewer>
-                                </Border>
+                                </mah:ClipBorder>
                             </Grid>
                         </Popup>
                         <VisualStateManager.VisualStateGroups>
