@@ -126,6 +126,7 @@ Does your company use MahApps.Metro?  Ask your manager or marketing team if your
 
 ## MahApps Examples
 
+* [Showcase/Demo application](./src/MahApps.Metro.Samples/MahApps.Metro.Demo) The showcase/demo application built by the MahApps.Metro team
 * [Azuser](https://github.com/Inzanit/azuser) by [@Inzanit](https://github.com/Inzanit) Azure SQL Server User Management
 * [Carnac](https://github.com/Code52/carnac) by [@Code52](https://github.com/Code52) the Magnificent Keyboard Utility
 * [Certify The Web](https://github.com/webprofusion/certify) by [@webprofusion](https://github.com/webprofusion) The GUI to manage free certificates from Let's Encrypt
