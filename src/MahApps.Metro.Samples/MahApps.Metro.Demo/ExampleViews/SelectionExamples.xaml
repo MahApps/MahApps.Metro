@@ -239,7 +239,7 @@
 
                     <ComboBox Width="200"
                               Margin="{StaticResource ControlMargin}"
-                              mah:TextBoxHelper.ClearTextButton="True"
+                              mah:TextBoxHelper.ClearTextButton="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=Self}, Converter={x:Static mah:IsNotNullConverter.Instance}}"
                               mah:TextBoxHelper.Watermark="Please select an item..."
                               SelectedIndex="0">
                         <ComboBox.ContextMenu>
