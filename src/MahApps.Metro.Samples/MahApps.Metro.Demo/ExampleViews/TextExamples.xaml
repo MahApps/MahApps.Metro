@@ -277,6 +277,7 @@
                              mah:TextBoxHelper.Watermark="Password"
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
                              mah:TextBoxHelper.Watermark="Win8"
                              Password="Win8"
