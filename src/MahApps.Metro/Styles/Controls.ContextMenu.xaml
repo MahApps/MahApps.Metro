@@ -22,6 +22,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <mah:ClipBorder x:Name="Border"
+                                    Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
                                     Padding="{TemplateBinding Padding}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"

@@ -14,13 +14,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Menu}">
-                    <mah:ClipBorder Padding="{TemplateBinding Padding}"
+                    <mah:ClipBorder Width="{TemplateBinding Width}"
+                                    Height="{TemplateBinding Height}"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ItemsPresenter Margin="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <ItemsPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </mah:ClipBorder>
                 </ControlTemplate>
             </Setter.Value>
