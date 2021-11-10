@@ -325,14 +325,6 @@ namespace MetroDemo
             set => this.Set(ref this._quitConfirmationEnabled, value);
         }
 
-        private bool showMyTitleBar = true;
-
-        public bool ShowMyTitleBar
-        {
-            get => this.showMyTitleBar;
-            set => this.Set(ref this.showMyTitleBar, value);
-        }
-
         private bool canCloseFlyout = true;
 
         public bool CanCloseFlyout
