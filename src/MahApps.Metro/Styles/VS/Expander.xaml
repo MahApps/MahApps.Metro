@@ -4,9 +4,10 @@
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <mahConverters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
-    <Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
+    <Thickness x:Key="ExpanderHeaderThemePadding">3</Thickness>
     <system:Double x:Key="ExpanderHeaderThemeFontSize">16</system:Double>
     <system:Double x:Key="ExpanderToggleButtonThemeSize">18</system:Double>
 
@@ -42,10 +43,11 @@
                             <Grid x:Name="ArrowGrid"
                                   Width="{DynamicResource ExpanderToggleButtonThemeSize}"
                                   Height="{DynamicResource ExpanderToggleButtonThemeSize}"
-                                  Margin="1"
+                                  Margin="0 0 0 4"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Background="Transparent">
+                                  Background="Transparent"
+                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -65,7 +67,7 @@
                                       StrokeThickness="2" />
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
-                                                  Margin="0 4 0 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -114,7 +116,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <mah:ContentControlEx Grid.Column="0"
-                                                  Margin="0 0 4 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -128,10 +130,11 @@
                                   Grid.Column="1"
                                   Width="{DynamicResource ExpanderToggleButtonThemeSize}"
                                   Height="{DynamicResource ExpanderToggleButtonThemeSize}"
-                                  Margin="1"
+                                  Margin="4 0 0 0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Background="Transparent">
+                                  Background="Transparent"
+                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -189,10 +192,11 @@
                             <Grid x:Name="ArrowGrid"
                                   Width="{DynamicResource ExpanderToggleButtonThemeSize}"
                                   Height="{DynamicResource ExpanderToggleButtonThemeSize}"
-                                  Margin="1"
+                                  Margin="0 0 0 4"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Background="Transparent">
+                                  Background="Transparent"
+                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -211,7 +215,7 @@
                                       StrokeThickness="2" />
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
-                                                  Margin="0 4 0 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -258,7 +262,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <mah:ContentControlEx Grid.Column="0"
-                                                  Margin="0 0 4 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -272,10 +276,11 @@
                                   Grid.Column="1"
                                   Width="{DynamicResource ExpanderToggleButtonThemeSize}"
                                   Height="{DynamicResource ExpanderToggleButtonThemeSize}"
-                                  Margin="1"
+                                  Margin="4 0 0 0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Background="Transparent">
+                                  Background="Transparent"
+                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
@@ -342,6 +347,7 @@
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">
                             <ToggleButton x:Name="ToggleSite"
+                                          Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                           mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                           Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
@@ -447,5 +453,6 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource ExpanderHeaderThemePadding}" />
     </Style>
 </ResourceDictionary>
