@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -22,6 +23,32 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = "HeaderRightStyle", StyleTargetType = typeof(ToggleButton))]
     public static class ExpanderHelper
     {
+        public static readonly DependencyProperty ShowToggleButtonProperty
+            = DependencyProperty.RegisterAttached("ShowToggleButton",
+                                                  typeof(bool),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>Helper for getting <see cref="ShowToggleButtonProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ShowToggleButtonProperty"/> from.</param>
+        /// <remarks>Gets the value whether the toggle button of the header should be visible or not.</remarks>
+        /// <returns>ShowToggleButton property value.</returns>
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        public static bool GetShowToggleButton(DependencyObject element)
+        {
+            return (bool)element.GetValue(ShowToggleButtonProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ShowToggleButtonProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ShowToggleButtonProperty"/> on.</param>
+        /// <param name="value">ShowToggleButton property value.</param>
+        /// <remarks>Sets the value whether the toggle button of the header should be visible or not.</remarks>
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        public static void SetShowToggleButton(DependencyObject element, bool value)
+        {
+            element.SetValue(ShowToggleButtonProperty, BooleanBoxes.Box(value));
+        }
+
         public static readonly DependencyProperty HeaderUpStyleProperty
             = DependencyProperty.RegisterAttached(
                 "HeaderUpStyle",

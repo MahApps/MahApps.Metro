@@ -4,10 +4,11 @@
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <mahConverters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
     <mahConverters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
 
-    <Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
+    <Thickness x:Key="ExpanderHeaderThemePadding">3</Thickness>
     <system:Double x:Key="ExpanderToggleButtonEllipseThemeSize">18</system:Double>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Base" TargetType="{x:Type ToggleButton}">
@@ -38,7 +39,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Grid Margin="1">
+                            <Grid Margin="0 0 0 4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -63,7 +64,7 @@
                                       StrokeThickness="2" />
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
-                                                  Margin="0 4 0 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -112,7 +113,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid Margin="1">
+                            <Grid Margin="0 0 4 0" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -137,7 +138,7 @@
                                       StrokeThickness="2" />
                             </Grid>
                             <mah:ContentControlEx Grid.Column="1"
-                                                  Margin="4 0 0 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -185,7 +186,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Grid Margin="1">
+                            <Grid Margin="0 0 0 4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -210,7 +211,7 @@
                                       StrokeThickness="2" />
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
-                                                  Margin="0 4 0 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -257,7 +258,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid Margin="1">
+                            <Grid Margin="0 0 4 0" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Ellipse x:Name="Circle"
                                          Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
                                          Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
@@ -273,7 +274,7 @@
                                       StrokeThickness="2" />
                             </Grid>
                             <mah:ContentControlEx Grid.Column="1"
-                                                  Margin="4 0 0 0"
+                                                  Margin="0"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
@@ -351,6 +352,7 @@
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     UseLayoutRounding="True">
                                 <ToggleButton x:Name="ToggleSite"
+                                              Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                               mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                               Content="{TemplateBinding Header}"
                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}"
@@ -474,5 +476,6 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource ExpanderHeaderThemePadding}" />
     </Style>
 </ResourceDictionary>
