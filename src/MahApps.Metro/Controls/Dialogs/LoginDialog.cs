@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_NegativeButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_TextBox), Type = typeof(TextBox))]
     [TemplatePart(Name = nameof(PART_PasswordBox), Type = typeof(PasswordBox))]
-    public partial class LoginDialog : BaseMetroDialog
+    public class LoginDialog : BaseMetroDialog
     {
         private CancellationTokenRegistration cancellationTokenRegistration;
 
@@ -260,8 +260,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
                 else
                 {
-                    if (this.PART_PasswordBox is not null)
+                    if (this.PART_PasswordBox is not null) 
+                    {
                         this.PART_PasswordBox.Focus();
+                    }
                 }
             }));
 
@@ -425,25 +427,22 @@ namespace MahApps.Metro.Controls.Dialogs
             this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
 
-            switch (this.DialogSettings.ColorScheme)
+            if(this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {
-                case MetroDialogColorScheme.Accented:
-                    if (this.PART_NegativeButton is not null)
-                    {
-                        this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Styles.Button.Dialogs.AccentHighlight");
-                    }
+                if (this.PART_NegativeButton is not null)
+                {
+                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Styles.Button.Dialogs.AccentHighlight");
+                }
 
-                    if (this.PART_TextBox is not null)
-                    {
-                        this.PART_TextBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
-                    }
+                if (this.PART_TextBox is not null)
+                {
+                    this.PART_TextBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
+                }
 
-                    if (this.PART_PasswordBox is not null)
-                    {
-                        this.PART_PasswordBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
-                    }
-
-                    break;
+                if (this.PART_PasswordBox is not null)
+                {
+                    this.PART_PasswordBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
+                }
             }
         }
     }

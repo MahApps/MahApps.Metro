@@ -15,7 +15,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     [TemplatePart(Name = nameof(PART_ProgressBar), Type = typeof(MetroProgressBar))]
     [TemplatePart(Name = nameof(PART_NegativeButton), Type = typeof(Button))]
-    public partial class ProgressDialog : BaseMetroDialog
+    public class ProgressDialog : BaseMetroDialog
     {
         #region Controls
 

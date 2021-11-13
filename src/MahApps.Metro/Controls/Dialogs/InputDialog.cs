@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_AffirmativeButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_NegativeButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_TextBox), Type = typeof(TextBox))]
-    public partial class InputDialog : BaseMetroDialog
+    public class InputDialog : BaseMetroDialog
     {
         private CancellationTokenRegistration cancellationTokenRegistration;
 
@@ -282,21 +282,18 @@ namespace MahApps.Metro.Controls.Dialogs
             this.Icon = this.DialogSettings.Icon;
             this.IconTemplate = this.DialogSettings.IconTemplate;
 
-            switch (this.DialogSettings.ColorScheme)
+            if(this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {
-                case MetroDialogColorScheme.Accented:
-                    if (this.PART_NegativeButton is not null)
-                    {
-                        this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Styles.Button.Dialogs.AccentHighlight");
-                    }
+                if (this.PART_NegativeButton is not null)
+                {
+                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Styles.Button.Dialogs.AccentHighlight");
+                }
 
-                    if (this.PART_TextBox is not null)
-                    {
-                        this.PART_TextBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
-                        this.PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "MahApps.Brushes.TextBox.Border.Focus");
-                    }
-
-                    break;
+                if (this.PART_TextBox is not null)
+                {
+                    this.PART_TextBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
+                    this.PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "MahApps.Brushes.TextBox.Border.Focus");
+                }
             }
         }
     }

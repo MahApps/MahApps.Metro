@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_FirstAuxiliaryButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_SecondAuxiliaryButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_MessageScrollViewer), Type = typeof(ScrollViewer))]
-    public partial class MessageDialog : BaseMetroDialog
+    public class MessageDialog : BaseMetroDialog
     {
         private const string ACCENT_BUTTON_STYLE = "MahApps.Styles.Button.Dialogs.Accent";
         private const string ACCENT_HIGHLIGHT_BUTTON_STYLE = "MahApps.Styles.Button.Dialogs.AccentHighlight";
@@ -151,7 +151,9 @@ namespace MahApps.Metro.Controls.Dialogs
             this.SetCurrentValue(SecondAuxiliaryButtonTextProperty, "Cancel");
 
             if (this.PART_MessageScrollViewer is not null)
+            {
                 this.PART_MessageScrollViewer.Height = this.DialogSettings.MaximumBodyHeight;
+            }
         }
 
         static MessageDialog()
@@ -444,14 +446,12 @@ namespace MahApps.Metro.Controls.Dialogs
             md.FirstAuxiliaryButtonText = md.DialogSettings.FirstAuxiliaryButtonText;
             md.SecondAuxiliaryButtonText = md.DialogSettings.SecondAuxiliaryButtonText;
 
-            switch (md.DialogSettings.ColorScheme)
+            if(md.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {
-                case MetroDialogColorScheme.Accented:
-                    md.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
-                    md.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
-                    md.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
-                    md.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
-                    break;
+                md.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
+                md.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
+                md.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
+                md.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
             }
         }
 
