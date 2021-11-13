@@ -364,6 +364,22 @@ namespace MetroDemo
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
 
+        private async void ShowInputDialogWithIcon(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings
+            {
+                Icon = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.AppleBrands
+            };
+            var result = await this.ShowInputAsync("Hello!", "What is your name?", settings);
+
+            if (result == null) //user pressed cancel
+            {
+                return;
+            }
+
+            await this.ShowMessageAsync("Hello", "Hello " + result + "!");
+        }
+
         private async void ShowLoginDialog(object sender, RoutedEventArgs e)
         {
             var result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, InitialUsername = "MahApps" });

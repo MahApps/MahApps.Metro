@@ -6,107 +6,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--<ControlTemplate x:Key="MahApps.Templates.InputDialog" TargetType="{x:Type dialogs:InputDialog}">
-        <Grid Background="{TemplateBinding Background}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <ContentPresenter x:Name="PART_Top"
-                              Grid.Row="0"
-                              AutomationProperties.Name="Dialog top"
-                              Content="{TemplateBinding DialogTop}"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
-                    <ColumnDefinition Width="{TemplateBinding DialogContentWidth}" />
-                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock x:Name="PART_Title"
-                               Grid.Row="0"
-                               AutomationProperties.Name="Dialog title"
-                               FontSize="{TemplateBinding DialogTitleFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
-                               Text="{TemplateBinding Title}"
-                               TextWrapping="Wrap" />
-                    <Grid x:Name="PART_Content"
-                          Grid.Row="1"
-                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                          AutomationProperties.Name="Dialog content"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                          Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" MinHeight="20" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock x:Name="PART_MessageTextBlock"
-                                   Grid.Row="0"
-                                   Margin="0 5 0 0"
-                                   FontSize="{TemplateBinding DialogMessageFontSize}"
-                                   Foreground="{TemplateBinding Foreground}"
-                                   Text="{TemplateBinding Message}"
-                                   TextWrapping="Wrap" />
-
-                        <TextBox x:Name="PART_TextBox"
-                                 Grid.Row="1"
-                                 Margin="0 5 0 0"
-                                 mah:ControlsHelper.FocusBorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                                 FontSize="{TemplateBinding DialogMessageFontSize}"
-                                 Foreground="{TemplateBinding Foreground}"
-                                 Text="{TemplateBinding Input}"
-                                 TextWrapping="Wrap" />
-
-                        <StackPanel Grid.Row="3"
-                                    MinHeight="85"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                            <Button x:Name="PART_AffirmativeButton"
-                                    Margin="0 0 5 0"
-                                    Content="{TemplateBinding AffirmativeButtonText}"
-                                    FontSize="{TemplateBinding DialogButtonFontSize}"
-                                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
-                            <Button x:Name="PART_NegativeButton"
-                                    Margin="5 0 5 0"
-                                    Content="{TemplateBinding NegativeButtonText}"
-                                    FontSize="{TemplateBinding DialogButtonFontSize}"
-                                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
-                        </StackPanel>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <ContentPresenter x:Name="PART_Bottom"
-                              Grid.Row="2"
-                              AutomationProperties.Name="Dialog bottom"
-                              Content="{TemplateBinding DialogBottom}"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-        </Grid>
-        <ControlTemplate.Triggers>
-            <Trigger Property="Title" Value="{x:Null}">
-                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
-            </Trigger>
-            <EventTrigger RoutedEvent="Loaded">
-                <EventTrigger.Actions>
-                    <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Dialogs.Show}" />
-                </EventTrigger.Actions>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>-->
-
     <ControlTemplate x:Key="MahApps.Templates.InputDialog" TargetType="{x:Type dialogs:InputDialog}">
         <Grid Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
@@ -120,87 +19,6 @@
                               AutomationProperties.Name="Dialog top"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-            <!--<Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
-                    <ColumnDefinition Width="{TemplateBinding DialogContentWidth}" />
-                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
-                </Grid.ColumnDefinitions>
-
-                <ContentPresenter x:Name="PART_Icon"
-                                  Content="{TemplateBinding Icon}"
-                                  ContentTemplate="{TemplateBinding IconTemplate}"
-                                  AutomationProperties.Name="Dialog icon"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Focusable="False"
-                                  RecognizesAccessKey="True"
-                                  UseLayoutRounding="False" />
-
-                <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock x:Name="PART_Title"
-                               Grid.Row="0"
-                               AutomationProperties.Name="Dialog title"
-                               FontSize="{TemplateBinding DialogTitleFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
-                               Text="{TemplateBinding Title}"
-                               TextWrapping="Wrap" />
-
-                    <Grid x:Name="PART_Content"
-                          Grid.Row="1"
-                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                          AutomationProperties.Name="Dialog content"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                          Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" MinHeight="20" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock x:Name="PART_MessageTextBlock"
-                                   Grid.Row="0"
-                                   Margin="0 5 0 0"
-                                   FontSize="{TemplateBinding DialogMessageFontSize}"
-                                   Foreground="{TemplateBinding Foreground}"
-                                   Text="{TemplateBinding Message}"
-                                   TextWrapping="Wrap" />
-
-                        <TextBox x:Name="PART_TextBox"
-                                 Grid.Row="1"
-                                 Margin="0 5 0 0"
-                                 mah:ControlsHelper.FocusBorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                                 FontSize="{TemplateBinding DialogMessageFontSize}"
-                                 Foreground="{TemplateBinding Foreground}"
-                                 Text="{TemplateBinding Input}"
-                                 TextWrapping="Wrap" />
-
-                        <StackPanel Grid.Row="3"
-                                    MinHeight="85"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                            <Button x:Name="PART_AffirmativeButton"
-                                    Margin="0 0 5 0"
-                                    Content="{TemplateBinding AffirmativeButtonText}"
-                                    FontSize="{TemplateBinding DialogButtonFontSize}"
-                                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
-                            <Button x:Name="PART_NegativeButton"
-                                    Margin="5 0 5 0"
-                                    Content="{TemplateBinding NegativeButtonText}"
-                                    FontSize="{TemplateBinding DialogButtonFontSize}"
-                                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
-                        </StackPanel>
-                    </Grid>
-                </Grid>
-            </Grid>-->
 
             <Grid Grid.Row="1" Margin="{TemplateBinding Padding}">
                 <Grid.ColumnDefinitions>
@@ -301,12 +119,14 @@
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+    
     <Canvas x:Key="WarningOctagone">
         <Path Width="100" Height="100" Stretch="Fill" Fill="Red" Data="F1 M 31.6667,19L 44.3333,19L 57,31.6667L 57,44.3333L 44.3333,57L 31.6667,57L 19,44.3333L 19,31.6667L 31.6667,19 Z M 26.4762,45.0454L 30.9546,49.5238L 38,42.4783L 45.0454,49.5238L 49.5237,45.0454L 42.4783,38L 49.5238,30.9546L 45.0454,26.4763L 38,33.5217L 30.9546,26.4762L 26.4762,30.9546L 33.5217,38L 26.4762,45.0454 Z " />
     </Canvas>
     <Canvas x:Key="WarningCircle">
         <Path Width="100" Height="100" Stretch="Fill" Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 34.0417,25.7292L 36.0208,41.9584L 39.9792,41.9583L 41.9583,25.7292L 34.0417,25.7292 Z M 38,44.3333C 36.2511,44.3333 34.8333,45.7511 34.8333,47.5C 34.8333,49.2489 36.2511,50.6667 38,50.6667C 39.7489,50.6667 41.1667,49.2489 41.1667,47.5C 41.1667,45.7511 39.7489,44.3333 38,44.3333 Z " />
     </Canvas>
+    
     <Style x:Key="MahApps.Styles.InputDialog" TargetType="{x:Type dialogs:InputDialog}" BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog}" />
         <!--<Setter Property="Icon" Value="{StaticResource WarningOctagone}" />-->

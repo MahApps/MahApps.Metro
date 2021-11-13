@@ -177,6 +177,7 @@
                 <Separator />
                 <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                 <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
+                <MenuItem Click="ShowInputDialogWithIcon" Header="Show InputDialog (with Icon)"/>
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
                 <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
                 <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />

@@ -142,5 +142,15 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets or sets the text used for the second auxiliary button.
         /// </summary>
         public string? SecondAuxiliaryButtonText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content used for the Icon ContentPresenter.
+        /// </summary>
+        public object? Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the datatemplate used for the Icon ContentPresenter.
+        /// </summary>
+        public DataTemplate? IconTemplate { get; set; }
     }
 }
