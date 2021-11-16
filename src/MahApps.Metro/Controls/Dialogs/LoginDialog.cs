@@ -286,7 +286,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 else
                 {
                     if (this.PART_PasswordBox is not null)
+                    {
                         this.PART_PasswordBox.Focus();
+                    }
+
                 }
             }));
 

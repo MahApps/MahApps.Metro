@@ -78,7 +78,10 @@ namespace MetroDemo
                 var useAccentForDialogs = (bool)e.NewValue;
 
                 if (useAccentForDialogs == true && window.MetroDialogOptions!.ColorScheme == MetroDialogColorScheme.Inverted)
+                {
                     window.SetValue(UseInvertForDialogsProperty, false);
+                }
+
 
                 window.MetroDialogOptions!.ColorScheme = useAccentForDialogs ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
             }

@@ -464,6 +464,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         }
                     }
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(md.ButtonStyle));
             }
 
             md.AffirmativeButtonText = md.DialogSettings.AffirmativeButtonText;
