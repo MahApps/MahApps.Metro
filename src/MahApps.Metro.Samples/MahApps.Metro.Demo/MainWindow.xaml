@@ -20,13 +20,14 @@
                  Icon="mahapps.metro.logo2.ico"
                  NonActiveGlowBrush="#CDFF0000"
                  ShowIconOnTitleBar="True"
+                 ShowTitleBar="{Binding ShowMyTitleBar, Mode=TwoWay}"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
     <!--
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
         event, as so:
-        
+
         DialogParticipation.SetRegister(this, null);
     -->
 
@@ -84,7 +85,6 @@
                          MinHeight="200">
 
                 <TextBlock x:Name="MessageTextBlock" Text="Message shown by this custom Dialog." />
-
             </UserControl>
 
             <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
@@ -98,9 +98,7 @@
                             Content="Close Me!"
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
-
             </UserControl>
-
         </ResourceDictionary>
     </Window.Resources>
 
@@ -171,13 +169,18 @@
                 <MenuItem Header="Use Accent?"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=UseAccentForDialogs}" />
+                <MenuItem Header="Use Invert?"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=UseInvertForDialogs}" />
+                <MenuItem Header="Show Icon?"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowIconOnDialogs}" />
                 <MenuItem Header="Show Dialogs over TitleBar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
                 <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                 <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
-                <MenuItem Click="ShowInputDialogWithIcon" Header="Show InputDialog (with Icon)"/>
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
                 <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
                 <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />
@@ -210,10 +213,7 @@
             <MenuItem Header="Window">
                 <MenuItem Header="ShowTitleBar"
                           IsCheckable="True"
-                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowTitleBar}" />
-                <MenuItem Header="UseNoneWindowStyle"
-                          IsCheckable="True"
-                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=UseNoneWindowStyle}" />
+                          IsChecked="{Binding Path=ShowMyTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <MenuItem Header="ShowInTaskbar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowInTaskbar}" />
@@ -354,6 +354,5 @@
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>
-
     </Grid>
 </mah:MetroWindow>

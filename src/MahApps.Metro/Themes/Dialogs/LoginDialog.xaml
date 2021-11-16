@@ -20,14 +20,14 @@
                               AutomationProperties.Name="Dialog top"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-            <Grid Grid.Row="1">
+
+            <!--<Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
                     <ColumnDefinition Width="{TemplateBinding DialogContentWidth}" />
                     <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Content Area-->
                 <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -41,6 +41,7 @@
                                Foreground="{TemplateBinding Foreground}"
                                Text="{TemplateBinding Title}"
                                TextWrapping="Wrap" />
+
                     <Grid x:Name="PART_Content"
                           Grid.Row="1"
                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -56,12 +57,14 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <TextBlock Grid.Row="0"
                                    Margin="0 5 0 0"
                                    FontSize="{TemplateBinding DialogMessageFontSize}"
                                    Foreground="{TemplateBinding Foreground}"
                                    Text="{TemplateBinding Message}"
                                    TextWrapping="Wrap" />
+
                         <TextBox x:Name="PART_TextBox"
                                  Grid.Row="1"
                                  Margin="0 5 0 0"
@@ -71,8 +74,9 @@
                                  CharacterCasing="{TemplateBinding UsernameCharacterCasing}"
                                  FontSize="{TemplateBinding DialogMessageFontSize}"
                                  Foreground="{TemplateBinding Foreground}"
-                                 Text="{TemplateBinding Username}"
+                                 Text="{Binding Username, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
                                  TextWrapping="Wrap" />
+
                         <PasswordBox x:Name="PART_PasswordBox"
                                      Grid.Row="2"
                                      Margin="0 5 0 0"
@@ -81,6 +85,7 @@
                                      mah:TextBoxHelper.Watermark="{TemplateBinding PasswordWatermark}"
                                      FontSize="{TemplateBinding DialogMessageFontSize}"
                                      Foreground="{TemplateBinding Foreground}" />
+
                         <CheckBox x:Name="PART_RememberCheckBox"
                                   Grid.Row="3"
                                   Margin="0 5 0 0"
@@ -88,6 +93,7 @@
                                   FontSize="{TemplateBinding DialogMessageFontSize}"
                                   IsChecked="{TemplateBinding RememberCheckBoxChecked}"
                                   Visibility="{TemplateBinding RememberCheckBoxVisibility}" />
+
                         <StackPanel Grid.Row="5"
                                     MinHeight="85"
                                     HorizontalAlignment="Right"
@@ -106,7 +112,110 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
+            </Grid>-->
+
+            <Grid Grid.Row="1" Margin="{TemplateBinding Padding}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
+                    <ColumnDefinition Width="{TemplateBinding DialogContentWidth}" />
+                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ContentControl x:Name="PART_Icon"
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Content="{TemplateBinding Icon}"
+                                ContentTemplate="{TemplateBinding IconTemplate}"
+                                AutomationProperties.Name="Dialog icon"
+                                HorizontalAlignment="Center"
+                                Focusable="False"
+                                UseLayoutRounding="False" />
+
+                <TextBlock x:Name="PART_Title"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           AutomationProperties.Name="Dialog title"
+                           FontSize="{TemplateBinding DialogTitleFontSize}"
+                           Foreground="{TemplateBinding Foreground}"
+                           Text="{TemplateBinding Title}"
+                           TextWrapping="Wrap" />
+
+                <Grid x:Name="PART_Content"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                      AutomationProperties.Name="Dialog content"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                      Margin="0 10 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="20" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Margin="0 5 0 0"
+                               FontSize="{TemplateBinding DialogMessageFontSize}"
+                               Foreground="{TemplateBinding Foreground}"
+                               Text="{TemplateBinding Message}"
+                               TextWrapping="Wrap" />
+
+                    <TextBox x:Name="PART_TextBox"
+                             Grid.Row="1"
+                             Margin="0 5 0 0"
+                             mah:TextBoxHelper.SelectAllOnFocus="True"
+                             mah:TextBoxHelper.Watermark="{TemplateBinding UsernameWatermark}"
+                             mah:VisibilityHelper.IsCollapsed="{TemplateBinding ShouldHideUsername}"
+                             CharacterCasing="{TemplateBinding UsernameCharacterCasing}"
+                             FontSize="{TemplateBinding DialogMessageFontSize}"
+                             Foreground="{TemplateBinding Foreground}"
+                             Text="{Binding Username, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                             TextWrapping="Wrap" />
+
+                    <PasswordBox x:Name="PART_PasswordBox"
+                                 Grid.Row="2"
+                                 Margin="0 5 0 0"
+                                 behaviors:PasswordBoxBindingBehavior.Password="{TemplateBinding Password}"
+                                 mah:TextBoxHelper.SelectAllOnFocus="True"
+                                 mah:TextBoxHelper.Watermark="{TemplateBinding PasswordWatermark}"
+                                 FontSize="{TemplateBinding DialogMessageFontSize}"
+                                 Foreground="{TemplateBinding Foreground}" />
+
+                    <CheckBox x:Name="PART_RememberCheckBox"
+                              Grid.Row="3"
+                              Margin="0 5 0 0"
+                              Content="{TemplateBinding RememberCheckBoxText}"
+                              FontSize="{TemplateBinding DialogMessageFontSize}"
+                              IsChecked="{TemplateBinding RememberCheckBoxChecked}"
+                              Visibility="{TemplateBinding RememberCheckBoxVisibility}" />
+
+                    <StackPanel Grid.Row="5"
+                                MinHeight="85"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button x:Name="PART_AffirmativeButton"
+                                Margin="0 0 5 0"
+                                Content="{TemplateBinding AffirmativeButtonText}"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                        <Button x:Name="PART_NegativeButton"
+                                Margin="5 0 5 0"
+                                Content="{TemplateBinding NegativeButtonText}"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Dialogs}"
+                                Visibility="{TemplateBinding NegativeButtonButtonVisibility}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
+
             <ContentPresenter x:Name="PART_Bottom"
                               Grid.Row="2"
                               AutomationProperties.Name="Dialog bottom"
@@ -124,6 +233,7 @@
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
     <Style x:Key="MahApps.Styles.LoginDialog" TargetType="{x:Type dialogs:LoginDialog}" BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.LoginDialog}" />
     </Style>

@@ -30,6 +30,8 @@ namespace MahApps.Metro.Controls.Dialogs
         private const string PART_Content = "PART_Content";
         private const string PART_Bottom = "PART_Bottom";
 
+        #region DependencyProperties
+
         /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
         public static readonly DependencyProperty DialogContentMarginProperty
             = DependencyProperty.Register(nameof(DialogContentMargin),
@@ -158,9 +160,13 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(DialogButtonFontSizeProperty, value);
         }
 
+        #endregion DependencyProperties
+
         public MetroDialogSettings DialogSettings { get; private set; } = null!;
 
         internal SizeChangedEventHandler? SizeChangedHandler { get; set; }
+
+        #region Constructor
 
         static BaseMetroDialog()
         {
@@ -184,6 +190,8 @@ namespace MahApps.Metro.Controls.Dialogs
             : this(null, new MetroDialogSettings())
         {
         }
+
+        #endregion Constructor
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -314,6 +322,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
+
                 case MetroDialogColorScheme.Inverted:
                     theme = ThemeManager.Current.GetInverseTheme(theme);
                     if (theme is null)
@@ -326,6 +335,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
+
                 case MetroDialogColorScheme.Accented:
                     ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background.Accent"));

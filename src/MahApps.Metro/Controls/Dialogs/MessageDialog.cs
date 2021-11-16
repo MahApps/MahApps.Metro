@@ -47,7 +47,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #endregion Controls
 
-        #region Properties
+        #region DependencyProperties
 
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty
@@ -135,7 +135,32 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(ButtonStyleProperty, value);
         }
 
-        #endregion Properties
+        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
+        public static readonly DependencyProperty IconProperty
+            = DependencyProperty.Register(nameof(Icon),
+                                          typeof(object),
+                                          typeof(MessageDialog),
+                                          new PropertyMetadata());
+
+        public object? Icon
+        {
+            get => this.GetValue(IconProperty);
+            set => this.SetValue(IconProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty IconTemplateProperty
+            = DependencyProperty.Register(nameof(IconTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(MessageDialog));
+
+        public DataTemplate? IconTemplate
+        {
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
+        }
+
+        #endregion DependencyProperties
 
         #region Constructor
 
@@ -446,7 +471,7 @@ namespace MahApps.Metro.Controls.Dialogs
             md.FirstAuxiliaryButtonText = md.DialogSettings.FirstAuxiliaryButtonText;
             md.SecondAuxiliaryButtonText = md.DialogSettings.SecondAuxiliaryButtonText;
 
-            if(md.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
+            if (md.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {
                 md.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
                 md.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
@@ -457,6 +482,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
         protected override void OnLoaded()
         {
+            this.Icon = this.DialogSettings.Icon;
+            this.IconTemplate = this.DialogSettings.IconTemplate;
+
             SetButtonState(this);
         }
 

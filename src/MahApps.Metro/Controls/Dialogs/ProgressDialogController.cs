@@ -34,12 +34,12 @@ namespace MahApps.Metro.Controls.Dialogs
 
         /// <summary>
         /// Gets if the Cancel button has been pressed.
-        /// </summary>        
+        /// </summary>
         public bool IsCanceled { get; private set; }
 
         /// <summary>
         /// Gets if the wrapped ProgressDialog is open.
-        /// </summary>        
+        /// </summary>
         public bool IsOpen { get; private set; }
 
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
@@ -52,7 +52,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.WrappedDialog.Invoke(() =>
                 {
                     this.WrappedDialog.KeyDown += this.WrappedDialog_KeyDown;
-                    this.WrappedDialog.PART_NegativeButton.Click += this.PART_NegativeButton_Click;
+                    this.WrappedDialog.PART_NegativeButton!.Click += this.PART_NegativeButton_Click;
                 });
 
             this.cancellationTokenRegistration = dialog.CancellationToken.Register(() => { this.WrappedDialog.BeginInvoke(this.Abort); });
@@ -76,7 +76,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (this.WrappedDialog.IsCancelable)
             {
-                this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
+                this.WrappedDialog.PART_NegativeButton!.IsEnabled = false;
                 this.IsCanceled = true;
                 this.Canceled?.Invoke(this, EventArgs.Empty);
             }
@@ -176,7 +176,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                     this.WrappedDialog.Dispatcher.VerifyAccess();
                     this.WrappedDialog.KeyDown -= this.WrappedDialog_KeyDown;
-                    this.WrappedDialog.PART_NegativeButton.Click -= this.PART_NegativeButton_Click;
+                    this.WrappedDialog.PART_NegativeButton!.Click -= this.PART_NegativeButton_Click;
 
                     this.cancellationTokenRegistration.Dispose();
                 });

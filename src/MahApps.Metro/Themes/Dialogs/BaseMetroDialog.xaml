@@ -65,18 +65,20 @@
                               AutomationProperties.Name="Dialog top"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding DialogContentMargin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                     <ColumnDefinition Width="{Binding DialogContentWidth, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                     <ColumnDefinition Width="{Binding DialogContentMargin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 </Grid.ColumnDefinitions>
-                <!--  Content area  -->
+
                 <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
+
                     <TextBlock x:Name="PART_Title"
                                Grid.Row="0"
                                AutomationProperties.Name="Dialog title"
@@ -84,6 +86,7 @@
                                Foreground="{TemplateBinding Foreground}"
                                Text="{TemplateBinding Title}"
                                TextWrapping="Wrap" />
+
                     <ContentPresenter x:Name="PART_Content"
                                       Grid.Row="1"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -96,6 +99,7 @@
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </Grid>
             </Grid>
+
             <ContentPresenter x:Name="PART_Bottom"
                               Grid.Row="2"
                               AutomationProperties.Name="Dialog bottom"
@@ -131,5 +135,12 @@
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.BaseMetroDialog}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DialogSettings.ColorScheme, RelativeSource={RelativeSource Self}, Mode=OneWay}"
+                         Value="{x:Static dialogs:MetroDialogColorScheme.Accented}">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Dialog.Background.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Dialog.Foreground.Accent}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

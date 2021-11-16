@@ -282,7 +282,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.Icon = this.DialogSettings.Icon;
             this.IconTemplate = this.DialogSettings.IconTemplate;
 
-            if(this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
+            if (this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {
                 if (this.PART_NegativeButton is not null)
                 {

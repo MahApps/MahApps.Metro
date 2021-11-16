@@ -210,6 +210,31 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(RememberCheckBoxCheckedProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
+        public static readonly DependencyProperty IconProperty
+            = DependencyProperty.Register(nameof(Icon),
+                                          typeof(object),
+                                          typeof(LoginDialog),
+                                          new PropertyMetadata());
+
+        public object? Icon
+        {
+            get => this.GetValue(IconProperty);
+            set => this.SetValue(IconProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty IconTemplateProperty
+            = DependencyProperty.Register(nameof(IconTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(LoginDialog));
+
+        public DataTemplate? IconTemplate
+        {
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
+        }
+
         #endregion DependencyProperties
 
         #region Constructor
@@ -260,10 +285,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
                 else
                 {
-                    if (this.PART_PasswordBox is not null) 
-                    {
+                    if (this.PART_PasswordBox is not null)
                         this.PART_PasswordBox.Focus();
-                    }
                 }
             }));
 
@@ -427,7 +450,10 @@ namespace MahApps.Metro.Controls.Dialogs
             this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
 
-            if(this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
+            this.Icon = this.DialogSettings.Icon;
+            this.IconTemplate = this.DialogSettings.IconTemplate;
+
+            if (this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {
                 if (this.PART_NegativeButton is not null)
                 {

@@ -19,8 +19,8 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         #region Controls
 
-        public Button PART_NegativeButton = null!;
-        private MetroProgressBar PART_ProgressBar = null!;
+        public Button? PART_NegativeButton;
+        private MetroProgressBar? PART_ProgressBar;
 
         public override void OnApplyTemplate()
         {
@@ -92,6 +92,31 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(ProgressBarForegroundProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
+        public static readonly DependencyProperty IconProperty
+            = DependencyProperty.Register(nameof(Icon),
+                                          typeof(object),
+                                          typeof(ProgressDialog),
+                                          new PropertyMetadata());
+
+        public object? Icon
+        {
+            get => this.GetValue(IconProperty);
+            set => this.SetValue(IconProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty IconTemplateProperty
+            = DependencyProperty.Register(nameof(IconTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(ProgressDialog));
+
+        public DataTemplate? IconTemplate
+        {
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
+        }
+
         #endregion DependecyProperties
 
         #region Constructor
@@ -115,6 +140,10 @@ namespace MahApps.Metro.Controls.Dialogs
         protected override void OnLoaded()
         {
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
+
+            this.Icon = this.DialogSettings.Icon;
+            this.IconTemplate = this.DialogSettings.IconTemplate;
+
             this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "MahApps.Brushes.Accent" : "MahApps.Brushes.ThemeForeground");
         }
 
@@ -122,30 +151,30 @@ namespace MahApps.Metro.Controls.Dialogs
 
         internal double Minimum
         {
-            get => this.PART_ProgressBar.Minimum;
-            set => this.PART_ProgressBar.Minimum = value;
+            get => this.PART_ProgressBar!.Minimum;
+            set => this.PART_ProgressBar!.Minimum = value;
         }
 
         internal double Maximum
         {
-            get => this.PART_ProgressBar.Maximum;
-            set => this.PART_ProgressBar.Maximum = value;
+            get => this.PART_ProgressBar!.Maximum;
+            set => this.PART_ProgressBar!.Maximum = value;
         }
 
         internal double ProgressValue
         {
-            get => this.PART_ProgressBar.Value;
+            get => this.PART_ProgressBar!.Value;
             set
             {
-                this.PART_ProgressBar.IsIndeterminate = false;
-                this.PART_ProgressBar.Value = value;
+                this.PART_ProgressBar!.IsIndeterminate = false;
+                this.PART_ProgressBar!.Value = value;
                 this.PART_ProgressBar.ApplyTemplate();
             }
         }
 
         internal void SetIndeterminate()
         {
-            this.PART_ProgressBar.IsIndeterminate = true;
+            this.PART_ProgressBar!.IsIndeterminate = true;
         }
     }
 }
