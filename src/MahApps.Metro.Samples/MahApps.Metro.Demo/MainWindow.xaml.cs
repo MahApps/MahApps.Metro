@@ -136,8 +136,6 @@ namespace MetroDemo
                         Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Duck,
                         Width = 75,
                         Height = 75,
-                        Spin = true,
-                        SpinDuration = 1,
                         Foreground = Brushes.Yellow,
                     }
                     : null;
