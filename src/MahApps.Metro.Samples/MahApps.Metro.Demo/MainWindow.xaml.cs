@@ -210,15 +210,7 @@ namespace MetroDemo
             }
         }
 
-        private async void ShowDialogOutside(object sender, RoutedEventArgs e)
-        {
-            var dialog = new CustomDialog(this.MetroDialogOptions!) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
-            dialog = dialog.ShowDialogExternally();
-
-            await Task.Delay(5000);
-
-            await dialog.RequestCloseAsync();
-        }
+        #region Show Dialogs
 
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
@@ -285,18 +277,18 @@ namespace MetroDemo
         {
             EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogOpened = null;
             dialogManagerOnDialogOpened = (o, args) =>
-                {
-                    DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-                    Console.WriteLine("Custom Dialog opened!");
-                };
+            {
+                DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
+                Console.WriteLine("Custom Dialog opened!");
+            };
             DialogManager.DialogOpened += dialogManagerOnDialogOpened;
 
             EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogClosed = null;
             dialogManagerOnDialogClosed = (o, args) =>
-                {
-                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-                    Console.WriteLine("Custom Dialog closed!");
-                };
+            {
+                DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
+                Console.WriteLine("Custom Dialog closed!");
+            };
             DialogManager.DialogClosed += dialogManagerOnDialogClosed;
 
             var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomCloseDialogTest"], Title = "Custom Dialog which is awaitable" };
@@ -436,6 +428,68 @@ namespace MetroDemo
             }
         }
 
+        #endregion
+
+        #region Show Dialog Outside
+
+        private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
+
+            if (result == null) //user pressed cancel
+            {
+                return;
+            }
+
+            this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
+        }
+
+        private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+            }
+        }
+
+        private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var mySettings = new MetroDialogSettings
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = this.MetroDialogOptions!.ColorScheme
+            };
+
+            MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
+                                                                       MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+            {
+                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative
+                                                  ? mySettings.AffirmativeButtonText
+                                                  : mySettings.NegativeButtonText +
+                                                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+            }
+        }
+        private async void ShowDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CustomDialog(this.MetroDialogOptions!) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
+            dialog = dialog.ShowDialogExternally();
+
+            await Task.Delay(5000);
+
+            await dialog.RequestCloseAsync();
+        }
+
+        #endregion
+
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
@@ -553,53 +607,6 @@ namespace MetroDemo
             w.BorderBrush = null;
             w.GlowBrush = Brushes.Black;
             w.Show();
-        }
-
-        private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
-        {
-            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
-
-            if (result == null) //user pressed cancel
-            {
-                return;
-            }
-
-            this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
-        }
-
-        private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
-        {
-            var result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions!.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
-            if (result == null)
-            {
-                //User pressed cancel
-            }
-            else
-            {
-                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
-            }
-        }
-
-        private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
-        {
-            var mySettings = new MetroDialogSettings
-            {
-                AffirmativeButtonText = "Hi",
-                NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel",
-                ColorScheme = this.MetroDialogOptions!.ColorScheme
-            };
-
-            MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
-                                                                       MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
-
-            if (result != MessageDialogResult.FirstAuxiliary)
-            {
-                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative
-                                                  ? mySettings.AffirmativeButtonText
-                                                  : mySettings.NegativeButtonText +
-                                                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
-            }
         }
     }
 }
