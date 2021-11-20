@@ -92,31 +92,6 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(ProgressBarForegroundProperty, value);
         }
 
-        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
-        public static readonly DependencyProperty IconProperty
-            = DependencyProperty.Register(nameof(Icon),
-                                          typeof(object),
-                                          typeof(ProgressDialog),
-                                          new PropertyMetadata());
-
-        public object? Icon
-        {
-            get => this.GetValue(IconProperty);
-            set => this.SetValue(IconProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
-        public static readonly DependencyProperty IconTemplateProperty
-            = DependencyProperty.Register(nameof(IconTemplate),
-                                          typeof(DataTemplate),
-                                          typeof(ProgressDialog));
-
-        public DataTemplate? IconTemplate
-        {
-            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
-            set => this.SetValue(IconTemplateProperty, value);
-        }
-
         #endregion DependecyProperties
 
         #region Constructor
