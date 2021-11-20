@@ -459,8 +459,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         protected override void OnLoaded()
         {
-            this.Icon = this.DialogSettings.Icon;
-            this.IconTemplate = this.DialogSettings.IconTemplate;
+            base.OnLoaded();
 
             SetButtonState(this);
         }

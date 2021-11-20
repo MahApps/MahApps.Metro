@@ -411,6 +411,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
         protected override void OnLoaded()
         {
+            //base.OnLoaded();
+
+            //this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
+            //this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
+
             if (this.DialogSettings is LoginDialogSettings settings && settings.EnablePasswordPreview)
             {
                 var win8MetroPasswordStyle = this.FindResource("MahApps.Styles.PasswordBox.Win8") as Style;

@@ -251,11 +251,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
         protected override void OnLoaded()
         {
+            base.OnLoaded();
+
             this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
-
-            this.Icon = this.DialogSettings.Icon;
-            this.IconTemplate = this.DialogSettings.IconTemplate;
 
             if (this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
             {

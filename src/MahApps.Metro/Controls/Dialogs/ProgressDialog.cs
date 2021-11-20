@@ -114,10 +114,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         protected override void OnLoaded()
         {
+            base.OnLoaded();
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
-
-            this.Icon = this.DialogSettings.Icon;
-            this.IconTemplate = this.DialogSettings.IconTemplate;
 
             this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "MahApps.Brushes.Accent" : "MahApps.Brushes.ThemeForeground");
         }

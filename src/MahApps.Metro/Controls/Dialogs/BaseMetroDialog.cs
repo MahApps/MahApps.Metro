@@ -384,7 +384,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected virtual void OnLoaded()
         {
-            // nothing here
+            this.Icon = this.DialogSettings.Icon;
+            this.IconTemplate = this.DialogSettings.IconTemplate;
         }
 
         private static ControlzEx.Theming.Theme? DetectTheme(BaseMetroDialog? dialog)
