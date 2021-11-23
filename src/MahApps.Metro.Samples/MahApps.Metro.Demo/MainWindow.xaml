@@ -20,7 +20,6 @@
                  Icon="mahapps.metro.logo2.ico"
                  NonActiveGlowBrush="#CDFF0000"
                  ShowIconOnTitleBar="True"
-                 ShowTitleBar="{Binding ShowMyTitleBar, Mode=TwoWay}"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
     <!--
