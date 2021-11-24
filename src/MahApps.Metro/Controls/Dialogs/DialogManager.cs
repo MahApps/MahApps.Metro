@@ -820,12 +820,16 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             LoginDialogData? result = null;
-            dialog.WaitForButtonPressAsync()
-                  .ContinueWith(task =>
-                      {
-                          result = task.Result;
-                          win.Invoke(win.Close);
-                      });
+            dialog.WaitForLoadAsync()
+                    .ContinueWith(x =>
+                    {
+                        dialog.WaitForButtonPressAsync()
+                                .ContinueWith(task =>
+                                {
+                                    result = task.Result;
+                                    win.Invoke(win.Close);
+                                });
+                    });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -860,12 +864,16 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             string? result = null;
-            dialog.WaitForButtonPressAsync()
-                  .ContinueWith(task =>
-                      {
-                          result = task.Result;
-                          win.Invoke(win.Close);
-                      });
+            dialog.WaitForLoadAsync()
+                    .ContinueWith(x =>
+                    {
+                        dialog.WaitForButtonPressAsync()
+                                .ContinueWith(task =>
+                                {
+                                    result = task.Result;
+                                    win.Invoke(win.Close);
+                                });
+                    });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();
@@ -901,12 +909,16 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             MessageDialogResult result = MessageDialogResult.Affirmative;
-            dialog.WaitForButtonPressAsync()
-                  .ContinueWith(task =>
-                      {
-                          result = task.Result;
-                          win.Invoke(win.Close);
-                      });
+            dialog.WaitForLoadAsync()
+                    .ContinueWith(x =>
+                    {
+                        dialog.WaitForButtonPressAsync()
+                                .ContinueWith(task =>
+                                {
+                                    result = task.Result;
+                                    win.Invoke(win.Close);
+                                });
+                    });
 
             HandleOverlayOnShow(settings, window);
             win.ShowDialog();

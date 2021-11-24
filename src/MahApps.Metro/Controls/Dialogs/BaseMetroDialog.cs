@@ -30,6 +30,8 @@ namespace MahApps.Metro.Controls.Dialogs
         private const string PART_Content = "PART_Content";
         private const string PART_Bottom = "PART_Bottom";
 
+        #region DependencyProperties
+
         /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
         public static readonly DependencyProperty DialogContentMarginProperty
             = DependencyProperty.Register(nameof(DialogContentMargin),
@@ -158,9 +160,38 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(DialogButtonFontSizeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
+        public static readonly DependencyProperty IconProperty
+            = DependencyProperty.Register(nameof(Icon),
+                                          typeof(object),
+                                          typeof(BaseMetroDialog),
+                                          new PropertyMetadata());
+
+        public object? Icon
+        {
+            get => this.GetValue(IconProperty);
+            set => this.SetValue(IconProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty IconTemplateProperty
+            = DependencyProperty.Register(nameof(IconTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(BaseMetroDialog));
+
+        public DataTemplate? IconTemplate
+        {
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
+            set => this.SetValue(IconTemplateProperty, value);
+        }
+
+        #endregion DependencyProperties
+
         public MetroDialogSettings DialogSettings { get; private set; } = null!;
 
         internal SizeChangedEventHandler? SizeChangedHandler { get; set; }
+
+        #region Constructor
 
         static BaseMetroDialog()
         {
@@ -184,6 +215,8 @@ namespace MahApps.Metro.Controls.Dialogs
             : this(null, new MetroDialogSettings())
         {
         }
+
+        #endregion Constructor
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -314,6 +347,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
+
                 case MetroDialogColorScheme.Inverted:
                     theme = ThemeManager.Current.GetInverseTheme(theme);
                     if (theme is null)
@@ -326,6 +360,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
+
                 case MetroDialogColorScheme.Accented:
                     ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background.Accent"));
@@ -349,7 +384,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected virtual void OnLoaded()
         {
-            // nothing here
+            this.Icon = this.DialogSettings.Icon;
+            this.IconTemplate = this.DialogSettings.IconTemplate;
         }
 
         private static ControlzEx.Theming.Theme? DetectTheme(BaseMetroDialog? dialog)

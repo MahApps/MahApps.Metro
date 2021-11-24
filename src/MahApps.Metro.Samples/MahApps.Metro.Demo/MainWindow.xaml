@@ -26,7 +26,7 @@
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
         event, as so:
-        
+
         DialogParticipation.SetRegister(this, null);
     -->
 
@@ -84,7 +84,6 @@
                          MinHeight="200">
 
                 <TextBlock x:Name="MessageTextBlock" Text="Message shown by this custom Dialog." />
-
             </UserControl>
 
             <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
@@ -98,9 +97,7 @@
                             Content="Close Me!"
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
-
             </UserControl>
-
         </ResourceDictionary>
     </Window.Resources>
 
@@ -171,26 +168,47 @@
                 <MenuItem Header="Use Accent?"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=UseAccentForDialogs}" />
+                <MenuItem Header="Use Invert?"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=UseInvertForDialogs}" />
+                <MenuItem Header="Show Icon?"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowIconOnDialogs}" />
                 <MenuItem Header="Show Dialogs over TitleBar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
-                <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
-                <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
-                <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
-                <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
-                <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />
-                <MenuItem Click="ShowLoginDialogWithRememberCheckBox" Header="Show LoginDialog (With Remember CheckBox)" />
-                <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
-                <MenuItem Click="ShowLimitedMessageDialog" Header="Show MessageDialog (Limited Size)" />
-                <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
-                <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
-                <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
+                <MenuItem Click="ShowInputDialog" 
+                          Header="Show InputDialog" />
+                <MenuItem Click="ShowInputDialogCustomButtonSizes"
+                          Header="Show InputDialog (with custom button font sizes)" />
+                <MenuItem Click="ShowLoginDialog"
+                          Header="Show LoginDialog" />
+                <MenuItem Click="ShowLoginDialogPasswordPreview" 
+                          Header="Show Password Preview LoginDialog" />
+                <MenuItem Click="ShowLoginDialogOnlyPassword" 
+                          Header="Show LoginDialog (Only Password)" />
+                <MenuItem Click="ShowLoginDialogWithRememberCheckBox" 
+                          Header="Show LoginDialog (With Remember CheckBox)" />
+                <MenuItem Click="ShowMessageDialog" 
+                          Header="Show MessageDialog" />
+                <MenuItem Click="ShowLimitedMessageDialog" 
+                          Header="Show MessageDialog (Limited Size)" />
+                <MenuItem Click="ShowProgressDialog"
+                          Header="Show ProgressDialog" />
+                <MenuItem Click="ShowCustomDialog" 
+                          Header="Show CustomDialog" />
+                <MenuItem Click="ShowAwaitCustomDialog"
+                          Header="Await CustomDialog" />
                 <Separator />
-                <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
-                <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />
-                <MenuItem Click="ShowMessageDialogOutside" Header="Show ShowMessageDialog Externally" />
-                <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
+                <MenuItem Click="ShowInputDialogOutside"
+                          Header="Show ShowInputDialog Externally" />
+                <MenuItem Click="ShowLoginDialogOutside" 
+                          Header="Show ShowLoginDialog Externally" />
+                <MenuItem Click="ShowMessageDialogOutside" 
+                          Header="Show ShowMessageDialog Externally" />
+                <MenuItem Click="ShowDialogOutside"
+                          Header="Show CustomDialog Externally" />
                 <Separator />
                 <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
                 <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
@@ -203,8 +221,10 @@
                               Header="... from Background Thread" />
                 </MenuItem>
 
-                <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
-                <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
+                <MenuItem Command="{Binding ShowProgressDialogCommand}"
+                          Header="Show ProgressDialog via VM" />
+                <MenuItem Command="{Binding ShowCustomDialogCommand}"
+                          Header="Show CustomDialog via VM" />
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="ShowTitleBar"
@@ -353,6 +373,5 @@
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>
-
     </Grid>
 </mah:MetroWindow>
