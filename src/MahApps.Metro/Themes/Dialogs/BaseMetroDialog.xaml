@@ -136,8 +136,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding DialogSettings.ColorScheme, RelativeSource={RelativeSource Self}, Mode=OneWay}"
-                         Value="{x:Static dialogs:MetroDialogColorScheme.Accented}">
+            <DataTrigger Binding="{Binding DialogSettings.ColorScheme, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="{x:Static dialogs:MetroDialogColorScheme.Accented}">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Dialog.Background.Accent}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Dialog.Foreground.Accent}" />
             </DataTrigger>

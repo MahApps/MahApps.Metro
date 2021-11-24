@@ -32,12 +32,12 @@
                 </Grid.RowDefinitions>
 
                 <ContentControl x:Name="PART_Icon"
-                                Grid.Column="0"
                                 Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                AutomationProperties.Name="Dialog icon"
                                 Content="{TemplateBinding Icon}"
                                 ContentTemplate="{TemplateBinding IconTemplate}"
-                                AutomationProperties.Name="Dialog icon"
-                                HorizontalAlignment="Center"
                                 Focusable="False"
                                 UseLayoutRounding="False" />
 
@@ -53,11 +53,11 @@
                 <Grid x:Name="PART_Content"
                       Grid.Row="1"
                       Grid.Column="1"
+                      Margin="0 10 0 0"
                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                       AutomationProperties.Name="Dialog content"
-                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                      Margin="0 10 0 0">
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -91,12 +91,12 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <ContentPresenter.Content>
                     <mah:MetroProgressBar x:Name="PART_ProgressBar"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Bottom"
-                                      Panel.ZIndex="5"
-                                      Foreground="{TemplateBinding ProgressBarForeground}"
-                                      Maximum="1.0"
-                                      Minimum="0.0" />
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Bottom"
+                                          Panel.ZIndex="5"
+                                          Foreground="{TemplateBinding ProgressBarForeground}"
+                                          Maximum="1.0"
+                                          Minimum="0.0" />
                 </ContentPresenter.Content>
             </ContentPresenter>
         </Grid>
@@ -111,7 +111,9 @@
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    <Style x:Key="MahApps.Styles.ProgressDialog" TargetType="{x:Type dialogs:ProgressDialog}" BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}">
+    <Style x:Key="MahApps.Styles.ProgressDialog"
+           BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
+           TargetType="{x:Type dialogs:ProgressDialog}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ProgressDialog}" />
     </Style>
 </ResourceDictionary>

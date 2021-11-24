@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -32,12 +32,12 @@
                 </Grid.RowDefinitions>
 
                 <ContentControl x:Name="PART_Icon"
-                                Grid.Column="0"
                                 Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                AutomationProperties.Name="Dialog icon"
                                 Content="{TemplateBinding Icon}"
                                 ContentTemplate="{TemplateBinding IconTemplate}"
-                                AutomationProperties.Name="Dialog icon"
-                                HorizontalAlignment="Center"
                                 Focusable="False"
                                 UseLayoutRounding="False" />
 
@@ -53,11 +53,11 @@
                 <Grid x:Name="PART_Content"
                       Grid.Row="1"
                       Grid.Column="1"
+                      Margin="0 10 0 0"
                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                       AutomationProperties.Name="Dialog content"
-                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                      Margin="0 10 0 0">
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" MinHeight="20" />
                         <RowDefinition Height="Auto" />
@@ -66,12 +66,12 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock x:Name="PART_MessageTextBlock"
-                                   Grid.Row="0"
-                                   Margin="0 5 0 0"
-                                   FontSize="{TemplateBinding DialogMessageFontSize}"
-                                   Foreground="{TemplateBinding Foreground}"
-                                   Text="{TemplateBinding Message}"
-                                   TextWrapping="Wrap" />
+                               Grid.Row="0"
+                               Margin="0 5 0 0"
+                               FontSize="{TemplateBinding DialogMessageFontSize}"
+                               Foreground="{TemplateBinding Foreground}"
+                               Text="{TemplateBinding Message}"
+                               TextWrapping="Wrap" />
 
                     <TextBox x:Name="PART_TextBox"
                              Grid.Row="1"
@@ -84,19 +84,19 @@
                              TextWrapping="Wrap" />
 
                     <StackPanel Grid.Row="3"
-                                    MinHeight="85"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
+                                MinHeight="85"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
                         <Button x:Name="PART_AffirmativeButton"
-                                    Margin="0 0 5 0"
-                                    Content="{TemplateBinding AffirmativeButtonText}"
-                                    FontSize="{TemplateBinding DialogButtonFontSize}"
-                                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                                Margin="0 0 5 0"
+                                Content="{TemplateBinding AffirmativeButtonText}"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
                         <Button x:Name="PART_NegativeButton"
-                                    Margin="5 0 5 0"
-                                    Content="{TemplateBinding NegativeButtonText}"
-                                    FontSize="{TemplateBinding DialogButtonFontSize}"
-                                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
+                                Margin="5 0 5 0"
+                                Content="{TemplateBinding NegativeButtonText}"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -119,7 +119,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.InputDialog" TargetType="{x:Type dialogs:InputDialog}" BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}">
+    <Style x:Key="MahApps.Styles.InputDialog"
+           BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
+           TargetType="{x:Type dialogs:InputDialog}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog}" />
     </Style>
 </ResourceDictionary>

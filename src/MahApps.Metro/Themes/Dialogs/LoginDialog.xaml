@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
@@ -33,12 +33,12 @@
                 </Grid.RowDefinitions>
 
                 <ContentControl x:Name="PART_Icon"
-                                Grid.Column="0"
                                 Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                AutomationProperties.Name="Dialog icon"
                                 Content="{TemplateBinding Icon}"
                                 ContentTemplate="{TemplateBinding IconTemplate}"
-                                AutomationProperties.Name="Dialog icon"
-                                HorizontalAlignment="Center"
                                 Focusable="False"
                                 UseLayoutRounding="False" />
 
@@ -54,11 +54,11 @@
                 <Grid x:Name="PART_Content"
                       Grid.Row="1"
                       Grid.Column="1"
+                      Margin="0 10 0 0"
                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                       AutomationProperties.Name="Dialog content"
-                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                      Margin="0 10 0 0">
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" MinHeight="20" />
                         <RowDefinition Height="Auto" />
@@ -141,7 +141,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.LoginDialog" TargetType="{x:Type dialogs:LoginDialog}" BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}">
+    <Style x:Key="MahApps.Styles.LoginDialog"
+           BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
+           TargetType="{x:Type dialogs:LoginDialog}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.LoginDialog}" />
     </Style>
 </ResourceDictionary>
