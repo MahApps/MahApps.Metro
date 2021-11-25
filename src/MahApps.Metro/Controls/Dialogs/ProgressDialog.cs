@@ -53,12 +53,12 @@ namespace MahApps.Metro.Controls.Dialogs
                                           typeof(bool),
                                           typeof(ProgressDialog),
                                           new PropertyMetadata(BooleanBoxes.FalseBox, (s, e) =>
-                                          {
-                                              if (s is ProgressDialog progressDialog && progressDialog.PART_NegativeButton is not null)
                                               {
-                                                  progressDialog.PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
-                                              }
-                                          }));
+                                                  if (s is ProgressDialog progressDialog && progressDialog.PART_NegativeButton is not null)
+                                                  {
+                                                      progressDialog.PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
+                                                  }
+                                              }));
 
         public bool IsCancelable
         {
@@ -96,14 +96,20 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #region Constructor
 
-        internal ProgressDialog() : this(null)
-        { }
+        internal ProgressDialog()
+            : this(null)
+        {
+        }
 
-        internal ProgressDialog(MetroWindow? parentWindow) : this(parentWindow, null)
-        { }
+        internal ProgressDialog(MetroWindow? parentWindow)
+            : this(parentWindow, null)
+        {
+        }
 
-        internal ProgressDialog(MetroWindow? parentWindow, MetroDialogSettings? settings) : base(parentWindow, settings)
-        { }
+        internal ProgressDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
+            : base(parentWindow, settings)
+        {
+        }
 
         static ProgressDialog()
         {

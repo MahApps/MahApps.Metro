@@ -139,13 +139,18 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #region Constructor
 
-        internal MessageDialog() : this(null)
-        { }
+        internal MessageDialog()
+            : this(null)
+        {
+        }
 
-        internal MessageDialog(MetroWindow? parentWindow) : this(parentWindow, null)
-        { }
+        internal MessageDialog(MetroWindow? parentWindow)
+            : this(parentWindow, null)
+        {
+        }
 
-        internal MessageDialog(MetroWindow? parentWindow, MetroDialogSettings? settings) : base(parentWindow, settings)
+        internal MessageDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
+            : base(parentWindow, settings)
         {
             this.SetCurrentValue(FirstAuxiliaryButtonTextProperty, "Cancel");
             this.SetCurrentValue(SecondAuxiliaryButtonTextProperty, "Cancel");
@@ -180,55 +185,59 @@ namespace MahApps.Metro.Controls.Dialogs
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                this.Focus();
-
-                var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus;
-
-                //Ensure it's a valid option
-                if (!this.IsApplicable(defaultButtonFocus))
                 {
-                    defaultButtonFocus = this.ButtonStyle == MessageDialogStyle.Affirmative
-                        ? MessageDialogResult.Affirmative
-                        : MessageDialogResult.Negative;
-                }
+                    this.Focus();
 
-                //kind of acts like a selective 'IsDefault' mechanism.
-                switch (defaultButtonFocus)
-                {
-                    case MessageDialogResult.Affirmative:
-                        if (this.PART_AffirmativeButton is not null)
-                        {
-                            this.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
-                            KeyboardNavigationEx.Focus(this.PART_AffirmativeButton);
-                        }
-                        break;
+                    var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus;
 
-                    case MessageDialogResult.Negative:
-                        if (this.PART_NegativeButton is not null)
-                        {
-                            this.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
-                            KeyboardNavigationEx.Focus(this.PART_NegativeButton);
-                        }
-                        break;
+                    //Ensure it's a valid option
+                    if (!this.IsApplicable(defaultButtonFocus))
+                    {
+                        defaultButtonFocus = this.ButtonStyle == MessageDialogStyle.Affirmative
+                            ? MessageDialogResult.Affirmative
+                            : MessageDialogResult.Negative;
+                    }
 
-                    case MessageDialogResult.FirstAuxiliary:
-                        if (this.PART_FirstAuxiliaryButton is not null)
-                        {
-                            this.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
-                            KeyboardNavigationEx.Focus(this.PART_FirstAuxiliaryButton);
-                        }
-                        break;
+                    //kind of acts like a selective 'IsDefault' mechanism.
+                    switch (defaultButtonFocus)
+                    {
+                        case MessageDialogResult.Affirmative:
+                            if (this.PART_AffirmativeButton is not null)
+                            {
+                                this.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
+                                KeyboardNavigationEx.Focus(this.PART_AffirmativeButton);
+                            }
 
-                    case MessageDialogResult.SecondAuxiliary:
-                        if (this.PART_SecondAuxiliaryButton is not null)
-                        {
-                            this.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
-                            KeyboardNavigationEx.Focus(this.PART_SecondAuxiliaryButton);
-                        }
-                        break;
-                }
-            }));
+                            break;
+
+                        case MessageDialogResult.Negative:
+                            if (this.PART_NegativeButton is not null)
+                            {
+                                this.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
+                                KeyboardNavigationEx.Focus(this.PART_NegativeButton);
+                            }
+
+                            break;
+
+                        case MessageDialogResult.FirstAuxiliary:
+                            if (this.PART_FirstAuxiliaryButton is not null)
+                            {
+                                this.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
+                                KeyboardNavigationEx.Focus(this.PART_FirstAuxiliaryButton);
+                            }
+
+                            break;
+
+                        case MessageDialogResult.SecondAuxiliary:
+                            if (this.PART_SecondAuxiliaryButton is not null)
+                            {
+                                this.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
+                                KeyboardNavigationEx.Focus(this.PART_SecondAuxiliaryButton);
+                            }
+
+                            break;
+                    }
+                }));
 
             var tcs = new TaskCompletionSource<MessageDialogResult>();
 
@@ -266,105 +275,105 @@ namespace MahApps.Metro.Controls.Dialogs
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
                                                      .Register(() =>
-                                                     {
-                                                         this.BeginInvoke(() =>
                                                          {
-                                                             CleanUpHandlers();
-                                                             tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                                                             this.BeginInvoke(() =>
+                                                                 {
+                                                                     CleanUpHandlers();
+                                                                     tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                                                                 });
                                                          });
-                                                     });
 
             negativeKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Enter)
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
+
+                        tcs.TrySetResult(MessageDialogResult.Negative);
+                    }
+                };
+
+            affirmativeKeyHandler = (_, e) =>
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
+
+                        tcs.TrySetResult(MessageDialogResult.Affirmative);
+                    }
+                };
+
+            firstAuxKeyHandler = (_, e) =>
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
+
+                        tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
+                    }
+                };
+
+            secondAuxKeyHandler = (_, e) =>
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
+
+                        tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
+                    }
+                };
+
+            negativeHandler = (_, e) =>
                 {
                     CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.Negative);
-                }
-            };
 
-            affirmativeKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Enter)
+                    e.Handled = true;
+                };
+
+            affirmativeHandler = (_, e) =>
                 {
                     CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.Affirmative);
-                }
-            };
 
-            firstAuxKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Enter)
+                    e.Handled = true;
+                };
+
+            firstAuxHandler = (_, e) =>
                 {
                     CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
-                }
-            };
 
-            secondAuxKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Enter)
+                    e.Handled = true;
+                };
+
+            secondAuxHandler = (_, e) =>
                 {
                     CleanUpHandlers();
 
                     tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
-                }
-            };
 
-            negativeHandler = (_, e) =>
-            {
-                CleanUpHandlers();
-
-                tcs.TrySetResult(MessageDialogResult.Negative);
-
-                e.Handled = true;
-            };
-
-            affirmativeHandler = (_, e) =>
-            {
-                CleanUpHandlers();
-
-                tcs.TrySetResult(MessageDialogResult.Affirmative);
-
-                e.Handled = true;
-            };
-
-            firstAuxHandler = (_, e) =>
-            {
-                CleanUpHandlers();
-
-                tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
-
-                e.Handled = true;
-            };
-
-            secondAuxHandler = (_, e) =>
-            {
-                CleanUpHandlers();
-
-                tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
-
-                e.Handled = true;
-            };
+                    e.Handled = true;
+                };
 
             escapeKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
                 {
-                    CleanUpHandlers();
+                    if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
+                    {
+                        CleanUpHandlers();
 
-                    tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? (this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative));
-                }
-                else if (e.Key == Key.Enter)
-                {
-                    CleanUpHandlers();
+                        tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? (this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative));
+                    }
+                    else if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
 
-                    tcs.TrySetResult(MessageDialogResult.Affirmative);
-                }
-            };
+                        tcs.TrySetResult(MessageDialogResult.Affirmative);
+                    }
+                };
 
             if (this.PART_AffirmativeButton is not null)
             {
@@ -413,31 +422,31 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (md.ButtonStyle)
             {
                 case MessageDialogStyle.Affirmative:
-                    {
-                        md.PART_AffirmativeButton.Visibility = Visibility.Visible;
-                        md.PART_NegativeButton.Visibility = Visibility.Collapsed;
-                        md.PART_FirstAuxiliaryButton.Visibility = Visibility.Collapsed;
-                        md.PART_SecondAuxiliaryButton.Visibility = Visibility.Collapsed;
-                    }
+                {
+                    md.PART_AffirmativeButton.Visibility = Visibility.Visible;
+                    md.PART_NegativeButton.Visibility = Visibility.Collapsed;
+                    md.PART_FirstAuxiliaryButton.Visibility = Visibility.Collapsed;
+                    md.PART_SecondAuxiliaryButton.Visibility = Visibility.Collapsed;
+                }
                     break;
 
                 case MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary:
                 case MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary:
                 case MessageDialogStyle.AffirmativeAndNegative:
+                {
+                    md.PART_AffirmativeButton.Visibility = Visibility.Visible;
+                    md.PART_NegativeButton.Visibility = Visibility.Visible;
+
+                    if (md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary || md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary)
                     {
-                        md.PART_AffirmativeButton.Visibility = Visibility.Visible;
-                        md.PART_NegativeButton.Visibility = Visibility.Visible;
-
-                        if (md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary || md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary)
-                        {
-                            md.PART_FirstAuxiliaryButton.Visibility = Visibility.Visible;
-                        }
-
-                        if (md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary)
-                        {
-                            md.PART_SecondAuxiliaryButton.Visibility = Visibility.Visible;
-                        }
+                        md.PART_FirstAuxiliaryButton.Visibility = Visibility.Visible;
                     }
+
+                    if (md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary)
+                    {
+                        md.PART_SecondAuxiliaryButton.Visibility = Visibility.Visible;
+                    }
+                }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(md.ButtonStyle));

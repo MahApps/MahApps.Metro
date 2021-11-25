@@ -93,14 +93,20 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #region Constructor
 
-        internal InputDialog() : this(null)
-        { }
+        internal InputDialog()
+            : this(null)
+        {
+        }
 
-        internal InputDialog(MetroWindow? parentWindow) : this(parentWindow, null)
-        { }
+        internal InputDialog(MetroWindow? parentWindow)
+            : this(parentWindow, null)
+        {
+        }
 
-        internal InputDialog(MetroWindow? parentWindow, MetroDialogSettings? settings) : base(parentWindow, settings)
-        { }
+        internal InputDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
+            : base(parentWindow, settings)
+        {
+        }
 
         static InputDialog()
         {
@@ -118,13 +124,13 @@ namespace MahApps.Metro.Controls.Dialogs
         internal Task<string?> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                this.Focus();
-                if (this.PART_TextBox is not null)
                 {
-                    this.PART_TextBox.Focus();
-                }
-            }));
+                    this.Focus();
+                    if (this.PART_TextBox is not null)
+                    {
+                        this.PART_TextBox.Focus();
+                    }
+                }));
 
             var tcs = new TaskCompletionSource<string?>();
 
@@ -163,61 +169,61 @@ namespace MahApps.Metro.Controls.Dialogs
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
                                                      .Register(() =>
-                                                     {
-                                                         this.BeginInvoke(() =>
                                                          {
-                                                             CleanUpHandlers();
-                                                             tcs.TrySetResult(null!);
+                                                             this.BeginInvoke(() =>
+                                                                 {
+                                                                     CleanUpHandlers();
+                                                                     tcs.TrySetResult(null!);
+                                                                 });
                                                          });
-                                                     });
 
             this.escapeKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
                 {
-                    CleanUpHandlers();
+                    if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
+                    {
+                        CleanUpHandlers();
 
-                    tcs.TrySetResult(null!);
-                }
-            };
+                        tcs.TrySetResult(null!);
+                    }
+                };
 
             this.negativeKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Enter)
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
+
+                        tcs.TrySetResult(null!);
+                    }
+                };
+
+            this.affirmativeKeyHandler = (_, e) =>
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        CleanUpHandlers();
+
+                        tcs.TrySetResult(this.Input!);
+                    }
+                };
+
+            this.negativeHandler = (_, e) =>
                 {
                     CleanUpHandlers();
 
                     tcs.TrySetResult(null!);
-                }
-            };
 
-            this.affirmativeKeyHandler = (_, e) =>
-            {
-                if (e.Key == Key.Enter)
+                    e.Handled = true;
+                };
+
+            this.affirmativeHandler = (_, e) =>
                 {
                     CleanUpHandlers();
 
                     tcs.TrySetResult(this.Input!);
-                }
-            };
 
-            this.negativeHandler = (_, e) =>
-            {
-                CleanUpHandlers();
-
-                tcs.TrySetResult(null!);
-
-                e.Handled = true;
-            };
-
-            this.affirmativeHandler = (_, e) =>
-            {
-                CleanUpHandlers();
-
-                tcs.TrySetResult(this.Input!);
-
-                e.Handled = true;
-            };
+                    e.Handled = true;
+                };
 
             if (this.PART_NegativeButton is not null)
             {

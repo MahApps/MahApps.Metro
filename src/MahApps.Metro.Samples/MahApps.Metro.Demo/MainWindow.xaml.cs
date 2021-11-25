@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,14 +16,14 @@ namespace MetroDemo
 {
     public partial class MainWindow : MetroWindow
     {
-        private bool _shutdown;
-        private readonly MainWindowViewModel _viewModel;
+        private bool shutdown;
+        private readonly MainWindowViewModel viewModel;
         private FlyoutDemo? flyoutDemo;
 
         public MainWindow()
         {
-            this._viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
-            this.DataContext = this._viewModel;
+            this.viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
+            this.DataContext = this.viewModel;
 
             this.InitializeComponent();
         }
@@ -82,7 +82,6 @@ namespace MetroDemo
                     window.SetValue(UseInvertForDialogsProperty, false);
                 }
 
-
                 window.MetroDialogOptions!.ColorScheme = useAccentForDialogs ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
             }
         }
@@ -133,14 +132,14 @@ namespace MetroDemo
             {
                 var window = (MainWindow)dependencyObject;
                 var showIconOnDialogs = (bool)e.NewValue;
-                window.MetroDialogOptions!.Icon = showIconOnDialogs ?
-                    new MahApps.Metro.IconPacks.PackIconMaterial()
-                    {
-                        Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Duck,
-                        Width = 75,
-                        Height = 75,
-                        Foreground = Brushes.Yellow,
-                    }
+                window.MetroDialogOptions!.Icon = showIconOnDialogs
+                    ? new MahApps.Metro.IconPacks.PackIconMaterial()
+                      {
+                          Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Duck,
+                          Width = 75,
+                          Height = 75,
+                          Foreground = Brushes.Goldenrod,
+                      }
                     : null;
             }
         }
@@ -182,12 +181,12 @@ namespace MetroDemo
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://github.com/MahApps/MahApps.Metro.IconPacks",
-                // UseShellExecute is default to false on .NET Core while true on .NET Framework.
-                // Only this value is set to true, the url link can be opened.
-                UseShellExecute = true,
-            });
+                          {
+                              FileName = "https://github.com/MahApps/MahApps.Metro.IconPacks",
+                              // UseShellExecute is default to false on .NET Core while true on .NET Framework.
+                              // Only this value is set to true, the url link can be opened.
+                              UseShellExecute = true,
+                          });
         }
 
         private Window? cleanWindowDemo;
@@ -277,18 +276,18 @@ namespace MetroDemo
         {
             EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogOpened = null;
             dialogManagerOnDialogOpened = (o, args) =>
-            {
-                DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-                Console.WriteLine("Custom Dialog opened!");
-            };
+                {
+                    DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
+                    Console.WriteLine("Custom Dialog opened!");
+                };
             DialogManager.DialogOpened += dialogManagerOnDialogOpened;
 
             EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogClosed = null;
             dialogManagerOnDialogClosed = (o, args) =>
-            {
-                DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-                Console.WriteLine("Custom Dialog closed!");
-            };
+                {
+                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
+                    Console.WriteLine("Custom Dialog closed!");
+                };
             DialogManager.DialogClosed += dialogManagerOnDialogClosed;
 
             var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomCloseDialogTest"], Title = "Custom Dialog which is awaitable" };
@@ -314,7 +313,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -327,7 +326,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Password: {0}", result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Password: {result.Password}");
             }
         }
 
@@ -340,7 +339,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}\nShouldRemember: {result.ShouldRemember}");
             }
         }
 
@@ -424,7 +423,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -453,7 +452,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -479,7 +478,7 @@ namespace MetroDemo
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
-            var dialog = new CustomDialog(this.MetroDialogOptions!) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
             dialog = dialog.ShowDialogExternally();
 
             await Task.Delay(5000);
@@ -514,8 +513,8 @@ namespace MetroDemo
                 return;
             }
 
-            if (this._viewModel.QuitConfirmationEnabled
-                && this._shutdown == false)
+            if (this.viewModel.QuitConfirmationEnabled
+                && this.shutdown == false)
             {
                 e.Cancel = true;
 
@@ -526,27 +525,27 @@ namespace MetroDemo
             {
                 this.flyoutDemo?.Dispose();
 
-                this._viewModel.Dispose();
+                this.viewModel.Dispose();
             }
         }
 
         private async Task ConfirmShutdown()
         {
             var mySettings = new MetroDialogSettings
-            {
-                AffirmativeButtonText = "Quit",
-                NegativeButtonText = "Cancel",
-                AnimateShow = true,
-                AnimateHide = false
-            };
+                             {
+                                 AffirmativeButtonText = "Quit",
+                                 NegativeButtonText = "Cancel",
+                                 AnimateShow = true,
+                                 AnimateHide = false
+                             };
 
             var result = await this.ShowMessageAsync("Quit application?",
                                                      "Sure you want to quit application?",
                                                      MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
-            this._shutdown = result == MessageDialogResult.Affirmative;
+            this.shutdown = result == MessageDialogResult.Affirmative;
 
-            if (this._shutdown)
+            if (this.shutdown)
             {
                 Application.Current.Shutdown();
             }
@@ -562,13 +561,13 @@ namespace MetroDemo
             }
 
             this.testWindow = new MetroWindow
-            {
-                Owner = this,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Title = "Another Test...",
-                Width = 500,
-                Height = 300
-            };
+                              {
+                                  Owner = this,
+                                  WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                                  Title = "Another Test...",
+                                  Width = 500,
+                                  Height = 300
+                              };
             this.testWindow.Closed += (o, args) => this.testWindow = null;
             return this.testWindow;
         }
