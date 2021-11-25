@@ -9,44 +9,57 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public class LoginDialogSettings : MetroDialogSettings
     {
+        private const string DefaultAffirmativeButtonText = "Login";
         private const string DefaultUsernameWatermark = "Username...";
         private const string DefaultPasswordWatermark = "Password...";
         private const string DefaultRememberCheckBoxText = "Remember";
 
         public LoginDialogSettings()
         {
-            this.UsernameWatermark = DefaultUsernameWatermark;
-            this.UsernameCharacterCasing = CharacterCasing.Normal;
-            this.PasswordWatermark = DefaultPasswordWatermark;
-            this.NegativeButtonVisibility = Visibility.Collapsed;
-            this.ShouldHideUsername = false;
-            this.AffirmativeButtonText = "Login";
-            this.EnablePasswordPreview = false;
-            this.RememberCheckBoxVisibility = Visibility.Collapsed;
-            this.RememberCheckBoxText = DefaultRememberCheckBoxText;
-            this.RememberCheckBoxChecked = false;
+            this.AffirmativeButtonText = DefaultAffirmativeButtonText;
+        }
+
+        public LoginDialogSettings(MetroDialogSettings? source)
+            : base(source)
+        {
+            this.AffirmativeButtonText = DefaultAffirmativeButtonText;
+
+            if (source is LoginDialogSettings settings)
+            {
+                this.InitialUsername = settings.InitialUsername;
+                this.InitialPassword = settings.InitialPassword;
+                this.UsernameWatermark = settings.UsernameWatermark;
+                this.UsernameCharacterCasing = settings.UsernameCharacterCasing;
+                this.ShouldHideUsername = settings.ShouldHideUsername;
+                this.PasswordWatermark = settings.PasswordWatermark;
+                this.NegativeButtonVisibility = settings.NegativeButtonVisibility;
+                this.EnablePasswordPreview = settings.EnablePasswordPreview;
+                this.RememberCheckBoxVisibility = settings.RememberCheckBoxVisibility;
+                this.RememberCheckBoxText = settings.RememberCheckBoxText;
+                this.RememberCheckBoxChecked = settings.RememberCheckBoxChecked;
+            }
         }
 
         public string? InitialUsername { get; set; }
 
         public string? InitialPassword { get; set; }
 
-        public string UsernameWatermark { get; set; }
+        public string UsernameWatermark { get; set; } = DefaultUsernameWatermark;
 
-        public CharacterCasing UsernameCharacterCasing { get; set; }
+        public CharacterCasing UsernameCharacterCasing { get; set; } = CharacterCasing.Normal;
 
         public bool ShouldHideUsername { get; set; }
 
-        public string PasswordWatermark { get; set; }
+        public string PasswordWatermark { get; set; } = DefaultPasswordWatermark;
 
-        public Visibility NegativeButtonVisibility { get; set; }
+        public Visibility NegativeButtonVisibility { get; set; } = Visibility.Collapsed;
 
         public bool EnablePasswordPreview { get; set; }
 
-        public Visibility RememberCheckBoxVisibility { get; set; }
+        public Visibility RememberCheckBoxVisibility { get; set; } = Visibility.Collapsed;
 
-        public string RememberCheckBoxText { get; set; }
+        public string RememberCheckBoxText { get; set; } = DefaultRememberCheckBoxText;
 
-        public bool RememberCheckBoxChecked { get; set; }
+        public bool RememberCheckBoxChecked { get; set; } = false;
     }
 }
