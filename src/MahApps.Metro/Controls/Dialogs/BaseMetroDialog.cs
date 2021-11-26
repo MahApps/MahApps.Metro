@@ -500,21 +500,32 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
-        protected internal virtual void OnShown()
+        internal void FireOnShown()
+        {
+            this.OnShown();
+        }
+
+        protected virtual void OnShown()
         {
         }
 
-        protected internal virtual void OnClose()
+        internal void FireOnClose()
         {
+            this.OnClose();
+
             // this is only set when a dialog is shown (externally) in it's OWN window.
             this.ParentDialogWindow?.Close();
+        }
+
+        protected virtual void OnClose()
+        {
         }
 
         /// <summary>
         /// A last chance virtual method for stopping an external dialog from closing.
         /// </summary>
         /// <returns></returns>
-        protected internal virtual bool OnRequestClose()
+        protected virtual bool OnRequestClose()
         {
             return true; //allow the dialog to close.
         }
@@ -527,7 +538,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
         /// </summary>
-        protected internal MetroWindow? OwningWindow { get; internal set; }
+        protected MetroWindow? OwningWindow { get; private set; }
 
         /// <summary>
         /// Waits until this dialog gets unloaded.
