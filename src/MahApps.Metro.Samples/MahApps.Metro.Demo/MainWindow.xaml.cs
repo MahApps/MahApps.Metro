@@ -409,7 +409,7 @@ namespace MetroDemo
         {
             var settings = new MetroDialogSettings(this.MetroDialogOptions)
                            {
-                               DialogButtonFontSize = 30D
+                               DialogButtonFontSize = 24D
                            };
 
             var result = await this.ShowInputAsync("Hello!", "What is your name?", settings);
