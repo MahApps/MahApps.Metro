@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MetroDemo.ExampleViews
 {
@@ -14,6 +15,8 @@ namespace MetroDemo.ExampleViews
         public CustomDialogExample()
         {
             this.InitializeComponent();
+
+            this.Loaded += (_, _) => { this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First)); };
         }
     }
 }

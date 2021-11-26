@@ -32,6 +32,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #region DependencyProperties
 
+        /// <summary>Identifies the <see cref="ColorScheme"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorSchemeProperty
+            = DependencyProperty.Register(nameof(ColorScheme),
+                                          typeof(MetroDialogColorScheme),
+                                          typeof(BaseMetroDialog),
+                                          new PropertyMetadata(MetroDialogColorScheme.Theme));
+
+        public MetroDialogColorScheme ColorScheme
+        {
+            get => (MetroDialogColorScheme)this.GetValue(ColorSchemeProperty);
+            set => this.SetValue(ColorSchemeProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
         public static readonly DependencyProperty DialogContentMarginProperty
             = DependencyProperty.Register(nameof(DialogContentMargin),
@@ -279,12 +292,17 @@ namespace MahApps.Metro.Controls.Dialogs
         private void Initialize(MetroWindow? owningWindow, MetroDialogSettings? settings)
         {
             this.OwningWindow = owningWindow;
-            this.DialogSettings = this.ConfigureSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
+            this.DialogSettings = this.ConfigureSettings(settings ?? owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
 
-            if (this.DialogSettings.CustomResourceDictionary != null)
+            if (this.DialogSettings.CustomResourceDictionary is not null)
             {
                 this.Resources.MergedDictionaries.Add(this.DialogSettings.CustomResourceDictionary);
             }
+
+            this.SetCurrentValue(ColorSchemeProperty, this.DialogSettings.ColorScheme);
+
+            this.SetCurrentValue(IconProperty, this.DialogSettings.Icon);
+            this.SetCurrentValue(IconTemplateProperty, this.DialogSettings.IconTemplate);
 
             this.HandleThemeChange();
 
@@ -325,7 +343,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.Invoke(this.HandleThemeChange);
         }
 
-        private static object? TryGetResource(ControlzEx.Theming.Theme? theme, string key)
+        private static object? TryGetResource(Theme? theme, string key)
         {
             return theme?.Resources[key];
         }
@@ -384,11 +402,10 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected virtual void OnLoaded()
         {
-            this.Icon = this.DialogSettings.Icon;
-            this.IconTemplate = this.DialogSettings.IconTemplate;
+            // nothing here
         }
 
-        private static ControlzEx.Theming.Theme? DetectTheme(BaseMetroDialog? dialog)
+        private static Theme? DetectTheme(BaseMetroDialog? dialog)
         {
             if (dialog is null)
             {
@@ -418,6 +435,8 @@ namespace MahApps.Metro.Controls.Dialogs
             return null;
         }
 
+        private RoutedEventHandler? dialogOnLoaded;
+
         /// <summary>
         /// Waits for the dialog to become ready for interaction.
         /// </summary>
@@ -428,26 +447,30 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded)
             {
-                return new Task(() => { });
-            }
-
-            if (this.DialogSettings.AnimateShow != true)
-            {
-                this.Opacity = 1.0; //skip the animation
+#if NET452
+                return Task.FromResult<object>(default!);
+#else
+                return Task.CompletedTask;
+#endif
             }
 
             var tcs = new TaskCompletionSource<object>();
 
-            void LoadedHandler(object sender, RoutedEventArgs args)
+            if (this.DialogSettings.AnimateShow != true)
             {
-                this.Loaded -= LoadedHandler;
-
-                this.Focus();
-
-                tcs.TrySetResult(null!);
+                this.SetCurrentValue(OpacityProperty, 1.0); // skip the animation
             }
 
-            this.Loaded += LoadedHandler;
+            this.dialogOnLoaded = (_, _) =>
+                {
+                    this.Loaded -= this.dialogOnLoaded;
+
+                    this.Focus();
+
+                    tcs.TrySetResult(null!);
+                };
+
+            this.Loaded += this.dialogOnLoaded;
 
             return tcs.Task;
         }
@@ -455,7 +478,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
         /// </summary>
-        public Task RequestCloseAsync()
+        public async Task RequestCloseAsync()
         {
             if (this.OnRequestClose())
             {
@@ -467,36 +490,48 @@ namespace MahApps.Metro.Controls.Dialogs
                     if (this.OwningWindow is null)
                     {
                         Trace.TraceWarning($"{this}: Can not request async closing, because the OwningWindow is already null. This can maybe happen if the dialog was closed manually.");
-                        return Task.Factory.StartNew(() => { });
+                        return;
                     }
 
                     // This is from a user-created MetroWindow
-                    return this.OwningWindow.HideMetroDialogAsync(this);
+                    await this.OwningWindow.HideMetroDialogAsync(this);
+
+                    return;
                 }
 
                 // This is from a MetroWindow created by the external dialog APIs.
-                return this.WaitForCloseAsync()
-                           .ContinueWith(_ => { this.ParentDialogWindow.Dispatcher.Invoke(() => { this.ParentDialogWindow.Close(); }); });
+                await this.WaitForCloseAsync();
+
+                this.ParentDialogWindow.Close();
             }
-
-            return Task.Factory.StartNew(() => { });
         }
 
-        protected internal virtual void OnShown()
+        internal void FireOnShown()
+        {
+            this.OnShown();
+        }
+
+        protected virtual void OnShown()
         {
         }
 
-        protected internal virtual void OnClose()
+        internal void FireOnClose()
         {
+            this.OnClose();
+
             // this is only set when a dialog is shown (externally) in it's OWN window.
             this.ParentDialogWindow?.Close();
+        }
+
+        protected virtual void OnClose()
+        {
         }
 
         /// <summary>
         /// A last chance virtual method for stopping an external dialog from closing.
         /// </summary>
         /// <returns></returns>
-        protected internal virtual bool OnRequestClose()
+        protected virtual bool OnRequestClose()
         {
             return true; //allow the dialog to close.
         }
@@ -509,7 +544,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
         /// </summary>
-        protected internal MetroWindow? OwningWindow { get; internal set; }
+        protected MetroWindow? OwningWindow { get; private set; }
 
         /// <summary>
         /// Waits until this dialog gets unloaded.
@@ -524,36 +559,35 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
+        private EventHandler? closingStoryboardOnCompleted;
+
         public Task WaitForCloseAsync()
         {
             var tcs = new TaskCompletionSource<object>();
 
             if (this.DialogSettings.AnimateHide)
             {
-                var closingStoryboard = this.TryFindResource("MahApps.Storyboard.Dialogs.Close") as Storyboard;
-
-                if (closingStoryboard is null)
+                if (this.TryFindResource("MahApps.Storyboard.Dialogs.Close") is not Storyboard closingStoryboard)
                 {
                     throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add BaseMetroDialog.xaml to your merged dictionaries?");
                 }
 
                 closingStoryboard = closingStoryboard.Clone();
 
-                EventHandler? completedHandler = null;
-                completedHandler = (_, _) =>
+                this.closingStoryboardOnCompleted = (_, _) =>
                     {
-                        closingStoryboard.Completed -= completedHandler;
+                        closingStoryboard.Completed -= this.closingStoryboardOnCompleted;
 
                         tcs.TrySetResult(null!);
                     };
 
-                closingStoryboard.Completed += completedHandler;
+                closingStoryboard.Completed += this.closingStoryboardOnCompleted;
 
                 closingStoryboard.Begin(this);
             }
             else
             {
-                this.Opacity = 0.0;
+                this.SetCurrentValue(OpacityProperty, 0.0);
                 tcs.TrySetResult(null!); //skip the animation
             }
 
