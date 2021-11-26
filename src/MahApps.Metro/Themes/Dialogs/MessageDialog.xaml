@@ -112,6 +112,51 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="ButtonStyle" Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_FirstAuxiliaryButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_SecondAuxiliaryButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="ButtonStyle" Value="AffirmativeAndNegativeAndSingleAuxiliary">
+                <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_FirstAuxiliaryButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_SecondAuxiliaryButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="ButtonStyle" Value="AffirmativeAndNegativeAndDoubleAuxiliary">
+                <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_FirstAuxiliaryButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_SecondAuxiliaryButton" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="ButtonStyle" Value="AffirmativeAndNegative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_FirstAuxiliaryButton" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_SecondAuxiliaryButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+
+            <Trigger Property="DefaultButtonFocus" Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Negative">
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="FirstAuxiliary">
+                <Setter TargetName="PART_FirstAuxiliaryButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="SecondAuxiliary">
+                <Setter TargetName="PART_SecondAuxiliaryButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Trigger>
+
+            <Trigger Property="ColorScheme" Value="Accented">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+                <Setter TargetName="PART_FirstAuxiliaryButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+                <Setter TargetName="PART_SecondAuxiliaryButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+            </Trigger>
+
             <Trigger Property="Title" Value="{x:Null}">
                 <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
             </Trigger>
@@ -122,6 +167,7 @@
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
     <Style x:Key="MahApps.Styles.MessageDialog"
            BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
            TargetType="{x:Type dialogs:MessageDialog}">
