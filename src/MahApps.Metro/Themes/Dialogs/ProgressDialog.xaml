@@ -101,6 +101,10 @@
             </ContentPresenter>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="ColorScheme" Value="Accented">
+                <Setter TargetName="PART_ProgressBar" Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
+
             <Trigger Property="Title" Value="{x:Null}">
                 <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
             </Trigger>
@@ -111,9 +115,11 @@
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
     <Style x:Key="MahApps.Styles.ProgressDialog"
            BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
            TargetType="{x:Type dialogs:ProgressDialog}">
+        <Setter Property="ProgressBarForeground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ProgressDialog}" />
     </Style>
 </ResourceDictionary>

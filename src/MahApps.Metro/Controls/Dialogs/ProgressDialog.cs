@@ -109,6 +109,7 @@ namespace MahApps.Metro.Controls.Dialogs
         internal ProgressDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
+            this.SetCurrentValue(NegativeButtonTextProperty, this.DialogSettings.NegativeButtonText);
         }
 
         static ProgressDialog()
@@ -117,14 +118,6 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         #endregion Constructor
-
-        protected override void OnLoaded()
-        {
-            base.OnLoaded();
-            this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
-
-            this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "MahApps.Brushes.Accent" : "MahApps.Brushes.ThemeForeground");
-        }
 
         internal CancellationToken CancellationToken => this.DialogSettings.CancellationToken;
 

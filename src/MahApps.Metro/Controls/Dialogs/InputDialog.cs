@@ -106,6 +106,8 @@ namespace MahApps.Metro.Controls.Dialogs
         internal InputDialog(MetroWindow? parentWindow, MetroDialogSettings? settings)
             : base(parentWindow, settings)
         {
+            this.SetCurrentValue(AffirmativeButtonTextProperty, this.DialogSettings.AffirmativeButtonText);
+            this.SetCurrentValue(NegativeButtonTextProperty, this.DialogSettings.NegativeButtonText);
         }
 
         static InputDialog()
@@ -253,28 +255,6 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             return tcs.Task;
-        }
-
-        protected override void OnLoaded()
-        {
-            base.OnLoaded();
-
-            this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
-            this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
-
-            if (this.DialogSettings.ColorScheme == MetroDialogColorScheme.Accented)
-            {
-                if (this.PART_NegativeButton is not null)
-                {
-                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Styles.Button.Dialogs.AccentHighlight");
-                }
-
-                if (this.PART_TextBox is not null)
-                {
-                    this.PART_TextBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.ThemeForeground");
-                    this.PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "MahApps.Brushes.TextBox.Border.Focus");
-                }
-            }
         }
     }
 }

@@ -32,6 +32,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #region DependencyProperties
 
+        /// <summary>Identifies the <see cref="ColorScheme"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorSchemeProperty
+            = DependencyProperty.Register(nameof(ColorScheme),
+                                          typeof(MetroDialogColorScheme),
+                                          typeof(BaseMetroDialog),
+                                          new PropertyMetadata(MetroDialogColorScheme.Theme));
+
+        public MetroDialogColorScheme ColorScheme
+        {
+            get => (MetroDialogColorScheme)this.GetValue(ColorSchemeProperty);
+            set => this.SetValue(ColorSchemeProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
         public static readonly DependencyProperty DialogContentMarginProperty
             = DependencyProperty.Register(nameof(DialogContentMargin),
@@ -279,12 +292,17 @@ namespace MahApps.Metro.Controls.Dialogs
         private void Initialize(MetroWindow? owningWindow, MetroDialogSettings? settings)
         {
             this.OwningWindow = owningWindow;
-            this.DialogSettings = this.ConfigureSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
+            this.DialogSettings = this.ConfigureSettings(settings ?? owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
 
-            if (this.DialogSettings.CustomResourceDictionary != null)
+            if (this.DialogSettings.CustomResourceDictionary is not null)
             {
                 this.Resources.MergedDictionaries.Add(this.DialogSettings.CustomResourceDictionary);
             }
+
+            this.SetCurrentValue(ColorSchemeProperty, this.DialogSettings.ColorScheme);
+
+            this.SetCurrentValue(IconProperty, this.DialogSettings.Icon);
+            this.SetCurrentValue(IconTemplateProperty, this.DialogSettings.IconTemplate);
 
             this.HandleThemeChange();
 
@@ -325,7 +343,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.Invoke(this.HandleThemeChange);
         }
 
-        private static object? TryGetResource(ControlzEx.Theming.Theme? theme, string key)
+        private static object? TryGetResource(Theme? theme, string key)
         {
             return theme?.Resources[key];
         }
@@ -384,11 +402,10 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected virtual void OnLoaded()
         {
-            this.Icon = this.DialogSettings.Icon;
-            this.IconTemplate = this.DialogSettings.IconTemplate;
+            // nothing here
         }
 
-        private static ControlzEx.Theming.Theme? DetectTheme(BaseMetroDialog? dialog)
+        private static Theme? DetectTheme(BaseMetroDialog? dialog)
         {
             if (dialog is null)
             {
@@ -524,36 +541,35 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
+        private EventHandler? closingStoryboardOnCompleted;
+
         public Task WaitForCloseAsync()
         {
             var tcs = new TaskCompletionSource<object>();
 
             if (this.DialogSettings.AnimateHide)
             {
-                var closingStoryboard = this.TryFindResource("MahApps.Storyboard.Dialogs.Close") as Storyboard;
-
-                if (closingStoryboard is null)
+                if (this.TryFindResource("MahApps.Storyboard.Dialogs.Close") is not Storyboard closingStoryboard)
                 {
                     throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add BaseMetroDialog.xaml to your merged dictionaries?");
                 }
 
                 closingStoryboard = closingStoryboard.Clone();
 
-                EventHandler? completedHandler = null;
-                completedHandler = (_, _) =>
+                this.closingStoryboardOnCompleted = (_, _) =>
                     {
-                        closingStoryboard.Completed -= completedHandler;
+                        closingStoryboard.Completed -= this.closingStoryboardOnCompleted;
 
                         tcs.TrySetResult(null!);
                     };
 
-                closingStoryboard.Completed += completedHandler;
+                closingStoryboard.Completed += this.closingStoryboardOnCompleted;
 
                 closingStoryboard.Begin(this);
             }
             else
             {
-                this.Opacity = 0.0;
+                this.SetCurrentValue(OpacityProperty, 0.0);
                 tcs.TrySetResult(null!); //skip the animation
             }
 

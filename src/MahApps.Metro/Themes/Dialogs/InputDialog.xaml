@@ -108,6 +108,11 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="ColorScheme" Value="Accented">
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+                <Setter TargetName="PART_TextBox" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                <Setter TargetName="PART_TextBox" Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.Focus}" />
+            </Trigger>
             <Trigger Property="Title" Value="{x:Null}">
                 <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
             </Trigger>
