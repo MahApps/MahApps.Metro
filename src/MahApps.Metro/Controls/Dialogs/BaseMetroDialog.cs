@@ -472,7 +472,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
         /// </summary>
-        public Task RequestCloseAsync()
+        public async Task RequestCloseAsync()
         {
             if (this.OnRequestClose())
             {
@@ -484,19 +484,20 @@ namespace MahApps.Metro.Controls.Dialogs
                     if (this.OwningWindow is null)
                     {
                         Trace.TraceWarning($"{this}: Can not request async closing, because the OwningWindow is already null. This can maybe happen if the dialog was closed manually.");
-                        return Task.Factory.StartNew(() => { });
+                        return;
                     }
 
                     // This is from a user-created MetroWindow
-                    return this.OwningWindow.HideMetroDialogAsync(this);
+                    await this.OwningWindow.HideMetroDialogAsync(this);
+
+                    return;
                 }
 
                 // This is from a MetroWindow created by the external dialog APIs.
-                return this.WaitForCloseAsync()
-                           .ContinueWith(_ => { this.ParentDialogWindow.Dispatcher.Invoke(() => { this.ParentDialogWindow.Close(); }); });
-            }
+                await this.WaitForCloseAsync();
 
-            return Task.Factory.StartNew(() => { });
+                this.ParentDialogWindow.Close();
+            }
         }
 
         protected internal virtual void OnShown()
