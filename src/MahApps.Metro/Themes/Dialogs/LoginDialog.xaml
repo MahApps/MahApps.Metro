@@ -130,6 +130,16 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="EnablePasswordPreview" Value="True">
+                <Setter TargetName="PART_PasswordBox" Property="Style" Value="{DynamicResource MahApps.Styles.PasswordBox.Win8}" />
+            </Trigger>
+
+            <Trigger Property="ColorScheme" Value="Accented">
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+                <Setter TargetName="PART_PasswordBox" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                <Setter TargetName="PART_TextBox" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </Trigger>
+
             <Trigger Property="Title" Value="{x:Null}">
                 <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
             </Trigger>
