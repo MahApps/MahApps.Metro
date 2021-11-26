@@ -435,6 +435,8 @@ namespace MahApps.Metro.Controls.Dialogs
             return null;
         }
 
+        private RoutedEventHandler? dialogOnLoaded;
+
         /// <summary>
         /// Waits for the dialog to become ready for interaction.
         /// </summary>
@@ -445,26 +447,30 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded)
             {
-                return new Task(() => { });
-            }
-
-            if (this.DialogSettings.AnimateShow != true)
-            {
-                this.Opacity = 1.0; //skip the animation
+#if NET452
+                return Task.FromResult<object>(default!);
+#else
+                return Task.CompletedTask;
+#endif
             }
 
             var tcs = new TaskCompletionSource<object>();
 
-            void LoadedHandler(object sender, RoutedEventArgs args)
+            if (this.DialogSettings.AnimateShow != true)
             {
-                this.Loaded -= LoadedHandler;
-
-                this.Focus();
-
-                tcs.TrySetResult(null!);
+                this.SetCurrentValue(OpacityProperty, 1.0); // skip the animation
             }
 
-            this.Loaded += LoadedHandler;
+            this.dialogOnLoaded = (_, _) =>
+                {
+                    this.Loaded -= this.dialogOnLoaded;
+
+                    this.Focus();
+
+                    tcs.TrySetResult(null!);
+                };
+
+            this.Loaded += this.dialogOnLoaded;
 
             return tcs.Task;
         }
