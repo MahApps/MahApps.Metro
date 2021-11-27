@@ -95,11 +95,11 @@ Setup<BuildData>(ctx =>
             || (BuildSystem.AppVeyor.IsRunningOnAppVeyor && BuildSystem.AppVeyor.Environment.PullRequest.IsPullRequest)
     };
 
-    // Set build version
-    // if (buildData.IsLocalBuild == false || buildData.Verbosity == Verbosity.Verbose)
-    // {
-    //     GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.BuildServer });
-    // }
+    // Set build version for CI
+    if (buildData.IsLocalBuild == false || buildData.Verbosity == Verbosity.Verbose)
+    {
+        GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.BuildServer });
+    }
     buildData.SetGitVersion(GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.Json }));
 
     Information("MSBuild                : {0}", buildData.MSBuildExe);
