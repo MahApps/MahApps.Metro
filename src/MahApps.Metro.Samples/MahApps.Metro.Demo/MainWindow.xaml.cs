@@ -26,6 +26,9 @@ namespace MetroDemo
             this.DataContext = this.viewModel;
 
             this.InitializeComponent();
+
+            DialogManager.DialogOpened += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} opened.");
+            DialogManager.DialogClosed += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} closed.");
         }
 
         #region DependencyProperties
@@ -278,22 +281,6 @@ namespace MetroDemo
 
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
-            EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogOpened = null;
-            dialogManagerOnDialogOpened = (o, args) =>
-                {
-                    DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-                    Console.WriteLine("Custom Dialog opened!");
-                };
-            DialogManager.DialogOpened += dialogManagerOnDialogOpened;
-
-            EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogClosed = null;
-            dialogManagerOnDialogClosed = (o, args) =>
-                {
-                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-                    Console.WriteLine("Custom Dialog closed!");
-                };
-            DialogManager.DialogClosed += dialogManagerOnDialogClosed;
-
             var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomCloseDialogTest"], Title = "Custom Dialog which is awaitable" };
 
             await this.ShowMetroDialogAsync(dialog);
