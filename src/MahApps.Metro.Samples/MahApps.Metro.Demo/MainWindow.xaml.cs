@@ -27,8 +27,8 @@ namespace MetroDemo
 
             this.InitializeComponent();
 
-            DialogManager.DialogOpened += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} opened.");
-            DialogManager.DialogClosed += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} closed.");
+            DialogManager.DialogOpened += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} - '{args.Dialog.Title}' opened.");
+            DialogManager.DialogClosed += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} - '{args.Dialog.Title}' closed.");
         }
 
         #region DependencyProperties

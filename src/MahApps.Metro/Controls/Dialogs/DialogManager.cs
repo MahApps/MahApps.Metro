@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             await HandleOverlayOnShow(settings, window);
 
-            //create the dialog control
+            // create the dialog control
             LoginDialog dialog = new LoginDialog(window, settings)
                                  {
                                      Title = title,
@@ -48,9 +48,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
             DialogOpened?.Invoke(window, new DialogStateChangedEventArgs(dialog));
 
-            var data = await dialog.WaitForButtonPressAsync();
+            var result = await dialog.WaitForButtonPressAsync();
 
-            //once a button as been clicked, begin removing the dialog.
+            // once a button as been clicked, begin removing the dialog.
             dialog.FireOnClose();
 
             DialogClosed?.Invoke(window, new DialogStateChangedEventArgs(dialog));
@@ -62,7 +62,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             await HandleOverlayOnHide(settings, window);
 
-            return data;
+            return result;
         }
 
         /// <summary>
@@ -73,63 +73,46 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<string?> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings? settings = null)
+        public static async Task<string?> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
             settings ??= window.MetroDialogOptions;
 
-            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-                {
-                    return (Task<string?>)window.Dispatcher.Invoke(new Func<Task<string?>>(() =>
-                        {
-                            //create the dialog control
-                            var dialog = new InputDialog(window, settings)
-                                         {
-                                             Title = title,
-                                             Message = message,
-                                             Input = settings?.DefaultText,
-                                         };
+            await HandleOverlayOnShow(settings, window);
 
-                            SetDialogFontSizes(settings, dialog);
+            // create the dialog control
+            var dialog = new InputDialog(window, settings)
+                         {
+                             Title = title,
+                             Message = message,
+                             Input = settings?.DefaultText,
+                         };
 
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                            dialog.SizeChangedHandler = sizeHandler;
+            SetDialogFontSizes(settings, dialog);
 
-                            return dialog.WaitForLoadAsync().ContinueWith(x =>
-                                {
-                                    if (DialogOpened != null)
-                                    {
-                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs(dialog))));
-                                    }
+            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+            dialog.SizeChangedHandler = sizeHandler;
 
-                                    return dialog.WaitForButtonPressAsync().ContinueWith(y =>
-                                        {
-                                            //once a button as been clicked, begin removing the dialog.
+            await dialog.WaitForLoadAsync();
 
-                                            dialog.FireOnClose();
+            DialogOpened?.Invoke(window, new DialogStateChangedEventArgs(dialog));
 
-                                            if (DialogClosed != null)
-                                            {
-                                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs(dialog))));
-                                            }
+            var result = await dialog.WaitForButtonPressAsync();
 
-                                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
-                                            return closingTask.ContinueWith(a =>
-                                                {
-                                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
-                                                        {
-                                                            window.SizeChanged -= sizeHandler;
+            // once a button as been clicked, begin removing the dialog.
+            dialog.FireOnClose();
 
-                                                            window.RemoveDialog(dialog);
+            DialogClosed?.Invoke(window, new DialogStateChangedEventArgs(dialog));
 
-                                                            return HandleOverlayOnHide(settings, window);
-                                                        }))).ContinueWith(y3 => y).Unwrap();
-                                                });
-                                        }).Unwrap();
-                                }).Unwrap().Unwrap();
-                        }));
-                }).Unwrap();
+            await dialog.WaitForCloseAsync();
+
+            window.SizeChanged -= sizeHandler;
+            window.RemoveDialog(dialog);
+
+            await HandleOverlayOnHide(settings, window);
+
+            return result;
         }
 
         /// <summary>
