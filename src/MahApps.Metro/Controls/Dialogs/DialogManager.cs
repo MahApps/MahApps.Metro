@@ -124,63 +124,46 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings? settings = null)
+        public static async Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
             settings ??= window.MetroDialogOptions;
 
-            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
-                {
-                    return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
-                        {
-                            //create the dialog control
-                            var dialog = new MessageDialog(window, settings)
-                                         {
-                                             Message = message,
-                                             Title = title,
-                                             ButtonStyle = style
-                                         };
+            await HandleOverlayOnShow(settings, window);
 
-                            SetDialogFontSizes(settings, dialog);
+            // create the dialog control
+            var dialog = new MessageDialog(window, settings)
+                         {
+                             Message = message,
+                             Title = title,
+                             ButtonStyle = style
+                         };
 
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                            dialog.SizeChangedHandler = sizeHandler;
+            SetDialogFontSizes(settings, dialog);
 
-                            return dialog.WaitForLoadAsync().ContinueWith(x =>
-                                {
-                                    if (DialogOpened != null)
-                                    {
-                                        window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs(dialog))));
-                                    }
+            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+            dialog.SizeChangedHandler = sizeHandler;
 
-                                    return dialog.WaitForButtonPressAsync().ContinueWith(y =>
-                                        {
-                                            //once a button as been clicked, begin removing the dialog.
+            await dialog.WaitForLoadAsync();
 
-                                            dialog.FireOnClose();
+            DialogOpened?.Invoke(window, new DialogStateChangedEventArgs(dialog));
 
-                                            if (DialogClosed != null)
-                                            {
-                                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs(dialog))));
-                                            }
+            var result = await dialog.WaitForButtonPressAsync();
 
-                                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
-                                            return closingTask.ContinueWith(a =>
-                                                {
-                                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
-                                                        {
-                                                            window.SizeChanged -= sizeHandler;
+            // once a button as been clicked, begin removing the dialog.
+            dialog.FireOnClose();
 
-                                                            window.RemoveDialog(dialog);
+            DialogClosed?.Invoke(window, new DialogStateChangedEventArgs(dialog));
 
-                                                            return HandleOverlayOnHide(settings, window);
-                                                        }))).ContinueWith(y3 => y).Unwrap();
-                                                });
-                                        }).Unwrap();
-                                }).Unwrap().Unwrap();
-                        }));
-                }).Unwrap();
+            await dialog.WaitForCloseAsync();
+
+            window.SizeChanged -= sizeHandler;
+            window.RemoveDialog(dialog);
+
+            await HandleOverlayOnHide(settings, window);
+
+            return result;
         }
 
         /// <summary>
