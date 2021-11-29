@@ -1078,106 +1078,103 @@ namespace MahApps.Metro.Controls
         /// Starts the overlay fade in effect.
         /// </summary>
         /// <returns>A task representing the process.</returns>
-        public System.Threading.Tasks.Task ShowOverlayAsync()
+        public async System.Threading.Tasks.Task ShowOverlayAsync()
         {
             if (this.overlayBox is null)
             {
                 throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
             }
 
-            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-
             if (this.IsOverlayVisible() && this.overlayStoryboard is null)
             {
-                //No Task.FromResult in .NET 4.
-                tcs.SetResult(null!);
-                return tcs.Task;
+                return;
             }
 
             this.Dispatcher.VerifyAccess();
 
             var sb = this.OverlayFadeIn?.Clone();
-            this.overlayStoryboard = sb;
-            if (this.CanUseOverlayFadingStoryboard(sb, out var animation))
-            {
-                this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
 
-                animation.To = this.OverlayOpacity;
-
-                this.onOverlayFadeInStoryboardCompleted = (_, _) =>
-                    {
-                        sb.Completed -= this.onOverlayFadeInStoryboardCompleted;
-                        if (this.overlayStoryboard == sb)
-                        {
-                            this.overlayStoryboard = null;
-                        }
-
-                        tcs.TrySetResult(null!);
-                    };
-
-                sb.Completed += this.onOverlayFadeInStoryboardCompleted;
-                this.overlayBox.BeginStoryboard(sb);
-            }
-            else
+            if (!this.CanUseOverlayFadingStoryboard(sb, out var animation))
             {
                 this.ShowOverlay();
-                tcs.TrySetResult(null!);
+                return;
             }
 
-            return tcs.Task;
+            this.overlayStoryboard = sb;
+
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+            animation.To = this.OverlayOpacity;
+
+            this.onOverlayFadeInStoryboardCompleted = (_, _) =>
+                {
+                    sb.Completed -= this.onOverlayFadeInStoryboardCompleted;
+                    if (this.overlayStoryboard == sb)
+                    {
+                        this.overlayStoryboard = null;
+                    }
+
+                    tcs.TrySetResult(null!);
+                };
+
+            sb.Completed += this.onOverlayFadeInStoryboardCompleted;
+
+            this.overlayBox.BeginStoryboard(sb);
+
+            await tcs.Task;
         }
 
         /// <summary>
         /// Starts the overlay fade out effect.
         /// </summary>
         /// <returns>A task representing the process.</returns>
-        public System.Threading.Tasks.Task HideOverlayAsync()
+        public async System.Threading.Tasks.Task HideOverlayAsync()
         {
             if (this.overlayBox is null)
             {
                 throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
             }
 
-            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-
             if (this.overlayBox.Visibility == Visibility.Visible && this.overlayBox.Opacity <= 0.0)
             {
-                //No Task.FromResult in .NET 4.
                 this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
-                tcs.SetResult(null!);
-                return tcs.Task;
+                return;
             }
 
             this.Dispatcher.VerifyAccess();
 
             var sb = this.OverlayFadeOut?.Clone();
-            this.overlayStoryboard = sb;
-            if (this.CanUseOverlayFadingStoryboard(sb, out var animation))
-            {
-                animation.To = 0d;
 
-                this.onOverlayFadeOutStoryboardCompleted = (_, _) =>
-                    {
-                        sb.Completed -= this.onOverlayFadeOutStoryboardCompleted;
-                        if (this.overlayStoryboard == sb)
-                        {
-                            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
-                            this.overlayStoryboard = null;
-                        }
-
-                        tcs.TrySetResult(null!);
-                    };
-
-                sb.Completed += this.onOverlayFadeOutStoryboardCompleted;
-                this.overlayBox.BeginStoryboard(sb);
-            }
-            else
+            if (!this.CanUseOverlayFadingStoryboard(sb, out var animation))
             {
                 this.HideOverlay();
-                tcs.TrySetResult(null!);
+                return;
             }
 
-            return tcs.Task;
+            this.overlayStoryboard = sb;
+
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            animation.To = 0d;
+
+            this.onOverlayFadeOutStoryboardCompleted = (_, _) =>
+                {
+                    sb.Completed -= this.onOverlayFadeOutStoryboardCompleted;
+                    if (this.overlayStoryboard == sb)
+                    {
+                        this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
+                        this.overlayStoryboard = null;
+                    }
+
+                    tcs.TrySetResult(null!);
+                };
+
+            sb.Completed += this.onOverlayFadeOutStoryboardCompleted;
+
+            this.overlayBox.BeginStoryboard(sb);
+
+            await tcs.Task;
         }
 
         public bool IsOverlayVisible()
