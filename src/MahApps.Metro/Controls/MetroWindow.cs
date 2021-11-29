@@ -1192,14 +1192,24 @@ namespace MahApps.Metro.Controls
 
         public void ShowOverlay()
         {
-            this.overlayBox?.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-            this.overlayBox?.SetCurrentValue(OpacityProperty, this.OverlayOpacity);
+            if (this.overlayBox is null)
+            {
+                return;
+            }
+
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+            this.overlayBox.SetCurrentValue(OpacityProperty, this.OverlayOpacity);
         }
 
         public void HideOverlay()
         {
-            this.overlayBox?.SetCurrentValue(OpacityProperty, 0d);
-            this.overlayBox?.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
+            if (this.overlayBox is null)
+            {
+                return;
+            }
+
+            this.overlayBox.SetCurrentValue(OpacityProperty, 0d);
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
         }
 
         /// <summary>
@@ -1208,18 +1218,18 @@ namespace MahApps.Metro.Controls
         /// <param name="thisElement">The element which will be focused again.</param>
         public void StoreFocus(IInputElement? thisElement = null)
         {
-            this.Dispatcher.BeginInvoke(new Action(() => { this.restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); }));
+            this.BeginInvoke(() => { this.restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this)); });
         }
 
         internal void RestoreFocus()
         {
             if (this.restoreFocus != null)
             {
-                this.Dispatcher.BeginInvoke(new Action(() =>
+                this.BeginInvoke(() =>
                     {
                         Keyboard.Focus(this.restoreFocus);
                         this.restoreFocus = null;
-                    }));
+                    });
             }
         }
 
