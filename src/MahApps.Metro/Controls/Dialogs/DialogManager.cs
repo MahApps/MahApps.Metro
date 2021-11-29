@@ -457,13 +457,10 @@ namespace MahApps.Metro.Controls.Dialogs
             where TDialog : BaseMetroDialog
         {
             window.Dispatcher.VerifyAccess();
-            var t = new TaskCompletionSource<TDialog?>();
-            window.Dispatcher.Invoke((Action)(() =>
-                {
-                    var dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
-                    t.TrySetResult(dialog);
-                }));
-            return t.Task;
+
+            var dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
+
+            return Task.FromResult(dialog);
         }
 
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
