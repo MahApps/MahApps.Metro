@@ -59,7 +59,7 @@ namespace MahApps.Metro.Controls.Dialogs
             = DependencyProperty.Register(nameof(Username),
                                           typeof(string),
                                           typeof(LoginDialog),
-                                          new PropertyMetadata(default(string)));
+                                          new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public string? Username
         {
@@ -215,7 +215,7 @@ namespace MahApps.Metro.Controls.Dialogs
             = DependencyProperty.Register(nameof(RememberCheckBoxChecked),
                                           typeof(bool),
                                           typeof(LoginDialog),
-                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public bool RememberCheckBoxChecked
         {

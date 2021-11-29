@@ -55,7 +55,7 @@ namespace MahApps.Metro.Controls.Dialogs
             = DependencyProperty.Register(nameof(Input),
                                           typeof(string),
                                           typeof(InputDialog),
-                                          new PropertyMetadata(default(string)));
+                                          new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public string? Input
         {
