@@ -1241,6 +1241,17 @@ namespace MahApps.Metro.Controls
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
+            EventManager.RegisterClassHandler(typeof(MetroWindow), AccessKeyManager.AccessKeyPressedEvent, new AccessKeyPressedEventHandler(OnAccessKeyPressed));
+        }
+
+        private static void OnAccessKeyPressed(object sender, AccessKeyPressedEventArgs e)
+        {
+            if (!e.Handled && sender is MetroWindow { IsAnyDialogOpen: true })
+            {
+                e.Scope = null;
+                e.Target = null;
+                e.Handled = true;
+            }
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using ControlzEx.Theming;
 using MahApps.Metro.Automation.Peers;
+using MahApps.Metro.Controls.Helper;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -293,6 +294,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize(MetroWindow? owningWindow, MetroDialogSettings? settings)
         {
+            AccessKeyHelper.SetIsAccessKeyScope(this, true);
+
             this.OwningWindow = owningWindow;
             this.DialogSettings = this.ConfigureSettings(settings ?? owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
 
