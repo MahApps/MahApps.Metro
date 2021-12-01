@@ -1,14 +1,16 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using ControlzEx.Theming;
 using MahApps.Metro.Automation.Peers;
@@ -597,6 +599,26 @@ namespace MahApps.Metro.Controls.Dialogs
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new MetroDialogAutomationPeer(this);
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.System && e.SystemKey is Key.LeftAlt or Key.RightAlt or Key.F10)
+            {
+                if (ReferenceEquals(e.Source, this))
+                {
+                    // Try to look if there is a main menu inside the dialog.
+                    // If no main menu exists then handle the Alt-Key and F10-Key
+                    // to prevent focusing the first menu item at the main menu (window).
+                    var menu = this.FindChildren<Menu>(true).FirstOrDefault(m => m.IsMainMenu);
+                    if (menu is null)
+                    {
+                        e.Handled = true;
+                    }
+                }
+            }
+
+            base.OnKeyDown(e);
         }
     }
 }
