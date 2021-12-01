@@ -1122,7 +1122,7 @@ namespace MahApps.Metro.Controls
 
             this.overlayBox.BeginStoryboard(sb);
 
-            await tcs.Task;
+            await tcs.Task.ConfigureAwait(false);
         }
 
         /// <summary>
