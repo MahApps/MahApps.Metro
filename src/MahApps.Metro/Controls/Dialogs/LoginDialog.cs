@@ -18,7 +18,8 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_PasswordBox), Type = typeof(PasswordBox))]
     public class LoginDialog : BaseMetroDialog
     {
-        private CancellationTokenRegistration cancellationTokenRegistration;
+        private readonly TaskCompletionSource<LoginDialogData?> tcs = new();
+        private CancellationTokenRegistration? cancellationTokenRegistration;
 
         #region Controls
 
@@ -266,15 +267,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #endregion Constructor
 
-        private RoutedEventHandler? negativeHandler = null;
-        private KeyEventHandler? negativeKeyHandler = null;
-        private RoutedEventHandler? affirmativeHandler = null;
-        private KeyEventHandler? affirmativeKeyHandler = null;
-        private KeyEventHandler? escapeKeyHandler = null;
-
-        internal Task<LoginDialogData?> WaitForButtonPressAsync()
+        internal async Task<LoginDialogData?> WaitForButtonPressAsync()
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            await this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     this.Focus();
                     if (this.PART_TextBox is not null && string.IsNullOrEmpty(this.PART_TextBox.Text) && !this.ShouldHideUsername)
@@ -283,50 +278,90 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
                     else
                     {
-                        if (this.PART_PasswordBox is not null)
-                        {
-                            this.PART_PasswordBox.Focus();
-                        }
+                        this.PART_PasswordBox?.Focus();
                     }
                 }));
 
-            var tcs = new TaskCompletionSource<LoginDialogData?>();
+            this.SetUpHandlers();
 
-            void CleanUpHandlers()
+            return await this.tcs.Task.ConfigureAwait(false);
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
             {
-                if (this.PART_TextBox is not null)
-                {
-                    this.PART_TextBox.KeyDown -= this.affirmativeKeyHandler;
-                }
+                this.CleanUpHandlers();
 
-                if (this.PART_PasswordBox is not null)
-                {
-                    this.PART_PasswordBox.KeyDown -= this.affirmativeKeyHandler;
-                }
+                this.tcs.TrySetResult(null!);
 
-                this.KeyDown -= this.escapeKeyHandler;
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Enter)
+            {
+                this.CleanUpHandlers();
 
-                if (this.PART_NegativeButton is not null)
-                {
-                    this.PART_NegativeButton.Click -= this.negativeHandler;
-                }
+                this.tcs.TrySetResult(!ReferenceEquals(sender, this.PART_NegativeButton)
+                                          ? new LoginDialogData
+                                            {
+                                                Username = this.Username,
+                                                SecurePassword = this.PART_PasswordBox?.SecurePassword,
+                                                ShouldRemember = this.RememberCheckBoxChecked
+                                            }
+                                          : null!);
 
-                if (this.PART_AffirmativeButton is not null)
-                {
-                    this.PART_AffirmativeButton.Click -= this.affirmativeHandler;
-                }
+                e.Handled = true;
+            }
+        }
 
-                if (this.PART_NegativeButton is not null)
-                {
-                    this.PART_NegativeButton.KeyDown -= this.negativeKeyHandler;
-                }
+        private void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.CleanUpHandlers();
 
-                if (this.PART_AffirmativeButton is not null)
-                {
-                    this.PART_AffirmativeButton.KeyDown -= this.affirmativeKeyHandler;
-                }
+            this.tcs.TrySetResult(ReferenceEquals(sender, this.PART_AffirmativeButton)
+                                      ? new LoginDialogData
+                                        {
+                                            Username = this.Username,
+                                            SecurePassword = this.PART_PasswordBox?.SecurePassword,
+                                            ShouldRemember = this.RememberCheckBoxChecked
+                                        }
+                                      : null!);
 
-                this.cancellationTokenRegistration.Dispose();
+            e.Handled = true;
+        }
+
+        private void SetUpHandlers()
+        {
+            if (this.PART_NegativeButton is not null)
+            {
+                this.PART_NegativeButton.KeyDown += this.OnKeyDownHandler;
+            }
+
+            if (this.PART_AffirmativeButton is not null)
+            {
+                this.PART_AffirmativeButton.KeyDown += this.OnKeyDownHandler;
+            }
+
+            if (this.PART_TextBox is not null)
+            {
+                this.PART_TextBox.KeyDown += this.OnKeyDownHandler;
+            }
+
+            if (this.PART_PasswordBox is not null)
+            {
+                this.PART_PasswordBox.KeyDown += this.OnKeyDownHandler;
+            }
+
+            this.KeyDown += this.OnKeyDownHandler;
+
+            if (this.PART_NegativeButton is not null)
+            {
+                this.PART_NegativeButton.Click += this.OnButtonClick;
+            }
+
+            if (this.PART_AffirmativeButton is not null)
+            {
+                this.PART_AffirmativeButton.Click += this.OnButtonClick;
             }
 
             this.cancellationTokenRegistration = this.DialogSettings
@@ -335,100 +370,47 @@ namespace MahApps.Metro.Controls.Dialogs
                                                          {
                                                              this.BeginInvoke(() =>
                                                                  {
-                                                                     CleanUpHandlers();
-                                                                     tcs.TrySetResult(null!);
+                                                                     this.CleanUpHandlers();
+                                                                     this.tcs.TrySetResult(null!);
                                                                  });
                                                          });
+        }
 
-            this.escapeKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(null!);
-                    }
-                };
-
-            this.negativeKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(null!);
-                    }
-                };
-
-            this.affirmativeKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-                        tcs.TrySetResult(new LoginDialogData
-                                         {
-                                             Username = this.Username,
-                                             SecurePassword = this.PART_PasswordBox?.SecurePassword,
-                                             ShouldRemember = this.RememberCheckBoxChecked
-                                         });
-                    }
-                };
-
-            this.negativeHandler = (_, e) =>
-                {
-                    CleanUpHandlers();
-
-                    tcs.TrySetResult(null!);
-
-                    e.Handled = true;
-                };
-
-            this.affirmativeHandler = (_, e) =>
-                {
-                    CleanUpHandlers();
-
-                    tcs.TrySetResult(new LoginDialogData
-                                     {
-                                         Username = this.Username,
-                                         SecurePassword = this.PART_PasswordBox?.SecurePassword,
-                                         ShouldRemember = this.RememberCheckBoxChecked
-                                     });
-
-                    e.Handled = true;
-                };
-            if (this.PART_NegativeButton is not null)
-            {
-                this.PART_NegativeButton.KeyDown += this.negativeKeyHandler;
-            }
-
-            if (this.PART_AffirmativeButton is not null)
-            {
-                this.PART_AffirmativeButton.KeyDown += this.affirmativeKeyHandler;
-            }
-
+        private void CleanUpHandlers()
+        {
             if (this.PART_TextBox is not null)
             {
-                this.PART_TextBox.KeyDown += this.affirmativeKeyHandler;
+                this.PART_TextBox.KeyDown -= this.OnKeyDownHandler;
             }
 
             if (this.PART_PasswordBox is not null)
             {
-                this.PART_PasswordBox.KeyDown += this.affirmativeKeyHandler;
+                this.PART_PasswordBox.KeyDown -= this.OnKeyDownHandler;
             }
-
-            this.KeyDown += this.escapeKeyHandler;
 
             if (this.PART_NegativeButton is not null)
             {
-                this.PART_NegativeButton.Click += this.negativeHandler;
+                this.PART_NegativeButton.KeyDown -= this.OnKeyDownHandler;
             }
 
             if (this.PART_AffirmativeButton is not null)
             {
-                this.PART_AffirmativeButton.Click += this.affirmativeHandler;
+                this.PART_AffirmativeButton.KeyDown -= this.OnKeyDownHandler;
             }
 
-            return tcs.Task;
+            this.KeyDown -= this.OnKeyDownHandler;
+
+            if (this.PART_NegativeButton is not null)
+            {
+                this.PART_NegativeButton.Click -= this.OnButtonClick;
+            }
+
+            if (this.PART_AffirmativeButton is not null)
+            {
+                this.PART_AffirmativeButton.Click -= this.OnButtonClick;
+            }
+
+            this.cancellationTokenRegistration?.Dispose();
         }
     }
 }

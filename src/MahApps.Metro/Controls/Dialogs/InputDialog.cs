@@ -16,6 +16,7 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_TextBox), Type = typeof(TextBox))]
     public class InputDialog : BaseMetroDialog
     {
+        private readonly TaskCompletionSource<string?> tcs = new();
         private CancellationTokenRegistration? cancellationTokenRegistration;
 
         #region Controls
@@ -118,8 +119,6 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         #endregion Constructor
-
-        private readonly TaskCompletionSource<string?> tcs = new();
 
         internal async Task<string?> WaitForButtonPressAsync()
         {
