@@ -53,6 +53,7 @@
             <Button x:Name="CloseButton"
                     MinWidth="90"
                     Margin="2"
+                    caliburn:Message.Attach="[Event Click] = [Action Close]"
                     Content="Close" />
         </StackPanel>
 

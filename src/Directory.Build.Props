@@ -6,7 +6,7 @@
 
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net452;net46;net47;netcoreapp3.1;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net462;net47;netcoreapp3.1;net5.0-windows</TargetFrameworks>
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects Condition=" $(TargetFramework.StartsWith('net4')) ">true</AutoGenerateBindingRedirects>
@@ -18,10 +18,6 @@
         <UseWPF>true</UseWPF>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <Nullable>enable</Nullable>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <DefineConstants Condition="'$(TargetFramework)' == 'net5.0-windows'">$(DefineConstants);NET5_0_OR_GREATER</DefineConstants>
     </PropertyGroup>
 
     <!-- Add the references for all projects and targets -->

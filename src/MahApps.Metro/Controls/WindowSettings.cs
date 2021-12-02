@@ -51,14 +51,22 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (this["Placement"] != null)
+                try
                 {
-                    return ((WINDOWPLACEMENT?)this["Placement"]);
+                    return this[nameof(Placement)] as WINDOWPLACEMENT;
                 }
+                catch (ConfigurationErrorsException? ex)
+                {
+                    string? filename = null;
+                    while (ex != null && (filename = ex.Filename) == null)
+                    {
+                        ex = ex.InnerException as ConfigurationErrorsException;
+                    }
 
-                return null;
+                    throw new MahAppsException($"The settings file '{filename ?? "<unknown>"}' seems to be corrupted", ex);
+                }
             }
-            set => this["Placement"] = value;
+            set => this[nameof(Placement)] = value;
         }
 #pragma warning restore 618
 
@@ -72,10 +80,7 @@ namespace MahApps.Metro.Controls
             {
                 try
                 {
-                    if (this["UpgradeSettings"] != null)
-                    {
-                        return (bool)this["UpgradeSettings"];
-                    }
+                    return (this[nameof(UpgradeSettings)] as bool?).GetValueOrDefault(true);
                 }
                 catch (ConfigurationErrorsException? ex)
                 {
@@ -87,10 +92,8 @@ namespace MahApps.Metro.Controls
 
                     throw new MahAppsException($"The settings file '{filename ?? "<unknown>"}' seems to be corrupted", ex);
                 }
-
-                return true;
             }
-            set => this["UpgradeSettings"] = value;
+            set => this[nameof(UpgradeSettings)] = value;
         }
     }
 }
