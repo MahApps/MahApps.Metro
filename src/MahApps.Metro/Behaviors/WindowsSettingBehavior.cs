@@ -129,7 +129,7 @@ namespace MahApps.Metro.Behaviors
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{this}: The settings could not be reloaded! {e}");
+                Trace.TraceError($"{this}: The settings for {window} could not be reloaded! {e}");
                 return;
             }
 
@@ -142,22 +142,11 @@ namespace MahApps.Metro.Behaviors
             try
             {
                 var wp = settings.Placement;
-                wp.flags = 0;
-                wp.showCmd = (wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd);
-
-                // this fixes wrong monitor positioning together with different Dpi usage for SetWindowPlacement
-                window.Left = wp.normalPosition.Left;
-                window.Top = wp.normalPosition.Top;
-
-                var windowHandle = new WindowInteropHelper(window).Handle;
-                if (!NativeMethods.SetWindowPlacement(windowHandle, wp))
-                {
-                    Trace.TraceWarning($"{this}: The WINDOWPLACEMENT {wp} could not be set by SetWindowPlacement.");
-                }
+                WinApiHelper.SetWindowPlacement(window, wp);
             }
             catch (Exception ex)
             {
-                throw new MahAppsException("Failed to set the window state from the settings file", ex);
+                throw new MahAppsException($"Failed to set the window state for {window} from the settings.", ex);
             }
         }
 
@@ -175,7 +164,7 @@ namespace MahApps.Metro.Behaviors
                 return;
             }
 
-            var windowHandle = new WindowInteropHelper(window).Handle;
+            var windowHandle = new WindowInteropHelper(window).EnsureHandle();
             var wp = NativeMethods.GetWindowPlacement(windowHandle);
 
             // check for saveable values

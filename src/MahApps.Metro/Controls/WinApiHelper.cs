@@ -67,6 +67,52 @@ namespace MahApps.Metro.Controls
             return default;
         }
 
+        /// <summary>
+        /// Sets a window placement to a window.
+        /// </summary>
+        /// <param name="window">The window which should get the window placement.</param>
+        /// <param name="wp">The window placement for the window.</param>
+        public static void SetWindowPlacement(Window? window, WINDOWPLACEMENT? wp)
+        {
+            if (window is null)
+            {
+                return;
+            }
+
+            var x = CalcIntValue(wp?.normalPosition.Left, window.Left);
+            var y = CalcIntValue(wp?.normalPosition.Top, window.Top);
+            var width = CalcIntValue(wp?.normalPosition.Width, window.ActualWidth);
+            var height = CalcIntValue(wp?.normalPosition.Height, window.ActualHeight);
+
+            var placement = new WINDOWPLACEMENT
+                            {
+                                showCmd = (wp is null || wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd),
+                                normalPosition = new RECT(x, y, x + width, y + height)
+                            };
+
+            var hWnd = new WindowInteropHelper(window).EnsureHandle();
+            if (NativeMethods.SetWindowPlacement(hWnd, placement) == false)
+            {
+                Trace.TraceWarning($"{window}: The window placement {wp} could not be (SetWindowPlacement)!");
+            }
+        }
+
+        private static int CalcIntValue(double? value, double fallback)
+        {
+            if (value is null)
+            {
+                return (int)fallback;
+            }
+
+            var d = (double)value;
+            if (!double.IsNaN(d) && d > int.MinValue && d < int.MaxValue)
+            {
+                return (int)d;
+            }
+
+            return (int)fallback;
+        }
+
         /// <summary> Gets the text associated with the given window handle. </summary>
         /// <param name="window"> The window to act on. </param>
         /// <returns> The window text. </returns>
