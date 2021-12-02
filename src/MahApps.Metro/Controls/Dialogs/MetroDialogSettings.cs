@@ -120,20 +120,11 @@ namespace MahApps.Metro.Controls.Dialogs
         public double DialogButtonFontSize { get; set; } = double.NaN;
 
         /// <summary>
-        /// Gets or sets the dialog result when the user cancelled the dialog with 'ESC' key
+        /// Gets or sets the message dialog result when the user cancelled the dialog with 'ESC' key
         /// </summary>
-        /// <remarks>If the value is <see langword="null"/> the default behavior is determined 
-        /// by the <see cref="MessageDialogStyle"/>.
-        /// <table>
-        /// <tr><td><see cref="MessageDialogStyle"/></td><td><see cref="MessageDialogResult"/></td></tr>
-        /// <tr><td><see cref="MessageDialogStyle.Affirmative"/></td><td><see cref="MessageDialogResult.Affirmative"/></td></tr>
-        /// <tr><td>
-        /// <list type="bullet">
-        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegative"/></item>
-        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary"/></item>
-        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary"/></item>
-        /// </list></td>
-        /// <td><see cref="MessageDialogResult.Negative"/></td></tr></table></remarks>
+        /// <remarks>
+        /// If the value is <see langword="null"/> the default behavior is determined by the <see cref="MessageDialogStyle"/>.
+        /// </remarks>
         public MessageDialogResult? DialogResultOnCancel { get; set; } = null;
 
         /// <summary>

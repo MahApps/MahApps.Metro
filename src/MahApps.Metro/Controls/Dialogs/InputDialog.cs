@@ -166,11 +166,13 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (this.PART_NegativeButton is not null)
             {
+                this.PART_NegativeButton.Click += this.OnButtonClick;
                 this.PART_NegativeButton.KeyDown += this.OnKeyDownHandler;
             }
 
             if (this.PART_AffirmativeButton is not null)
             {
+                this.PART_AffirmativeButton.Click += this.OnButtonClick;
                 this.PART_AffirmativeButton.KeyDown += this.OnKeyDownHandler;
             }
 
@@ -180,16 +182,6 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             this.KeyDown += this.OnKeyDownHandler;
-
-            if (this.PART_NegativeButton is not null)
-            {
-                this.PART_NegativeButton.Click += this.OnButtonClick;
-            }
-
-            if (this.PART_AffirmativeButton is not null)
-            {
-                this.PART_AffirmativeButton.Click += this.OnButtonClick;
-            }
 
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
@@ -205,32 +197,24 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void CleanUpHandlers()
         {
-            if (this.PART_TextBox is not null)
-            {
-                this.PART_TextBox.KeyDown -= this.OnKeyDownHandler;
-            }
-
             if (this.PART_NegativeButton is not null)
             {
+                this.PART_NegativeButton.Click -= this.OnButtonClick;
                 this.PART_NegativeButton.KeyDown -= this.OnKeyDownHandler;
             }
 
             if (this.PART_AffirmativeButton is not null)
             {
+                this.PART_AffirmativeButton.Click -= this.OnButtonClick;
                 this.PART_AffirmativeButton.KeyDown -= this.OnKeyDownHandler;
             }
 
+            if (this.PART_TextBox is not null)
+            {
+                this.PART_TextBox.KeyDown -= this.OnKeyDownHandler;
+            }
+
             this.KeyDown -= this.OnKeyDownHandler;
-
-            if (this.PART_NegativeButton is not null)
-            {
-                this.PART_NegativeButton.Click -= this.OnButtonClick;
-            }
-
-            if (this.PART_AffirmativeButton is not null)
-            {
-                this.PART_AffirmativeButton.Click -= this.OnButtonClick;
-            }
 
             this.cancellationTokenRegistration?.Dispose();
         }
