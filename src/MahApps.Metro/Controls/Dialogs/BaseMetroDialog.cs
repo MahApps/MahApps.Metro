@@ -452,11 +452,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded)
             {
-#if NET452
-                return Task.FromResult<object>(default!);
-#else
                 return Task.CompletedTask;
-#endif
             }
 
             var tcs = new TaskCompletionSource<object>();

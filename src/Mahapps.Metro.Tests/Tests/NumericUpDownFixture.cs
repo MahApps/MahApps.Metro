@@ -73,11 +73,7 @@ namespace MahApps.Metro.Tests.Tests
             this.NumDown = null;
             this.Window = null;
 
-#if NET452
-            return Task.Delay(0);
-#else
             return Task.CompletedTask;
-#endif
         }
     }
 }

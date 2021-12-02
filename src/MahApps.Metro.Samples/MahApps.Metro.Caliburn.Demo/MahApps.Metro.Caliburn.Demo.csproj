@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net452;net46;net47</TargetFrameworks>
+        <TargetFrameworks>net47;net462</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' ">true</DisableFody>
@@ -33,14 +33,6 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Include="app.manifest" />
-        <None Remove="App.config" />
-        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).exe.config</TargetPath>
-        </AppConfigWithTargetPath>
     </ItemGroup>
 
     <ItemGroup>
