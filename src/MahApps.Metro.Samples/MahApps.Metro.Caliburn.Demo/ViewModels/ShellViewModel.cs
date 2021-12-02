@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel.Composition;
+using System.Threading;
+using System.Threading.Tasks;
 using Caliburn.Metro.Demo.ViewModels.Flyouts;
 using Caliburn.Micro;
 
@@ -15,12 +17,12 @@ namespace Caliburn.Metro.Demo.ViewModels
 
         public ShellViewModel()
         {
-            FlyoutViewModels = new BindableCollection<FlyoutBaseViewModel>();
+            this.FlyoutViewModels = new BindableCollection<FlyoutBaseViewModel>();
         }
 
-        public void Close()
+        public async Task Close()
         {
-            this.TryClose();
+            await this.TryCloseAsync();
         }
 
         public void ToggleFlyout(int index)
@@ -29,9 +31,8 @@ namespace Caliburn.Metro.Demo.ViewModels
             flyout.IsOpen = !flyout.IsOpen;
         }
 
-        protected override void OnInitialize()
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            base.OnInitialize();
             this.DisplayName = "Caliburn Metro Demo";
             this.FlyoutViewModels.Add(new Flyout1ViewModel());
             this.FlyoutViewModels.Add(new Flyout2ViewModel());
@@ -40,6 +41,8 @@ namespace Caliburn.Metro.Demo.ViewModels
             this.FlyoutViewModels.Add(new FlyoutLeftViewModel());
             this.FlyoutViewModels.Add(new FlyoutTopViewModel());
             this.FlyoutViewModels.Add(new FlyoutBottomViewModel());
+
+            return Task.FromResult(true);
         }
     }
 }

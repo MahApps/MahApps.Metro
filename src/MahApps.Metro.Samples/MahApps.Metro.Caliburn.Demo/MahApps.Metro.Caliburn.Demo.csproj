@@ -2,7 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net47;net462</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' ">true</DisableFody>
@@ -27,7 +26,7 @@
 
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
-        <PackageReference Include="Caliburn.Micro" Version="3.*" />
+        <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
         <PackageReference Include="Fody" Version="6.*">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

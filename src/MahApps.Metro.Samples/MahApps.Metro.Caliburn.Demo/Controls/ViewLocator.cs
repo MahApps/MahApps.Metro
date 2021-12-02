@@ -34,10 +34,10 @@ namespace Caliburn.Metro.Demo.Controls
 
             if (viewType.IsInterface || viewType.IsAbstract || !typeof(UIElement).IsAssignableFrom(viewType))
             {
-                return new TextBlock { Text = string.Format("Cannot create {0}.", viewType.FullName) };
+                return new TextBlock { Text = $"Cannot create {viewType.FullName}." };
             }
 
-            var newInstance = (UIElement)Activator.CreateInstance(viewType);
+            var newInstance = (UIElement)Activator.CreateInstance(viewType)!;
 
             Micro.ViewLocator.InitializeComponent(newInstance);
 

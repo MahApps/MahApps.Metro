@@ -20,7 +20,7 @@ namespace Caliburn.Metro.Demo.Services
             this.compositionContainer = compositionContainer;
         }
 
-        public T GetInstance<T>()
+        public T? GetInstance<T>()
             where T : class
         {
             try

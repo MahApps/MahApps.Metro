@@ -20,7 +20,7 @@ namespace Caliburn.Metro.Demo
 
         public AppBootstrapper()
         {
-            Initialize();
+            this.Initialize();
         }
 
         protected override void BuildUp(object instance)
@@ -49,34 +49,33 @@ namespace Caliburn.Metro.Demo
             this.container.Compose(batch);
         }
 
-        protected override IEnumerable<object>? GetAllInstances(Type serviceType)
+        protected override IEnumerable<object> GetAllInstances(Type serviceType)
         {
-            return this.container?.GetExportedValues<object>(AttributedModelServices.GetContractName(serviceType));
+            return this.container?.GetExportedValues<object>(AttributedModelServices.GetContractName(serviceType)) ?? Enumerable.Empty<object>();
         }
 
         protected override object GetInstance(Type serviceType, string key)
         {
             var contract = string.IsNullOrEmpty(key) ? AttributedModelServices.GetContractName(serviceType) : key;
-            var exports = this.container?.GetExportedValues<object>(contract);
+            var export = this.container?.GetExportedValues<object>(contract).FirstOrDefault();
 
-            if (exports?.Any() == true)
+            if (export is not null)
             {
-                return exports.First();
+                return export;
             }
 
-            throw new Exception(string.Format("Could not locate any instances of contract {0}.", contract));
+            throw new Exception($"Could not locate any instances of contract {contract}.");
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            var startupTasks =
-                GetAllInstances(typeof(StartupTask))
-                    .Cast<ExportedDelegate>()
-                    .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask)));
+            var startupTasks = this.GetAllInstances(typeof(StartupTask))
+                                   .OfType<ExportedDelegate>()
+                                   .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask))!);
 
             startupTasks.Apply(s => s());
 
-            DisplayRootViewFor<IShell>();
+            this.DisplayRootViewFor<IShell>();
         }
     }
 }
