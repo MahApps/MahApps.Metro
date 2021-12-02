@@ -20,10 +20,6 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <DefineConstants Condition="'$(TargetFramework)' == 'net5.0-windows'">$(DefineConstants);NET5_0_OR_GREATER</DefineConstants>
-    </PropertyGroup>
-
     <!-- Add the references for all projects and targets -->
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2021.*" PrivateAssets="All" IncludeAssets="build;compile" />
