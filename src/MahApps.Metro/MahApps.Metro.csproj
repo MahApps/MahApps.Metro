@@ -10,18 +10,31 @@
         <DefineConstants>$(DefineConstants);INTERNAL_NULLABLE_ATTRIBUTES</DefineConstants>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Configuration" />
-    </ItemGroup>
+    <!-- SourceLink -->
+    <PropertyGroup>
+        <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+        <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+        <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="[5.*, 6)" />
         <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="all" IncludeAssets="build" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
     </ItemGroup>
 
     <!-- Items include -->
