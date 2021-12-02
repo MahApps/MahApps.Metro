@@ -22,7 +22,8 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_MessageScrollViewer), Type = typeof(ScrollViewer))]
     public class MessageDialog : BaseMetroDialog
     {
-        private CancellationTokenRegistration cancellationTokenRegistration;
+        private readonly TaskCompletionSource<MessageDialogResult> tcs = new();
+        private CancellationTokenRegistration? cancellationTokenRegistration;
 
         #region Controls
 
@@ -191,20 +192,6 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #endregion Constructor
 
-        #region Event Handler
-
-        private RoutedEventHandler? negativeHandler = null;
-        private KeyEventHandler? negativeKeyHandler = null;
-        private RoutedEventHandler? affirmativeHandler = null;
-        private KeyEventHandler? affirmativeKeyHandler = null;
-        private RoutedEventHandler? firstAuxHandler = null;
-        private KeyEventHandler? firstAuxKeyHandler = null;
-        private RoutedEventHandler? secondAuxHandler = null;
-        private KeyEventHandler? secondAuxKeyHandler = null;
-        private KeyEventHandler? escapeKeyHandler = null;
-
-        #endregion Event Handler
-
         private void OnButtonStyleChanged(MessageDialogStyle oldStyle, MessageDialogStyle newStyle)
         {
             this.ApplyDefaultButtonFocus();
@@ -225,9 +212,9 @@ namespace MahApps.Metro.Controls.Dialogs
             this.SetCurrentValue(DefaultButtonFocusProperty, defaultButtonFocus);
         }
 
-        internal Task<MessageDialogResult> WaitForButtonPressAsync()
+        internal async Task<MessageDialogResult> WaitForButtonPressAsync()
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            await this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     this.Focus();
 
@@ -255,38 +242,105 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
                 }));
 
-            var tcs = new TaskCompletionSource<MessageDialogResult>();
+            this.SetUpHandlers();
 
-            void CleanUpHandlers()
+            return await this.tcs.Task.ConfigureAwait(false);
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
             {
-                if (this.PART_NegativeButton is not null)
-                {
-                    this.PART_NegativeButton.Click -= this.negativeHandler;
-                    this.PART_NegativeButton.KeyDown -= this.negativeKeyHandler;
-                }
+                this.CleanUpHandlers();
 
-                if (this.PART_AffirmativeButton is not null)
-                {
-                    this.PART_AffirmativeButton.Click -= this.affirmativeHandler;
-                    this.PART_AffirmativeButton.KeyDown -= this.affirmativeKeyHandler;
-                }
+                this.tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? MessageDialogResult.Canceled);
 
-                if (this.PART_FirstAuxiliaryButton is not null)
-                {
-                    this.PART_FirstAuxiliaryButton.Click -= this.firstAuxHandler;
-                    this.PART_FirstAuxiliaryButton.KeyDown -= this.firstAuxKeyHandler;
-                }
-
-                if (this.PART_SecondAuxiliaryButton is not null)
-                {
-                    this.PART_SecondAuxiliaryButton.Click -= this.secondAuxHandler;
-                    this.PART_SecondAuxiliaryButton.KeyDown -= this.secondAuxKeyHandler;
-                }
-
-                this.KeyDown -= this.escapeKeyHandler;
-
-                this.cancellationTokenRegistration.Dispose();
+                e.Handled = true;
             }
+            else if (e.Key == Key.Enter)
+            {
+                this.CleanUpHandlers();
+
+                var result = this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative;
+
+                if (ReferenceEquals(sender, this.PART_NegativeButton))
+                {
+                    result = MessageDialogResult.Negative;
+                }
+                else if (ReferenceEquals(sender, this.PART_AffirmativeButton))
+                {
+                    result = MessageDialogResult.Affirmative;
+                }
+                else if (ReferenceEquals(sender, this.PART_FirstAuxiliaryButton))
+                {
+                    result = MessageDialogResult.FirstAuxiliary;
+                }
+                else if (ReferenceEquals(sender, this.PART_SecondAuxiliaryButton))
+                {
+                    result = MessageDialogResult.SecondAuxiliary;
+                }
+
+                this.tcs.TrySetResult(result);
+
+                e.Handled = true;
+            }
+        }
+
+        private void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.CleanUpHandlers();
+
+            var result = this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative;
+
+            if (ReferenceEquals(sender, this.PART_NegativeButton))
+            {
+                result = MessageDialogResult.Negative;
+            }
+            else if (ReferenceEquals(sender, this.PART_AffirmativeButton))
+            {
+                result = MessageDialogResult.Affirmative;
+            }
+            else if (ReferenceEquals(sender, this.PART_FirstAuxiliaryButton))
+            {
+                result = MessageDialogResult.FirstAuxiliary;
+            }
+            else if (ReferenceEquals(sender, this.PART_SecondAuxiliaryButton))
+            {
+                result = MessageDialogResult.SecondAuxiliary;
+            }
+
+            this.tcs.TrySetResult(result);
+
+            e.Handled = true;
+        }
+
+        private void SetUpHandlers()
+        {
+            if (this.PART_AffirmativeButton is not null)
+            {
+                this.PART_AffirmativeButton.Click += this.OnButtonClick;
+                this.PART_AffirmativeButton.KeyDown += this.OnKeyDownHandler;
+            }
+
+            if (this.PART_NegativeButton is not null)
+            {
+                this.PART_NegativeButton.Click += this.OnButtonClick;
+                this.PART_NegativeButton.KeyDown += this.OnKeyDownHandler;
+            }
+
+            if (this.PART_FirstAuxiliaryButton is not null)
+            {
+                this.PART_FirstAuxiliaryButton.Click += this.OnButtonClick;
+                this.PART_FirstAuxiliaryButton.KeyDown += this.OnKeyDownHandler;
+            }
+
+            if (this.PART_SecondAuxiliaryButton is not null)
+            {
+                this.PART_SecondAuxiliaryButton.Click += this.OnButtonClick;
+                this.PART_SecondAuxiliaryButton.KeyDown += this.OnKeyDownHandler;
+            }
+
+            this.KeyDown += this.OnKeyDownHandler;
 
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
@@ -294,130 +348,41 @@ namespace MahApps.Metro.Controls.Dialogs
                                                          {
                                                              this.BeginInvoke(() =>
                                                                  {
-                                                                     CleanUpHandlers();
-                                                                     tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                                                                     this.CleanUpHandlers();
+                                                                     this.tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? MessageDialogResult.Canceled);
                                                                  });
                                                          });
+        }
 
-            this.negativeKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.Negative);
-                    }
-                };
-
-            this.affirmativeKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.Affirmative);
-                    }
-                };
-
-            this.firstAuxKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
-                    }
-                };
-
-            this.secondAuxKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
-                    }
-                };
-
-            this.negativeHandler = (_, e) =>
-                {
-                    CleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.Negative);
-
-                    e.Handled = true;
-                };
-
-            this.affirmativeHandler = (_, e) =>
-                {
-                    CleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.Affirmative);
-
-                    e.Handled = true;
-                };
-
-            this.firstAuxHandler = (_, e) =>
-                {
-                    CleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
-
-                    e.Handled = true;
-                };
-
-            this.secondAuxHandler = (_, e) =>
-                {
-                    CleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
-
-                    e.Handled = true;
-                };
-
-            this.escapeKeyHandler = (_, e) =>
-                {
-                    if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? (this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative));
-                    }
-                    else if (e.Key == Key.Enter)
-                    {
-                        CleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.Affirmative);
-                    }
-                };
+        private void CleanUpHandlers()
+        {
+            if (this.PART_NegativeButton is not null)
+            {
+                this.PART_NegativeButton.Click -= this.OnButtonClick;
+                this.PART_NegativeButton.KeyDown -= this.OnKeyDownHandler;
+            }
 
             if (this.PART_AffirmativeButton is not null)
             {
-                this.PART_AffirmativeButton.KeyDown += this.affirmativeKeyHandler;
-                this.PART_AffirmativeButton.Click += this.affirmativeHandler;
-            }
-
-            if (this.PART_NegativeButton is not null)
-            {
-                this.PART_NegativeButton.KeyDown += this.negativeKeyHandler;
-                this.PART_NegativeButton.Click += this.negativeHandler;
+                this.PART_AffirmativeButton.Click -= this.OnButtonClick;
+                this.PART_AffirmativeButton.KeyDown -= this.OnKeyDownHandler;
             }
 
             if (this.PART_FirstAuxiliaryButton is not null)
             {
-                this.PART_FirstAuxiliaryButton.KeyDown += this.firstAuxKeyHandler;
-                this.PART_FirstAuxiliaryButton.Click += this.firstAuxHandler;
+                this.PART_FirstAuxiliaryButton.Click -= this.OnButtonClick;
+                this.PART_FirstAuxiliaryButton.KeyDown -= this.OnKeyDownHandler;
             }
 
             if (this.PART_SecondAuxiliaryButton is not null)
             {
-                this.PART_SecondAuxiliaryButton.KeyDown += this.secondAuxKeyHandler;
-                this.PART_SecondAuxiliaryButton.Click += this.secondAuxHandler;
+                this.PART_SecondAuxiliaryButton.Click -= this.OnButtonClick;
+                this.PART_SecondAuxiliaryButton.KeyDown -= this.OnKeyDownHandler;
             }
 
-            this.KeyDown += this.escapeKeyHandler;
+            this.KeyDown -= this.OnKeyDownHandler;
 
-            return tcs.Task;
+            this.cancellationTokenRegistration?.Dispose();
         }
 
         private void OnKeyCopyExecuted(object sender, ExecutedRoutedEventArgs e)

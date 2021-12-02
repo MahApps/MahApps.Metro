@@ -101,6 +101,10 @@
             </ContentPresenter>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="IsCancelable" Value="True">
+                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible" />
+            </Trigger>
+
             <Trigger Property="ColorScheme" Value="Accented">
                 <Setter TargetName="PART_ProgressBar" Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>

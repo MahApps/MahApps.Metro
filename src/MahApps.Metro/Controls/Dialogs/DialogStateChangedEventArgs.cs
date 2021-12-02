@@ -8,8 +8,14 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public class DialogStateChangedEventArgs : EventArgs
     {
-        internal DialogStateChangedEventArgs()
+        internal DialogStateChangedEventArgs(BaseMetroDialog dialog)
         {
+            this.Dialog = dialog;
         }
+
+        /// <summary>
+        /// The associated dialog.
+        /// </summary>
+        public BaseMetroDialog Dialog { get; }
     }
 }

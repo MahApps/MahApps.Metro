@@ -90,7 +90,7 @@
                     <PasswordBox x:Name="PART_PasswordBox"
                                  Grid.Row="2"
                                  Margin="0 5 0 0"
-                                 behaviors:PasswordBoxBindingBehavior.Password="{TemplateBinding Password}"
+                                 behaviors:PasswordBoxBindingBehavior.Password="{Binding Password, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
                                  mah:TextBoxHelper.SelectAllOnFocus="True"
                                  mah:TextBoxHelper.Watermark="{TemplateBinding PasswordWatermark}"
                                  FontSize="{TemplateBinding DialogMessageFontSize}"
@@ -101,7 +101,7 @@
                               Margin="0 5 0 0"
                               Content="{TemplateBinding RememberCheckBoxText}"
                               FontSize="{TemplateBinding DialogMessageFontSize}"
-                              IsChecked="{TemplateBinding RememberCheckBoxChecked}"
+                              IsChecked="{Binding RememberCheckBoxChecked, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
                               Visibility="{TemplateBinding RememberCheckBoxVisibility}" />
 
                     <StackPanel Grid.Row="5"

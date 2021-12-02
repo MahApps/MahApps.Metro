@@ -26,6 +26,9 @@ namespace MetroDemo
             this.DataContext = this.viewModel;
 
             this.InitializeComponent();
+
+            DialogManager.DialogOpened += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} - '{args.Dialog.Title}' opened.");
+            DialogManager.DialogClosed += (_, args) => Debug.WriteLine($"Dialog {args.Dialog} - '{args.Dialog.Title}' closed.");
         }
 
         #region DependencyProperties
@@ -223,16 +226,12 @@ namespace MetroDemo
                                DialogButtonFontSize = 20D
                            };
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!",
-                                                                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!",
+                                                                     "Welcome to the world of metro!",
+                                                                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                                                                     settings);
 
-            if (result != MessageDialogResult.FirstAuxiliary)
-            {
-                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative
-                                                ? settings.AffirmativeButtonText
-                                                : settings.NegativeButtonText +
-                                                  Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
-            }
+            await this.ShowMessageAsync("Result", $"You said ({result}): {(result == MessageDialogResult.Affirmative ? settings.AffirmativeButtonText : result == MessageDialogResult.FirstAuxiliary ? settings.FirstAuxiliaryButtonText : settings.NegativeButtonText)}");
         }
 
         private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
@@ -245,16 +244,12 @@ namespace MetroDemo
                                MaximumBodyHeight = 100
                            };
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"),
-                                                                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!",
+                                                                     "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"),
+                                                                     MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+                                                                     settings);
 
-            if (result != MessageDialogResult.FirstAuxiliary)
-            {
-                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative
-                                                ? settings.AffirmativeButtonText
-                                                : settings.NegativeButtonText +
-                                                  Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
-            }
+            await this.ShowMessageAsync("Result", $"You said ({result}): {(result == MessageDialogResult.Affirmative ? settings.AffirmativeButtonText : result == MessageDialogResult.FirstAuxiliary ? settings.FirstAuxiliaryButtonText : settings.NegativeButtonText)}");
         }
 
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
@@ -278,22 +273,6 @@ namespace MetroDemo
 
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
-            EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogOpened = null;
-            dialogManagerOnDialogOpened = (o, args) =>
-                {
-                    DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-                    Console.WriteLine("Custom Dialog opened!");
-                };
-            DialogManager.DialogOpened += dialogManagerOnDialogOpened;
-
-            EventHandler<DialogStateChangedEventArgs>? dialogManagerOnDialogClosed = null;
-            dialogManagerOnDialogClosed = (o, args) =>
-                {
-                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-                    Console.WriteLine("Custom Dialog closed!");
-                };
-            DialogManager.DialogClosed += dialogManagerOnDialogClosed;
-
             var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomCloseDialogTest"], Title = "Custom Dialog which is awaitable" };
 
             await this.ShowMetroDialogAsync(dialog);
@@ -317,7 +296,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
+                await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -330,7 +309,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Password: {result.Password}");
+                await this.ShowMessageAsync("Authentication Information", $"Password: {result.Password}");
             }
         }
 
@@ -343,7 +322,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}\nShouldRemember: {result.ShouldRemember}");
+                await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}\nShouldRemember: {result.ShouldRemember}");
             }
         }
 
@@ -431,7 +410,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
+                await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -551,7 +530,8 @@ namespace MetroDemo
 
             var result = await this.ShowMessageAsync("Quit application?",
                                                      "Sure you want to quit application?",
-                                                     MessageDialogStyle.AffirmativeAndNegative, mySettings);
+                                                     MessageDialogStyle.AffirmativeAndNegative,
+                                                     mySettings);
 
             this.shutdown = result == MessageDialogResult.Affirmative;
 

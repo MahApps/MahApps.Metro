@@ -19,7 +19,7 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         #region Controls
 
-        public Button? PART_NegativeButton;
+        internal Button? PART_NegativeButton;
         private MetroProgressBar? PART_ProgressBar;
 
         public override void OnApplyTemplate()
@@ -52,13 +52,7 @@ namespace MahApps.Metro.Controls.Dialogs
             = DependencyProperty.Register(nameof(IsCancelable),
                                           typeof(bool),
                                           typeof(ProgressDialog),
-                                          new PropertyMetadata(BooleanBoxes.FalseBox, (s, e) =>
-                                              {
-                                                  if (s is ProgressDialog progressDialog && progressDialog.PART_NegativeButton is not null)
-                                                  {
-                                                      progressDialog.PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
-                                                  }
-                                              }));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public bool IsCancelable
         {
