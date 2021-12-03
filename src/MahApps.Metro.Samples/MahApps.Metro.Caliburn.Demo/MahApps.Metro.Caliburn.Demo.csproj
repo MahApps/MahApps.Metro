@@ -13,25 +13,29 @@
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <!-- <ApplicationManifest>app.manifest</ApplicationManifest> -->
+        <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Reference Include="System.ComponentModel.Composition" />
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+        <PackageReference Include="Fody" Version="6.5.*">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="5.6.*" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
         <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
-        <PackageReference Include="Fody" Version="6.*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

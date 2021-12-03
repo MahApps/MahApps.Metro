@@ -36,6 +36,7 @@ public class BuildData
 {
     public string Configuration { get; }
     public Verbosity Verbosity { get; }
+    public DotNetCoreVerbosity DotNetCoreVerbosity { get; }
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
     public bool IsDevelopBranch { get; set; }
@@ -47,11 +48,13 @@ public class BuildData
     public BuildData(
         string configuration,
         Verbosity verbosity,
+        DotNetCoreVerbosity dotNetCoreVerbosity,
         DirectoryPath latestMSBuildInstallationPath
     )
     {
         Configuration = configuration;
         Verbosity = verbosity;
+        DotNetCoreVerbosity = dotNetCoreVerbosity;
 
         MSBuildPath = latestMSBuildInstallationPath.Combine("./MSBuild/Current/Bin");
         MSBuildExe = MSBuildPath.CombineWithFilePath("./MSBuild.exe");
@@ -86,6 +89,7 @@ Setup<BuildData>(ctx =>
     var buildData = new BuildData(
         configuration: Argument("configuration", "Release"),
         verbosity: Argument("verbosity", Verbosity.Minimal),
+        dotNetCoreVerbosity: Argument("dotnetnetcoreverbosity", DotNetCoreVerbosity.Minimal),
         latestMSBuildInstallationPath: VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true })
     )
     {
@@ -141,28 +145,28 @@ Task("Clean")
 Task("Restore")
     .Does<BuildData>(data =>
 {
-    NuGetRestore(solution, new NuGetRestoreSettings { MSBuildPath = data.MSBuildPath.ToString() });
+    DotNetCoreRestore(solution);
 });
 
 Task("Build")
     .Does<BuildData>(data =>
 {
-    var msBuildSettings = new MSBuildSettings {
-        Verbosity = data.Verbosity
-        , ToolPath = data.MSBuildExe
+    var buildSettings = new DotNetCoreBuildSettings {
+        Verbosity = data.DotNetCoreVerbosity
         , Configuration = data.Configuration
         , ArgumentCustomization = args => args.Append("/m").Append("/nr:false") // The /nr switch tells msbuild to quite once it�s done
-        , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = data.IsLocalBuild }
-    };
-    MSBuild(solution, msBuildSettings
+        , MSBuildSettings = new DotNetCoreMSBuildSettings()
             .SetMaxCpuCount(0)
+            .SetConfiguration(data.Configuration)
             .WithProperty("Description", "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.")
             .WithProperty("Version", data.IsReleaseBranch ? data.GitVersion.MajorMinorPatch : data.GitVersion.NuGetVersion)
             .WithProperty("AssemblyVersion", data.GitVersion.AssemblySemVer)
             .WithProperty("FileVersion", data.GitVersion.AssemblySemFileVer)
             .WithProperty("InformationalVersion", data.GitVersion.InformationalVersion)
             .WithProperty("ContinuousIntegrationBuild", data.IsReleaseBranch ? "true" : "false")
-            );
+    };
+
+    DotNetCoreBuild(solution, buildSettings);
 });
 
 Task("Pack")
@@ -171,26 +175,27 @@ Task("Pack")
 {
     EnsureDirectoryExists(Directory(publishDir));
 
-    var msBuildSettings = new MSBuildSettings {
-        Verbosity = data.Verbosity
-        , ToolPath = data.MSBuildExe
+    var buildSettings = new DotNetCorePackSettings {
+        Verbosity = data.DotNetCoreVerbosity
         , Configuration = data.Configuration
+        , NoRestore = true
+        , MSBuildSettings = new DotNetCoreMSBuildSettings()
+            .SetMaxCpuCount(0)
+            .SetConfiguration(data.Configuration)
+            .WithProperty("NoBuild", "true")
+            .WithProperty("IncludeBuildOutput", "true")
+            .WithProperty("PackageOutputPath", MakeAbsolute(Directory(publishDir)).FullPath)
+            .WithProperty("RepositoryBranch", data.GitVersion.BranchName)
+            .WithProperty("RepositoryCommit", data.GitVersion.Sha)
+            .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
+            .WithProperty("Version", data.IsReleaseBranch ? data.GitVersion.MajorMinorPatch : data.GitVersion.NuGetVersion)
+            .WithProperty("AssemblyVersion", data.GitVersion.AssemblySemVer)
+            .WithProperty("FileVersion", data.GitVersion.AssemblySemFileVer)
+            .WithProperty("InformationalVersion", data.GitVersion.InformationalVersion)
     };
 
     var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
-    MSBuild(project, msBuildSettings
-      .WithTarget("pack")
-      .WithProperty("NoBuild", "true")
-      .WithProperty("IncludeBuildOutput", "true")
-      .WithProperty("PackageOutputPath", publishDir)
-      .WithProperty("RepositoryBranch", data.GitVersion.BranchName)
-      .WithProperty("RepositoryCommit", data.GitVersion.Sha)
-      .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
-      .WithProperty("Version", data.IsReleaseBranch ? data.GitVersion.MajorMinorPatch : data.GitVersion.NuGetVersion)
-      .WithProperty("AssemblyVersion", data.GitVersion.AssemblySemVer)
-      .WithProperty("FileVersion", data.GitVersion.AssemblySemFileVer)
-      .WithProperty("InformationalVersion", data.GitVersion.InformationalVersion)
-    );
+    DotNetCorePack(project, buildSettings);
 });
 
 void SignFiles(IEnumerable<FilePath> files, string description)

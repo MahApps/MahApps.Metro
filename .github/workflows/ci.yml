@@ -16,6 +16,13 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: | 
+            3.1.x
+            5.x
+            6.x
       - name: List dotnet sdks
         run: dotnet --list-sdks
       - name: Run the Cake script

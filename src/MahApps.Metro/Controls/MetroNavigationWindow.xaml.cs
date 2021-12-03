@@ -125,7 +125,11 @@ namespace MahApps.Metro.Controls
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
+#if NET6_0_OR_GREATER
+        private void MetroNavigationWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+#else
         private void MetroNavigationWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+#endif
         {
             this.PART_Frame.FragmentNavigation -= this.PART_Frame_FragmentNavigation;
             this.PART_Frame.Navigating -= this.PART_Frame_Navigating;

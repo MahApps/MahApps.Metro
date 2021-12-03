@@ -355,7 +355,7 @@ namespace MetroDemo
 
         public ICommand TextBoxButtonCmdWithParameter { get; }
 
-        public string? this[string columnName]
+        public string this[string columnName]
         {
             get
             {
@@ -384,7 +384,7 @@ namespace MetroDemo
                     return "There is something hidden... \nActivate me to show it up.";
                 }
 
-                return null;
+                return null!;
             }
         }
 
