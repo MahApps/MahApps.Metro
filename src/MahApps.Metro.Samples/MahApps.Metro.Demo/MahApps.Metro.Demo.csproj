@@ -29,11 +29,11 @@
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <PackageReference Include="MaterialDesignThemes" Version="3.0.1" />
         <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
-        <PackageReference Include="Fody" Version="6.*">
+        <PackageReference Include="Fody" Version="6.5.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="4.*" PrivateAssets="All" />
+        <PackageReference Include="Costura.Fody" Version="5.6.*" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
