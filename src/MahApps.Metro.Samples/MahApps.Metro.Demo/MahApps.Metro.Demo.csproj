@@ -14,7 +14,8 @@
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <!-- <ApplicationManifest>app.manifest</ApplicationManifest> -->
+        <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     </PropertyGroup>
 
     <ItemGroup>

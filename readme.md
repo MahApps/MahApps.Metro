@@ -7,7 +7,7 @@
     A toolkit for creating modern WPF applications. Lots of goodness out-of-the box.
   </p>
   <p>
-    Supporting .NET Framework (4.5.2 and greater), .NET Core (3.1) and .NET 5 (on Windows)
+    Supporting .NET Framework 4.6.2 and greater, .NET Core 3.1, .NET 5 and .NET 6 (on Windows)
   </p>
   <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">

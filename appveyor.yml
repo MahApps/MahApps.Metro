@@ -18,12 +18,12 @@ environment:
     secure: BSPdW2TgnQtoQXXbeDECug==
 
 skip_tags: true
-image: Visual Studio 2019
+image: Visual Studio 2022
 test: off
 
 # install:
   # - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
-  # - ps: ./dotnet-install.ps1 -Version 5.0.301 -InstallDir "C:\Program Files\dotnet"
+  # - ps: ./dotnet-install.ps1 -Version 6.0.100 -InstallDir "C:\Program Files\dotnet"
 
 pull_requests:
   do_not_increment_build_number: false

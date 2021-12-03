@@ -27,7 +27,11 @@ namespace MetroDemo.ExampleWindows
 
         private bool closeMe;
 
+#if NET6_0_OR_GREATER
+        private async void CleanWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
+#else
         private async void CleanWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+#endif
         {
             if (e.Cancel)
             {
@@ -92,15 +96,15 @@ namespace MetroDemo.ExampleWindows
             this.settingsFlyout.IsOpen = !this.settingsFlyout.IsOpen;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.ShowMessageAsync("Something",
-                                  "Something should be displayed here.",
-                                  MessageDialogStyle.Affirmative,
-                                  new MetroDialogSettings
-                                  {
-                                      ColorScheme = MetroDialogColorScheme.Inverted
-                                  });
+            await this.ShowMessageAsync("Something",
+                                        "Something should be displayed here.",
+                                        MessageDialogStyle.Affirmative,
+                                        new MetroDialogSettings
+                                        {
+                                            ColorScheme = MetroDialogColorScheme.Inverted
+                                        });
         }
     }
 }
