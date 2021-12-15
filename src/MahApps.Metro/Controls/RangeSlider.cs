@@ -849,6 +849,7 @@ namespace MahApps.Metro.Controls
         private int _precision;
         private readonly PropertyChangeNotifier actualWidthPropertyChangeNotifier;
         private readonly PropertyChangeNotifier actualHeightPropertyChangeNotifier;
+        private readonly PropertyChangeNotifier visibilityPropertyChangeNotifier;
 
         #endregion
 
@@ -863,6 +864,14 @@ namespace MahApps.Metro.Controls
             this.actualWidthPropertyChangeNotifier.ValueChanged += (_, _) => this.ReCalculateSize();
             this.actualHeightPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualHeightProperty);
             this.actualHeightPropertyChangeNotifier.ValueChanged += (_, _) => this.ReCalculateSize();
+            this.visibilityPropertyChangeNotifier = new PropertyChangeNotifier(this, VisibilityProperty);
+            this.visibilityPropertyChangeNotifier.ValueChanged += (_, _) =>
+                {
+                    if (this.IsVisible)
+                    {
+                        this.ReCalculateSize();
+                    }
+                };
 
             this._timer = new DispatcherTimer();
             this._timer.Tick += this.MoveToNextValue;
