@@ -685,6 +685,7 @@
 The .NET Foundation licenses this file to you under the MIT license.&#xD;
 See the LICENSE file in the project root for more information.&#xD;
 </s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UI/@EntryIndexedValue">UI</s:String>
 		
 	
 	

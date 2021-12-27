@@ -4,39 +4,48 @@
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                  GlowBrush="{DynamicResource MahApps.Brushes.Accent}">
 
+    <mah:MetroWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </mah:MetroWindow.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button x:Name="PART_BackButton"
-                    Width="34"
-                    Height="34"
-                    Margin="4 2 2 2"
-                    VerticalAlignment="Center"
-                    Style="{DynamicResource MahApps.Styles.Button.Circle}">
-                <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
-                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
-                              FontSize="20"
-                              Glyph="&#xF0B0;" />
-            </Button>
-            <Button x:Name="PART_ForwardButton"
-                    Width="34"
-                    Height="34"
-                    Margin="2 2 4 2"
-                    VerticalAlignment="Center"
-                    IsEnabled="False"
-                    Style="{DynamicResource MahApps.Styles.Button.Circle}">
-                <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
-                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
-                              FontSize="20"
-                              Glyph="&#xF0AF;" />
-            </Button>
+        <StackPanel Grid.Row="0"
+                    MinHeight="50"
+                    Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding ShowsNavigationUI, RelativeSource={RelativeSource AncestorType=mah:MetroNavigationWindow}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button x:Name="PART_BackButton"
+                        Width="34"
+                        Height="34"
+                        Margin="4 4 2 4"
+                        VerticalAlignment="Center"
+                        Style="{DynamicResource MahApps.Styles.Button.Circle}">
+                    <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
+                                  FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="20"
+                                  Glyph="&#xF0B0;" />
+                </Button>
+                <Button x:Name="PART_ForwardButton"
+                        Width="34"
+                        Height="34"
+                        Margin="2 4 4 4"
+                        VerticalAlignment="Center"
+                        IsEnabled="False"
+                        Style="{DynamicResource MahApps.Styles.Button.Circle}">
+                    <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
+                                  FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="20"
+                                  Glyph="&#xF0AF;" />
+                </Button>
+            </StackPanel>
+
             <Label x:Name="PART_Title"
                    VerticalAlignment="Center"
-                   FontSize="25" />
+                   FontSize="{DynamicResource MahApps.Font.Size.SubHeader}" />
         </StackPanel>
 
         <Grid Grid.Row="1">
