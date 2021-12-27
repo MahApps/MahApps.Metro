@@ -440,28 +440,23 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+
                         <DockPanel x:Name="PaneHeader"
                                    Grid.Row="0"
                                    Margin="{TemplateBinding PaneHeaderMargin}"
                                    LastChildFill="True">
-                            <Button x:Name="HamburgerButton"
-                                    Width="{TemplateBinding HamburgerWidth}"
-                                    Height="{TemplateBinding HamburgerHeight}"
-                                    Padding="{TemplateBinding HamburgerMargin}"
-                                    AutomationProperties.AutomationId="HamburgerButton"
-                                    AutomationProperties.HelpText="{TemplateBinding HamburgerButtonHelpText}"
-                                    AutomationProperties.Name="{TemplateBinding HamburgerButtonName}"
-                                    ContentTemplate="{TemplateBinding HamburgerButtonTemplate}"
-                                    DockPanel.Dock="Left"
-                                    Foreground="{TemplateBinding PaneForeground}"
-                                    IsTabStop="{TemplateBinding IsTabStop}"
-                                    Style="{TemplateBinding HamburgerButtonStyle}"
-                                    TabIndex="0"
-                                    Visibility="{TemplateBinding HamburgerVisibility}" />
+                            <Grid x:Name="HamburgerButtonSpace"
+                                  Width="{TemplateBinding HamburgerWidth}"
+                                  Height="{TemplateBinding HamburgerHeight}"
+                                  Margin="{TemplateBinding HamburgerMargin}"
+                                  DockPanel.Dock="Left"
+                                  Visibility="{TemplateBinding HamburgerVisibility}" />
                             <ContentControl x:Name="PaneHeaderContent"
+                                            VerticalAlignment="Stretch"
                                             ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
                                             IsTabStop="False" />
                         </DockPanel>
+
                         <mah:HamburgerMenuListBox x:Name="ButtonsListView"
                                                   Grid.Row="1"
                                                   Width="{TemplateBinding OpenPaneLength}"
@@ -510,10 +505,26 @@
                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                  Transition="{TemplateBinding ContentTransition}" />
             </mah:SplitView>
+            <Button x:Name="HamburgerButton"
+                    Width="{TemplateBinding HamburgerWidth}"
+                    Height="{TemplateBinding HamburgerHeight}"
+                    Margin="{TemplateBinding HamburgerMargin}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    AutomationProperties.AutomationId="HamburgerButton"
+                    AutomationProperties.HelpText="{TemplateBinding HamburgerButtonHelpText}"
+                    AutomationProperties.Name="{TemplateBinding HamburgerButtonName}"
+                    ContentTemplate="{TemplateBinding HamburgerButtonTemplate}"
+                    Foreground="{TemplateBinding PaneForeground}"
+                    IsTabStop="{TemplateBinding IsTabStop}"
+                    Style="{TemplateBinding HamburgerButtonStyle}"
+                    TabIndex="0"
+                    Visibility="{TemplateBinding HamburgerVisibility}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="PanePlacement" Value="Right">
-                <Setter TargetName="HamburgerButton" Property="DockPanel.Dock" Value="Right" />
+                <Setter TargetName="HamburgerButton" Property="HorizontalAlignment" Value="Right" />
+                <Setter TargetName="HamburgerButtonSpace" Property="DockPanel.Dock" Value="Right" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
