@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -46,6 +47,30 @@ namespace MahApps.Metro.Controls
         {
             get => this.GetValue(PageContentProperty);
             private set => this.SetValue(PageContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ShowsNavigationUI"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowsNavigationUIProperty
+            = DependencyProperty.Register(nameof(ShowsNavigationUI),
+                                          typeof(bool),
+                                          typeof(MetroNavigationWindow),
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Determines whether to show the default navigation UI.
+        /// </summary>
+        public bool ShowsNavigationUI
+        {
+            get
+            {
+                this.VerifyAccess();
+                return (bool)this.GetValue(ShowsNavigationUIProperty);
+            }
+            set
+            {
+                this.VerifyAccess();
+                this.SetValue(ShowsNavigationUIProperty, BooleanBoxes.Box(value));
+            }
         }
 
         public MetroNavigationWindow()
