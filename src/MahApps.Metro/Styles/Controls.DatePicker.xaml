@@ -73,7 +73,7 @@
                                             Margin="4 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
-                                    <MultiBinding Converter="{mahConverters:MathMultiplyConverter}">
+                                    <MultiBinding Converter="{mahConverters:MathMultiplyConverter}" FallbackValue="0">
                                         <Binding ElementName="PART_FloatingMessage"
                                                  Mode="OneWay"
                                                  Path="ActualHeight" />
@@ -93,7 +93,7 @@
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform x:Name="FloatingMessageTransform">
                                             <TranslateTransform.Y>
-                                                <MultiBinding Converter="{mahConverters:MathSubtractConverter}">
+                                                <MultiBinding Converter="{mahConverters:MathSubtractConverter}" FallbackValue="0">
                                                     <Binding ElementName="PART_FloatingMessage"
                                                              Mode="OneWay"
                                                              Path="ActualHeight" />
