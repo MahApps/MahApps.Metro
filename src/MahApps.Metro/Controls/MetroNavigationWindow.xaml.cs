@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -34,11 +35,14 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(OverlayContentProperty, value);
         }
 
+        private static readonly DependencyPropertyKey PageContentPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(PageContent),
+                                                  typeof(object),
+                                                  typeof(MetroNavigationWindow),
+                                                  new PropertyMetadata(default(object)));
+
         /// <summary>Identifies the <see cref="PageContent"/> dependency property.</summary>
-        public static readonly DependencyProperty PageContentProperty
-            = DependencyProperty.Register(nameof(PageContent),
-                                          typeof(object),
-                                          typeof(MetroNavigationWindow));
+        public static readonly DependencyProperty PageContentProperty = PageContentPropertyKey.DependencyProperty;
 
         /// <summary>
         /// Gets the content of the selected frame.
@@ -46,7 +50,7 @@ namespace MahApps.Metro.Controls
         public object? PageContent
         {
             get => this.GetValue(PageContentProperty);
-            private set => this.SetValue(PageContentProperty, value);
+            protected set => this.SetValue(PageContentPropertyKey, value);
         }
 
         /// <summary>Identifies the <see cref="ShowsNavigationUI"/> dependency property.</summary>
@@ -57,7 +61,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
-        /// Determines whether to show the default navigation UI.
+        /// Determines whether to show the default UI.
         /// </summary>
         public bool ShowsNavigationUI
         {
@@ -71,6 +75,22 @@ namespace MahApps.Metro.Controls
                 this.VerifyAccess();
                 this.SetValue(ShowsNavigationUIProperty, BooleanBoxes.Box(value));
             }
+        }
+
+        /// <summary>Identifies the <see cref="ShowHomeButton"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowHomeButtonProperty
+            = DependencyProperty.Register(nameof(ShowHomeButton),
+                                          typeof(bool),
+                                          typeof(MetroNavigationWindow),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Determines whether to show the home button on the navigation UI.
+        /// </summary>
+        public bool ShowHomeButton
+        {
+            get => (bool)this.GetValue(ShowHomeButtonProperty);
+            set => this.SetValue(ShowHomeButtonProperty, BooleanBoxes.Box(value));
         }
 
         public MetroNavigationWindow()
@@ -91,6 +111,7 @@ namespace MahApps.Metro.Controls
             this.PART_Frame.LoadCompleted += this.PART_Frame_LoadCompleted;
             this.PART_Frame.FragmentNavigation += this.PART_Frame_FragmentNavigation;
 
+            this.PART_HomeButton.Click += this.PART_HomeButton_Click;
             this.PART_BackButton.Click += this.PART_BackButton_Click;
             this.PART_ForwardButton.Click += this.PART_ForwardButton_Click;
         }
@@ -98,10 +119,7 @@ namespace MahApps.Metro.Controls
         [System.Diagnostics.DebuggerNonUserCode]
         private void PART_ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.CanGoForward)
-            {
-                this.GoForward();
-            }
+            this.GoForward();
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
@@ -141,12 +159,17 @@ namespace MahApps.Metro.Controls
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
-        private void PART_BackButton_Click(object sender, RoutedEventArgs e)
+        private void PART_HomeButton_Click(object sender, RoutedEventArgs e)
         {
             if (this.CanGoBack)
             {
-                this.GoBack();
+                this.GoHome();
             }
+        }
+
+        private void PART_BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.GoBack();
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
@@ -164,8 +187,9 @@ namespace MahApps.Metro.Controls
             this.PART_Frame.LoadCompleted -= this.PART_Frame_LoadCompleted;
             this.PART_Frame.Navigated -= this.PART_Frame_Navigated;
 
-            this.PART_ForwardButton.Click -= this.PART_ForwardButton_Click;
+            this.PART_HomeButton.Click -= this.PART_HomeButton_Click;
             this.PART_BackButton.Click -= this.PART_BackButton_Click;
+            this.PART_ForwardButton.Click -= this.PART_ForwardButton_Click;
 
             this.Loaded -= this.MetroNavigationWindow_Loaded;
             this.Closing -= this.MetroNavigationWindow_Closing;
@@ -174,13 +198,13 @@ namespace MahApps.Metro.Controls
         [System.Diagnostics.DebuggerNonUserCode]
         private void PART_Frame_Navigated(object sender, NavigationEventArgs e)
         {
-            this.PART_Title.Content = ((Page)this.PART_Frame.Content).Title;
-            (this as IUriContext).BaseUri = e.Uri;
+            this.PART_Title.Content = (e.Content as Page)?.Title;
+            ((IUriContext)this).BaseUri = e.Uri;
 
-            this.PageContent = this.PART_Frame.Content;
+            this.SetValue(PageContentPropertyKey, e.Content);
 
+            this.PART_HomeButton.IsEnabled = this.CanGoBack;
             this.PART_BackButton.IsEnabled = this.CanGoBack;
-
             this.PART_ForwardButton.IsEnabled = this.CanGoForward;
 
             this.Navigated?.Invoke(this, e);
@@ -255,13 +279,44 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Navigates to the first item in back navigation history and clears the history.
+        /// </summary>
+        [System.Diagnostics.DebuggerNonUserCode]
+        public void GoHome()
+        {
+            this.PART_Frame.Navigated -= this.PART_Frame_Navigated;
+            try
+            {
+                while (this.PART_Frame.CanGoBack)
+                {
+                    if (this.PART_Frame.BackStack.OfType<object>().Count() == 1)
+                    {
+                        break;
+                    }
+
+                    this.PART_Frame.RemoveBackEntry();
+                }
+            }
+            finally
+            {
+                this.PART_Frame.Navigated += this.PART_Frame_Navigated;
+            }
+
+            this.GoBack();
+            this.PART_Frame.RemoveBackEntry();
+        }
+
+        /// <summary>
         /// Navigates to the most recent item in back navigation history.
         /// </summary>
         /// <see cref="System.Windows.Navigation.NavigationWindow.GoBack"/>
         [System.Diagnostics.DebuggerNonUserCode]
         public void GoBack()
         {
-            this.PART_Frame.GoBack();
+            if (this.CanGoBack)
+            {
+                this.PART_Frame.GoBack();
+            }
         }
 
         /// <summary>
@@ -271,7 +326,10 @@ namespace MahApps.Metro.Controls
         [System.Diagnostics.DebuggerNonUserCode]
         public void GoForward()
         {
-            this.PART_Frame.GoForward();
+            if (this.CanGoForward)
+            {
+                this.PART_Frame.GoForward();
+            }
         }
 
         /// <summary>

@@ -484,8 +484,13 @@ namespace MetroDemo
 
         private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
         {
-            var navWin = new MetroNavigationWindow();
-            navWin.Title = "Navigation Demo";
+            var navWin = new MetroNavigationWindow
+                         {
+                             Title = "Navigation Demo",
+                             Width = 800,
+                             Height = 600,
+                             ShowHomeButton = true
+                         };
 
             //uncomment the next two lines if you want the clean style.
             //navWin.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Clean/MetroWindow.xaml", UriKind.Absolute) });

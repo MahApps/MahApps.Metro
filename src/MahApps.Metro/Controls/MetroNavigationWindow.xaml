@@ -18,6 +18,18 @@
                     MinHeight="50"
                     Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" Visibility="{Binding ShowsNavigationUI, RelativeSource={RelativeSource AncestorType=mah:MetroNavigationWindow}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button x:Name="PART_HomeButton"
+                        Width="34"
+                        Height="34"
+                        Margin="4"
+                        VerticalAlignment="Center"
+                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                        Visibility="{Binding ShowHomeButton, RelativeSource={RelativeSource AncestorType=mah:MetroNavigationWindow}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
+                                  FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="20"
+                                  Glyph="&#xE10F;" />
+                </Button>
                 <Button x:Name="PART_BackButton"
                         Width="34"
                         Height="34"
@@ -27,7 +39,7 @@
                     <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
                                   FontSize="20"
-                                  Glyph="&#xF0B0;" />
+                                  Glyph="&#xE112;" />
                 </Button>
                 <Button x:Name="PART_ForwardButton"
                         Width="34"
@@ -39,7 +51,7 @@
                     <mah:FontIcon FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
                                   FontSize="20"
-                                  Glyph="&#xF0AF;" />
+                                  Glyph="&#xE111;" />
                 </Button>
             </StackPanel>
 
