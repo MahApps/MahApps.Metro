@@ -192,7 +192,9 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" Header="Row Selected" />
+                <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
+                                        Header="Row Selected"
+                                        IsReadOnly="True" />
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"

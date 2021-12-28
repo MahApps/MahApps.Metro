@@ -233,12 +233,12 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.DataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridColumnHeader.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGridColumnHeader.BorderBrush}" />
         <Setter Property="BorderThickness" Value="0 0 0 3" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridColumnHeader.Foreground}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
@@ -279,12 +279,13 @@
                               Height="10"
                               Margin="0 0 8 2"
                               VerticalAlignment="Center"
-                              Fill="{DynamicResource MahApps.Brushes.Gray2}"
+                              Fill="{DynamicResource MahApps.Brushes.DataGridColumnHeader.SortArrowFill}"
                               RenderTransformOrigin="0.5,0.5"
                               Stretch="Fill"
                               Visibility="Collapsed" />
 
                         <Thumb x:Name="PART_LeftHeaderGripper"
+                               Grid.Column="0"
                                HorizontalAlignment="Left"
                                Background="Transparent"
                                Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper}" />
@@ -314,12 +315,15 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.DataGridColumnHeader}" />
         <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Column.IsReadOnly, RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue=False, TargetNullValue=False}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridColumnHeader.Background.ReadOnly}" />
+            </DataTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="SortDirection" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridColumnHeader.Background.MouseOver}" />
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />

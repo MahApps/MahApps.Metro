@@ -231,6 +231,13 @@
     <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Text.Inactive" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Text.MouseOver" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background.MouseOver" Color="{StaticResource MahApps.Colors.Gray8}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background.ReadOnly" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Foreground" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.BorderBrush" Color="{StaticResource MahApps.Colors.Gray5}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.SortArrowFill" Color="{StaticResource MahApps.Colors.Gray2}" options:Freeze="True" />
+
     <SolidColorBrush x:Key="MahApps.Brushes.Badged.Background" Color="{StaticResource MahApps.Colors.AccentBase}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Badged.Background.Disabled" Color="{{MahApps.Colors.Badged.Background.Disabled}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Badged.Foreground" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
