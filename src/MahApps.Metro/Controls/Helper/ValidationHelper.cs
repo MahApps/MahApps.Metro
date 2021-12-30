@@ -69,5 +69,35 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(ShowValidationErrorOnMouseOverProperty, BooleanBoxes.Box(value));
         }
+
+        /// <summary>
+        /// Identifies the ShowValidationErrorOnKeyboardFocus attached property.
+        /// </summary>
+        public static readonly DependencyProperty ShowValidationErrorOnKeyboardFocusProperty
+            = DependencyProperty.RegisterAttached(
+                "ShowValidationErrorOnKeyboardFocus",
+                typeof(bool),
+                typeof(ValidationHelper),
+                new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets whether the validation error text will be shown when the element has the keyboard focus.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(UIElement))]
+        public static bool GetShowValidationErrorOnKeyboardFocus(UIElement element)
+        {
+            return (bool)element.GetValue(ShowValidationErrorOnKeyboardFocusProperty);
+        }
+
+        /// <summary>
+        /// Sets whether the validation error text will be shown when the element has the keyboard focus.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(UIElement))]
+        public static void SetShowValidationErrorOnKeyboardFocus(UIElement element, bool value)
+        {
+            element.SetValue(ShowValidationErrorOnKeyboardFocusProperty, BooleanBoxes.Box(value));
+        }
     }
 }

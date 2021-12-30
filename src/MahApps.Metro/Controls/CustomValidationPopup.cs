@@ -61,6 +61,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ShowValidationErrorOnMouseOverProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="ShowValidationErrorOnKeyboardFocus"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowValidationErrorOnKeyboardFocusProperty
+            = DependencyProperty.Register(nameof(ShowValidationErrorOnKeyboardFocus),
+                                          typeof(bool),
+                                          typeof(CustomValidationPopup),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the validation error text will be shown when the element has the keyboard focus.
+        /// </summary>
+        public bool ShowValidationErrorOnKeyboardFocus
+        {
+            get => (bool)this.GetValue(ShowValidationErrorOnKeyboardFocusProperty);
+            set => this.SetValue(ShowValidationErrorOnKeyboardFocusProperty, BooleanBoxes.Box(value));
+        }
+
         /// <summary>Identifies the <see cref="AdornedElement"/> dependency property.</summary>
         public static readonly DependencyProperty AdornedElementProperty
             = DependencyProperty.Register(nameof(AdornedElement),
@@ -218,13 +234,22 @@ namespace MahApps.Metro.Controls
             this.Unloaded += this.CustomValidationPopup_Unloaded;
         }
 
+        private bool ShouldPopupOpen()
+        {
+            var adornedElement = this.AdornedElement;
+            var isOpen = adornedElement is not null
+                         && Validation.GetHasError(adornedElement)
+                         && adornedElement.IsKeyboardFocusWithin
+                         && this.ShowValidationErrorOnKeyboardFocus
+                         && ValidationHelper.GetShowValidationErrorOnKeyboardFocus(adornedElement);
+            return isOpen;
+        }
+
         private void Flyout_OpeningFinished(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
 
-            var adornedElement = this.AdornedElement;
-            var isOpen = Validation.GetHasError(adornedElement!) && adornedElement!.IsKeyboardFocusWithin;
-            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
 
             this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
@@ -251,9 +276,7 @@ namespace MahApps.Metro.Controls
         {
             this.RefreshPosition();
 
-            var adornedElement = this.AdornedElement;
-            var isOpen = Validation.GetHasError(adornedElement!) && adornedElement!.IsKeyboardFocusWithin;
-            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
 
             this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
@@ -266,9 +289,7 @@ namespace MahApps.Metro.Controls
 
                 if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
                 {
-                    var adornedElement = this.AdornedElement;
-                    var isOpen = Validation.GetHasError(adornedElement!) && adornedElement!.IsKeyboardFocusWithin;
-                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
+                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
                 }
                 else
                 {
