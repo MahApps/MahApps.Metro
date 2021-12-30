@@ -11,6 +11,8 @@ namespace MahApps.Metro.Controls
 {
     public class MetroHeader : GroupBox
     {
+        private const string PartHeaderPresenter = "PART_Header";
+
         /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
         public static readonly DependencyProperty OrientationProperty
             = DependencyProperty.Register(nameof(Orientation),
@@ -40,12 +42,40 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            this.SetHeaderVisibility();
         }
 
         /// <inheritdoc />
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new MetroHeaderAutomationPeer(this);
+        }
+
+        protected override void OnHeaderChanged(object oldHeader, object newHeader)
+        {
+            base.OnHeaderChanged(oldHeader, newHeader);
+
+            this.SetHeaderVisibility();
+        }
+
+        private void SetHeaderVisibility()
+        {
+            if (this.GetTemplateChild(PartHeaderPresenter) is FrameworkElement headerPresenter)
+            {
+                if (this.Header is string headerText)
+                {
+                    headerPresenter.Visibility = string.IsNullOrEmpty(headerText)
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
+                }
+                else
+                {
+                    headerPresenter.Visibility = this.Header != null
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
+                }
+            }
         }
     }
 }
