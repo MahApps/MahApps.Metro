@@ -95,11 +95,19 @@
             <mah:Flyout x:Name="settingsFlyout"
                         Margin="200 30 0 0"
                         mah:ControlsHelper.ContentCharacterCasing="Upper"
+                        mah:HeaderedControlHelper.HeaderBackground="#FFEB3B"
                         mah:HeaderedControlHelper.HeaderFontFamily="Segoe Script"
+                        mah:HeaderedControlHelper.HeaderForeground="Black"
+                        mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Stretch"
                         AreAnimationsEnabled="True"
                         FocusedElement="{Binding ElementName=firstTB}"
                         Header="Settings"
                         Position="Right">
+                <mah:Flyout.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Right" Text="{Binding}" />
+                    </DataTemplate>
+                </mah:Flyout.HeaderTemplate>
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -107,8 +115,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
-                        <TextBlock Grid.Row="0" Text="This Flyout animates its opacity when opening and closing." />
+                        <TextBlock Text="Something above the ScrollPanel" />
+                        <TextBlock Text="This Flyout animates its opacity when opening and closing." />
                     </StackPanel>
                     <TabControl Grid.Row="1" mah:TabControlHelper.Underlined="TabPanel">
                         <TabItem Header="Settings">
