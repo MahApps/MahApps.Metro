@@ -213,6 +213,8 @@ namespace MetroDemo
                                                                                   async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now Off."); });
 
             this.MyObjectParser = new ObjectParser(this, this._dialogCoordinator);
+
+            ShowTitleColumn = true;
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -252,6 +254,13 @@ namespace MetroDemo
         public void Dispose()
         {
             HotkeyManager.Current.Remove("demo");
+        }
+
+        private bool showTitleColumn;
+        public bool ShowTitleColumn
+        {
+            get => showTitleColumn;
+            set => Set(ref showTitleColumn, value);
         }
 
         public string Title { get; set; }
