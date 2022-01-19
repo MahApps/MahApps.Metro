@@ -6,7 +6,7 @@
 
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net462;net47;netcoreapp3.1;net5.0-windows;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net462;net47;net48;netcoreapp3.1;net5.0-windows;net6.0-windows</TargetFrameworks>
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects Condition=" $(TargetFramework.StartsWith('net4')) ">true</AutoGenerateBindingRedirects>
