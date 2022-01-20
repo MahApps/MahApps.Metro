@@ -59,6 +59,8 @@ public class HeaderedControlHelperFixture : IAsyncLifetime
         ClearDependencyProperties(this.Window?.TestGroupBoxClean);
         ClearDependencyProperties(this.Window?.TestGroupBoxVS);
         ClearDependencyProperties(this.Window?.TestMetroHeader);
+        ClearDependencyProperties(this.Window?.TestExpander);
+        ClearDependencyProperties(this.Window?.TestExpanderVS);
     }
 
     /// <summary>

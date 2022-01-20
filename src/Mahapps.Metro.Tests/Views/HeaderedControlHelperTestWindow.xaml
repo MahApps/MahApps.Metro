@@ -10,6 +10,7 @@
                  mc:Ignorable="d">
     <StackPanel>
         <GroupBox x:Name="TestGroupBox" Header="Test" />
+        <Expander x:Name="TestExpander" Header="Test" />
         <Grid>
             <Grid.Resources>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Controls.xaml" />
@@ -26,6 +27,7 @@
                 </ResourceDictionary>
             </Grid.Resources>
             <GroupBox x:Name="TestGroupBoxVS" Header="Test" />
+            <Expander x:Name="TestExpanderVS" Header="Test" />
         </Grid>
         <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
     </StackPanel>
