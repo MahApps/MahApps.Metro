@@ -31,5 +31,10 @@
         </Grid>
         <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
         <mah:ColorPalette x:Name="TestColorPalette" Header="Test" />
+        <TabControl x:Name="TestTabControl" Height="250">
+            <TabItem x:Name="TestTabItem" Header="Test">
+                <TextBlock x:Name="TestTextBlock" Text="Test" />
+            </TabItem>
+        </TabControl>
     </StackPanel>
 </mah:MetroWindow>

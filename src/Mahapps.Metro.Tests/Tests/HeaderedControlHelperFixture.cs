@@ -62,6 +62,9 @@ public class HeaderedControlHelperFixture : IAsyncLifetime
         ClearDependencyProperties(this.Window?.TestColorPalette);
         ClearDependencyProperties(this.Window?.TestExpander);
         ClearDependencyProperties(this.Window?.TestExpanderVS);
+        ClearDependencyProperties(this.Window?.TestTabControl);
+        ClearDependencyProperties(this.Window?.TestTabItem);
+        ClearDependencyProperties(this.Window?.TestTextBlock);
     }
 
     /// <summary>
