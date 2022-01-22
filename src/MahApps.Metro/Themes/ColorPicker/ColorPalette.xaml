@@ -136,7 +136,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorPalette}">
-                    <GroupBox Margin="{TemplateBinding Margin}"
+                    <GroupBox x:Name="ContentSite"
+                              Margin="{TemplateBinding Margin}"
                               Padding="{TemplateBinding Padding}"
                               mah:ControlsHelper.ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
                               mah:HeaderedControlHelper.HeaderBackground="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"

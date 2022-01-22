@@ -30,5 +30,6 @@
             <Expander x:Name="TestExpanderVS" Header="Test" />
         </Grid>
         <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
+        <mah:ColorPalette x:Name="TestColorPalette" Header="Test" />
     </StackPanel>
 </mah:MetroWindow>

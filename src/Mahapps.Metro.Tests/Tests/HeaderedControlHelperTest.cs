@@ -46,6 +46,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
         Assert.Equal(headerBackground, this.fixture.Window?.TestMetroHeader.FindChild<Grid>("PART_Header")?.Background);
 
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestColorPalette.FindChild<Border>("HeaderSite")?.Background);
+
         // Expander
 
         this.fixture.Window?.TestExpander.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
@@ -78,6 +81,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
         Assert.Equal(headerForeground, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.Foreground);
 
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(headerForeground, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.Foreground);
+
         // Expander
 
         this.fixture.Window?.TestExpander.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
@@ -109,6 +115,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
         Assert.Equal(headerMargin, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.Margin);
+
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.Margin);
 
         // Expander
 
@@ -151,6 +160,11 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
         Assert.Equal(verticalAlignment, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.VerticalAlignment);
 
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.HorizontalAlignment);
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.VerticalAlignment);
+
         // Expander
 
         this.fixture.Window?.TestExpander.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
@@ -187,6 +201,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
         Assert.Equal(fontFamily, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.FontFamily);
 
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontFamily);
+
         // Expander
 
         this.fixture.Window?.TestExpander.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
@@ -218,6 +235,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
         Assert.Equal(fontSize, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.FontSize);
+
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontSize);
 
         // Expander
 
@@ -251,6 +271,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
         Assert.Equal(fontStretch, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.FontStretch);
 
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontStretch);
+
         // Expander
 
         this.fixture.Window?.TestExpander.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
@@ -282,6 +305,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestMetroHeader.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
         Assert.Equal(fontWeight, this.fixture.Window?.TestMetroHeader.FindChild<ContentControlEx>("HeaderContent")?.FontWeight);
+
+        this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontWeight);
 
         // Expander
 

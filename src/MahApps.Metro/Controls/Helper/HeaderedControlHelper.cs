@@ -34,6 +34,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderForeground(UIElement element, Brush value)
         {
             element.SetValue(HeaderForegroundProperty, value);
@@ -61,6 +62,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderBackground(UIElement element, Brush value)
         {
             element.SetValue(HeaderBackgroundProperty, value);
@@ -90,6 +92,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderFontFamily(UIElement element, FontFamily value)
         {
             element.SetValue(HeaderFontFamilyProperty, value);
@@ -119,6 +122,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderFontSize(UIElement element, double value)
         {
             element.SetValue(HeaderFontSizeProperty, value);
@@ -148,6 +152,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderFontStretch(UIElement element, FontStretch value)
         {
             element.SetValue(HeaderFontStretchProperty, value);
@@ -177,6 +182,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderFontWeight(UIElement element, FontWeight value)
         {
             element.SetValue(HeaderFontWeightProperty, value);
@@ -204,6 +210,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderMargin(UIElement element, Thickness value)
         {
             element.SetValue(HeaderMarginProperty, value);
@@ -231,6 +238,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderHorizontalContentAlignment(UIElement element, HorizontalAlignment value)
         {
             element.SetValue(HeaderHorizontalContentAlignmentProperty, value);
@@ -258,6 +266,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetHeaderVerticalContentAlignment(UIElement element, VerticalAlignment value)
         {
             element.SetValue(HeaderVerticalContentAlignmentProperty, value);
