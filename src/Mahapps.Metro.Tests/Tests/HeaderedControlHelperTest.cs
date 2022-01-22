@@ -62,6 +62,10 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
         Assert.Equal(headerBackground, this.fixture.Window?.TestTabItem.Background);
         Assert.Equal(headerBackground, this.fixture.Window?.TestTabItem.FindChild<Border>("Border")?.Background);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestMetroTabItem.Background);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestMetroTabItem.FindChild<Border>("Border")?.Background);
     }
 
     [Fact]
@@ -105,6 +109,11 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
         Assert.Equal(tabForeground, this.fixture.Window?.TestTabItem.Foreground);
         Assert.Equal(headerForeground, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground);
+
+        this.fixture.Window?.TestMetroTabItem.SetCurrentValue(TabItem.ForegroundProperty, tabForeground);
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(tabForeground, this.fixture.Window?.TestMetroTabItem.Foreground);
+        Assert.Equal(headerForeground, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground);
     }
 
     [Fact]
@@ -147,6 +156,11 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(headerMargin, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin);
         this.fixture.Window?.TestTabItem.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
         Assert.Equal(new Thickness(8), this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin);
+        this.fixture.Window?.TestMetroTabItem.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
+        Assert.Equal(new Thickness(8), this.fixture.Window?.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin);
     }
 
     [Fact]
@@ -204,6 +218,11 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(horizontalAlignment, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
         Assert.Equal(verticalAlignment, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
     }
 
     [Fact]
@@ -244,6 +263,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
         Assert.Equal(fontFamily, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
     }
 
     [Fact]
@@ -284,6 +306,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
         Assert.Equal(fontSize, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize);
     }
 
     [Fact]
@@ -324,6 +349,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
         Assert.Equal(fontStretch, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
     }
 
     [Fact]
@@ -364,5 +392,8 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
         Assert.Equal(fontWeight, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
+
+        this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
     }
 }

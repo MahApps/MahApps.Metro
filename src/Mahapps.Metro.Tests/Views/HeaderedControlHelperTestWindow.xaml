@@ -33,8 +33,13 @@
         <mah:ColorPalette x:Name="TestColorPalette" Header="Test" />
         <TabControl x:Name="TestTabControl" Height="250">
             <TabItem x:Name="TestTabItem" Header="Test">
-                <TextBlock x:Name="TestTextBlock" Text="Test" />
+                <TextBlock Text="Test" />
             </TabItem>
         </TabControl>
+        <mah:MetroTabControl x:Name="TestMetroTabControl" Height="250">
+            <mah:MetroTabItem x:Name="TestMetroTabItem" Header="Test">
+                <TextBlock Text="Test" />
+            </mah:MetroTabItem>
+        </mah:MetroTabControl>
     </StackPanel>
 </mah:MetroWindow>
