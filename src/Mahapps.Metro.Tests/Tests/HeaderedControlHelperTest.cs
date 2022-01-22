@@ -63,6 +63,10 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(headerBackground, this.fixture.Window?.TestTabItem.Background);
         Assert.Equal(headerBackground, this.fixture.Window?.TestTabItem.FindChild<Border>("Border")?.Background);
 
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestTabItemVS.Background);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestTabItemVS.FindChild<Border>("Border")?.Background);
+
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
         Assert.Equal(headerBackground, this.fixture.Window?.TestMetroTabItem.Background);
         Assert.Equal(headerBackground, this.fixture.Window?.TestMetroTabItem.FindChild<Border>("Border")?.Background);
@@ -105,10 +109,16 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         // TabItem
 
         var tabForeground = Brushes.Aqua;
+
         this.fixture.Window?.TestTabItem.SetCurrentValue(TabItem.ForegroundProperty, tabForeground);
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
         Assert.Equal(tabForeground, this.fixture.Window?.TestTabItem.Foreground);
         Assert.Equal(headerForeground, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground);
+
+        this.fixture.Window?.TestTabItemVS.SetCurrentValue(TabItem.ForegroundProperty, tabForeground);
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(tabForeground, this.fixture.Window?.TestTabItemVS.Foreground);
+        Assert.Equal(headerForeground, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Foreground);
 
         this.fixture.Window?.TestMetroTabItem.SetCurrentValue(TabItem.ForegroundProperty, tabForeground);
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
@@ -156,6 +166,11 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(headerMargin, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin);
         this.fixture.Window?.TestTabItem.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
         Assert.Equal(new Thickness(8), this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin);
+
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Margin);
+        this.fixture.Window?.TestTabItemVS.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
+        Assert.Equal(new Thickness(8), this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Margin);
 
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
         Assert.Equal(headerMargin, this.fixture.Window?.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin);
@@ -219,6 +234,11 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
         Assert.Equal(verticalAlignment, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
 
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
+
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
         Assert.Equal(horizontalAlignment, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
@@ -264,6 +284,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
         Assert.Equal(fontFamily, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
 
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
+
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
         Assert.Equal(fontFamily, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
     }
@@ -306,6 +329,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
         Assert.Equal(fontSize, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize);
+
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontSize);
 
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
         Assert.Equal(fontSize, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize);
@@ -350,6 +376,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
         Assert.Equal(fontStretch, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
 
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
+
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
         Assert.Equal(fontStretch, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
     }
@@ -392,6 +421,9 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestTabItem.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
         Assert.Equal(fontWeight, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
+
+        this.fixture.Window?.TestTabItemVS.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
 
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
         Assert.Equal(fontWeight, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);

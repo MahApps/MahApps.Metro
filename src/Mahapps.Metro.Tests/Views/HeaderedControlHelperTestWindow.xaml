@@ -17,18 +17,23 @@
             </Grid.Resources>
             <GroupBox x:Name="TestGroupBoxClean" Header="Test" />
         </Grid>
-        <Grid>
-            <Grid.Resources>
+        <StackPanel>
+            <StackPanel.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
                         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
-            </Grid.Resources>
+            </StackPanel.Resources>
             <GroupBox x:Name="TestGroupBoxVS" Header="Test" />
             <Expander x:Name="TestExpanderVS" Header="Test" />
-        </Grid>
+            <TabControl x:Name="TestTabControlVS" Height="250">
+                <TabItem x:Name="TestTabItemVS" Header="Test">
+                    <TextBlock Text="Test" />
+                </TabItem>
+            </TabControl>
+        </StackPanel>
         <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
         <mah:ColorPalette x:Name="TestColorPalette" Header="Test" />
         <TabControl x:Name="TestTabControl" Height="250">
