@@ -33,6 +33,7 @@
                             <Grid x:Name="PART_ContentSite"
                                   Grid.Row="0"
                                   Grid.Column="0"
+                                  Margin="{TemplateBinding Padding}"
                                   UseLayoutRounding="False">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -40,7 +41,8 @@
                                 </Grid.ColumnDefinitions>
                                 <mah:ContentControlEx x:Name="ContentSite"
                                                       Grid.Column="0"
-                                                      Padding="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                       Content="{TemplateBinding Header}"
                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
@@ -51,7 +53,7 @@
                                                       FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
                                                       FontStyle="{TemplateBinding FontStyle}"
                                                       FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                      Foreground="{TemplateBinding Foreground}"
+                                                      Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                                       RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Button x:Name="PART_CloseButton"
@@ -168,9 +170,6 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="false">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray}" />
                         </Trigger>
 
                         <MultiDataTrigger>
