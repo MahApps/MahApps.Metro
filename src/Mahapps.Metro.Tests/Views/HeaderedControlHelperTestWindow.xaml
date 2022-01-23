@@ -8,6 +8,17 @@
                  Width="800"
                  Height="450"
                  mc:Ignorable="d">
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="TestFlyout"
+                        Width="200"
+                        Header="Test"
+                        IsOpen="True"
+                        Position="Right">
+                <TextBlock Text="Test" />
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
     <StackPanel>
         <GroupBox x:Name="TestGroupBox" Header="Test" />
         <Expander x:Name="TestExpander" Header="Test" />
