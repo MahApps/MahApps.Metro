@@ -1,0 +1,62 @@
+﻿<mah:MetroWindow x:Class="MahApps.Metro.Tests.Views.HeaderedControlHelperTestWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="HeaderedControlHelperTestWindow"
+                 Width="800"
+                 Height="450"
+                 mc:Ignorable="d">
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="TestFlyout"
+                        Width="200"
+                        Header="Test"
+                        IsOpen="True"
+                        Position="Right">
+                <TextBlock Text="Test" />
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+    <StackPanel>
+        <GroupBox x:Name="TestGroupBox" Header="Test" />
+        <Expander x:Name="TestExpander" Header="Test" />
+        <Grid>
+            <Grid.Resources>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Controls.xaml" />
+            </Grid.Resources>
+            <GroupBox x:Name="TestGroupBoxClean" Header="Test" />
+        </Grid>
+        <StackPanel>
+            <StackPanel.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </StackPanel.Resources>
+            <GroupBox x:Name="TestGroupBoxVS" Header="Test" />
+            <Expander x:Name="TestExpanderVS" Header="Test" />
+            <TabControl x:Name="TestTabControlVS" Height="250">
+                <TabItem x:Name="TestTabItemVS" Header="Test">
+                    <TextBlock Text="Test" />
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+        <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
+        <mah:ColorPalette x:Name="TestColorPalette" Header="Test" />
+        <mah:ToggleSwitch x:Name="TestToggleSwitch" Header="Test" />
+        <TabControl x:Name="TestTabControl" Height="250">
+            <TabItem x:Name="TestTabItem" Header="Test">
+                <TextBlock Text="Test" />
+            </TabItem>
+        </TabControl>
+        <mah:MetroTabControl x:Name="TestMetroTabControl" Height="250">
+            <mah:MetroTabItem x:Name="TestMetroTabItem" Header="Test">
+                <TextBlock Text="Test" />
+            </mah:MetroTabItem>
+        </mah:MetroTabControl>
+    </StackPanel>
+</mah:MetroWindow>

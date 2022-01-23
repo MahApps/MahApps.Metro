@@ -9,6 +9,7 @@
     <Style x:Key="MahApps.Styles.TabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -93,8 +94,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--  special property for header font size  -->
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, FallbackValue={x:Static Brushes.Transparent}}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.TabItem}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="6 2" />
         <Setter Property="mah:TabControlHelper.UnderlineBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
         <Setter Property="mah:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
         <Setter Property="mah:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
@@ -102,16 +106,17 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.TabItem" TargetType="TabItem">
-        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay, FallbackValue=Transparent}" />
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderBackground), Mode=OneWay, FallbackValue={x:Static Brushes.Transparent}}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=HorizontalContentAlignment, Mode=OneWay, FallbackValue={x:Static HorizontalAlignment.Stretch}}" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="5" />
         <Setter Property="MinWidth" Value="5" />
-        <Setter Property="Padding" Value="6 2 6 2" />
+        <Setter Property="Padding" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderMargin), FallbackValue='6 2', Mode=OneWay}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -136,7 +141,9 @@
                             <mah:ContentControlEx x:Name="ContentSite"
                                                   Grid.Row="0"
                                                   Grid.Column="0"
-                                                  Padding="{TemplateBinding Padding}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   Content="{TemplateBinding Header}"
                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
@@ -147,7 +154,7 @@
                                                   FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
                                                   FontStyle="{TemplateBinding FontStyle}"
                                                   FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                  Foreground="{TemplateBinding Foreground}"
+                                                  Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   UseLayoutRounding="False" />
@@ -212,9 +219,6 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="false">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray}" />
                         </Trigger>
 
                         <MultiDataTrigger>
@@ -491,16 +495,21 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontFamily), Mode=OneWay}" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontSize), Mode=OneWay}" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderFontStretch" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontStretch), Mode=OneWay}" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontWeight), Mode=OneWay}" />
-        <Setter Property="mah:TabControlHelper.UnderlineBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay}" />
-        <Setter Property="mah:TabControlHelper.UnderlineMouseOverBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
-        <Setter Property="mah:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
-        <Setter Property="mah:TabControlHelper.UnderlinePlacement" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Mode=OneWay}" />
-        <Setter Property="mah:TabControlHelper.UnderlineSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=VerticalContentAlignment, Mode=OneWay, FallbackValue={x:Static VerticalAlignment.Stretch}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderBackground), Mode=OneWay, FallbackValue={x:Static Brushes.Transparent}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontFamily), Mode=OneWay, FallbackValue={x:Static SystemFonts.MessageFontFamily}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontSize), Mode=OneWay, FallbackValue={x:Static SystemFonts.MessageFontSize}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontStretch" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontStretch), Mode=OneWay, FallbackValue={x:Static FontStretches.Normal}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontWeight), Mode=OneWay, FallbackValue={x:Static SystemFonts.MessageFontWeight}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderForeground), Mode=OneWay, FallbackValue={x:Static SystemColors.ControlTextBrush}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderHorizontalContentAlignment), Mode=OneWay, FallbackValue={x:Static HorizontalAlignment.Stretch}}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderMargin), Mode=OneWay, FallbackValue='6 2'}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderVerticalContentAlignment), Mode=OneWay, FallbackValue={x:Static VerticalAlignment.Center}}" />
+        <Setter Property="mah:TabControlHelper.UnderlineBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="mah:TabControlHelper.UnderlineMouseOverBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="mah:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="mah:TabControlHelper.UnderlinePlacement" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="mah:TabControlHelper.UnderlineSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay, FallbackValue={x:Null}}" />
     </Style>
 
     <!--  MahApps.Styles.TabControl.AnimatedSingleRow  -->
