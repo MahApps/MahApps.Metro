@@ -140,8 +140,8 @@
                             <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
                                 <Style.Triggers>
                                     <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
-                                        <Setter Property="mah:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
                                         <Setter Property="mah:TextBoxHelper.ButtonContent" Value="r" />
+                                        <Setter Property="mah:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>

@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
                 new UIPropertyMetadata(Brushes.White));
 
         /// <summary>
-        /// Gets the value of the Foreground for the header.
+        /// Gets the value of the Foreground for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value of the Foreground for the header.
+        /// Sets the value of the Foreground for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -47,7 +47,7 @@ namespace MahApps.Metro.Controls
                 new UIPropertyMetadata(Panel.BackgroundProperty.DefaultMetadata.DefaultValue));
 
         /// <summary>
-        /// Gets the value of the Background for the header.
+        /// Gets the value of the Background for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -57,7 +57,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value of the Background for the header.
+        /// Sets the value of the Background for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -74,7 +74,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets the value of the FontFamily for the header.
+        /// Gets the value of the FontFamily for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -85,7 +85,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value of the FontFamily for the header.
+        /// Sets the value of the FontFamily for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -103,7 +103,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets the value of the FontSize for the header.
+        /// Gets the value of the FontSize for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -114,7 +114,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value of the FontSize for the header.
+        /// Sets the value of the FontSize for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(TextElement.FontStretchProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets the value of the FontStretch for the header.
+        /// Gets the value of the FontStretch for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -143,7 +143,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value of the FontStretch for the header.
+        /// Sets the value of the FontStretch for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -161,7 +161,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets the value of the FontWeight for the header.
+        /// Gets the value of the FontWeight for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -172,7 +172,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value of the FontWeight for the header.
+        /// Sets the value of the FontWeight for the header.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
