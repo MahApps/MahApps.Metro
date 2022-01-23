@@ -95,6 +95,30 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderBackgroundProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var headerBackground = Brushes.BlueViolet;
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestTabItem.Background);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestTabItem.FindChild<Border>("Border")?.Background);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestTabItemVS.Background);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestTabItemVS.FindChild<Border>("Border")?.Background);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestMetroTabItem.Background);
+        Assert.Equal(headerBackground, this.fixture.Window?.TestMetroTabItem.FindChild<Border>("Border")?.Background);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task FlyoutShouldUseHeaderBackgroundProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -199,6 +223,27 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task TabControlShouldUseForegroundProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var headerForeground = Brushes.Crimson;
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(headerForeground, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(headerForeground, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Foreground);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(headerForeground, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task FlyoutShouldUseForegroundProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -210,7 +255,7 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         var flyoutForeground = Brushes.Aqua;
 
-        this.fixture.Window?.TestFlyout.SetCurrentValue(TabItem.ForegroundProperty, flyoutForeground);
+        this.fixture.Window?.TestFlyout.SetCurrentValue(Flyout.ForegroundProperty, flyoutForeground);
         this.fixture.Window?.TestFlyout.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
         Assert.Equal(flyoutForeground, this.fixture.Window?.TestFlyout.Foreground);
         Assert.Equal(headerForeground, this.fixture.Window?.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.Foreground);
@@ -301,6 +346,27 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(headerMargin, this.fixture.Window?.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin);
         this.fixture.Window?.TestMetroTabItem.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
         Assert.Equal(new Thickness(8), this.fixture.Window?.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderMarginProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var headerMargin = new Thickness(4);
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Margin);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin);
     }
 
     [Fact]
@@ -427,6 +493,34 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderContentAlignmentProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
+        const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment);
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task FlyoutShouldUseHeaderContentAlignmentProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -521,6 +615,27 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(fontFamily, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
 
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderFontFamilyProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var fontFamily = new FontFamily("Arial");
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
         Assert.Equal(fontFamily, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily);
     }
 
@@ -622,6 +737,27 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderFontSizeProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        const double fontSize = 48d;
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontSize);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task FlyoutShouldUseHeaderFontSizeProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -718,6 +854,27 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderFontStretchProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var fontStretch = FontStretches.Condensed;
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task FlyoutShouldUseHeaderFontStretchProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -809,6 +966,27 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
         Assert.Equal(fontWeight, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
 
         this.fixture.Window?.TestMetroTabItem.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
+    public async Task TabControlShouldUseHeaderFontWeightProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var fontWeight = FontWeights.ExtraBold;
+
+        // TabControl
+
+        this.fixture.Window?.TestTabControl.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, this.fixture.Window?.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
+
+        this.fixture.Window?.TestTabControlVS.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, this.fixture.Window?.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
+
+        this.fixture.Window?.TestMetroTabControl.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
         Assert.Equal(fontWeight, this.fixture.Window?.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight);
     }
 
