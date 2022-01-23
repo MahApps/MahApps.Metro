@@ -47,6 +47,7 @@
         </StackPanel>
         <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
         <mah:ColorPalette x:Name="TestColorPalette" Header="Test" />
+        <mah:ToggleSwitch x:Name="TestToggleSwitch" Header="Test" />
         <TabControl x:Name="TestTabControl" Height="250">
             <TabItem x:Name="TestTabItem" Header="Test">
                 <TextBlock Text="Test" />

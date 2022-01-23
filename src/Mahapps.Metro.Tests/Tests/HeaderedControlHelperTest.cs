@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -136,6 +137,21 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseForegroundProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var headerForeground = Brushes.Crimson;
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
+        Assert.Equal(headerForeground, TextElement.GetForeground(this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")));
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task ExpanderShouldUseForegroundProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -225,6 +241,21 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
         Assert.Equal(headerMargin, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.Margin);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseHeaderMarginProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var headerMargin = new Thickness(4);
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
+        Assert.Equal(headerMargin, this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")?.Margin);
     }
 
     [Fact]
@@ -327,6 +358,24 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseHeaderContentAlignmentProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
+        const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty, horizontalAlignment);
+        Assert.Equal(horizontalAlignment, this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")?.HorizontalAlignment);
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
+        Assert.Equal(verticalAlignment, this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")?.VerticalAlignment);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task ExpanderShouldUseHeaderContentAlignmentProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -423,6 +472,21 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseHeaderFontFamilyProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var fontFamily = new FontFamily("Arial");
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
+        Assert.Equal(fontFamily, TextElement.GetFontFamily(this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")));
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task ExpanderShouldUseHeaderFontFamilyProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -500,6 +564,21 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
         Assert.Equal(fontSize, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontSize);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseHeaderFontSizeProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        const double fontSize = 48d;
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
+        Assert.Equal(fontSize, TextElement.GetFontSize(this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")));
     }
 
     [Fact]
@@ -585,6 +664,21 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
     [Fact]
     [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseHeaderFontStretchProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var fontStretch = FontStretches.Condensed;
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
+        Assert.Equal(fontStretch, TextElement.GetFontStretch(this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")));
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
     public async Task ExpanderShouldUseHeaderFontStretchProperty()
     {
         await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
@@ -662,6 +756,21 @@ public class HeaderedControlHelperTest : AutomationTestBase, IClassFixture<Heade
 
         this.fixture.Window?.TestColorPalette.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
         Assert.Equal(fontWeight, this.fixture.Window?.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontWeight);
+    }
+
+    [Fact]
+    [DisplayTestMethodName]
+    public async Task ToggleSwitchShouldUseHeaderFontWeightProperty()
+    {
+        await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+        await TestHost.SwitchToAppThread();
+
+        var fontWeight = FontWeights.ExtraBold;
+
+        // ToggleSwitch
+
+        this.fixture.Window?.TestToggleSwitch.SetValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
+        Assert.Equal(fontWeight, TextElement.GetFontWeight(this.fixture.Window?.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")));
     }
 
     [Fact]
