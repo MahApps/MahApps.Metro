@@ -41,32 +41,32 @@ namespace MahApps.Metro.Tests.TestHelpers
 
         private TestHost()
         {
-            appThread = new Thread(StartDispatcher);
-            appThread.SetApartmentState(ApartmentState.STA);
-            appThread.Start();
+            this.appThread = new Thread(this.StartDispatcher);
+            this.appThread.SetApartmentState(ApartmentState.STA);
+            this.appThread.Start();
 
-            gate.WaitOne();
+            this.gate.WaitOne();
         }
 
         private void StartDispatcher()
         {
-            app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-            app.InitializeComponent();
-            app.Exit += (sender, args) =>
+            this.app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+            this.app.InitializeComponent();
+            this.app.Exit += (sender, args) =>
                 {
                     var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
                 };
-            app.Startup += async (sender, args) =>
+            this.app.Startup += async (sender, args) =>
                 {
                     var message = $"Start TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
-                    gate.Set();
+                    this.gate.Set();
                     await Task.Yield();
                 };
-            app.Run();
+            this.app.Run();
         }
 
         /// <summary>

@@ -20,13 +20,15 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
+                        <Grid x:Name="HeaderSite"
+                              Grid.Row="0"
+                              Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
                             <mah:ContentControlEx x:Name="HeaderContent"
-                                                  Margin="{DynamicResource GroupBoxHeaderThemePadding}"
+                                                  Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                                   HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   Content="{TemplateBinding Header}"
-                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
@@ -58,6 +60,7 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.GroupBox.HeaderThemeFont}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource GroupBoxHeaderThemePadding}" />
     </Style>
 
 </ResourceDictionary>
