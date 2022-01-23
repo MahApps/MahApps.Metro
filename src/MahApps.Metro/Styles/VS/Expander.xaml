@@ -68,8 +68,8 @@
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
                                                   Margin="0"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -117,8 +117,8 @@
                             </Grid.ColumnDefinitions>
                             <mah:ContentControlEx Grid.Column="0"
                                                   Margin="0"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -216,8 +216,8 @@
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
                                                   Margin="0"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -263,8 +263,8 @@
                             </Grid.ColumnDefinitions>
                             <mah:ContentControlEx Grid.Column="0"
                                                   Margin="0"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -348,6 +348,8 @@
                         <DockPanel x:Name="ExpanderRoot">
                             <ToggleButton x:Name="ToggleSite"
                                           Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                          HorizontalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                           mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                           Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
                                           BorderBrush="{TemplateBinding BorderBrush}"

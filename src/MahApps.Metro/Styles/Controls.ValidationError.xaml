@@ -139,7 +139,7 @@
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
             </MultiDataTrigger>
-            
+
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding ElementName=RedTriangle, Path=IsMouseOver, Mode=OneWay}" Value="True" />

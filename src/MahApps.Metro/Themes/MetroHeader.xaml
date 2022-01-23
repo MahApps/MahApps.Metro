@@ -23,7 +23,8 @@
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
                               Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
-                            <mah:ContentControlEx Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                            <mah:ContentControlEx x:Name="HeaderContent"
+                                                  Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                                   HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   Content="{TemplateBinding Header}"
