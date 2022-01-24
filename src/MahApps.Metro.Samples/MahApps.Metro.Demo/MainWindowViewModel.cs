@@ -254,6 +254,13 @@ namespace MetroDemo
             HotkeyManager.Current.Remove("demo");
         }
 
+        private bool showTitleColumn;
+        public bool ShowTitleColumn
+        {
+            get => showTitleColumn;
+            set => Set(ref showTitleColumn, value);
+        }
+
         public string Title { get; set; }
 
         public int SelectedIndex { get; set; }

@@ -4,6 +4,7 @@
 
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
@@ -23,6 +24,12 @@ namespace MahApps.Metro.Controls
             if (d is FrameworkElement fe)
             {
                 fe.Visibility = (bool?)e.NewValue == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+            else if (d is DataGridColumn dataGridColumn)
+            {
+                dataGridColumn.Visibility = (bool?)e.NewValue == true
                     ? Visibility.Visible
                     : Visibility.Collapsed;
             }
@@ -56,6 +63,12 @@ namespace MahApps.Metro.Controls
                     ? Visibility.Collapsed
                     : Visibility.Visible;
             }
+            else if (d is DataGridColumn dataGridColumn)
+            {
+                dataGridColumn.Visibility = (bool?)e.NewValue == true
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+            }
         }
 
         public static void SetIsCollapsed(DependencyObject element, bool? value)
@@ -83,6 +96,12 @@ namespace MahApps.Metro.Controls
             if (d is FrameworkElement fe)
             {
                 fe.Visibility = (bool?)e.NewValue == true
+                    ? Visibility.Hidden
+                    : Visibility.Visible;
+            }
+            else if (d is DataGridColumn dataGridColumn)
+            {
+                dataGridColumn.Visibility = (bool?)e.NewValue == true
                     ? Visibility.Hidden
                     : Visibility.Visible;
             }
