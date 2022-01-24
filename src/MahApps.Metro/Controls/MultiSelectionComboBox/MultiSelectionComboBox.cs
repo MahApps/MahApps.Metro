@@ -1825,7 +1825,8 @@ namespace MahApps.Metro.Controls
                         {
                             foreach (var item in e.NewItems)
                             {
-                                targetCollection.Add(item);
+                                if (targetCollection.Contains(item) == false)
+                                    targetCollection.Add(item);
                             }
                         }
 
@@ -1845,7 +1846,8 @@ namespace MahApps.Metro.Controls
                         {
                             foreach (var item in e.NewItems)
                             {
-                                targetCollection.Add(item);
+                                if (targetCollection.Contains(item) == false)
+                                    targetCollection.Add(item);
                             }
                         }
 
@@ -1896,7 +1898,8 @@ namespace MahApps.Metro.Controls
 
                         foreach (var item in sourceCollection)
                         {
-                            targetCollection.Add(item);
+                            if (targetCollection.Contains(item) == false)
+                                targetCollection.Add(item);
                         }
 
                         break;

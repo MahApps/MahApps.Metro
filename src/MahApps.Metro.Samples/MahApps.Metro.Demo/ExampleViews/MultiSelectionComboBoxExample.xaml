@@ -280,12 +280,17 @@
                   Margin="5"
                   Header="Result">
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
                 <mah:MultiSelectionComboBox x:Name="mscb_Example"
                                             Margin="5"
                                             VerticalAlignment="Center"
                                             mah:MultiSelectorHelper.SelectedItems="{Binding SelectedAnimals}"
                                             mah:TextBoxHelper.AutoWatermark="True"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
+                                            DisplayMemberPath="Name"
                                             AddedItem="Mscb_Example_AddedItem"
                                             AddingItem="Mscb_Example_AddingItem"
                                             EditableTextStringComparision="CurrentCultureIgnoreCase"
@@ -299,6 +304,14 @@
                                             StringToObjectParser="{x:Static mah:DefaultStringToObjectParser.Instance}"
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
                                             TextWrapping="Wrap" />
+
+                <ListBox 
+                    Grid.Row="1"
+                    Margin="5"
+                    ItemsSource="{Binding Path=SelectedAnimals}"
+                    DisplayMemberPath="Name"
+                    VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                </ListBox>
             </Grid>
         </GroupBox>
     </Grid>
