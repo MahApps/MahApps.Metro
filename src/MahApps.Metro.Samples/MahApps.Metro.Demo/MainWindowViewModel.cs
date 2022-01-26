@@ -255,6 +255,7 @@ namespace MetroDemo
         }
 
         private bool showTitleColumn = true;
+
         public bool ShowTitleColumn
         {
             get => showTitleColumn;

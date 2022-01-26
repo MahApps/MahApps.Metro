@@ -7,6 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:MetroDemo.Models"
              xmlns:vc="clr-namespace:MetroDemo.ValueConverter"
+             xmlns:core="clr-namespace:MetroDemo.Core"
              d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -134,7 +135,7 @@
 
             <vc:AlbumPriceIsTooMuchConverter x:Key="AlbumPriceIsTooMuchConverter" />
 
-            <models:BindingProxy x:Key="proxy" Data="{Binding }"/>
+            <core:BindingProxy x:Key="proxy" Data="{Binding }"/>
 
         </ResourceDictionary>
     </UserControl.Resources>

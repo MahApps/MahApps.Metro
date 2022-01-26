@@ -53,26 +53,6 @@ namespace MetroDemo.ExampleViews
         }
     }
 
-    // This class can be used to avoid the following error message
-    // System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=
-    // WPF doesn’t know which FrameworkElement to use to get the DataContext, because the HamburgerMenuItem doesn’t belong to the visual or logical tree of the HamburgerMenu.
-    public class BindingProxy : Freezable
-    {
-        // Using a DependencyProperty as the backing store for Data. This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DataProperty = DependencyProperty.Register(nameof(Data), typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
-
-        public object? Data
-        {
-            get => this.GetValue(DataProperty);
-            set => this.SetValue(DataProperty, value);
-        }
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BindingProxy();
-        }
-    }
-
     public static class ShowAboutCommand
     {
         public static readonly RoutedCommand Command = new RoutedCommand(nameof(Command), typeof(ShowAboutCommand));
