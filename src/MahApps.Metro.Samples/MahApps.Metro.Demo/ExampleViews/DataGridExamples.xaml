@@ -134,6 +134,8 @@
 
             <vc:AlbumPriceIsTooMuchConverter x:Key="AlbumPriceIsTooMuchConverter" />
 
+            <models:BindingProxy x:Key="proxy" Data="{Binding }"/>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -148,12 +150,20 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Grid.Column="0"
-               Grid.ColumnSpan="2"
-               HorizontalAlignment="Left"
-               Content="Metro Style"
-               Style="{DynamicResource DescriptionHeaderStyle}" />
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+
+            <Label Content="Metro Style"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+
+            <mah:ToggleSwitch Margin="2"
+                              IsOn="{Binding ShowTitleColumn}"
+                              OnContent="Title visible" 
+                              OffContent="No Title"/>
+        </StackPanel>
 
         <ContentControl Grid.Row="1"
                         Grid.Column="0"
@@ -199,7 +209,7 @@
                                         EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         Header="Album Selected" />
-                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
+                <DataGridTextColumn Binding="{Binding Title}" Header="Title" mah:VisibilityHelper.IsVisible="{Binding Data.ShowTitleColumn, Source={StaticResource proxy}}"/>
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                 <DataGridComboBoxColumn DisplayMemberPath="Name"
                                         Header="Artist"
@@ -260,7 +270,7 @@
                   RowHeaderWidth="0"
                   Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
+                <DataGridTextColumn Binding="{Binding Title}" Header="Title" mah:VisibilityHelper.IsVisible="{Binding Data.ShowTitleColumn, Source={StaticResource proxy}}"/>
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                 <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
                 <DataGridTemplateColumn Header="Price">
