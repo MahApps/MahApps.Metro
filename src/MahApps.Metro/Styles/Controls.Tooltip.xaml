@@ -53,6 +53,12 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
+					<ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="True">
+                            <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                            <Setter TargetName="Root" Property="Margin" Value="0,0,6,6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
