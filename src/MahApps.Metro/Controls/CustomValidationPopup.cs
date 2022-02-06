@@ -432,7 +432,8 @@ namespace MahApps.Metro.Controls
             var handle = hwndSource.Handle;
 
 #pragma warning disable 618
-            if (!UnsafeNativeMethods.GetWindowRect(handle, out var rect))
+            var rect = NativeMethods.GetWindowRect(handle);
+            if (rect == default)
             {
                 return;
             }

@@ -27,7 +27,13 @@
 
         <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0085" PrivateAssets="all" IncludeAssets="build" />
 
+        <PackageReference Include="ControlzEx" version="6.0.0-alpha0188" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="all" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.1.635-beta">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>

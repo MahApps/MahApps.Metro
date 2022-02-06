@@ -8,7 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.MetroWindow.VisualStudio" TargetType="{x:Type mah:MetroWindow}">
-        <Setter Property="GlowBrush" Value="{DynamicResource MahApps.Brushes.Window.Glow}" />
+        <Setter Property="GlowColor" Value="{DynamicResource MahApps.Colors.Accent}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ShowTitleBar" Value="True" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.WindowTitle.Foreground}" />

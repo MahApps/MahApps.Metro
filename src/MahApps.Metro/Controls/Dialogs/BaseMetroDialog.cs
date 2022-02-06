@@ -394,10 +394,10 @@ namespace MahApps.Metro.Controls.Dialogs
             if (this.ParentDialogWindow != null)
             {
                 this.ParentDialogWindow.SetCurrentValue(BackgroundProperty, this.Background);
-                var glowBrush = TryGetResource(theme, "MahApps.Brushes.Dialog.Glow");
-                if (glowBrush != null)
+                var glowColor = TryGetResource(theme, "MahApps.Colors.Accent");
+                if (glowColor != null)
                 {
-                    this.ParentDialogWindow.SetCurrentValue(MetroWindow.GlowBrushProperty, glowBrush);
+                    this.ParentDialogWindow.SetCurrentValue(MetroWindow.GlowColorProperty, glowColor);
                 }
             }
         }
