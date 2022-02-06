@@ -18,9 +18,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 using ControlzEx;
 using ControlzEx.Native;
-using ControlzEx.Standard;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
 using MahApps.Metro.Automation.Peers;
@@ -1533,7 +1534,7 @@ namespace MahApps.Metro.Controls
                 else if (this.ShowSystemMenu)
                 {
 #pragma warning disable 618
-                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
+                    ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
 #pragma warning restore 618
                 }
             }
@@ -1599,7 +1600,7 @@ namespace MahApps.Metro.Controls
 
 #pragma warning disable 618
             // for the touch usage
-            UnsafeNativeMethods.ReleaseCapture();
+            PInvoke.ReleaseCapture();
 #pragma warning restore 618
 
             if (windowIsMaximized)
@@ -1627,7 +1628,7 @@ namespace MahApps.Metro.Controls
             var wpfPoint = window.PointToScreen(Mouse.GetPosition(window));
             var x = (int)wpfPoint.X;
             var y = (int)wpfPoint.Y;
-            NativeMethods.SendMessage(window.CriticalHandle, WM.NCLBUTTONDOWN, (IntPtr)HT.CAPTION, new IntPtr(x | (y << 16)));
+            PInvoke.SendMessage(new HWND(window.CriticalHandle), PInvoke.WM_NCLBUTTONDOWN, new WPARAM((nuint)HT.CAPTION), new IntPtr(x | (y << 16)));
 #pragma warning restore 618
         }
 
@@ -1645,11 +1646,11 @@ namespace MahApps.Metro.Controls
 #pragma warning disable 618
                     if (window.WindowState == WindowState.Normal)
                     {
-                        ControlzEx.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        ControlzEx.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        ControlzEx.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        ControlzEx.SystemCommands.RestoreWindow(window);
                     }
 #pragma warning restore 618
                     mouseButtonEventArgs.Handled = true;
@@ -1666,7 +1667,7 @@ namespace MahApps.Metro.Controls
                 if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.UseNoneWindowStyle && window.TitleBarHeight <= 0))
                 {
 #pragma warning disable 618
-                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
+                    ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
 #pragma warning restore 618
                 }
             }

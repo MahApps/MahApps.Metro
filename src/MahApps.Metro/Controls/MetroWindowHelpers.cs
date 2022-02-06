@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ControlzEx.Theming;
-using ControlzEx.Windows.Shell;
+using ControlzEx;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls

@@ -4,9 +4,13 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using ControlzEx.Standard;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.WindowsAndMessaging;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
@@ -140,7 +144,7 @@ namespace MahApps.Metro.Behaviors
 
             try
             {
-                var wp = settings.Placement;
+                var wp = settings.Placement.ToWINDOWPLACEMENT();
                 WinApiHelper.SetWindowPlacement(window, wp);
             }
             catch (Exception ex)
@@ -164,30 +168,48 @@ namespace MahApps.Metro.Behaviors
             }
 
             var windowHandle = new WindowInteropHelper(window).EnsureHandle();
-            var wp = NativeMethods.GetWindowPlacement(windowHandle);
+            var wp = new WINDOWPLACEMENT
+                     {
+                        length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>()
+                     };
+            unsafe
+            {
+                PInvoke.GetWindowPlacement((HWND)windowHandle, &wp);
+            }
 
             // check for saveable values
-            if (wp.showCmd != SW.HIDE && wp.length > 0)
+            if (wp.showCmd != SHOW_WINDOW_CMD.SW_HIDE && wp.length > 0)
             {
-                if (wp.showCmd == SW.NORMAL)
+                if (wp.showCmd == SHOW_WINDOW_CMD.SW_NORMAL)
                 {
-                    var rect = NativeMethods.GetWindowRect(windowHandle);
-                    if (rect != default)
+                    unsafe
                     {
-                        var monitor = NativeMethods.MonitorFromWindow(windowHandle, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-                        if (monitor != IntPtr.Zero)
+                        var rect = new RECT();
+                        PInvoke.GetWindowRect(new HWND(windowHandle), &rect);
+                        if (rect.left != 0
+                            || rect.top != 0
+                            || rect.right != 0
+                            || rect.bottom != 0)
                         {
-                            var monitorInfo = NativeMethods.GetMonitorInfo(monitor);
-                            rect.Offset(monitorInfo.rcMonitor.Left - monitorInfo.rcWork.Left, monitorInfo.rcMonitor.Top - monitorInfo.rcWork.Top);
-                        }
+                            var monitor = PInvoke.MonitorFromWindow(new HWND(windowHandle), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+                            if (monitor != IntPtr.Zero)
+                            {
+                                var monitorInfo = new MONITORINFO
+                                                  {
+                                                        cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
+                                                  };
+                                PInvoke.GetMonitorInfo(monitor, &monitorInfo);
+                                rect.Offset(monitorInfo.rcMonitor.left - monitorInfo.rcWork.left, monitorInfo.rcMonitor.top - monitorInfo.rcWork.top);
+                            }
 
-                        wp.normalPosition = rect;
+                            wp.rcNormalPosition = rect;
+                        }
                     }
                 }
 
-                if (!wp.normalPosition.IsEmpty)
+                if (!wp.rcNormalPosition.IsEmpty())
                 {
-                    settings.Placement = wp;
+                    settings.Placement = WindowPlacementSetting.FromWINDOWPLACEMENT(wp);
                 }
             }
 

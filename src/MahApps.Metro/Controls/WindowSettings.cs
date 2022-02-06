@@ -2,17 +2,49 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ControlzEx.Standard;
 using System.Configuration;
+using System.Runtime.InteropServices;
 using System.Windows;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace MahApps.Metro.Controls
 {
+    public class WindowPlacementSetting
+    {
+        public uint showCmd;
+        public Point minPosition;
+        public Point maxPosition;
+        public Rect normalPosition;
+
+        internal WINDOWPLACEMENT ToWINDOWPLACEMENT()
+        {
+            return new WINDOWPLACEMENT
+                   {
+                        length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
+                        showCmd = (SHOW_WINDOW_CMD)this.showCmd,
+                        ptMinPosition = new POINT { x = (int)this.minPosition.X, y = (int)this.minPosition.Y },
+                        ptMaxPosition = new POINT { x = (int)this.maxPosition.X, y = (int)this.maxPosition.Y },
+                        rcNormalPosition = new RECT { left = (int)this.normalPosition.X, top = (int)this.normalPosition.Y, right = (int)this.normalPosition.Right, bottom = (int)this.normalPosition.Bottom }
+                   };
+        }
+
+        internal static WindowPlacementSetting FromWINDOWPLACEMENT(WINDOWPLACEMENT windowplacement)
+        {
+            return new WindowPlacementSetting
+                    {
+                        showCmd = (uint)windowplacement.showCmd,
+                        minPosition = new Point(windowplacement.ptMinPosition.x, windowplacement.ptMinPosition.y),
+                        maxPosition = new Point(windowplacement.ptMaxPosition.x, windowplacement.ptMaxPosition.y),
+                        normalPosition = new Rect(windowplacement.rcNormalPosition.left, windowplacement.rcNormalPosition.top, windowplacement.rcNormalPosition.GetWidth(), windowplacement.rcNormalPosition.GetHeight()),
+                    };
+        }
+    }
+
     public interface IWindowPlacementSettings
     {
-#pragma warning disable 618
-        WINDOWPLACEMENT? Placement { get; set; }
-#pragma warning restore 618
+        WindowPlacementSetting? Placement { get; set; }
 
         /// <summary>
         /// Refreshes the application settings property values from persistent storage.
@@ -45,15 +77,14 @@ namespace MahApps.Metro.Controls
         {
         }
 
-#pragma warning disable 618
         [UserScopedSetting]
-        public WINDOWPLACEMENT? Placement
+        public WindowPlacementSetting? Placement
         {
             get
             {
                 try
                 {
-                    return this[nameof(Placement)] as WINDOWPLACEMENT;
+                    return this[nameof(Placement)] as WindowPlacementSetting;
                 }
                 catch (ConfigurationErrorsException? ex)
                 {
@@ -68,7 +99,6 @@ namespace MahApps.Metro.Controls
             }
             set => this[nameof(Placement)] = value;
         }
-#pragma warning restore 618
 
         /// <summary>
         /// Upgrades the application settings on loading.
