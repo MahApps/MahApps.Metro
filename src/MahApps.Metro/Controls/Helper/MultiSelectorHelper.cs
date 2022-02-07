@@ -202,7 +202,10 @@ namespace MahApps.Metro.Controls
                     {
                         foreach (var newItem in addedItems)
                         {
-                            this.collection.Add(newItem);
+                            if (this.collection.Contains(newItem) == false)
+                            {
+                                this.collection.Add(newItem);
+                            }
                         }
                     }
                 }
