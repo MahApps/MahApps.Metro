@@ -111,7 +111,6 @@ namespace MahApps.Metro.Behaviors
                 });
         }
 
-#pragma warning disable 618
         private void LoadWindowState()
         {
             var window = this.AssociatedObject;
@@ -222,6 +221,5 @@ namespace MahApps.Metro.Behaviors
                 Trace.TraceError($"{this}: The settings could not be saved! {e}");
             }
         }
-#pragma warning restore 618
     }
 }

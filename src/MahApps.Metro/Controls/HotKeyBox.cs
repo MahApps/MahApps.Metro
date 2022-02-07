@@ -164,7 +164,6 @@ namespace MahApps.Metro.Controls
             ComponentDispatcher.ThreadPreprocessMessage += this.ComponentDispatcherOnThreadPreprocessMessage;
         }
 
-#pragma warning disable 618
         private void ComponentDispatcherOnThreadPreprocessMessage(ref MSG msg, ref bool handled)
         {
             if (msg.message == PInvoke.WM_HOTKEY)
@@ -173,7 +172,6 @@ namespace MahApps.Metro.Controls
                 handled = true;
             }
         }
-#pragma warning restore 618
 
         private void TextBoxOnLostFocus(object sender, RoutedEventArgs routedEventArgs)
         {

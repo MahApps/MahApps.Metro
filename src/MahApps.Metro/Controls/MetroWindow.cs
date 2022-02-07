@@ -1598,10 +1598,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-#pragma warning disable 618
             // for the touch usage
             PInvoke.ReleaseCapture();
-#pragma warning restore 618
 
             if (windowIsMaximized)
             {
@@ -1620,7 +1618,6 @@ namespace MahApps.Metro.Controls
                 window.StateChanged += onWindowStateChanged;
             }
 
-#pragma warning disable 618
             // these lines are from DragMove
             // NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
             // NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
@@ -1629,7 +1626,6 @@ namespace MahApps.Metro.Controls
             var x = (int)wpfPoint.X;
             var y = (int)wpfPoint.Y;
             PInvoke.SendMessage(new HWND(window.CriticalHandle), PInvoke.WM_NCLBUTTONDOWN, new WPARAM((nuint)HT.CAPTION), new IntPtr(x | (y << 16)));
-#pragma warning restore 618
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)

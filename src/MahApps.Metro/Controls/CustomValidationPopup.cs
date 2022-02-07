@@ -432,7 +432,6 @@ namespace MahApps.Metro.Controls
 
             var handle = new HWND(hwndSource.Handle);
 
-#pragma warning disable 618
             var rect = new RECT();
             PInvoke.GetWindowRect(handle, &rect);
             if (rect.left == 0
@@ -466,7 +465,6 @@ namespace MahApps.Metro.Controls
             }
 
             this.appliedTopMost = isTop;
-#pragma warning restore 618
         }
     }
 }

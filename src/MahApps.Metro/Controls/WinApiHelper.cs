@@ -15,8 +15,6 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.WindowsAndMessaging;
 
-#pragma warning disable 618
-
 namespace MahApps.Metro.Controls
 {
     internal static class WinApiHelper

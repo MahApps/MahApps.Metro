@@ -44,7 +44,6 @@ namespace MahApps.Metro.Controls
             return this.Key == other.Key && this.ModifierKeys == other.ModifierKeys;
         }
 
-#pragma warning disable 618
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -74,7 +73,6 @@ namespace MahApps.Metro.Controls
             sb.Append(GetLocalizedKeyString(this.Key));
             return sb.ToString();
         }
-#pragma warning restore 618
 
         private static string GetLocalizedKeyString(Key key)
         {
@@ -87,7 +85,6 @@ namespace MahApps.Metro.Controls
             return GetLocalizedKeyStringUnsafe(vkey) ?? key.ToString();
         }
 
-#pragma warning disable 618
         private static string? GetLocalizedKeyStringUnsafe(int key)
         {
             // strip any modifier keys
@@ -117,6 +114,5 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
-#pragma warning restore 618
     }
 }
