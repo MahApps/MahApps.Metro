@@ -106,6 +106,24 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Single(this.fixture.Window?.MultiSelectionComboBox.SelectedItems);
             Assert.Single(this.fixture.Window?.FirstListBox.SelectedItems);
             Assert.Single(this.fixture.Window?.SecondListBox.SelectedItems);
+
+            this.fixture.Window?.FirstListBox?.SelectedItems.Add(this.fixture.Window?.Items[1]);
+
+            Assert.Equal(2, this.fixture.Window?.MultiSelectionComboBox.SelectedItems.Count);
+            Assert.Equal(2, this.fixture.Window?.FirstListBox.SelectedItems.Count);
+            Assert.Equal(2, this.fixture.Window?.SecondListBox.SelectedItems.Count);
+
+            this.fixture.Window?.SecondListBox?.SelectedItems.Add(this.fixture.Window?.Items[2]);
+
+            Assert.Equal(3, this.fixture.Window?.MultiSelectionComboBox.SelectedItems.Count);
+            Assert.Equal(3, this.fixture.Window?.FirstListBox.SelectedItems.Count);
+            Assert.Equal(3, this.fixture.Window?.SecondListBox.SelectedItems.Count);
+
+            this.fixture.Window?.MultiSelectionComboBox?.SelectedItems.Add(this.fixture.Window?.Items[3]);
+
+            Assert.Equal(4, this.fixture.Window?.MultiSelectionComboBox.SelectedItems.Count);
+            Assert.Equal(4, this.fixture.Window?.FirstListBox.SelectedItems.Count);
+            Assert.Equal(4, this.fixture.Window?.SecondListBox.SelectedItems.Count);
         }
 
         [Fact]
