@@ -14,7 +14,7 @@ using System.Windows.Controls.Primitives;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Defines a helper class for selected items binding on <see cref="ListBox"/> or <see cref="MultiSelector"/> controls.
+    /// Defines a helper class for SelectedItems binding on <see cref="ListBox"/>, <see cref="MultiSelector"/> or <see cref="MultiSelectionComboBox"/> controls.
     /// </summary>
     public static class MultiSelectorHelper
     {
@@ -30,15 +30,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private static void OnSelectedItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ListBox || d is MultiSelector || d is MultiSelectionComboBox))
+            if (d is not (ListBox or MultiSelector or MultiSelectionComboBox))
             {
                 throw new ArgumentException("The property 'SelectedItems' may only be set on ListBox, MultiSelector or MultiSelectionComboBox elements.");
             }
 
             if (e.OldValue != e.NewValue)
             {
-                var oldBinding = GetSelectedItemBinding(d);
-                oldBinding?.UnBind();
+                GetSelectedItemBinding(d)?.UnBind();
 
                 if (e.NewValue is IList newList)
                 {
@@ -48,7 +47,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    SetSelectedItemBinding((Selector)d, null);
+                    SetSelectedItemBinding(d, null);
                 }
             }
         }
@@ -59,6 +58,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static IList? GetSelectedItems(DependencyObject element)
         {
             return (IList?)element.GetValue(SelectedItemsProperty);
@@ -70,6 +70,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static void SetSelectedItems(DependencyObject element, IList? value)
         {
             element.SetValue(SelectedItemsProperty, value);
@@ -81,28 +82,18 @@ namespace MahApps.Metro.Controls
                 typeof(MultiSelectorBinding),
                 typeof(MultiSelectorHelper));
 
-        /// <summary>
-        /// Gets the <see cref="MultiSelectorBinding"/> for a binding
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(ListBox))]
-        [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
         private static MultiSelectorBinding? GetSelectedItemBinding(DependencyObject element)
         {
             return (MultiSelectorBinding?)element.GetValue(SelectedItemBindingProperty);
         }
 
-        /// <summary>
-        /// Sets the <see cref="MultiSelectorBinding"/> for a binding
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(ListBox))]
-        [AttachedPropertyBrowsableForType(typeof(MultiSelector))]
         private static void SetSelectedItemBinding(DependencyObject element, MultiSelectorBinding? value)
         {
             element.SetValue(SelectedItemBindingProperty, value);
         }
 
         /// <summary>
-        /// Defines a binding between multi selector and property
+        /// Defines a binding between <see cref="Selector"/> and collection.
         /// </summary>
         private class MultiSelectorBinding
         {
@@ -119,31 +110,13 @@ namespace MahApps.Metro.Controls
                 this.selector = selector;
                 this.collection = collection;
 
-                if (selector is ListBox listbox)
+                var selectedItems = GetSelectedItems(selector);
+                if (selectedItems is not null)
                 {
-                    listbox.SelectedItems.Clear();
+                    selectedItems.Clear();
                     foreach (var newItem in collection)
                     {
-                        listbox.SelectedItems.Add(newItem);
-                    }
-                }
-                else if (selector is MultiSelector multiSelector)
-                {
-                    multiSelector.SelectedItems.Clear();
-                    foreach (var newItem in collection)
-                    {
-                        multiSelector.SelectedItems.Add(newItem);
-                    }
-                }
-                else if (selector is MultiSelectionComboBox multiSelectionComboBox)
-                {
-                    if (multiSelectionComboBox.SelectedItems is not null)
-                    {
-                        multiSelectionComboBox.SelectedItems.Clear();
-                        foreach (var newItem in collection)
-                        {
-                            multiSelectionComboBox.SelectedItems.Add(newItem);
-                        }
+                        selectedItems.Add(newItem);
                     }
                 }
             }
@@ -231,8 +204,7 @@ namespace MahApps.Metro.Controls
 
                 try
                 {
-                    var selectedItems = (this.selector as ListBox)?.SelectedItems ?? (this.selector as MultiSelector)?.SelectedItems;
-
+                    var selectedItems = GetSelectedItems(this.selector);
                     if (selectedItems is not null)
                     {
                         switch (e.Action)
@@ -338,6 +310,17 @@ namespace MahApps.Metro.Controls
                         AddItems(selectedItems, e);
                     }
                 }
+            }
+
+            private static IList? GetSelectedItems(Selector selector)
+            {
+                return selector switch
+                {
+                    ListBox listbox => listbox.SelectedItems,
+                    MultiSelector multiSelector => multiSelector.SelectedItems,
+                    MultiSelectionComboBox multiSelectionComboBox => multiSelectionComboBox.SelectedItems,
+                    _ => null
+                };
             }
         }
     }
