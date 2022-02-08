@@ -13,6 +13,15 @@
                       Color="{DynamicResource MahApps.Colors.MenuShadow}"
                       po:Freeze="True" />
 
+    <DropShadowEffect x:Key="MahApps.DropShadowEffect.ToolTip"
+                      x:Shared="False"
+                      BlurRadius="4"
+                      Direction="315"
+                      Opacity="0.3"
+                      ShadowDepth="2"
+                      Color="{DynamicResource MahApps.Colors.ToolTipShadow}"
+                      po:Freeze="True" />
+
     <DropShadowEffect x:Key="MahApps.DropShadowEffect.WaitingForData"
                       x:Shared="False"
                       BlurRadius="10"
