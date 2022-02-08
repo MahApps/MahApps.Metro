@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
@@ -53,10 +53,10 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
-					<ControlTemplate.Triggers>
+                    <ControlTemplate.Triggers>
                         <Trigger Property="HasDropShadow" Value="True">
-                            <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
-                            <Setter TargetName="Root" Property="Margin" Value="0,0,6,6" />
+                            <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.ToolTip}" />
+                            <Setter TargetName="Root" Property="Margin" Value="0 0 6 6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
