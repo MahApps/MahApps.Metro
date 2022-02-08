@@ -291,9 +291,9 @@
                                             mah:MultiSelectorHelper.SelectedItems="{Binding SelectedAnimals}"
                                             mah:TextBoxHelper.AutoWatermark="True"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                                            DisplayMemberPath="Name"
                                             AddedItem="Mscb_Example_AddedItem"
                                             AddingItem="Mscb_Example_AddingItem"
+                                            DisplayMemberPath="Name"
                                             EditableTextStringComparision="CurrentCultureIgnoreCase"
                                             InterceptMouseWheelSelection="False"
                                             ItemContainerStyle="{Binding ElementName=Cmb_ItemContainerStyle, Path=SelectedItem.Tag}"
@@ -306,14 +306,15 @@
                                             Style="{Binding ElementName=CmbSelectStyle, Path=SelectedItem.Tag}"
                                             TextWrapping="Wrap" />
 
-                <TextBlock Text="Selected Items" FontSize="18"  Grid.Row="1" Margin="5"/>
-                <ListBox 
-                        Grid.Row="2"
-                        Margin="5"
-                        ItemsSource="{Binding Path=SelectedAnimals}"
-                        DisplayMemberPath="Name"
-                        VirtualizingPanel.IsVirtualizingWhenGrouping="True">
-                    </ListBox>
+                <TextBlock Grid.Row="1"
+                           Margin="5"
+                           FontSize="18"
+                           Text="Selected Items" />
+                <ListBox Grid.Row="2"
+                         Margin="5"
+                         DisplayMemberPath="Name"
+                         ItemsSource="{Binding Path=SelectedAnimals}"
+                         VirtualizingPanel.IsVirtualizingWhenGrouping="True" />
             </Grid>
         </GroupBox>
     </Grid>
