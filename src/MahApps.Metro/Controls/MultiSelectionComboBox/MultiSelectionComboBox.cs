@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,10 +43,7 @@ namespace MahApps.Metro.Controls
 
         public MultiSelectionComboBox()
         {
-            var selectedItemsImpl = new ObservableCollection<object>();
-            this.SetValue(SelectedItemsPropertyKey, selectedItemsImpl);
-
-            selectedItemsImpl.CollectionChanged += this.SelectedItemsImpl_CollectionChanged;
+            this.SetValue(SelectedItemsPropertyKey, new ObservableCollection<object>());
         }
 
         #endregion
@@ -68,7 +65,6 @@ namespace MahApps.Metro.Controls
         private bool isTextChanging; // This flag indicates if the text is changed by us, so we don't want to re-fire the TextChangedEvent.
         private bool shouldDoTextReset; // Defines if the Text should be reset after selecting items from string
         private bool shouldAddItems; // Defines if the MultiSelectionComboBox should add new items from text input. Don't set this to true while input is pending. We cannot know how long the user needs for typing.
-        private bool isSyncingSelectedItems; // true if syncing in one or the other direction already running
         private DispatcherTimer? updateSelectedItemsFromTextTimer;
         private static readonly RoutedUICommand SelectAllCommand
             = new RoutedUICommand("Select All",
@@ -1165,6 +1161,8 @@ namespace MahApps.Metro.Controls
 
         public override void OnApplyTemplate()
         {
+            this.StopListeningForSelectionChanges();
+
             base.OnApplyTemplate();
 
             // Init SelectedItemsPresenter
@@ -1186,17 +1184,52 @@ namespace MahApps.Metro.Controls
             this.PART_Popup = this.GetTemplateChild(nameof(this.PART_Popup)) as Popup ?? throw new MissingRequiredTemplatePartException(this, nameof(this.PART_Popup));
             this.PART_PopupListBox = this.GetTemplateChild(nameof(this.PART_PopupListBox)) as ListBox ?? throw new MissingRequiredTemplatePartException(this, nameof(this.PART_PopupListBox));
 
-            if (this.PART_PopupListBox.SelectedItems is INotifyCollectionChanged selectedItemsCollection)
+            if (this.PART_PopupListBox is not null)
             {
-                selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged;
-                selectedItemsCollection.CollectionChanged += this.PART_PopupListBox_SelectedItems_CollectionChanged;
-            }
+                this.PART_PopupListBox.SelectionChanged += this.PART_PopupListBox_SelectionChanged;
 
-            this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+
+                this.PART_PopupListBox.SelectionChanged -= this.PART_PopupListBox_SelectionChanged;
+            }
 
             // Do update the text and selection
             this.UpdateDisplaySelectedItems();
             this.UpdateEditableText(true);
+        }
+
+        private void PART_PopupListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ReferenceEquals(e.OriginalSource, this.PART_PopupListBox))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void StartListeningForSelectionChanges()
+        {
+            if (this.PART_PopupListBox?.SelectedItems is INotifyCollectionChanged selectedItemsCollection)
+            {
+                selectedItemsCollection.CollectionChanged += this.PART_PopupListBox_SelectedItems_CollectionChanged;
+            }
+
+            if (this.SelectedItems is INotifyCollectionChanged selectedItemsImpl)
+            {
+                selectedItemsImpl.CollectionChanged += this.SelectedItemsImpl_CollectionChanged;
+            }
+        }
+
+        private void StopListeningForSelectionChanges()
+        {
+            if (this.PART_PopupListBox?.SelectedItems is INotifyCollectionChanged selectedItemsCollection)
+            {
+                selectedItemsCollection.CollectionChanged -= this.PART_PopupListBox_SelectedItems_CollectionChanged;
+            }
+
+            if (this.SelectedItems is INotifyCollectionChanged selectedItemsImpl)
+            {
+                selectedItemsImpl.CollectionChanged -= this.SelectedItemsImpl_CollectionChanged;
+            }
         }
 
 #if NET5_0_OR_GREATER
@@ -1799,22 +1832,17 @@ namespace MahApps.Metro.Controls
         private void SelectedItemsImpl_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 #endif
         {
-            if (this.PART_PopupListBox is null)
-            {
-                return;
-            }
-
-            this.SyncSelectedItems(sender as IList, this.PART_PopupListBox.SelectedItems, e);
+            this.SyncSelectedItems(sender as IList, this.PART_PopupListBox?.SelectedItems, e);
         }
 
         private void SyncSelectedItems(IList? sourceCollection, IList? targetCollection, NotifyCollectionChangedEventArgs e)
         {
-            if (this.isSyncingSelectedItems || sourceCollection is null || targetCollection is null || !this.IsInitialized)
+            if (sourceCollection is null || targetCollection is null || !this.IsInitialized)
             {
                 return;
             }
 
-            this.isSyncingSelectedItems = true;
+            this.StopListeningForSelectionChanges();
 
             try
             {
@@ -1908,7 +1936,7 @@ namespace MahApps.Metro.Controls
             }
             finally
             {
-                this.isSyncingSelectedItems = false;
+                this.StartListeningForSelectionChanges();
             }
         }
 
