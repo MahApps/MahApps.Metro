@@ -15,7 +15,7 @@ namespace MahApps.Metro.Tests.TestHelpers
 {
     public static class WindowHelpers
     {
-        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? changeAddiotionalProperties = null)
+        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? onLoadedAction = null)
             where T : Window, new()
         {
             var window = new T
@@ -27,7 +27,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             void OnLoaded(object sender, RoutedEventArgs e)
             {
                 window.Loaded -= OnLoaded;
-                changeAddiotionalProperties?.Invoke(window);
+                onLoadedAction?.Invoke(window);
             }
 
             window.Loaded += OnLoaded;
