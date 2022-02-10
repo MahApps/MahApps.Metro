@@ -15,13 +15,11 @@ using Xunit;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class NumericUpDownTests : AutomationTestBase, IClassFixture<NumericUpDownFixture>
+    public class NumericUpDownTests : AutomationTestFixtureBase<NumericUpDownTestsFixture>
     {
-        private readonly NumericUpDownFixture fixture;
-
-        public NumericUpDownTests(NumericUpDownFixture fixture)
+        public NumericUpDownTests(NumericUpDownTestsFixture fixture)
+            : base(fixture)
         {
-            this.fixture = fixture;
         }
 
         public static bool NearlyEqual(double a, double b, double epsilon)
@@ -54,6 +52,10 @@ namespace MahApps.Metro.Tests.Tests
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
+
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
 
             this.fixture.Window.TheNUD.Interval = 0.1;
             this.fixture.Window.TheNUD.SnapToMultipleOfInterval = true;
@@ -101,6 +103,11 @@ namespace MahApps.Metro.Tests.Tests
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
+
             this.fixture.Window.TheNUD.Culture = CultureInfo.InvariantCulture;
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
             this.fixture.Window.TheNUD.StringFormat = format;
@@ -138,6 +145,11 @@ namespace MahApps.Metro.Tests.Tests
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
+
             this.fixture.Window.TheNUD.NumericInputMode = numericInput;
 
             SetText(this.fixture.TextBox, text);
@@ -164,6 +176,11 @@ namespace MahApps.Metro.Tests.Tests
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
+
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
 
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
             this.fixture.Window.TheNUD.StringFormat = format;
@@ -197,6 +214,11 @@ namespace MahApps.Metro.Tests.Tests
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
+
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
 
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
             this.fixture.Window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
@@ -242,6 +264,11 @@ namespace MahApps.Metro.Tests.Tests
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
+
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
             this.fixture.Window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
             this.fixture.Window.TheNUD.StringFormat = format;
@@ -263,6 +290,11 @@ namespace MahApps.Metro.Tests.Tests
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
+
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
 
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.Decimal;
             this.fixture.Window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
@@ -286,6 +318,11 @@ namespace MahApps.Metro.Tests.Tests
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
+
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
 
             this.fixture.Window.TheNUD.NumericInputMode = NumericInput.Numbers;
             this.fixture.Window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
@@ -314,6 +351,11 @@ namespace MahApps.Metro.Tests.Tests
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
+
             this.fixture.Window.TheNUD.StringFormat = format;
 
             SetText(this.fixture.TextBox, text);
@@ -339,6 +381,11 @@ namespace MahApps.Metro.Tests.Tests
             // Prepare
             await this.fixture.PrepareForTestAsync().ConfigureAwait(true);
             await TestHost.SwitchToAppThread();
+
+            Assert.NotNull(this.fixture.Window);
+            Assert.NotNull(this.fixture.NumUp);
+            Assert.NotNull(this.fixture.NumDown);
+            Assert.NotNull(this.fixture.TextBox);
 
             var nud = this.fixture.Window.TheNUD;
             nud.Minimum = 0;

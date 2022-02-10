@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
 using Xunit;
@@ -24,32 +22,6 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         public MultiSelectorHelperTestWindow? Window { get; private set; }
-
-        public static IEnumerable<DependencyProperty> EnumerateDependencyProperties(DependencyObject? obj)
-        {
-            if (obj != null)
-            {
-                LocalValueEnumerator lve = obj.GetLocalValueEnumerator();
-                while (lve.MoveNext())
-                {
-                    yield return lve.Current.Property;
-                }
-            }
-        }
-
-        public static void ClearDependencyProperties(DependencyObject? obj)
-        {
-            if (obj != null)
-            {
-                foreach (var property in EnumerateDependencyProperties(obj))
-                {
-                    if (property.ReadOnly == false)
-                    {
-                        obj.ClearValue(property);
-                    }
-                }
-            }
-        }
 
         public async Task PrepareForTestAsync()
         {
