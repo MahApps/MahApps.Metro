@@ -710,7 +710,13 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IconTemplate),
                                           typeof(DataTemplate),
                                           typeof(MetroWindow),
-                                          new PropertyMetadata(null));
+                                          new PropertyMetadata(null, (o, e) =>
+                                              {
+                                                  if (e.NewValue != e.OldValue)
+                                                  {
+                                                      (o as MetroWindow)?.UpdateIconVisibility();
+                                                  }
+                                              }));
 
         /// <summary>
         /// Gets or sets the <see cref="DataTemplate"/> for the icon on the TitleBar.
@@ -1022,8 +1028,8 @@ namespace MahApps.Metro.Controls
 
         private void UpdateIconVisibility()
         {
-            var isVisible = (this.IconOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar)
-                            || (this.ShowIconOnTitleBar && this.ShowTitleBar);
+            var isVisible = (this.Icon is not null || this.IconTemplate is not null)
+                && ((this.IconOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar) || (this.ShowIconOnTitleBar && this.ShowTitleBar));
             this.icon?.SetCurrentValue(VisibilityProperty, isVisible ? Visibility.Visible : Visibility.Collapsed);
         }
 
@@ -1241,7 +1247,19 @@ namespace MahApps.Metro.Controls
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
+
             EventManager.RegisterClassHandler(typeof(MetroWindow), AccessKeyManager.AccessKeyPressedEvent, new AccessKeyPressedEventHandler(OnAccessKeyPressed));
+
+            IconProperty.OverrideMetadata(
+                typeof(MetroWindow),
+                new FrameworkPropertyMetadata(
+                    (o, e) =>
+                        {
+                            if (e.NewValue != e.OldValue)
+                            {
+                                (o as MetroWindow)?.UpdateIconVisibility();
+                            }
+                        }));
         }
 
         private static void OnAccessKeyPressed(object sender, AccessKeyPressedEventArgs e)
