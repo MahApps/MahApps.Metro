@@ -28,7 +28,7 @@
             </Grid.Resources>
             <GroupBox x:Name="TestGroupBoxClean" Header="Test" />
         </Grid>
-        <StackPanel>
+        <StackPanel x:Name="TestStackPanelVS">
             <StackPanel.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
@@ -43,6 +43,9 @@
                 <TabItem x:Name="TestTabItemVS" Header="Test">
                     <TextBlock Text="Test" />
                 </TabItem>
+                <TabItem x:Name="TestTabItemVSUnselected" Header="Test">
+                    <TextBlock Text="Test" />
+                </TabItem>
             </TabControl>
         </StackPanel>
         <mah:MetroHeader x:Name="TestMetroHeader" Header="Test" />
@@ -52,9 +55,15 @@
             <TabItem x:Name="TestTabItem" Header="Test">
                 <TextBlock Text="Test" />
             </TabItem>
+            <TabItem x:Name="TestTabItemUnselected" Header="Test">
+                <TextBlock Text="Test" />
+            </TabItem>
         </TabControl>
         <mah:MetroTabControl x:Name="TestMetroTabControl" Height="250">
             <mah:MetroTabItem x:Name="TestMetroTabItem" Header="Test">
+                <TextBlock Text="Test" />
+            </mah:MetroTabItem>
+            <mah:MetroTabItem x:Name="TestMetroTabItemUnselected" Header="Test">
                 <TextBlock Text="Test" />
             </mah:MetroTabItem>
         </mah:MetroTabControl>

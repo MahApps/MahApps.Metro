@@ -23,7 +23,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             }
         }
 
-        public static void ClearDependencyProperties(this DependencyObject? obj)
+        public static void ClearDependencyProperties(this DependencyObject? obj, IList<string>? properties = null)
         {
             if (obj is null)
             {
@@ -34,7 +34,10 @@ namespace MahApps.Metro.Tests.TestHelpers
             {
                 if (property.ReadOnly == false)
                 {
-                    obj.ClearValue(property);
+                    if (properties is null || properties.Contains(property.Name))
+                    {
+                        obj.ClearValue(property);
+                    }
                 }
             }
         }
