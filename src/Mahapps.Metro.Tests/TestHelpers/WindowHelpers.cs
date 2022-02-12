@@ -58,5 +58,12 @@ namespace MahApps.Metro.Tests.TestHelpers
 
             Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands!.Foreground).Color);
         }
+
+        public static void AssertWindowButtonCommandsColor(this MetroWindow window, Color color)
+        {
+            Assert.NotNull(window.WindowButtonCommands);
+
+            Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
+        }
     }
 }
