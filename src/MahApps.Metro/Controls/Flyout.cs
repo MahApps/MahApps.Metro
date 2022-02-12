@@ -681,14 +681,8 @@ namespace MahApps.Metro.Controls
 
             switch (this.Theme)
             {
-                case FlyoutTheme.Accent:
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
-                    this.OverrideFlyoutResources(this.Resources, true);
-                    break;
-
                 case FlyoutTheme.Adapt:
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
@@ -700,7 +694,6 @@ namespace MahApps.Metro.Controls
                     }
 
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
@@ -712,7 +705,6 @@ namespace MahApps.Metro.Controls
                     }
 
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, darkTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
@@ -724,54 +716,8 @@ namespace MahApps.Metro.Controls
                     }
 
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, lightTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
             }
-        }
-
-        protected virtual void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
-        {
-            var fromColorKey = accent ? "MahApps.Colors.Highlight" : "MahApps.Colors.Flyout";
-
-            resources.BeginInit();
-
-            var fromColor = (Color)resources[fromColorKey];
-            resources["MahApps.Colors.ThemeBackground"] = fromColor;
-            resources["MahApps.Colors.Flyout"] = fromColor;
-
-            var newBrush = new SolidColorBrush(fromColor);
-            newBrush.Freeze();
-            resources["MahApps.Brushes.Flyout.Background"] = newBrush;
-            resources["MahApps.Brushes.Control.Background"] = newBrush;
-            resources["MahApps.Brushes.ThemeBackground"] = newBrush;
-            resources["MahApps.Brushes.Window.Background"] = newBrush;
-            resources[SystemColors.WindowBrushKey] = newBrush;
-
-            if (accent)
-            {
-                fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
-                newBrush = new SolidColorBrush(fromColor);
-                newBrush.Freeze();
-                resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
-                resources["MahApps.Brushes.Text"] = newBrush;
-
-                if (resources.Contains("MahApps.Colors.AccentBase"))
-                {
-                    fromColor = (Color)resources["MahApps.Colors.AccentBase"];
-                }
-                else
-                {
-                    var accentColor = (Color)resources["MahApps.Colors.Accent"];
-                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
-                }
-
-                newBrush = new SolidColorBrush(fromColor);
-                newBrush.Freeze();
-                resources["MahApps.Colors.Highlight"] = fromColor;
-                resources["MahApps.Brushes.Highlight"] = newBrush;
-            }
-
-            resources.EndInit();
         }
 
         private void UpdateOpacityChange()
