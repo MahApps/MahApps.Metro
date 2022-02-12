@@ -3,14 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace MahApps.Metro.Tests.TestHelpers
 {
-    using System.Diagnostics;
-
     /// <summary>
     /// This class is the ultimate hack to work around that we can't 
     /// create more than one application in the same AppDomain
@@ -27,16 +26,13 @@ namespace MahApps.Metro.Tests.TestHelpers
     {
         private TestApp? app;
         private readonly Thread? appThread;
-        private readonly AutoResetEvent gate = new AutoResetEvent(false);
+        private readonly AutoResetEvent gate = new(false);
 
         private static TestHost? testHost;
 
         public static void Initialize()
         {
-            if (testHost == null)
-            {
-                testHost = new TestHost();
-            }
+            testHost ??= new TestHost();
         }
 
         private TestHost()
@@ -52,13 +48,13 @@ namespace MahApps.Metro.Tests.TestHelpers
         {
             this.app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             this.app.InitializeComponent();
-            this.app.Exit += (sender, args) =>
+            this.app.Exit += (_, _) =>
                 {
                     var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
                 };
-            this.app.Startup += async (sender, args) =>
+            this.app.Startup += async (_, _) =>
                 {
                     var message = $"Start TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
@@ -76,7 +72,7 @@ namespace MahApps.Metro.Tests.TestHelpers
         {
             if (testHost?.app is null)
             {
-                throw new InvalidOperationException("Testhost is not initialized.");
+                throw new InvalidOperationException($"{nameof(TestHost)} is not initialized!");
             }
 
             return new SwitchContextToUiThreadAwaiter(testHost.app.Dispatcher);

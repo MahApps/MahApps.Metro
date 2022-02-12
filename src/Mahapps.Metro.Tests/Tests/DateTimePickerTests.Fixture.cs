@@ -9,7 +9,7 @@ using Xunit;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class MultiSelectorHelperTestsFixture : IAsyncLifetime
+    public class DateTimePickerTestsFixture : IAsyncLifetime
     {
         /// <summary>
         /// Called immediately after the class has been created, before it is used.
@@ -18,20 +18,10 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            this.Window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            this.Window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
         }
 
-        public MultiSelectorHelperTestWindow? Window { get; private set; }
-
-        public async Task PrepareForTestAsync()
-        {
-            await TestHost.SwitchToAppThread();
-
-            this.Window?.SelectedItems?.Clear();
-            this.Window?.MultiSelectionComboBox?.SelectedItems?.Clear();
-            this.Window?.FirstListBox?.SelectedItems?.Clear();
-            this.Window?.SecondListBox?.SelectedItems?.Clear();
-        }
+        public DateAndTimePickerWindow? Window { get; private set; }
 
         /// <summary>
         /// Called when an object is no longer needed. Called just before <see cref="M:System.IDisposable.Dispose" />

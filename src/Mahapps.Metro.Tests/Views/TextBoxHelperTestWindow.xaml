@@ -7,6 +7,14 @@
                  d:DesignHeight="300"
                  d:DesignWidth="300"
                  mc:Ignorable="d">
+    <mah:MetroWindow.Resources>
+        <DataTemplate x:Key="TestDataTemplate">
+            <TextBlock Text="{Binding}" />
+        </DataTemplate>
+        <ControlTemplate x:Key="TestControlTemplate" TargetType="{x:Type Button}">
+            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </ControlTemplate>
+    </mah:MetroWindow.Resources>
     <StackPanel>
         <TextBox x:Name="TestTextBox" />
         <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MahApps.Styles.TextBox.Button}" />

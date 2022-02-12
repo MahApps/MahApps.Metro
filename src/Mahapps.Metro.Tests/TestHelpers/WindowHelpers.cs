@@ -15,9 +15,11 @@ namespace MahApps.Metro.Tests.TestHelpers
 {
     public static class WindowHelpers
     {
-        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? changeAddiotionalProperties = null)
+        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? onLoadedAction = null)
             where T : Window, new()
         {
+            var completionSource = new TaskCompletionSource<T>();
+
             var window = new T
                          {
                              Visibility = Visibility.Hidden,
@@ -27,12 +29,10 @@ namespace MahApps.Metro.Tests.TestHelpers
             void OnLoaded(object sender, RoutedEventArgs e)
             {
                 window.Loaded -= OnLoaded;
-                changeAddiotionalProperties?.Invoke(window);
+                onLoadedAction?.Invoke(window);
             }
 
             window.Loaded += OnLoaded;
-
-            var completionSource = new TaskCompletionSource<T>();
 
             void OnActivated(object sender, EventArgs args)
             {
@@ -50,13 +50,20 @@ namespace MahApps.Metro.Tests.TestHelpers
         public static void AssertWindowCommandsColor(this MetroWindow window, Color color)
         {
             Assert.NotNull(window.RightWindowCommands);
-            
+
             foreach (var element in window.RightWindowCommands!.Items.OfType<Button>())
             {
                 Assert.Equal(color, ((SolidColorBrush)element.Foreground).Color);
             }
 
             Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands!.Foreground).Color);
+        }
+
+        public static void AssertWindowButtonCommandsColor(this MetroWindow window, Color color)
+        {
+            Assert.NotNull(window.WindowButtonCommands);
+
+            Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
         }
     }
 }

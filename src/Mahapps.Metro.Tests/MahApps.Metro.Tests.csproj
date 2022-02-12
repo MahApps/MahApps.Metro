@@ -14,11 +14,6 @@
         <Nullable>annotations</Nullable>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
-        <!-- Use NLS instead of ICU https://docs.microsoft.com/en-us/dotnet/standard/globalization-localization/globalization-icu -->
-        <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
-    </ItemGroup>
-
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
@@ -26,6 +21,13 @@
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
+        <!-- Use NLS instead of ICU https://docs.microsoft.com/en-us/dotnet/standard/globalization-localization/globalization-icu -->
+        <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
+
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>

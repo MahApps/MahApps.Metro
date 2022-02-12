@@ -2,10 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
@@ -32,6 +34,10 @@ namespace MahApps.Metro.Tests.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
+            Assert.NotNull(window.LeftWindowCommands);
+            Assert.NotNull(window.RightWindowCommands);
+            Assert.NotNull(window.WindowButtonCommands);
+
             Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
             Assert.Equal(window, window.RightWindowCommands.ParentWindow);
             Assert.Equal(window, window.WindowButtonCommands.ParentWindow);
@@ -53,14 +59,15 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task IconShouldBeVisibleByDefault()
+        public async Task IconShouldBeCollapsedByDefault()
         {
             await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
-            var icon = window.FindChild<ContentControl>("PART_Icon");
 
-            Assert.Equal(Visibility.Visible, icon.Visibility);
+            var icon = window.FindChild<ContentControl>("PART_Icon");
+            Assert.NotNull(icon);
+
+            Assert.Equal(Visibility.Collapsed, icon.Visibility);
         }
 
         [Fact]
@@ -70,7 +77,9 @@ namespace MahApps.Metro.Tests.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowIconOnTitleBar = false);
+
             var icon = window.FindChild<ContentControl>("PART_Icon");
+            Assert.NotNull(icon);
 
             Assert.Equal(Visibility.Collapsed, icon.Visibility);
         }
@@ -82,7 +91,9 @@ namespace MahApps.Metro.Tests.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowTitleBar = false);
+
             var icon = window.FindChild<ContentControl>("PART_Icon");
+            Assert.NotNull(icon);
 
             Assert.Equal(Visibility.Collapsed, icon.Visibility);
         }
@@ -95,10 +106,13 @@ namespace MahApps.Metro.Tests.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w =>
                 {
+                    w.Icon = new BitmapImage(new Uri("pack://application:,,,/MahApps.Metro.Tests;component/mahapps.metro.logo2.ico", UriKind.RelativeOrAbsolute));
                     w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
                     w.ShowTitleBar = false;
                 });
+
             var icon = window.FindChild<ContentControl>("PART_Icon");
+            Assert.NotNull(icon);
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
         }
@@ -109,28 +123,16 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => { w.Icon = new BitmapImage(new Uri("pack://application:,,,/MahApps.Metro.Tests;component/mahapps.metro.logo2.ico", UriKind.RelativeOrAbsolute)); });
+
             var icon = window.FindChild<ContentControl>("PART_Icon");
+            Assert.NotNull(icon);
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
 
             window.ShowIconOnTitleBar = false;
 
             Assert.Equal(Visibility.Collapsed, icon.Visibility);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task IconCanOverlayHiddenTitlebar()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
-            window.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
-            window.ShowTitleBar = false;
-            var icon = window.FindChild<ContentControl>("PART_Icon");
-
-            Assert.Equal(Visibility.Visible, icon.Visibility);
         }
 
         private Button GetButton(MetroWindow window, string buttonName)
@@ -313,8 +315,12 @@ namespace MahApps.Metro.Tests.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
+
             var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
+            Assert.NotNull(titleBar);
+
             var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
+            Assert.NotNull(titleBarContent);
 
             var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
             Assert.NotNull(be);

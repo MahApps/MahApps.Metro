@@ -7,13 +7,11 @@ using Xunit;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class MultiSelectorHelperTests : AutomationTestBase, IClassFixture<MultiSelectorHelperTestsFixture>
+    public class MultiSelectorHelperTests : AutomationTestFixtureBase<MultiSelectorHelperTestsFixture>
     {
-        private readonly MultiSelectorHelperTestsFixture fixture;
-
         public MultiSelectorHelperTests(MultiSelectorHelperTestsFixture fixture)
+            : base(fixture)
         {
-            this.fixture = fixture;
         }
 
         [Fact]
