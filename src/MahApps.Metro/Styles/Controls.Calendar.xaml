@@ -292,7 +292,7 @@
                                        FontWeight="Bold"
                                        Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                        Opacity="0.8"
-                                       Text="{Binding FallbackValue={x:Static system:String.Empty}}" />
+                                       Text="{Binding}" />
                         </DataTemplate>
                     </ControlTemplate.Resources>
                     <Grid x:Name="PART_Root">
