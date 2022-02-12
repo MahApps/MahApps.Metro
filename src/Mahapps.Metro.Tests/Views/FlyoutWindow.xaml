@@ -6,8 +6,8 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  d:DesignHeight="300"
                  d:DesignWidth="300"
-                 mc:Ignorable="d"
-                 Icon="..\mahapps.metro.logo2.ico">
+                 Icon="..\mahapps.metro.logo2.ico"
+                 mc:Ignorable="d">
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button Content="Test" />
