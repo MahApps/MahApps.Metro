@@ -44,6 +44,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local"
@@ -497,7 +498,6 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=VerticalContentAlignment, Mode=OneWay, FallbackValue={x:Static VerticalAlignment.Stretch}}" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:ControlsHelper.CornerRadius), Mode=OneWay, FallbackValue=0}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderBackground), Mode=OneWay, FallbackValue={x:Static Brushes.Transparent}}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontFamily), Mode=OneWay, FallbackValue={x:Static SystemFonts.MessageFontFamily}}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontSize), Mode=OneWay, FallbackValue={x:Static SystemFonts.MessageFontSize}}" />
@@ -841,6 +841,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 ClipToBounds="{TemplateBinding ClipToBounds}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local"
