@@ -163,9 +163,10 @@
                             <mah:Underline x:Name="Underline"
                                            Grid.Row="1"
                                            Grid.Column="0"
+                                           Margin="{TemplateBinding mah:TabControlHelper.UnderlineMargin}"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch"
-                                           Background="{TemplateBinding Background}"
+                                           Background="{x:Null}"
                                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay}"
                                            LineExtent="3"
                                            LineThickness="2"
@@ -508,6 +509,7 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderMargin), Mode=OneWay, FallbackValue='6 2'}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderVerticalContentAlignment), Mode=OneWay, FallbackValue={x:Static VerticalAlignment.Center}}" />
         <Setter Property="mah:TabControlHelper.UnderlineBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="mah:TabControlHelper.UnderlineMargin" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMargin), Mode=OneWay, FallbackValue=0}" />
         <Setter Property="mah:TabControlHelper.UnderlineMouseOverBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="mah:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="mah:TabControlHelper.UnderlinePlacement" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Mode=OneWay, FallbackValue={x:Null}}" />
