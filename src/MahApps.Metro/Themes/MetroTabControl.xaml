@@ -25,7 +25,7 @@
                 <mah:Underline x:Name="Underline"
                                Background="Transparent"
                                BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
-                               LineThickness="1"
+                               LineThickness="{DynamicResource TabControlUnderlineThickness}"
                                Placement="Bottom"
                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                Visibility="Collapsed" />
@@ -103,7 +103,7 @@
                 <mah:Underline x:Name="Underline"
                                Background="Transparent"
                                BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
-                               LineThickness="1"
+                               LineThickness="{DynamicResource TabControlUnderlineThickness}"
                                Placement="Bottom"
                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                Visibility="Collapsed" />
