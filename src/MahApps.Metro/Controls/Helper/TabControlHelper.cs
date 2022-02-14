@@ -275,11 +275,14 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
         public static TransitionType GetTransition(DependencyObject obj)
         {
             return (TransitionType)obj.GetValue(TransitionProperty);
         }
 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
         public static void SetTransition(DependencyObject obj, TransitionType value)
         {
             obj.SetValue(TransitionProperty, value);
@@ -302,9 +305,43 @@ namespace MahApps.Metro.Controls
             return (Dock?)element.GetValue(UnderlinePlacementProperty);
         }
 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
         public static void SetUnderlinePlacement(UIElement element, Dock? value)
         {
             element.SetValue(UnderlinePlacementProperty, value);
+        }
+
+        /// <summary>
+        /// Defines the margin of the <see cref="TabControl"/> or <see cref="TabItem"/> underline.
+        /// </summary>
+        public static readonly DependencyProperty UnderlineMarginProperty
+            = DependencyProperty.RegisterAttached(
+                "UnderlineMargin",
+                typeof(Thickness),
+                typeof(TabControlHelper),
+                new UIPropertyMetadata(new Thickness()));
+
+        /// <summary>
+        /// Gets or s ets the margin for the underline.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
+        public static Thickness GetUnderlineMargin(UIElement element)
+        {
+            return (Thickness)element.GetValue(UnderlineMarginProperty);
+        }
+
+        /// <summary>
+        /// Sets or sets the outer margin for the underline.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
+        public static void SetUnderlineMargin(UIElement element, Thickness value)
+        {
+            element.SetValue(UnderlineMarginProperty, value);
         }
     }
 }
