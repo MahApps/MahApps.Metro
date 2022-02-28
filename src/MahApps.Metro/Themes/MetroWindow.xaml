@@ -264,15 +264,6 @@
                 <Setter TargetName="PART_TitleBar" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
                 <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
-            <!--  no icon and no icon content template -> collapse the icon content control  -->
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="Icon" Value="{x:Null}" />
-                    <Condition Property="IconTemplate" Value="{x:Null}" />
-                </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Icon" Property="MinWidth" Value="0" />
-                <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
-            </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
@@ -559,15 +550,6 @@
                 <Setter TargetName="PART_TitleBar" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
                 <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             </Trigger>
-            <!--  no icon and no icon content template -> collapse the icon content control  -->
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="Icon" Value="{x:Null}" />
-                    <Condition Property="IconTemplate" Value="{x:Null}" />
-                </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Icon" Property="MinWidth" Value="0" />
-                <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
-            </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode" Value="CanResizeWithGrip" />

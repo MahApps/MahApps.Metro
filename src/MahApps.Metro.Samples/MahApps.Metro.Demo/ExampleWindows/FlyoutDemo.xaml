@@ -167,20 +167,6 @@
 
             <exampleWindows:ShowcaseFlyout DataContext="{Binding}" />
 
-            <mah:Flyout Header="Accented"
-                        Position="Right"
-                        Theme="Accent">
-                <Grid Width="400" Margin="10">
-                    <StackPanel>
-                        <TextBlock Text="This flyout adapts its theme to the current accent" />
-                        <GroupBox Height="250"
-                                  Margin="10"
-                                  Header="Flyout Group Box" />
-                        <Button Margin="10" Content="Button" />
-                        <ToggleButton Margin="10" Content="Toggle Button" />
-                    </StackPanel>
-                </Grid>
-            </mah:Flyout>
             <mah:Flyout Header="Inverse"
                         Position="Right"
                         Theme="Inverse">
@@ -402,9 +388,6 @@
             <Button Margin="2"
                     Click="ShowThird"
                     Content="Show 3" />
-            <Button Margin="2"
-                    Click="ShowAccent"
-                    Content="Accent" />
             <Button Margin="2"
                     Click="ShowInverse"
                     Content="Inverse" />

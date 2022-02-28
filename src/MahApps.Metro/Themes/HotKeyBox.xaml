@@ -25,6 +25,7 @@
                              Padding="{TemplateBinding Padding}"
                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                             mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                              mah:ControlsHelper.FocusBorderBrush="{TemplateBinding mah:ControlsHelper.FocusBorderBrush}"
                              mah:ControlsHelper.MouseOverBorderBrush="{TemplateBinding mah:ControlsHelper.MouseOverBorderBrush}"
                              mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"

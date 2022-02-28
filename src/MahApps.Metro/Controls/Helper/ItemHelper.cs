@@ -684,5 +684,34 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(MouseRightButtonPressedForegroundBrushProperty, value);
         }
+
+        /// <summary>
+        /// Gets or sets the brush which will be used when the indicator of the <see cref="GridViewHeaderRowPresenter"/> become visible. 
+        /// </summary>
+        public static readonly DependencyProperty GridViewHeaderIndicatorBrushProperty
+            = DependencyProperty.RegisterAttached(
+                "GridViewHeaderIndicatorBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="GridViewHeaderIndicatorBrushProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to read <see cref="GridViewHeaderIndicatorBrushProperty"/> from.</param>
+        /// <returns>The brush which will be used when the indicator of the <see cref="GridViewHeaderRowPresenter"/> become visible.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListView))]
+        public static Brush? GetGridViewHeaderIndicatorBrush(UIElement element)
+        {
+            return (Brush?)element.GetValue(GridViewHeaderIndicatorBrushProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="GridViewHeaderIndicatorBrushProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to set <see cref="GridViewHeaderIndicatorBrushProperty"/> on.</param>
+        /// <param name="value">The brush which will be used when the indicator of the <see cref="GridViewHeaderRowPresenter"/> become visible.</param>
+        [AttachedPropertyBrowsableForType(typeof(ListView))]
+        public static void SetGridViewHeaderIndicatorBrush(UIElement element, Brush? value)
+        {
+            element.SetValue(GridViewHeaderIndicatorBrushProperty, value);
+        }
     }
 }

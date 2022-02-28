@@ -77,54 +77,49 @@ namespace MetroDemo.ExampleWindows
             this.ToggleFlyout(2);
         }
 
-        private void ShowAccent(object sender, RoutedEventArgs e)
+        private void ShowInverse(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(3);
         }
 
-        private void ShowInverse(object sender, RoutedEventArgs e)
+        private void ShowAdapt(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(4);
         }
 
-        private void ShowAdapt(object sender, RoutedEventArgs e)
+        private void ShowSettings(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(5);
         }
 
-        private void ShowSettings(object sender, RoutedEventArgs e)
+        private void ShowLeft(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(6);
         }
 
-        private void ShowLeft(object sender, RoutedEventArgs e)
+        private void ShowCustomTop(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(7);
         }
 
-        private void ShowCustomTop(object sender, RoutedEventArgs e)
+        private void ShowTop(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(8);
         }
 
-        private void ShowTop(object sender, RoutedEventArgs e)
+        private void ShowBottom(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(9);
         }
 
-        private void ShowBottom(object sender, RoutedEventArgs e)
+        private void ShowModal(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(10);
         }
 
-        private void ShowModal(object sender, RoutedEventArgs e)
-        {
-            this.ToggleFlyout(11);
-        }
-
         private void ShowAppBar(object sender, RoutedEventArgs e)
         {
-            this.ToggleFlyout(12);
+            this.ToggleFlyout(11);
         }
 
         private void CloseMe(object sender, RoutedEventArgs e)

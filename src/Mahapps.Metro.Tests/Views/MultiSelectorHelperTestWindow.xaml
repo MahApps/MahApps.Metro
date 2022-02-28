@@ -14,8 +14,22 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <mah:MultiSelectionComboBox x:Name="MultiSelectionComboBox"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Margin="4 4 4 0"
+                                    mah:MultiSelectorHelper.SelectedItems="{Binding ElementName=Window, Path=SelectedItems}"
+                                    ItemsSource="{Binding ElementName=Window, Path=Items}"
+                                    SelectionMode="Extended" />
 
         <ListBox x:Name="FirstListBox"
+                 Grid.Row="1"
                  Grid.Column="0"
                  Margin="4 4 2 4"
                  mah:MultiSelectorHelper.SelectedItems="{Binding ElementName=Window, Path=SelectedItems}"
@@ -23,6 +37,7 @@
                  SelectionMode="Extended" />
 
         <ListBox x:Name="SecondListBox"
+                 Grid.Row="1"
                  Grid.Column="1"
                  Margin="2 4 4 4"
                  mah:MultiSelectorHelper.SelectedItems="{Binding ElementName=Window, Path=SelectedItems}"

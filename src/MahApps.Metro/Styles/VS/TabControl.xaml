@@ -50,6 +50,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local"
@@ -153,6 +154,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <StackPanel x:Name="PART_Content"
                                     HorizontalAlignment="Stretch"
