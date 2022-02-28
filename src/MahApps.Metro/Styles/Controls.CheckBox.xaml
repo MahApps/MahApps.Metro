@@ -342,7 +342,7 @@
                     <Path Width="12"
                           Height="10"
                           Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
-                          Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground, FallbackValue=Transparent}"
                           Stretch="Fill"
                           UseLayoutRounding="False" />
                 </DataTemplate>
@@ -365,7 +365,7 @@
                 <DataTemplate>
                     <Rectangle Width="8"
                                Height="3"
-                               Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground, FallbackValue=Transparent}"
                                UseLayoutRounding="False" />
                 </DataTemplate>
             </Setter.Value>
