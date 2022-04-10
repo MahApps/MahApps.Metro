@@ -5,7 +5,6 @@
         <AssemblyName>MahApps.Metro</AssemblyName>
         <Title>MahApps.Metro</Title>
         <RootNamespace>MahApps.Metro</RootNamespace>
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DefineConstants>$(DefineConstants);INTERNAL_NULLABLE_ATTRIBUTES</DefineConstants>
     </PropertyGroup>
@@ -25,7 +24,9 @@
 
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="[5.*, 6)" />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="all" IncludeAssets="build" />
+
+        <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0085" PrivateAssets="all" IncludeAssets="build" />
+
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -39,8 +40,6 @@
 
     <!-- Items include -->
     <ItemGroup>
-        <EmbeddedResource Include="**\*.Template.xaml" />
-        <EmbeddedResource Include="**\GeneratorParameters.json" />
         <None Remove="Assets\Eyedropper.cur" />
         <Resource Include="Assets\Eyedropper.cur" />
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
@@ -68,20 +67,11 @@
         </EmbeddedResource>
     </ItemGroup>
 
-    <!-- Generate theme files -->
-    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;PrepareForBuild" Condition=" '$(IsBuildingWpfTempProj)' != 'true' and '$(XamlColorSchemeGeneratorExecutable)' != '' ">
-	    <Message Text="Generating XAML Color Scheme files... $(XamlColorSchemeGeneratorExecutable)" Importance="high" />
-	    <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
-    </Target>
-
-    <!-- Delete generated XAML files when user explicitly executes Clean build. -->
-    <Target Name="CleanGenerateXamlFiles" AfterTargets="Clean">
-	    <ItemGroup>
-		    <ThemeFiles Include="$(MSBuildProjectDirectory)/Styles/Themes/Dark.*.xaml" />
-		    <ThemeFiles Include="$(MSBuildProjectDirectory)/Styles/Themes/Light.*.xaml" />
-	    </ItemGroup>
-	    <Message Text="Deleting XAML Color Scheme files..." Importance="high" />
-	    <Delete Files="@(ThemeFiles)" ContinueOnError="true" />
-    </Target>
+    <ItemGroup>
+        <XAMLColorSchemeGeneratorItems Include="Styles\Themes\Theme.Template.xaml">
+            <ParametersFile>Styles\Themes\GeneratorParameters.json</ParametersFile>
+            <OutputPath>Styles\Themes</OutputPath>
+        </XAMLColorSchemeGeneratorItems>
+    </ItemGroup>
 
 </Project>
