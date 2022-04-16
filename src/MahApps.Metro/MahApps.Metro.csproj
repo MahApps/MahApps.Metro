@@ -23,13 +23,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ControlzEx" version="[5.*, 6)" />
+        <PackageReference Include="ControlzEx" version="6.0.0-alpha0204" />
 
         <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0085" PrivateAssets="all" IncludeAssets="build" />
 
-        <PackageReference Include="ControlzEx" version="6.0.0-alpha0188" />
-        <PackageReference Include="ControlzEx" version="6.0.0-alpha0204" />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="all" IncludeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
