@@ -42,11 +42,11 @@
 
             <Style x:Key="MahApps.Styles.MetroHeader.Horizontal"
                    BasedOn="{StaticResource MahApps.Styles.MetroHeader}"
-                   TargetType="mah:MetroHeader">
+                   TargetType="{x:Type mah:MetroHeader}">
                 <Setter Property="Padding" Value="0 2" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="mah:MetroHeader">
+                        <ControlTemplate TargetType="{x:Type mah:MetroHeader}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="HeaderGroup" />

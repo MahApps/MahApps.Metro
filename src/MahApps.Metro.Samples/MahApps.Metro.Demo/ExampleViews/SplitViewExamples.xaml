@@ -28,7 +28,7 @@
             <!--  #Templates  -->
             <ControlTemplate x:Key="ConfigDataTemplate">
                 <ControlTemplate.Resources>
-                    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
+                    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="{x:Type mah:MetroHeader}" />
                 </ControlTemplate.Resources>
                 <StackPanel d:DataContext="{d:DesignInstance mah:SplitView}" Grid.IsSharedSizeScope="True">
 

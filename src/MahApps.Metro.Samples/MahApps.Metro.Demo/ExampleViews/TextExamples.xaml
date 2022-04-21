@@ -334,8 +334,8 @@
                   Header="NumericUpDown"
                   UseLayoutRounding="True">
             <GroupBox.Resources>
-                <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
-                <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="mah:ToggleSwitch">
+                <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="{x:Type mah:MetroHeader}" />
+                <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type mah:ToggleSwitch}">
                     <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
                     <Setter Property="MinHeight" Value="1" />
                 </Style>

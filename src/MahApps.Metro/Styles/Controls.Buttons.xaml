@@ -722,7 +722,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Grid>
                         <mah:ClipBorder x:Name="Border"
                                         Background="{TemplateBinding Background}"

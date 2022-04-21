@@ -121,7 +121,7 @@
         <Setter Property="mah:TabControlHelper.UnderlineSelectedBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TabItem" TargetType="TabItem">
+    <Style x:Key="MahApps.Styles.TabItem" TargetType="{x:Type TabItem}">
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderBackground), Mode=OneWay, FallbackValue={x:Static Brushes.Transparent}}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -136,7 +136,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="TabItem">
+                <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="Border"
                             HorizontalAlignment="Stretch"
                             Background="{TemplateBinding Background}"
@@ -927,7 +927,7 @@
 
     <Style x:Key="MahApps.Styles.TabControl.ColorPicker"
            BasedOn="{StaticResource MahApps.Styles.TabControl}"
-           TargetType="TabControl">
+           TargetType="{x:Type TabControl}">
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ColorPicker.TabItemHeader}" />
     </Style>
 

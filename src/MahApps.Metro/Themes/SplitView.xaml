@@ -4,7 +4,7 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="MahApps.Styles.MetroThumb.SplitView.Resize" TargetType="mah:MetroThumb">
+    <Style x:Key="MahApps.Styles.MetroThumb.SplitView.Resize" TargetType="{x:Type mah:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="Template">

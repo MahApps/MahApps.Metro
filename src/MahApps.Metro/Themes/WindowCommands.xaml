@@ -182,7 +182,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="MahApps.Templates.WindowCommands" TargetType="mah:WindowCommands">
+    <ControlTemplate x:Key="MahApps.Templates.WindowCommands" TargetType="{x:Type mah:WindowCommands}">
         <DockPanel>
             <ToggleButton x:Name="PART_ToggleButton"
                           AutomationProperties.Name="OverflowToggleButton"

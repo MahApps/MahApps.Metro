@@ -14,7 +14,7 @@
 
     <Style x:Key="MahApps.Styles.CheckBox.DataGrid"
            BasedOn="{StaticResource MahApps.Styles.CheckBox}"
-           TargetType="CheckBox">
+           TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0" />
@@ -34,7 +34,7 @@
 
     <Style x:Key="MahApps.Styles.CheckBox.DataGrid.Win10"
            BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}"
-           TargetType="CheckBox">
+           TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Margin" Value="12 0" />
@@ -668,11 +668,11 @@
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridColumnHeader}" />
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
-                <Style TargetType="Separator">
+                <Style TargetType="{x:Type Separator}">
                     <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="Separator">
+                            <ControlTemplate TargetType="{x:Type Separator}">
                                 <Rectangle Width="{TemplateBinding Width}"
                                            Height="{TemplateBinding Height}"
                                            Fill="{TemplateBinding Background}" />

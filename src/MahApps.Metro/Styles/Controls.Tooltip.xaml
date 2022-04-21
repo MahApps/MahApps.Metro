@@ -3,7 +3,7 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <!--  Tooltip Style  -->
-    <Style x:Key="MahApps.Styles.ToolTip" TargetType="ToolTip">
+    <Style x:Key="MahApps.Styles.ToolTip" TargetType="{x:Type ToolTip}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -14,7 +14,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToolTip">
+                <ControlTemplate TargetType="{x:Type ToolTip}">
                     <Border x:Name="Root"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"

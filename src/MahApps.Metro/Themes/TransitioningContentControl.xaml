@@ -2,13 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="mah:TransitioningContentControl">
+    <Style TargetType="{x:Type mah:TransitioningContentControl}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="mah:TransitioningContentControl">
+                <ControlTemplate TargetType="{x:Type mah:TransitioningContentControl}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"

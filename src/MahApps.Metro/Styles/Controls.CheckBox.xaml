@@ -10,7 +10,7 @@
     <mahConverters:CornerRadiusFilterConverter x:Key="CornerRadiusTopLeftConverter" Filter="TopLeft" />
     <mahConverters:CornerRadiusFilterConverter x:Key="CornerRadiusBottomRightConverter" Filter="BottomRight" />
 
-    <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
+    <Style x:Key="MahApps.Styles.CheckBox" TargetType="{x:Type CheckBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUnchecked}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -23,7 +23,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="CheckBox">
+                <ControlTemplate TargetType="{x:Type CheckBox}">
                     <Grid>
                         <Border x:Name="RootBorder"
                                 Background="{TemplateBinding Background}"
@@ -392,7 +392,7 @@
 
     <Style x:Key="MahApps.Styles.CheckBox.Win10"
            BasedOn="{StaticResource MahApps.Styles.CheckBox}"
-           TargetType="CheckBox">
+           TargetType="{x:Type CheckBox}">
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="120" />
         <Setter Property="Padding" Value="8 0 0 0" />

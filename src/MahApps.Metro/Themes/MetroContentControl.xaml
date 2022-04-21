@@ -9,7 +9,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="mah:MetroContentControl">
+                <ControlTemplate TargetType="{x:Type mah:MetroContentControl}">
                     <Grid x:Name="RootGrid"
                           Opacity="0"
                           RenderTransformOrigin="0.5,0.5">

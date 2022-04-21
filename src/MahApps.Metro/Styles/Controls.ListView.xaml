@@ -105,7 +105,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListView">
+                <ControlTemplate TargetType="{x:Type ListView}">
                     <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -310,7 +310,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Thumb.GridViewColumnHeaderGripper" TargetType="Thumb">
+    <Style x:Key="MahApps.Styles.Thumb.GridViewColumnHeaderGripper" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="LightGray" />
         <Setter Property="Template">
             <Setter.Value>
@@ -328,7 +328,7 @@
         <Setter Property="Width" Value="18" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.GridViewColumnHeader" TargetType="GridViewColumnHeader">
+    <Style x:Key="MahApps.Styles.GridViewColumnHeader" TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -336,7 +336,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="GridViewColumnHeader">
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
                     <Grid>
                         <Rectangle Fill="Transparent" IsHitTestVisible="True" />
                         <Border x:Name="HeaderBorder">
@@ -377,7 +377,7 @@
                 <Setter Property="Opacity" Value="0.7" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="GridViewColumnHeader">
+                        <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
                             <Canvas Name="PART_FloatingHeaderCanvas">
                                 <Rectangle Width="{TemplateBinding ActualWidth}"
                                            Height="{TemplateBinding ActualHeight}"

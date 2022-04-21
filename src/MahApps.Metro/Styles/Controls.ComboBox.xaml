@@ -602,7 +602,7 @@
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ComboBoxItem" TargetType="ComboBoxItem">
+    <Style x:Key="MahApps.Styles.ComboBoxItem" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -612,7 +612,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ComboBoxItem">
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Grid x:Name="RootGrid"
                           Background="Transparent"
                           RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">

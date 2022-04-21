@@ -50,7 +50,7 @@
                                            PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}">
                     <Grid x:Name="Root" Margin="4">
                         <Grid.Resources>
-                            <Style TargetType="Border">
+                            <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver, Mode=OneWay}" Value="True">
                                         <DataTrigger.EnterActions>

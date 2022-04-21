@@ -39,14 +39,14 @@
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem"
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
-           TargetType="ListBoxItem" />
+           TargetType="{x:Type ListBoxItem}" />
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.CheckBox"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem}"
-           TargetType="ListBoxItem">
+           TargetType="{x:Type ListBoxItem}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid x:Name="RootGrid" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
@@ -111,7 +111,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.MulitselectionComboBoxSelectedItem" TargetType="ListBoxItem">
+    <Style x:Key="MahApps.Styles.MulitselectionComboBoxSelectedItem" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Margin" Value="0 0 2 0" />
@@ -120,7 +120,7 @@
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid>
                         <Border Margin="{TemplateBinding Margin}"
                                 Background="{TemplateBinding Background}"
@@ -145,7 +145,7 @@
 
     <Style x:Key="MahApps.Styles.Button.MulitselectionComboBoxSelectedItem.RemoveItem"
            BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
-           TargetType="Button">
+           TargetType="{x:Type Button}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -174,10 +174,10 @@
 
     <Style x:Key="MahApps.Styles.MulitselectionComboBoxSelectedItem.Removeable"
            BasedOn="{StaticResource MahApps.Styles.MulitselectionComboBoxSelectedItem}"
-           TargetType="ListBoxItem">
+           TargetType="{x:Type ListBoxItem}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid>
                         <Border Margin="{TemplateBinding Margin}"
                                 Background="{TemplateBinding Background}"
@@ -868,7 +868,7 @@
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBox.Horizontal"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}"
-           TargetType="mah:MultiSelectionComboBox">
+           TargetType="{x:Type mah:MultiSelectionComboBox}">
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="SelectedItemsPanelTemplate">
             <Setter.Value>

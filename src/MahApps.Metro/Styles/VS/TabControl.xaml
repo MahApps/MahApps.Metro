@@ -250,7 +250,7 @@
         <DockPanel>
             <ContentPresenter VerticalAlignment="Center" Content="{Binding DisplayName}">
                 <ContentPresenter.Resources>
-                    <Style TargetType="TextBlock">
+                    <Style TargetType="{x:Type TextBlock}">
                         <Setter Property="FontSize" Value="20" />
                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
                     </Style>

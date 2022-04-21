@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Styles.Button.VisualStudio" TargetType="Button">
+    <Style x:Key="MahApps.Styles.Button.VisualStudio" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
@@ -11,7 +11,7 @@
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <mah:ClipBorder Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="1"
@@ -40,12 +40,12 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.Link.VisualStudio" TargetType="Button">
+    <Style x:Key="MahApps.Styles.Button.Link.VisualStudio" TargetType="{x:Type Button}">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <TextBlock>
                         <ContentPresenter />
                     </TextBlock>

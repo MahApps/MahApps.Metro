@@ -8,13 +8,13 @@
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width">16</system:Double>
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height">10</system:Double>
 
-    <Style x:Key="MahApps.Styles.Thumb.Slider" TargetType="Thumb">
+    <Style x:Key="MahApps.Styles.Thumb.Slider" TargetType="{x:Type Thumb}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
+                <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -287,13 +287,13 @@
 
     <!--  Windows 10  -->
 
-    <Style x:Key="MahApps.Styles.Thumb.Slider.Win10" TargetType="Thumb">
+    <Style x:Key="MahApps.Styles.Thumb.Slider.Win10" TargetType="{x:Type Thumb}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
+                <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"

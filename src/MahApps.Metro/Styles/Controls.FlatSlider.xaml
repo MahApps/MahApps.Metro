@@ -32,7 +32,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TickBar.Slider.Flat" TargetType="TickBar">
+    <Style x:Key="MahApps.Styles.TickBar.Slider.Flat" TargetType="{x:Type TickBar}">
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.SliderThumb.Disabled}" />
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>

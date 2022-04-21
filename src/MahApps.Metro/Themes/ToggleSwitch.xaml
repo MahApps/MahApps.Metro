@@ -173,7 +173,7 @@
                                        Grid.Column="0"
                                        Grid.ColumnSpan="3">
                                     <Thumb.Template>
-                                        <ControlTemplate TargetType="Thumb">
+                                        <ControlTemplate TargetType="{x:Type Thumb}">
                                             <Rectangle Fill="Transparent" />
                                         </ControlTemplate>
                                     </Thumb.Template>

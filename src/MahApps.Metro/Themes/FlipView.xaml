@@ -47,14 +47,14 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ListBoxItem.FlipView.Index" TargetType="ListBoxItem">
+    <Style x:Key="MahApps.Styles.ListBoxItem.FlipView.Index" TargetType="{x:Type ListBoxItem}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="10" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Ellipse x:Name="Bd"
                              Width="{DynamicResource FlipViewIndexItemSize}"
                              Height="{DynamicResource FlipViewIndexItemSize}"

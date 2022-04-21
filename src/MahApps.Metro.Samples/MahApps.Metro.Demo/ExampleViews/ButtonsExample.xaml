@@ -439,7 +439,7 @@
             <StackPanel.Resources>
                 <Style x:Key="CircleDropDownButton"
                        BasedOn="{StaticResource {x:Type mah:DropDownButton}}"
-                       TargetType="mah:DropDownButton">
+                       TargetType="{x:Type mah:DropDownButton}">
                     <Setter Property="ArrowVisibility" Value="Collapsed" />
                     <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Circle}" />

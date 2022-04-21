@@ -5,13 +5,13 @@
 
     <converters:ThicknessFilterConverter x:Key="ThicknessFilterConverter" />
 
-    <Style x:Key="MahApps.Styles.GroupBox.Clean" TargetType="GroupBox">
+    <Style x:Key="MahApps.Styles.GroupBox.Clean" TargetType="{x:Type GroupBox}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="GroupBox">
+                <ControlTemplate TargetType="{x:Type GroupBox}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -46,7 +46,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
-                                <Style x:Key="InternalBorderStyle" TargetType="Border">
+                                <Style x:Key="InternalBorderStyle" TargetType="{x:Type Border}">
                                     <Setter Property="Panel.ZIndex" Value="1" />
                                     <Setter Property="VerticalAlignment" Value="Stretch" />
                                     <Setter Property="Width" Value="Auto" />

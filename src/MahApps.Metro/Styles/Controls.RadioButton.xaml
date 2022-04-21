@@ -4,7 +4,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  ********************************** RadioButton Style **********************************  -->
-    <Style x:Key="MahApps.Styles.RadioButton" TargetType="RadioButton">
+    <Style x:Key="MahApps.Styles.RadioButton" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
@@ -18,7 +18,7 @@
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
+                <ControlTemplate TargetType="{x:Type RadioButton}">
                     <Grid>
                         <Border x:Name="RootBorder"
                                 Background="{TemplateBinding Background}"
@@ -182,7 +182,7 @@
 
     <Style x:Key="MahApps.Styles.RadioButton.Win10"
            BasedOn="{StaticResource MahApps.Styles.RadioButton}"
-           TargetType="RadioButton">
+           TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrush}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />

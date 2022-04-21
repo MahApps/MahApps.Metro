@@ -12,8 +12,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
-        <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox">
+        <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="{x:Type mah:MetroHeader}" />
+        <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="{x:Type GroupBox}">
             <Setter Property="Margin" Value="5 5 5 0" />
         </Style>
 

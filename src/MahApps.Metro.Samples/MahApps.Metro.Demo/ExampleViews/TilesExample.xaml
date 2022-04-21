@@ -11,7 +11,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
+            <Style x:Key="LargeTileStyle" TargetType="{x:Type mah:Tile}">
                 <Setter Property="Height" Value="125" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
@@ -19,7 +19,7 @@
                 <Setter Property="Width" Value="300" />
             </Style>
 
-            <Style x:Key="SmallTileStyle" TargetType="mah:Tile">
+            <Style x:Key="SmallTileStyle" TargetType="{x:Type mah:Tile}">
                 <Setter Property="Height" Value="125" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />

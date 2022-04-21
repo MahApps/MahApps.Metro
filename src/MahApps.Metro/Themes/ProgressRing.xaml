@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="mah:ProgressRing">
+    <Style TargetType="{x:Type mah:ProgressRing}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Height" Value="60" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -11,12 +11,12 @@
         <Setter Property="MinWidth" Value="20" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="mah:ProgressRing">
+                <ControlTemplate TargetType="{x:Type mah:ProgressRing}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Border.Resources>
-                            <Style x:Key="ProgressRingEllipseStyle" TargetType="Ellipse">
+                            <Style x:Key="ProgressRingEllipseStyle" TargetType="{x:Type Ellipse}">
                                 <Setter Property="HorizontalAlignment" Value="Left" />
                                 <Setter Property="Opacity" Value="0" />
                                 <Setter Property="VerticalAlignment" Value="Top" />
