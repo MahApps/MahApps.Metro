@@ -3,102 +3,83 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shadows.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Page.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ValidationError.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Calendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.MenuItem.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContentControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContextMenu.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DataGrid.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Expander.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GridSplitter.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Hyperlink.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Label.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.MenuItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.RadioButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shadows.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Slider.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.StatusBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Hyperlink.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Label.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Tooltip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToolBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Tooltip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TreeView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.StatusBar.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContentControl.xaml" />
-
-        <!--  Theme styles with keys  -->
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/NumericUpDown.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Flyout.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroHeader.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FlipView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorEyeDropper.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorCanvas.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPalette.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPicker.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MultiSelectionComboBox.xaml" />
-
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ValidationError.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  note: default style for textblock is now in MetroWindow !!!  -->
 
-    <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type mah:CustomValidationPopup}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ToolTip}" TargetType="{x:Type ToolTip}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="{x:Type Button}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="{x:Type RepeatButton}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton}" TargetType="{x:Type ToggleButton}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Hyperlink}" TargetType="{x:Type Hyperlink}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox}" TargetType="{x:Type RichTextBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="{x:Type Slider}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Label}" TargetType="{x:Type Label}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="{x:Type TabControl}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar}" TargetType="{x:Type ScrollBar}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton}" TargetType="{x:Type RadioButton}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar}" TargetType="{x:Type ProgressBar}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox}" TargetType="{x:Type PasswordBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Calendar}" TargetType="{x:Type Calendar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="{x:Type CheckBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox}" TargetType="{x:Type ComboBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}" TargetType="{x:Type ComboBoxItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox}" TargetType="{x:Type ComboBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu}" TargetType="{x:Type ContextMenu}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type mah:CustomValidationPopup}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DataGrid}" TargetType="{x:Type DataGrid}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox}" TargetType="{x:Type DatePickerTextBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePicker}" TargetType="{x:Type DatePicker}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="{x:Type Expander}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GridSplitter}" TargetType="{x:Type GridSplitter}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader}" TargetType="{x:Type GridViewColumnHeader}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="{x:Type GroupBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Hyperlink}" TargetType="{x:Type Hyperlink}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Label}" TargetType="{x:Type Label}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBox}" TargetType="{x:Type ListBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem}" TargetType="{x:Type ListViewItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListView}" TargetType="{x:Type ListView}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem}" TargetType="{x:Type MenuItem}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Menu}" TargetType="{x:Type Menu}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu}" TargetType="{x:Type ContextMenu}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="{x:Type Expander}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="{x:Type GroupBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListBox}" TargetType="{x:Type ListBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader}" TargetType="{x:Type GridViewColumnHeader}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListView}" TargetType="{x:Type ListView}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem}" TargetType="{x:Type ListViewItem}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TreeView}" TargetType="{x:Type TreeView}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TreeViewItem}" TargetType="{x:Type TreeViewItem}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.DatePicker}" TargetType="{x:Type DatePicker}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox}" TargetType="{x:Type DatePickerTextBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Calendar}" TargetType="{x:Type Calendar}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.DataGrid}" TargetType="{x:Type DataGrid}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.StatusBar}" TargetType="{x:Type StatusBar}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem}" TargetType="{x:Type StatusBarItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox}" TargetType="{x:Type PasswordBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar}" TargetType="{x:Type ProgressBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton}" TargetType="{x:Type RadioButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox}" TargetType="{x:Type RichTextBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar}" TargetType="{x:Type ScrollBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer}" TargetType="{x:Type ScrollViewer}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.GridSplitter}" TargetType="{x:Type GridSplitter}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ToolBar}" TargetType="{x:Type ToolBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="{x:Type Slider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem}" TargetType="{x:Type StatusBarItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.StatusBar}" TargetType="{x:Type StatusBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="{x:Type TabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton}" TargetType="{x:Type ToggleButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToolBarTray}" TargetType="{x:Type ToolBarTray}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolBar}" TargetType="{x:Type ToolBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolTip}" TargetType="{x:Type ToolTip}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TreeViewItem}" TargetType="{x:Type TreeViewItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TreeView}" TargetType="{x:Type TreeView}" />
 
 </ResourceDictionary>
