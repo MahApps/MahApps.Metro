@@ -3,7 +3,7 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <Style TargetType="{x:Type mah:HotKeyBox}">
+    <Style x:Key="MahApps.Styles.HotKeyBox" TargetType="{x:Type mah:HotKeyBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />

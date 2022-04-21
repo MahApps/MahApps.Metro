@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type mah:ProgressRing}">
+    <Style x:Key="MahApps.Styles.ProgressRing" TargetType="{x:Type mah:ProgressRing}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Height" Value="60" />
         <Setter Property="HorizontalAlignment" Value="Center" />

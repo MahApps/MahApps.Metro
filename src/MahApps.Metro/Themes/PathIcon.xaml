@@ -3,7 +3,7 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <Style TargetType="{x:Type mah:PathIcon}">
+    <Style x:Key="MahApps.Styles.PathIcon" TargetType="{x:Type mah:PathIcon}">
         <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />

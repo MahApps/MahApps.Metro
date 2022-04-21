@@ -20,7 +20,7 @@
         <Setter Property="Width" Value="3" />
     </Style>
 
-    <Style TargetType="{x:Type mah:SplitView}">
+    <Style x:Key="MahApps.Styles.SplitView" TargetType="{x:Type mah:SplitView}">
         <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

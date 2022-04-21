@@ -7,15 +7,16 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Underline.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Badged.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/DateTimePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/DropDownButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FlipView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Flyout.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FlyoutsControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FontIcon.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/PathIcon.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HotKeyBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroAnimatedSingleRowTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroAnimatedTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroContentControl.xaml" />
@@ -24,26 +25,25 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroTabItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroWindow.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MultiSelectionComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/NumericUpDown.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/PathIcon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RevealImage.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Underline.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HotKeyBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorEyeDropper.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorCanvas.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPalette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPicker.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MultiSelectionComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/MessageDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/InputDialog.xaml" />
@@ -55,29 +55,45 @@
 
     <!--  set up default styles for our custom controls  -->
 
-    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDown}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Flyout}" TargetType="{x:Type mah:Flyout}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type mah:ToggleSwitch}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Badged}" TargetType="{x:Type mah:Badged}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentControlEx}" TargetType="{x:Type mah:ContentControlEx}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.MetroThumbContentControl}" TargetType="{x:Type mah:MetroThumbContentControl}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommandsItem}" TargetType="{x:Type mah:WindowCommandsItem}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands}" TargetType="{x:Type mah:WindowCommands}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Win10}" TargetType="{x:Type mah:WindowButtonCommands}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenuListBox}" TargetType="{x:Type mah:HamburgerMenuListBox}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}" TargetType="{x:Type mah:HamburgerMenu}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RevealImage}" TargetType="{x:Type mah:RevealImage}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type mah:MetroProgressBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton}" TargetType="{x:Type mah:DropDownButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipViewItem}" TargetType="{x:Type mah:FlipViewItem}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type mah:FlipView}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.FlyoutsControl}" TargetType="{x:Type mah:FlyoutsControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Flyout}" TargetType="{x:Type mah:Flyout}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.FontIcon}" TargetType="{x:Type mah:FontIcon}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenuListBox}" TargetType="{x:Type mah:HamburgerMenuListBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}" TargetType="{x:Type mah:HamburgerMenu}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox}" TargetType="{x:Type mah:HotKeyBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroContentControl}" TargetType="{x:Type mah:MetroContentControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type mah:MetroProgressBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroThumbContentControl}" TargetType="{x:Type mah:MetroThumbContentControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow}" TargetType="{x:Type mah:MetroWindow}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PathIcon}" TargetType="{x:Type mah:PathIcon}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PivotItem}" TargetType="{x:Type mah:PivotItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Pivot}" TargetType="{x:Type mah:Pivot}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressRing}" TargetType="{x:Type mah:ProgressRing}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RevealImage}" TargetType="{x:Type mah:RevealImage}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.SplitButton}" TargetType="{x:Type mah:SplitButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.SplitView}" TargetType="{x:Type mah:SplitView}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Tile}" TargetType="{x:Type mah:Tile}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type mah:ToggleSwitch}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TransitioningContentControl}" TargetType="{x:Type mah:TransitioningContentControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Underline}" TargetType="{x:Type mah:Underline}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Win10}" TargetType="{x:Type mah:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommandsItem}" TargetType="{x:Type mah:WindowCommandsItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands}" TargetType="{x:Type mah:WindowCommands}" />
     <!--#region ColorPicker-->
     <Style BasedOn="{StaticResource MahApps.Styles.ColorCanvas}" TargetType="{x:Type mah:ColorCanvas}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}" TargetType="{x:Type mah:ColorEyeDropper}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette}" TargetType="{x:Type mah:ColorPalette}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type mah:ColorPicker}" />
     <!--#endregion-->
-    <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />

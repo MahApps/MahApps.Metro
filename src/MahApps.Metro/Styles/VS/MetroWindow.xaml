@@ -25,7 +25,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type mah:WindowButtonCommands}">
+    <Style x:Key="MahApps.Styles.WindowButtonCommands" TargetType="{x:Type mah:WindowButtonCommands}">
         <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
         <Setter Property="DarkMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
         <Setter Property="DarkMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />

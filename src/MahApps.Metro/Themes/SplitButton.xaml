@@ -268,7 +268,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type mah:SplitButton}">
+    <Style x:Key="MahApps.Styles.SplitButton" TargetType="{x:Type mah:SplitButton}">
         <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />

@@ -20,7 +20,7 @@
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style TargetType="{x:Type mah:Badged}">
+    <Style x:Key="MahApps.Styles.Badged" TargetType="{x:Type mah:Badged}">
         <Setter Property="BadgeBackground" Value="{DynamicResource MahApps.Brushes.Badged.Background}" />
         <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
         <Setter Property="BadgeFontSize" Value="11" />

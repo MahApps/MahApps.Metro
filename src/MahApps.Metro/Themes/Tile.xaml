@@ -3,7 +3,7 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <Style TargetType="{x:Type mah:Tile}">
+    <Style x:Key="MahApps.Styles.Tile" TargetType="{x:Type mah:Tile}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="CountFontSize" Value="28" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />

@@ -49,7 +49,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style TargetType="{x:Type mah:Pivot}">
+    <Style x:Key="MahApps.Styles.Pivot" TargetType="{x:Type mah:Pivot}">
         <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.PivotHeader}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -117,7 +117,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type mah:PivotItem}">
+    <Style x:Key="MahApps.Styles.PivotItem" TargetType="{x:Type mah:PivotItem}">
         <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.PivotItemHeader}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

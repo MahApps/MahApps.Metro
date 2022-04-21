@@ -16,7 +16,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type mah:DropDownButton}">
+    <Style x:Key="MahApps.Styles.DropDownButton" TargetType="{x:Type mah:DropDownButton}">
         <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />

@@ -576,7 +576,7 @@
         <DoubleAnimation To="0.0" />
     </Storyboard>
 
-    <Style TargetType="{x:Type mah:MetroWindow}">
+    <Style x:Key="MahApps.Styles.MetroWindow" TargetType="{x:Type mah:MetroWindow}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />
