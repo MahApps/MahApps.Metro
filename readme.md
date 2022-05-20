@@ -145,8 +145,10 @@ Does your company use MahApps.Metro?  Ask your manager or marketing team if your
 * [myEcho](http://myechoapp.com/) iOS Dictation for Windows
 * [NETworkManager](https://github.com/BornToBeRoot/NETworkManager) by [@BornToBeRoot](https://github.com/BornToBeRoot) A powerful tool for managing networks and troubleshoot network problems!
 * [Papercut](https://github.com/jaben/papercut) by [@Jaben](https://github.com/Jaben) Simple Desktop SMTP Server / Email Receiver
+* [RainyDay Backup](https://www.copidal.com) Backup system for Azure DevOps Services and Azure Devops Server
 * [SimpleMP](https://github.com/punker76/simple-music-player) by [@punker76](https://github.com/punker76) Simple Music Player - SimpleMP - Keeps it simple and plays your music
 * [Solutionizer](https://github.com/thoemmi/Solutionizer) by [@thoemmi](https://github.com/thoemmi) Creating ad-hoc solutions for Visual Studio
+* [Version Changer](https://marketplace.visualstudio.com/items?itemName=Newky2k.VersionChanger2022) Version Changer is a Visual Studio extension that makes it simple to change the version numbers of all the projects in a solution.
 * [WinReform](https://github.com/AKruimink/WinReform) by [@AKruimink](https://github.com/AKruimink) A simple tool to help resize and relocate stubborn windows.
 * [Xamarin Inspector](https://docs.microsoft.com/en-us/xamarin/tools/inspector/) Visualize and debug your live app
 * [Xamarin Workbooks](https://docs.microsoft.com/en-us/xamarin/tools/workbooks/) Workbooks is an interactive programming environment that’s perfect for experimentation, learning, and documentation: an educational tool for learning the myriad of .NET platforms, APIs, and libraries. [Source](https://github.com/Microsoft/workbooks)
