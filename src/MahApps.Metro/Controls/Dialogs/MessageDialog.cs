@@ -169,19 +169,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.SetCurrentValue(NegativeButtonTextProperty, this.DialogSettings.NegativeButtonText);
             this.SetCurrentValue(FirstAuxiliaryButtonTextProperty, this.DialogSettings.FirstAuxiliaryButtonText);
             this.SetCurrentValue(SecondAuxiliaryButtonTextProperty, this.DialogSettings.SecondAuxiliaryButtonText);
-
-            var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus;
-
-            //Ensure it's a valid option
-            if (!this.IsApplicable(defaultButtonFocus))
-            {
-                defaultButtonFocus = this.ButtonStyle == MessageDialogStyle.Affirmative
-                    ? MessageDialogResult.Affirmative
-                    : MessageDialogResult.Negative;
-            }
-
-            this.SetCurrentValue(DefaultButtonFocusProperty, defaultButtonFocus);
-
+            
             this.ApplyDefaultButtonFocus();
         }
 
@@ -398,7 +386,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             return value switch
             {
-                MessageDialogResult.Affirmative => this.ButtonStyle == MessageDialogStyle.Affirmative,
+                MessageDialogResult.Affirmative => true,
                 MessageDialogResult.Negative => this.ButtonStyle != MessageDialogStyle.Affirmative,
                 MessageDialogResult.FirstAuxiliary => this.ButtonStyle is MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary or MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary,
                 MessageDialogResult.SecondAuxiliary => this.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary,
