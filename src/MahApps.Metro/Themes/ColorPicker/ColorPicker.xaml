@@ -228,7 +228,7 @@
                                        Grid.Column="0"
                                        Margin="4 0"
                                        Padding="{TemplateBinding Padding}"
-                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       HorizontalAlignment="Stretch"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
@@ -253,7 +253,7 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
-                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           HorizontalAlignment="Stretch"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
