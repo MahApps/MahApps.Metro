@@ -329,6 +329,7 @@
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
                                      mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                      mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                      mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
@@ -414,9 +415,9 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
-                                Opacity="0.6"
+                                Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Visibility="Collapsed" />
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
 
                         <!--  AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme  -->
                         <Popup x:Name="PART_Popup"
@@ -565,7 +566,7 @@
                         </MultiTrigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="DisabledVisualElement" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

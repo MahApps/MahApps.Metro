@@ -287,7 +287,7 @@
                                 IsHitTestVisible="False"
                                 Opacity="0.6"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Visibility="Collapsed" />
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
 
                         <!--  AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme  -->
                         <controlzex:PopupEx x:Name="PART_Popup"
@@ -505,7 +505,7 @@
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="DisabledVisualElement" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -157,7 +157,8 @@
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
