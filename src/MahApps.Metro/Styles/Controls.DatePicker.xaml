@@ -284,7 +284,8 @@
                                       BorderThickness="0"
                                       FocusVisualStyle="{x:Null}"
                                       IsTabStop="False"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}" />
 
                         <ContentControl x:Name="PART_Watermark"
                                         Margin="4 0"
