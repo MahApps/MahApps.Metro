@@ -261,22 +261,24 @@
                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                    Grid.Row="0"
                                    Grid.Column="1"
+                                   AutomationProperties.AutomationId="VerticalScrollBar"
                                    Cursor="Arrow"
                                    Maximum="{TemplateBinding ScrollableHeight}"
                                    Minimum="0"
                                    ViewportSize="{TemplateBinding ViewportHeight}"
                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                   Value="{TemplateBinding VerticalOffset}" />
                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                    Grid.Row="1"
                                    Grid.Column="0"
+                                   AutomationProperties.AutomationId="HorizontalScrollBar"
                                    Cursor="Arrow"
                                    Maximum="{TemplateBinding ScrollableWidth}"
                                    Minimum="0"
                                    Orientation="Horizontal"
                                    ViewportSize="{TemplateBinding ViewportWidth}"
                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                   Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                   Value="{TemplateBinding HorizontalOffset}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
@@ -292,5 +294,69 @@
         </Setter>
         <Setter Property="mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="False" />
     </Style>
+
+    <Style x:Key="MahApps.Styles.ScrollViewer.TextControlContentHost"
+           BasedOn="{StaticResource MahApps.Styles.ScrollViewer}"
+           TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="leftColumn" Width="*" />
+                            <ColumnDefinition x:Name="rightColumn" Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0"
+                                Grid.Column="0"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                    Margin="{TemplateBinding mah:ScrollViewerHelper.ScrollContentPresenterMargin}"
+                                                    CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                    CanHorizontallyScroll="False"
+                                                    CanVerticallyScroll="False"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Border>
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   AutomationProperties.AutomationId="VerticalScrollBar"
+                                   Cursor="Arrow"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   Minimum="0"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                   Value="{TemplateBinding VerticalOffset}" />
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   AutomationProperties.AutomationId="HorizontalScrollBar"
+                                   Cursor="Arrow"
+                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                   Minimum="0"
+                                   Orientation="Horizontal"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                   Value="{TemplateBinding HorizontalOffset}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
+                            <Setter TargetName="PART_HorizontalScrollBar" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_ScrollContentPresenter" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_VerticalScrollBar" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="leftColumn" Property="Width" Value="Auto" />
+                            <Setter TargetName="rightColumn" Property="Width" Value="*" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:ScrollViewerHelper.ScrollContentPresenterMargin" Value="-2 0" />
+    </Style>
+
 
 </ResourceDictionary>

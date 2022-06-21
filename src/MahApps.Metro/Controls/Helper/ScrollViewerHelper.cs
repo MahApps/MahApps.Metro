@@ -14,12 +14,30 @@ namespace MahApps.Metro.Controls
 {
     public static class ScrollViewerHelper
     {
+        public static readonly DependencyProperty ScrollContentPresenterMarginProperty
+            = DependencyProperty.RegisterAttached(
+                "ScrollContentPresenterMargin",
+                typeof(Thickness),
+                typeof(ScrollViewerHelper));
+
+        [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
+        public static Thickness GetScrollContentPresenterMargin(ScrollViewer scrollViewer)
+        {
+            return (Thickness)scrollViewer.GetValue(ScrollContentPresenterMarginProperty);
+        }
+
+        [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
+        public static void SetScrollContentPresenterMargin(ScrollViewer scrollViewer, Thickness value)
+        {
+            scrollViewer.SetValue(ScrollContentPresenterMarginProperty, value);
+        }
+
         /// <summary>
         /// Identifies the VerticalScrollBarOnLeftSide attached property.
         /// This property can be used to set vertical scrollbar left side from the tabpanel (look at MetroAnimatedSingleRowTabControl)
         /// </summary>
-        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty =
-            DependencyProperty.RegisterAttached(
+        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty
+            = DependencyProperty.RegisterAttached(
                 "VerticalScrollBarOnLeftSide",
                 typeof(bool),
                 typeof(ScrollViewerHelper),
@@ -48,8 +66,8 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the IsHorizontalScrollWheelEnabled attached property.
         /// </summary>
-        public static readonly DependencyProperty IsHorizontalScrollWheelEnabledProperty =
-            DependencyProperty.RegisterAttached(
+        public static readonly DependencyProperty IsHorizontalScrollWheelEnabledProperty
+            = DependencyProperty.RegisterAttached(
                 "IsHorizontalScrollWheelEnabled",
                 typeof(bool),
                 typeof(ScrollViewerHelper),

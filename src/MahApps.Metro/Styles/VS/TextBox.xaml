@@ -13,11 +13,13 @@
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="{TemplateBinding Padding}"
+                                      Margin="0"
+                                      Padding="{TemplateBinding Padding}"
                                       Background="{x:Null}"
                                       BorderThickness="0"
                                       IsTabStop="False"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -47,11 +49,13 @@
                                    Text="Search ..."
                                    Visibility="Hidden" />
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="{TemplateBinding Padding}"
+                                      Margin="0"
+                                      Padding="{TemplateBinding Padding}"
                                       Background="{x:Null}"
                                       BorderThickness="0"
                                       IsTabStop="False"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TextBox.Text" Value="">

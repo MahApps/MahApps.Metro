@@ -41,7 +41,8 @@
                                           Background="{x:Null}"
                                           BorderThickness="0"
                                           IsTabStop="False"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}" />
 
                             <TextBlock x:Name="PART_Message"
                                        Grid.Row="1"

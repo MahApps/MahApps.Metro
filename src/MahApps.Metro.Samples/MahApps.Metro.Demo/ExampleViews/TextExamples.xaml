@@ -195,6 +195,11 @@
                   Header="RichTextBox"
                   UseLayoutRounding="True">
             <StackPanel>
+                <RichTextBox Margin="{StaticResource ControlMargin}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <FlowDocument PageWidth="NaN">
+                        <Paragraph>Hello</Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
                 <RichTextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.Watermark="Type something in..."
@@ -215,52 +220,44 @@
                              Style="{StaticResource MahApps.Styles.RichTextBox.Button}" />
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             Padding="5"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True">
-                    <!--
-                        Workaround for: RichTextBox behaves oddly inside a ScrollViewer
-                        
-                        The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
-                    -->
-                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                    <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="Normal" />
                             </Hyperlink>
                             <LineBreak />
-                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             Padding="5"
                              IsDocumentEnabled="True"
                              IsReadOnly="True">
-                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                    <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="ReadOnly" />
                             </Hyperlink>
                             <LineBreak />
-                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             Padding="5"
                              IsDocumentEnabled="True"
                              IsEnabled="False">
-                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                    <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="Disabled" />
                             </Hyperlink>
                             <LineBreak />
-                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
