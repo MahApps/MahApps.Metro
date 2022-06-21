@@ -9,36 +9,62 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <!--  TextBox Style  -->
-    <Style x:Key="MahApps.Styles.TextBox" TargetType="{x:Type TextBox}">
+    <Style x:Key="MahApps.Styles.RichTextBox" TargetType="{x:Type RichTextBox}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="{x:Type Hyperlink}">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+                <Setter Property="TextDecorations" Value="Underline" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="True">
+                        <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="ForceCursor" Value="True" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style BasedOn="{StaticResource {x:Type FlowDocument}}" TargetType="{x:Type FlowDocument}">
+                <Setter Property="FlowDirection" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FlowDirection}" />
+                <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontFamily}" />
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontSize}" />
+                <Setter Property="FontStretch" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontStretch}" />
+                <Setter Property="FontStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontStyle}" />
+                <Setter Property="FontWeight" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontWeight}" />
+                <Setter Property="Language" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=Language}" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+            </Style>
+        </Style.Resources>
+        <Setter Property="AllowDrop" Value="True" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="MinWidth" Value="10" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Padding" Value="4" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="SelectionBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <!--  change SnapsToDevicePixels to True to view a better border and validation error  -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
+                <ControlTemplate TargetType="{x:Type RichTextBox}">
                     <Grid>
-                        <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <Border x:Name="PART_WaitingForDataEffectGrid"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                    Effect="{DynamicResource MahApps.DropShadowEffect.WaitingForData}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </AdornerDecorator>
-
-                        <Border x:Name="Base"
+                        <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -52,20 +78,27 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition x:Name="ButtonRow" Height="*" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Grid.Row="1"
-                                          Grid.Column="0"
-                                          Margin="0"
-                                          Padding="{TemplateBinding Padding}"
-                                          VerticalAlignment="Stretch"
-                                          Background="{x:Null}"
-                                          BorderThickness="0"
-                                          IsTabStop="False"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}" />
+                            <Grid x:Name="PART_GridContentHost"
+                                  Grid.Row="1"
+                                  Grid.Column="0">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Width="{Binding ElementName=PART_GridContentHost, Path=ActualWidth}"
+                                              Margin="0"
+                                              Padding="{TemplateBinding Padding}"
+                                              VerticalAlignment="Stretch"
+                                              mah:ScrollViewerHelper.ScrollContentPresenterMargin="-5 -1 -1 -1"
+                                              Background="{x:Null}"
+                                              BorderThickness="0"
+                                              HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                              IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                              IsTabStop="False"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}"
+                                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+                            </Grid>
 
                             <TextBlock x:Name="PART_Message"
                                        Grid.Row="1"
@@ -127,7 +160,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                    mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                    mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
                                     Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
@@ -153,13 +186,13 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_GridContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
                             <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText)}" Value="False">
                             <Setter TargetName="PART_Message" Property="Visibility" Value="Visible" />
                         </DataTrigger>
 
@@ -183,12 +216,12 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Right" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ClearTextButton)}" Value="False" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_GridContentHost" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
                         </MultiDataTrigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
@@ -197,7 +230,7 @@
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
@@ -231,20 +264,6 @@
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsVisible" Value="True" />
-                                <Condition Property="mah:TextBoxHelper.IsWaitingForData" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.WaitingForData}" />
-                            </MultiTrigger.EnterActions>
-                        </MultiTrigger>
-                        <Trigger Property="mah:TextBoxHelper.IsWaitingForData" Value="False">
-                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -256,28 +275,16 @@
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="mah:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
-        <Setter Property="mah:TextBoxHelper.WatermarkWrapping" Value="{Binding RelativeSource={RelativeSource Self}, Path=TextWrapping, Mode=OneWay}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.Button"
-           BasedOn="{StaticResource MahApps.Styles.TextBox}"
-           TargetType="{x:Type TextBox}">
-        <!--  change SnapsToDevicePixels to True to view a better border and validation error  -->
+    <Style x:Key="MahApps.Styles.RichTextBox.Button"
+           BasedOn="{StaticResource MahApps.Styles.RichTextBox}"
+           TargetType="{x:Type RichTextBox}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <Grid>
-                        <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <Border x:Name="PART_WaitingForDataEffectGrid"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                    Effect="{DynamicResource MahApps.DropShadowEffect.WaitingForData}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </AdornerDecorator>
-
-                        <Border x:Name="Base"
+                        <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -291,20 +298,27 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition x:Name="ButtonRow" Height="*" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Grid.Row="1"
-                                          Grid.Column="0"
-                                          Margin="0"
-                                          Padding="{TemplateBinding Padding}"
-                                          VerticalAlignment="Stretch"
-                                          Background="{x:Null}"
-                                          BorderThickness="0"
-                                          IsTabStop="False"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}" />
+                            <Grid x:Name="PART_GridContentHost"
+                                  Grid.Row="1"
+                                  Grid.Column="0">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Width="{Binding ElementName=PART_GridContentHost, Path=ActualWidth}"
+                                              Margin="0"
+                                              Padding="{TemplateBinding Padding}"
+                                              VerticalAlignment="Stretch"
+                                              mah:ScrollViewerHelper.ScrollContentPresenterMargin="-5 -1 -1 -1"
+                                              Background="{x:Null}"
+                                              BorderThickness="0"
+                                              HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                              IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                              IsTabStop="False"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              Style="{DynamicResource MahApps.Styles.ScrollViewer.TextControlContentHost}"
+                                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+                            </Grid>
 
                             <TextBlock x:Name="PART_Message"
                                        Grid.Row="1"
@@ -324,7 +338,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Margin="4 0"
+                                            Margin="6 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{mahConverters:MathMultiplyConverter}" FallbackValue="0">
@@ -366,7 +380,9 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                    mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="True"
+                                    mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="False"
+                                    Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                    CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
                                     Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
@@ -376,7 +392,7 @@
                                     IsTabStop="False"
                                     Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                     Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.TextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    Visibility="Visible" />
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
@@ -393,13 +409,13 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_GridContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Message" Property="Grid.Column" Value="1" />
                             <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText)}" Value="False">
                             <Setter TargetName="PART_Message" Property="Visibility" Value="Visible" />
                         </DataTrigger>
 
@@ -423,12 +439,12 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Right" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.TextButton)}" Value="False" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_GridContentHost" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
                         </MultiDataTrigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
@@ -441,7 +457,7 @@
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
                         </MultiTrigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
@@ -475,43 +491,12 @@
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsVisible" Value="True" />
-                                <Condition Property="mah:TextBoxHelper.IsWaitingForData" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.WaitingForData}" />
-                            </MultiTrigger.EnterActions>
-                        </MultiTrigger>
-                        <Trigger Property="mah:TextBoxHelper.IsWaitingForData" Value="False">
-                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
-        <Setter Property="mah:TextBoxHelper.TextButton" Value="True" />
-    </Style>
-
-    <Style x:Key="MahApps.Styles.TextBox.Search"
-           BasedOn="{StaticResource MahApps.Styles.TextBox.Button}"
-           TargetType="{x:Type TextBox}">
-        <!--  Modern - Magnify  -->
-        <Setter Property="mah:TextBoxHelper.ButtonContent" Value="M 42.5,22C 49.4036,22 55,27.5964 55,34.5C 55,41.4036 49.4036,47 42.5,47C 40.1356,47 37.9245,46.3435 36,45.2426L 26.9749,54.2678C 25.8033,55.4393 23.9038,55.4393 22.7322,54.2678C 21.5607,53.0962 21.5607,51.1967 22.7322,50.0251L 31.7971,40.961C 30.6565,39.0755 30,36.8644 30,34.5C 30,27.5964 35.5964,22 42.5,22 Z M 42.5,26C 37.8056,26 34,29.8056 34,34.5C 34,39.1944 37.8056,43 42.5,43C 47.1944,43 51,39.1944 51,34.5C 51,29.8056 47.1944,26 42.5,26 Z" />
-        <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <mah:PathIcon Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                  Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                  Padding="3"
-                                  Data="{Binding Mode=OneWay}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
 </ResourceDictionary>
