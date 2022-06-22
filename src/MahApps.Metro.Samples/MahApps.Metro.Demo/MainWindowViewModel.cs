@@ -127,27 +127,35 @@ namespace MetroDemo
             this.CloseCmd = new SimpleCommand<Flyout>(f => f is not null && this.CanCloseFlyout, f => f!.IsOpen = false);
 
             this.TextBoxButtonCmd = new SimpleCommand<object>(
-                o => true,
-                async x =>
+                o =>
                     {
-                        if (x is string s)
+                        if (o is RichTextBox richTextBox)
+                        {
+                            return TextBoxHelper.GetHasText(richTextBox);
+                        }
+
+                        return true;
+                    },
+                async o =>
+                    {
+                        if (o is string s)
                         {
                             await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
                         }
-                        else if (x is RichTextBox richTextBox)
+                        else if (o is RichTextBox richTextBox)
                         {
                             var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
                             await this._dialogCoordinator.ShowMessageAsync(this, "RichTextBox Button was clicked!", text).ConfigureAwait(false);
                         }
-                        else if (x is TextBox textBox)
+                        else if (o is TextBox textBox)
                         {
                             await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
                         }
-                        else if (x is PasswordBox passwordBox)
+                        else if (o is PasswordBox passwordBox)
                         {
                             await this._dialogCoordinator.ShowMessageAsync(this, "PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
                         }
-                        else if (x is DatePicker datePicker)
+                        else if (o is DatePicker datePicker)
                         {
                             await this._dialogCoordinator.ShowMessageAsync(this, "DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
                         }

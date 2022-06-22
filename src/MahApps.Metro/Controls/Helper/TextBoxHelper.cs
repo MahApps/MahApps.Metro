@@ -1083,12 +1083,7 @@ namespace MahApps.Metro.Controls
 
             if (GetClearTextButton(parent))
             {
-                if (parent is RichTextBox richTextBox)
-                {
-                    richTextBox.Document?.Blocks?.Clear();
-                    richTextBox.Selection?.Select(richTextBox.CaretPosition, richTextBox.CaretPosition);
-                }
-                else if (parent is TextBox textBox)
+                if (parent is TextBox textBox)
                 {
                     textBox.Clear();
                     textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
