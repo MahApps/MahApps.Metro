@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
                     break;
                 case DatePicker datePicker:
                     datePicker.SetCurrentValue(DatePicker.SelectedDateProperty, null);
-                    datePicker.SetCurrentValue(DatePicker.TextProperty, null);
+                    datePicker.SetCurrentValue(DatePicker.TextProperty, string.Empty);
                     datePicker.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                     break;
                 case TimePickerBase timePicker:
