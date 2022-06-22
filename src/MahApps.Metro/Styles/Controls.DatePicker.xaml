@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:accessibility="clr-namespace:MahApps.Metro.Accessibility"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
+                    xmlns:controlzex="urn:controlzex"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
@@ -138,14 +139,15 @@
                                     IsTabStop="False"
                                     Style="{DynamicResource MahApps.Styles.Button.Chromeless}" />
 
-                            <Popup x:Name="PART_Popup"
-                                   Grid.Row="1"
-                                   Grid.Column="0"
-                                   AllowsTransparency="True"
-                                   Placement="Bottom"
-                                   PlacementTarget="{Binding ElementName=PART_Root}"
-                                   PopupAnimation="Fade"
-                                   StaysOpen="False" />
+                            <controlzex:PopupEx x:Name="PART_Popup"
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                AllowsTransparency="True"
+                                                Focusable="False"
+                                                Placement="Bottom"
+                                                PlacementTarget="{Binding ElementName=PART_Root}"
+                                                PopupAnimation="Fade"
+                                                StaysOpen="False" />
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
