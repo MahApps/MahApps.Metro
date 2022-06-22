@@ -133,6 +133,10 @@ namespace MetroDemo
                         {
                             return TextBoxHelper.GetHasText(richTextBox);
                         }
+                        else if (o is TextBox textBox)
+                        {
+                            return TextBoxHelper.GetHasText(textBox);
+                        }
 
                         return true;
                     },

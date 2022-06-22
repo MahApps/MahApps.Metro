@@ -14,6 +14,8 @@ namespace MahApps.Metro.Controls
     {
         public static ICommand ClearControlCommand { get; } = new RoutedUICommand("Clear", nameof(ClearControlCommand), typeof(MahAppsCommands));
 
+        public static ICommand SearchCommand { get; } = new RoutedUICommand("Search", nameof(SearchCommand), typeof(MahAppsCommands));
+
         static MahAppsCommands()
         {
             // Register CommandBinding for all windows.
