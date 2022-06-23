@@ -276,33 +276,31 @@
                   UseLayoutRounding="True">
             <StackPanel>
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Password"
+                             mah:TextBoxHelper.Watermark="Password..."
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Win8"
+                             mah:TextBoxHelper.Watermark="Win8..."
                              Password="Win8"
                              Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText), Mode=OneWay}"
                              mah:TextBoxHelper.IsWaitingForData="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Revealed PasswordBox"
-                             Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+                             mah:TextBoxHelper.Watermark="Revealed..."
+                             Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Password"
+                             mah:TextBoxHelper.Watermark="Password..."
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:PasswordBoxHelper.CapsLockIcon="!"
                              mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="4"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MahApps.Styles.PasswordBox.Button}">
+                             mah:TextBoxHelper.Watermark="Custom icon...">
                     <mah:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />
@@ -320,8 +318,6 @@
                              mah:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
                              Password="Password" />
-
-                <Label Content="Select all on focus" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
                              Password="Password"
