@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
@@ -53,18 +53,28 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <CheckBox Margin="{TemplateBinding BorderThickness}" IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </CheckBox>
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <CheckBox x:Name="ContentPresenter"
+                                      Margin="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      mah:CheckBoxHelper.ForegroundIndeterminatePressed="{TemplateBinding Foreground}"
+                                      mah:CheckBoxHelper.ForegroundUnchecked="{TemplateBinding Foreground}"
+                                      mah:CheckBoxHelper.ForegroundUncheckedPressed="{TemplateBinding Foreground}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                      IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsSelected, Mode=TwoWay}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Style="{DynamicResource MahApps.Styles.CheckBox.MultiSelectionComboBoxItem}" />
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundChecked" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedPressed" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -72,7 +82,7 @@
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundChecked" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
                         <MultiTrigger>
@@ -81,7 +91,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -89,12 +99,12 @@
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
                             <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
@@ -103,7 +113,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedDisabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
