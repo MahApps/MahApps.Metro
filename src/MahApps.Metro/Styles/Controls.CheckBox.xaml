@@ -447,7 +447,7 @@
         <Setter Property="mah:CheckBoxHelper.CheckGlyphCheckedTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <mah:FontIcon x:Name="CheckGlyph"
+                    <mah:FontIcon x:Name="CheckGlyphCheckedFontIcon"
                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
                                   FontSize="20"
                                   Glyph="&#xE001;"
@@ -470,7 +470,7 @@
         <Setter Property="mah:CheckBoxHelper.CheckGlyphIndeterminateTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <mah:FontIcon x:Name="CheckGlyph"
+                    <mah:FontIcon x:Name="CheckGlyphIndeterminateFontIcon"
                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
                                   FontSize="20"
                                   Glyph="&#xE73C;"

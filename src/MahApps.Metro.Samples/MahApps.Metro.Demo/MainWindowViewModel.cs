@@ -126,7 +126,7 @@ namespace MetroDemo
 
             this.CloseCmd = new SimpleCommand<Flyout>(f => f is not null && this.CanCloseFlyout, f => f!.IsOpen = false);
 
-            this.TextBoxButtonCmd = new SimpleCommand<object>(
+            this.ControlButtonCommand = new SimpleCommand<object>(
                 o =>
                     {
                         if (o is RichTextBox richTextBox)
@@ -163,10 +163,14 @@ namespace MetroDemo
                         {
                             await this._dialogCoordinator.ShowMessageAsync(this, "DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
                         }
+                        else if (o is ComboBox comboBox)
+                        {
+                            await this._dialogCoordinator.ShowMessageAsync(this, "ComboBox Button was clicked!", comboBox.Text).ConfigureAwait(false);
+                        }
                     }
             );
 
-            this.TextBoxButtonCmdWithParameter = new SimpleCommand<object>(
+            this.ControlButtonCommandWithParameter = new SimpleCommand<object>(
                 o => true,
                 async x => { await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
             );
@@ -375,9 +379,9 @@ namespace MetroDemo
             set => this.Set(ref this.isHamburgerMenuPaneOpen, value);
         }
 
-        public ICommand TextBoxButtonCmd { get; }
+        public ICommand ControlButtonCommand { get; }
 
-        public ICommand TextBoxButtonCmdWithParameter { get; }
+        public ICommand ControlButtonCommandWithParameter { get; }
 
         public string this[string columnName]
         {

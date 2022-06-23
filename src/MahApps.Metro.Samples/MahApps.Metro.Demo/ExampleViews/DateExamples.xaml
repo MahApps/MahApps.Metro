@@ -44,7 +44,7 @@
                             SelectedDate="{x:Static system:DateTime.Now}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd}"
+                            mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand}"
                             mah:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             mah:TextBoxHelper.Watermark="" />
                 <DatePicker Width="200"

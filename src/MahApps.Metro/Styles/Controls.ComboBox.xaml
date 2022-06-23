@@ -27,7 +27,6 @@
                         <Grid x:Name="PART_InnerGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="TextColumn" Width="*" />
-                                <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -99,22 +98,6 @@
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                             </ContentControl>
-
-                            <Button x:Name="PART_ClearText"
-                                    Grid.Row="0"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="1"
-                                    Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                    mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
-                                    Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                    ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                    Focusable="False"
-                                    FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                    FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -137,24 +120,9 @@
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ClearTextButton)}" Value="False">
-                            <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
-                            <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
-                        </DataTrigger>
-                        <Trigger Property="IsReadOnly" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
-                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
-                        </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
                         <MultiTrigger>
@@ -202,16 +170,18 @@
                         <Button x:Name="PART_ClearText"
                                 Grid.Column="1"
                                 Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                CommandTarget="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Mode=OneWay}"
                                 Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                 ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                 Focusable="False"
                                 FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
                                 FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                Foreground="{TemplateBinding Foreground}"
                                 IsTabStop="False"
                                 Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                Visibility="Visible" />
 
                         <Grid x:Name="BtnArrowBackground"
                               Grid.Column="2"
@@ -229,17 +199,30 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Command" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
+                                <Condition Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+
                         <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
                             <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                         </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True">
                             <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </DataTrigger>
+
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
@@ -295,10 +278,13 @@
                                           Margin="0"
                                           VerticalAlignment="Stretch"
                                           mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                          mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                          mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
                                           mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                           mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                           mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
                                           mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                          mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
                                           mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                                           mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
                                           Background="Transparent"
@@ -337,6 +323,7 @@
                                      mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                      mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
                                      mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                     mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
                                      mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                                      mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
                                      mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
@@ -345,13 +332,13 @@
                                      mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
                                      Background="{x:Null}"
                                      BorderThickness="0"
-                                     CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
+                                     CharacterCasing="{TemplateBinding mah:ComboBoxHelper.CharacterCasing}"
                                      Focusable="True"
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
                                      Foreground="{TemplateBinding Foreground}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
-                                     MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ComboBoxHelper.MaxLength), Mode=OneWay}"
+                                     MaxLength="{TemplateBinding mah:ComboBoxHelper.MaxLength}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      Style="{StaticResource MahApps.Styles.TextBox.ComboBox.Editable}"
                                      Visibility="Collapsed" />
@@ -524,11 +511,16 @@
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ClearTextButton)}" Value="False">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
+                                <Condition Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
                             <Setter TargetName="ContentSite" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_EditableTextBox" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
-                        </DataTrigger>
+                        </MultiTrigger>
+
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="IsTabStop" Value="false" />
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Collapsed" />
@@ -577,10 +569,15 @@
         </Setter>
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.Focus}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.MouseOver}" />
+
+        <Setter Property="mah:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
+
         <Style.Triggers>
             <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
                 <Setter Property="ItemsPanel">

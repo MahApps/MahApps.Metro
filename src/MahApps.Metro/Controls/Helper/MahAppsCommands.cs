@@ -83,12 +83,12 @@ namespace MahApps.Metro.Controls
                 {
                     if (comboBox.IsEditable)
                     {
-                        comboBox.SetCurrentValue(ComboBox.TextProperty, null);
+                        comboBox.SetCurrentValue(ComboBox.TextProperty, string.Empty);
                         comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
 
-                    comboBox.SetCurrentValue(ComboBox.SelectedItemProperty, null);
-                    comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    comboBox.SetCurrentValue(Selector.SelectedItemProperty, null);
+                    comboBox.GetBindingExpression(Selector.SelectedItemProperty)?.UpdateSource();
                     break;
                 }
             }
