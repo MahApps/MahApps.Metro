@@ -68,8 +68,9 @@ namespace MahApps.Metro.Controls
                     datePicker.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                     break;
                 case TimePickerBase timePicker:
-                    timePicker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+                    timePicker.Clear();
                     timePicker.GetBindingExpression(TimePickerBase.SelectedDateTimeProperty)?.UpdateSource();
+
                     break;
                 case TextBox textBox:
                     textBox.Clear();
