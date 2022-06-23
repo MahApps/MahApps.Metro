@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
@@ -35,7 +35,7 @@
 
     <!--#endregion-->
 
-    <!--#region ItemContainterStyles-->
+    <!--#region ItemContainerStyles-->
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem"
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
@@ -111,7 +111,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.MulitselectionComboBoxSelectedItem" TargetType="ListBoxItem">
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem" TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Margin" Value="0 0 2 0" />
@@ -143,7 +143,7 @@
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={mahConverters:SizeToCornerRadiusConverter}}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MulitselectionComboBoxSelectedItem.RemoveItem"
+    <Style x:Key="MahApps.Styles.Button.MultiSelectionComboBoxSelectedItem.RemoveItem"
            BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
            TargetType="Button">
         <Setter Property="ContentTemplate">
@@ -172,8 +172,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.MulitselectionComboBoxSelectedItem.Removeable"
-           BasedOn="{StaticResource MahApps.Styles.MulitselectionComboBoxSelectedItem}"
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}"
            TargetType="ListBoxItem">
         <Setter Property="Template">
             <Setter.Value>
@@ -192,7 +192,7 @@
                                     Command="mah:MultiSelectionComboBox.RemoveItemCommand"
                                     CommandParameter="{Binding}"
                                     DockPanel.Dock="Right"
-                                    Style="{DynamicResource MahApps.Styles.Button.MulitselectionComboBoxSelectedItem.RemoveItem}" />
+                                    Style="{DynamicResource MahApps.Styles.Button.MultiSelectionComboBoxSelectedItem.RemoveItem}" />
                             <ContentPresenter Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -462,7 +462,7 @@
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="SelectItemsFromTextInputDelay" Value="-1" />
-        <Setter Property="SelectedItemContainerStyle" Value="{DynamicResource MahApps.Styles.MulitselectionComboBoxSelectedItem}" />
+        <Setter Property="SelectedItemContainerStyle" Value="{DynamicResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}" />
         <Setter Property="SelectedItemsPanelTemplate">
             <Setter.Value>
                 <ItemsPanelTemplate>
