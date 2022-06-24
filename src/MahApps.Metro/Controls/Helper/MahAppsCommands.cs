@@ -81,6 +81,10 @@ namespace MahApps.Metro.Controls
                     passwordBox.Clear();
                     passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
                     break;
+                case ColorPickerBase colorPicker:
+                    colorPicker.SetCurrentValue(ColorPickerBase.SelectedColorProperty, null);
+                    colorPicker.GetBindingExpression(ColorPickerBase.SelectedColorProperty)?.UpdateSource();
+                    break;
                 case ComboBox comboBox:
                 {
                     if (comboBox is MultiSelectionComboBox multiSelectionComboBox)
