@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -82,14 +83,46 @@ namespace MahApps.Metro.Controls
                     break;
                 case ComboBox comboBox:
                 {
-                    if (comboBox.IsEditable)
+                    if (comboBox is MultiSelectionComboBox multiSelectionComboBox)
                     {
-                        comboBox.SetCurrentValue(ComboBox.TextProperty, string.Empty);
+                        if (multiSelectionComboBox.HasCustomText)
+                        {
+                            multiSelectionComboBox.ResetEditableText(true);
+                        }
+                        else
+                        {
+                            switch (multiSelectionComboBox.SelectionMode)
+                            {
+                                case SelectionMode.Single:
+                                    multiSelectionComboBox.SetCurrentValue(MultiSelectionComboBox.SelectedItemProperty, null);
+                                    break;
+                                case SelectionMode.Multiple:
+                                case SelectionMode.Extended:
+                                    multiSelectionComboBox.SelectedItems?.Clear();
+                                    break;
+                                default:
+                                    throw new NotSupportedException("Unknown SelectionMode");
+                            }
+
+                            multiSelectionComboBox.ResetEditableText(true);
+                        }
+
                         comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
+                        comboBox.GetBindingExpression(MultiSelectionComboBox.SelectedItemProperty)?.UpdateSource();
+                        comboBox.GetBindingExpression(MultiSelectionComboBox.SelectedItemsProperty)?.UpdateSource();
+                    }
+                    else
+                    {
+                        if (comboBox.IsEditable)
+                        {
+                            comboBox.SetCurrentValue(ComboBox.TextProperty, string.Empty);
+                            comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
+                        }
+
+                        comboBox.SetCurrentValue(Selector.SelectedItemProperty, null);
+                        comboBox.GetBindingExpression(Selector.SelectedItemProperty)?.UpdateSource();
                     }
 
-                    comboBox.SetCurrentValue(Selector.SelectedItemProperty, null);
-                    comboBox.GetBindingExpression(Selector.SelectedItemProperty)?.UpdateSource();
                     break;
                 }
             }
