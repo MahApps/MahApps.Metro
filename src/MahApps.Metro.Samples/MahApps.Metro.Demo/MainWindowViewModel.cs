@@ -129,43 +129,38 @@ namespace MetroDemo
             this.ControlButtonCommand = new SimpleCommand<object>(
                 o =>
                     {
-                        if (o is RichTextBox richTextBox)
+                        return o switch
                         {
-                            return TextBoxHelper.GetHasText(richTextBox);
-                        }
-                        else if (o is TextBox textBox)
-                        {
-                            return TextBoxHelper.GetHasText(textBox);
-                        }
-
-                        return true;
+                            RichTextBox richTextBox => TextBoxHelper.GetHasText(richTextBox),
+                            TextBox textBox => TextBoxHelper.GetHasText(textBox),
+                            _ => true
+                        };
                     },
                 async o =>
                     {
-                        if (o is string s)
+                        switch (o)
                         {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
-                        }
-                        else if (o is RichTextBox richTextBox)
-                        {
-                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-                            await this._dialogCoordinator.ShowMessageAsync(this, "RichTextBox Button was clicked!", text).ConfigureAwait(false);
-                        }
-                        else if (o is TextBox textBox)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
-                        }
-                        else if (o is PasswordBox passwordBox)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
-                        }
-                        else if (o is DatePicker datePicker)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
-                        }
-                        else if (o is ComboBox comboBox)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "ComboBox Button was clicked!", comboBox.Text).ConfigureAwait(false);
+                            case string s:
+                                await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
+                                break;
+                            case RichTextBox richTextBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text).ConfigureAwait(false);
+                                break;
+                            case TextBox textBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", textBox.Text).ConfigureAwait(false);
+                                break;
+                            case PasswordBox passwordBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", passwordBox.Password).ConfigureAwait(false);
+                                break;
+                            case DatePicker datePicker:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", datePicker.Text).ConfigureAwait(false);
+                                break;
+                            case ComboBox comboBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", comboBox.Text).ConfigureAwait(false);
+                                break;
+                            case Control control:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", control.ToString() ?? string.Empty).ConfigureAwait(false);
+                                break;
                         }
                     }
             );
