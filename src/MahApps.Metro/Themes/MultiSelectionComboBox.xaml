@@ -271,6 +271,7 @@
                                           mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                           mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                           mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                          mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
                                           mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                           mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                           mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"

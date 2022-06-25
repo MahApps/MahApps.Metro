@@ -543,6 +543,24 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonCommandParameterProperty, value);
         }
 
+        public static readonly DependencyProperty ButtonCommandTargetProperty
+            = DependencyProperty.RegisterAttached(
+                "ButtonCommandTarget",
+                typeof(IInputElement),
+                typeof(TextBoxHelper),
+                new FrameworkPropertyMetadata(null));
+
+        [Category(AppName.MahApps)]
+        public static IInputElement? GetButtonCommandTarget(DependencyObject d)
+        {
+            return (IInputElement?)d.GetValue(ButtonCommandTargetProperty);
+        }
+
+        public static void SetButtonCommandTarget(DependencyObject obj, IInputElement? value)
+        {
+            obj.SetValue(ButtonCommandTargetProperty, value);
+        }
+
         public static readonly DependencyProperty ButtonContentProperty
             = DependencyProperty.RegisterAttached(
                 "ButtonContent",
@@ -879,6 +897,20 @@ namespace MahApps.Metro.Controls
                     passBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
+            else if (d is HotKeyBox hotKeyBox)
+            {
+                if ((bool)e.NewValue)
+                {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    hotKeyBox.BeginInvoke(() => OnHotKeyBoxHotKeyChanged(hotKeyBox, new RoutedEventArgs(HotKeyBox.HotKeyChangedEvent, hotKeyBox)));
+
+                    hotKeyBox.HotKeyChanged += OnHotKeyBoxHotKeyChanged;
+                }
+                else
+                {
+                    hotKeyBox.HotKeyChanged -= OnHotKeyBoxHotKeyChanged;
+                }
+            }
             else if (d is NumericUpDown numericUpDown)
             {
                 if ((bool)e.NewValue)
@@ -939,6 +971,11 @@ namespace MahApps.Metro.Controls
         private static void TextChanged(object sender, RoutedEventArgs e)
         {
             SetTextLength(sender as TextBox, textBox => textBox.Text.Length);
+        }
+
+        private static void OnHotKeyBoxHotKeyChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as HotKeyBox, hotKeyBox => hotKeyBox.Text?.Length ?? (hotKeyBox.HotKey is not null ? 1 : 0));
         }
 
         private static void OnNumericUpDownValueChanged(object sender, RoutedEventArgs e)

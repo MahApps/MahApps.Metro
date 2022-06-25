@@ -158,6 +158,9 @@ namespace MetroDemo
                             case ComboBox comboBox:
                                 await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", comboBox.Text).ConfigureAwait(false);
                                 break;
+                            case HotKeyBox hotKeyBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", hotKeyBox.Text ?? hotKeyBox.HotKey?.ToString() ?? string.Empty).ConfigureAwait(false);
+                                break;
                             case Control control:
                                 await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", control.ToString() ?? string.Empty).ConfigureAwait(false);
                                 break;

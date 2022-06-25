@@ -160,7 +160,7 @@
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                                     Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                     CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                    CommandTarget="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Mode=OneWay}"
+                                    CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
                                     Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
@@ -277,6 +277,7 @@
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
 
         <Setter Property="mah:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
+        <Setter Property="mah:TextBoxHelper.ButtonCommandTarget" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />

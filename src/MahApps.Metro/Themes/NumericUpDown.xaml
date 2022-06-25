@@ -138,6 +138,7 @@
                                      mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                      mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                      mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                     mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
                                      mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                      mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                      mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
@@ -324,6 +325,7 @@
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
 
         <Setter Property="mah:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
+        <Setter Property="mah:TextBoxHelper.ButtonCommandTarget" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />

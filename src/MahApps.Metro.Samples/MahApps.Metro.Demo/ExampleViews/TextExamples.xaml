@@ -555,6 +555,12 @@
                                mah:TextBoxHelper.Watermark="Enter hot key"
                                AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
+                               mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                               mah:TextBoxHelper.ButtonContent="s"
+                               mah:TextBoxHelper.Watermark="Enter hot key"
+                               AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
+                               HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             </StackPanel>
         </GroupBox>
     </Grid>

@@ -72,6 +72,10 @@ namespace MahApps.Metro.Controls
                     timePicker.Clear();
                     timePicker.GetBindingExpression(TimePickerBase.SelectedDateTimeProperty)?.UpdateSource();
                     break;
+                case HotKeyBox hotKeyBox:
+                    hotKeyBox.SetCurrentValue(HotKeyBox.HotKeyProperty, null);
+                    hotKeyBox.GetBindingExpression(HotKeyBox.HotKeyProperty)?.UpdateSource();
+                    break;
                 case NumericUpDown numericUpDown:
                     numericUpDown.SetCurrentValue(NumericUpDown.ValueProperty, NumericUpDown.ValueProperty.DefaultMetadata.DefaultValue);
                     numericUpDown.GetBindingExpression(NumericUpDown.ValueProperty)?.UpdateSource();
