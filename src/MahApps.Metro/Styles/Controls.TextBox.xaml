@@ -195,9 +195,6 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
-                        <Trigger Property="IsReadOnly" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
-                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
