@@ -15,7 +15,6 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Data;
-using MahApps.Metro.Behaviors;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -463,30 +462,6 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ClearTextButtonProperty, BooleanBoxes.Box(value));
         }
 
-        public static readonly DependencyProperty TextButtonProperty
-            = DependencyProperty.RegisterAttached(
-                "TextButton",
-                typeof(bool),
-                typeof(TextBoxHelper),
-                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, ButtonCommandOrClearTextChanged));
-
-        /// <summary>
-        /// Gets the text button visibility.
-        /// </summary>
-        [Category(AppName.MahApps)]
-        public static bool GetTextButton(DependencyObject d)
-        {
-            return (bool)d.GetValue(TextButtonProperty);
-        }
-
-        /// <summary>
-        /// Sets the text button visibility.
-        /// </summary>
-        public static void SetTextButton(DependencyObject obj, bool value)
-        {
-            obj.SetValue(TextButtonProperty, BooleanBoxes.Box(value));
-        }
-
         public static readonly DependencyProperty ButtonsAlignmentProperty
             = DependencyProperty.RegisterAttached(
                 "ButtonsAlignment",
@@ -509,35 +484,6 @@ namespace MahApps.Metro.Controls
         public static void SetButtonsAlignment(DependencyObject obj, ButtonsAlignment value)
         {
             obj.SetValue(ButtonsAlignmentProperty, value);
-        }
-
-        /// <summary>
-        /// The clear text button behavior property. It sets a click event to the button if the value is true.
-        /// </summary>
-        public static readonly DependencyProperty IsClearTextButtonBehaviorEnabledProperty
-            = DependencyProperty.RegisterAttached(
-                "IsClearTextButtonBehaviorEnabled",
-                typeof(bool),
-                typeof(TextBoxHelper),
-                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, IsClearTextButtonBehaviorEnabledChanged));
-
-        /// <summary>
-        /// Gets the clear text button behavior.
-        /// </summary>
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
-        public static bool GetIsClearTextButtonBehaviorEnabled(Button d)
-        {
-            return (bool)d.GetValue(IsClearTextButtonBehaviorEnabledProperty);
-        }
-
-        /// <summary>
-        /// Sets the clear text button behavior.
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
-        public static void SetIsClearTextButtonBehaviorEnabled(Button obj, bool value)
-        {
-            obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -595,6 +541,24 @@ namespace MahApps.Metro.Controls
         public static void SetButtonCommandParameter(DependencyObject obj, object? value)
         {
             obj.SetValue(ButtonCommandParameterProperty, value);
+        }
+
+        public static readonly DependencyProperty ButtonCommandTargetProperty
+            = DependencyProperty.RegisterAttached(
+                "ButtonCommandTarget",
+                typeof(IInputElement),
+                typeof(TextBoxHelper),
+                new FrameworkPropertyMetadata(null));
+
+        [Category(AppName.MahApps)]
+        public static IInputElement? GetButtonCommandTarget(DependencyObject d)
+        {
+            return (IInputElement?)d.GetValue(ButtonCommandTargetProperty);
+        }
+
+        public static void SetButtonCommandTarget(DependencyObject obj, IInputElement? value)
+        {
+            obj.SetValue(ButtonCommandTargetProperty, value);
         }
 
         public static readonly DependencyProperty ButtonContentProperty
@@ -933,6 +897,20 @@ namespace MahApps.Metro.Controls
                     passBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
+            else if (d is HotKeyBox hotKeyBox)
+            {
+                if ((bool)e.NewValue)
+                {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    hotKeyBox.BeginInvoke(() => OnHotKeyBoxHotKeyChanged(hotKeyBox, new RoutedEventArgs(HotKeyBox.HotKeyChangedEvent, hotKeyBox)));
+
+                    hotKeyBox.HotKeyChanged += OnHotKeyBoxHotKeyChanged;
+                }
+                else
+                {
+                    hotKeyBox.HotKeyChanged -= OnHotKeyBoxHotKeyChanged;
+                }
+            }
             else if (d is NumericUpDown numericUpDown)
             {
                 if ((bool)e.NewValue)
@@ -995,6 +973,11 @@ namespace MahApps.Metro.Controls
             SetTextLength(sender as TextBox, textBox => textBox.Text.Length);
         }
 
+        private static void OnHotKeyBoxHotKeyChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as HotKeyBox, hotKeyBox => hotKeyBox.Text?.Length ?? (hotKeyBox.HotKey is not null ? 1 : 0));
+        }
+
         private static void OnNumericUpDownValueChanged(object sender, RoutedEventArgs e)
         {
             SetTextLength(sender as NumericUpDown, numericUpDown => numericUpDown.Value.HasValue ? 1 : 0);
@@ -1043,98 +1026,6 @@ namespace MahApps.Metro.Controls
                 if (GetSelectAllOnFocus(sender))
                 {
                     sender.Dispatcher.BeginInvoke(action, sender);
-                }
-            }
-        }
-
-        private static void IsClearTextButtonBehaviorEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && d is Button button)
-            {
-                button.Click -= ButtonClicked;
-                if ((bool)e.NewValue)
-                {
-                    button.Click += ButtonClicked;
-                }
-            }
-        }
-
-        public static void ButtonClicked(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-
-            var parent = button.GetAncestors().FirstOrDefault(a => a is RichTextBox || a is TextBox || a is PasswordBox || a is ComboBox || a is ColorPickerBase || a is MultiSelectionComboBox);
-            if (parent is null)
-            {
-                return;
-            }
-
-            var command = GetButtonCommand(parent);
-            var commandParameter = GetButtonCommandParameter(parent) ?? parent;
-            if (command != null && command.CanExecute(commandParameter))
-            {
-                if (parent is TextBox textBox)
-                {
-                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                }
-
-                command.Execute(commandParameter);
-            }
-
-            if (GetClearTextButton(parent))
-            {
-                if (parent is RichTextBox richTextBox)
-                {
-                    richTextBox.Document?.Blocks?.Clear();
-                    richTextBox.Selection?.Select(richTextBox.CaretPosition, richTextBox.CaretPosition);
-                }
-                else if (parent is TextBox textBox)
-                {
-                    textBox.Clear();
-                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                }
-                else if (parent is PasswordBox passwordBox)
-                {
-                    passwordBox.Clear();
-                    passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
-                }
-                else if (parent is MultiSelectionComboBox multiSelectionComboBox)
-                {
-                    if (multiSelectionComboBox.HasCustomText)
-                    {
-                        multiSelectionComboBox.ResetEditableText(true);
-                    }
-                    else
-                    {
-                        switch (multiSelectionComboBox.SelectionMode)
-                        {
-                            case SelectionMode.Single:
-                                multiSelectionComboBox.SetCurrentValue(MultiSelectionComboBox.SelectedItemProperty, null);
-                                break;
-                            case SelectionMode.Multiple:
-                            case SelectionMode.Extended:
-                                multiSelectionComboBox.SelectedItems?.Clear();
-                                break;
-                            default:
-                                throw new NotSupportedException("Unknown SelectionMode");
-                        }
-                        multiSelectionComboBox.ResetEditableText(true);
-                    }
-                }
-                else if (parent is ComboBox comboBox)
-                {
-                    if (comboBox.IsEditable)
-                    {
-                        comboBox.SetCurrentValue(ComboBox.TextProperty, string.Empty);
-                        comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
-                    }
-
-                    comboBox.SetCurrentValue(ComboBox.SelectedItemProperty, null);
-                    comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
-                }
-                else if (parent is ColorPickerBase colorPicker)
-                {
-                    colorPicker.SetCurrentValue(ColorPickerBase.SelectedColorProperty, null);
                 }
             }
         }

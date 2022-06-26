@@ -69,6 +69,13 @@
                   UseLayoutRounding="True">
             <AdornerDecorator>
                 <StackPanel>
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Text="Clear with Escape">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Escape" Command="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <mah:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
                         <mah:MetroHeader.HeaderTemplate>
                             <DataTemplate>
@@ -96,7 +103,7 @@
                              mah:TextBoxHelper.Watermark="Watermark"
                              mah:TextBoxHelper.WatermarkAlignment="Right"
                              SpellCheck.IsEnabled="True"
-                             ToolTip="Default alignment">
+                             ToolTip="WatermarkAlignment Right">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Custom Item" />
@@ -108,9 +115,8 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              ContextMenu="{x:Null}"
-                             Text="Clear button and no ContextMenu">
+                             Text="No ContextMenu...">
                         <TextBox.Style>
                             <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                                 <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
@@ -127,13 +133,12 @@
                         </TextBox.Style>
                     </TextBox>
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
                              mah:TextBoxHelper.Watermark="Search...">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Return"
-                                        Command="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                        Command="{Binding ControlButtonCommand, Mode=OneWay}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
                         </TextBox.InputBindings>
                         <TextBox.Style>
@@ -142,24 +147,32 @@
                                     <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
                                         <Setter Property="mah:TextBoxHelper.ButtonContent" Value="r" />
                                         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBox.Style>
                     </TextBox>
                     <!--  Entypo MagnifyingGlass  -->
-                    <TextBox Name="test2"
-                             Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
-                             mah:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommandWithParameter, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="M17.545,15.467l-3.779-3.779c0.57-0.935,0.898-2.035,0.898-3.21c0-3.417-2.961-6.377-6.378-6.377  C4.869,2.1,2.1,4.87,2.1,8.287c0,3.416,2.961,6.377,6.377,6.377c1.137,0,2.2-0.309,3.115-0.844l3.799,3.801  c0.372,0.371,0.975,0.371,1.346,0l0.943-0.943C18.051,16.307,17.916,15.838,17.545,15.467z M4.004,8.287  c0-2.366,1.917-4.283,4.282-4.283c2.366,0,4.474,2.107,4.474,4.474c0,2.365-1.918,4.283-4.283,4.283  C6.111,12.76,4.004,10.652,4.004,8.287z"
-                             mah:TextBoxHelper.Watermark="Enter parameter"
+                             mah:TextBoxHelper.Watermark="Search something..."
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonContent="M17.545,15.467l-3.779-3.779c0.57-0.935,0.898-2.035,0.898-3.21c0-3.417-2.961-6.377-6.378-6.377  C4.869,2.1,2.1,4.87,2.1,8.287c0,3.416,2.961,6.377,6.377,6.377c1.137,0,2.2-0.309,3.115-0.844l3.799,3.801  c0.372,0.371,0.975,0.371,1.346,0l0.943-0.943C18.051,16.307,17.916,15.838,17.545,15.467z M4.004,8.287  c0-2.366,1.917-4.283,4.282-4.283c2.366,0,4.474,2.107,4.474,4.474c0,2.365-1.918,4.283-4.283,4.283  C6.111,12.76,4.004,10.652,4.004,8.287z"
+                             mah:TextBoxHelper.Watermark="Find something..."
+                             Style="{DynamicResource MahApps.Styles.TextBox.Search}">
+                        <TextBox.CommandBindings>
+                            <CommandBinding CanExecute="TextBoxSearchOnCanExecute"
+                                            Command="{x:Static mah:MahAppsCommands.SearchCommand}"
+                                            Executed="TextBoxSearchOnExecuted" />
+                        </TextBox.CommandBindings>
+                    </TextBox>
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="s"
-                             mah:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
+                             mah:TextBoxHelper.Watermark="Custom icon style" />
                     <TextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.Watermark="Number smaller than 10"
                              Text="{Binding IntegerGreater10Property, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
@@ -178,7 +191,7 @@
                              IsEnabled="False"
                              Text="Clear button" />
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Search style"
+                             mah:TextBoxHelper.Watermark="Search style..."
                              IsEnabled="False"
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
@@ -212,12 +225,11 @@
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="s"
                              mah:TextBoxHelper.Watermark="Type in..."
                              IsDocumentEnabled="True"
-                             SpellCheck.IsEnabled="True"
-                             Style="{StaticResource MahApps.Styles.RichTextBox.Button}" />
+                             SpellCheck.IsEnabled="True" />
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
@@ -271,33 +283,31 @@
                   UseLayoutRounding="True">
             <StackPanel>
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Password"
+                             mah:TextBoxHelper.Watermark="Password..."
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Win8"
+                             mah:TextBoxHelper.Watermark="Win8..."
                              Password="Win8"
                              Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText), Mode=OneWay}"
                              mah:TextBoxHelper.IsWaitingForData="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Revealed PasswordBox"
-                             Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+                             mah:TextBoxHelper.Watermark="Revealed..."
+                             Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Password"
+                             mah:TextBoxHelper.Watermark="Password..."
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:PasswordBoxHelper.CapsLockIcon="!"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="4"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MahApps.Styles.PasswordBox.Button}">
+                             mah:TextBoxHelper.Watermark="Custom icon...">
                     <mah:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />
@@ -315,8 +325,6 @@
                              mah:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
                              Password="Password" />
-
-                <Label Content="Select all on focus" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
                              Password="Password"
@@ -551,6 +559,12 @@
                 <TextBlock Margin="{StaticResource ControlMargin}" Text="Try SHIFT+D to demonstrate validation" />
                 <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
                                mah:TextBoxHelper.ClearTextButton="True"
+                               mah:TextBoxHelper.Watermark="Enter hot key"
+                               AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
+                               HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
+                               mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                               mah:TextBoxHelper.ButtonContent="s"
                                mah:TextBoxHelper.Watermark="Enter hot key"
                                AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />

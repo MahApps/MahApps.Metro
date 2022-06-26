@@ -31,7 +31,6 @@ namespace MahApps.Metro.Tests.Tests
             this.Window?.TestTextBox.ClearDependencyProperties(properties);
             this.Window?.TestButtonTextBox.ClearDependencyProperties(properties);
             this.Window?.TestPasswordBox.ClearDependencyProperties(properties);
-            this.Window?.TestButtonPasswordBox.ClearDependencyProperties(properties);
             this.Window?.TestButtonRevealedPasswordBox.ClearDependencyProperties(properties);
             this.Window?.TestComboBox.ClearDependencyProperties(properties);
             this.Window?.TestEditableComboBox.ClearDependencyProperties(properties);

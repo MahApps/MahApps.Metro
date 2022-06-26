@@ -36,8 +36,6 @@ namespace MahApps.Metro.Tests.Tests
 
             this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
             Assert.Equal(width, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Width);
-            this.fixture.Window?.TestButtonPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestButtonPasswordBox.FindChild<Button>("PART_ClearText")?.Width);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
             Assert.Equal(width, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Width);
             Assert.Equal(width, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_RevealButton")?.Width);
@@ -48,8 +46,9 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(width, toggleButton?.FindChild<Grid>("BtnArrowBackground")?.Width);
 
             this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            var edTextBox = this.fixture.Window?.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
-            Assert.Equal(width, edTextBox?.FindChild<Button>("PART_ClearText")?.Width);
+            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.Equal(width, toggleButtonEditable?.FindChild<Button>("PART_ClearText")?.Width);
+            Assert.Equal(width, toggleButtonEditable?.FindChild<Grid>("BtnArrowBackground")?.Width);
 
             this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonWidthProperty, width);
             Assert.Equal(width, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.Width);
@@ -74,8 +73,6 @@ namespace MahApps.Metro.Tests.Tests
 
             this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
             Assert.Equal(content, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Content);
-            this.fixture.Window?.TestButtonPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestButtonPasswordBox.FindChild<Button>("PART_ClearText")?.Content);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
             Assert.Equal(content, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Content);
 
@@ -84,8 +81,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(content, toggleButton.FindChild<Button>("PART_ClearText")?.Content);
 
             this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            var edTextBox = this.fixture.Window?.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
-            Assert.Equal(content, edTextBox.FindChild<Button>("PART_ClearText")?.Content);
+            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.Equal(content, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.Content);
 
             this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentProperty, content);
             Assert.Equal(content, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.Content);
@@ -112,8 +109,6 @@ namespace MahApps.Metro.Tests.Tests
 
             this.fixture.Window?.TestPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
             Assert.Equal(dataTemplate, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
-            this.fixture.Window?.TestButtonPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestButtonPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
             Assert.Equal(dataTemplate, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
 
@@ -122,8 +117,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(dataTemplate, toggleButton.FindChild<Button>("PART_ClearText")?.ContentTemplate);
 
             this.fixture.Window?.TestEditableComboBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            var edTextBox = this.fixture.Window?.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
-            Assert.Equal(dataTemplate, edTextBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.Equal(dataTemplate, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.ContentTemplate);
 
             this.fixture.Window?.TestNumericUpDown.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
             Assert.Equal(dataTemplate, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.ContentTemplate);
@@ -148,8 +143,6 @@ namespace MahApps.Metro.Tests.Tests
 
             this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
             Assert.Equal(fontFamily, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily);
-            this.fixture.Window?.TestButtonPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestButtonPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
             Assert.Equal(fontFamily, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily);
 
@@ -158,8 +151,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(fontFamily, toggleButton.FindChild<Button>("PART_ClearText")?.FontFamily);
 
             this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            var edTextBox = this.fixture.Window?.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
-            Assert.Equal(fontFamily, edTextBox.FindChild<Button>("PART_ClearText")?.FontFamily);
+            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.Equal(fontFamily, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.FontFamily);
 
             this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
             Assert.Equal(fontFamily, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.FontFamily);
@@ -184,8 +177,6 @@ namespace MahApps.Metro.Tests.Tests
 
             this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
             Assert.Equal(fontSize, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize);
-            this.fixture.Window?.TestButtonPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestButtonPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
             Assert.Equal(fontSize, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize);
 
@@ -194,8 +185,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(fontSize, toggleButton.FindChild<Button>("PART_ClearText")?.FontSize);
 
             this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            var edTextBox = this.fixture.Window?.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
-            Assert.Equal(fontSize, edTextBox.FindChild<Button>("PART_ClearText")?.FontSize);
+            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.Equal(fontSize, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.FontSize);
 
             this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
             Assert.Equal(fontSize, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.FontSize);
@@ -218,8 +209,6 @@ namespace MahApps.Metro.Tests.Tests
             this.fixture.Window?.TestButtonTextBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
             Assert.Equal(controlTemplate, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Template);
 
-            this.fixture.Window?.TestButtonPasswordBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
-            Assert.Equal(controlTemplate, this.fixture.Window?.TestButtonPasswordBox.FindChild<Button>("PART_ClearText")?.Template);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
             Assert.Equal(controlTemplate, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Template);
         }

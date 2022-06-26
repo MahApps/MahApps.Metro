@@ -117,12 +117,14 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="PART_LeftColumn" Width="*" />
                                 <ColumnDefinition x:Name="PART_MiddleColumn" Width="Auto" />
                                 <ColumnDefinition x:Name="PART_RightColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
+
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Column="0"
                                      MinWidth="20"
@@ -133,10 +135,15 @@
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                                     mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
+                                     mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                     mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                     mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
                                      mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                      mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                      mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
                                      mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                     mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
                                      mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                                      mah:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}"
                                      mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
@@ -146,6 +153,7 @@
                                      mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                      mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
                                      mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                     mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
                                      Background="{x:Null}"
                                      BorderThickness="0"
                                      ContextMenu="{TemplateBinding ContextMenu}"
@@ -160,6 +168,7 @@
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      TabIndex="{TemplateBinding TabIndex}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
@@ -172,6 +181,7 @@
                                           Delay="{TemplateBinding Delay}"
                                           Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Style="{TemplateBinding SpinButtonStyle}" />
+
                             <RepeatButton x:Name="PART_NumericDown"
                                           Grid.Column="2"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
@@ -185,12 +195,14 @@
                                           Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Style="{TemplateBinding SpinButtonStyle}" />
                         </Grid>
+
                         <Border x:Name="FocusBorder"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 BorderThickness="0"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
                         <Border x:Name="DisabledVisualElement"
                                 Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
@@ -308,9 +320,14 @@
         <Setter Property="TextAlignment" Value="Right" />
         <Setter Property="UpDownButtonsWidth" Value="22" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
+
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.Focus}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
+
+        <Setter Property="mah:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
+        <Setter Property="mah:TextBoxHelper.ButtonCommandTarget" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="Right" />

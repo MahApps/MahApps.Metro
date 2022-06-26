@@ -196,8 +196,8 @@
                                       IsReadOnly="True"
                                       SelectedIndex="0"
                                       ToolTip="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text}">
-                                <ComboBoxItem Content="Default: MahApps.Styles.MulitselectionComboBoxSelectedItem" Tag="{DynamicResource MahApps.Styles.MulitselectionComboBoxSelectedItem}" />
-                                <ComboBoxItem Content="Removeable: MahApps.Styles.MulitselectionComboBoxSelectedItem.Removeable" Tag="{StaticResource MahApps.Styles.MulitselectionComboBoxSelectedItem.Removeable}" />
+                                <ComboBoxItem Content="Default: MahApps.Styles.MultiSelectionComboBoxSelectedItem" Tag="{DynamicResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}" />
+                                <ComboBoxItem Content="Removable: MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable" Tag="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable}" />
                             </ComboBox>
                         </mah:MetroHeader>
                     </StackPanel>

@@ -17,10 +17,9 @@
     </mah:MetroWindow.Resources>
     <StackPanel>
         <TextBox x:Name="TestTextBox" />
-        <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
+        <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
         <PasswordBox x:Name="TestPasswordBox" />
-        <PasswordBox x:Name="TestButtonPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.Button}" />
-        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.Revealed}" />
         <ComboBox x:Name="TestComboBox" />
         <ComboBox x:Name="TestEditableComboBox" IsEditable="True" />
         <mah:NumericUpDown x:Name="TestNumericUpDown" />

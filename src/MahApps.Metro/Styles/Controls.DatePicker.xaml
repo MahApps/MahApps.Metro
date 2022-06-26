@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:accessibility="clr-namespace:MahApps.Metro.Accessibility"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
+                    xmlns:controlzex="urn:controlzex"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
@@ -114,13 +115,12 @@
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                                     Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                     CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                    CommandTarget="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Mode=OneWay}"
+                                    CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
                                     Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
                                     FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
                                     FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                    Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
                                     Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                     Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
@@ -136,18 +136,18 @@
                                     Focusable="False"
                                     FontFamily="{TemplateBinding mah:DatePickerHelper.DropDownButtonFontFamily}"
                                     FontSize="{TemplateBinding mah:DatePickerHelper.DropDownButtonFontSize}"
-                                    Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
                                     Style="{DynamicResource MahApps.Styles.Button.Chromeless}" />
 
-                            <Popup x:Name="PART_Popup"
-                                   Grid.Row="1"
-                                   Grid.Column="0"
-                                   AllowsTransparency="True"
-                                   Placement="Bottom"
-                                   PlacementTarget="{Binding ElementName=PART_Root}"
-                                   PopupAnimation="Fade"
-                                   StaysOpen="False" />
+                            <controlzex:PopupEx x:Name="PART_Popup"
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                AllowsTransparency="True"
+                                                Focusable="False"
+                                                Placement="Bottom"
+                                                PlacementTarget="{Binding ElementName=PART_Root}"
+                                                PopupAnimation="Fade"
+                                                StaysOpen="False" />
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
@@ -163,8 +163,15 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
-                            <Setter Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
+                            <Setter TargetName="PART_ClearText" Property="Command" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
+                                <Condition Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
@@ -202,17 +209,6 @@
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
-                        <Trigger Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}">
-                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
-                        </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="mah:ControlsHelper.IsReadOnly" Value="True" />
-                                <Condition Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
-                        </MultiTrigger>
                         <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -241,8 +237,10 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
+
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.Focus}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
+
         <!--  Modern - Calendar14  -->
         <Setter Property="mah:DatePickerHelper.DropDownButtonContent" Value="M 34.0047,52.0073L 31.0042,52.0073L 31.0042,38.5053C 29.6649,39.8964 28.157,40.7849 26.3412,41.4502L 26.3412,37.7553C 27.2998,37.4474 28.3405,36.8645 29.4634,36.0068C 30.5862,35.149 31.3572,34.1483 31.7762,33.0046L 34.0047,33.0046L 34.0047,52.0073 Z M 45.0063,52.0073L 45.0063,48.0067L 37.0052,48.0067L 37.0052,45.0063L 45.0063,33.0046L 48.0067,33.0046L 48.0067,45.0063L 50.007,45.0063L 50.007,48.0067L 48.0067,48.0067L 48.0067,52.0073L 45.0063,52.0073 Z M 45.0063,45.0063L 45.0063,38.2555L 40.2556,45.0063L 45.0063,45.0063 Z M 18.0025,57.0082L 18.0025,23.0033L 23.0032,23.0033L 23.0032,20.0029C 23.0033,18.898 23.8988,18.0026 25.0035,18.0026L 29.004,18.0026C 30.1087,18.0026 31.0042,18.898 31.0043,20.0026L 31.0043,23.0033L 45.0063,23.0033L 45.0062,20.0026C 45.0062,18.8979 45.9018,18.0023 47.0065,18.0023L 51.0071,18.0023C 52.1118,18.0023 53.0074,18.8979 53.0074,20.0026L 53.0074,23.0033L 58.0081,23.0033L 58.0081,57.0082L 18.0025,57.0082 Z M 21.0029,54.0078L 55.0076,54.0078L 55.0076,31.0044L 21.0029,31.0044L 21.0029,54.0078 Z M 48.5067,20.0029C 47.6782,20.0029 47.0065,20.6746 47.0065,21.5031L 47.0065,24.5035C 47.0065,25.3321 47.6782,26.0038 48.5067,26.0038L 49.5068,26.0038C 50.3354,26.0038 51.007,25.3321 51.007,24.5035L 51.007,21.5031C 51.007,20.6746 50.3354,20.0029 49.5068,20.0029L 48.5067,20.0029 Z M 26.5037,20.0029C 25.6751,20.0029 25.0035,20.6745 25.0035,21.5031L 25.0035,24.5035C 25.0035,25.3321 25.6751,26.0037 26.5037,26.0037L 27.5038,26.0037C 28.3324,26.0037 29.004,25.3321 29.004,24.5035L 29.004,21.5031C 29.004,20.6745 28.3324,20.0029 27.5038,20.0029L 26.5037,20.0029 Z" />
         <Setter Property="mah:DatePickerHelper.DropDownButtonContentTemplate">
@@ -255,6 +253,9 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+
+        <Setter Property="mah:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
+        <Setter Property="mah:TextBoxHelper.ButtonCommandTarget" Value="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}" />
         <Setter Property="mah:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
@@ -357,6 +358,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
+        <Setter Property="mah:TextBoxHelper.WatermarkWrapping" Value="{Binding RelativeSource={RelativeSource Self}, Path=TextWrapping, Mode=OneWay}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.DatePickerTextBox.TimePickerBase"

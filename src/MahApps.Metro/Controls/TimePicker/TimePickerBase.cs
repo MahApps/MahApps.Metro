@@ -545,6 +545,12 @@ namespace MahApps.Metro.Controls
 
         #endregion
 
+        public void Clear()
+        {
+            this.SetCurrentValue(SelectedDateTimeProperty, null);
+            this.WriteValueToTextBox();
+        }
+
         static TimePickerBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));

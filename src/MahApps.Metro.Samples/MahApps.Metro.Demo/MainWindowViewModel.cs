@@ -126,35 +126,49 @@ namespace MetroDemo
 
             this.CloseCmd = new SimpleCommand<Flyout>(f => f is not null && this.CanCloseFlyout, f => f!.IsOpen = false);
 
-            this.TextBoxButtonCmd = new SimpleCommand<object>(
-                o => true,
-                async x =>
+            this.ControlButtonCommand = new SimpleCommand<object>(
+                o =>
                     {
-                        if (x is string s)
+                        return o switch
                         {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
-                        }
-                        else if (x is RichTextBox richTextBox)
+                            RichTextBox richTextBox => TextBoxHelper.GetHasText(richTextBox),
+                            TextBox textBox => TextBoxHelper.GetHasText(textBox),
+                            _ => true
+                        };
+                    },
+                async o =>
+                    {
+                        switch (o)
                         {
-                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-                            await this._dialogCoordinator.ShowMessageAsync(this, "RichTextBox Button was clicked!", text).ConfigureAwait(false);
-                        }
-                        else if (x is TextBox textBox)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
-                        }
-                        else if (x is PasswordBox passwordBox)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
-                        }
-                        else if (x is DatePicker datePicker)
-                        {
-                            await this._dialogCoordinator.ShowMessageAsync(this, "DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
+                            case string s:
+                                await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
+                                break;
+                            case RichTextBox richTextBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text).ConfigureAwait(false);
+                                break;
+                            case TextBox textBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", textBox.Text).ConfigureAwait(false);
+                                break;
+                            case PasswordBox passwordBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", passwordBox.Password).ConfigureAwait(false);
+                                break;
+                            case DatePicker datePicker:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", datePicker.Text).ConfigureAwait(false);
+                                break;
+                            case ComboBox comboBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", comboBox.Text).ConfigureAwait(false);
+                                break;
+                            case HotKeyBox hotKeyBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", hotKeyBox.Text ?? hotKeyBox.HotKey?.ToString() ?? string.Empty).ConfigureAwait(false);
+                                break;
+                            case Control control:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", control.ToString() ?? string.Empty).ConfigureAwait(false);
+                                break;
                         }
                     }
             );
 
-            this.TextBoxButtonCmdWithParameter = new SimpleCommand<object>(
+            this.ControlButtonCommandWithParameter = new SimpleCommand<object>(
                 o => true,
                 async x => { await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
             );
@@ -363,9 +377,9 @@ namespace MetroDemo
             set => this.Set(ref this.isHamburgerMenuPaneOpen, value);
         }
 
-        public ICommand TextBoxButtonCmd { get; }
+        public ICommand ControlButtonCommand { get; }
 
-        public ICommand TextBoxButtonCmdWithParameter { get; }
+        public ICommand ControlButtonCommandWithParameter { get; }
 
         public string this[string columnName]
         {
