@@ -69,6 +69,13 @@
                   UseLayoutRounding="True">
             <AdornerDecorator>
                 <StackPanel>
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Text="Clear with Escape">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Escape" Command="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <mah:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
                         <mah:MetroHeader.HeaderTemplate>
                             <DataTemplate>
