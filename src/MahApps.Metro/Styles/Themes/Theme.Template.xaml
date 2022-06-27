@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:markup="clr-namespace:MahApps.Metro.Markup"
                     xmlns:markupWithAssembly="clr-namespace:MahApps.Metro.Markup;assembly=MahApps.Metro"
@@ -383,6 +383,20 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlTransparent" Color="Transparent" options:Freeze="True" />
 
     <markup:StaticResource x:Key="MahApps.Brushes.SystemControlDescriptionTextForeground" ResourceKey="MahApps.Brushes.SystemControlPageTextBaseMedium" />
+
+    <!--  Resources for MahApps.Styles.Button.Win10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
 
     <!--  Resources for MahApps.Styles.CheckBox.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
