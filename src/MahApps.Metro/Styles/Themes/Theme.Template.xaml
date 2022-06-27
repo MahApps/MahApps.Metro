@@ -384,6 +384,34 @@
 
     <markup:StaticResource x:Key="MahApps.Brushes.SystemControlDescriptionTextForeground" ResourceKey="MahApps.Brushes.SystemControlPageTextBaseMedium" />
 
+    <!--  Resources for MahApps.Styles.Button.Win10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
+
+    <!--  Resources for MahApps.Styles.Button.Accent.Win10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackground" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForeground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
+
     <!--  Resources for MahApps.Styles.CheckBox.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />

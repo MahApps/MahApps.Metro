@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:markup="clr-namespace:MahApps.Metro.Markup"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <FontFamily x:Key="MahApps.Fonts.Family.SymbolTheme">Segoe MDL2 Assets,/MahApps.Metro;component/Assets/#Segoe MDL2 Assets</FontFamily>
@@ -9,6 +10,7 @@
     <FontFamily x:Key="MahApps.Fonts.Family.Control">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ContentControlTheme">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
     <system:Double x:Key="MahApps.Font.Size.Header">40</system:Double>
     <system:Double x:Key="MahApps.Font.Size.SubHeader">29.333</system:Double>
@@ -24,17 +26,14 @@
     <system:Double x:Key="MahApps.Font.Size.Menu">14</system:Double>
     <system:Double x:Key="MahApps.Font.Size.ContextMenu">14</system:Double>
     <system:Double x:Key="MahApps.Font.Size.StatusBar">12</system:Double>
-
     <system:Double x:Key="MahApps.Font.Size.Dialog.Title">26</system:Double>
     <system:Double x:Key="MahApps.Font.Size.Dialog.Message">15</system:Double>
     <system:Double x:Key="MahApps.Font.Size.Dialog.Button">12</system:Double>
-
     <system:Double x:Key="MahApps.Font.Size.Flyout.Header">20</system:Double>
-
     <system:Double x:Key="MahApps.Font.Size.ToggleSwitch">14</system:Double>
     <system:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">14</system:Double>
-
     <system:Double x:Key="MahApps.Font.Size.ColorPicker.TabItemHeader">16</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.ControlContentTheme">14</system:Double>
 
     <CharacterCasing x:Key="MahApps.CharacterCasing.Button">Upper</CharacterCasing>
     <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Square">Lower</CharacterCasing>
