@@ -32,10 +32,18 @@
                              Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
                         <ListBox.ItemContainerStyle>
                             <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="Margin" Value="2" />
+                                <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+                                <Setter Property="mah:ItemHelper.ActiveSelectionBorderBrush" Value="{StaticResource MahApps.Brushes.Gray2}" />
+                                <Setter Property="mah:ItemHelper.HoverBorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
+                                <Setter Property="mah:ItemHelper.HoverSelectedBorderBrush" Value="{StaticResource MahApps.Brushes.Gray2}" />
                                 <Setter Property="mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="Coral" />
                                 <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="Black" />
                                 <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="DarkOliveGreen" />
                                 <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="White" />
+                                <Setter Property="mah:ItemHelper.SelectedBorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
                                 <Style.Triggers>
                                     <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                                         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
