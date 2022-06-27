@@ -131,6 +131,31 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Styles.Button.Accent.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.Win10}"
+           TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.AccentBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.AccentBorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.AccentForeground}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.AccentBackgroundPointerOver}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.AccentBorderBrushPointerOver}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Button.AccentForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.AccentBackgroundPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.AccentBorderBrushPressed}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Button.AccentForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.AccentBackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.AccentBorderBrushDisabled}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Button.AccentForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!--  style for flat toggle button like MahApps.Styles.Button.Flat  -->
     <Style x:Key="MahApps.Styles.ToggleButton.Flat" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}" />
