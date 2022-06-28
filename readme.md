@@ -93,7 +93,7 @@ This project is supported by the [.NET Foundation](http://www.dotnetfoundation.o
 
 We want to give some :heart: to this dev tools which makes the work a little bit easier!
 
-- [Cake (C# Make)]((https://cakebuild.net/)) a free and open source cross-platform build automation system.
+- [Cake (C# Make)](https://cakebuild.net/) a free and open source cross-platform build automation system.
 - [ReSharper](https://www.jetbrains.com/resharper/)
 - [Rider](https://www.jetbrains.com/rider/)
 - [AppVeyor](https://www.appveyor.com/) CI/CD service for Windows, Linux and macOS
