@@ -197,12 +197,10 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Background="{x:Null}"
+                    BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    UseLayoutRounding="True">
-                <Border.BorderBrush>
-                    <SolidColorBrush Color="{TemplateBinding GlowColor}" />
-                </Border.BorderBrush>
-            </Border>
+                    UseLayoutRounding="True" />
+
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
@@ -451,12 +449,10 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Background="{x:Null}"
+                    BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    UseLayoutRounding="True">
-                <Border.BorderBrush>
-                    <SolidColorBrush Color="{TemplateBinding GlowColor}" />
-                </Border.BorderBrush>
-            </Border>
+                    UseLayoutRounding="True" />
+
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
@@ -549,7 +545,7 @@
     <Style TargetType="{x:Type mah:MetroWindow}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FlyoutOverlayBrush" Value="{DynamicResource MahApps.Brushes.Window.FlyoutOverlay}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
