@@ -208,7 +208,8 @@
                         VerticalAlignment="Bottom"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed" />
+                        Visibility="Collapsed"
+                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight" />
         </Grid>
 
         <ControlTemplate.Triggers>
@@ -461,7 +462,8 @@
                         VerticalAlignment="Bottom"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed" />
+                        Visibility="Collapsed"
+                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight" />
         </Grid>
 
         <ControlTemplate.Resources>
