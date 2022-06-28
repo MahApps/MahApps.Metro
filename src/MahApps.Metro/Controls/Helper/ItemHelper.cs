@@ -622,7 +622,7 @@ namespace MahApps.Metro.Controls
                 element.MouseEnter -= OnLeftMouseEnter;
                 element.MouseLeave -= OnLeftMouseLeave;
 
-                if (e.NewValue is Brush || GetMouseLeftButtonPressedForegroundBrush(element) != null)
+                if (e.NewValue is Brush || GetMouseLeftButtonPressedForegroundBrush(element) != null || GetMouseLeftButtonPressedBorderBrush(element) != null)
                 {
                     element.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
                     element.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
@@ -698,7 +698,26 @@ namespace MahApps.Metro.Controls
                 "MouseLeftButtonPressedBorderBrush",
                 typeof(Brush),
                 typeof(ItemHelper),
-                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseLeftButtonPressedPropertyChanged));
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseLeftButtonPressedBorderPropertyChanged));
+
+        private static void OnMouseLeftButtonPressedBorderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement element && e.OldValue != e.NewValue)
+            {
+                element.PreviewMouseLeftButtonDown -= OnPreviewMouseLeftButtonDown;
+                element.PreviewMouseLeftButtonUp -= OnPreviewMouseLeftButtonUp;
+                element.MouseEnter -= OnLeftMouseEnter;
+                element.MouseLeave -= OnLeftMouseLeave;
+
+                if (e.NewValue is Brush || GetMouseLeftButtonPressedForegroundBrush(element) != null || GetMouseLeftButtonPressedBackgroundBrush(element) != null)
+                {
+                    element.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+                    element.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
+                    element.MouseEnter += OnLeftMouseEnter;
+                    element.MouseLeave += OnLeftMouseLeave;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the border brush which will be used when an item is pressed by the left mouse button.
@@ -741,7 +760,7 @@ namespace MahApps.Metro.Controls
                 element.MouseEnter -= OnLeftMouseEnter;
                 element.MouseLeave -= OnLeftMouseLeave;
 
-                if (e.NewValue is Brush || GetMouseLeftButtonPressedBackgroundBrush(element) != null)
+                if (e.NewValue is Brush || GetMouseLeftButtonPressedBackgroundBrush(element) != null || GetMouseLeftButtonPressedBorderBrush(element) != null)
                 {
                     element.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
                     element.PreviewMouseLeftButtonUp += OnPreviewMouseLeftButtonUp;
@@ -804,7 +823,7 @@ namespace MahApps.Metro.Controls
                 element.PreviewMouseRightButtonDown -= OnPreviewMouseRightButtonDown;
                 element.PreviewMouseRightButtonUp -= OnPreviewMouseRightButtonUp;
 
-                if (e.NewValue is Brush || GetMouseRightButtonPressedForegroundBrush(element) != null)
+                if (e.NewValue is Brush || GetMouseRightButtonPressedForegroundBrush(element) != null || GetMouseRightButtonPressedBorderBrush(element) != null)
                 {
                     element.PreviewMouseRightButtonDown += OnPreviewMouseRightButtonDown;
                     element.PreviewMouseRightButtonUp += OnPreviewMouseRightButtonUp;
@@ -870,7 +889,22 @@ namespace MahApps.Metro.Controls
                 "MouseRightButtonPressedBorderBrush",
                 typeof(Brush),
                 typeof(ItemHelper),
-                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseRightButtonPressedPropertyChanged));
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender, OnMouseRightButtonPressedBorderPropertyChanged));
+
+        private static void OnMouseRightButtonPressedBorderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement element && e.OldValue != e.NewValue)
+            {
+                element.PreviewMouseRightButtonDown -= OnPreviewMouseRightButtonDown;
+                element.PreviewMouseRightButtonUp -= OnPreviewMouseRightButtonUp;
+
+                if (e.NewValue is Brush || GetMouseRightButtonPressedForegroundBrush(element) != null || GetMouseRightButtonPressedBackgroundBrush(element) != null)
+                {
+                    element.PreviewMouseRightButtonDown += OnPreviewMouseRightButtonDown;
+                    element.PreviewMouseRightButtonUp += OnPreviewMouseRightButtonUp;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the border brush which will be used when an item is pressed by the right mouse button.
@@ -911,7 +945,7 @@ namespace MahApps.Metro.Controls
                 element.PreviewMouseRightButtonDown -= OnPreviewMouseRightButtonDown;
                 element.PreviewMouseRightButtonUp -= OnPreviewMouseRightButtonUp;
 
-                if (e.NewValue is Brush || GetMouseRightButtonPressedBackgroundBrush(element) != null)
+                if (e.NewValue is Brush || GetMouseRightButtonPressedBackgroundBrush(element) != null || GetMouseRightButtonPressedBorderBrush(element) != null)
                 {
                     element.PreviewMouseRightButtonDown += OnPreviewMouseRightButtonDown;
                     element.PreviewMouseRightButtonUp += OnPreviewMouseRightButtonUp;
