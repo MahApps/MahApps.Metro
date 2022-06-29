@@ -236,14 +236,14 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="False" />
-                    <Condition Property="GlowColor" Value="Transparent" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="True" />
-                    <Condition Property="GlowColor" Value="Transparent" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
@@ -505,14 +505,14 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="False" />
-                    <Condition Property="GlowColor" Value="Transparent" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="True" />
-                    <Condition Property="GlowColor" Value="Transparent" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
