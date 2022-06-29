@@ -586,6 +586,8 @@ namespace MetroDemo
         {
             var w = this.GetTestWindow();
             w.Content = new TextBlock { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.GlowColor = null;
+            w.NonActiveGlowColor = null;
             w.Show();
         }
 
