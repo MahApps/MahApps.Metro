@@ -8,6 +8,11 @@
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width">16</system:Double>
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height">10</system:Double>
 
+    <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height.Win10">24</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width.Win10">8</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width.Win10">24</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height.Win10">8</system:Double>
+
     <Style x:Key="MahApps.Styles.Thumb.Slider" TargetType="Thumb">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />
@@ -373,8 +378,8 @@
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <mah:MetroThumb x:Name="HorizontalThumb"
-                                    Width="8"
-                                    Height="24"
+                                    Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Width.Win10}"
+                                    Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height.Win10}"
                                     Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
                                     IsTabStop="True"
                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
@@ -460,8 +465,8 @@
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <mah:MetroThumb x:Name="VerticalThumb"
-                                    Width="24"
-                                    Height="8"
+                                    Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Width.Win10}"
+                                    Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Height.Win10}"
                                     Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
                                     IsTabStop="True"
                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
