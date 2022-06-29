@@ -125,6 +125,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData(".", NumericInput.All, 0d)]
         [InlineData(".9", NumericInput.All, 0.9d)]
         [InlineData(".0115", NumericInput.All, 0.0115d)]
+        [InlineData("-.5", NumericInput.All, -0.5d)]
         [InlineData("", NumericInput.All, null)]
         [InlineData("42", NumericInput.Decimal, 42d)]
         [InlineData("42.", NumericInput.Decimal, 42d)]
@@ -132,15 +133,16 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData(".", NumericInput.Decimal, 0d)]
         [InlineData(".9", NumericInput.Decimal, 0.9d)]
         [InlineData(".0115", NumericInput.Decimal, 0.0115d)]
+        [InlineData("-.5", NumericInput.Decimal, -0.5d)]
         [InlineData("", NumericInput.Decimal, null)]
         [InlineData("42", NumericInput.Numbers, 42d)]
-        [InlineData("42.", NumericInput.Numbers, null)]
-        [InlineData("42.2", NumericInput.Numbers, null)]
+        [InlineData("42.", NumericInput.Numbers, 42d)]
+        [InlineData("42.2", NumericInput.Numbers, 422d)]
         [InlineData(".", NumericInput.Numbers, null)]
-        [InlineData(".9", NumericInput.Numbers, null)]
+        [InlineData(".9", NumericInput.Numbers, 9d)]
         [InlineData("", NumericInput.Numbers, null)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInput(string text, NumericInput numericInput, object expectedValue)
+        public async Task ShouldConvertManualTextInput(string text, NumericInput numericInput, object expectedValue)
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
@@ -165,6 +167,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData(".9", "{}{0:N2} cm", 0.9d, "0.90 cm")]
         [InlineData(".0115", "{}{0:N2} cm", 0.0115d, "0.01 cm")]
         [InlineData(".0155", "{}{0:N2} cm", 0.0155d, "0.02 cm")]
+        [InlineData("-.5", "{}{0:N2} cm", -0.5d, "-0.50 cm")]
         [InlineData("100.00 cm", "{}{0:N2} cm", 100d, "100.00 cm")]
         [InlineData("200.00cm", "{}{0:N2} cm", 200d, "200.00 cm")]
         [InlineData("200.20", "{}{0:N2} cm", 200.2d, "200.20 cm")]
@@ -367,11 +370,15 @@ namespace MahApps.Metro.Tests.Tests
         private static void SetText(TextBox theTextBox, string theText)
         {
             theTextBox.Clear();
-            var textCompositionEventArgs = new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, theTextBox, theText));
-            textCompositionEventArgs.RoutedEvent = UIElement.PreviewTextInputEvent;
-            theTextBox.RaiseEvent(textCompositionEventArgs);
-            textCompositionEventArgs.RoutedEvent = UIElement.TextInputEvent;
-            theTextBox.RaiseEvent(textCompositionEventArgs);
+            foreach (var c in theText)
+            {
+                var textCompositionEventArgs = new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, theTextBox, c.ToString()));
+                textCompositionEventArgs.RoutedEvent = UIElement.PreviewTextInputEvent;
+                theTextBox.RaiseEvent(textCompositionEventArgs);
+                textCompositionEventArgs.RoutedEvent = UIElement.TextInputEvent;
+                theTextBox.RaiseEvent(textCompositionEventArgs);
+            }
+
             theTextBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 

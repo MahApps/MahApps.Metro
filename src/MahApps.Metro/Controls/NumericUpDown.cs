@@ -1724,7 +1724,10 @@ namespace MahApps.Metro.Controls
 
             if (number == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
                 || number == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
-                || number == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator)
+                || number == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator
+                || number == (this.SpecificCultureInfo.NumberFormat.NegativeSign + this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+                || number == (this.SpecificCultureInfo.NumberFormat.PositiveSign + this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+               )
             {
                 return true;
             }
