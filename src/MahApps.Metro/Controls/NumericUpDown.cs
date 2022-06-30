@@ -368,7 +368,10 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(Value),
                                           typeof(double?),
                                           typeof(NumericUpDown),
-                                          new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValuePropertyChanged, CoerceValue));
+                                          new FrameworkPropertyMetadata(default(double?),
+                                                                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                                                                        OnValuePropertyChanged,
+                                                                        (o, value) => CoerceValue(o, value).Item1));
 
         private static void OnValuePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -379,12 +382,12 @@ namespace MahApps.Metro.Controls
         }
 
         [MustUseReturnValue]
-        private static object? CoerceValue(DependencyObject d, object? baseValue)
+        private static Tuple<double?, bool> CoerceValue(DependencyObject d, object? baseValue)
         {
             var numericUpDown = (NumericUpDown)d;
             if (baseValue is null)
             {
-                return numericUpDown.DefaultValue;
+                return new Tuple<double?, bool>(numericUpDown.DefaultValue, false);
             }
 
             var value = ((double?)baseValue).Value;
@@ -396,15 +399,15 @@ namespace MahApps.Metro.Controls
 
             if (value < numericUpDown.Minimum)
             {
-                return numericUpDown.Minimum;
+                return new Tuple<double?, bool>(numericUpDown.Minimum, true);
             }
 
             if (value > numericUpDown.Maximum)
             {
-                return numericUpDown.Maximum;
+                return new Tuple<double?, bool>(numericUpDown.Maximum, true);
             }
 
-            return value;
+            return new Tuple<double?, bool>(value, false);
         }
 
         /// <summary>
@@ -817,23 +820,6 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ButtonDownContentStringFormatProperty, value);
         }
 
-        /// <summary>Identifies the <see cref="ChangeValueOnTextChanged"/> dependency property.</summary>
-        public static readonly DependencyProperty ChangeValueOnTextChangedProperty
-            = DependencyProperty.Register(nameof(ChangeValueOnTextChanged),
-                                          typeof(bool),
-                                          typeof(NumericUpDown),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the value will be changed directly on every TextBox text changed input event or when using the Enter key.
-        /// </summary>
-        [Category("Behavior")]
-        public bool ChangeValueOnTextChanged
-        {
-            get => (bool)this.GetValue(ChangeValueOnTextChangedProperty);
-            set => this.SetValue(ChangeValueOnTextChangedProperty, BooleanBoxes.Box(value));
-        }
-
         /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
         public static readonly DependencyProperty CultureProperty
             = DependencyProperty.Register(nameof(Culture),
@@ -1022,26 +1008,8 @@ namespace MahApps.Metro.Controls
 
             this.ToggleReadOnlyMode(this.IsReadOnly);
 
-            this.repeatUp.Click += (_, _) =>
-                {
-                    this.ChangeValueWithSpeedUp(true);
-
-                    if (!this.UpDownButtonsFocusable)
-                    {
-                        this.manualChange = false;
-                        this.InternalSetText(this.Value);
-                    }
-                };
-            this.repeatDown.Click += (_, _) =>
-                {
-                    this.ChangeValueWithSpeedUp(false);
-
-                    if (!this.UpDownButtonsFocusable)
-                    {
-                        this.manualChange = false;
-                        this.InternalSetText(this.Value);
-                    }
-                };
+            this.repeatUp.Click += (_, _) => { this.ChangeValueWithSpeedUp(true); };
+            this.repeatDown.Click += (_, _) => { this.ChangeValueWithSpeedUp(false); };
 
             this.repeatUp.PreviewMouseUp += (_, _) => this.ResetInternal();
             this.repeatDown.PreviewMouseUp += (_, _) => this.ResetInternal();
@@ -1135,14 +1103,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (e.Key == Key.Enter)
-            {
-                if (!this.ChangeValueOnTextChanged)
-                {
-                    this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
-                }
-            }
-            else if (e.Key == Key.Up)
+            if (e.Key == Key.Up)
             {
                 this.ChangeValueWithSpeedUp(true);
                 e.Handled = true;
@@ -1151,12 +1112,6 @@ namespace MahApps.Metro.Controls
             {
                 this.ChangeValueWithSpeedUp(false);
                 e.Handled = true;
-            }
-
-            if (e.Handled)
-            {
-                this.manualChange = false;
-                this.InternalSetText(this.Value);
             }
         }
 
@@ -1178,8 +1133,7 @@ namespace MahApps.Metro.Controls
             if (this.InterceptMouseWheel && (this.IsFocused || this.valueTextBox?.IsFocused == true || this.TrackMouseWheelWhenMouseOver))
             {
                 bool increment = e.Delta > 0;
-                this.manualChange = false;
-                this.ChangeValueInternal(increment);
+                this.ChangeValueWithSpeedUp(increment);
             }
 
             var sv = this.TryFindScrollViewer();
@@ -1205,8 +1159,10 @@ namespace MahApps.Metro.Controls
         {
             var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
-            e.Handled = !this.ValidateText(fullText, out _);
-            this.manualChange = true;
+            var textIsValid = this.ValidateText(fullText, out var convertedValue);
+            // Value must be valid and not coerced
+            e.Handled = !textIsValid || CoerceValue(this, convertedValue as double?).Item2;
+            this.manualChange = !e.Handled;
         }
 
         /// <summary>
@@ -1423,6 +1379,7 @@ namespace MahApps.Metro.Controls
             }
 
             double direction = toPositive ? 1 : -1;
+
             if (this.Speedup)
             {
                 double d = this.Interval * this.internalLargeChange;
@@ -1440,17 +1397,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ChangeValueInternal(bool addInterval)
-        {
-            this.ChangeValueInternal(addInterval ? this.Interval : -this.Interval);
-        }
-
         private void ChangeValueInternal(double interval)
         {
             if (this.IsReadOnly)
             {
                 return;
             }
+
+            this.manualChange = false;
 
             NumericUpDownChangedRoutedEventArgs routedEvent = interval > 0 ? new NumericUpDownChangedRoutedEventArgs(ValueIncrementedEvent, interval) : new NumericUpDownChangedRoutedEventArgs(ValueDecrementedEvent, interval);
 
@@ -1459,6 +1413,8 @@ namespace MahApps.Metro.Controls
             if (!routedEvent.Handled)
             {
                 this.ChangeValueBy(routedEvent.Interval);
+
+                this.InternalSetText(this.Value);
 
                 if (this.valueTextBox is not null)
                 {
@@ -1491,7 +1447,7 @@ namespace MahApps.Metro.Controls
                 value = this.Minimum;
             }
 
-            this.SetCurrentValue(ValueProperty, CoerceValue(this, value));
+            this.SetCurrentValue(ValueProperty, CoerceValue(this, value).Item1);
         }
 
         private void EnableDisableDown()
@@ -1590,42 +1546,29 @@ namespace MahApps.Metro.Controls
 
         private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
         {
-            this.ChangeValueFromTextInput(sender as TextBox);
-        }
-
-        private void ChangeValueFromTextInput(TextBox? textBox)
-        {
-            if (textBox is null || !this.InterceptManualEnter)
-            {
-                return;
-            }
-
-            if (this.manualChange)
+            if (this.valueTextBox is not null)
             {
                 this.manualChange = false;
-
-                if (this.ValidateText(textBox.Text, out var convertedValue))
-                {
-                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
-                    this.SetValueTo(convertedValue);
-                }
-                else if (this.DefaultValue.HasValue)
-                {
-                    this.SetValueTo(this.DefaultValue.Value);
-                }
+                this.valueTextBox.TextChanged -= this.OnTextChanged;
+                this.InternalSetText(this.Value);
+                this.valueTextBox.TextChanged += this.OnTextChanged;
             }
-
-            this.OnValueChanged(this.Value, this.Value);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!this.ChangeValueOnTextChanged)
+            var text = ((TextBox)sender).Text;
+            this.ChangeValueFromTextInput(text);
+        }
+
+        private void ChangeValueFromTextInput(string text)
+        {
+            if (!this.InterceptManualEnter)
             {
                 return;
             }
 
-            if (string.IsNullOrEmpty(((TextBox)sender).Text))
+            if (string.IsNullOrEmpty(text))
             {
                 if (this.DefaultValue.HasValue)
                 {
@@ -1640,14 +1583,27 @@ namespace MahApps.Metro.Controls
                     this.SetCurrentValue(ValueProperty, null);
                 }
             }
-            else if (this.manualChange || e.UndoAction == UndoAction.Undo || e.UndoAction == UndoAction.Redo)
+            else if (this.manualChange)
             {
-                if (this.ValidateText(((TextBox)sender).Text, out var convertedValue))
+                if (this.ValidateText(text, out var convertedValue))
                 {
                     convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
+                else if (this.DefaultValue.HasValue)
+                {
+                    this.SetValueTo(this.DefaultValue.Value);
+                    this.InternalSetText(this.Value);
+                }
+                else
+                {
+                    this.SetCurrentValue(ValueProperty, null);
+                }
             }
+
+            this.OnValueChanged(this.Value, this.Value);
+
+            this.manualChange = false;
         }
 
         private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)

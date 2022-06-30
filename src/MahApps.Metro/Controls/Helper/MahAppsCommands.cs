@@ -77,7 +77,7 @@ namespace MahApps.Metro.Controls
                     hotKeyBox.GetBindingExpression(HotKeyBox.HotKeyProperty)?.UpdateSource();
                     break;
                 case NumericUpDown numericUpDown:
-                    numericUpDown.SetCurrentValue(NumericUpDown.ValueProperty, NumericUpDown.ValueProperty.DefaultMetadata.DefaultValue);
+                    numericUpDown.SetCurrentValue(NumericUpDown.ValueProperty, numericUpDown.DefaultValue);
                     numericUpDown.GetBindingExpression(NumericUpDown.ValueProperty)?.UpdateSource();
                     break;
                 case TextBox textBox:
