@@ -21,6 +21,7 @@
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          Cursor="{TemplateBinding Cursor}"
                                           RecognizesAccessKey="{TemplateBinding RecognizesAccessKey}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
