@@ -1655,7 +1655,8 @@ namespace MahApps.Metro.Controls
 
             if (text.Count(c => c == this.SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 2
                 || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 2
-                || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1)
+                // || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1
+               )
             {
                 return false;
             }

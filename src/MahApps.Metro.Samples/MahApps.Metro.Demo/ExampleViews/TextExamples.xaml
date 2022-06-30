@@ -421,7 +421,7 @@
                               mah:TextBoxHelper.ClearTextButton="True"
                               IsEditable="True"
                               ItemsSource="{x:Static exampleViews:TextExamples.NUD_StringFormats}"
-                              SelectedItem="{Binding ElementName=NUD, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding ElementName=NUD, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Header="CultureInfo">
