@@ -23,7 +23,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ControlzEx" version="6.0.0-alpha0218" />
+        <PackageReference Include="ControlzEx" version="6.0.0-alpha0237" />
 
         <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0100" PrivateAssets="all" IncludeAssets="build" />
 
