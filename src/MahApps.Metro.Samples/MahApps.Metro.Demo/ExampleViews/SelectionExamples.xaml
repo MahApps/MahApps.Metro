@@ -16,212 +16,201 @@
 
     <TabControl Margin="10" TabStripPlacement="Left">
         <TabItem Header="ListBox">
-            <ScrollViewer Margin="2"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled">
-                <UniformGrid Columns="2" Rows="2">
-                    <ListBox Margin="2"
-                             mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
-                             mah:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
-                             AlternationCount="2"
-                             BorderThickness="1"
-                             DisplayMemberPath="Name"
-                             ItemsSource="{Binding Artists}"
-                             SelectedIndex="0"
-                             SelectionMode="Extended"
-                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
-                        <ListBox.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
-                                <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
-                                <Setter Property="BorderThickness" Value="1" />
-                                <Setter Property="Margin" Value="2" />
-                                <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
-                                <Setter Property="mah:ItemHelper.ActiveSelectionBorderBrush" Value="{StaticResource MahApps.Brushes.Gray2}" />
-                                <Setter Property="mah:ItemHelper.HoverBorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
-                                <Setter Property="mah:ItemHelper.HoverSelectedBorderBrush" Value="{StaticResource MahApps.Brushes.Gray2}" />
-                                <Setter Property="mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="Coral" />
-                                <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="Black" />
-                                <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="DarkOliveGreen" />
-                                <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="White" />
-                                <Setter Property="mah:ItemHelper.SelectedBorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
-                                <Style.Triggers>
-                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                                        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-                    <ListBox Margin="2"
-                             mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
-                             AlternationCount="2"
-                             BorderThickness="1"
-                             DisplayMemberPath="Name"
-                             IsEnabled="False"
-                             ItemsSource="{Binding Artists}"
-                             SelectedIndex="0"
-                             SelectionMode="Extended"
-                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
-                        <ListBox.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
-                                <Style.Triggers>
-                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                                        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
+            <UniformGrid Columns="2" Rows="2">
+                <ListBox Margin="2"
+                         mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                         mah:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
+                         AlternationCount="2"
+                         BorderThickness="1"
+                         DisplayMemberPath="Name"
+                         ItemsSource="{Binding Artists}"
+                         SelectedIndex="0"
+                         SelectionMode="Extended"
+                         Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="BorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Margin" Value="2" />
+                            <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+                            <Setter Property="mah:ItemHelper.ActiveSelectionBorderBrush" Value="{StaticResource MahApps.Brushes.Gray2}" />
+                            <Setter Property="mah:ItemHelper.HoverBorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
+                            <Setter Property="mah:ItemHelper.HoverSelectedBorderBrush" Value="{StaticResource MahApps.Brushes.Gray2}" />
+                            <Setter Property="mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="Coral" />
+                            <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="Black" />
+                            <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="DarkOliveGreen" />
+                            <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="White" />
+                            <Setter Property="mah:ItemHelper.SelectedBorderBrush" Value="{StaticResource MahApps.Brushes.Gray1}" />
+                            <Style.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+                <ListBox Margin="2"
+                         mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                         AlternationCount="2"
+                         BorderThickness="1"
+                         DisplayMemberPath="Name"
+                         IsEnabled="False"
+                         ItemsSource="{Binding Artists}"
+                         SelectedIndex="0"
+                         SelectionMode="Extended"
+                         Style="{StaticResource MahApps.Styles.ListBox.Virtualized}">
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                            <Style.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
 
-                    <ListBox Margin="2" SelectedIndex="0">
-                        <ListBoxItem Content="Item 1" />
-                        <ListBoxItem Content="Item 2" />
-                        <ListBoxItem Content="Item 3" />
-                    </ListBox>
-                    <ListBox Margin="2"
-                             IsEnabled="False"
-                             SelectedIndex="0">
-                        <ListBoxItem Content="Item 1" />
-                        <ListBoxItem Content="Item 2" />
-                        <ListBoxItem Content="Item 3" />
-                    </ListBox>
-                </UniformGrid>
-            </ScrollViewer>
+                <ListBox Margin="2" SelectedIndex="0">
+                    <ListBoxItem Content="Item 1" />
+                    <ListBoxItem Content="Item 2" />
+                    <ListBoxItem Content="Item 3" />
+                </ListBox>
+                <ListBox Margin="2"
+                         IsEnabled="False"
+                         SelectedIndex="0">
+                    <ListBoxItem Content="Item 1" />
+                    <ListBoxItem Content="Item 2" />
+                    <ListBoxItem Content="Item 3" />
+                </ListBox>
+            </UniformGrid>
         </TabItem>
 
         <TabItem Header="List/GridView">
-            <ScrollViewer Margin="2"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled">
-                <UniformGrid Columns="2" Rows="2">
-                    <ListView Margin="2"
-                              BorderThickness="1"
-                              ItemsSource="{Binding Artists}"
-                              SelectedIndex="0"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <ListView Margin="2"
-                              BorderThickness="1"
-                              IsEnabled="False"
-                              ItemsSource="{Binding Artists}"
-                              SelectedIndex="0"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+            <UniformGrid Columns="2" Rows="2">
+                <ListView Margin="2"
+                          mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                          BorderThickness="1"
+                          ItemsSource="{Binding Artists}"
+                          SelectedIndex="0"
+                          Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Artist" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView Margin="2"
+                          mah:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                          BorderThickness="1"
+                          IsEnabled="False"
+                          ItemsSource="{Binding Artists}"
+                          Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Artist" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-                    <ListView Margin="2"
-                              SelectedIndex="0"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                        <ListViewItem>Test 1</ListViewItem>
-                        <ListViewItem>Test 2</ListViewItem>
-                        <ListViewItem>Test 3</ListViewItem>
-                        <ListViewItem>Test 4</ListViewItem>
-                    </ListView>
-                    <ListView Margin="2"
-                              IsEnabled="False"
-                              SelectedIndex="0"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                        <ListViewItem>Test 1</ListViewItem>
-                        <ListViewItem>Test 2</ListViewItem>
-                        <ListViewItem>Test 3</ListViewItem>
-                        <ListViewItem>Test 4</ListViewItem>
-                    </ListView>
-                </UniformGrid>
-            </ScrollViewer>
+                <ListView Margin="2"
+                          SelectedIndex="0"
+                          Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    <ListViewItem>Test 1</ListViewItem>
+                    <ListViewItem>Test 2</ListViewItem>
+                    <ListViewItem>Test 3</ListViewItem>
+                    <ListViewItem>Test 4</ListViewItem>
+                </ListView>
+                <ListView Margin="2"
+                          IsEnabled="False"
+                          SelectedIndex="0"
+                          Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    <ListViewItem>Test 1</ListViewItem>
+                    <ListViewItem>Test 2</ListViewItem>
+                    <ListViewItem>Test 3</ListViewItem>
+                    <ListViewItem>Test 4</ListViewItem>
+                </ListView>
+            </UniformGrid>
         </TabItem>
 
         <TabItem Header="TreeView">
-            <ScrollViewer Margin="2"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled">
-                <UniformGrid Columns="2" Rows="2">
-                    <TreeView Margin="2"
-                              BorderThickness="1"
-                              ItemsSource="{Binding Artists}"
-                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
-                        <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
-                                <TextBlock Text="{Binding Name}" />
-                                <HierarchicalDataTemplate.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Title}" />
-                                    </DataTemplate>
-                                </HierarchicalDataTemplate.ItemTemplate>
-                            </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
-                    <TreeView Margin="2"
-                              BorderThickness="1"
-                              IsEnabled="False"
-                              ItemsSource="{Binding Artists}"
-                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
-                        <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
-                                <TextBlock Text="{Binding Name}" />
-                                <HierarchicalDataTemplate.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Title}" />
-                                    </DataTemplate>
-                                </HierarchicalDataTemplate.ItemTemplate>
-                            </HierarchicalDataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
+            <UniformGrid Columns="2" Rows="2">
+                <TreeView Margin="2"
+                          BorderThickness="1"
+                          ItemsSource="{Binding Artists}"
+                          Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
+                            <TextBlock Text="{Binding Name}" />
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" />
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+                <TreeView Margin="2"
+                          BorderThickness="1"
+                          IsEnabled="False"
+                          ItemsSource="{Binding Artists}"
+                          Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
+                            <TextBlock Text="{Binding Name}" />
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" />
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
 
-                    <TreeView Margin="2">
-                        <TreeViewItem Header="Item 1">
-                            <TreeViewItem Header="Item 1.1">
-                                <TreeViewItem Header="Item 1.1.1" />
-                                <TreeViewItem Header="Item 1.1.2" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Item 1.2" />
-                            <TreeViewItem Header="Item 1.3" />
+                <TreeView Margin="2">
+                    <TreeViewItem Header="Item 1">
+                        <TreeViewItem Header="Item 1.1">
+                            <TreeViewItem Header="Item 1.1.1" />
+                            <TreeViewItem Header="Item 1.1.2" />
                         </TreeViewItem>
-                        <TreeViewItem Header="Item 22" />
-                        <TreeViewItem Header="Item 3"
-                                      IsExpanded="True"
-                                      IsSelected="True">
-                            <TreeViewItem Header="Item 3.1" IsExpanded="True">
-                                <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
-                                <TreeViewItem Header="Item 3.1.2" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Item 3.2" />
-                            <TreeViewItem Header="Item 3.3" />
+                        <TreeViewItem Header="Item 1.2" />
+                        <TreeViewItem Header="Item 1.3" />
+                    </TreeViewItem>
+                    <TreeViewItem Header="Item 22" />
+                    <TreeViewItem Header="Item 3"
+                                  IsExpanded="True"
+                                  IsSelected="True">
+                        <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                            <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
+                            <TreeViewItem Header="Item 3.1.2" />
                         </TreeViewItem>
-                    </TreeView>
-                    <TreeView Margin="2" IsEnabled="False">
-                        <TreeViewItem Header="Item 1">
-                            <TreeViewItem Header="Item 1.1">
-                                <TreeViewItem Header="Item 1.1.1" />
-                                <TreeViewItem Header="Item 1.1.2" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Item 1.2" />
-                            <TreeViewItem Header="Item 1.3" />
+                        <TreeViewItem Header="Item 3.2" />
+                        <TreeViewItem Header="Item 3.3" />
+                    </TreeViewItem>
+                </TreeView>
+                <TreeView Margin="2" IsEnabled="False">
+                    <TreeViewItem Header="Item 1">
+                        <TreeViewItem Header="Item 1.1">
+                            <TreeViewItem Header="Item 1.1.1" />
+                            <TreeViewItem Header="Item 1.1.2" />
                         </TreeViewItem>
-                        <TreeViewItem Header="Item 22" />
-                        <TreeViewItem Header="Item 3"
-                                      IsExpanded="True"
-                                      IsSelected="True">
-                            <TreeViewItem Header="Item 3.1" IsExpanded="True">
-                                <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
-                                <TreeViewItem Header="Item 3.1.2" />
-                            </TreeViewItem>
-                            <TreeViewItem Header="Item 3.2" />
-                            <TreeViewItem Header="Item 3.3" />
+                        <TreeViewItem Header="Item 1.2" />
+                        <TreeViewItem Header="Item 1.3" />
+                    </TreeViewItem>
+                    <TreeViewItem Header="Item 22" />
+                    <TreeViewItem Header="Item 3"
+                                  IsExpanded="True"
+                                  IsSelected="True">
+                        <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                            <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
+                            <TreeViewItem Header="Item 3.1.2" />
                         </TreeViewItem>
-                    </TreeView>
-                </UniformGrid>
-            </ScrollViewer>
+                        <TreeViewItem Header="Item 3.2" />
+                        <TreeViewItem Header="Item 3.3" />
+                    </TreeViewItem>
+                </TreeView>
+            </UniformGrid>
         </TabItem>
 
         <TabItem Header="ComboBox">
