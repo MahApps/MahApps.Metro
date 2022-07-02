@@ -41,7 +41,6 @@
                              mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
                              mah:TextBoxHelper.ButtonsAlignment="{TemplateBinding mah:TextBoxHelper.ButtonsAlignment}"
                              mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
-                             mah:TextBoxHelper.IsWaitingForData="{TemplateBinding mah:TextBoxHelper.IsWaitingForData}"
                              mah:TextBoxHelper.SelectAllOnFocus="{TemplateBinding mah:TextBoxHelper.SelectAllOnFocus}"
                              mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
                              mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
