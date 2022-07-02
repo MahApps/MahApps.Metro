@@ -26,16 +26,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
-                        <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <Border x:Name="PART_WaitingForDataEffectGrid"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                    Effect="{DynamicResource MahApps.DropShadowEffect.WaitingForData}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </AdornerDecorator>
-
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -230,20 +220,6 @@
                             <Trigger.ExitActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
-                        </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsVisible" Value="True" />
-                                <Condition Property="mah:TextBoxHelper.IsWaitingForData" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.WaitingForData}" />
-                            </MultiTrigger.EnterActions>
-                        </MultiTrigger>
-                        <Trigger Property="mah:TextBoxHelper.IsWaitingForData" Value="False">
-                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

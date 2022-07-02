@@ -98,9 +98,8 @@
                     <TextBox Margin="{StaticResource ControlMargin}"
                              HorizontalContentAlignment="Stretch"
                              mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.IsWaitingForData="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Watermark"
+                             mah:TextBoxHelper.Watermark="Watermark..."
                              mah:TextBoxHelper.WatermarkAlignment="Right"
                              SpellCheck.IsEnabled="True"
                              ToolTip="WatermarkAlignment Right">
@@ -293,7 +292,6 @@
                              Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText), Mode=OneWay}"
-                             mah:TextBoxHelper.IsWaitingForData="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
                              mah:TextBoxHelper.Watermark="Revealed..."
                              Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />

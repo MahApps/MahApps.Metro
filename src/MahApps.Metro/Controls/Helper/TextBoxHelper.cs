@@ -671,29 +671,6 @@ namespace MahApps.Metro.Controls
             obj.SetValue(SelectAllOnFocusProperty, BooleanBoxes.Box(value));
         }
 
-        public static readonly DependencyProperty IsWaitingForDataProperty
-            = DependencyProperty.RegisterAttached(
-                "IsWaitingForData",
-                typeof(bool),
-                typeof(TextBoxHelper),
-                new UIPropertyMetadata(BooleanBoxes.FalseBox));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
-        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static bool GetIsWaitingForData(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsWaitingForDataProperty);
-        }
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
-        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static void SetIsWaitingForData(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsWaitingForDataProperty, BooleanBoxes.Box(value));
-        }
-
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty
             = DependencyProperty.RegisterAttached(
                 "IsSpellCheckContextMenuEnabled",
