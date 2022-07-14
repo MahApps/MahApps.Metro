@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:markup="clr-namespace:MahApps.Metro.Markup"
                     xmlns:markupWithAssembly="clr-namespace:MahApps.Metro.Markup;assembly=MahApps.Metro"
@@ -234,7 +234,7 @@
 
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background.MouseOver" Color="{StaticResource MahApps.Colors.Gray8}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background.ReadOnly" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Background.ReadOnly" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.Foreground" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.BorderBrush" Color="{StaticResource MahApps.Colors.Gray5}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridColumnHeader.SortArrowFill" Color="{StaticResource MahApps.Colors.Gray2}" options:Freeze="True" />
