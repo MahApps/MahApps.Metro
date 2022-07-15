@@ -596,12 +596,6 @@
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <mah:ClipBorder x:Name="DisabledVisualElement"
-                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        IsHitTestVisible="False"
-                                        Opacity="0"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <mah:ContentControlEx x:Name="PART_ContentPresenter"
                                                   Padding="{TemplateBinding Padding}"
@@ -615,6 +609,12 @@
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
+                        <mah:ClipBorder x:Name="DisabledVisualElement"
+                                        Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -628,6 +628,7 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.7" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
