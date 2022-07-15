@@ -67,29 +67,29 @@
             <Label Content="Square Button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Square"
+                    Content="Enabled"
                     Style="{DynamicResource MahApps.Styles.Button.Square}" />
             <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Square"
+                    Content="Disabled"
                     IsEnabled="False"
                     Style="{DynamicResource MahApps.Styles.Button.Square}" />
             <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Square Accent"
+                    Content="Enabled"
                     Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
             <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Square Accent"
+                    Content="Disabled"
                     IsEnabled="False"
                     Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
             <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Square Highlight"
+                    Content="Enabled"
                     Style="{DynamicResource MahApps.Styles.Button.Square.Highlight}" />
             <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Square Highlight"
+                    Content="Disabled"
                     IsEnabled="False"
                     Style="{DynamicResource MahApps.Styles.Button.Square.Highlight}" />
         </StackPanel>
