@@ -376,7 +376,7 @@ namespace MahApps.Metro.Controls
                 var endOfHorizontalScrollReachedCommand = GetEndOfHorizontalScrollReachedCommand(scrollViewer);
                 var commandParameter = GetEndOfScrollReachedCommandParameter(scrollViewer) ?? scrollViewer;
 
-                if (endOfVerticalScrollReachedCommand != null && scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight)
+                if (endOfVerticalScrollReachedCommand != null && scrollViewer.VerticalOffset >= scrollViewer.ScrollableHeight && scrollViewer.ScrollableHeight > 0)
                 {
                     if (endOfVerticalScrollReachedCommand.CanExecute(commandParameter))
                     {
@@ -384,7 +384,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
 
-                if (endOfHorizontalScrollReachedCommand != null && scrollViewer.HorizontalOffset >= scrollViewer.ScrollableWidth)
+                if (endOfHorizontalScrollReachedCommand != null && scrollViewer.HorizontalOffset >= scrollViewer.ScrollableWidth && scrollViewer.ScrollableWidth > 0)
                 {
                     if (endOfHorizontalScrollReachedCommand.CanExecute(commandParameter))
                     {
