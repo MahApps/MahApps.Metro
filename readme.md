@@ -114,8 +114,7 @@ A big virtual hug :hugs: goes to all the great people around the world who contr
 * [Certify The Web](https://github.com/webprofusion/certify) by [@webprofusion](https://github.com/webprofusion) The GUI to manage free certificates from Let's Encrypt
 * [Chocolatey GUI](https://github.com/chocolatey/ChocolateyGUI) Chocolatey GUI is a user interface for [Chocolatey](https://chocolatey.org/) (a Machine Package Manager for Windows)
 * [CodeTrack](http://www.getcodetrack.com) by [Nico Van Goethem](https://twitter.com/GoethemNico) CodeTrack is a versatile profiler with some extra tricks up its sleeve.
-* [FolderSecurityViewer](https://www.foldersecurityviewer.com) Easy to use NTFS permissions reporter to get
-*  all effective security owners of your data
+* [FolderSecurityViewer](https://www.foldersecurityviewer.com) Easy to use NTFS permissions reporter to get all effective security owners of your data
 * [Hearthstone-Deck-Tracker](https://github.com/Epix37/Hearthstone-Deck-Tracker) by [@Epix37](https://github.com/Epix37) HDT is an automatic deck tracker and manager for Hearthstone
 * [Markdown Edit](https://github.com/mike-ward/Markdown-Edit) by [@mike-ward](https://github.com/mike-ward) A full-featured Markdown editor for Windows with an emphasis on content and keyboard shortcuts
 * [Markdown Monster](https://markdownmonster.west-wind.com) by [@RickStrahl](https://github.com/RickStrahl) An extensible Markdown Editor, Viewer and Weblog Publisher for Windows
