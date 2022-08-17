@@ -7,7 +7,7 @@
                  xmlns:local="clr-namespace:MetroDemo"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:theming="urn:controlzex"
+                 xmlns:controlzEx="urn:controlzex"
                  Title="MahApps.Metro - Demo Application"
                  Width="1024"
                  Height="768"
@@ -18,9 +18,9 @@
                  d:DesignWidth="800"
                  mah:DialogParticipation.Register="{Binding}"
                  Closing="MetroWindow_Closing"
-                 GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+                 GlowColor="{DynamicResource MahApps.Colors.Accent}"
                  Icon="mahapps.metro.logo2.ico"
-                 NonActiveGlowBrush="#CDFF0000"
+                 NonActiveGlowColor="#CDFF0000"
                  ResizeMode="CanResizeWithGrip"
                  ShowIconOnTitleBar="True"
                  WindowStartupLocation="CenterScreen"
@@ -37,9 +37,9 @@
         <ResourceDictionary>
             <ObjectDataProvider x:Key="SyncModePreferenceEnumValues"
                                 MethodName="GetValues"
-                                ObjectType="{x:Type theming:ThemeSyncMode}">
+                                ObjectType="{x:Type controlzEx:ThemeSyncMode}">
                 <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="theming:ThemeSyncMode" />
+                    <x:Type TypeName="controlzEx:ThemeSyncMode" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
@@ -106,6 +106,14 @@
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
             </UserControl>
+
+            <ObjectDataProvider x:Key="CornerPreferenceEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type controlzEx:WindowCornerPreference}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="controlzEx:WindowCornerPreference" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -168,7 +176,7 @@
                           ItemsSource="{Binding Source={StaticResource SyncModePreferenceEnumValues}}" />
                 <MenuItem Header="Use HSL colors?"
                           IsCheckable="True"
-                          IsChecked="{Binding Options.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
+                          IsChecked="{Binding Options.UseHSL, Source={x:Static controlzEx:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
 
                 <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
             </MenuItem>
@@ -218,6 +226,29 @@
                 <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
             </MenuItem>
             <MenuItem Header="Window">
+                <MenuItem Header="Chrome">
+                    <MenuItem>
+                        <MenuItem.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="CornerPreference" />
+                                    <ComboBox VerticalAlignment="Center"
+                                              ItemsSource="{Binding Source={StaticResource CornerPreferenceEnumValues}}"
+                                              SelectedItem="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=CornerPreference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </MenuItem.Template>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Glow">
+                    <MenuItem Header="PreferDWMBorderColor"
+                              IsCheckable="True"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=PreferDWMBorderColor}" />
+                    <MenuItem Header="DWMSupportsBorderColor"
+                              IsEnabled="False"
+                              IsCheckable="True"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=DWMSupportsBorderColor}" />
+                </MenuItem>
                 <MenuItem Header="ShowTitleBar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowTitleBar}" />

@@ -18,10 +18,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using ControlzEx.Behaviors;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using ControlzEx;
 using ControlzEx.Native;
-using ControlzEx.Standard;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
 using MahApps.Metro.Automation.Peers;
@@ -48,7 +48,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_MetroInactiveDialogsContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_FlyoutModal, Type = typeof(Rectangle))]
     [TemplatePart(Name = PART_Content, Type = typeof(MetroContentControl))]
-    public class MetroWindow : Window
+    public class MetroWindow : WindowChromeWindow
     {
         private const string PART_Icon = "PART_Icon";
         private const string PART_TitleBar = "PART_TitleBar";
@@ -212,38 +212,6 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(IsAnyDialogOpenProperty);
             protected set => this.SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>Identifies the <see cref="ShowMinButton"/> dependency property.</summary>
-        public static readonly DependencyProperty ShowMinButtonProperty
-            = DependencyProperty.Register(nameof(ShowMinButton),
-                                          typeof(bool),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        /// <summary>
-        /// Gets or sets whether if the minimize button is visible and the minimize system menu is enabled.
-        /// </summary>
-        public bool ShowMinButton
-        {
-            get => (bool)this.GetValue(ShowMinButtonProperty);
-            set => this.SetValue(ShowMinButtonProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>Identifies the <see cref="ShowMaxRestoreButton"/> dependency property.</summary>
-        public static readonly DependencyProperty ShowMaxRestoreButtonProperty
-            = DependencyProperty.Register(nameof(ShowMaxRestoreButton),
-                                          typeof(bool),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        /// <summary>
-        /// Gets or sets whether if the maximize/restore button is visible and the maximize/restore system menu is enabled.
-        /// </summary>
-        public bool ShowMaxRestoreButton
-        {
-            get => (bool)this.GetValue(ShowMaxRestoreButtonProperty);
-            set => this.SetValue(ShowMaxRestoreButtonProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ShowCloseButton"/> dependency property.</summary>
@@ -543,38 +511,6 @@ namespace MahApps.Metro.Controls
         {
             get => (Brush)this.GetValue(NonActiveBorderBrushProperty);
             set => this.SetValue(NonActiveBorderBrushProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="GlowBrush"/> dependency property.</summary>
-        public static readonly DependencyProperty GlowBrushProperty
-            = DependencyProperty.Register(nameof(GlowBrush),
-                                          typeof(Brush),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets the brush used for glow border of the window.
-        /// </summary>
-        public Brush? GlowBrush
-        {
-            get => (Brush?)this.GetValue(GlowBrushProperty);
-            set => this.SetValue(GlowBrushProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="NonActiveGlowBrush"/> dependency property.</summary>
-        public static readonly DependencyProperty NonActiveGlowBrushProperty
-            = DependencyProperty.Register(nameof(NonActiveGlowBrush),
-                                          typeof(Brush),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets the non-active brush used for glow border of the window.
-        /// </summary>
-        public Brush? NonActiveGlowBrush
-        {
-            get => (Brush?)this.GetValue(NonActiveGlowBrushProperty);
-            set => this.SetValue(NonActiveGlowBrushProperty, value);
         }
 
         /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
@@ -924,74 +860,6 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(IsWindowDraggableProperty, BooleanBoxes.Box(value));
         }
 
-        /// <summary>Identifies the <see cref="IgnoreTaskbarOnMaximize"/> dependency property.</summary>
-        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty
-            = DependencyProperty.Register(nameof(IgnoreTaskbarOnMaximize),
-                                          typeof(bool),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        /// <summary>
-        /// Gets or sets whether if the Taskbar should be ignored when maximizing the window.
-        /// </summary>
-        public bool IgnoreTaskbarOnMaximize
-        {
-            get => (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty);
-            set => this.SetValue(IgnoreTaskbarOnMaximizeProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>Identifies the <see cref="ResizeBorderThickness"/> dependency property.</summary>
-        public static readonly DependencyProperty ResizeBorderThicknessProperty
-            = DependencyProperty.Register(nameof(ResizeBorderThickness),
-                                          typeof(Thickness),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(new Thickness(6D)));
-
-        /// <summary>
-        /// Gets or sets resize border thickness of the window.
-        /// </summary>
-        public Thickness ResizeBorderThickness
-        {
-            get => (Thickness)this.GetValue(ResizeBorderThicknessProperty);
-            set => this.SetValue(ResizeBorderThicknessProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="KeepBorderOnMaximize"/> dependency property.</summary>
-        public static readonly DependencyProperty KeepBorderOnMaximizeProperty
-            = DependencyProperty.Register(nameof(KeepBorderOnMaximize),
-                                          typeof(bool),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox));
-
-        /// <summary>
-        /// Gets or sets whether if the border thickness should be kept on maximize
-        /// if the MaxHeight/MaxWidth of the window is less than the monitor resolution.
-        /// </summary>
-        public bool KeepBorderOnMaximize
-        {
-            get => (bool)this.GetValue(KeepBorderOnMaximizeProperty);
-            set => this.SetValue(KeepBorderOnMaximizeProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>Identifies the <see cref="TryToBeFlickerFree"/> dependency property.</summary>
-        public static readonly DependencyProperty TryToBeFlickerFreeProperty
-            = DependencyProperty.Register(nameof(TryToBeFlickerFree),
-                                          typeof(bool),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.FalseBox));
-
-        /// <summary>
-        /// Gets or sets whether the resizing of the window should be tried in a way that does not cause flicker/jitter, especially when resizing from the left side.
-        /// </summary>
-        /// <remarks>
-        /// Please note that setting this to <c>true</c> may cause resize lag and black areas appearing on some systems.
-        /// </remarks>
-        public bool TryToBeFlickerFree
-        {
-            get => (bool)this.GetValue(TryToBeFlickerFreeProperty);
-            set => this.SetValue(TryToBeFlickerFreeProperty, BooleanBoxes.Box(value));
-        }
-
         /// <summary>Identifies the <see cref="FlyoutsStatusChanged"/> routed event.</summary>
         public static readonly RoutedEvent FlyoutsStatusChangedEvent
             = EventManager.RegisterRoutedEvent(nameof(FlyoutsStatusChanged),
@@ -1279,10 +1147,7 @@ namespace MahApps.Metro.Controls
         {
             this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
-            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
-            this.InitializeWindowChromeBehavior();
             this.InitializeSettingsBehavior();
-            this.InitializeGlowWindowBehavior();
 
             this.DataContextChanged += this.MetroWindow_DataContextChanged;
             this.Loaded += this.MetroWindow_Loaded;
@@ -1296,20 +1161,6 @@ namespace MahApps.Metro.Controls
 
             ThemeManager.Current.ThemeChanged += this.HandleThemeManagerThemeChanged;
             this.Unloaded += (_, _) => ThemeManager.Current.ThemeChanged -= this.HandleThemeManagerThemeChanged;
-        }
-
-        private void InitializeWindowChromeBehavior()
-        {
-            Interaction.GetBehaviors(this).Add(new BorderlessWindowBehavior());
-        }
-
-        private void InitializeGlowWindowBehavior()
-        {
-            var glowWindowBehavior = new GlowWindowBehavior();
-            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
-            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.GlowBrushProperty, new Binding { Path = new PropertyPath(GlowBrushProperty), Source = this });
-            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.NonActiveGlowBrushProperty, new Binding { Path = new PropertyPath(NonActiveGlowBrushProperty), Source = this });
-            Interaction.GetBehaviors(this).Add(glowWindowBehavior);
         }
 
         private void InitializeSettingsBehavior()
@@ -1683,7 +1534,7 @@ namespace MahApps.Metro.Controls
                 else if (this.ShowSystemMenu)
                 {
 #pragma warning disable 618
-                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
+                    ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
 #pragma warning restore 618
                 }
             }
@@ -1747,10 +1598,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-#pragma warning disable 618
             // for the touch usage
-            UnsafeNativeMethods.ReleaseCapture();
-#pragma warning restore 618
+            PInvoke.ReleaseCapture();
 
             if (windowIsMaximized)
             {
@@ -1769,7 +1618,6 @@ namespace MahApps.Metro.Controls
                 window.StateChanged += onWindowStateChanged;
             }
 
-#pragma warning disable 618
             // these lines are from DragMove
             // NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
             // NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
@@ -1777,8 +1625,7 @@ namespace MahApps.Metro.Controls
             var wpfPoint = window.PointToScreen(Mouse.GetPosition(window));
             var x = (int)wpfPoint.X;
             var y = (int)wpfPoint.Y;
-            NativeMethods.SendMessage(window.CriticalHandle, WM.NCLBUTTONDOWN, (IntPtr)HT.CAPTION, new IntPtr(x | (y << 16)));
-#pragma warning restore 618
+            PInvoke.SendMessage(new HWND(window.CriticalHandle), PInvoke.WM_NCLBUTTONDOWN, new WPARAM((nuint)HT.CAPTION), new IntPtr(x | (y << 16)));
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1795,11 +1642,11 @@ namespace MahApps.Metro.Controls
 #pragma warning disable 618
                     if (window.WindowState == WindowState.Normal)
                     {
-                        ControlzEx.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        ControlzEx.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        ControlzEx.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        ControlzEx.SystemCommands.RestoreWindow(window);
                     }
 #pragma warning restore 618
                     mouseButtonEventArgs.Handled = true;
@@ -1816,7 +1663,7 @@ namespace MahApps.Metro.Controls
                 if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.UseNoneWindowStyle && window.TitleBarHeight <= 0))
                 {
 #pragma warning disable 618
-                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
+                    ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
 #pragma warning restore 618
                 }
             }

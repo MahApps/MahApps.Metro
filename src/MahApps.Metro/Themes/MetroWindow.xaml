@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controlzEx="urn:controlzex"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
@@ -56,6 +56,7 @@
                                     Panel.ZIndex="1"
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
+                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                     Focusable="False"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
@@ -74,7 +75,6 @@
                         <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
                                                 Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 VerticalAlignment="Top"
-                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                                 Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 DockPanel.Dock="Left"
                                                 Focusable="False" />
@@ -82,7 +82,6 @@
                         <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
                                                 Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 VerticalAlignment="Top"
-                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                                 Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 DockPanel.Dock="Right"
                                                 Focusable="False" />
@@ -117,7 +116,6 @@
                                             Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                             VerticalAlignment="Top"
                                             Panel.ZIndex="1"
-                                            controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                             Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                             Focusable="False" />
 
@@ -133,7 +131,6 @@
                                              UseLayoutRounding="True">
                         <mah:ContentPresenterEx x:Name="PART_ContentPresenter"
                                                 Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
-                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                                 UseLayoutRounding="False" />
                     </mah:MetroContentControl>
 
@@ -200,15 +197,17 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Background="{x:Null}"
-                    BorderBrush="{TemplateBinding GlowBrush}"
+                    BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     UseLayoutRounding="True" />
+
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed" />
+                        Visibility="Collapsed"
+                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight" />
         </Grid>
 
         <ControlTemplate.Triggers>
@@ -231,39 +230,23 @@
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">
-                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveGlowBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveGlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
                 <Setter TargetName="PART_WindowTitleBackground" Property="Fill" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="False" />
-                    <Condition Property="GlowBrush" Value="{x:Null}" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="True" />
-                    <Condition Property="GlowBrush" Value="{x:Null}" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
-            <!--  HitTest visibility  -->
-            <Trigger Property="GlowBrush" Value="{x:Null}">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-            </Trigger>
-            <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_TitleBar" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-            </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
@@ -318,6 +301,7 @@
                                     Panel.ZIndex="1"
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
+                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                     Focusable="False"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
@@ -362,7 +346,6 @@
                         <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
                                                 Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 VerticalAlignment="Top"
-                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                                 Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 DockPanel.Dock="Left"
                                                 Focusable="False" />
@@ -370,7 +353,6 @@
                         <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
                                                 Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 VerticalAlignment="Top"
-                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                                 Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 DockPanel.Dock="Right"
                                                 Focusable="False" />
@@ -386,7 +368,6 @@
                                             Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                             VerticalAlignment="Top"
                                             Panel.ZIndex="1"
-                                            controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                             Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                             Focusable="False" />
 
@@ -402,7 +383,6 @@
                                              UseLayoutRounding="True">
                         <mah:ContentPresenterEx x:Name="PART_ContentPresenter"
                                                 Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
-                                                controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                                 UseLayoutRounding="False" />
                     </mah:MetroContentControl>
 
@@ -469,15 +449,17 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Background="{x:Null}"
-                    BorderBrush="{TemplateBinding GlowBrush}"
+                    BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     UseLayoutRounding="True" />
+
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed" />
+                        Visibility="Collapsed"
+                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight" />
         </Grid>
 
         <ControlTemplate.Resources>
@@ -517,39 +499,23 @@
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">
-                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveGlowBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveGlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
                 <Setter TargetName="PART_WindowTitleBackground" Property="Fill" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="False" />
-                    <Condition Property="GlowBrush" Value="{x:Null}" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="True" />
-                    <Condition Property="GlowBrush" Value="{x:Null}" />
+                    <Condition Property="GlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
-            <!--  HitTest visibility  -->
-            <Trigger Property="GlowBrush" Value="{x:Null}">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="False" />
-            </Trigger>
-            <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter TargetName="PART_Border" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_ContentPresenter" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_LeftWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_RightWindowCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_TitleBar" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-                <Setter TargetName="PART_WindowButtonCommands" Property="controlzEx:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
-            </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
@@ -583,7 +549,7 @@
         <Setter Property="FlyoutOverlayBrush" Value="{DynamicResource MahApps.Brushes.Window.FlyoutOverlay}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
-        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="NonActiveGlowColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.WindowTitle.NonActive}" />
         <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="OverlayFadeIn" Value="{StaticResource OverlayFastSemiFadeIn}" />

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Controls;
-using ControlzEx.Standard;
+using Windows.Win32;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -164,16 +164,14 @@ namespace MahApps.Metro.Controls
             ComponentDispatcher.ThreadPreprocessMessage += this.ComponentDispatcherOnThreadPreprocessMessage;
         }
 
-#pragma warning disable 618
         private void ComponentDispatcherOnThreadPreprocessMessage(ref MSG msg, ref bool handled)
         {
-            if (msg.message == (int)WM.HOTKEY)
+            if (msg.message == PInvoke.WM_HOTKEY)
             {
                 // swallow all hotkeys, so our control can catch the key strokes
                 handled = true;
             }
         }
-#pragma warning restore 618
 
         private void TextBoxOnLostFocus(object sender, RoutedEventArgs routedEventArgs)
         {

@@ -5,8 +5,7 @@
 using System;
 using System.Text;
 using System.Windows.Input;
-using ControlzEx.Native;
-using ControlzEx.Standard;
+using Windows.Win32;
 
 namespace MahApps.Metro.Controls
 {
@@ -45,25 +44,24 @@ namespace MahApps.Metro.Controls
             return this.Key == other.Key && this.ModifierKeys == other.ModifierKeys;
         }
 
-#pragma warning disable 618
         public override string ToString()
         {
             var sb = new StringBuilder();
             if ((this.ModifierKeys & ModifierKeys.Alt) == ModifierKeys.Alt)
             {
-                sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_MENU));
+                sb.Append(GetLocalizedKeyStringUnsafe(0x12 /*VK_MENU*/));
                 sb.Append("+");
             }
 
             if ((this.ModifierKeys & ModifierKeys.Control) == ModifierKeys.Control)
             {
-                sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_CONTROL));
+                sb.Append(GetLocalizedKeyStringUnsafe(0x11 /*VK_CONTROL*/));
                 sb.Append("+");
             }
 
             if ((this.ModifierKeys & ModifierKeys.Shift) == ModifierKeys.Shift)
             {
-                sb.Append(GetLocalizedKeyStringUnsafe(Constants.VK_SHIFT));
+                sb.Append(GetLocalizedKeyStringUnsafe(0x10 /*VK_SHIFT*/));
                 sb.Append("+");
             }
 
@@ -75,7 +73,6 @@ namespace MahApps.Metro.Controls
             sb.Append(GetLocalizedKeyString(this.Key));
             return sb.ToString();
         }
-#pragma warning restore 618
 
         private static string GetLocalizedKeyString(Key key)
         {
@@ -88,15 +85,12 @@ namespace MahApps.Metro.Controls
             return GetLocalizedKeyStringUnsafe(vkey) ?? key.ToString();
         }
 
-#pragma warning disable 618
         private static string? GetLocalizedKeyStringUnsafe(int key)
         {
             // strip any modifier keys
             long keyCode = key & 0xffff;
 
-            var sb = new StringBuilder(256);
-
-            long scanCode = NativeMethods.MapVirtualKey((uint)keyCode, NativeMethods.MapType.MAPVK_VK_TO_VSC);
+            long scanCode = PInvoke.MapVirtualKey((uint)keyCode, 0x00 /*MAPVK_VK_TO_VSC*/);
 
             // shift the scancode to the high word
             scanCode = (scanCode << 16);
@@ -109,9 +103,16 @@ namespace MahApps.Metro.Controls
                 scanCode |= 0x1000000;
             }
 
-            var resultLength = UnsafeNativeMethods.GetKeyNameText((int)scanCode, sb, 256);
-            return resultLength > 0 ? sb.ToString() : null;
+            unsafe
+            {
+                var chars = new char[256];
+
+                fixed (char* pchars = chars)
+                {
+                    var resultLength = PInvoke.GetKeyNameText((int)scanCode, pchars, 256);
+                    return resultLength > 0 ? new string(pchars) : null;
+                }
+            }
         }
-#pragma warning restore 618
     }
 }

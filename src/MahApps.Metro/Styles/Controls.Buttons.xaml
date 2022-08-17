@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:controlzex="urn:controlzex">
 
     <mahConverters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
@@ -454,6 +455,13 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCPressed" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
             </Trigger>
@@ -469,6 +477,13 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCPressed" Value="true">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>

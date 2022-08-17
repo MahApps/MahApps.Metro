@@ -586,6 +586,8 @@ namespace MetroDemo
         {
             var w = this.GetTestWindow();
             w.Content = new TextBlock { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.GlowColor = null;
+            w.NonActiveGlowColor = null;
             w.Show();
         }
 
@@ -595,7 +597,7 @@ namespace MetroDemo
             w.Content = new Button { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
-            w.SetResourceReference(GlowBrushProperty, "MahApps.Brushes.Accent");
+            w.SetResourceReference(GlowColorProperty, "MahApps.Colors.Accent");
             w.Show();
         }
 
@@ -605,7 +607,7 @@ namespace MetroDemo
             w.Content = new TextBlock { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(0);
             w.BorderBrush = null;
-            w.GlowBrush = Brushes.Black;
+            w.GlowColor = Colors.Black;
             w.Show();
         }
     }

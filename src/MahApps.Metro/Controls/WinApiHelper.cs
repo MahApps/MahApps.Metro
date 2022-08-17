@@ -5,41 +5,47 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Text;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using ControlzEx.Native;
-using ControlzEx.Standard;
-
-#pragma warning disable 618
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace MahApps.Metro.Controls
 {
-    public static class WinApiHelper
+    internal static class WinApiHelper
     {
-        private static SafeLibraryHandle? user32;
+        private static SafeHandle? user32;
 
         /// <summary>
         /// Get caption for the given id from the user32.dll
         /// </summary>
         /// <param name="id">The id for the caption.</param>
         /// <returns>The caption from the id.</returns>
-        public static string GetCaption(uint id)
+        public static unsafe string GetCaption(uint id)
         {
-            user32 ??= UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
-
-            var sb = new StringBuilder(256);
-            try
+            if (user32 is null)
             {
-                UnsafeNativeMethods.LoadString(user32, id, sb, sb.Capacity);
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError($"Can not find the caption for the id {id}! {e}");
+                user32 = PInvoke.LoadLibrary(Path.Combine(Environment.SystemDirectory, "User32.dll"));
             }
 
-            return sb.ToString().Replace("&", "");
+            var chars = new char[256];
+
+            fixed (char* pchars = chars)
+            {
+                //PWSTR str = new PWSTR()
+                if (PInvoke.LoadString(user32, id, pchars, chars.Length) == 0)
+                {
+                    return string.Format("String with id '{0}' could not be found.", id);
+                }
+#pragma warning disable CA1307 // Specify StringComparison for clarity
+                return new string(chars).Replace("&", string.Empty);
+#pragma warning restore CA1307 // Specify StringComparison for clarity
+            }
         }
 
         /// <summary>
@@ -47,7 +53,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="visual">The visual element to get the monitor information.</param>
         /// <returns>The working area size of the monitor.</returns>
-        public static Size GetMonitorWorkSize(this Visual? visual)
+        public static unsafe Size GetMonitorWorkSize(this Visual? visual)
         {
             if (visual is null == false
                 && PresentationSource.FromVisual(visual) is HwndSource source
@@ -56,11 +62,15 @@ namespace MahApps.Metro.Controls
                 && source.Handle != IntPtr.Zero)
             {
                 // Try to get the monitor from where the owner stays and use the working area for window size properties
-                var monitor = NativeMethods.MonitorFromWindow(source.Handle, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                var monitor = PInvoke.MonitorFromWindow(new HWND(source.Handle), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
                 {
-                    var monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
-                    return new Size(monitorInfo.rcWork.Width, monitorInfo.rcWork.Height);
+                    var monitorInfo = new MONITORINFO
+                                      {
+                                        cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
+                                      };
+                    PInvoke.GetMonitorInfo(monitor, &monitorInfo);
+                    return new Size(monitorInfo.rcWork.right - monitorInfo.rcWork.left, monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
                 }
             }
 
@@ -72,26 +82,26 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="window">The window which should get the window placement.</param>
         /// <param name="wp">The window placement for the window.</param>
-        public static void SetWindowPlacement(Window? window, WINDOWPLACEMENT? wp)
+        public static unsafe void SetWindowPlacement(Window? window, WINDOWPLACEMENT? wp)
         {
             if (window is null)
             {
                 return;
             }
 
-            var x = CalcIntValue(wp?.normalPosition.Left, window.Left);
-            var y = CalcIntValue(wp?.normalPosition.Top, window.Top);
-            var width = CalcIntValue(wp?.normalPosition.Width, window.ActualWidth);
-            var height = CalcIntValue(wp?.normalPosition.Height, window.ActualHeight);
+            var x = CalcIntValue(wp?.rcNormalPosition.left, window.Left);
+            var y = CalcIntValue(wp?.rcNormalPosition.top, window.Top);
+            var width = CalcIntValue(wp?.rcNormalPosition.GetWidth(), window.ActualWidth);
+            var height = CalcIntValue(wp?.rcNormalPosition.GetHeight(), window.ActualHeight);
 
             var placement = new WINDOWPLACEMENT
                             {
-                                showCmd = (wp is null || wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd),
-                                normalPosition = new RECT(x, y, x + width, y + height)
+                                showCmd = (wp is null || wp.Value.showCmd == SHOW_WINDOW_CMD.SW_SHOWMINIMIZED ? SHOW_WINDOW_CMD.SW_SHOWNORMAL : wp.Value.showCmd),
+                                rcNormalPosition = new RECT { left = x, top = y, right = x + width, bottom = y + height }
                             };
 
             var hWnd = new WindowInteropHelper(window).EnsureHandle();
-            if (NativeMethods.SetWindowPlacement(hWnd, placement) == false)
+            if (PInvoke.SetWindowPlacement(new HWND(hWnd), &placement) == false)
             {
                 Trace.TraceWarning($"{window}: The window placement {wp} could not be (SetWindowPlacement)!");
             }
@@ -124,9 +134,15 @@ namespace MahApps.Metro.Controls
                 && source.RootVisual is null == false
                 && source.Handle != IntPtr.Zero)
             {
-                var builder = new StringBuilder(512);
-                NativeMethods.GetWindowText(source.Handle, builder, builder.Capacity);
-                return builder.ToString();
+                int bufferSize = PInvoke.GetWindowTextLength(new HWND(source.Handle)) + 1;
+                unsafe
+                {
+                    fixed (char* windowNameChars = new char[bufferSize])
+                    {
+                        PInvoke.GetWindowText(new HWND(source.Handle), windowNameChars, bufferSize);
+                        return new string(windowNameChars);
+                    }
+                }
             }
 
             return default;
@@ -145,11 +161,14 @@ namespace MahApps.Metro.Controls
                 && source.RootVisual is null == false
                 && source.Handle != IntPtr.Zero)
             {
-                var rc = new RECT(0, 0, 0, 0);
+                var rc = new RECT();
 
                 try
                 {
-                    rc = NativeMethods.GetWindowRect(source.Handle);
+                    unsafe
+                    {
+                        PInvoke.GetWindowRect((HWND)source.Handle, &rc);
+                    }
                 }
                 // Allow empty catch statements.
 #pragma warning disable 56502
@@ -159,7 +178,7 @@ namespace MahApps.Metro.Controls
                 // Disallow empty catch statements.
 #pragma warning restore 56502
 
-                bounds = new Rect(rc.Left, rc.Top, rc.Width, rc.Height);
+                bounds = new Rect(rc.left, rc.top, rc.GetWidth(), rc.GetHeight());
             }
 
             return bounds;

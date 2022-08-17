@@ -5,7 +5,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using ControlzEx.Windows.Shell;
+using ControlzEx;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
