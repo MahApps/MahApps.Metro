@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -25,7 +25,7 @@
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="6.0.0-alpha0241" />
 
-        <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0100" PrivateAssets="all" IncludeAssets="build" />
+        <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0135" PrivateAssets="all" IncludeAssets="build" />
 
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
             <PrivateAssets>all</PrivateAssets>
