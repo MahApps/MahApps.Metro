@@ -24,8 +24,8 @@ namespace MahApps.Metro.Controls
                    {
                         length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
                         showCmd = (SHOW_WINDOW_CMD)this.showCmd,
-                        ptMinPosition = new POINT { x = (int)this.minPosition.X, y = (int)this.minPosition.Y },
-                        ptMaxPosition = new POINT { x = (int)this.maxPosition.X, y = (int)this.maxPosition.Y },
+                        ptMinPosition = new System.Drawing.Point { X = (int)this.minPosition.X, Y = (int)this.minPosition.Y },
+                        ptMaxPosition = new System.Drawing.Point { X = (int)this.maxPosition.X, Y = (int)this.maxPosition.Y },
                         rcNormalPosition = new RECT { left = (int)this.normalPosition.X, top = (int)this.normalPosition.Y, right = (int)this.normalPosition.Right, bottom = (int)this.normalPosition.Bottom }
                    };
         }
@@ -35,8 +35,8 @@ namespace MahApps.Metro.Controls
             return new WindowPlacementSetting
                     {
                         showCmd = (uint)windowplacement.showCmd,
-                        minPosition = new Point(windowplacement.ptMinPosition.x, windowplacement.ptMinPosition.y),
-                        maxPosition = new Point(windowplacement.ptMaxPosition.x, windowplacement.ptMaxPosition.y),
+                        minPosition = new Point(windowplacement.ptMinPosition.X, windowplacement.ptMinPosition.Y),
+                        maxPosition = new Point(windowplacement.ptMaxPosition.X, windowplacement.ptMaxPosition.Y),
                         normalPosition = new Rect(windowplacement.rcNormalPosition.left, windowplacement.rcNormalPosition.top, windowplacement.rcNormalPosition.GetWidth(), windowplacement.rcNormalPosition.GetHeight()),
                     };
         }

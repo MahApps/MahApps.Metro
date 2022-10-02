@@ -25,13 +25,13 @@
     <ItemGroup>
         <PackageReference Include="ControlzEx" version="6.0.0-alpha0241" />
 
-        <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0100" PrivateAssets="all" IncludeAssets="build" />
+        <PackageReference Include="XAMLTools.MSBuild" Version="1.0.0-alpha0135" PrivateAssets="all" IncludeAssets="build" />
 
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.1.635-beta">
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.63-beta">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>

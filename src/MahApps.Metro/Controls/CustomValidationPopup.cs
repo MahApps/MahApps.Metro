@@ -451,7 +451,7 @@ namespace MahApps.Metro.Controls
             var height = rect.GetHeight();
             if (isTop)
             {
-                PInvoke.SetWindowPos(handle, PInvoke.HWND_TOPMOST, left, top, width, height, SWP_TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_TOPMOST, left, top, width, height, SWP_TOPMOST);
             }
             else
             {
@@ -459,9 +459,9 @@ namespace MahApps.Metro.Controls
                 // the titlebar (as opposed to other parts of the external
                 // window) unless I first set the popup to HWND_BOTTOM
                 // then HWND_TOP before HWND_NOTOPMOST
-                PInvoke.SetWindowPos(handle, PInvoke.HWND_BOTTOM, left, top, width, height, SWP_TOPMOST);
-                PInvoke.SetWindowPos(handle, PInvoke.HWND_TOP, left, top, width, height, SWP_TOPMOST);
-                PInvoke.SetWindowPos(handle, PInvoke.HWND_NOTOPMOST, left, top, width, height, SWP_TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_BOTTOM, left, top, width, height, SWP_TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_TOP, left, top, width, height, SWP_TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_NOTOPMOST, left, top, width, height, SWP_TOPMOST);
             }
 
             this.appliedTopMost = isTop;
