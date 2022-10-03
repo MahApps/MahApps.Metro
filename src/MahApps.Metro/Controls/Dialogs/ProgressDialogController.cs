@@ -147,7 +147,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Sets the dialog's title.
         /// </summary>
         /// <param name="title">The title to be set.</param>
-        public void SetTitle(string title)
+        public void SetTitle(object title)
         {
             this.WrappedDialog.Invoke(() => this.WrappedDialog.Title = title);
         }

@@ -40,4 +40,16 @@
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\DialogCustomTitleWindow.xaml.cs">
+        <DependentUpon>DialogCustomTitleWindow.xaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\DialogCustomTitleWindow.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      </Page>
+    </ItemGroup>
 </Project>

@@ -2,7 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -33,10 +36,48 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
 
             dialog.DataContext = vm;
-            var textBlock = dialog.FindChild<TextBlock>("TheDialogBody");
+            var bodyTextBlock = dialog.FindChild<TextBlock>("TheDialogBody");
 
-            Assert.Equal(vm.Text, textBlock.Text);
+            Assert.Equal(vm.Text, bodyTextBlock.Text);
 
+            var title = dialog.FindChild<ContentPresenter>("PART_Title");
+
+            Assert.Equal(vm.Title, title.Content);
+
+            await window.HideMetroDialogAsync(dialog);
+
+            await TestHost.SwitchToAppThread(); // No idea why we have to do this again
+
+            Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task DisplaysTitleWithCustomContent()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogCustomTitleWindow>();
+            var vm = new TheViewModel();
+            var dialog = (CustomDialog)window.Resources["CustomDialog"];
+
+            await window.ShowMetroDialogAsync(dialog);
+
+            await TestHost.SwitchToAppThread(); // No idea why we have to do this again
+
+            Assert.Equal(await window.GetCurrentDialogAsync<CustomDialog>(), dialog);
+            Assert.NotNull(await window.GetCurrentDialogAsync<BaseMetroDialog>());
+            Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
+
+            dialog.DataContext = vm;
+
+            var titleContainer = dialog.FindChild<DockPanel>("TheDialogTitle");
+
+            var rects = titleContainer.FindChildren<System.Windows.Shapes.Rectangle>().ToList();
+            Assert.Equal(2, rects.Count);
+            TextBlock text = titleContainer.FindChild<TextBlock>();
+            Assert.Equal(vm.Title, text.Text);
+            
             await window.HideMetroDialogAsync(dialog);
 
             await TestHost.SwitchToAppThread(); // No idea why we have to do this again
@@ -47,6 +88,7 @@ namespace MahApps.Metro.Tests.Tests
         private class TheViewModel
         {
             public string Text => "TheText";
+            public string Title => "TheTitle";
         }
     }
 }
