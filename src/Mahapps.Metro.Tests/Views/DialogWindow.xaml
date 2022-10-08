@@ -8,7 +8,7 @@
                  d:DesignWidth="300"
                  mc:Ignorable="d">
     <mah:MetroWindow.Resources>
-        <mah:CustomDialog x:Key="CustomDialog">
+        <mah:CustomDialog x:Key="CustomDialog" Title="{Binding Path=Title}">
             <TextBlock x:Name="TheDialogBody" Text="{Binding Path=Text}" />
         </mah:CustomDialog>
     </mah:MetroWindow.Resources>

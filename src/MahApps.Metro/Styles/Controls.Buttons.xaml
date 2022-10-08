@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controlzex="urn:controlzex"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:controlzex="urn:controlzex">
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <mahConverters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 

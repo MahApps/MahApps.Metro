@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static async Task<LoginDialogData?> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings? settings = null)
+        public static async Task<LoginDialogData?> ShowLoginAsync(this MetroWindow window, object title, string message, LoginDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static async Task<string?> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings? settings = null)
+        public static async Task<string?> ShowInputAsync(this MetroWindow window, object title, string message, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -124,7 +124,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static async Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings? settings = null)
+        public static async Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, object title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -175,7 +175,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
-        public static async Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings? settings = null)
+        public static async Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, object title, string message, bool isCancelable = false, MetroDialogSettings? settings = null)
         {
             window.Dispatcher.VerifyAccess();
 

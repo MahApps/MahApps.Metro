@@ -79,13 +79,18 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock x:Name="PART_Title"
-                               Grid.Row="0"
-                               AutomationProperties.Name="Dialog title"
-                               FontSize="{TemplateBinding DialogTitleFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
-                               Text="{TemplateBinding Title}"
-                               TextWrapping="Wrap" />
+                    <ContentPresenter x:Name="PART_Title"
+                                      Grid.Row="0"
+                                      AutomationProperties.Name="Dialog title"
+                                      Content="{TemplateBinding Title}"
+                                      TextElement.FontSize="{TemplateBinding DialogTitleFontSize}"
+                                      TextElement.Foreground="{TemplateBinding Foreground}">
+                        <ContentPresenter.Resources>
+                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap" />
+                            </Style>
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
 
                     <ContentPresenter x:Name="PART_Content"
                                       Grid.Row="1"

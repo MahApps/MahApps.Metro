@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controlzEx="urn:controlzex"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
@@ -54,9 +54,9 @@
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
                                     Panel.ZIndex="1"
+                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
-                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                     Focusable="False"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
@@ -204,10 +204,10 @@
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
+                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed"
-                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight" />
+                        Visibility="Collapsed" />
         </Grid>
 
         <ControlTemplate.Triggers>
@@ -299,9 +299,9 @@
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
                                     Panel.ZIndex="1"
+                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
-                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
                                     Focusable="False"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
@@ -456,10 +456,10 @@
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
+                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed"
-                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight" />
+                        Visibility="Collapsed" />
         </Grid>
 
         <ControlTemplate.Resources>
