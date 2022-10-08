@@ -2,10 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -29,8 +27,6 @@ namespace MahApps.Metro.Tests.Tests
 
             await window.ShowMetroDialogAsync(dialog);
 
-            await TestHost.SwitchToAppThread(); // No idea why we have to do this again
-
             Assert.Equal(await window.GetCurrentDialogAsync<CustomDialog>(), dialog);
             Assert.NotNull(await window.GetCurrentDialogAsync<BaseMetroDialog>());
             Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
@@ -45,8 +41,6 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(vm.Title, title.Content);
 
             await window.HideMetroDialogAsync(dialog);
-
-            await TestHost.SwitchToAppThread(); // No idea why we have to do this again
 
             Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
         }
@@ -63,8 +57,6 @@ namespace MahApps.Metro.Tests.Tests
 
             await window.ShowMetroDialogAsync(dialog);
 
-            await TestHost.SwitchToAppThread(); // No idea why we have to do this again
-
             Assert.Equal(await window.GetCurrentDialogAsync<CustomDialog>(), dialog);
             Assert.NotNull(await window.GetCurrentDialogAsync<BaseMetroDialog>());
             Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
@@ -79,8 +71,6 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Equal(vm.Title, text.Text);
             
             await window.HideMetroDialogAsync(dialog);
-
-            await TestHost.SwitchToAppThread(); // No idea why we have to do this again
 
             Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
         }
