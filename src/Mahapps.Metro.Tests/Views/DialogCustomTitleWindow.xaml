@@ -11,10 +11,16 @@
         <mah:CustomDialog x:Key="CustomDialog">
             <mah:CustomDialog.Title>
                 <DockPanel x:Name="TheDialogTitle">
-                    <Rectangle Fill="Red" Width="20" Height="20" DockPanel.Dock="Left" />
-                    <Rectangle Fill="Blue" Width="20" Height="20" DockPanel.Dock="Right" />
+                    <Rectangle Width="20"
+                               Height="20"
+                               DockPanel.Dock="Left"
+                               Fill="Red" />
+                    <Rectangle Width="20"
+                               Height="20"
+                               DockPanel.Dock="Right"
+                               Fill="Blue" />
 
-                    <TextBlock Text="{Binding Path=Title}" Margin="10,2" />
+                    <TextBlock Margin="10 2" Text="{Binding Path=Title}" />
                 </DockPanel>
             </mah:CustomDialog.Title>
             <TextBlock x:Name="TheDialogBody" Text="{Binding Path=Text}" />

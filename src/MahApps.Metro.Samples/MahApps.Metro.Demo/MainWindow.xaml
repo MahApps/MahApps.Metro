@@ -1,13 +1,13 @@
 ﻿<mah:MetroWindow x:Class="MetroDemo.MainWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:controlzEx="urn:controlzex"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:local="clr-namespace:MetroDemo"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:controlzEx="urn:controlzex"
                  Title="MahApps.Metro - Demo Application"
                  Width="1024"
                  Height="768"
@@ -245,9 +245,9 @@
                               IsCheckable="True"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=PreferDWMBorderColor}" />
                     <MenuItem Header="DWMSupportsBorderColor"
-                              IsEnabled="False"
                               IsCheckable="True"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=DWMSupportsBorderColor}" />
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=DWMSupportsBorderColor}"
+                              IsEnabled="False" />
                 </MenuItem>
                 <MenuItem Header="ShowTitleBar"
                           IsCheckable="True"
