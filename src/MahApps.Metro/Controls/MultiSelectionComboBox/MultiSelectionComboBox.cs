@@ -1243,6 +1243,7 @@ namespace MahApps.Metro.Controls
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
+            e.Handled = ReferenceEquals(e.OriginalSource, this);
             base.OnSelectionChanged(e);
             this.UpdateDisplaySelectedItems();
             this.UpdateEditableText();
