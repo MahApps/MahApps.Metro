@@ -27,13 +27,13 @@
         <!-- Use NLS instead of ICU https://docs.microsoft.com/en-us/dotnet/standard/globalization-localization/globalization-icu -->
         <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
 
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="xunit" Version="2.4.1" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
     </ItemGroup>
 
     <ItemGroup>

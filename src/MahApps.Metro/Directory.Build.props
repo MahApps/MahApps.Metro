@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- By using EmbedAllSources we don't need SourceLink itself -->
+        <!-- https://github.com/dotnet/sourcelink/blob/master/docs/README.md#embedallsources -->
+        <EmbedAllSources>true</EmbedAllSources>
+    </PropertyGroup>
+
+    <!-- PDB-Options -->
+    <PropertyGroup>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>Embedded</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SourceRoot Include="$(NuGetPackageRoot)" Condition="'$(NuGetPackageRoot)' != ''" />
+    </ItemGroup>
+
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+</Project>

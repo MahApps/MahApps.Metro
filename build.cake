@@ -8,7 +8,7 @@
 #tool dotnet:?package=GitVersion.Tool&version=5.6.3
 #tool dotnet:?package=XamlStyler.Console&version=3.2008.4
 
-#tool xunit.runner.console&version=2.4.1
+#tool xunit.runner.console&version=2.4.2
 #tool vswhere&version=2.8.4
 #addin nuget:?package=Cake.Figlet&version=2.0.1
 
@@ -187,7 +187,7 @@ Task("Pack")
             .WithProperty("PackageOutputPath", MakeAbsolute(Directory(publishDir)).FullPath)
             .WithProperty("RepositoryBranch", data.GitVersion.BranchName)
             .WithProperty("RepositoryCommit", data.GitVersion.Sha)
-            .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
+            .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.6.2), with minimal effort.")
             .WithProperty("Version", data.IsReleaseBranch ? data.GitVersion.MajorMinorPatch : data.GitVersion.NuGetVersion)
             .WithProperty("AssemblyVersion", data.GitVersion.AssemblySemVer)
             .WithProperty("FileVersion", data.GitVersion.AssemblySemFileVer)

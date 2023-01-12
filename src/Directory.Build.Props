@@ -1,5 +1,6 @@
 <Project>
     <PropertyGroup>
+        <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
         <IsBuildingWpfTempProj Condition="$(MSBuildProjectName.Contains('_wpftmp')) != 'true'">false</IsBuildingWpfTempProj>
         <IsBuildingWpfTempProj Condition="$(MSBuildProjectName.Contains('_wpftmp')) == 'true'">true</IsBuildingWpfTempProj>
     </PropertyGroup>
@@ -9,10 +10,8 @@
         <TargetFrameworks>net462;net47;net48;netcoreapp3.1;net5.0-windows;net6.0-windows</TargetFrameworks>
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
-        <AutoGenerateBindingRedirects Condition=" $(TargetFramework.StartsWith('net4')) ">true</AutoGenerateBindingRedirects>
-        <LangVersion>latest</LangVersion>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
+        <AutoGenerateBindingRedirects Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">true</AutoGenerateBindingRedirects>
+        <LangVersion>latestmajor</LangVersion>
         <NoWarn>$(NoWarn);CS1591</NoWarn>
         <NoError>$(NoError);CS1591</NoError>
         <UseWPF>true</UseWPF>
@@ -22,16 +21,17 @@
 
     <!-- Add the references for all projects and targets -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
-        <PackageReference Include="WpfAnalyzers" Version="4.1.1">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
+        <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" IncludeAssets="build;compile" />
+        <PackageReference Include="WpfAnalyzers" PrivateAssets="all" IncludeAssets="build;analyzers" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
-        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
+        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
+        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
     </ItemGroup>
 
 </Project>

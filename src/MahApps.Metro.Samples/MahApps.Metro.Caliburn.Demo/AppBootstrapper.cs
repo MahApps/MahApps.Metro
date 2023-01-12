@@ -67,7 +67,7 @@ namespace Caliburn.Metro.Demo
             throw new Exception($"Could not locate any instances of contract {contract}.");
         }
 
-        protected override void OnStartup(object sender, StartupEventArgs e)
+        protected override async void OnStartup(object sender, StartupEventArgs e)
         {
             var startupTasks = this.GetAllInstances(typeof(StartupTask))
                                    .OfType<ExportedDelegate>()
@@ -75,7 +75,7 @@ namespace Caliburn.Metro.Demo
 
             startupTasks.Apply(s => s());
 
-            this.DisplayRootViewFor<IShell>();
+            await this.DisplayRootViewForAsync<IShell>();
         }
     }
 }

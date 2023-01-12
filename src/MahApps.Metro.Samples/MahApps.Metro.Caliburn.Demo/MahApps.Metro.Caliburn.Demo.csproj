@@ -26,19 +26,20 @@
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
-        <PackageReference Include="Fody" Version="6.6.0">
+        <PackageReference Include="Fody">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="5.7.0">
+        <PackageReference Include="Costura.Fody">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; compile; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
-        <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" />
+        <PackageReference Include="Caliburn.Micro" />
+        <PackageReference Include="System.ComponentModel.Composition" />
     </ItemGroup>
 
     <ItemGroup>
