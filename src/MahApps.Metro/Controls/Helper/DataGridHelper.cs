@@ -553,6 +553,12 @@ namespace MahApps.Metro.Controls
                         return;
                     }
 
+                    // If the cell is already being edited, we let the cell itself handle the mouse event
+                    if (dataGridCell.IsEditing)
+                    {
+                        return;
+                    }
+
                     dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
                     dataGrid.BeginEdit();
 
