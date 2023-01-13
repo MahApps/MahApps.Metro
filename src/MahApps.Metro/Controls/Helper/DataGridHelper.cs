@@ -511,18 +511,25 @@ namespace MahApps.Metro.Controls
         {
             if (d is DataGrid dataGrid && e.OldValue != e.NewValue && e.NewValue is bool isEnabled)
             {
-                dataGrid.PreviewMouseLeftButtonDown -= DataGridOnPreviewMouseLeftButtonDown;
+                dataGrid.RemoveHandler(UIElement.MouseLeftButtonDownEvent, (RoutedEventHandler)DataGridOnMouseLeftButtonDown);
+                dataGrid.PreviewKeyDown -= EditOnSpaceBarPress;
+
                 if (isEnabled)
                 {
-                    dataGrid.PreviewMouseLeftButtonDown += DataGridOnPreviewMouseLeftButtonDown;
+                    // Register for bubbling events from cells, even when the cell handles them (thus the 'true' parameter)
+                    dataGrid.AddHandler(UIElement.MouseLeftButtonDownEvent, (RoutedEventHandler)DataGridOnMouseLeftButtonDown, true);
+                    dataGrid.PreviewKeyDown += EditOnSpaceBarPress;
                 }
             }
         }
 
+        // This relay is only needed because the UIElement.AddHandler() has strict requirements for the signature of the passed Delegate
+        private static void DataGridOnMouseLeftButtonDown(object sender, RoutedEventArgs e) => AllowDirectEditWithoutFocus(sender, (MouseButtonEventArgs)e);
+
         /// <summary>
         /// Allows editing of components inside of a <see cref="DataGrid"/> cell with a single left click.
         /// </summary>
-        private static void DataGridOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseArgs)
+        private static void AllowDirectEditWithoutFocus(object sender, MouseButtonEventArgs mouseArgs)
         {
             var originalSource = (DependencyObject)mouseArgs.OriginalSource;
             var dataGridCell = originalSource
@@ -541,60 +548,80 @@ namespace MahApps.Metro.Controls
             {
                 var dataGrid = (DataGrid)sender;
 
-                // Check if the cursor actually hit the element and not just the complete cell
-                var mousePosition = mouseArgs.GetPosition(element);
-                var elementHitBox = new Rect(element.RenderSize);
-                if (elementHitBox.Contains(mousePosition))
+                // If it is a DataGridTemplateColumn we want the
+                // click to be handled naturally by the control
+                if (dataGridCell.Column.GetType() == typeof(DataGridTemplateColumn))
                 {
-                    // If it is a DataGridTemplateColumn we want the
-                    // click to be handled naturally by the control
-                    if (dataGridCell.Column.GetType() == typeof(DataGridTemplateColumn))
+                    return;
+                }
+
+                // If the cell is already being edited, we let the cell itself handle the mouse event
+                if (dataGridCell.IsEditing)
+                {
+                    return;
+                }
+
+                dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
+                dataGrid.BeginEdit();
+
+                // Now use the content from the editable template/style
+                switch (dataGridCell.Content)
+                {
+                    case TextBoxBase textBox:
                     {
-                        return;
-                    }
-
-                    // If the cell is already being edited, we let the cell itself handle the mouse event
-                    if (dataGridCell.IsEditing)
-                    {
-                        return;
-                    }
-
-                    dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
-                    dataGrid.BeginEdit();
-
-                    // Begin edit likely changes the visual tree, trigger the mouse down event to cause the DataGrid to adjust selection
-                    var mouseDownEvent = new MouseButtonEventArgs(mouseArgs.MouseDevice, mouseArgs.Timestamp, mouseArgs.ChangedButton)
-                                         {
-                                             RoutedEvent = Mouse.MouseDownEvent,
-                                             Source = mouseArgs.Source
-                                         };
-
-                    dataGridCell.RaiseEvent(mouseDownEvent);
-
-                    // Now use the content from the editable template/style
-                    switch (dataGridCell.Content)
-                    {
-                        // Send a 'left click' routed command to the toggleButton
-                        case ToggleButton toggleButton:
+                        if (TextBoxHelper.GetSelectAllOnFocus(textBox) == false)
                         {
-                            var newMouseEvent = new MouseButtonEventArgs(mouseArgs.MouseDevice, 0, MouseButton.Left)
+                            // Send a 'left-click' routed event to the TextBox to place the I-beam at the position of the mouse cursor
+                            var mouseDownEvent = new MouseButtonEventArgs(mouseArgs.MouseDevice, mouseArgs.Timestamp, mouseArgs.ChangedButton)
+                                                 {
+                                                     RoutedEvent = Mouse.MouseDownEvent,
+                                                     Source = mouseArgs.Source
+                                                 };
+                            textBox.RaiseEvent(mouseDownEvent);
+                        }
+
+                        break;
+                    }
+
+                    case ToggleButton toggleButton:
+                    {
+                        // Check if the cursor actually hit the checkbox and not just the cell
+                        var mousePosition = mouseArgs.GetPosition(element);
+                        var elementHitBox = new Rect(element.RenderSize);
+                        if (elementHitBox.Contains(mousePosition))
+                        {
+                            // Send a 'left click' routed command to the toggleButton to toggle the state
+                            var newMouseEvent = new MouseButtonEventArgs(mouseArgs.MouseDevice, mouseArgs.Timestamp, mouseArgs.ChangedButton)
                                                 {
                                                     RoutedEvent = Mouse.MouseDownEvent,
                                                     Source = dataGrid
                                                 };
 
                             toggleButton.RaiseEvent(newMouseEvent);
-                            break;
                         }
 
-                        // Open the dropdown explicitly. Left clicking is not viable, as it would edit the text and not open the dropdown
-                        case ComboBox comboBox:
-                        {
-                            comboBox.IsDropDownOpen = true;
-                            mouseArgs.Handled = true;
-                            break;
-                        }
+                        break;
                     }
+
+                    // Open the dropdown explicitly. Left clicking is not viable, as it would edit the text and not open the dropdown
+                    case ComboBox comboBox:
+                    {
+                        comboBox.IsDropDownOpen = true;
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static void EditOnSpaceBarPress(object sender, KeyEventArgs e)
+        {
+            if (sender is DataGrid dataGrid)
+            {
+                if (e is { Key: Key.Space, OriginalSource: DataGridCell { IsReadOnly: false, Column: DataGridComboBoxColumn } })
+                {
+                    dataGrid.BeginEdit();
+                    e.Handled = true;
                 }
             }
         }
