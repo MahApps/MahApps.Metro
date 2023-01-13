@@ -522,9 +522,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Allows editing of components inside of a <see cref="DataGrid"/> cell with a single left click.
         /// </summary>
-        private static void DataGridOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private static void DataGridOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseArgs)
         {
-            var originalSource = (DependencyObject)e.OriginalSource;
+            var originalSource = (DependencyObject)mouseArgs.OriginalSource;
             var dataGridCell = originalSource
                                .GetVisualAncestry()
                                .OfType<DataGridCell>()
@@ -542,7 +542,7 @@ namespace MahApps.Metro.Controls
                 var dataGrid = (DataGrid)sender;
 
                 // Check if the cursor actually hit the element and not just the complete cell
-                var mousePosition = e.GetPosition(element);
+                var mousePosition = mouseArgs.GetPosition(element);
                 var elementHitBox = new Rect(element.RenderSize);
                 if (elementHitBox.Contains(mousePosition))
                 {
@@ -556,13 +556,22 @@ namespace MahApps.Metro.Controls
                     dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
                     dataGrid.BeginEdit();
 
+                    // Begin edit likely changes the visual tree, trigger the mouse down event to cause the DataGrid to adjust selection
+                    var mouseDownEvent = new MouseButtonEventArgs(mouseArgs.MouseDevice, mouseArgs.Timestamp, mouseArgs.ChangedButton)
+                                         {
+                                             RoutedEvent = Mouse.MouseDownEvent,
+                                             Source = mouseArgs.Source
+                                         };
+
+                    dataGridCell.RaiseEvent(mouseDownEvent);
+
                     // Now use the content from the editable template/style
                     switch (dataGridCell.Content)
                     {
                         // Send a 'left click' routed command to the toggleButton
                         case ToggleButton toggleButton:
                         {
-                            var newMouseEvent = new MouseButtonEventArgs(e.MouseDevice, 0, MouseButton.Left)
+                            var newMouseEvent = new MouseButtonEventArgs(mouseArgs.MouseDevice, 0, MouseButton.Left)
                                                 {
                                                     RoutedEvent = Mouse.MouseDownEvent,
                                                     Source = dataGrid
@@ -576,7 +585,7 @@ namespace MahApps.Metro.Controls
                         case ComboBox comboBox:
                         {
                             comboBox.IsDropDownOpen = true;
-                            e.Handled = true;
+                            mouseArgs.Handled = true;
                             break;
                         }
                     }
