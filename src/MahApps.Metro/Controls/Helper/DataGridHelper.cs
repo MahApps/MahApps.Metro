@@ -561,6 +561,16 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
+                // Don't handle events from nested data grids
+                var parentDataGrid = dataGridCell
+                                     .GetVisualAncestry()
+                                     .OfType<DataGrid>()
+                                     .FirstOrDefault();
+                if (parentDataGrid != dataGrid)
+                {
+                    return;
+                }
+
                 dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
                 dataGrid.BeginEdit();
 
