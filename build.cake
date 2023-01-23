@@ -9,7 +9,6 @@
 #tool dotnet:?package=XamlStyler.Console&version=3.2008.4
 
 #tool xunit.runner.console&version=2.4.2
-#tool vswhere&version=2.8.4
 #addin nuget:?package=Cake.Figlet&version=2.0.1
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,22 +41,16 @@ public class BuildData
     public bool IsDevelopBranch { get; set; }
     public bool IsReleaseBranch { get; set; }
     public GitVersion GitVersion { get; set; }
-    public DirectoryPath MSBuildPath { get; }
-    public FilePath MSBuildExe { get; }
 
     public BuildData(
         string configuration,
         Verbosity verbosity,
-        DotNetCoreVerbosity dotNetCoreVerbosity,
-        DirectoryPath latestMSBuildInstallationPath
+        DotNetCoreVerbosity dotNetCoreVerbosity
     )
     {
         Configuration = configuration;
         Verbosity = verbosity;
         DotNetCoreVerbosity = dotNetCoreVerbosity;
-
-        MSBuildPath = latestMSBuildInstallationPath.Combine("./MSBuild/Current/Bin");
-        MSBuildExe = MSBuildPath.CombineWithFilePath("./MSBuild.exe");
     }
 
     public void SetGitVersion(GitVersion gitVersion)
@@ -89,8 +82,7 @@ Setup<BuildData>(ctx =>
     var buildData = new BuildData(
         configuration: Argument("configuration", "Release"),
         verbosity: Argument("verbosity", Verbosity.Minimal),
-        dotNetCoreVerbosity: Argument("dotnetnetcoreverbosity", DotNetCoreVerbosity.Minimal),
-        latestMSBuildInstallationPath: VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true })
+        dotNetCoreVerbosity: Argument("dotnetnetcoreverbosity", DotNetCoreVerbosity.Minimal)
     )
     {
         IsLocalBuild = BuildSystem.IsLocalBuild,
@@ -106,7 +98,6 @@ Setup<BuildData>(ctx =>
     }
     buildData.SetGitVersion(GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.Json }));
 
-    Information("MSBuild                : {0}", buildData.MSBuildExe);
     Information("Branch                 : {0}", buildData.GitVersion.BranchName);
     Information("Configuration          : {0}", buildData.Configuration);
     Information("IsLocalBuild           : {0}", buildData.IsLocalBuild);
@@ -115,11 +106,6 @@ Setup<BuildData>(ctx =>
     Information("AssemblySemVer  Version: {0}", buildData.GitVersion.AssemblySemVer);
     Information("MajorMinorPatch Version: {0}", buildData.GitVersion.MajorMinorPatch);
     Information("NuGet           Version: {0}", buildData.GitVersion.NuGetVersion);
-
-    if (FileExists(buildData.MSBuildExe) == false)
-    {
-        throw new NotImplementedException("You need at least Visual Studio 2019 to build this project.");
-    }
 
     return buildData;
 });

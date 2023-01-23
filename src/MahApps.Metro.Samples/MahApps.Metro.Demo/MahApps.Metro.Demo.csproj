@@ -14,12 +14,16 @@
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
-        <!-- <ApplicationManifest>app.manifest</ApplicationManifest> -->
-        <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+        <ApplicationManifest Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">app.manifest</ApplicationManifest>
+        <ApplicationHighDpiMode Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">PerMonitorV2</ApplicationHighDpiMode>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+        <None Include="app.manifest" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
