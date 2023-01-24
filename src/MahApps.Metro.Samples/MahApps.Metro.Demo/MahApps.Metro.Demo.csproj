@@ -8,21 +8,23 @@
         <UseWindowsForms>true</UseWindowsForms>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
-    </PropertyGroup>
-
-    <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
-        <ApplicationManifest Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">app.manifest</ApplicationManifest>
-        <ApplicationHighDpiMode Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">PerMonitorV2</ApplicationHighDpiMode>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" $(TargetFramework.StartsWith('net6')) == false ">
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <PropertyGroup Condition=" $(TargetFramework.StartsWith('net6')) == true ">
+        <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+    <ItemGroup>
         <None Include="app.manifest" />
     </ItemGroup>
 
