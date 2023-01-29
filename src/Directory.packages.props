@@ -23,6 +23,7 @@
         <PackageVersion Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
         <PackageVersion Include="NHotkey.Wpf" Version="2.1.0" />
+        <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.1518.46" />
 
         <PackageVersion Include="System.ComponentModel.Composition" Version="5.0.0" />
         <PackageVersion Include="Caliburn.Micro" Version="4.0.212" />

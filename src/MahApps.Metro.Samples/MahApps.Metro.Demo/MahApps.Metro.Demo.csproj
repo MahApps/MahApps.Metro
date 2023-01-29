@@ -5,19 +5,12 @@
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' ">true</DisableFody>
-        <UseWindowsForms>true</UseWindowsForms>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652;WPF0041</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" $(TargetFramework.StartsWith('net6')) == false ">
         <ApplicationManifest>app.manifest</ApplicationManifest>
-    </PropertyGroup>
-    <PropertyGroup Condition=" $(TargetFramework.StartsWith('net6')) == true ">
-        <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,31 +25,16 @@
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
-        <PackageReference Include="MaterialDesignThemes" />
-        <PackageReference Include="MaterialDesignColors" />
-        <PackageReference Include="Fody">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Costura.Fody">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; compile; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
-        <PackageReference Include="MaterialDesignThemes" />
-        <PackageReference Include="MaterialDesignColors" />
-    </ItemGroup>
-
     <ItemGroup>
+        <PackageReference Include="MaterialDesignThemes" />
+        <PackageReference Include="MaterialDesignColors" />
         <PackageReference Include="MahApps.Metro.IconPacks.Entypo" />
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" />
         <PackageReference Include="MahApps.Metro.IconPacks.Material" />
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" />
         <PackageReference Include="NHotkey.Wpf" />
+        <PackageReference Include="Microsoft.Web.WebView2" />
     </ItemGroup>
 
     <ItemGroup>
