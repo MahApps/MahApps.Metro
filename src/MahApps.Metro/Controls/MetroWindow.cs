@@ -1239,12 +1239,12 @@ namespace MahApps.Metro.Controls
             {
                 this.titleBar.SetCurrentValue(MarginProperty, default(Thickness));
                 Grid.SetColumn(this.titleBar, 0);
-                Grid.SetColumnSpan(this.titleBar, 5);
+                Grid.SetColumnSpan(this.titleBar, 3);
             }
             else
             {
                 this.titleBar.SetCurrentValue(MarginProperty, new Thickness(leftWindowCommandsWidth, 0, rightWindowCommandsWidth, 0));
-                Grid.SetColumn(this.titleBar, 2);
+                Grid.SetColumn(this.titleBar, 1);
                 Grid.SetColumnSpan(this.titleBar, 1);
             }
         }

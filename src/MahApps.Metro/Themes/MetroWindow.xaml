@@ -14,209 +14,203 @@
     <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <ControlTemplate x:Key="MahApps.Templates.MetroWindow" TargetType="{x:Type mah:MetroWindow}">
-        <Grid Background="{TemplateBinding Background}"
-              LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
-              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
-              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-              UseLayoutRounding="True">
-            <AdornerDecorator>
-                <Grid UseLayoutRounding="False">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
+        <mah:ClipBorder x:Name="PART_Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                        UseLayoutRounding="True">
+            <AdornerDecorator UseLayoutRounding="False">
+                <Grid Background="{x:Null}"
+                      LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
+                      RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                      UseLayoutRounding="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!--  icon  -->
+                            <ColumnDefinition Width="Auto" />
+                            <!--  left window commands, title, right window commands  -->
+                            <ColumnDefinition Width="*" />
+                            <!--  min,max,close buttons  -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Rectangle x:Name="PART_WindowTitleBackground"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Fill="{TemplateBinding WindowTitleBrush}"
+                                   Focusable="False"
+                                   StrokeThickness="0" />
+
                         <!--  icon  -->
-                        <ColumnDefinition Width="Auto" />
-                        <!--  left window commands, title, right window commands  -->
-                        <ColumnDefinition Width="*" />
-                        <!--  min,max,close buttons  -->
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                        <ContentControl x:Name="PART_Icon"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        Panel.ZIndex="1"
+                                        controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Content="{TemplateBinding Icon}"
+                                        ContentTemplate="{TemplateBinding IconTemplate}"
+                                        Focusable="False"
+                                        Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <Rectangle x:Name="PART_WindowTitleBackground"
-                               Grid.Row="1"
-                               Grid.Column="1"
-                               Grid.ColumnSpan="3"
-                               Fill="{TemplateBinding WindowTitleBrush}"
-                               Focusable="False"
-                               StrokeThickness="0" />
+                        <mah:MetroThumb x:Name="PART_WindowTitleThumb"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
+                                        UseLayoutRounding="True" />
 
-                    <!--  icon  -->
-                    <ContentControl x:Name="PART_Icon"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    Panel.ZIndex="1"
-                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
-                                    Content="{TemplateBinding Icon}"
-                                    ContentTemplate="{TemplateBinding IconTemplate}"
-                                    Focusable="False"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <DockPanel Grid.Row="0"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Top"
+                                   Focusable="False">
+                            <!--  the left window commands  -->
+                            <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
+                                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    VerticalAlignment="Top"
+                                                    Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    DockPanel.Dock="Left"
+                                                    Focusable="False" />
+                            <!--  the right window commands  -->
+                            <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
+                                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    VerticalAlignment="Top"
+                                                    Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    DockPanel.Dock="Right"
+                                                    Focusable="False" />
+                            <!--  the title bar  -->
+                            <mah:MetroThumbContentControl x:Name="PART_TitleBar"
+                                                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                          HorizontalAlignment="{TemplateBinding TitleAlignment}"
+                                                          HorizontalContentAlignment="Stretch"
+                                                          VerticalContentAlignment="Stretch"
+                                                          Content="{TemplateBinding Title}"
+                                                          ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                          ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                          Focusable="False">
+                                <ContentControl.Foreground>
+                                    <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
+                                        <Binding ElementName="PART_WindowTitleBackground"
+                                                 Mode="OneWay"
+                                                 Path="Fill" />
+                                        <Binding Mode="OneWay"
+                                                 Path="TitleForeground"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </ContentControl.Foreground>
+                            </mah:MetroThumbContentControl>
+                        </DockPanel>
 
-                    <mah:MetroThumb x:Name="PART_WindowTitleThumb"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="5"
-                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
-                                    UseLayoutRounding="True" />
-
-                    <DockPanel Grid.Row="1"
-                               Grid.Column="2"
-                               VerticalAlignment="Top"
-                               Focusable="False">
-                        <!--  the left window commands  -->
-                        <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
+                        <!--  the window button commands  -->
+                        <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
                                                 Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 VerticalAlignment="Top"
-                                                Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                DockPanel.Dock="Left"
+                                                Panel.ZIndex="1"
+                                                Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 Focusable="False" />
-                        <!--  the right window commands  -->
-                        <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
-                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                VerticalAlignment="Top"
-                                                Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                DockPanel.Dock="Right"
-                                                Focusable="False" />
-                        <!--  the title bar  -->
-                        <mah:MetroThumbContentControl x:Name="PART_TitleBar"
-                                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                      HorizontalAlignment="{TemplateBinding TitleAlignment}"
-                                                      HorizontalContentAlignment="Stretch"
-                                                      VerticalContentAlignment="Stretch"
-                                                      Content="{TemplateBinding Title}"
-                                                      ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
-                                                      ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                      Focusable="False">
-                            <ContentControl.Foreground>
-                                <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
-                                    <Binding ElementName="PART_WindowTitleBackground"
-                                             Mode="OneWay"
-                                             Path="Fill" />
-                                    <Binding Mode="OneWay"
-                                             Path="TitleForeground"
-                                             RelativeSource="{RelativeSource TemplatedParent}" />
-                                </MultiBinding>
-                            </ContentControl.Foreground>
-                        </mah:MetroThumbContentControl>
-                    </DockPanel>
 
-                    <!--  the window button commands  -->
-                    <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
-                                            Grid.Row="1"
-                                            Grid.RowSpan="2"
-                                            Grid.Column="3"
-                                            Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                            VerticalAlignment="Top"
-                                            Panel.ZIndex="1"
-                                            Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                            Focusable="False" />
+                        <!--  the main window content  -->
+                        <mah:MetroContentControl x:Name="PART_Content"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 FocusVisualStyle="{x:Null}"
+                                                 IsTabStop="False"
+                                                 OnlyLoadTransition="True"
+                                                 TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
+                                                 UseLayoutRounding="False">
+                            <mah:ContentPresenterEx x:Name="PART_ContentPresenter" />
+                        </mah:MetroContentControl>
 
-                    <!--  the main window content  -->
-                    <mah:MetroContentControl x:Name="PART_Content"
-                                             Grid.Row="2"
-                                             Grid.Column="0"
-                                             Grid.ColumnSpan="5"
-                                             FocusVisualStyle="{x:Null}"
-                                             IsTabStop="False"
-                                             OnlyLoadTransition="True"
-                                             TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
-                                             UseLayoutRounding="True">
-                        <mah:ContentPresenterEx x:Name="PART_ContentPresenter"
-                                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
-                                                UseLayoutRounding="False" />
-                    </mah:MetroContentControl>
+                        <!--  disables the main content when a modal flyout is shown  -->
+                        <Rectangle Name="PART_FlyoutModal"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Fill="{TemplateBinding FlyoutOverlayBrush}"
+                                   Visibility="Hidden" />
+                        <mah:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
+                                        Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
-                    <!--  disables the main content when a modal flyout is shown  -->
-                    <Rectangle Name="PART_FlyoutModal"
-                               Grid.Row="1"
-                               Grid.RowSpan="2"
-                               Grid.Column="1"
-                               Grid.ColumnSpan="3"
-                               Fill="{TemplateBinding FlyoutOverlayBrush}"
-                               Visibility="Hidden" />
-                    <mah:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="5"
-                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
-                                    Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
+                        <!--  flyouts  -->
+                        <ContentControl Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        VerticalAlignment="Stretch"
+                                        Panel.ZIndex="2"
+                                        Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Focusable="False"
+                                        KeyboardNavigation.TabNavigation="None" />
 
-                    <!--  flyouts  -->
-                    <ContentControl Grid.Row="1"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="3"
-                                    VerticalAlignment="Stretch"
-                                    Panel.ZIndex="2"
-                                    Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Focusable="False"
-                                    KeyboardNavigation.TabNavigation="None" />
+                        <!--  inactive dialog container  -->
+                        <Grid x:Name="PART_MetroInactiveDialogsContainer"
+                              Grid.Row="0"
+                              Grid.RowSpan="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Panel.ZIndex="3"
+                              FocusVisualStyle="{x:Null}" />
 
-                    <!--  inactive dialog container  -->
-                    <Grid x:Name="PART_MetroInactiveDialogsContainer"
-                          Grid.Row="1"
-                          Grid.RowSpan="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3"
-                          Panel.ZIndex="3"
-                          FocusVisualStyle="{x:Null}" />
+                        <!--  overlay effect container  -->
+                        <Grid x:Name="PART_OverlayBox"
+                              Grid.Row="0"
+                              Grid.RowSpan="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Panel.ZIndex="4"
+                              Background="{TemplateBinding OverlayBrush}"
+                              FocusVisualStyle="{x:Null}"
+                              Focusable="False"
+                              Opacity="0"
+                              Visibility="Hidden" />
 
-                    <!--  overlay effect container  -->
-                    <Grid x:Name="PART_OverlayBox"
-                          Grid.Row="1"
-                          Grid.RowSpan="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3"
-                          Panel.ZIndex="4"
-                          Background="{TemplateBinding OverlayBrush}"
-                          FocusVisualStyle="{x:Null}"
-                          Focusable="False"
-                          Opacity="0"
-                          Visibility="Hidden" />
+                        <!--  active dialog container  -->
+                        <Grid x:Name="PART_MetroActiveDialogContainer"
+                              Grid.Row="0"
+                              Grid.RowSpan="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Panel.ZIndex="5"
+                              FocusVisualStyle="{x:Null}" />
+                    </Grid>
 
-                    <!--  active dialog container  -->
-                    <Grid x:Name="PART_MetroActiveDialogContainer"
-                          Grid.Row="1"
-                          Grid.RowSpan="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3"
-                          Panel.ZIndex="5"
-                          FocusVisualStyle="{x:Null}" />
+                    <ResizeGrip x:Name="WindowResizeGrip"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                controlzEx:WindowChrome.ResizeGripDirection="BottomRight"
+                                IsTabStop="False"
+                                UseLayoutRounding="True"
+                                Visibility="Collapsed" />
                 </Grid>
             </AdornerDecorator>
-
-            <Border x:Name="PART_Border"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Background="{x:Null}"
-                    BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    UseLayoutRounding="True" />
-
-            <ResizeGrip x:Name="WindowResizeGrip"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight"
-                        IsTabStop="False"
-                        UseLayoutRounding="True"
-                        Visibility="Collapsed" />
-        </Grid>
+        </mah:ClipBorder>
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
             </Trigger>
 
@@ -236,7 +230,7 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="False" />
-                    <Condition Property="GlowColor" Value="{x:Null}" />
+                    <Condition Property="NonActiveGlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
@@ -259,208 +253,202 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="MahApps.Templates.MetroWindow.Center" TargetType="{x:Type mah:MetroWindow}">
-        <Grid Background="{TemplateBinding Background}"
-              LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
-              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
-              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-              UseLayoutRounding="True">
-            <AdornerDecorator>
-                <Grid UseLayoutRounding="False">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
+        <mah:ClipBorder x:Name="PART_Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                        UseLayoutRounding="True">
+            <AdornerDecorator UseLayoutRounding="False">
+                <Grid Background="{x:Null}"
+                      LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
+                      RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                      UseLayoutRounding="True">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!--  icon  -->
+                            <ColumnDefinition Width="Auto" />
+                            <!--  left window commands, title, right window commands  -->
+                            <ColumnDefinition Width="*" />
+                            <!--  min,max,close buttons  -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Rectangle x:Name="PART_WindowTitleBackground"
+                                   Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Fill="{TemplateBinding WindowTitleBrush}"
+                                   Focusable="False"
+                                   StrokeThickness="0" />
+
                         <!--  icon  -->
-                        <ColumnDefinition Width="Auto" />
-                        <!--  left window commands, title, right window commands  -->
-                        <ColumnDefinition Width="*" />
-                        <!--  min,max,close buttons  -->
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                        <ContentControl x:Name="PART_Icon"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        Panel.ZIndex="1"
+                                        controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
+                                        Content="{TemplateBinding Icon}"
+                                        ContentTemplate="{TemplateBinding IconTemplate}"
+                                        Focusable="False"
+                                        Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <Rectangle x:Name="PART_WindowTitleBackground"
-                               Grid.Row="1"
-                               Grid.Column="1"
-                               Grid.ColumnSpan="3"
-                               Fill="{TemplateBinding WindowTitleBrush}"
-                               Focusable="False"
-                               StrokeThickness="0" />
+                        <mah:MetroThumb x:Name="PART_WindowTitleThumb"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
+                                        UseLayoutRounding="True" />
 
-                    <!--  icon  -->
-                    <ContentControl x:Name="PART_Icon"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    Panel.ZIndex="1"
-                                    controlzEx:WindowChrome.IsHitTestVisibleInChrome="True"
-                                    Content="{TemplateBinding Icon}"
-                                    ContentTemplate="{TemplateBinding IconTemplate}"
-                                    Focusable="False"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <!--  the title bar  -->
+                        <mah:MetroThumbContentControl x:Name="PART_TitleBar"
+                                                      Grid.Row="0"
+                                                      Grid.Column="0"
+                                                      Grid.ColumnSpan="3"
+                                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                      HorizontalAlignment="{TemplateBinding TitleAlignment}"
+                                                      HorizontalContentAlignment="Center"
+                                                      VerticalContentAlignment="Center"
+                                                      Content="{TemplateBinding Title}"
+                                                      ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                      ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                      Focusable="False">
+                            <ContentControl.Foreground>
+                                <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
+                                    <Binding ElementName="PART_WindowTitleBackground"
+                                             Mode="OneWay"
+                                             Path="Fill" />
+                                    <Binding Mode="OneWay"
+                                             Path="TitleForeground"
+                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                </MultiBinding>
+                            </ContentControl.Foreground>
+                        </mah:MetroThumbContentControl>
 
-                    <mah:MetroThumb x:Name="PART_WindowTitleThumb"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="5"
-                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
-                                    UseLayoutRounding="True" />
+                        <DockPanel Grid.Row="0"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Top"
+                                   Panel.ZIndex="1"
+                                   Focusable="False">
+                            <!--  the left window commands  -->
+                            <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
+                                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    VerticalAlignment="Top"
+                                                    Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    DockPanel.Dock="Left"
+                                                    Focusable="False" />
+                            <!--  the right window commands  -->
+                            <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
+                                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    VerticalAlignment="Top"
+                                                    Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    DockPanel.Dock="Right"
+                                                    Focusable="False" />
+                            <!--  the fake title bar  -->
+                            <Grid />
+                        </DockPanel>
 
-                    <!--  the title bar  -->
-                    <mah:MetroThumbContentControl x:Name="PART_TitleBar"
-                                                  Grid.Row="1"
-                                                  Grid.Column="0"
-                                                  Grid.ColumnSpan="5"
-                                                  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                  HorizontalAlignment="{TemplateBinding TitleAlignment}"
-                                                  HorizontalContentAlignment="Center"
-                                                  VerticalContentAlignment="Center"
-                                                  Content="{TemplateBinding Title}"
-                                                  ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
-                                                  ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                  Focusable="False">
-                        <ContentControl.Foreground>
-                            <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
-                                <Binding ElementName="PART_WindowTitleBackground"
-                                         Mode="OneWay"
-                                         Path="Fill" />
-                                <Binding Mode="OneWay"
-                                         Path="TitleForeground"
-                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                            </MultiBinding>
-                        </ContentControl.Foreground>
-                    </mah:MetroThumbContentControl>
-
-                    <DockPanel Grid.Row="1"
-                               Grid.Column="2"
-                               VerticalAlignment="Top"
-                               Panel.ZIndex="1"
-                               Focusable="False">
-                        <!--  the left window commands  -->
-                        <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
+                        <!--  the window button commands  -->
+                        <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="2"
                                                 Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 VerticalAlignment="Top"
-                                                Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                DockPanel.Dock="Left"
+                                                Panel.ZIndex="1"
+                                                Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                 Focusable="False" />
-                        <!--  the right window commands  -->
-                        <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
-                                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                VerticalAlignment="Top"
-                                                Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                DockPanel.Dock="Right"
-                                                Focusable="False" />
-                        <!--  the fake title bar  -->
-                        <Grid />
-                    </DockPanel>
 
-                    <!--  the window button commands  -->
-                    <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
-                                            Grid.Row="1"
-                                            Grid.RowSpan="2"
-                                            Grid.Column="3"
-                                            Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                            VerticalAlignment="Top"
-                                            Panel.ZIndex="1"
-                                            Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                            Focusable="False" />
+                        <!--  the main window content  -->
+                        <mah:MetroContentControl x:Name="PART_Content"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 FocusVisualStyle="{x:Null}"
+                                                 IsTabStop="False"
+                                                 OnlyLoadTransition="True"
+                                                 TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
+                                                 UseLayoutRounding="False">
+                            <mah:ContentPresenterEx x:Name="PART_ContentPresenter" />
+                        </mah:MetroContentControl>
 
-                    <!--  the main window content  -->
-                    <mah:MetroContentControl x:Name="PART_Content"
-                                             Grid.Row="2"
-                                             Grid.Column="0"
-                                             Grid.ColumnSpan="5"
-                                             FocusVisualStyle="{x:Null}"
-                                             IsTabStop="False"
-                                             OnlyLoadTransition="True"
-                                             TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
-                                             UseLayoutRounding="True">
-                        <mah:ContentPresenterEx x:Name="PART_ContentPresenter"
-                                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
-                                                UseLayoutRounding="False" />
-                    </mah:MetroContentControl>
+                        <!--  disables the main content when a modal flyout is shown  -->
+                        <Rectangle Name="PART_FlyoutModal"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"
+                                   Fill="{TemplateBinding FlyoutOverlayBrush}"
+                                   Visibility="Hidden" />
+                        <mah:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
+                                        Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
-                    <!--  disables the main content when a modal flyout is shown  -->
-                    <Rectangle Name="PART_FlyoutModal"
-                               Grid.Row="1"
-                               Grid.RowSpan="2"
-                               Grid.Column="1"
-                               Grid.ColumnSpan="3"
-                               Fill="{TemplateBinding FlyoutOverlayBrush}"
-                               Visibility="Hidden" />
-                    <mah:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="5"
-                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
-                                    Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
+                        <!--  flyouts  -->
+                        <ContentControl Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        VerticalAlignment="Stretch"
+                                        Panel.ZIndex="2"
+                                        Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Focusable="False"
+                                        KeyboardNavigation.TabNavigation="None" />
 
-                    <!--  flyouts  -->
-                    <ContentControl Grid.Row="0"
-                                    Grid.RowSpan="3"
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="3"
-                                    VerticalAlignment="Stretch"
-                                    Panel.ZIndex="2"
-                                    Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Focusable="False"
-                                    KeyboardNavigation.TabNavigation="None" />
+                        <!--  inactive dialog container  -->
+                        <Grid x:Name="PART_MetroInactiveDialogsContainer"
+                              Grid.Row="0"
+                              Grid.RowSpan="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Panel.ZIndex="3"
+                              FocusVisualStyle="{x:Null}" />
 
-                    <!--  inactive dialog container  -->
-                    <Grid x:Name="PART_MetroInactiveDialogsContainer"
-                          Grid.Row="1"
-                          Grid.RowSpan="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3"
-                          Panel.ZIndex="3"
-                          FocusVisualStyle="{x:Null}" />
+                        <!--  overlay effect container  -->
+                        <Grid x:Name="PART_OverlayBox"
+                              Grid.Row="0"
+                              Grid.RowSpan="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Panel.ZIndex="4"
+                              Background="{TemplateBinding OverlayBrush}"
+                              FocusVisualStyle="{x:Null}"
+                              Focusable="False"
+                              Opacity="0"
+                              Visibility="Hidden" />
 
-                    <!--  overlay effect container  -->
-                    <Grid x:Name="PART_OverlayBox"
-                          Grid.Row="1"
-                          Grid.RowSpan="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3"
-                          Panel.ZIndex="4"
-                          Background="{TemplateBinding OverlayBrush}"
-                          FocusVisualStyle="{x:Null}"
-                          Focusable="False"
-                          Opacity="0"
-                          Visibility="Hidden" />
+                        <!--  active dialog container  -->
+                        <Grid x:Name="PART_MetroActiveDialogContainer"
+                              Grid.Row="0"
+                              Grid.RowSpan="2"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Panel.ZIndex="5"
+                              FocusVisualStyle="{x:Null}" />
+                    </Grid>
 
-                    <!--  active dialog container  -->
-                    <Grid x:Name="PART_MetroActiveDialogContainer"
-                          Grid.Row="1"
-                          Grid.RowSpan="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="3"
-                          Panel.ZIndex="5"
-                          FocusVisualStyle="{x:Null}" />
+                    <ResizeGrip x:Name="WindowResizeGrip"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                controlzEx:WindowChrome.ResizeGripDirection="BottomRight"
+                                IsTabStop="False"
+                                UseLayoutRounding="True"
+                                Visibility="Collapsed" />
                 </Grid>
             </AdornerDecorator>
-
-            <Border x:Name="PART_Border"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Background="{x:Null}"
-                    BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    UseLayoutRounding="True" />
-
-            <ResizeGrip x:Name="WindowResizeGrip"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        controlzEx:WindowChrome.ResizeGripDirection="BottomRight"
-                        IsTabStop="False"
-                        UseLayoutRounding="True"
-                        Visibility="Collapsed" />
-        </Grid>
+        </mah:ClipBorder>
 
         <ControlTemplate.Resources>
             <Storyboard x:Key="OverlayFastSemiFadeIn"
@@ -481,11 +469,11 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
             </Trigger>
 
@@ -505,7 +493,7 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsActive" Value="False" />
-                    <Condition Property="GlowColor" Value="{x:Null}" />
+                    <Condition Property="NonActiveGlowColor" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
@@ -544,10 +532,11 @@
 
     <Style TargetType="{x:Type mah:MetroWindow}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FlyoutOverlayBrush" Value="{DynamicResource MahApps.Brushes.Window.FlyoutOverlay}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="GlowColor" Value="{DynamicResource MahApps.Colors.AccentBase}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
         <Setter Property="NonActiveGlowColor" Value="{DynamicResource MahApps.Colors.ThemeForeground}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.WindowTitle.NonActive}" />
