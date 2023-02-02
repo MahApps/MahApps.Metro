@@ -271,6 +271,7 @@
                 <MenuItem Click="MenuWindowWithGlowOnClick" Header="Window with Glow" />
                 <MenuItem Click="MenuWindowWithoutGlowOnClick" Header="Window without Glow" />
                 <MenuItem Click="MenuWindowWithBorderOnClick" Header="Window with Border (and Glow)" />
+                <MenuItem Click="MenuWindowWithRoundedBorderOnClick" Header="Window with rounded Border (without Glow)" />
                 <MenuItem Click="LaunchSizeToContentDemo" Header="Window with SizeToContent" />
                 <Separator />
                 <MenuItem x:Name="ShowSeparatorsMI"

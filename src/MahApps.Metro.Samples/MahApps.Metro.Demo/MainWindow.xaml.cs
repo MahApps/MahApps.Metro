@@ -580,6 +580,19 @@ namespace MetroDemo
             w.Show();
         }
 
+        private void MenuWindowWithRoundedBorderOnClick(object sender, RoutedEventArgs e)
+        {
+            var w = this.GetTestWindow();
+            w.Content = new TextBlock { Text = "MetroWindow with rounded Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.GlowColor = null;
+            w.NonActiveGlowColor = null;
+            w.BorderThickness = new Thickness(1);
+            w.WindowStyle = WindowStyle.None;
+            w.AllowsTransparency = true;
+            ControlsHelper.SetCornerRadius(w, new CornerRadius(8));
+            w.Show();
+        }
+
         private void MenuWindowWithGlowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
@@ -590,7 +603,7 @@ namespace MetroDemo
         private void MenuWindowWithoutGlowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "MetroWindow without Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.GlowColor = null;
             w.NonActiveGlowColor = null;
             w.BorderThickness = new Thickness(1);
