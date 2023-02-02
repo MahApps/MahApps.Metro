@@ -14,8 +14,6 @@
                  MinWidth="700"
                  MinHeight="500"
                  d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
-                 BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                 BorderThickness="1"
                  IconOverlayBehavior="Never"
                  SaveWindowPosition="True"
                  TitleCharacterCasing="Normal"
@@ -499,7 +497,12 @@
                           SelectedValue="{Binding ElementName=ThisView, Path=IconOverlayBehavior, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
-            <CheckBox Content="ShowTitleBar" IsChecked="{Binding ElementName=ThisView, Path=ShowTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Content="ShowTitleBar"
+                      IsChecked="{Binding ElementName=ThisView, Path=ShowTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
+            <CheckBox Content="IsWindowDraggable"
+                      IsChecked="{Binding ElementName=ThisView, Path=IsWindowDraggable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
 
             <Button Margin="2 10 2 2"
                     Click="ShowLeft"
