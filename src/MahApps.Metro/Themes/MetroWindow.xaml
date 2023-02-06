@@ -127,6 +127,7 @@
                                                  Grid.Row="1"
                                                  Grid.Column="0"
                                                  Grid.ColumnSpan="3"
+                                                 Background="{x:Null}"
                                                  FocusVisualStyle="{x:Null}"
                                                  IsTabStop="False"
                                                  OnlyLoadTransition="True"
@@ -214,7 +215,7 @@
                 <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
             </Trigger>
 
-            <Trigger Property="UseNoneWindowStyle" Value="True">
+            <Trigger Property="WindowStyle" Value="None">
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
@@ -373,6 +374,7 @@
                                                  Grid.Row="1"
                                                  Grid.Column="0"
                                                  Grid.ColumnSpan="3"
+                                                 Background="{x:Null}"
                                                  FocusVisualStyle="{x:Null}"
                                                  IsTabStop="False"
                                                  OnlyLoadTransition="True"
@@ -477,7 +479,7 @@
                 <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
             </Trigger>
 
-            <Trigger Property="UseNoneWindowStyle" Value="True">
+            <Trigger Property="WindowStyle" Value="None">
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 using ControlzEx.Theming;
 using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
@@ -610,10 +609,13 @@ namespace MahApps.Metro.Controls.Dialogs
                              ShowActivated = true,
                              Topmost = true,
                              ResizeMode = ResizeMode.NoResize,
-                             WindowStyle = WindowStyle.None,
                              WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                             BorderThickness = new Thickness(0),
                              ShowTitleBar = false,
                              ShowCloseButton = false,
+                             ShowMinButton = false,
+                             ShowMaxRestoreButton = false,
+                             ShowSystemMenu = false,
                              WindowTransitionsEnabled = false,
                              Owner = windowOwner
                          };
@@ -640,14 +642,6 @@ namespace MahApps.Metro.Controls.Dialogs
         private static MetroWindow SetupExternalDialogWindow(BaseMetroDialog dialog, Window? windowOwner = null)
         {
             var win = CreateExternalWindow(windowOwner ?? Application.Current?.MainWindow);
-
-            // Remove the border on left and right side
-            win.BeginInvoke(window =>
-                                {
-                                    window.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, window.BorderThickness.Top, 0, window.BorderThickness.Bottom));
-                                    window.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, window.ResizeBorderThickness.Top, 0, window.ResizeBorderThickness.Bottom));
-                                },
-                            DispatcherPriority.Loaded);
 
             // Get the monitor working area
             var monitorWorkingArea = win.Owner.GetMonitorWorkSize();
@@ -699,14 +693,6 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else
             {
-                // Remove the border on left and right side
-                win.BeginInvoke(window =>
-                                    {
-                                        window.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, window.BorderThickness.Top, 0, window.BorderThickness.Bottom));
-                                        window.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, window.ResizeBorderThickness.Top, 0, window.ResizeBorderThickness.Bottom));
-                                    },
-                                DispatcherPriority.Loaded);
-
                 // Get the monitor working area
                 var monitorWorkingArea = windowOwner.GetMonitorWorkSize();
                 if (monitorWorkingArea != default)

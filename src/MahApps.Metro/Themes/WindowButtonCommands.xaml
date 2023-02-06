@@ -23,9 +23,6 @@
                                  Path="ShowMinButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
                                  Path="ResizeMode"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                     </MultiBinding>
@@ -47,9 +44,6 @@
                     <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Max}">
                         <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
                                  Path="ResizeMode"
@@ -78,9 +72,6 @@
                     <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Close}">
                         <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
@@ -149,9 +140,6 @@
                                  Path="ShowMinButton"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
                                  Path="ResizeMode"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                     </MultiBinding>
@@ -181,9 +169,6 @@
                     <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Max}">
                         <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
                                  Path="ResizeMode"
@@ -217,9 +202,6 @@
                     <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Close}">
                         <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
