@@ -431,6 +431,14 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparent}" />
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCPressed" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
             </Trigger>
@@ -501,7 +509,15 @@
                 <Setter Property="Background" Value="#E81123" />
                 <Setter Property="Foreground" Value="White" />
             </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCMouseOver" Value="True">
+                <Setter Property="Background" Value="#E81123" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
             <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#F1707A" />
+                <Setter Property="Foreground" Value="Black" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCPressed" Value="True">
                 <Setter Property="Background" Value="#F1707A" />
                 <Setter Property="Foreground" Value="Black" />
             </Trigger>
@@ -516,7 +532,15 @@
                 <Setter Property="Background" Value="#E81123" />
                 <Setter Property="Foreground" Value="White" />
             </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCMouseOver" Value="True">
+                <Setter Property="Background" Value="#E81123" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
             <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#F1707A" />
+                <Setter Property="Foreground" Value="Black" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCPressed" Value="True">
                 <Setter Property="Background" Value="#F1707A" />
                 <Setter Property="Foreground" Value="Black" />
             </Trigger>
