@@ -28,7 +28,7 @@ namespace MahApps.Metro.Converters
                     return !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
 
-                var windowResizeMode = (values.ElementAtOrDefault(2) as ResizeMode?).GetValueOrDefault(ResizeMode.CanResize);
+                var windowResizeMode = (values.ElementAtOrDefault(1) as ResizeMode?).GetValueOrDefault(ResizeMode.CanResize);
 
                 switch (windowResizeMode)
                 {
