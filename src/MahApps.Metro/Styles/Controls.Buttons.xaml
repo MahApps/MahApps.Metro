@@ -431,6 +431,14 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparent}" />
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+            <Trigger Property="controlzex:NonClientControlProperties.IsNCPressed" Value="true">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
             </Trigger>
