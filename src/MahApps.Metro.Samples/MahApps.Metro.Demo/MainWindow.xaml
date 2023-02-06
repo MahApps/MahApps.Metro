@@ -252,9 +252,6 @@
                 <MenuItem Header="ShowTitleBar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowTitleBar}" />
-                <MenuItem Header="UseNoneWindowStyle"
-                          IsCheckable="True"
-                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=UseNoneWindowStyle}" />
                 <MenuItem Header="ShowInTaskbar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowInTaskbar}" />

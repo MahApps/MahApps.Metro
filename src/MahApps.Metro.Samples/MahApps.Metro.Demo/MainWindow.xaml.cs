@@ -49,13 +49,14 @@ namespace MetroDemo
                 {
                     window.SetCurrentValue(IgnoreTaskbarOnMaximizeProperty, true);
                     window.SetCurrentValue(WindowStateProperty, WindowState.Maximized);
-                    window.SetCurrentValue(UseNoneWindowStyleProperty, true);
+                    window.SetCurrentValue(WindowStyleProperty, WindowStyle.None);
+                    window.SetCurrentValue(ShowTitleBarProperty, false);
                 }
                 else
                 {
                     window.SetCurrentValue(WindowStateProperty, WindowState.Normal);
-                    window.SetCurrentValue(UseNoneWindowStyleProperty, false);
-                    window.SetCurrentValue(ShowTitleBarProperty, true); // <-- this must be set to true
+                    window.SetCurrentValue(WindowStyleProperty, WindowStyle.SingleBorderWindow);
+                    window.SetCurrentValue(ShowTitleBarProperty, true);
                     window.SetCurrentValue(IgnoreTaskbarOnMaximizeProperty, false);
                 }
             }

@@ -23,7 +23,6 @@ using Windows.Win32.Foundation;
 using ControlzEx;
 using ControlzEx.Native;
 using ControlzEx.Theming;
-using JetBrains.Annotations;
 using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
@@ -161,14 +160,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ShowTitleBar),
                                           typeof(bool),
                                           typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
-
-        [MustUseReturnValue]
-        private static object? OnShowTitleBarCoerceValueCallback(DependencyObject d, object? value)
-        {
-            // if UseNoneWindowStyle = true no title bar should be shown
-            return ((MetroWindow)d).UseNoneWindowStyle ? false : value;
-        }
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnShowTitleBarPropertyChangedCallback));
 
         /// <summary>
         /// Gets or sets whether the TitleBar is visible or not.
@@ -803,32 +795,6 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(IconOverlayBehaviorProperty, value);
         }
 
-        /// <summary>Identifies the <see cref="UseNoneWindowStyle"/> dependency property.</summary>
-        public static readonly DependencyProperty UseNoneWindowStyleProperty
-            = DependencyProperty.Register(nameof(UseNoneWindowStyle),
-                                          typeof(bool),
-                                          typeof(MetroWindow),
-                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnUseNoneWindowStylePropertyChangedCallback));
-
-        private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue != e.OldValue)
-            {
-                // if UseNoneWindowStyle = true no title bar should be shown
-                // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
-                ((MetroWindow)d).CoerceValue(ShowTitleBarProperty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether the window will force WindowStyle to None.
-        /// </summary>
-        public bool UseNoneWindowStyle
-        {
-            get => (bool)this.GetValue(UseNoneWindowStyleProperty);
-            set => this.SetValue(UseNoneWindowStyleProperty, BooleanBoxes.Box(value));
-        }
-
         /// <summary>Identifies the <see cref="OverrideDefaultWindowCommandsBrush"/> dependency property.</summary>
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty
             = DependencyProperty.Register(nameof(OverrideDefaultWindowCommandsBrush),
@@ -897,7 +863,7 @@ namespace MahApps.Metro.Controls
         private void UpdateIconVisibility()
         {
             var isVisible = (this.Icon is not null || this.IconTemplate is not null)
-                && ((this.IconOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar) || (this.ShowIconOnTitleBar && this.ShowTitleBar));
+                            && ((this.IconOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar) || (this.ShowIconOnTitleBar && this.ShowTitleBar));
             this.icon?.SetCurrentValue(VisibilityProperty, isVisible ? Visibility.Visible : Visibility.Collapsed);
         }
 
@@ -905,15 +871,15 @@ namespace MahApps.Metro.Controls
         {
             this.UpdateIconVisibility();
 
-            var newVisibility = this.TitleBarHeight > 0 && this.ShowTitleBar && !this.UseNoneWindowStyle ? Visibility.Visible : Visibility.Collapsed;
+            var newVisibility = this.TitleBarHeight > 0 && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
 
             this.titleBar?.SetCurrentValue(VisibilityProperty, newVisibility);
             this.titleBarBackground?.SetCurrentValue(VisibilityProperty, newVisibility);
 
-            var leftWindowCommandsVisibility = this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && !this.UseNoneWindowStyle ? Visibility.Visible : newVisibility;
+            var leftWindowCommandsVisibility = this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
             this.LeftWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, leftWindowCommandsVisibility);
 
-            var rightWindowCommandsVisibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && !this.UseNoneWindowStyle ? Visibility.Visible : newVisibility;
+            var rightWindowCommandsVisibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
             this.RightWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, rightWindowCommandsVisibility);
 
             var windowButtonCommandsVisibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(OverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
@@ -1660,7 +1626,7 @@ namespace MahApps.Metro.Controls
             {
                 // show menu only if mouse pos is on title bar or if we have a window with none style and no title bar
                 var mousePos = e.GetPosition(window);
-                if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.UseNoneWindowStyle && window.TitleBarHeight <= 0))
+                if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.WindowStyle == WindowStyle.None && window.TitleBarHeight <= 0))
                 {
 #pragma warning disable 618
                     ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
