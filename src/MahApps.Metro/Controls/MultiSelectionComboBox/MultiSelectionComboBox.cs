@@ -1186,11 +1186,14 @@ namespace MahApps.Metro.Controls
 
             if (this.PART_PopupListBox is not null)
             {
-                this.PART_PopupListBox.SelectionChanged += this.PART_PopupListBox_SelectionChanged;
+                this.BeginInvoke(() =>
+                    {
+                        this.PART_PopupListBox.SelectionChanged += this.PART_PopupListBox_SelectionChanged;
 
-                this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                        this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-                this.PART_PopupListBox.SelectionChanged -= this.PART_PopupListBox_SelectionChanged;
+                        this.PART_PopupListBox.SelectionChanged -= this.PART_PopupListBox_SelectionChanged;
+                    }, DispatcherPriority.DataBind);
             }
 
             // Do update the text and selection
