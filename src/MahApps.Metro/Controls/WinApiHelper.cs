@@ -67,7 +67,7 @@ namespace MahApps.Metro.Controls
                 {
                     var monitorInfo = new MONITORINFO
                                       {
-                                        cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
+                                          cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
                                       };
                     PInvoke.GetMonitorInfo(monitor, &monitorInfo);
                     return new Size(monitorInfo.rcWork.right - monitorInfo.rcWork.left, monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
@@ -96,9 +96,16 @@ namespace MahApps.Metro.Controls
 
             var placement = new WINDOWPLACEMENT
                             {
+                                length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
                                 showCmd = (wp is null || wp.Value.showCmd == SHOW_WINDOW_CMD.SW_SHOWMINIMIZED ? SHOW_WINDOW_CMD.SW_SHOWNORMAL : wp.Value.showCmd),
                                 rcNormalPosition = new RECT { left = x, top = y, right = x + width, bottom = y + height }
                             };
+
+            if (wp is not null)
+            {
+                placement.ptMinPosition = new System.Drawing.Point(wp.Value.ptMinPosition.X, wp.Value.ptMinPosition.Y);
+                placement.ptMaxPosition = new System.Drawing.Point(wp.Value.ptMaxPosition.X, wp.Value.ptMaxPosition.Y);
+            }
 
             var hWnd = new WindowInteropHelper(window).EnsureHandle();
             if (PInvoke.SetWindowPlacement(new HWND(hWnd), &placement) == false)
