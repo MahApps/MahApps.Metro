@@ -1113,8 +1113,6 @@ namespace MahApps.Metro.Controls
         {
             this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
-            this.InitializeSettingsBehavior();
-
             this.DataContextChanged += this.MetroWindow_DataContextChanged;
             this.Loaded += this.MetroWindow_Loaded;
         }
@@ -1129,8 +1127,10 @@ namespace MahApps.Metro.Controls
             this.Unloaded += (_, _) => ThemeManager.Current.ThemeChanged -= this.HandleThemeManagerThemeChanged;
         }
 
-        private void InitializeSettingsBehavior()
+        protected override void InitializeBehaviors()
         {
+            base.InitializeBehaviors();
+
             Interaction.GetBehaviors(this).Add(new WindowsSettingBehavior());
         }
 

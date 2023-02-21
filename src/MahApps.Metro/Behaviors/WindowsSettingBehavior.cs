@@ -23,18 +23,6 @@ namespace MahApps.Metro.Behaviors
         {
             base.OnAttached();
 
-            this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
-        }
-
-        /// <inheritdoc />
-        protected override void OnDetaching()
-        {
-            this.CleanUp("from OnDetaching");
-            base.OnDetaching();
-        }
-
-        private void AssociatedObject_SourceInitialized(object? sender, EventArgs e)
-        {
             this.LoadWindowState();
 
             var window = this.AssociatedObject;
@@ -57,6 +45,13 @@ namespace MahApps.Metro.Behaviors
                         app.SessionEnding += this.CurrentApplicationSessionEnding;
                     }
                 });
+        }
+
+        /// <inheritdoc />
+        protected override void OnDetaching()
+        {
+            this.CleanUp("from OnDetaching");
+            base.OnDetaching();
         }
 
         private void AssociatedObject_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -99,7 +94,6 @@ namespace MahApps.Metro.Behaviors
             window.StateChanged -= this.AssociatedObject_StateChanged;
             window.Closing -= this.AssociatedObject_Closing;
             window.Closed -= this.AssociatedObject_Closed;
-            window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
 
             // This operation must be thread safe
             Application.Current?.BeginInvoke(app =>
@@ -169,11 +163,11 @@ namespace MahApps.Metro.Behaviors
             var windowHandle = new WindowInteropHelper(window).EnsureHandle();
             var wp = new WINDOWPLACEMENT
                      {
-                        length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>()
+                         length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>()
                      };
             unsafe
             {
-                PInvoke.GetWindowPlacement((HWND)windowHandle, &wp);
+                PInvoke.GetWindowPlacement(new HWND(windowHandle), &wp);
             }
 
             // check for saveable values
@@ -195,7 +189,7 @@ namespace MahApps.Metro.Behaviors
                             {
                                 var monitorInfo = new MONITORINFO
                                                   {
-                                                        cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
+                                                      cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
                                                   };
                                 PInvoke.GetMonitorInfo(monitor, &monitorInfo);
                                 rect.Offset(monitorInfo.rcMonitor.left - monitorInfo.rcWork.left, monitorInfo.rcMonitor.top - monitorInfo.rcWork.top);

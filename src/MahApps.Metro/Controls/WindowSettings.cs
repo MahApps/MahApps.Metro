@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,23 +22,23 @@ namespace MahApps.Metro.Controls
         {
             return new WINDOWPLACEMENT
                    {
-                        length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
-                        showCmd = (SHOW_WINDOW_CMD)this.showCmd,
-                        ptMinPosition = new System.Drawing.Point { X = (int)this.minPosition.X, Y = (int)this.minPosition.Y },
-                        ptMaxPosition = new System.Drawing.Point { X = (int)this.maxPosition.X, Y = (int)this.maxPosition.Y },
-                        rcNormalPosition = new RECT { left = (int)this.normalPosition.X, top = (int)this.normalPosition.Y, right = (int)this.normalPosition.Right, bottom = (int)this.normalPosition.Bottom }
+                       length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
+                       showCmd = (SHOW_WINDOW_CMD)this.showCmd,
+                       ptMinPosition = new System.Drawing.Point { X = (int)this.minPosition.X, Y = (int)this.minPosition.Y },
+                       ptMaxPosition = new System.Drawing.Point { X = (int)this.maxPosition.X, Y = (int)this.maxPosition.Y },
+                       rcNormalPosition = new RECT { left = (int)this.normalPosition.X, top = (int)this.normalPosition.Y, right = (int)this.normalPosition.Right, bottom = (int)this.normalPosition.Bottom }
                    };
         }
 
         internal static WindowPlacementSetting FromWINDOWPLACEMENT(WINDOWPLACEMENT windowplacement)
         {
             return new WindowPlacementSetting
-                    {
-                        showCmd = (uint)windowplacement.showCmd,
-                        minPosition = new Point(windowplacement.ptMinPosition.X, windowplacement.ptMinPosition.Y),
-                        maxPosition = new Point(windowplacement.ptMaxPosition.X, windowplacement.ptMaxPosition.Y),
-                        normalPosition = new Rect(windowplacement.rcNormalPosition.left, windowplacement.rcNormalPosition.top, windowplacement.rcNormalPosition.GetWidth(), windowplacement.rcNormalPosition.GetHeight()),
-                    };
+                   {
+                       showCmd = (uint)windowplacement.showCmd,
+                       minPosition = new Point(windowplacement.ptMinPosition.X, windowplacement.ptMinPosition.Y),
+                       maxPosition = new Point(windowplacement.ptMaxPosition.X, windowplacement.ptMaxPosition.Y),
+                       normalPosition = new Rect(windowplacement.rcNormalPosition.left, windowplacement.rcNormalPosition.top, windowplacement.rcNormalPosition.GetWidth(), windowplacement.rcNormalPosition.GetHeight()),
+                   };
         }
     }
 
