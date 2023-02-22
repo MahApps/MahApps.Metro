@@ -473,16 +473,6 @@ namespace MetroDemo
             }
         }
 
-        private async void ShowDialogOutside(object sender, RoutedEventArgs e)
-        {
-            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
-            dialog = dialog.ShowDialogExternally();
-
-            await Task.Delay(5000);
-
-            await dialog.RequestCloseAsync();
-        }
-
         #endregion
 
         private void InteropDemo(object sender, RoutedEventArgs e)
