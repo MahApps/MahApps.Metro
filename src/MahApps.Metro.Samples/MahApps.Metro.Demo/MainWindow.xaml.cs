@@ -428,7 +428,7 @@ namespace MetroDemo
 
         private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
         {
-            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
+            var result = this.ShowModalInputExternal("Hello!", "What is your name?", new MetroDialogSettings(this.MetroDialogOptions) { AnimateShow = false });
 
             if (result == null) //user pressed cancel
             {
