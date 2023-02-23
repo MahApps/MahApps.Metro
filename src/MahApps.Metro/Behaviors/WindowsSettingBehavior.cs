@@ -202,7 +202,7 @@ namespace MahApps.Metro.Behaviors
 
                 if (!wp.rcNormalPosition.IsEmpty())
                 {
-                    settings.Placement = WindowPlacementSetting.FromWINDOWPLACEMENT(wp);
+                    settings.Placement = WindowPlacementSetting.FromWINDOWPLACEMENT(window, wp);
                 }
             }
 

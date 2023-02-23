@@ -5,6 +5,7 @@
 using System.Configuration;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Media;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -30,14 +31,21 @@ namespace MahApps.Metro.Controls
                    };
         }
 
-        internal static WindowPlacementSetting FromWINDOWPLACEMENT(WINDOWPLACEMENT windowplacement)
+        internal static WindowPlacementSetting FromWINDOWPLACEMENT(Window window, WINDOWPLACEMENT placement)
         {
+            // Get the current DPI scale factor
+            var dpiScale = VisualTreeHelper.GetDpi(window);
+
+            // Adjust the size of the window for DPI scaling
+            var adjustedWidth = placement.rcNormalPosition.GetWidth() / dpiScale.DpiScaleX;
+            var adjustedHeight = placement.rcNormalPosition.GetHeight() / dpiScale.DpiScaleY;
+
             return new WindowPlacementSetting
                    {
-                       showCmd = (uint)windowplacement.showCmd,
-                       minPosition = new Point(windowplacement.ptMinPosition.X, windowplacement.ptMinPosition.Y),
-                       maxPosition = new Point(windowplacement.ptMaxPosition.X, windowplacement.ptMaxPosition.Y),
-                       normalPosition = new Rect(windowplacement.rcNormalPosition.left, windowplacement.rcNormalPosition.top, windowplacement.rcNormalPosition.GetWidth(), windowplacement.rcNormalPosition.GetHeight()),
+                       showCmd = (uint)placement.showCmd,
+                       minPosition = new Point(placement.ptMinPosition.X, placement.ptMinPosition.Y),
+                       maxPosition = new Point(placement.ptMaxPosition.X, placement.ptMaxPosition.Y),
+                       normalPosition = new Rect(placement.rcNormalPosition.left, placement.rcNormalPosition.top, adjustedWidth, adjustedHeight),
                    };
         }
     }
