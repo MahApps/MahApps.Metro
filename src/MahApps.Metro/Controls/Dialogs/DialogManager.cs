@@ -490,46 +490,6 @@ namespace MahApps.Metro.Controls.Dialogs
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(window.metroActiveDialogContainer.Children.Count > 0));
         }
 
-        /// <summary>
-        /// Create and show an external dialog.
-        /// </summary>
-        /// <param name="dialog">The dialog which will be shown externally.</param>
-        /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
-        /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
-        /// <returns>The given dialog.</returns>
-        public static TDialog ShowDialogExternally<TDialog>(this TDialog dialog, Window? windowOwner = null, Action<Window>? handleExternalDialogWindow = null)
-            where TDialog : BaseMetroDialog
-        {
-            var win = SetupExternalDialogWindow(dialog, windowOwner);
-
-            handleExternalDialogWindow?.Invoke(win);
-
-            dialog.FireOnShown();
-            win.Show();
-
-            return dialog;
-        }
-
-        /// <summary>
-        /// Create and show an external modal dialog.
-        /// </summary>
-        /// <param name="dialog">The dialog which will be shown externally.</param>
-        /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
-        /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
-        /// <returns>The given dialog.</returns>
-        public static TDialog ShowModalDialogExternally<TDialog>(this TDialog dialog, Window? windowOwner = null, Action<Window>? handleExternalDialogWindow = null)
-            where TDialog : BaseMetroDialog
-        {
-            var win = SetupExternalDialogWindow(dialog, windowOwner);
-
-            handleExternalDialogWindow?.Invoke(win);
-
-            dialog.FireOnShown();
-            win.ShowDialog();
-
-            return dialog;
-        }
-
         private static MetroWindow CreateExternalWindow(Window? windowOwner = null)
         {
             var window = new MetroWindow
@@ -566,46 +526,6 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             return window;
-        }
-
-        private static MetroWindow SetupExternalDialogWindow(BaseMetroDialog dialog, Window? windowOwner = null)
-        {
-            var win = CreateExternalWindow(windowOwner ?? Application.Current?.MainWindow);
-
-            // Get the monitor working area
-            var monitorWorkingArea = win.Owner.GetMonitorWorkSize();
-            if (monitorWorkingArea != default)
-            {
-                win.Width = monitorWorkingArea.Width;
-                win.MinHeight = monitorWorkingArea.Height / 4.0;
-                win.MaxHeight = monitorWorkingArea.Height;
-            }
-            else
-            {
-                win.Width = SystemParameters.PrimaryScreenWidth;
-                win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
-                win.MaxHeight = SystemParameters.PrimaryScreenHeight;
-            }
-
-            dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
-
-            win.Content = dialog;
-
-            dialog.HandleThemeChange();
-
-            EventHandler? closedHandler = null;
-            closedHandler = (_, _) =>
-                {
-                    win.Closed -= closedHandler;
-                    dialog.ParentDialogWindow = null;
-                    win.Content = null;
-                };
-
-            win.Closed += closedHandler;
-
-            win.SizeToContent = SizeToContent.Height;
-
-            return win;
         }
 
         private static MetroWindow CreateModalExternalWindow(MetroWindow windowOwner)

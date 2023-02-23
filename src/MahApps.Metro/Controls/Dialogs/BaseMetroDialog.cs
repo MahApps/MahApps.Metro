@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -390,16 +389,6 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground.Accent"));
                     break;
             }
-
-            if (this.ParentDialogWindow != null)
-            {
-                this.ParentDialogWindow.SetCurrentValue(BackgroundProperty, this.Background);
-                var glowColor = TryGetResource(theme, "MahApps.Colors.Accent");
-                if (glowColor != null)
-                {
-                    this.ParentDialogWindow.SetCurrentValue(MetroWindow.GlowColorProperty, glowColor);
-                }
-            }
         }
 
         /// <summary>
@@ -476,37 +465,6 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
-        /// <summary>
-        /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
-        /// </summary>
-        public async Task RequestCloseAsync()
-        {
-            if (this.OnRequestClose())
-            {
-                // Technically, the Dialog is /always/ inside of a MetroWindow.
-                // If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
-                if (this.ParentDialogWindow is null)
-                {
-                    // this is very bad, or the user called the close event before we can do this
-                    if (this.OwningWindow is null)
-                    {
-                        Trace.TraceWarning($"{this}: Can not request async closing, because the OwningWindow is already null. This can maybe happen if the dialog was closed manually.");
-                        return;
-                    }
-
-                    // This is from a user-created MetroWindow
-                    await this.OwningWindow.HideMetroDialogAsync(this);
-
-                    return;
-                }
-
-                // This is from a MetroWindow created by the external dialog APIs.
-                await this.WaitForCloseAsync();
-
-                this.ParentDialogWindow.Close();
-            }
-        }
-
         internal void FireOnShown()
         {
             this.OnShown();
@@ -519,28 +477,11 @@ namespace MahApps.Metro.Controls.Dialogs
         internal void FireOnClose()
         {
             this.OnClose();
-
-            // this is only set when a dialog is shown (externally) in it's OWN window.
-            this.ParentDialogWindow?.Close();
         }
 
         protected virtual void OnClose()
         {
         }
-
-        /// <summary>
-        /// A last chance virtual method for stopping an external dialog from closing.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual bool OnRequestClose()
-        {
-            return true; //allow the dialog to close.
-        }
-
-        /// <summary>
-        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown externally.
-        /// </summary>
-        protected internal Window? ParentDialogWindow { get; internal set; }
 
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
