@@ -80,7 +80,12 @@ namespace MahApps.Metro.Controls
 
             var topFlyout = allOpenFlyouts
                             .Where(x => x.Position == Position.Top)
+#if NET6_0_OR_GREATER
                             .MaxBy(Panel.GetZIndex);
+#else
+                            .OrderByDescending(Panel.GetZIndex)
+                            .FirstOrDefault();
+#endif
             if (topFlyout != null)
             {
                 window.UpdateWindowCommandsForFlyout(topFlyout);
@@ -89,7 +94,12 @@ namespace MahApps.Metro.Controls
             {
                 var leftFlyout = allOpenFlyouts
                                  .Where(x => x.Position == Position.Left)
+#if NET6_0_OR_GREATER
                                  .MaxBy(Panel.GetZIndex);
+#else
+                                 .OrderByDescending(Panel.GetZIndex)
+                                 .FirstOrDefault();
+#endif
                 if (leftFlyout != null)
                 {
                     window.UpdateWindowCommandsForFlyout(leftFlyout);
@@ -97,7 +107,12 @@ namespace MahApps.Metro.Controls
 
                 var rightFlyout = allOpenFlyouts
                                   .Where(x => x.Position == Position.Right)
+#if NET6_0_OR_GREATER
                                   .MaxBy(Panel.GetZIndex);
+#else
+                                  .OrderByDescending(Panel.GetZIndex)
+                                  .FirstOrDefault();
+#endif
                 if (rightFlyout != null)
                 {
                     window.UpdateWindowCommandsForFlyout(rightFlyout);
