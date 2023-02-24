@@ -201,7 +201,10 @@ namespace MetroDemo
 
             this.ToggleIconScalingCommand = new SimpleCommand<MultiFrameImageMode?>(m => m is not null, this.ToggleIconScaling);
 
-            this.OpenFirstFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, !f.IsOpen));
+            this.OpenFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, true));
+            this.CloseFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, false));
+            this.MoveLeftFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.PositionProperty, Position.Left));
+            this.MoveRightFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.PositionProperty, Position.Right));
 
             this.ArtistsDropDownCommand = new SimpleCommand<object>(o => false);
 
@@ -241,7 +244,13 @@ namespace MetroDemo
 
         public ICommand ShowHamburgerAboutCommand { get; }
 
-        public ICommand OpenFirstFlyoutCommand { get; }
+        public ICommand OpenFlyoutCommand { get; }
+
+        public ICommand CloseFlyoutCommand { get; }
+
+        public ICommand MoveLeftFlyoutCommand { get; }
+
+        public ICommand MoveRightFlyoutCommand { get; }
 
         public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand<ThemeSyncMode?>(
             x => x is not null,
