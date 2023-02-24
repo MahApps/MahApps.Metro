@@ -70,9 +70,9 @@ namespace MahApps.Metro.Controls
         /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
         public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts)
         {
-            var allOpenFlyouts = flyouts.Where(x => x.IsOpen).ToList();
+            var allOpenFlyouts = flyouts.Where(f => f.IsOpen && f.Position != Position.Bottom).ToList();
 
-            var anyFlyoutOpen = allOpenFlyouts.Any(x => x.Position != Position.Bottom);
+            var anyFlyoutOpen = allOpenFlyouts.Any();
             if (!anyFlyoutOpen)
             {
                 window.ResetAllWindowCommandsBrush();
@@ -80,8 +80,12 @@ namespace MahApps.Metro.Controls
 
             var topFlyout = allOpenFlyouts
                             .Where(x => x.Position == Position.Top)
+#if NET6_0_OR_GREATER
+                            .MaxBy(Panel.GetZIndex);
+#else
                             .OrderByDescending(Panel.GetZIndex)
                             .FirstOrDefault();
+#endif
             if (topFlyout != null)
             {
                 window.UpdateWindowCommandsForFlyout(topFlyout);
@@ -90,8 +94,12 @@ namespace MahApps.Metro.Controls
             {
                 var leftFlyout = allOpenFlyouts
                                  .Where(x => x.Position == Position.Left)
+#if NET6_0_OR_GREATER
+                                 .MaxBy(Panel.GetZIndex);
+#else
                                  .OrderByDescending(Panel.GetZIndex)
                                  .FirstOrDefault();
+#endif
                 if (leftFlyout != null)
                 {
                     window.UpdateWindowCommandsForFlyout(leftFlyout);
@@ -99,8 +107,12 @@ namespace MahApps.Metro.Controls
 
                 var rightFlyout = allOpenFlyouts
                                   .Where(x => x.Position == Position.Right)
+#if NET6_0_OR_GREATER
+                                  .MaxBy(Panel.GetZIndex);
+#else
                                   .OrderByDescending(Panel.GetZIndex)
                                   .FirstOrDefault();
+#endif
                 if (rightFlyout != null)
                 {
                     window.UpdateWindowCommandsForFlyout(rightFlyout);
@@ -108,15 +120,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        [CanBeNull]
-        private static Theme? GetCurrentTheme([NotNull] MetroWindow window)
+        private static Theme? GetCurrentTheme(FrameworkElement frameworkElement)
         {
-            if (window is null)
-            {
-                throw new ArgumentNullException(nameof(window));
-            }
-
-            var currentTheme = ThemeManager.Current.DetectTheme(window);
+            var currentTheme = ThemeManager.Current.DetectTheme(frameworkElement);
             if (currentTheme is null)
             {
                 var application = Application.Current;
