@@ -15,6 +15,7 @@
                  MinHeight="500"
                  d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
                  IconOverlayBehavior="Never"
+                 ResizeMode="CanResizeWithGrip"
                  SaveWindowPosition="True"
                  TitleCharacterCasing="Normal"
                  WindowStartupLocation="CenterScreen"
@@ -366,10 +367,9 @@
 
         <TextBlock Grid.Row="0"
                    Grid.Column="0"
-                   Grid.ColumnSpan="3"
                    Margin="10"
                    FontSize="30"
-                   Text="Some Flyout Tests..." />
+                   Text="Flyout Tests..." />
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
@@ -424,10 +424,6 @@
                     Margin="5"
                     HorizontalAlignment="Center"
                     Grid.IsSharedSizeScope="True">
-
-            <TextBlock Margin="5"
-                       FontSize="30"
-                       Text="OverlayBehavior" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -503,6 +499,9 @@
             <CheckBox Content="IsWindowDraggable"
                       IsChecked="{Binding ElementName=ThisView, Path=IsWindowDraggable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
+            <CheckBox Content="ShowFlyoutsOverDialogs"
+                      IsChecked="{Binding ElementName=ThisView, Path=ShowFlyoutsOverDialogs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
 
             <Button Margin="2 10 2 2"
                     Click="ShowLeft"
@@ -516,7 +515,7 @@
             <Button Margin="2"
                     Click="ShowBottom"
                     Content="Show Bottom" />
-            <Button Margin="2"
+            <Button Margin="2 4 2 2"
                     Click="CloseMe"
                     Content="Close" />
         </StackPanel>

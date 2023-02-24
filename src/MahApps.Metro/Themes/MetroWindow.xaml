@@ -152,7 +152,8 @@
                                         Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                         <!--  flyouts  -->
-                        <ContentControl Grid.Row="0"
+                        <ContentControl x:Name="PART_Flyouts"
+                                        Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"
@@ -213,6 +214,10 @@
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
+            </Trigger>
+
+            <Trigger Property="ShowFlyoutsOverDialogs" Value="True">
+                <Setter TargetName="PART_Flyouts" Property="Panel.ZIndex" Value="6" />
             </Trigger>
 
             <Trigger Property="WindowStyle" Value="None">
@@ -399,7 +404,8 @@
                                         Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                         <!--  flyouts  -->
-                        <ContentControl Grid.Row="0"
+                        <ContentControl x:Name="PART_Flyouts"
+                                        Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"
@@ -477,6 +483,10 @@
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
+            </Trigger>
+
+            <Trigger Property="ShowFlyoutsOverDialogs" Value="True">
+                <Setter TargetName="PART_Flyouts" Property="Panel.ZIndex" Value="6" />
             </Trigger>
 
             <Trigger Property="WindowStyle" Value="None">
