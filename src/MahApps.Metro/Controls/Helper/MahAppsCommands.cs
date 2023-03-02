@@ -20,7 +20,14 @@ namespace MahApps.Metro.Controls
         static MahAppsCommands()
         {
             // Register CommandBinding for all windows.
-            CommandManager.RegisterClassCommandBinding(typeof(Window), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(DatePicker), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(TimePickerBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(TextBoxBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(HotKeyBox), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(NumericUpDown), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(PasswordBox), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(ColorPickerBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(ComboBox), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
         }
 
         private static void CanClearControl(CanExecuteRoutedEventArgs args)
@@ -45,7 +52,7 @@ namespace MahApps.Metro.Controls
             };
         }
 
-        public static void ClearControl(ExecutedRoutedEventArgs args)
+        private static void ClearControl(RoutedEventArgs args)
         {
             if (args.Handled)
             {
