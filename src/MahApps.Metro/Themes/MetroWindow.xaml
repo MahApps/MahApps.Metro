@@ -19,7 +19,8 @@
                         BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                        UseLayoutRounding="True">
+                        UseLayoutRounding="True"
+                        Margin="{TemplateBinding Padding}">
             <AdornerDecorator UseLayoutRounding="False">
                 <Grid Background="{x:Null}"
                       LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
@@ -264,7 +265,8 @@
                         BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                        UseLayoutRounding="True">
+                        UseLayoutRounding="True"
+                        Margin="{TemplateBinding Padding}">
             <AdornerDecorator UseLayoutRounding="False">
                 <Grid Background="{x:Null}"
                       LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"

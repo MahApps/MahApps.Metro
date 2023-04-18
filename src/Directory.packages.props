@@ -4,7 +4,7 @@
         <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     </PropertyGroup>
     <ItemGroup>
-        <PackageVersion Include="ControlzEx" Version="6.0.0-alpha0272" />
+        <PackageVersion Include="ControlzEx" Version="6.0.0-alpha0280" />
         <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0143" />
         <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     </ItemGroup>
