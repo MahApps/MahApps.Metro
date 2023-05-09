@@ -4,7 +4,6 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
-        <DisableFody Condition=" '$(Configuration)' == 'Debug' ">true</DisableFody>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
         <OutputType>WinExe</OutputType>
@@ -23,17 +22,6 @@
 
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <Reference Include="System.ComponentModel.DataAnnotations" />
-    </ItemGroup>
-
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
-        <PackageReference Include="Fody">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Costura.Fody">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; compile; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

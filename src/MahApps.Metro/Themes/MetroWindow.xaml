@@ -15,12 +15,12 @@
 
     <ControlTemplate x:Key="MahApps.Templates.MetroWindow" TargetType="{x:Type mah:MetroWindow}">
         <mah:ClipBorder x:Name="PART_Border"
+                        Margin="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                        UseLayoutRounding="True"
-                        Margin="{TemplateBinding Padding}">
+                        UseLayoutRounding="True">
             <AdornerDecorator UseLayoutRounding="False">
                 <Grid Background="{x:Null}"
                       LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
@@ -261,12 +261,12 @@
 
     <ControlTemplate x:Key="MahApps.Templates.MetroWindow.Center" TargetType="{x:Type mah:MetroWindow}">
         <mah:ClipBorder x:Name="PART_Border"
+                        Margin="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                        UseLayoutRounding="True"
-                        Margin="{TemplateBinding Padding}">
+                        UseLayoutRounding="True">
             <AdornerDecorator UseLayoutRounding="False">
                 <Grid Background="{x:Null}"
                       LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"

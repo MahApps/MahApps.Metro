@@ -4,7 +4,6 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
-        <DisableFody Condition=" '$(Configuration)' == 'Debug' ">true</DisableFody>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
         <OutputType>WinExe</OutputType>
