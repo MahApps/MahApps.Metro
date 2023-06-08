@@ -89,10 +89,13 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+            // Get the current DPI scale factor
+            var dpiScale = VisualTreeHelper.GetDpi(window);
+
             var x = CalcIntValue(wp?.rcNormalPosition.left, window.Left);
             var y = CalcIntValue(wp?.rcNormalPosition.top, window.Top);
-            var width = CalcIntValue(wp?.rcNormalPosition.GetWidth(), window.ActualWidth);
-            var height = CalcIntValue(wp?.rcNormalPosition.GetHeight(), window.ActualHeight);
+            var width = CalcIntValue(wp?.rcNormalPosition.GetWidth() * dpiScale.DpiScaleX, window.ActualWidth);
+            var height = CalcIntValue(wp?.rcNormalPosition.GetHeight() * dpiScale.DpiScaleY, window.ActualHeight);
 
             var placement = new WINDOWPLACEMENT
                             {
