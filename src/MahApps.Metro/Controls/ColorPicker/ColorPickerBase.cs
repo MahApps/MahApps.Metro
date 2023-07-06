@@ -280,6 +280,7 @@ namespace MahApps.Metro.Controls
                 try
                 {
                     colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor());
+                    colorPicker.SetValue(SelectedHSVColorPropertyKey, hsv);
                 }
                 finally
                 {
