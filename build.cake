@@ -261,7 +261,7 @@ Task("Sign")
     .ContinueOnError()
     .Does(() =>
 {
-    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro.dll");
+    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro*.dll");
     SignFiles(files, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
 
     files = GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe");
