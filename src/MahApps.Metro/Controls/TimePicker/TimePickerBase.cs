@@ -941,7 +941,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected TimeSpan? GetSelectedTimeFromGUI()
+        protected virtual TimeSpan? GetSelectedTimeFromGUI()
         {
             if (IsValueSelected(this.hourInput) &&
                 IsValueSelected(this.minuteInput) &&
