@@ -67,7 +67,7 @@
 
 [![Follow @punker76](https://img.shields.io/badge/Twitter-Follow%20%40punker76-blue.svg?style=flat-square)](https://twitter.com/intent/follow?screen_name=punker76)
 
-[![Join the chat at https://gitter.im/MahApps/MahApps.Metro](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
+[![Join the chat at https://gitter.im/MahApps/MahApps.Metro](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://matrix.to/#/#MahApps_MahApps.Metro:gitter.im)
 
 ## License
 
