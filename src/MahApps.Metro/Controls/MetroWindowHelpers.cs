@@ -158,6 +158,7 @@ namespace MahApps.Metro.Controls
             if (foregroundBrush is null)
             {
                 window.LeftWindowCommands?.ClearValue(Control.ForegroundProperty);
+                window.CenterWindowCommands?.ClearValue(Control.ForegroundProperty);
                 window.RightWindowCommands?.ClearValue(Control.ForegroundProperty);
             }
 
@@ -168,12 +169,14 @@ namespace MahApps.Metro.Controls
 
             // set the theme to light by default
             window.LeftWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
+            window.CenterWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
             window.RightWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
 
             // clear or set the foreground property
             if (foregroundBrush != null)
             {
                 window.LeftWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
+                window.CenterWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
                 window.RightWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
             }
         }

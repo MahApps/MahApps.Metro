@@ -45,6 +45,15 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
 
+
+    <mah:MetroWindow.CenterWindowCommands>
+        <mah:WindowCommands>
+            <Button Content="Another Test" />
+            <ToggleButton Content="ToggleButton" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.CenterWindowCommands>
+
+    
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button Content="Another Test" />

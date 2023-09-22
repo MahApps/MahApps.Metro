@@ -41,6 +41,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_WindowTitleThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_FlyoutModalDragMoveThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_CenterWindowCommands, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
@@ -57,6 +58,7 @@ namespace MahApps.Metro.Controls
         private const string PART_WindowTitleThumb = "PART_WindowTitleThumb";
         private const string PART_FlyoutModalDragMoveThumb = "PART_FlyoutModalDragMoveThumb";
         private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
+        private const string PART_CenterWindowCommands = "PART_CenterWindowCommands";
         private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
@@ -73,6 +75,7 @@ namespace MahApps.Metro.Controls
         private Thumb? flyoutModalDragMoveThumb;
         private IInputElement? restoreFocus;
         private ContentPresenter? LeftWindowCommandsPresenter;
+        private ContentPresenter? CenterWindowCommandsPresenter;
         private ContentPresenter? RightWindowCommandsPresenter;
         private ContentPresenter? WindowButtonCommandsPresenter;
 
@@ -718,6 +721,33 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(LeftWindowCommandsProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CenterWindowCommands"/> dependency property.</summary>
+        public static readonly DependencyProperty CenterWindowCommandsProperty
+            = DependencyProperty.Register(nameof(CenterWindowCommands),
+                                          typeof(WindowCommands),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null, OnCenterWindowCommandsPropertyChanged));
+
+        private static void OnCenterWindowCommandsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is WindowCommands windowCommands)
+            {
+                AutomationProperties.SetName(windowCommands, nameof(CenterWindowCommands));
+            }
+
+            UpdateLogicalChildren(d, e);
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="WindowCommands"/> host on the center of the TitleBar.
+        /// </summary>
+        public WindowCommands? CenterWindowCommands
+        {
+            get => (WindowCommands?)this.GetValue(CenterWindowCommandsProperty);
+            set => this.SetValue(CenterWindowCommandsProperty, value);
+        }
+
+        
         /// <summary>Identifies the <see cref="RightWindowCommands"/> dependency property.</summary>
         public static readonly DependencyProperty RightWindowCommandsProperty
             = DependencyProperty.Register(nameof(RightWindowCommands),
@@ -784,6 +814,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(LeftWindowCommandsOverlayBehaviorProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CenterWindowCommandsOverlayBehavior"/> dependency property.</summary>
+        public static readonly DependencyProperty CenterWindowCommandsOverlayBehaviorProperty
+            = DependencyProperty.Register(nameof(CenterWindowCommandsOverlayBehavior),
+                                          typeof(WindowCommandsOverlayBehavior),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+
+        /// <summary>
+        /// Gets or sets the overlay behavior for the <see cref="WindowCommands"/> host on the center.
+        /// </summary>
+        public WindowCommandsOverlayBehavior CenterWindowCommandsOverlayBehavior
+        {
+            get => (WindowCommandsOverlayBehavior)this.GetValue(CenterWindowCommandsOverlayBehaviorProperty);
+            set => this.SetValue(CenterWindowCommandsOverlayBehaviorProperty, value);
+        }
+        
         /// <summary>Identifies the <see cref="RightWindowCommandsOverlayBehavior"/> dependency property.</summary>
         public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty
             = DependencyProperty.Register(nameof(RightWindowCommandsOverlayBehavior),
@@ -916,6 +962,9 @@ namespace MahApps.Metro.Controls
             var leftWindowCommandsVisibility = this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
             this.LeftWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, leftWindowCommandsVisibility);
 
+            var centerWindowCommandsVisibility = this.CenterWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
+            this.CenterWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, centerWindowCommandsVisibility);
+            
             var rightWindowCommandsVisibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
             this.RightWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, rightWindowCommandsVisibility);
 
@@ -1193,6 +1242,11 @@ namespace MahApps.Metro.Controls
                 this.LeftWindowCommands.DataContext = this.DataContext;
             }
 
+            if (this.CenterWindowCommands != null)
+            {
+                this.CenterWindowCommands.DataContext = this.DataContext;
+            }
+            
             if (this.RightWindowCommands != null)
             {
                 this.RightWindowCommands.DataContext = this.DataContext;
@@ -1226,6 +1280,7 @@ namespace MahApps.Metro.Controls
 
             var iconWidth = this.icon?.ActualWidth ?? 0;
             var leftWindowCommandsWidth = this.LeftWindowCommands?.ActualWidth ?? 0;
+            var centerWindowCommandsWidth = this.CenterWindowCommands?.ActualWidth ?? 0;
             var rightWindowCommandsWidth = this.RightWindowCommands?.ActualWidth ?? 0;
             var windowButtonCommandsWith = this.WindowButtonCommands?.ActualWidth ?? 0;
 
@@ -1371,6 +1426,11 @@ namespace MahApps.Metro.Controls
                     children.Add(this.LeftWindowCommands);
                 }
 
+                if (this.CenterWindowCommands != null)
+                {
+                    children.Add(this.CenterWindowCommands);
+                }
+                
                 if (this.RightWindowCommands != null)
                 {
                     children.Add(this.RightWindowCommands);
@@ -1395,14 +1455,17 @@ namespace MahApps.Metro.Controls
             base.OnApplyTemplate();
 
             this.LeftWindowCommandsPresenter = this.GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
+            this.CenterWindowCommandsPresenter = this.GetTemplateChild(PART_CenterWindowCommands) as ContentPresenter;
             this.RightWindowCommandsPresenter = this.GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
             this.WindowButtonCommandsPresenter = this.GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             this.LeftWindowCommands ??= new WindowCommands();
+            this.CenterWindowCommands ??= new WindowCommands();
             this.RightWindowCommands ??= new WindowCommands();
             this.WindowButtonCommands ??= new WindowButtonCommands();
 
             this.LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            this.CenterWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
             this.RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
             this.WindowButtonCommands.SetValue(WindowButtonCommands.ParentWindowPropertyKey, this);
 
@@ -1694,6 +1757,7 @@ namespace MahApps.Metro.Controls
             //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the Flyout's.
             this.icon?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.IconOverlayBehavior.HasFlag(OverlayBehavior.Flyouts) ? zIndex : 1));
             this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout is { IsModal: true, IsOpen: true } ? 0 : 1);
+            this.CenterWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout is { IsModal: true, IsOpen: true } ? 0 : 1);
             this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout is { IsModal: true, IsOpen: true } ? 0 : 1);
             this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout is { IsModal: true, IsOpen: true } ? 0 : (this.WindowButtonCommandsOverlayBehavior.HasFlag(OverlayBehavior.Flyouts) ? zIndex : 1));
 

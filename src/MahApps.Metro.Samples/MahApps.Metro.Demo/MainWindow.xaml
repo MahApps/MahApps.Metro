@@ -25,7 +25,7 @@
                  ShowIconOnTitleBar="True"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
-    <!--
+    <!--    
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
         event, as so:
@@ -127,6 +127,16 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
 
+    <mah:MetroWindow.CenterWindowCommands>
+        <mah:WindowCommands ShowSeparators="False">
+            <TextBox                 Width="250" 
+                                     BorderThickness="0"
+                                     FontSize="14"
+                                     Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                     mah:TextBoxHelper.Watermark="Run Command... (Ctrl+Shit+P)"></TextBox>
+        </mah:WindowCommands>
+    </mah:MetroWindow.CenterWindowCommands>
+    
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">
             <Button Click="LaunchFlyoutDemo"
