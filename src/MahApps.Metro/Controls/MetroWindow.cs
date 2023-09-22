@@ -747,7 +747,6 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(CenterWindowCommandsProperty, value);
         }
 
-        
         /// <summary>Identifies the <see cref="RightWindowCommands"/> dependency property.</summary>
         public static readonly DependencyProperty RightWindowCommandsProperty
             = DependencyProperty.Register(nameof(RightWindowCommands),
@@ -829,7 +828,7 @@ namespace MahApps.Metro.Controls
             get => (WindowCommandsOverlayBehavior)this.GetValue(CenterWindowCommandsOverlayBehaviorProperty);
             set => this.SetValue(CenterWindowCommandsOverlayBehaviorProperty, value);
         }
-        
+
         /// <summary>Identifies the <see cref="RightWindowCommandsOverlayBehavior"/> dependency property.</summary>
         public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty
             = DependencyProperty.Register(nameof(RightWindowCommandsOverlayBehavior),
@@ -964,7 +963,7 @@ namespace MahApps.Metro.Controls
 
             var centerWindowCommandsVisibility = this.CenterWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
             this.CenterWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, centerWindowCommandsVisibility);
-            
+
             var rightWindowCommandsVisibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
             this.RightWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, rightWindowCommandsVisibility);
 
@@ -1246,7 +1245,7 @@ namespace MahApps.Metro.Controls
             {
                 this.CenterWindowCommands.DataContext = this.DataContext;
             }
-            
+
             if (this.RightWindowCommands != null)
             {
                 this.RightWindowCommands.DataContext = this.DataContext;
@@ -1279,7 +1278,7 @@ namespace MahApps.Metro.Controls
             var distanceToCenter = (this.titleBar.DesiredSize.Width - margin.Left - margin.Right) / 2;
 
             var iconWidth = this.icon?.ActualWidth ?? 0;
-            var leftWindowCommandsWidth = this.LeftWindowCommands?.ActualWidth ?? 0;            
+            var leftWindowCommandsWidth = this.LeftWindowCommands?.ActualWidth ?? 0;
             var rightWindowCommandsWidth = this.RightWindowCommands?.ActualWidth ?? 0;
             var windowButtonCommandsWith = this.WindowButtonCommands?.ActualWidth ?? 0;
 
@@ -1293,12 +1292,12 @@ namespace MahApps.Metro.Controls
             var dLeft = distanceFromLeft + distanceToCenter + horizontalMargin;
             var dRight = distanceFromRight + distanceToCenter + horizontalMargin;
             if ((dLeft < halfDistance) && (dRight < halfDistance))
-            {                
+            {
                 Grid.SetColumn(this.titleBar, 0);
                 Grid.SetColumnSpan(this.titleBar, 5);
             }
             else
-            {             
+            {
                 Grid.SetColumn(this.titleBar, 2);
                 Grid.SetColumnSpan(this.titleBar, 1);
             }
@@ -1427,7 +1426,7 @@ namespace MahApps.Metro.Controls
                 {
                     children.Add(this.CenterWindowCommands);
                 }
-                
+
                 if (this.RightWindowCommands != null)
                 {
                     children.Add(this.RightWindowCommands);

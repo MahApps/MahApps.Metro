@@ -23,7 +23,7 @@
                  NonActiveGlowColor="#CDFF0000"
                  ResizeMode="CanResizeWithGrip"
                  ShowIconOnTitleBar="True"
-                 WindowStartupLocation="CenterScreen"                 
+                 WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
     <!--    
         if using DialogParticipation on Windows which open/close frequently you will get a
@@ -59,37 +59,50 @@
             <Style x:Key="AppThemeMenuItemStyle"
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
-                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
-                <Setter Property="CommandParameter" Value="{Binding Name, Mode=OneWay}" />
-                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
-                <Setter Property="Icon" Value="{StaticResource AppThemeMenuIcon}" />
+                <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="CommandParameter"
+                        Value="{Binding Name, Mode=OneWay}" />
+                <Setter Property="Header"
+                        Value="{Binding Name, Mode=OneWay}" />
+                <Setter Property="Icon"
+                        Value="{StaticResource AppThemeMenuIcon}" />
             </Style>
 
             <Style x:Key="AccentColorMenuItemStyle"
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
-                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
-                <Setter Property="CommandParameter" Value="{Binding Name, Mode=OneWay}" />
-                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
-                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+                <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="CommandParameter"
+                        Value="{Binding Name, Mode=OneWay}" />
+                <Setter Property="Header"
+                        Value="{Binding Name, Mode=OneWay}" />
+                <Setter Property="Icon"
+                        Value="{StaticResource AccentMenuIcon}" />
             </Style>
 
             <Style x:Key="SyncModeMenuItemStyle"
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
-                <Setter Property="Command" Value="{Binding DataContext.ChangeSyncModeCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-                <Setter Property="CommandParameter" Value="{Binding Mode=OneTime}" />
-                <Setter Property="Header" Value="{Binding Mode=OneTime}" />
+                <Setter Property="Command"
+                        Value="{Binding DataContext.ChangeSyncModeCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="CommandParameter"
+                        Value="{Binding Mode=OneTime}" />
+                <Setter Property="Header"
+                        Value="{Binding Mode=OneTime}" />
             </Style>
 
             <UserControl x:Key="CustomDialogTest"
                          x:Name="CustomDialogTest"
                          MinHeight="200">
 
-                <TextBlock x:Name="MessageTextBlock" Text="Message shown by this custom Dialog." />
+                <TextBlock x:Name="MessageTextBlock"
+                           Text="Message shown by this custom Dialog." />
             </UserControl>
 
-            <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
+            <UserControl x:Key="CustomCloseDialogTest"
+                         x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
                     <TextBlock Height="30"
@@ -118,7 +131,8 @@
     </Window.Resources>
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
-            <Button Click="LaunchMahAppsOnGitHub" ToolTip="MahApps.Metro on GitHub">
+            <Button Click="LaunchMahAppsOnGitHub"
+                    ToolTip="MahApps.Metro on GitHub">
                 <iconPacks:PackIconModern Width="22"
                                           Height="22"
                                           Kind="SocialGithubOctocat" />
@@ -129,29 +143,36 @@
         <mah:WindowCommands ShowSeparators="False">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Grid.Row="0">
-                    <Rectangle Width="28" Fill="{DynamicResource MahApps.Brushes.Gray10}"/>
-                    <Rectangle Width="20" Height="20" HorizontalAlignment="Right" Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                <Grid Grid.Column="0"
+                      Grid.Row="0">
+                    <Rectangle Width="28"
+                               Fill="{DynamicResource MahApps.Brushes.Gray10}" />
+                    <Rectangle Width="20"
+                               Height="20"
+                               HorizontalAlignment="Right"
+                               Fill="{DynamicResource MahApps.Brushes.Gray8}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                            <VisualBrush Stretch="Uniform"
+                                         Visual="{iconPacks:Material Kind=ChevronRight}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Grid>
                 <ComboBox x:Name="CenterWindowCommandComboBox"
-                         Grid.Column="1" Grid.Row="0"
-                         GotKeyboardFocus="CenterWindowCommandComboBox_GotFocus"
-                         LostKeyboardFocus="CenterWindowCommandComboBox_LostFocus"
-                         DropDownClosed="CenterWindowCommandComboBox_DropDownClosed"
-                         Width="150"
-                         VerticalContentAlignment="Center"
-                         BorderThickness="0"
-                         FontSize="14"
-                         IsEditable="True"
-                         Background="{DynamicResource MahApps.Brushes.Gray10}"
-                         mah:TextBoxHelper.Watermark="Run command...">
+                          Grid.Column="1"
+                          Grid.Row="0"
+                          GotKeyboardFocus="CenterWindowCommandComboBox_GotFocus"
+                          LostKeyboardFocus="CenterWindowCommandComboBox_LostFocus"
+                          DropDownClosed="CenterWindowCommandComboBox_DropDownClosed"
+                          Width="150"
+                          VerticalContentAlignment="Center"
+                          BorderThickness="0"
+                          FontSize="14"
+                          IsEditable="True"
+                          Background="{DynamicResource MahApps.Brushes.Gray10}"
+                          mah:TextBoxHelper.Watermark="Run command...">
                     <ComboBoxItem Content="switch theme" />
                     <ComboBoxItem Content="switch accent" />
                     <ComboBoxItem Content="help" />
@@ -211,7 +232,8 @@
                           IsCheckable="True"
                           IsChecked="{Binding Options.UseHSL, Source={x:Static controlzEx:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
 
-                <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
+                <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                          Header="Sync now" />
             </MenuItem>
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
@@ -227,24 +249,40 @@
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
-                <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
-                <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
-                <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
-                <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
-                <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />
-                <MenuItem Click="ShowLoginDialogWithRememberCheckBox" Header="Show LoginDialog (With Remember CheckBox)" />
-                <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
-                <MenuItem Click="ShowLimitedMessageDialog" Header="Show MessageDialog (Limited Size)" />
-                <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
-                <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
-                <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
+                <MenuItem Click="ShowInputDialog"
+                          Header="Show InputDialog" />
+                <MenuItem Click="ShowInputDialogCustomButtonSizes"
+                          Header="Show InputDialog (with custom button font sizes)" />
+                <MenuItem Click="ShowLoginDialog"
+                          Header="Show LoginDialog" />
+                <MenuItem Click="ShowLoginDialogPasswordPreview"
+                          Header="Show Password Preview LoginDialog" />
+                <MenuItem Click="ShowLoginDialogOnlyPassword"
+                          Header="Show LoginDialog (Only Password)" />
+                <MenuItem Click="ShowLoginDialogWithRememberCheckBox"
+                          Header="Show LoginDialog (With Remember CheckBox)" />
+                <MenuItem Click="ShowMessageDialog"
+                          Header="Show MessageDialog" />
+                <MenuItem Click="ShowLimitedMessageDialog"
+                          Header="Show MessageDialog (Limited Size)" />
+                <MenuItem Click="ShowProgressDialog"
+                          Header="Show ProgressDialog" />
+                <MenuItem Click="ShowCustomDialog"
+                          Header="Show CustomDialog" />
+                <MenuItem Click="ShowAwaitCustomDialog"
+                          Header="Await CustomDialog" />
                 <Separator />
-                <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
-                <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />
-                <MenuItem Click="ShowMessageDialogOutside" Header="Show ShowMessageDialog Externally" />
+                <MenuItem Click="ShowInputDialogOutside"
+                          Header="Show ShowInputDialog Externally" />
+                <MenuItem Click="ShowLoginDialogOutside"
+                          Header="Show ShowLoginDialog Externally" />
+                <MenuItem Click="ShowMessageDialogOutside"
+                          Header="Show ShowMessageDialog Externally" />
                 <Separator />
-                <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
-                <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
+                <MenuItem Command="{Binding ShowInputDialogCommand}"
+                          Header="Show InputDialog via VM" />
+                <MenuItem Command="{Binding ShowLoginDialogCommand}"
+                          Header="Show LoginDialog via VM ..." />
                 <MenuItem Header="Show MessageDialog via VM">
                     <MenuItem Command="{Binding ShowMessageDialogCommand}"
                               CommandParameter="DISPATCHER_THREAD"
@@ -254,8 +292,10 @@
                               Header="... from Background Thread" />
                 </MenuItem>
 
-                <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
-                <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
+                <MenuItem Command="{Binding ShowProgressDialogCommand}"
+                          Header="Show ProgressDialog via VM" />
+                <MenuItem Command="{Binding ShowCustomDialogCommand}"
+                          Header="Show CustomDialog via VM" />
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="Chrome">
@@ -297,11 +337,16 @@
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=ToggleFullScreen}" />
                 <Separator />
-                <MenuItem Click="MenuWindowWithGlowOnClick" Header="Window with Glow" />
-                <MenuItem Click="MenuWindowWithoutGlowOnClick" Header="Window without Glow" />
-                <MenuItem Click="MenuWindowWithBorderOnClick" Header="Window with Border (and Glow)" />
-                <MenuItem Click="MenuWindowWithRoundedBorderOnClick" Header="Window with rounded Border (without Glow)" />
-                <MenuItem Click="LaunchSizeToContentDemo" Header="Window with SizeToContent" />
+                <MenuItem Click="MenuWindowWithGlowOnClick"
+                          Header="Window with Glow" />
+                <MenuItem Click="MenuWindowWithoutGlowOnClick"
+                          Header="Window without Glow" />
+                <MenuItem Click="MenuWindowWithBorderOnClick"
+                          Header="Window with Border (and Glow)" />
+                <MenuItem Click="MenuWindowWithRoundedBorderOnClick"
+                          Header="Window with rounded Border (without Glow)" />
+                <MenuItem Click="LaunchSizeToContentDemo"
+                          Header="Window with SizeToContent" />
                 <Separator />
                 <MenuItem x:Name="ShowSeparatorsMI"
                           Header="ShowSeparators (RightWindowCommands)"
@@ -332,7 +377,8 @@
             </MenuItem>
         </Menu>
 
-        <mah:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1">
+        <mah:MetroAnimatedSingleRowTabControl x:Name="MainTabControl"
+                                              Grid.Row="1">
             <TabItem Header="buttons">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
@@ -372,7 +418,8 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="splitview">
-                <ScrollViewer Margin="2" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Margin="2"
+                              VerticalScrollBarVisibility="Auto">
                     <exampleViews:SplitViewExamples DataContext="{Binding}" />
                 </ScrollViewer>
             </TabItem>
@@ -398,7 +445,8 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="colors">
-                <exampleViews:ColorExample Margin="2" DataContext="{Binding}" />
+                <exampleViews:ColorExample Margin="2"
+                                           DataContext="{Binding}" />
             </TabItem>
 
             <TabItem Header="ColorPicker">
