@@ -109,17 +109,6 @@
                             </ContentControl.Foreground>
                         </mah:MetroThumbContentControl>
 
-                        <!--  the center window commands  -->
-                        <mah:ContentPresenterEx x:Name="PART_CenterWindowCommands"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                                                Grid.ColumnSpan="5"
-                        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                        VerticalAlignment="Top"
-                        Content="{Binding CenterWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                                                    
-                        HorizontalAlignment="Center"
-                        Focusable="False" />
-
                         <!--  the right window commands  -->                            
                             <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
                                                     Grid.Row="0"
@@ -127,9 +116,20 @@
                                                     Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                     VerticalAlignment="Top"
                                                     Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                    Focusable="False" />                            
-                                                        
-                                <!--  the window button commands  -->
+                                                    Focusable="False" />
+
+                        <!--  the center window commands  -->
+                        <mah:ContentPresenterEx x:Name="PART_CenterWindowCommands"
+ Grid.Row="0"
+ Grid.Column="0"
+                         Grid.ColumnSpan="5"
+ Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+ VerticalAlignment="Top"
+ Content="{Binding CenterWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                                                    
+ HorizontalAlignment="Center"
+ Focusable="False" />
+
+                        <!--  the window button commands  -->
                         <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
                                                 Grid.Row="0"
                                                 Grid.RowSpan="2"
@@ -340,17 +340,18 @@
 
                         <!--  the left window commands  -->
                         <mah:ContentPresenterEx x:Name="PART_LeftWindowCommands"
-                                                Grid.Row="0"
-                                                    Grid.Column="1"
-                        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                        VerticalAlignment="Top"
-                        Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                                                    
-                        Focusable="False" />
-
+                                  Grid.Row="0"
+                                                    Grid.Column="1"                
+                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                          VerticalAlignment="Top"
+                          Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                          
+                          Focusable="False" />
+                        
                         <!--  the title bar  -->
                         <mah:MetroThumbContentControl x:Name="PART_TitleBar"
                                                       Grid.Row="0"
-                                                      Grid.Column="2"                                                      
+                                                      Grid.Column="0"
+                                                      Grid.ColumnSpan="5"
                                                       Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                       HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                                       HorizontalContentAlignment="Center"
@@ -371,29 +372,26 @@
                             </ContentControl.Foreground>
                         </mah:MetroThumbContentControl>
 
-                       
-                            
-                                
-                            <!--  the center window commands  -->
-                            <mah:ContentPresenterEx x:Name="PART_CenterWindowCommands"
-                                                    Grid.Row="0"
-                        Grid.Column="0"
-                                                Grid.ColumnSpan="5"
-                                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                    VerticalAlignment="Top"
-                                                    Content="{Binding CenterWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                                
-                                                    Focusable="False" />
-                                
-                            <!--  the right window commands  -->
+                        <!--  the right window commands  -->
                             <mah:ContentPresenterEx x:Name="PART_RightWindowCommands"
-                                                     Grid.Row="0"
+                                                    Grid.Row="0"
                                                     Grid.Column="3"
                                                     Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                     VerticalAlignment="Top"
-                                                    Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                                
+                                                    Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                    DockPanel.Dock="Right"
                                                     Focusable="False" />
-                            <!--  the fake title bar  -->
-                            <Grid />                       
+
+                        <!--  the center window commands  -->                        
+                        <mah:ContentPresenterEx x:Name="PART_CenterWindowCommands"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="5"
+                        Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                        VerticalAlignment="Top"
+                        Content="{Binding CenterWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"                                                    
+                        HorizontalAlignment="Center"
+                        Focusable="False" />
 
                         <!--  the window button commands  -->
                         <mah:ContentPresenterEx x:Name="PART_WindowButtonCommands"
@@ -510,11 +508,11 @@
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
                 <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="2" />
             </Trigger>
 
             <Trigger Property="ShowFlyoutsOverDialogs" Value="True">
@@ -522,12 +520,12 @@
             </Trigger>
 
             <Trigger Property="WindowStyle" Value="None">
-                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
-                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="4" />
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="4" />
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
-                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
-                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="4" />
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="4" />
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">

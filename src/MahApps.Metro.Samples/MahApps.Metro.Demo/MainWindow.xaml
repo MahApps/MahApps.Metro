@@ -23,7 +23,7 @@
                  NonActiveGlowColor="#CDFF0000"
                  ResizeMode="CanResizeWithGrip"
                  ShowIconOnTitleBar="True"
-                 WindowStartupLocation="CenterScreen"
+                 WindowStartupLocation="CenterScreen"                 
                  mc:Ignorable="d">
     <!--    
         if using DialogParticipation on Windows which open/close frequently you will get a
@@ -116,7 +116,6 @@
             </ObjectDataProvider>
         </ResourceDictionary>
     </Window.Resources>
-
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
             <Button Click="LaunchMahAppsOnGitHub" ToolTip="MahApps.Metro on GitHub">
@@ -126,17 +125,41 @@
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
-
     <mah:MetroWindow.CenterWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
-            <TextBox                 Width="250" 
-                                     BorderThickness="0"
-                                     FontSize="14"
-                                     Background="{DynamicResource MahApps.Brushes.Gray10}"
-                                     mah:TextBoxHelper.Watermark="Run Command... (Ctrl+Shit+P)"></TextBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Rectangle Width="28" Fill="{DynamicResource MahApps.Brushes.Gray10}"/>
+                    <Rectangle Width="20" Height="20" HorizontalAlignment="Right" Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Grid>
+                <ComboBox x:Name="CenterWindowCommandComboBox"
+                         Grid.Column="1" Grid.Row="0"
+                         GotKeyboardFocus="CenterWindowCommandComboBox_GotFocus"
+                         LostKeyboardFocus="CenterWindowCommandComboBox_LostFocus"
+                         DropDownClosed="CenterWindowCommandComboBox_DropDownClosed"
+                         Width="150"
+                         VerticalContentAlignment="Center"
+                         BorderThickness="0"
+                         FontSize="14"
+                         IsEditable="True"
+                         Background="{DynamicResource MahApps.Brushes.Gray10}"
+                         mah:TextBoxHelper.Watermark="Run command...">
+                    <ComboBoxItem Content="switch theme" />
+                    <ComboBoxItem Content="switch accent" />
+                    <ComboBoxItem Content="help" />
+                </ComboBox>
+            </Grid>
         </mah:WindowCommands>
     </mah:MetroWindow.CenterWindowCommands>
-    
+
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">
             <Button Click="LaunchFlyoutDemo"

@@ -1279,8 +1279,7 @@ namespace MahApps.Metro.Controls
             var distanceToCenter = (this.titleBar.DesiredSize.Width - margin.Left - margin.Right) / 2;
 
             var iconWidth = this.icon?.ActualWidth ?? 0;
-            var leftWindowCommandsWidth = this.LeftWindowCommands?.ActualWidth ?? 0;
-            var centerWindowCommandsWidth = this.CenterWindowCommands?.ActualWidth ?? 0;
+            var leftWindowCommandsWidth = this.LeftWindowCommands?.ActualWidth ?? 0;            
             var rightWindowCommandsWidth = this.RightWindowCommands?.ActualWidth ?? 0;
             var windowButtonCommandsWith = this.WindowButtonCommands?.ActualWidth ?? 0;
 
@@ -1294,15 +1293,13 @@ namespace MahApps.Metro.Controls
             var dLeft = distanceFromLeft + distanceToCenter + horizontalMargin;
             var dRight = distanceFromRight + distanceToCenter + horizontalMargin;
             if ((dLeft < halfDistance) && (dRight < halfDistance))
-            {
-                this.titleBar.SetCurrentValue(MarginProperty, default(Thickness));
+            {                
                 Grid.SetColumn(this.titleBar, 0);
-                Grid.SetColumnSpan(this.titleBar, 3);
+                Grid.SetColumnSpan(this.titleBar, 5);
             }
             else
-            {
-                this.titleBar.SetCurrentValue(MarginProperty, new Thickness(leftWindowCommandsWidth, 0, rightWindowCommandsWidth, 0));
-                Grid.SetColumn(this.titleBar, 1);
+            {             
+                Grid.SetColumn(this.titleBar, 2);
                 Grid.SetColumnSpan(this.titleBar, 1);
             }
         }

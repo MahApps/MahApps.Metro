@@ -601,5 +601,22 @@ namespace MetroDemo
             w.WindowStyle = WindowStyle.None;
             w.Show();
         }
+
+        private void CenterWindowCommandComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            CenterWindowCommandComboBox.Width = 450;
+        }
+
+        private void CenterWindowCommandComboBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!CenterWindowCommandComboBox.IsDropDownOpen)
+                CenterWindowCommandComboBox.Width = 150;
+        }
+
+        private void CenterWindowCommandComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (CenterWindowCommandComboBox.IsFocused)
+                CenterWindowCommandComboBox.Width = 150;
+        }
     }
 }
