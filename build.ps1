@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 
 Set-Location -LiteralPath $PSScriptRoot
 

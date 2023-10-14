@@ -31,7 +31,7 @@ pull_requests:
 build_script:
   - ps: dotnet --list-sdks
   - ps: gitversion /version
-  - ps: .\build.ps1 --target=ci
+  - ps: .\build.ps1 --target=ci #--verbosity=diagnostic
 
 after_build:
   - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
