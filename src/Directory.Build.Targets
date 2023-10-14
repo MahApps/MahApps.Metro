@@ -5,7 +5,7 @@
         <Company>MahApps</Company>
         <Product>MahApps.Metro</Product>
         <Copyright>Copyright © $([System.DateTime]::Today.ToString(yyyy)) .NET Foundation and Contributors. All rights reserved.</Copyright>
-        <Description>A toolkit for creating Metro / Modern UI styled WPF apps.</Description>
+        <Description>MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.</Description>
 
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <Version>3.0.0.0</Version>
