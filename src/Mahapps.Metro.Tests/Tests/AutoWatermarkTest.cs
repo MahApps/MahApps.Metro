@@ -18,7 +18,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AutoWatermarkTestWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AutoWatermarkTestWindow>();
 
             window.Invoke(() =>
                 {

@@ -35,7 +35,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task DefaultButtonRespectsControlsHelperContentCharacterCasing()
         {
-            await this.fixture.PrepareForTestAsync(new[] { ControlsHelper.ContentCharacterCasingProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { ControlsHelper.ContentCharacterCasingProperty.Name });
             await TestHost.SwitchToAppThread();
 
             Button defaultButton = this.fixture.Window?.DefaultButton;
@@ -71,7 +71,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task SquareButtonRespectsButtonHelperContentCharacterCasing()
         {
-            await this.fixture.PrepareForTestAsync(new[] { ControlsHelper.ContentCharacterCasingProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { ControlsHelper.ContentCharacterCasingProperty.Name });
             await TestHost.SwitchToAppThread();
 
             Button squareButton = this.fixture.Window?.SquareButton;
@@ -95,7 +95,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task DropDownButtonShouldRespectParentIsEnabledProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { UIElement.IsEnabledProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { UIElement.IsEnabledProperty.Name });
             await TestHost.SwitchToAppThread();
 
             this.fixture.Window?.TheStackPanel.SetCurrentValue(UIElement.IsEnabledProperty, false);
@@ -109,7 +109,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task SplitButtonShouldRespectParentIsEnabledProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { UIElement.IsEnabledProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { UIElement.IsEnabledProperty.Name });
             await TestHost.SwitchToAppThread();
 
             this.fixture.Window?.TheStackPanel.SetCurrentValue(UIElement.IsEnabledProperty, false);

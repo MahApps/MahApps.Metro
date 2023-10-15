@@ -20,7 +20,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: | 
-            3.1.x
             5.x
             6.x
       - name: List dotnet sdks
@@ -28,8 +27,7 @@ jobs:
       - name: Run the Cake script
         uses: cake-build/cake-action@v1
         with:
-          cake-version: 1.3.0
-          cake-bootstrap: true
+          cake-version: tool-manifest
           verbosity: Normal
           script-path: build.cake
           target: ci

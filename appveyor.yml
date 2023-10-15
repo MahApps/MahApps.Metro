@@ -21,7 +21,14 @@ skip_tags: true
 image: Visual Studio 2022
 test: off
 
-# install:
+install:
+  # Appveyor uses git checkout -qf FETCH_HEAD but all GitVersion versions above 5.6.3 doesn't support this detached header
+  # This is a workaround for this issue
+  - ps: |
+      if ($env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT -ne "")
+      {
+        git checkout -qf $($env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT)
+      }
   # - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
   # - ps: ./dotnet-install.ps1 -Version 6.0.100 -InstallDir "C:\Program Files\dotnet"
 
@@ -31,7 +38,7 @@ pull_requests:
 build_script:
   - ps: dotnet --list-sdks
   - ps: gitversion /version
-  - ps: .\build.ps1 --target=ci
+  - ps: .\build.ps1 --target=ci #--verbosity=diagnostic
 
 after_build:
   - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
@@ -46,9 +53,9 @@ skip_commits:
   files:
     - '**/*.md'
 
-notifications:
-  - provider: Webhook
-    url: https://webhooks.gitter.im/e/3065442a8d5860a11008
-    on_build_success: true
-    on_build_failure: true
-    on_build_status_changed: false
+# notifications:
+#   - provider: Webhook
+#     url: https://webhooks.gitter.im/e/3065442a8d5860a11008
+#     on_build_success: true
+#     on_build_failure: true
+#     on_build_status_changed: false

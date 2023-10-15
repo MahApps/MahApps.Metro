@@ -19,7 +19,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
             var theme = ThemeManager.Current.DetectTheme();
             Assert.NotNull(theme);

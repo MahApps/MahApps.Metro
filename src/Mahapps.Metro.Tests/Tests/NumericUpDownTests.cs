@@ -50,7 +50,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldSnapToMultipleOfInterval()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -100,7 +100,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldFormatValueInput(object value, string format, string expectedText)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -144,7 +144,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertManualTextInput(string text, NumericInput numericInput, object expectedValue)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -177,7 +177,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -215,7 +215,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -264,7 +264,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string culture, object expectedValue, string expectedText)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -291,7 +291,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertDecimalTextInputWithSpecialCulture(string text, object expectedValue)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -319,7 +319,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertHexadecimalTextInput(string text, object expectedValue)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);
@@ -351,7 +351,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertHexadecimalTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window);

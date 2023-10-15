@@ -26,7 +26,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderBackgroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerBackground = Brushes.BlueViolet;
@@ -53,7 +53,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderBackgroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerBackground = Brushes.BlueViolet;
@@ -71,7 +71,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderBackgroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerBackground = Brushes.BlueViolet;
@@ -102,7 +102,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderBackgroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerBackground = Brushes.BlueViolet;
@@ -131,7 +131,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderBackgroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderBackgroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerBackground = Brushes.BlueViolet;
@@ -146,7 +146,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseForegroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerForeground = Brushes.Crimson;
@@ -173,7 +173,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseForegroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerForeground = Brushes.Crimson;
@@ -188,7 +188,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseForegroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerForeground = Brushes.Crimson;
@@ -206,7 +206,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseForegroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TabItem.ForegroundProperty.Name, HeaderedControlHelper.HeaderForegroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TabItem.ForegroundProperty.Name, HeaderedControlHelper.HeaderForegroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerForeground = Brushes.Crimson;
@@ -248,7 +248,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseForegroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderForegroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerForeground = Brushes.Crimson;
@@ -275,7 +275,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseForegroundProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { Flyout.ForegroundProperty.Name, HeaderedControlHelper.HeaderForegroundProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { Flyout.ForegroundProperty.Name, HeaderedControlHelper.HeaderForegroundProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerForeground = Brushes.Crimson;
@@ -294,7 +294,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderMarginProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerMargin = new Thickness(4);
@@ -321,7 +321,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseHeaderMarginProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerMargin = new Thickness(4);
@@ -336,7 +336,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderMarginProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerMargin = new Thickness(4);
@@ -354,7 +354,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderMarginProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TabItem.PaddingProperty.Name, HeaderedControlHelper.HeaderMarginProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TabItem.PaddingProperty.Name, HeaderedControlHelper.HeaderMarginProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerMargin = new Thickness(4);
@@ -381,7 +381,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderMarginProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerMargin = new Thickness(4);
@@ -402,7 +402,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderMarginProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderMarginProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var headerMargin = new Thickness(4);
@@ -417,7 +417,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderContentAlignmentProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
@@ -455,7 +455,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseHeaderContentAlignmentProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
@@ -473,7 +473,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderContentAlignmentProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
@@ -496,7 +496,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderContentAlignmentProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
@@ -524,7 +524,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderContentAlignmentProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
@@ -552,7 +552,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderContentAlignmentProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name, HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
@@ -570,7 +570,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderFontFamilyProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamily("Arial");
@@ -597,7 +597,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseHeaderFontFamilyProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamily("Arial");
@@ -612,7 +612,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderFontFamilyProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamily("Arial");
@@ -630,7 +630,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderFontFamilyProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamily("Arial");
@@ -651,7 +651,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderFontFamilyProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamily("Arial");
@@ -672,7 +672,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderFontFamilyProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamily("Arial");
@@ -687,7 +687,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderFontSizeProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double fontSize = 48d;
@@ -714,7 +714,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseHeaderFontSizeProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double fontSize = 48d;
@@ -729,7 +729,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderFontSizeProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double fontSize = 48d;
@@ -747,7 +747,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderFontSizeProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double fontSize = 48d;
@@ -768,7 +768,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderFontSizeProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double fontSize = 48d;
@@ -789,7 +789,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderFontSizeProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double fontSize = 48d;
@@ -804,7 +804,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderFontStretchProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontStretch = FontStretches.Condensed;
@@ -831,7 +831,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseHeaderFontStretchProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontStretch = FontStretches.Condensed;
@@ -846,7 +846,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderFontStretchProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontStretch = FontStretches.Condensed;
@@ -864,7 +864,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderFontStretchProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontStretch = FontStretches.Condensed;
@@ -885,7 +885,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderFontStretchProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontStretch = FontStretches.Condensed;
@@ -906,7 +906,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderFontStretchProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontStretchProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontStretch = FontStretches.Condensed;
@@ -921,7 +921,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task GroupBoxShouldUseHeaderFontWeightProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontWeight = FontWeights.ExtraBold;
@@ -948,7 +948,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ToggleSwitchShouldUseHeaderFontWeightProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontWeight = FontWeights.ExtraBold;
@@ -963,7 +963,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task ExpanderShouldUseHeaderFontWeightProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontWeight = FontWeights.ExtraBold;
@@ -981,7 +981,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabItemShouldUseHeaderFontWeightProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontWeight = FontWeights.ExtraBold;
@@ -1002,7 +1002,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TabControlShouldUseHeaderFontWeightProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontWeight = FontWeights.ExtraBold;
@@ -1023,7 +1023,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task FlyoutShouldUseHeaderFontWeightProperty()
         {
-            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { HeaderedControlHelper.HeaderFontWeightProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontWeight = FontWeights.ExtraBold;
