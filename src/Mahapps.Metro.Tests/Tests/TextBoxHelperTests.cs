@@ -24,7 +24,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TestAttachedPropertyButtonWidth()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonWidthProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonWidthProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const double width = 42d;
@@ -61,7 +61,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TestAttachedPropertyButtonContent()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var content = "42";
@@ -95,7 +95,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TestAttachedPropertyButtonContentTemplate()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentTemplateProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentTemplateProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const string resourceKey = "TestDataTemplate";
@@ -131,7 +131,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TestAttachedPropertyButtonFontFamily()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonFontFamilyProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonFontFamilyProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontFamily = new FontFamilyConverter().ConvertFromString("Arial");
@@ -165,7 +165,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TestAttachedPropertyButtonFontSize()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonFontSizeProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonFontSizeProperty.Name });
             await TestHost.SwitchToAppThread();
 
             var fontSize = 42d;
@@ -199,7 +199,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async Task TestAttachedPropertyButtonTemplate()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonTemplateProperty.Name }).ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonTemplateProperty.Name });
             await TestHost.SwitchToAppThread();
 
             const string resourceKey = "TestControlTemplate";

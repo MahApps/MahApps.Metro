@@ -19,7 +19,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
             Assert.NotNull(templateSelector);
 
@@ -46,7 +46,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
             Assert.NotNull(templateSelector);
 
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
             Assert.NotNull(templateSelector);
 
@@ -100,7 +100,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
             Assert.NotNull(templateSelector);
 

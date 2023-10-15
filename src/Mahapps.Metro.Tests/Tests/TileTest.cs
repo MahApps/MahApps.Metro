@@ -24,7 +24,7 @@ namespace MahApps.Metro.Tests.Tests
                     var grid = new Grid();
                     grid.Children.Add(testTile);
                     w.Content = grid;
-                }).ConfigureAwait(false);
+                });
 
             window.Invoke(() =>
                 {

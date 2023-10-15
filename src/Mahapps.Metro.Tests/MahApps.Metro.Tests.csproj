@@ -32,7 +32,9 @@
 
     <ItemGroup>
         <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.runner.visualstudio" />
+        <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
+        <PackageReference Include="xunit.runner.console" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
+        <PackageReference Include="xunit.analyzers" PrivateAssets="all" IncludeAssets="build;analyzers" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
     </ItemGroup>
 

@@ -18,7 +18,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void SelectedItemsShouldBeSyncedByMultiSelectionHelper()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -39,7 +39,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void PreSelectedItemsShouldBeSyncedByMultiSelectionHelper()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -60,7 +60,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void SelectedItemsShouldBeSyncedAndContainsOnlyOnce()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -89,7 +89,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void AddedItemShouldBeSynced()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -128,7 +128,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void RemovedItemShouldBeSynced()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -155,7 +155,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void MovedItemShouldBeSynced()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -194,7 +194,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void ReplacedItemShouldBeSynced()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);
@@ -240,7 +240,7 @@ namespace MahApps.Metro.Tests.Tests
         [DisplayTestMethodName]
         public async void ClearedItemShouldBeSynced()
         {
-            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
 
             Assert.NotNull(this.fixture.Window?.SelectedItems);

@@ -4,41 +4,41 @@
         <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageVersion Include="ControlzEx" Version="6.0.0" />
-        <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0143" />
-        <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    </ItemGroup>
-
-    <ItemGroup Label="Test">
-        <PackageVersion Include="xunit" Version="2.4.2" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
-    </ItemGroup>
-
     <ItemGroup Label="Build">
-        <PackageVersion Include="JetBrains.Annotations" Version="2022.3.1" />
-        <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.2.188-beta" />
-        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+        <PackageVersion Include="ControlzEx" Version="6.0.0" />
+        <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+        <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0143" />
+
+        <PackageVersion Include="Caliburn.Micro" Version="4.0.212" />
+        <PackageVersion Include="JetBrains.Annotations" Version="2023.2.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Entypo" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
-        <PackageVersion Include="NHotkey.Wpf" Version="2.1.0" />
-        <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.1518.46" />
 
-        <PackageVersion Include="System.ComponentModel.Composition" Version="5.0.0" />
-        <PackageVersion Include="Caliburn.Micro" Version="4.0.212" />
+        <PackageVersion Include="MaterialDesignThemes" Version="3.0.1" Condition=" $(DefineConstants.Contains(NETCOREAPP)) == false " />
+        <PackageVersion Include="MaterialDesignColors" Version="1.2.7" Condition=" $(DefineConstants.Contains(NETCOREAPP)) == false " />
+        <PackageVersion Include="MaterialDesignThemes" Version="4.9.0" Condition=" $(DefineConstants.Contains(NETCOREAPP)) == true " />
+        <PackageVersion Include="MaterialDesignColors" Version="2.1.4" Condition=" $(DefineConstants.Contains(NETCOREAPP)) == true " />
+
+        <PackageVersion Include="NHotkey.Wpf" Version="2.1.1" />
+        <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.2045.28" />
+        <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.2.252-beta" />
+
+        <PackageVersion Include="System.ComponentModel.Composition" Version="6.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == false " />
+        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="6.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == false " />
+        <PackageVersion Include="System.ComponentModel.Composition" Version="7.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == true " />
+        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="7.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == true " />
 
         <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
     </ItemGroup>
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
-        <PackageVersion Include="MaterialDesignThemes" Version="3.0.1" />
-        <PackageVersion Include="MaterialDesignColors" Version="1.2.7" />
-    </ItemGroup>
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
-        <PackageVersion Include="MaterialDesignThemes" Version="4.1.0" />
-        <PackageVersion Include="MaterialDesignColors" Version="2.0.1" />
+
+    <ItemGroup Label="Test">
+        <PackageVersion Include="xunit" Version="2.5.2" />
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+        <PackageVersion Include="xunit.runner.console" Version="2.5.2" />
+        <PackageVersion Include="xunit.analyzers" Version="1.4.0" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     </ItemGroup>
 </Project>
