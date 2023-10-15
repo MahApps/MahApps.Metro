@@ -7,7 +7,7 @@
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.15.0
 #tool dotnet:?package=XamlStyler.Console&version=3.2206.4
 
-#tool nuget:?package=GitVersion.CommandLine&version=5.6.3
+#tool nuget:?package=GitVersion.CommandLine&version=5.12.0
 #tool nuget:?package=xunit.runner.console&version=2.5.2
 
 #addin nuget:?package=Cake.Figlet&version=2.0.1
