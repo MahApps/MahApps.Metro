@@ -9,6 +9,23 @@
         <DefineConstants>$(DefineConstants);INTERNAL_NULLABLE_ATTRIBUTES</DefineConstants>
     </PropertyGroup>
 
+    <!-- NuGet -->
+    <PropertyGroup>
+        <Authors>Jan Karger, Bastian Schmidt, Dennis Daume, Brendan Forster, Alex Mitchell, Paul Jenkins, Jake Ginnivan</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/MahApps/MahApps.Metro</PackageProjectUrl>
+        <PackageIcon>mahapps.metro.logo.png</PackageIcon>
+        <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
+        <PackageReleaseNotes>https://github.com/MahApps/MahApps.Metro/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/MahApps/MahApps.Metro.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SourceRoot Include="$(NuGetPackageRoot)" Condition="'$(NuGetPackageRoot)' != ''" />
+    </ItemGroup>
+
     <ItemGroup>
         <PackageReference Include="ControlzEx" />
         <PackageReference Include="XAMLTools.MSBuild" PrivateAssets="all" IncludeAssets="build" />
@@ -24,6 +41,13 @@
     </ItemGroup>
 
     <!-- Items include -->
+    <ItemGroup>
+        <None Include="..\..\mahapps.metro.logo.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
     <ItemGroup>
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
         <UpToDateCheckInput Include="**/*.xaml" />

@@ -1,19 +1,5 @@
 <Project>
 
-    <!-- AssemblyInfo -->
-    <PropertyGroup>
-        <Company>MahApps</Company>
-        <Product>MahApps.Metro</Product>
-        <Copyright>Copyright © $([System.DateTime]::Today.ToString(yyyy)) .NET Foundation and Contributors. All rights reserved.</Copyright>
-        <Description>MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.</Description>
-
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-        <Version>3.0.0.0</Version>
-        <AssemblyVersion>3.0.0.0</AssemblyVersion>
-        <FileVersion>3.0.0.0</FileVersion>
-        <InformationalVersion>3.0.0.0</InformationalVersion>
-    </PropertyGroup>
-
     <ItemGroup>
         <Page Update="@(Page)" SubType="Designer" Generator="MSBuild:Compile" />
     </ItemGroup>

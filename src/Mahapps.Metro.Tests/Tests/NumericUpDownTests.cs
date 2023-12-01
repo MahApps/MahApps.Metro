@@ -98,7 +98,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData(255d, "x4", "00ff")]
         [InlineData(-1d, "X4", "FFFFFFFF")]
         [DisplayTestMethodName]
-        public async Task ShouldFormatValueInput(object value, string format, string expectedText)
+        public async Task ShouldFormatValueInput(object? value, string format, string expectedText)
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -142,7 +142,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData(".9", NumericInput.Numbers, 9d)]
         [InlineData("", NumericInput.Numbers, null)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertManualTextInput(string text, NumericInput numericInput, object expectedValue)
+        public async Task ShouldConvertManualTextInput(string text, NumericInput numericInput, object? expectedValue)
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -175,7 +175,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData("0.986", "{}{0:G3} mPa·s", 0.986d, "0.986 mPa·s")] // GH-3376#issuecomment-472324787
         [InlineData("", "{}{0:N2} cm", null, "")]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
+        public async Task ShouldConvertTextInputWithStringFormat(string text, string format, object? expectedValue, string expectedText)
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -213,7 +213,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData("100%", "{}{0}%", null, 100d, "100%", false)]
         [InlineData("100 %", "{}{0}%", null, 100d, "100%", false)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon)
+        public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string? culture, object expectedValue, string expectedText, bool useEpsilon)
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -262,7 +262,7 @@ namespace MahApps.Metro.Tests.Tests
         [InlineData("1 ‰", "0.0‰", "en-EN", 0.001d, "1.0‰")]
         [InlineData("0.25", "{0:0.0000}‰", null, 0.25d, "0.2500‰")]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string culture, object expectedValue, string expectedText)
+        public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string? culture, object expectedValue, string expectedText)
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();

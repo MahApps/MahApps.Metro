@@ -7,16 +7,60 @@
 
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net462;net47;net48;net5.0-windows;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net8.0-windows;net6.0-windows;net462</TargetFrameworks>
+        <LangVersion>latestmajor</LangVersion>
+
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
         <AutoGenerateBindingRedirects Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">true</AutoGenerateBindingRedirects>
-        <LangVersion>latestmajor</LangVersion>
+
+        <UseWPF>true</UseWPF>
+        <Nullable>enable</Nullable>
+
         <NoWarn>$(NoWarn);CS1591</NoWarn>
         <NoError>$(NoError);CS1591</NoError>
-        <UseWPF>true</UseWPF>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <!-- AssemblyInfo -->
+    <PropertyGroup>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+
+        <Company>MahApps</Company>
+        <Product>MahApps.Metro</Product>
+        <Copyright>Copyright © $([System.DateTime]::Today.ToString(yyyy)) .NET Foundation and Contributors. All rights reserved.</Copyright>
+        <Description>MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.</Description>
+
+        <Version Condition="'$(Version)' == ''">3.0.0.0</Version>
+        <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">3.0.0.0</AssemblyVersion>
+        <FileVersion Condition="'$(FileVersion)' == ''">3.0.0.0</FileVersion>
+        <InformationalVersion Condition="'$(InformationalVersion)' == ''">SRC</InformationalVersion>
+    </PropertyGroup>
+
+    <!-- Sign assembly -->
+    <PropertyGroup>
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)/mahapps.public.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>false</DelaySign>
+        <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    </PropertyGroup>
+
+    <!-- SourceLink -->
+    <PropertyGroup>
+        <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- By using EmbedAllSources we don't need SourceLink itself -->
+        <!-- https://github.com/dotnet/sourcelink/blob/master/docs/README.md#embedallsources -->
+        <EmbedAllSources>true</EmbedAllSources>
+    </PropertyGroup>
+
+    <!-- PDB-Options -->
+    <PropertyGroup>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>Embedded</DebugType>
     </PropertyGroup>
 
     <!-- Add the references for all projects and targets -->

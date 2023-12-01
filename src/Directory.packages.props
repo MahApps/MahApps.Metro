@@ -9,8 +9,9 @@
         <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0143" />
 
+        <PackageVersion Include="JetBrains.Annotations" Version="2023.3.0" />
+
         <PackageVersion Include="Caliburn.Micro" Version="4.0.212" />
-        <PackageVersion Include="JetBrains.Annotations" Version="2023.2.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Entypo" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
         <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
@@ -23,22 +24,20 @@
         <PackageVersion Include="MaterialDesignColors" Version="2.1.4" Condition=" $(DefineConstants.Contains(NETCOREAPP)) == true " />
 
         <PackageVersion Include="NHotkey.Wpf" Version="2.1.1" />
-        <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.2045.28" />
-        <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.2.252-beta" />
+        <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />
+        <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta" />
 
-        <PackageVersion Include="System.ComponentModel.Composition" Version="6.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == false " />
-        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="6.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == false " />
-        <PackageVersion Include="System.ComponentModel.Composition" Version="7.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == true " />
-        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="7.0.0" Condition=" $(DefineConstants.Contains(NET6_0_OR_GREATER)) == true " />
+        <PackageVersion Include="System.ComponentModel.Composition" Version="8.0.0" />
+        <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
 
         <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
     </ItemGroup>
 
     <ItemGroup Label="Test">
-        <PackageVersion Include="xunit" Version="2.5.2" />
-        <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
-        <PackageVersion Include="xunit.runner.console" Version="2.5.2" />
-        <PackageVersion Include="xunit.analyzers" Version="1.4.0" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+        <PackageVersion Include="xunit" Version="2.6.2" />
+        <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.4" />
+        <PackageVersion Include="xunit.runner.console" Version="2.6.2" />
+        <PackageVersion Include="xunit.analyzers" Version="1.6.0" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     </ItemGroup>
 </Project>
