@@ -26,6 +26,8 @@
     <!-- AssemblyInfo -->
     <PropertyGroup>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <!-- Required for Hot Reload (See https://github.com/dotnet/sdk/issues/36666) -->
+        <IncludeSourceRevisionInInformationalVersion Condition="'$(Configuration)' == 'Debug'">false</IncludeSourceRevisionInInformationalVersion>
 
         <Company>MahApps</Company>
         <Product>MahApps.Metro</Product>
