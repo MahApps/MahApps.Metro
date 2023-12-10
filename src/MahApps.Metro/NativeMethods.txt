@@ -2,8 +2,6 @@ GetKeyNameText
 GetMonitorInfo
 GetWindowPlacement
 GetWindowRect
-GetWindowText
-GetWindowTextLength
 LoadLibrary
 LoadString
 MapVirtualKey

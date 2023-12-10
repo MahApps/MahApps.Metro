@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
