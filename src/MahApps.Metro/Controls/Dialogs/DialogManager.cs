@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using ControlzEx.Theming;
+using MahApps.Metro.Native;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls.Dialogs

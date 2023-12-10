@@ -12,6 +12,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.WindowsAndMessaging;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Native;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
