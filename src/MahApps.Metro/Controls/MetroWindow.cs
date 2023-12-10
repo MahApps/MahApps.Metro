@@ -159,6 +159,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(IconScalingModeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CloseOnIconDoubleClick"/> dependency property.</summary>
+        public static readonly DependencyProperty CloseOnIconDoubleClickProperty
+            = DependencyProperty.Register(nameof(CloseOnIconDoubleClick),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets the value to close the window if the user double click on the window icon.
+        /// </summary>
+        public bool CloseOnIconDoubleClick
+        {
+            get => (bool)this.GetValue(CloseOnIconDoubleClickProperty);
+            set => this.SetValue(CloseOnIconDoubleClickProperty, BooleanBoxes.Box(value));
+        }
+
         /// <summary>Identifies the <see cref="ShowTitleBar"/> dependency property.</summary>
         public static readonly DependencyProperty ShowTitleBarProperty
             = DependencyProperty.Register(nameof(ShowTitleBar),
@@ -1479,7 +1495,7 @@ namespace MahApps.Metro.Controls
 
             if (this.icon != null)
             {
-                this.icon.MouseDown -= this.IconMouseDown;
+                this.icon.MouseLeftButtonDown -= this.OnIconMouseLeftButtonDown;
             }
 
             this.SizeChanged -= this.MetroWindow_SizeChanged;
@@ -1493,7 +1509,7 @@ namespace MahApps.Metro.Controls
             // set mouse down/up for icon
             if (this.icon != null && this.icon.Visibility == Visibility.Visible)
             {
-                this.icon.MouseDown += this.IconMouseDown;
+                this.icon.MouseDown += this.OnIconMouseLeftButtonDown;
             }
 
             if (this.windowTitleThumb != null)
@@ -1527,20 +1543,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void IconMouseDown(object sender, MouseButtonEventArgs e)
+        private void OnIconMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ClickCount == 2 && this.CloseOnIconDoubleClick)
             {
-                if (e.ClickCount == 2)
-                {
-                    this.Close();
-                }
-                else if (this.ShowSystemMenu)
-                {
+                this.Close();
+            }
+            else if (this.ShowSystemMenu)
+            {
 #pragma warning disable 618
-                    ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
+                ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
 #pragma warning restore 618
-                }
             }
         }
 
