@@ -67,5 +67,35 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(ShowValidationErrorOnMouseOverProperty, BooleanBoxes.Box(value));
         }
+
+        /// <summary>
+        /// Identifies the AlwaysShowValidationError attached property.
+        /// </summary>
+        public static readonly DependencyProperty AlwaysShowValidationErrorProperty
+            = DependencyProperty.RegisterAttached(
+                "AlwaysShowValidationError",
+                typeof(bool),
+                typeof(ValidationHelper),
+                new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets whether the validation error text should always be shown, regardless of focus or mouse position.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(UIElement))]
+        public static bool GetAlwaysShowValidationError(UIElement element)
+        {
+            return (bool)element.GetValue(AlwaysShowValidationErrorProperty);
+        }
+
+        /// <summary>
+        /// Sets whether the validation error text should always be shown, regardless of focus or mouse position.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(UIElement))]
+        public static void SetAlwaysShowValidationError(UIElement element, bool value)
+        {
+            element.SetValue(AlwaysShowValidationErrorProperty, BooleanBoxes.Box(value));
+        }
     }
 }
