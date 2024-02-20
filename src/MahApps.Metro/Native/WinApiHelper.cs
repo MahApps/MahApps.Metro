@@ -110,9 +110,20 @@ namespace MahApps.Metro.Native
             }
 
             var hWnd = new WindowInteropHelper(window).EnsureHandle();
+
+            var placementBefore = new WINDOWPLACEMENT { length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>() };
+            PInvoke.GetWindowPlacement((HWND)hWnd, &placementBefore);
+            if (placementBefore.showCmd is SHOW_WINDOW_CMD.SW_NORMAL or SHOW_WINDOW_CMD.SW_SHOWMAXIMIZED && placement.showCmd is SHOW_WINDOW_CMD.SW_SHOWMAXIMIZED)
+            {
+                if (PInvoke.MoveWindow((HWND)hWnd, placement.rcNormalPosition.X, placement.rcNormalPosition.Y, placement.rcNormalPosition.Width, placement.rcNormalPosition.Height, false) == false)
+                {
+                    Trace.TraceWarning($"{window}: The window can not moved! (MoveWindow) {placement}");
+                }
+            }
+
             if (PInvoke.SetWindowPlacement(new HWND(hWnd), &placement) == false)
             {
-                Trace.TraceWarning($"{window}: The window placement {wp} could not be (SetWindowPlacement)!");
+                Trace.TraceWarning($"{window}: The window placement {wp} could not be set (SetWindowPlacement) {placement}!");
             }
         }
 

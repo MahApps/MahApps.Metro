@@ -6,6 +6,7 @@ LoadLibrary
 LoadString
 MapVirtualKey
 MonitorFromWindow
+MoveWindow
 ReleaseCapture
 SendMessage
 SetWindowPlacement
