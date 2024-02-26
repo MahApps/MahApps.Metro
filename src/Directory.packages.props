@@ -4,9 +4,9 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup Label="Build">
-    <PackageVersion Include="ControlzEx" Version="7.0.0-alpha0018" />
+    <PackageVersion Include="ControlzEx" Version="7.0.0-alpha0021" />
     <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
-    <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0164" />
+    <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0167" />
     <PackageVersion Include="JetBrains.Annotations" Version="2023.3.0" />
     <PackageVersion Include="Caliburn.Micro" Version="4.0.212" />
     <PackageVersion Include="MahApps.Metro.IconPacks.Entypo" Version="4.11.0" />
