@@ -9,6 +9,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:markup="clr-namespace:MetroDemo.Markup"
              d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -159,17 +160,8 @@
                                       Grid.Row="1"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static mah:TimePartVisibility.All}">
-                                <ComboBox.ItemsSource>
-                                    <x:Array Type="mah:TimePartVisibility">
-                                        <mah:TimePartVisibility>All</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>HourMinute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Hour</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Minute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Second</mah:TimePartVisibility>
-                                    </x:Array>
-                                </ComboBox.ItemsSource>
-                            </ComboBox>
+                                      ItemsSource="{Binding Source={markup:EnumBindingSource {x:Type mah:TimePartVisibility}}, Mode=OneTime}"
+                                      SelectedItem="{x:Static mah:TimePartVisibility.All}" />
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
@@ -179,17 +171,8 @@
                                       Grid.Row="2"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static mah:TimePartVisibility.All}">
-                                <ComboBox.ItemsSource>
-                                    <x:Array Type="mah:TimePartVisibility">
-                                        <mah:TimePartVisibility>All</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>HourMinute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Hour</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Minute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Second</mah:TimePartVisibility>
-                                    </x:Array>
-                                </ComboBox.ItemsSource>
-                            </ComboBox>
+                                      ItemsSource="{Binding Source={markup:EnumBindingSource {x:Type mah:TimePartVisibility}}, Mode=OneTime}"
+                                      SelectedItem="{x:Static mah:TimePartVisibility.All}" />
 
                             <Label Grid.Row="3"
                                    Grid.Column="0"

@@ -16,6 +16,7 @@ namespace MahApps.Metro.Controls
         Minute = 1 << 2,
         Second = 1 << 3,
         HourMinute = Hour | Minute,
+        MinuteSecond = Minute | Second,
         All = HourMinute | Second
     }
 }

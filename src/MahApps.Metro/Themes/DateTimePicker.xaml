@@ -354,18 +354,20 @@
                                                           FontSize="{TemplateBinding FontSize}"
                                                           ItemStringFormat="{TemplateBinding HoursItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceHours}" />
-                                                <Label Grid.Column="1"
-                                                       Content=":"
-                                                       Visibility="{Binding Path=Visibility, ElementName=PART_MinutePicker}" />
+                                                <Label x:Name="PART_HourMinuteColon"
+                                                       Grid.Column="1"
+                                                       Visibility="Collapsed"
+                                                       Content=":" />
                                                 <ComboBox x:Name="PART_MinutePicker"
                                                           Grid.Column="2"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
                                                           ItemStringFormat="{TemplateBinding MinutesItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceMinutes}" />
-                                                <Label Grid.Column="3"
-                                                       Content=":"
-                                                       Visibility="{Binding Path=Visibility, ElementName=PART_SecondPicker}" />
+                                                <Label x:Name="PART_MinuteSecondColon"
+                                                       Grid.Column="3"
+                                                       Visibility="Collapsed"
+                                                       Content=":" />
                                                 <ComboBox x:Name="PART_SecondPicker"
                                                           Grid.Column="4"
                                                           FontFamily="{TemplateBinding FontFamily}"
@@ -395,6 +397,21 @@
 
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="PART_HourPicker" Property="Visibility" Value="Visible" />
+                                <Condition SourceName="PART_MinutePicker" Property="Visibility" Value="Visible" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_HourMinuteColon" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="PART_MinutePicker" Property="Visibility" Value="Visible" />
+                                <Condition SourceName="PART_SecondPicker" Property="Visibility" Value="Visible" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_MinuteSecondColon" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+
                         <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Command" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
                         </Trigger>
