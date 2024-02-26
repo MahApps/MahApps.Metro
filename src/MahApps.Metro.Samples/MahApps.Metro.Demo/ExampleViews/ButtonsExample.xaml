@@ -329,6 +329,7 @@
 
             <mah:ToggleSwitch Margin="{StaticResource ControlMargin}"
                               Header="Header"
+                              Toggled="ToggleSwitch_OnToggled"
                               IsOn="{Binding CanUseToggleSwitch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <mah:ToggleSwitch Margin="{StaticResource ControlMargin}"
                               CommandParameter="{Binding}"

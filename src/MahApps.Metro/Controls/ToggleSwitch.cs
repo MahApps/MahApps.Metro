@@ -415,14 +415,23 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Toggled event
+        /// </summary>
+        public static readonly RoutedEvent ToggledEvent = EventManager.RegisterRoutedEvent(nameof(Toggled), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ToggleSwitch));
+
+        /// <summary>
         /// Occurs when "On"/"Off" state changes for this ToggleSwitch.
         /// </summary>
-        public event RoutedEventHandler? Toggled;
+        public event RoutedEventHandler Toggled
+        {
+            add => this.AddHandler(ToggledEvent, value);
+            remove => this.RemoveHandler(ToggledEvent, value);
+        }
 
         /// <summary>This method is invoked when the <see cref="IsOnProperty"/> changes.</summary>
         protected virtual void OnToggled()
         {
-            this.Toggled?.Invoke(this, new RoutedEventArgs());
+            this.RaiseEvent(new RoutedEventArgs(ToggledEvent));
         }
 
         static ToggleSwitch()

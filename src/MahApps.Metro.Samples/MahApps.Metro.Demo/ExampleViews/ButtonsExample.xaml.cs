@@ -34,5 +34,10 @@ namespace MetroDemo.ExampleViews
             var value = ((Selector)sender).SelectedValue;
             Debug.WriteLine($">> SplitButton SelectionChanged: index={index}, item={item}, value={value}");
         }
+
+        private void ToggleSwitch_OnToggled(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine($">> ToggleSwitch Toggled: sender={sender}, OriginalSource={e.OriginalSource}, Source={e.Source}, IsOn={(sender as ToggleSwitch)?.IsOn}");
+        }
     }
 }
