@@ -240,9 +240,10 @@ namespace MahApps.Metro.Controls
             var adornedElement = this.AdornedElement;
             var isOpen = adornedElement is not null
                          && Validation.GetHasError(adornedElement)
-                         && adornedElement.IsKeyboardFocusWithin
-                         && this.ShowValidationErrorOnKeyboardFocus
-                         && ValidationHelper.GetShowValidationErrorOnKeyboardFocus(adornedElement);
+                         && (ValidationHelper.GetAlwaysShowValidationError(adornedElement)
+                             || (adornedElement.IsKeyboardFocusWithin
+                                 && this.ShowValidationErrorOnKeyboardFocus
+                                 && ValidationHelper.GetShowValidationErrorOnKeyboardFocus(adornedElement)));
             return isOpen;
         }
 
