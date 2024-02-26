@@ -132,10 +132,19 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding ElementName=ValidationPopup, Path=CanShow, Mode=OneWay}" Value="True" />
-                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(mah:ValidationHelper.ShowValidationErrorOnKeyboardFocus), Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=ValidationPopup, Path=ShowValidationErrorOnKeyboardFocus, Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ValidationPopup, Path=CanShow, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(mah:ValidationHelper.AlwaysShowValidationError), Mode=OneWay}" Value="True" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
             </MultiDataTrigger>
@@ -153,13 +162,6 @@
                     <Condition Binding="{Binding ElementName=RedTriangle, Path=IsMouseOver, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=ValidationPopup, Path=ShowValidationErrorOnMouseOver, Mode=OneWay}" Value="True" />
-                </MultiDataTrigger.Conditions>
-                <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
-            </MultiDataTrigger>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
-                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(mah:ValidationHelper.AlwaysShowValidationError), Mode=OneWay}" Value="True" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
             </MultiDataTrigger>

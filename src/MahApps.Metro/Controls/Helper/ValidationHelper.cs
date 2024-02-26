@@ -108,7 +108,7 @@ namespace MahApps.Metro.Controls
                 "AlwaysShowValidationError",
                 typeof(bool),
                 typeof(ValidationHelper),
-                new PropertyMetadata(BooleanBoxes.TrueBox));
+                new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets whether the validation error text should always be shown, regardless of focus or mouse position.
