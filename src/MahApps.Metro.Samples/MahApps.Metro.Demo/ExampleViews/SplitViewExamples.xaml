@@ -117,13 +117,15 @@
             </mah:SplitView.Pane>
 
             <Grid Background="CornflowerBlue">
-                <TextBlock Margin="20"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="20"
-                           Foreground="White"
-                           Text="This is the main content area and should be blue"
-                           TextWrapping="Wrap" />
+                <StackPanel>
+                    <TextBlock Margin="10"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               FontSize="20"
+                               Foreground="Black"
+                               Text="{Binding ElementName=sliderTest, Path=Value, Mode=OneWay, FallbackValue=0}" />
+                    <Slider x:Name="sliderTest" Margin="10" Minimum="0" Maximum="100" Value="42" />
+                </StackPanel>
             </Grid>
 
         </mah:SplitView>
