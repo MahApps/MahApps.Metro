@@ -383,6 +383,36 @@
 
     <markup:StaticResource x:Key="MahApps.Brushes.SystemControlDescriptionTextForeground" ResourceKey="MahApps.Brushes.SystemControlPageTextBaseMedium" />
 
+    <!--  Resources for MahApps.Styles.TextBox.Win10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundAltMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundAltMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BackgroundFocused" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushFocused" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ForegroundFocused" ResourceKey="MahApps.Brushes.SystemControlForegroundChromeBlackHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledChromeDisabledLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.PlaceholderForeground" ResourceKey="MahApps.Brushes.SystemControlPageTextBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.PlaceholderForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlPageTextBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.PlaceholderForegroundFocused" ResourceKey="MahApps.Brushes.SystemControlPageTextChromeBlackMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.PlaceholderForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledChromeDisabledLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.HeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.HeaderForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.SelectionHighlightColor" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundChromeBlackMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
+
     <!--  Resources for MahApps.Styles.Button.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Button.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
