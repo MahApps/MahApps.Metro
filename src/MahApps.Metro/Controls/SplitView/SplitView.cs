@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,7 +34,7 @@ namespace MahApps.Metro.Controls
     [TemplateVisualState(Name = "OpenCompactOverlayRight", GroupName = "DisplayModeStates")]
     [ContentProperty(nameof(Content))]
     [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
-    public class SplitView : Control
+    public class SplitView : ContentControl
     {
         private Rectangle? lightDismissLayer;
         private RectangleGeometry? paneClipRectangle;
@@ -67,23 +68,6 @@ namespace MahApps.Metro.Controls
         {
             get => (double)this.GetValue(CompactPaneLengthProperty);
             set => this.SetValue(CompactPaneLengthProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="Content"/> dependency property.</summary>
-        public static readonly DependencyProperty ContentProperty
-            = DependencyProperty.Register(nameof(Content),
-                                          typeof(UIElement),
-                                          typeof(SplitView),
-                                          new PropertyMetadata(null));
-
-        /// <summary>
-        ///     Gets or sets the contents of the main panel of a <see cref="SplitView" />.
-        /// </summary>
-        /// <returns>The contents of the main panel of a <see cref="SplitView" />. The default is null.</returns>
-        public UIElement? Content
-        {
-            get => (UIElement?)this.GetValue(ContentProperty);
-            set => this.SetValue(ContentProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DisplayMode"/> dependency property.</summary>
@@ -337,18 +321,85 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="Pane"/> dependency property.</summary>
         public static readonly DependencyProperty PaneProperty
             = DependencyProperty.Register(nameof(Pane),
-                                          typeof(UIElement),
+                                          typeof(object),
                                           typeof(SplitView),
-                                          new PropertyMetadata(null, UpdateLogicalChild));
+                                          new FrameworkPropertyMetadata(
+                                              null,
+                                              new PropertyChangedCallback(OnPaneChanged)));
 
         /// <summary>
         ///     Gets or sets the contents of the pane of a <see cref="SplitView" />.
         /// </summary>
         /// <returns>The contents of the pane of a <see cref="SplitView" />. The default is null.</returns>
-        public UIElement? Pane
+        [Bindable(true), Category("Content")]
+        public object? Pane
         {
-            get => (UIElement?)this.GetValue(PaneProperty);
+            get => this.GetValue(PaneProperty);
             set => this.SetValue(PaneProperty, value);
+        }
+
+        /// <summary>
+        ///     Called when PaneProperty is invalidated
+        /// </summary>
+        private static void OnPaneChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SplitView splitView = (SplitView)d;
+
+            splitView.OnPaneChanged(e.OldValue, e.NewValue);
+        }
+
+        /// <summary>
+        ///     This method is invoked when the Header property changes.
+        /// </summary>
+        /// <param name="oldPane">The old value of the Header property.</param>
+        /// <param name="newPane">The new value of the Header property.</param>
+        protected virtual void OnPaneChanged(object oldPane, object newPane)
+        {
+            this.RemoveLogicalChild(oldPane);
+            this.AddLogicalChild(newPane);
+
+            if (newPane is FrameworkElement frameworkElement)
+            {
+                frameworkElement.DataContext = this.DataContext;
+            }
+        }
+
+        /// <summary>Identifies the <see cref="PaneTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty PaneTemplateProperty
+            = DependencyProperty.Register(
+                nameof(PaneTemplate),
+                typeof(DataTemplate),
+                typeof(SplitView),
+                new FrameworkPropertyMetadata(
+                    null,
+                    new PropertyChangedCallback(OnPaneTemplateChanged)));
+
+        /// <summary>
+        ///     PaneTemplate is the template used to display the <seealso cref="Pane"/>.
+        /// </summary>
+        [Bindable(true), Category("Content")]
+        public DataTemplate? PaneTemplate
+        {
+            get => (DataTemplate?)this.GetValue(PaneTemplateProperty);
+            set => this.SetValue(PaneTemplateProperty, value);
+        }
+
+        /// <summary>
+        ///     Called when PaneTemplateProperty is invalidated on "d."
+        /// </summary>
+        private static void OnPaneTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SplitView ctrl = (SplitView)d;
+            ctrl.OnPaneTemplateChanged((DataTemplate?)e.OldValue, (DataTemplate?)e.NewValue);
+        }
+
+        /// <summary>
+        ///     This method is invoked when the PaneTemplate property changes.
+        /// </summary>
+        /// <param name="oldPaneTemplate">The old value of the PaneTemplate property.</param>
+        /// <param name="newPaneTemplate">The new value of the PaneTemplate property.</param>
+        protected virtual void OnPaneTemplateChanged(DataTemplate? oldPaneTemplate, DataTemplate? newPaneTemplate)
+        {
         }
 
         /// <summary>Identifies the <see cref="PaneBackground"/> dependency property.</summary>
@@ -502,25 +553,6 @@ namespace MahApps.Metro.Controls
         private void ResizingThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             this.SetCurrentValue(OpenPaneLengthProperty, this.PanePlacement == SplitViewPanePlacement.Left ? this.OpenPaneLength + e.HorizontalChange : this.OpenPaneLength - e.HorizontalChange);
-        }
-
-        private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (dependencyObject is not SplitView splitView)
-            {
-                return;
-            }
-
-            if (e.OldValue is FrameworkElement oldChild)
-            {
-                splitView.RemoveLogicalChild(oldChild);
-            }
-
-            if (e.NewValue is FrameworkElement newChild)
-            {
-                splitView.AddLogicalChild(newChild);
-                newChild.DataContext = splitView.DataContext;
-            }
         }
 
         /// <inheritdoc />
