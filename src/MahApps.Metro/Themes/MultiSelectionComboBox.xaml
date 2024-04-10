@@ -437,7 +437,7 @@
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                             <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
                                 <mah:ClipBorder x:Name="PopupBorder"
-                                                Height="200"
+                                                Height="Auto"
                                                 HorizontalAlignment="Stretch"
                                                 Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
                                                 BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
