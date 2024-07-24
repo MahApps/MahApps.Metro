@@ -16,6 +16,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
+using MahApps.Metro.Automation.Peers;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {
@@ -1017,6 +1020,14 @@ namespace MahApps.Metro.Controls
             this.OnValueChanged(this.Value, this.Value);
 
             this.scrollViewer = null;
+        }
+
+        /// <summary>
+        /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new NumericUpdDownAutomationPeer(this);
         }
 
         private void ToggleReadOnlyMode(bool isReadOnly)
