@@ -15,25 +15,22 @@ namespace MetroDemo
         /// <inheritdoc />
         protected override void OnStartup(StartupEventArgs e)
         {
-            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            base.OnStartup(e);
+
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncAll;
+
             ThemeManager.Current.SyncTheme();
 
-            ThemeManager.Current.ThemeChanged += HandleThemeChanged;
+            ThemeManager.Current.ThemeChanged += CurrentOnThemeChanged;
 
 #pragma warning disable CS0618 // Type or member is obsolete
             AppModeHelper.SyncAppMode();
-#pragma warning restore CS0618 // Type or member is obsolete
 
-            base.OnStartup(e);
-
-            return;
-
-            void HandleThemeChanged(object? sender, ThemeChangedEventArgs themeChangedEventArgs)
+            void CurrentOnThemeChanged(object? sender, ThemeChangedEventArgs themeChangedEventArgs)
             {
-#pragma warning disable CS0618 // Type or member is obsolete
                 AppModeHelper.SyncAppMode();
-#pragma warning restore CS0618 // Type or member is obsolete
             }
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }
