@@ -17,7 +17,6 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 using MahApps.Metro.Automation.Peers;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 
 namespace MahApps.Metro.Controls
