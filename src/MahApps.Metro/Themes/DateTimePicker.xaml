@@ -356,8 +356,8 @@
                                                           ItemsSource="{TemplateBinding SourceHours}" />
                                                 <Label x:Name="PART_HourMinuteColon"
                                                        Grid.Column="1"
-                                                       Visibility="Collapsed"
-                                                       Content=":" />
+                                                       Content=":"
+                                                       Visibility="Collapsed" />
                                                 <ComboBox x:Name="PART_MinutePicker"
                                                           Grid.Column="2"
                                                           FontFamily="{TemplateBinding FontFamily}"
@@ -366,8 +366,8 @@
                                                           ItemsSource="{TemplateBinding SourceMinutes}" />
                                                 <Label x:Name="PART_MinuteSecondColon"
                                                        Grid.Column="3"
-                                                       Visibility="Collapsed"
-                                                       Content=":" />
+                                                       Content=":"
+                                                       Visibility="Collapsed" />
                                                 <ComboBox x:Name="PART_SecondPicker"
                                                           Grid.Column="4"
                                                           FontFamily="{TemplateBinding FontFamily}"

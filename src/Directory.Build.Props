@@ -67,8 +67,14 @@
 
     <!-- Add the references for all projects and targets -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" IncludeAssets="build;compile" />
-        <PackageReference Include="WpfAnalyzers" PrivateAssets="all" IncludeAssets="build;analyzers" />
+        <PackageReference Include="JetBrains.Annotations">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>compile; build</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="WpfAnalyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>build;analyzers</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

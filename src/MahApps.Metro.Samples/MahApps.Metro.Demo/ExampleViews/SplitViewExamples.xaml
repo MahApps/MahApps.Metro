@@ -124,7 +124,11 @@
                                FontSize="20"
                                Foreground="Black"
                                Text="{Binding ElementName=sliderTest, Path=Value, Mode=OneWay, FallbackValue=0}" />
-                    <Slider x:Name="sliderTest" Margin="10" Minimum="0" Maximum="100" Value="42" />
+                    <Slider x:Name="sliderTest"
+                            Margin="10"
+                            Maximum="100"
+                            Minimum="0"
+                            Value="42" />
                 </StackPanel>
             </Grid>
 

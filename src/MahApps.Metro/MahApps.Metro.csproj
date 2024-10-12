@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -33,6 +33,12 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
+
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Condition="'$(TargetFramework)' != 'net8.0-windows'" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
+        <PackageReference Include="System.Memory" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">

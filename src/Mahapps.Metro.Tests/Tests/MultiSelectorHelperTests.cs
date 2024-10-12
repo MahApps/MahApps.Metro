@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Threading.Tasks;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void SelectedItemsShouldBeSyncedByMultiSelectionHelper()
+        public async Task SelectedItemsShouldBeSyncedByMultiSelectionHelper()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -37,7 +38,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void PreSelectedItemsShouldBeSyncedByMultiSelectionHelper()
+        public async Task PreSelectedItemsShouldBeSyncedByMultiSelectionHelper()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -58,7 +59,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void SelectedItemsShouldBeSyncedAndContainsOnlyOnce()
+        public async Task SelectedItemsShouldBeSyncedAndContainsOnlyOnce()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -87,7 +88,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void AddedItemShouldBeSynced()
+        public async Task AddedItemShouldBeSynced()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -126,7 +127,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void RemovedItemShouldBeSynced()
+        public async Task RemovedItemShouldBeSynced()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -153,7 +154,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void MovedItemShouldBeSynced()
+        public async Task MovedItemShouldBeSynced()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -192,7 +193,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void ReplacedItemShouldBeSynced()
+        public async Task ReplacedItemShouldBeSynced()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
@@ -238,7 +239,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async void ClearedItemShouldBeSynced()
+        public async Task ClearedItemShouldBeSynced()
         {
             await this.fixture.PrepareForTestAsync();
             await TestHost.SwitchToAppThread();
