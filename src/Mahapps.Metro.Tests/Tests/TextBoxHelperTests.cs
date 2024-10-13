@@ -64,13 +64,16 @@ namespace MahApps.Metro.Tests.Tests
             await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentProperty.Name });
             await TestHost.SwitchToAppThread();
 
-            var content = "42";
+            var content = "M237.5 75A12.5 12.5 0 0 0 237.5 100A12.5 12.5 0 0 1 250 112.5V212.5A12.5 12.5 0 0 1 237.5 225H142.6875L136.8 241.675A12.5125 12.5125 0 0 1 125 250H62.5A12.5 12.5 0 0 1 50 237.5V112.5A12.5 12.5 0 0 1 62.5 100A12.5 12.5 0 0 0 62.5 75A37.5 37.5 0 0 0 25 112.5V237.5A37.5 37.5 0 0 0 62.5 275H125C141.325 275 155.2125 264.5625 160.375 250H237.5A37.5 37.5 0 0 0 275 212.5V112.5A37.5 37.5 0 0 0 237.5 75zM174.875 76.2A62.525 62.525 0 0 0 96.2125 172.5375A62.5 62.5 0 0 0 192.55 93.875L228.8 57.625A12.5 12.5 0 0 0 211.1125 39.9625L174.8625 76.2000000000001zM166.925 101.825A37.5 37.5 0 1 1 113.875 154.875A37.5 37.5 0 0 1 166.9125 101.8375z";
 
-            this.fixture.Window?.TestTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.Content);
             this.fixture.Window?.TestButtonTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
             Assert.Equal(content, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Content);
 
+            content = "42";
+
+            this.fixture.Window?.TestTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.Equal(content, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.Content);
+            
             this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
             Assert.Equal(content, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Content);
             this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
