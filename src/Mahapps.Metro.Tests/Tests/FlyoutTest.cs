@@ -10,17 +10,16 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
-using Xunit;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class FlyoutTest : AutomationTestBase
+    [TestFixture]
+    public class FlyoutTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task AdaptsWindowCommandsToDarkFlyout()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             var flyout = new Flyout { Theme = FlyoutTheme.Dark };
@@ -39,54 +38,54 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await completionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
             window.AssertWindowButtonCommandsColor(((SolidColorBrush)flyout.Foreground).Color);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task DefaultFlyoutPositionIsLeft()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(Position.Left, window.DefaultFlyout.Position);
+            Assert.That(window.DefaultFlyout.Position, Is.EqualTo(Position.Left));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task FlyoutIsClosedByDefault()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.False(window.DefaultFlyout.IsOpen);
+            Assert.That(window.DefaultFlyout.IsOpen, Is.False);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task FlyoutIsHiddenByDefault()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             // root grid should be hidden
-            Assert.Equal(Visibility.Hidden, window.DefaultFlyout.Visibility);
+            Assert.That(window.DefaultFlyout.Visibility, Is.EqualTo(Visibility.Hidden));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task HiddenIconIsBelowFlyout()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             window.IconOverlayBehavior = OverlayBehavior.Never;
 
-            Assert.NotNull(window.Icon);
+            Assert.That(window.Icon, Is.Not.Null);
             var icon = window.FindChild<FrameworkElement>("PART_Icon");
-            Assert.NotNull(icon);
+            Assert.That(icon, Is.Not.Null);
 
             var flyout = window.LeftFlyout;
 
@@ -103,27 +102,27 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await completionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
             var iconZIndex = Panel.GetZIndex(icon);
             var flyoutZIndex = Panel.GetZIndex(flyout);
 
-            Assert.Equal(0, flyoutZIndex);
-            Assert.Equal(1, iconZIndex);
-            Assert.True(flyoutZIndex < iconZIndex);
+            Assert.That(flyoutZIndex, Is.EqualTo(0));
+            Assert.That(iconZIndex, Is.EqualTo(1));
+            Assert.That(flyoutZIndex < iconZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task HiddenLeftWindowCommandsAreBelowFlyout()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
 
             var windowCommands = window.FindChild<ContentPresenter>("PART_LeftWindowCommands");
-            Assert.NotNull(windowCommands);
+            Assert.That(windowCommands, Is.Not.Null);
 
             var flyout = window.LeftFlyout;
 
@@ -140,27 +139,27 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await completionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
             var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
             var flyoutZIndex = Panel.GetZIndex(flyout);
 
-            Assert.Equal(0, flyoutZIndex);
-            Assert.Equal(1, windowCommandsZIndex);
-            Assert.True(flyoutZIndex < windowCommandsZIndex);
+            Assert.That(flyoutZIndex, Is.EqualTo(0));
+            Assert.That(windowCommandsZIndex, Is.EqualTo(1));
+            Assert.That(flyoutZIndex < windowCommandsZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task HiddenRightWindowCommandsAreBelowFlyout()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             window.RightWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
 
             var windowCommands = window.FindChild<ContentPresenter>("PART_RightWindowCommands");
-            Assert.NotNull(windowCommands);
+            Assert.That(windowCommands, Is.Not.Null);
 
             var flyout = window.RightFlyout;
 
@@ -177,25 +176,25 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await completionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
             var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
             var flyoutZIndex = Panel.GetZIndex(flyout);
 
-            Assert.Equal(0, flyoutZIndex);
-            Assert.Equal(1, windowCommandsZIndex);
-            Assert.True(flyoutZIndex < windowCommandsZIndex);
+            Assert.That(flyoutZIndex, Is.EqualTo(0));
+            Assert.That(windowCommandsZIndex, Is.EqualTo(1));
+            Assert.That(flyoutZIndex < windowCommandsZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task WindowButtonCommandsAreOverFlyout()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             var windowCommands = window.FindChild<ContentPresenter>("PART_WindowButtonCommands");
-            Assert.NotNull(windowCommands);
+            Assert.That(windowCommands, Is.Not.Null);
 
             var flyout = window.RightFlyout;
 
@@ -212,19 +211,19 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await completionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
             var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
             var flyoutZIndex = Panel.GetZIndex(flyout);
 
-            Assert.True(windowCommandsZIndex > flyoutZIndex);
+            Assert.That(windowCommandsZIndex > flyoutZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task RaisesIsOpenChangedEvent()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             var flyout = window.RightFlyout;
@@ -242,14 +241,14 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await completionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task RaisesClosingFinishedEvent()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             var flyout = window.RightFlyout;
@@ -275,48 +274,47 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await openingCompletionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
             flyout.IsOpen = false;
 
             var closed = await closingCompletionSource.Task;
-            Assert.True(closed);
+            Assert.That(closed, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task FindFlyoutWithFindChildren()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            var ex = Record.Exception(() =>
+            Assert.DoesNotThrow(() =>
                 {
                     var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
                     var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == nameof(window.FlyoutOnGrid));
-                    Assert.NotNull(flyoutOnGrid);
+                    Assert.That(flyoutOnGrid, Is.Not.Null);
                 });
-            Assert.Null(ex);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task DefaultFlyoutThemeIsDark()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
+            Assert.That(window.DefaultFlyout.Theme, Is.EqualTo(FlyoutTheme.Dark));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task WindowButtonCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.NotNull(window.WindowButtonCommands);
+            Assert.That(window.WindowButtonCommands, Is.Not.Null);
 
             var brush = Brushes.Red;
 
@@ -345,26 +343,26 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await openingCompletionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
-            Assert.Equal(brush, window.WindowButtonCommands.Foreground);
+            Assert.That(window.WindowButtonCommands.Foreground, Is.EqualTo(brush));
 
             flyout.IsOpen = false;
 
             var closed = await closingCompletionSource.Task;
-            Assert.True(closed);
+            Assert.That(closed, Is.True);
 
-            Assert.Equal(brush, window.WindowButtonCommands.Foreground);
+            Assert.That(window.WindowButtonCommands.Foreground, Is.EqualTo(brush));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task LeftWindowCommandsForegroundBrushShouldAlwaysOverrideDefaultWindowCommandsBrush()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.NotNull(window.LeftWindowCommands);
+            Assert.That(window.LeftWindowCommands, Is.Not.Null);
 
             var brush = Brushes.Red;
 
@@ -393,26 +391,26 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await openingCompletionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
-            Assert.Equal(brush, window.LeftWindowCommands.Foreground);
+            Assert.That(window.LeftWindowCommands.Foreground, Is.EqualTo(brush));
 
             flyout.IsOpen = false;
 
             var closed = await closingCompletionSource.Task;
-            Assert.True(closed);
+            Assert.That(closed, Is.True);
 
-            Assert.Equal(brush, window.LeftWindowCommands.Foreground);
+            Assert.That(window.LeftWindowCommands.Foreground, Is.EqualTo(brush));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task RightWindowCommandsForegroundBrushShouldAlwaysOverrideDefaultWindowCommandsBrush()
         {
-            await TestHost.SwitchToAppThread();
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.NotNull(window.RightWindowCommands);
+            Assert.That(window.RightWindowCommands, Is.Not.Null);
 
             var brush = Brushes.Red;
 
@@ -441,16 +439,18 @@ namespace MahApps.Metro.Tests.Tests
             flyout.IsOpen = true;
 
             var opened = await openingCompletionSource.Task;
-            Assert.True(opened);
+            Assert.That(opened, Is.True);
 
-            Assert.Equal(brush, window.RightWindowCommands.Foreground);
+            Assert.That(window.RightWindowCommands.Foreground, Is.EqualTo(brush));
 
             flyout.IsOpen = false;
 
             var closed = await closingCompletionSource.Task;
-            Assert.True(closed);
+            Assert.That(closed, Is.True);
 
-            Assert.Equal(brush, window.RightWindowCommands.Foreground);
+            Assert.That(window.RightWindowCommands.Foreground, Is.EqualTo(brush));
+
+            window.Close();
         }
     }
 }

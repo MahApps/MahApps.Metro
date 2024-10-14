@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
-using Xunit;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class AutoWatermarkTest : AutomationTestBase
+    [TestFixture]
+    public class AutoWatermarkTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAutoWatermark()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<AutoWatermarkTestWindow>();
 
             window.Invoke(() =>
                 {
                     var autoWatermark = "AutoWatermark";
 
-                    Assert.Equal(autoWatermark, window.TestTextBox.GetValue(TextBoxHelper.WatermarkProperty));
-                    Assert.Equal(autoWatermark, window.TestTextBoxSubModel.GetValue(TextBoxHelper.WatermarkProperty));
-                    Assert.Equal(autoWatermark, window.TestComboBox.GetValue(TextBoxHelper.WatermarkProperty));
-                    Assert.Equal(autoWatermark, window.TestNumericUpDown.GetValue(TextBoxHelper.WatermarkProperty));
-                    Assert.Equal(autoWatermark, window.TestDatePicker.GetValue(TextBoxHelper.WatermarkProperty));
-                    Assert.Equal(autoWatermark, window.TestHotKeyBox.GetValue(TextBoxHelper.WatermarkProperty));
+                    Assert.That(window.TestTextBox.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestTextBoxSubModel.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestComboBox.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestNumericUpDown.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestDatePicker.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestHotKeyBox.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
                 });
+
+            window.Close();
         }
     }
 }

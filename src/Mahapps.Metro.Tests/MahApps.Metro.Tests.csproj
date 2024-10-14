@@ -31,10 +31,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="xunit" />
-        <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-        <PackageReference Include="xunit.runner.console" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
-        <PackageReference Include="xunit.analyzers" PrivateAssets="all" IncludeAssets="build; analyzers" />
+        <PackageReference Include="NUnit" />
+        <PackageReference Include="NUnit3TestAdapter" />
+        <PackageReference Include="NUnit.Analyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
     </ItemGroup>
 

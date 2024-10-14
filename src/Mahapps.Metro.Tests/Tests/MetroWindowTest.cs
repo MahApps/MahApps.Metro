@@ -11,100 +11,92 @@ using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
-using Xunit;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class MetroWindowTest : AutomationTestBase
+    [TestFixture]
+    public class MetroWindowTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MetroWindowSmokeTest()
         {
-            await TestHost.SwitchToAppThread();
-
-            await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task WindowCommandsShouldHaveTheParentWindow()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            Assert.That(window.LeftWindowCommands, Is.Not.Null);
+            Assert.That(window.RightWindowCommands, Is.Not.Null);
+            Assert.That(window.WindowButtonCommands, Is.Not.Null);
 
-            Assert.NotNull(window.LeftWindowCommands);
-            Assert.NotNull(window.RightWindowCommands);
-            Assert.NotNull(window.WindowButtonCommands);
+            Assert.That(window.LeftWindowCommands.ParentWindow, Is.EqualTo(window));
+            Assert.That(window.RightWindowCommands.ParentWindow, Is.EqualTo(window));
+            Assert.That(window.WindowButtonCommands.ParentWindow, Is.EqualTo(window));
 
-            Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
-            Assert.Equal(window, window.RightWindowCommands.ParentWindow);
-            Assert.Equal(window, window.WindowButtonCommands.ParentWindow);
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task CheckDefaultOverlayBehaviors()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            Assert.That(window.IconOverlayBehavior, Is.EqualTo(OverlayBehavior.Never));
+            Assert.That(window.LeftWindowCommandsOverlayBehavior, Is.EqualTo(WindowCommandsOverlayBehavior.Never));
+            Assert.That(window.RightWindowCommandsOverlayBehavior, Is.EqualTo(WindowCommandsOverlayBehavior.Never));
+            Assert.That(window.WindowButtonCommandsOverlayBehavior, Is.EqualTo(OverlayBehavior.Always));
 
-            Assert.Equal(OverlayBehavior.Never, window.IconOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.LeftWindowCommandsOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.RightWindowCommandsOverlayBehavior);
-            Assert.Equal(OverlayBehavior.Always, window.WindowButtonCommandsOverlayBehavior);
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task IconShouldBeCollapsedByDefault()
         {
-            await TestHost.SwitchToAppThread();
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
             var icon = window.FindChild<ContentControl>("PART_Icon");
-            Assert.NotNull(icon);
+            Assert.That(icon, Is.Not.Null);
 
-            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+            Assert.That(icon.Visibility, Is.EqualTo(Visibility.Collapsed));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task IconShouldBeCollapsedWithShowIconOnTitleBarFalse()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowIconOnTitleBar = false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>(w => w.ShowIconOnTitleBar = false);
 
             var icon = window.FindChild<ContentControl>("PART_Icon");
-            Assert.NotNull(icon);
+            Assert.That(icon, Is.Not.Null);
 
-            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+            Assert.That(icon.Visibility, Is.EqualTo(Visibility.Collapsed));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task IconShouldBeCollapsedWithShowTitleBarFalse()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowTitleBar = false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>(w => w.ShowTitleBar = false);
 
             var icon = window.FindChild<ContentControl>("PART_Icon");
-            Assert.NotNull(icon);
+            Assert.That(icon, Is.Not.Null);
 
-            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+            Assert.That(icon.Visibility, Is.EqualTo(Visibility.Collapsed));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task IconShouldBeVisibleWithShowTitleBarFalseAndOverlayBehaviorHiddenTitleBar()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w =>
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>(w =>
                 {
                     w.Icon = new BitmapImage(new Uri("pack://application:,,,/MahApps.Metro.Tests;component/mahapps.metro.logo2.ico", UriKind.RelativeOrAbsolute));
                     w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
@@ -112,175 +104,169 @@ namespace MahApps.Metro.Tests.Tests
                 });
 
             var icon = window.FindChild<ContentControl>("PART_Icon");
-            Assert.NotNull(icon);
+            Assert.That(icon, Is.Not.Null);
 
-            Assert.Equal(Visibility.Visible, icon.Visibility);
+            Assert.That(icon.Visibility, Is.EqualTo(Visibility.Visible));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task IconShouldBeHiddenWithChangedShowIconOnTitleBar()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => { w.Icon = new BitmapImage(new Uri("pack://application:,,,/MahApps.Metro.Tests;component/mahapps.metro.logo2.ico", UriKind.RelativeOrAbsolute)); });
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>(w => { w.Icon = new BitmapImage(new Uri("pack://application:,,,/MahApps.Metro.Tests;component/mahapps.metro.logo2.ico", UriKind.RelativeOrAbsolute)); });
 
             var icon = window.FindChild<ContentControl>("PART_Icon");
-            Assert.NotNull(icon);
+            Assert.That(icon, Is.Not.Null);
 
-            Assert.Equal(Visibility.Visible, icon.Visibility);
+            Assert.That(icon.Visibility, Is.EqualTo(Visibility.Visible));
 
             window.ShowIconOnTitleBar = false;
 
-            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+            Assert.That(icon.Visibility, Is.EqualTo(Visibility.Collapsed));
+
+            window.Close();
         }
 
         private Button GetButton(MetroWindow window, string buttonName)
         {
             var windowButtonCommands = window.WindowButtonCommands;
-            Assert.NotNull(windowButtonCommands);
+            Assert.That(windowButtonCommands, Is.Not.Null);
 
             var button = windowButtonCommands.Template.FindName(buttonName, windowButtonCommands) as Button;
-            Assert.NotNull(button);
+            Assert.That(button, Is.Not.Null);
 
             return button;
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MinMaxCloseButtonsShouldBeVisibleByDefault()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
             var minButton = this.GetButton(window, "PART_Min");
             var maxButton = this.GetButton(window, "PART_Max");
             var closeButton = this.GetButton(window, "PART_Close");
 
             // min/max/close should be visible
-            Assert.True(minButton.IsVisible);
-            Assert.True(maxButton.IsVisible);
-            Assert.True(closeButton.IsVisible);
-            Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.True);
+            Assert.That(closeButton.IsVisible, Is.True);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanResize));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MinMaxButtonsShouldBeHiddenWithNoResizeMode()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
             var minButton = this.GetButton(window, "PART_Min");
             var maxButton = this.GetButton(window, "PART_Max");
 
             // min/max should be visible
-            Assert.True(minButton.IsVisible);
-            Assert.True(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.True);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanResize));
 
             window.ResizeMode = ResizeMode.NoResize;
 
             // min/max should be hidden
-            Assert.False(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.NoResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.False);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.NoResize));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MaxButtonShouldBeHiddenWithCanMinimizeResizeMode()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
             var minButton = this.GetButton(window, "PART_Min");
             var maxButton = this.GetButton(window, "PART_Max");
 
             // min/max should be visible
-            Assert.True(minButton.IsVisible);
-            Assert.True(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.True);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanResize));
 
             window.ResizeMode = ResizeMode.CanMinimize;
 
             // min should be visible, max hidden
-            Assert.True(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.CanMinimize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanMinimize));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MinMaxButtonsShouldBeToggled()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
 
             var minButton = this.GetButton(window, "PART_Min");
             var maxButton = this.GetButton(window, "PART_Max");
 
             // min/max should be visible
-            Assert.True(minButton.IsVisible);
-            Assert.True(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.True);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanResize));
 
             window.ResizeMode = ResizeMode.CanMinimize;
 
             // min should be visible, max hidden
-            Assert.True(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.CanMinimize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanMinimize));
 
             window.ShowMinButton = false;
             // min should be hidden
-            Assert.False(minButton.IsVisible);
+            Assert.That(minButton.IsVisible, Is.False);
 
             window.ResizeMode = ResizeMode.NoResize;
 
             // min/max should be hidden
-            Assert.False(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.NoResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.False);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.NoResize));
 
             window.ShowMaxRestoreButton = false;
             // max should be hidden
-            Assert.False(maxButton.IsVisible);
+            Assert.That(maxButton.IsVisible, Is.False);
 
             window.ResizeMode = ResizeMode.CanResizeWithGrip;
 
             // min/max should be hidden
-            Assert.False(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.CanResizeWithGrip, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.False);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanResizeWithGrip));
 
             window.ShowMinButton = true;
             window.ShowMaxRestoreButton = true;
             // min/max should be visible
-            Assert.True(minButton.IsVisible);
-            Assert.True(maxButton.IsVisible);
+            Assert.That(minButton.IsVisible, Is.True);
+            Assert.That(maxButton.IsVisible, Is.True);
 
             window.ResizeMode = ResizeMode.NoResize;
 
             // min/max should be hidden
-            Assert.False(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.Equal(ResizeMode.NoResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.False);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.NoResize));
+
+            window.Close();
         }
 
         /// <summary>
         /// #1362: ShowMinButton="False" and ShowMaxRestoreButton="False" not working
         /// </summary>
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MinMaxCloseButtonsShouldBeHidden()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<HiddenMinMaxCloseButtonsWindow>();
 
             var minButton = this.GetButton(window, "PART_Min");
@@ -288,55 +274,55 @@ namespace MahApps.Metro.Tests.Tests
             var closeButton = this.GetButton(window, "PART_Close");
 
             // min/max/close should be hidden
-            Assert.False(minButton.IsVisible);
-            Assert.False(maxButton.IsVisible);
-            Assert.False(closeButton.IsVisible);
-            Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
+            Assert.That(minButton.IsVisible, Is.False);
+            Assert.That(maxButton.IsVisible, Is.False);
+            Assert.That(closeButton.IsVisible, Is.False);
+            Assert.That(window.ResizeMode, Is.EqualTo(ResizeMode.CanResize));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task WindowSettingsUpgradeSettingsShouldBeTrueByDefault()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
             window.SaveWindowPosition = true;
 
             var settings = window.GetWindowPlacementSettings();
-            Assert.NotNull(settings);
-            Assert.True(settings.UpgradeSettings);
+            Assert.That(settings, Is.Not.Null);
+            Assert.That(settings.UpgradeSettings, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestTitleCharacterCasingProperty()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>(w => w.Title = "Test");
 
             var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
-            Assert.NotNull(titleBar);
+            Assert.That(titleBar, Is.Not.Null);
 
             var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
-            Assert.NotNull(titleBarContent);
+            Assert.That(titleBarContent, Is.Not.Null);
 
             var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
-            Assert.NotNull(be);
+            Assert.That(be, Is.Not.Null);
             be.UpdateTarget();
 
             // default should be UPPER
-            Assert.Equal(CharacterCasing.Upper, window.TitleCharacterCasing);
-            Assert.Equal("TEST", titleBarContent.Content);
+            Assert.That(window.TitleCharacterCasing, Is.EqualTo(CharacterCasing.Upper));
+            Assert.That(titleBarContent.Content, Is.EqualTo("TEST"));
 
             window.TitleCharacterCasing = CharacterCasing.Lower;
             be.UpdateTarget();
-            Assert.Equal("test", titleBarContent.Content);
+            Assert.That(titleBarContent.Content, Is.EqualTo("test"));
 
             window.TitleCharacterCasing = CharacterCasing.Normal;
             be.UpdateTarget();
-            Assert.Equal("Test", titleBarContent.Content);
+            Assert.That(titleBarContent.Content, Is.EqualTo("Test"));
+
+            window.Close();
         }
     }
 }

@@ -4,26 +4,25 @@
 
 using System.Collections.Generic;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Tests.TestHelpers;
-using Xunit;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class MultiSelectionComboBoxTests : AutomationTestBase
+    [TestFixture]
+    public class MultiSelectionComboBoxTests
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public void ShouldGetElementTypeFromList()
         {
             var list = new List<MyTestClass>();
             var elementType = DefaultStringToObjectParser.Instance.GetElementType(list);
 
-            Assert.Equal(typeof(MyTestClass), elementType);
+            Assert.That(elementType, Is.EqualTo(typeof(MyTestClass)));
 
             list.Add(new MyOtherTestClass());
             elementType = DefaultStringToObjectParser.Instance.GetElementType(list);
 
-            Assert.Equal(typeof(MyTestClass), elementType);
+            Assert.That(elementType, Is.EqualTo(typeof(MyTestClass)));
         }
     }
 
