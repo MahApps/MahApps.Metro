@@ -77,7 +77,9 @@
         "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.9",
         "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.6",
         "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.8",
-        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36"
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36",
+        "MahApps.Brushes.Window.Background.Backdrop.Acrylic": "#60000000",
+        "MahApps.Brushes.Window.Background.Backdrop.Auto": "#BB000000"
       }
     },
     {
@@ -153,7 +155,9 @@
         "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.7",
         "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.4",
         "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.6",
-        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14"
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14",
+        "MahApps.Brushes.Window.Background.Backdrop.Acrylic": "#60FFFFFF",
+        "MahApps.Brushes.Window.Background.Backdrop.Auto": "#BBFFFFFF"
       }
     }
   ],

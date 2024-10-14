@@ -6,6 +6,8 @@ branches:
     - main
 
 environment:
+  # bad, but without this, gitversion doesn't work anymore
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   azure-key-vault-url:
     secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
   azure-key-vault-client-id:
@@ -30,7 +32,7 @@ install:
         git checkout -qf $($env:APPVEYOR_PULL_REQUEST_HEAD_COMMIT)
       }
   - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
-  - ps: ./dotnet-install.ps1 -Version 8.0.100 -InstallDir "C:\Program Files\dotnet"
+  - ps: ./dotnet-install.ps1 -Version 8.0.403 -InstallDir "C:\Program Files\dotnet"
 
 pull_requests:
   do_not_increment_build_number: false
@@ -38,7 +40,7 @@ pull_requests:
 build_script:
   - ps: dotnet --info
   - ps: gitversion /version
-  - ps: .\build.ps1 --target=ci #--verbosity=diagnostic
+  - ps: .\build.ps1 --target=ci --verbosity=diagnostic
 
 after_build:
   - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }

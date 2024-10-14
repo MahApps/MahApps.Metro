@@ -114,6 +114,14 @@
                     <x:Type TypeName="controlzEx:WindowCornerPreference" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
+
+            <ObjectDataProvider x:Key="WindowBackdropTypeEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type controlzEx:WindowBackdropType}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="controlzEx:WindowBackdropType" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -234,6 +242,18 @@
                                     <ComboBox VerticalAlignment="Center"
                                               ItemsSource="{Binding Source={StaticResource CornerPreferenceEnumValues}}"
                                               SelectedItem="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=CornerPreference, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </MenuItem.Template>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuItem.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Backdrop" />
+                                    <ComboBox VerticalAlignment="Center"
+                                              ItemsSource="{Binding Source={StaticResource WindowBackdropTypeEnumValues}}"
+                                              SelectedItem="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:MetroWindow}}, Path=(controlzEx:WindowBackdropManager.BackdropType), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </ControlTemplate>
                         </MenuItem.Template>

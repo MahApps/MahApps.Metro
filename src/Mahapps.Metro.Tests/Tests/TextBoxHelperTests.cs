@@ -9,208 +9,208 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
-using Xunit;
+using MahApps.Metro.Tests.Views;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class TextBoxHelperTests : AutomationTestFixtureBase<TextBoxHelperTestsFixture>
+    [TestFixture]
+    public class TextBoxHelperTests
     {
-        public TextBoxHelperTests(TextBoxHelperTestsFixture fixture)
-            : base(fixture)
-        {
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAttachedPropertyButtonWidth()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonWidthProperty.Name });
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
 
             const double width = 42d;
 
-            this.fixture.Window?.TestTextBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.Width);
-            this.fixture.Window?.TestButtonTextBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Width);
+            window.TestTextBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            Assert.That(window.TestTextBox.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
+            window.TestButtonTextBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            Assert.That(window.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
 
-            this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Width);
-            this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Width);
-            Assert.Equal(width, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_RevealButton")?.Width);
+            window.TestPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            Assert.That(window.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
+            window.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_RevealButton")?.Width, Is.EqualTo(width));
 
-            this.fixture.Window?.TestComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            var toggleButton = this.fixture.Window?.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(width, toggleButton?.FindChild<Button>("PART_ClearText")?.Width);
-            Assert.Equal(width, toggleButton?.FindChild<Grid>("BtnArrowBackground")?.Width);
+            window.TestComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButton?.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
+            Assert.That(toggleButton?.FindChild<Grid>("BtnArrowBackground")?.Width, Is.EqualTo(width));
 
-            this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(width, toggleButtonEditable?.FindChild<Button>("PART_ClearText")?.Width);
-            Assert.Equal(width, toggleButtonEditable?.FindChild<Grid>("BtnArrowBackground")?.Width);
+            window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            var toggleButtonEditable = window.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButtonEditable?.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
+            Assert.That(toggleButtonEditable?.FindChild<Grid>("BtnArrowBackground")?.Width, Is.EqualTo(width));
 
-            this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.Width);
+            window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            Assert.That(window.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
 
-            this.fixture.Window?.TestHotKeyBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-            Assert.Equal(width, this.fixture.Window?.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.Width);
+            window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+            Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAttachedPropertyButtonContent()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentProperty.Name });
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
 
-            var content = "42";
+            var content = "M237.5 75A12.5 12.5 0 0 0 237.5 100A12.5 12.5 0 0 1 250 112.5V212.5A12.5 12.5 0 0 1 237.5 225H142.6875L136.8 241.675A12.5125 12.5125 0 0 1 125 250H62.5A12.5 12.5 0 0 1 50 237.5V112.5A12.5 12.5 0 0 1 62.5 100A12.5 12.5 0 0 0 62.5 75A37.5 37.5 0 0 0 25 112.5V237.5A37.5 37.5 0 0 0 62.5 275H125C141.325 275 155.2125 264.5625 160.375 250H237.5A37.5 37.5 0 0 0 275 212.5V112.5A37.5 37.5 0 0 0 237.5 75zM174.875 76.2A62.525 62.525 0 0 0 96.2125 172.5375A62.5 62.5 0 0 0 192.55 93.875L228.8 57.625A12.5 12.5 0 0 0 211.1125 39.9625L174.8625 76.2000000000001zM166.925 101.825A37.5 37.5 0 1 1 113.875 154.875A37.5 37.5 0 0 1 166.9125 101.8375z";
 
-            this.fixture.Window?.TestTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.Content);
-            this.fixture.Window?.TestButtonTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Content);
+            window.TestButtonTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.That(window.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
 
-            this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Content);
-            this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Content);
+            content = "42";
 
-            this.fixture.Window?.TestComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            var toggleButton = this.fixture.Window?.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(content, toggleButton.FindChild<Button>("PART_ClearText")?.Content);
+            window.TestTextBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.That(window.TestTextBox.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
 
-            this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(content, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.Content);
+            window.TestPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.That(window.TestPasswordBox.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
+            window.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
 
-            this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.Content);
+            window.TestComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButton.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
 
-            this.fixture.Window?.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-            Assert.Equal(content, this.fixture.Window?.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.Content);
+            window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            var toggleButtonEditable = window.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButtonEditable.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
+
+            window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.That(window.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
+
+            window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+            Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAttachedPropertyButtonContentTemplate()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonContentTemplateProperty.Name });
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
 
             const string resourceKey = "TestDataTemplate";
-            var dataTemplate = this.fixture.Window?.TryFindResource(resourceKey) as DataTemplate;
-            Assert.NotNull(dataTemplate);
+            var dataTemplate = window.TryFindResource(resourceKey) as DataTemplate;
+            Assert.That(dataTemplate, Is.Not.Null);
 
-            this.fixture.Window?.TestTextBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
-            this.fixture.Window?.TestButtonTextBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            window.TestTextBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            Assert.That(window.TestTextBox.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
+            window.TestButtonTextBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            Assert.That(window.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
 
-            this.fixture.Window?.TestPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
-            this.fixture.Window?.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            window.TestPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            Assert.That(window.TestPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
+            window.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
 
-            this.fixture.Window?.TestComboBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            var toggleButton = this.fixture.Window?.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(dataTemplate, toggleButton.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            window.TestComboBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButton.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
 
-            this.fixture.Window?.TestEditableComboBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(dataTemplate, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            window.TestEditableComboBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            var toggleButtonEditable = window.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButtonEditable.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
 
-            this.fixture.Window?.TestNumericUpDown.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            window.TestNumericUpDown.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            Assert.That(window.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
 
-            this.fixture.Window?.TestHotKeyBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
-            Assert.Equal(dataTemplate, this.fixture.Window?.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.ContentTemplate);
+            window.TestHotKeyBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
+            Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAttachedPropertyButtonFontFamily()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonFontFamilyProperty.Name });
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
 
             var fontFamily = new FontFamilyConverter().ConvertFromString("Arial");
 
-            this.fixture.Window?.TestTextBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.FontFamily);
-            this.fixture.Window?.TestButtonTextBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.FontFamily);
+            window.TestTextBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            Assert.That(window.TestTextBox.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
+            window.TestButtonTextBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            Assert.That(window.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
 
-            this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily);
-            this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily);
+            window.TestPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            Assert.That(window.TestPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
+            window.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
 
-            this.fixture.Window?.TestComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            var toggleButton = this.fixture.Window?.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(fontFamily, toggleButton.FindChild<Button>("PART_ClearText")?.FontFamily);
+            window.TestComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButton.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
 
-            this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(fontFamily, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.FontFamily);
+            window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            var toggleButtonEditable = window.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButtonEditable.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
 
-            this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.FontFamily);
+            window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            Assert.That(window.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
 
-            this.fixture.Window?.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-            Assert.Equal(fontFamily, this.fixture.Window?.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.FontFamily);
+            window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+            Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAttachedPropertyButtonFontSize()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonFontSizeProperty.Name });
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
 
             var fontSize = 42d;
 
-            this.fixture.Window?.TestTextBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestTextBox.FindChild<Button>("PART_ClearText")?.FontSize);
-            this.fixture.Window?.TestButtonTextBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.FontSize);
+            window.TestTextBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            Assert.That(window.TestTextBox.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
+            window.TestButtonTextBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            Assert.That(window.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
 
-            this.fixture.Window?.TestPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize);
-            this.fixture.Window?.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize);
+            window.TestPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            Assert.That(window.TestPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
+            window.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
 
-            this.fixture.Window?.TestComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            var toggleButton = this.fixture.Window?.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(fontSize, toggleButton.FindChild<Button>("PART_ClearText")?.FontSize);
+            window.TestComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButton.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
 
-            this.fixture.Window?.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            var toggleButtonEditable = this.fixture.Window?.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
-            Assert.Equal(fontSize, toggleButtonEditable.FindChild<Button>("PART_ClearText")?.FontSize);
+            window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            var toggleButtonEditable = window.TestEditableComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+            Assert.That(toggleButtonEditable.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
 
-            this.fixture.Window?.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.FontSize);
+            window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            Assert.That(window.TestNumericUpDown.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
 
-            this.fixture.Window?.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-            Assert.Equal(fontSize, this.fixture.Window?.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.FontSize);
+            window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+            Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TestAttachedPropertyButtonTemplate()
         {
-            await this.fixture.PrepareForTestAsync(new[] { TextBoxHelper.ButtonTemplateProperty.Name });
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
 
             const string resourceKey = "TestControlTemplate";
-            var controlTemplate = this.fixture.Window?.TryFindResource(resourceKey) as ControlTemplate;
-            Assert.NotNull(controlTemplate);
+            var controlTemplate = window.TryFindResource(resourceKey) as ControlTemplate;
+            Assert.That(controlTemplate, Is.Not.Null);
 
-            this.fixture.Window?.TestButtonTextBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
-            Assert.Equal(controlTemplate, this.fixture.Window?.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Template);
+            window.TestButtonTextBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
+            Assert.That(window.TestButtonTextBox.FindChild<Button>("PART_ClearText")?.Template, Is.EqualTo(controlTemplate));
 
-            this.fixture.Window?.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
-            Assert.Equal(controlTemplate, this.fixture.Window?.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Template);
+            window.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
+            Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Template, Is.EqualTo(controlTemplate));
+
+            window.Close();
         }
     }
 }

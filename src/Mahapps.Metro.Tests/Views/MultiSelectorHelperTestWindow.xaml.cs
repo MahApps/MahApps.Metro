@@ -4,14 +4,13 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
-using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Tests.Views
 {
     /// <summary>
     /// Interaction logic for MultiSelectorHelperTestWindow.xaml
     /// </summary>
-    public partial class MultiSelectorHelperTestWindow : MetroWindow
+    public partial class MultiSelectorHelperTestWindow : TestWindow
     {
         public static readonly DependencyProperty ItemsProperty
             = DependencyProperty.Register(

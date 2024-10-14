@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -23,6 +24,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a Geometry that specifies the shape to be drawn. In XAML this can also be set using the Path Markup Syntax.
         /// </summary>
+        [TypeConverter(typeof(GeometryConverter))]
         public Geometry? Data
         {
             get => (Geometry?)this.GetValue(DataProperty);

@@ -43,7 +43,27 @@ namespace MahApps.Metro.Controls
 
         public MultiSelectionComboBox()
         {
-            this.SetValue(SelectedItemsPropertyKey, new ObservableCollection<object>());
+            var collection = new ObservableCollection<object>();
+            this.SetValue(SelectedItemsPropertyKey, collection);
+        }
+
+        /// <summary>
+        /// Raise the SelectionChanged event.
+        /// </summary>
+        private void InvokeSelectionChanged(IList removedItems, IList addedItems)
+        {
+            var selectionChanged = new SelectionChangedEventArgs(
+                                       Selector.SelectionChangedEvent,
+                                       removedItems,
+                                       addedItems)
+                                   {
+                                       Source = this
+                                   };
+
+            base.OnSelectionChanged(selectionChanged);
+
+            this.UpdateDisplaySelectedItems();
+            this.UpdateEditableText();
         }
 
         #endregion
@@ -842,7 +862,7 @@ namespace MahApps.Metro.Controls
 
         private void SelectItemsFromText(int millisecondsToWait)
         {
-            if (!this.isUserdefinedTextInputPending || this.isTextChanging)
+            if (!this.IsEditable || !this.isUserdefinedTextInputPending || this.isTextChanging)
             {
                 return;
             }
@@ -1114,7 +1134,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
 
-                multiSelectionCombo.ResetEditableText(true);
+                //multiSelectionCombo.ResetEditableText(true);
             }
         }
 
@@ -1186,14 +1206,16 @@ namespace MahApps.Metro.Controls
 
             if (this.PART_PopupListBox is not null)
             {
-                this.BeginInvoke(() =>
-                    {
-                        this.PART_PopupListBox.SelectionChanged += this.PART_PopupListBox_SelectionChanged;
+                this.PART_PopupListBox.SelectionChanged += this.PART_PopupListBox_SelectionChanged;
+                this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                this.PART_PopupListBox.SelectionChanged -= this.PART_PopupListBox_SelectionChanged;
 
-                        this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-
-                        this.PART_PopupListBox.SelectionChanged -= this.PART_PopupListBox_SelectionChanged;
-                    }, DispatcherPriority.DataBind);
+                //this.BeginInvoke(() =>
+                //    {
+                //        this.PART_PopupListBox.SelectionChanged += this.PART_PopupListBox_SelectionChanged;
+                //        this.SyncSelectedItems(this.SelectedItems, this.PART_PopupListBox.SelectedItems, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                //        this.PART_PopupListBox.SelectionChanged -= this.PART_PopupListBox_SelectionChanged;
+                //    }, DispatcherPriority.DataBind);
             }
 
             // Do update the text and selection
@@ -1837,6 +1859,34 @@ namespace MahApps.Metro.Controls
 #endif
         {
             this.SyncSelectedItems(sender as IList, this.PART_PopupListBox?.SelectedItems, e);
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems is not null)
+                    {
+                        this.InvokeSelectionChanged(new List<object>(), e.NewItems.Cast<object>().ToList());
+                    }
+
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems is not null)
+                    {
+                        this.InvokeSelectionChanged(e.OldItems.Cast<object>().ToList(), new List<object>());
+                    }
+
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.NewItems is not null && e.OldItems is not null)
+                    {
+                        this.InvokeSelectionChanged(e.OldItems.Cast<object>().ToList(), e.NewItems.Cast<object>().ToList());
+                    }
+
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break; // order within SelectedItems doesn't matter
+            }
         }
 
         private void SyncSelectedItems(IList? sourceCollection, IList? targetCollection, NotifyCollectionChangedEventArgs e)
@@ -1953,6 +2003,7 @@ namespace MahApps.Metro.Controls
         {
             // If we have a ScrollViewer (ListBox has) we need to handle this event here as it will not be forwarded to the ToggleButton
             this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.Box(!this.IsDropDownOpen));
+            e.Handled = true;
         }
 
         private void PART_SelectedItemsPresenter_SelectionChanged(object sender, SelectionChangedEventArgs e)

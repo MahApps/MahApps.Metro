@@ -574,6 +574,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="WindowTitleBrush" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
+        <Setter Property="controlzEx:WindowBackdropManager.BackdropType" Value="Mica" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">
@@ -591,6 +592,25 @@
             </DataTrigger>
             <Trigger Property="TitleAlignment" Value="Center">
                 <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroWindow.Center}" />
+            </Trigger>
+            <Trigger Property="UseNativeCaptionButtons" Value="True">
+                <Setter Property="GlassFrameThickness" Value="-1" />
+            </Trigger>
+            <Trigger Property="controlzEx:WindowBackdropManager.CurrentBackdropType" Value="Acrylic">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Acrylic}" />
+                <Setter Property="GlassFrameThickness" Value="-1" />
+            </Trigger>
+            <Trigger Property="controlzEx:WindowBackdropManager.CurrentBackdropType" Value="Auto">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Auto}" />
+                <Setter Property="GlassFrameThickness" Value="-1" />
+            </Trigger>
+            <Trigger Property="controlzEx:WindowBackdropManager.CurrentBackdropType" Value="Mica">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="GlassFrameThickness" Value="-1" />
+            </Trigger>
+            <Trigger Property="controlzEx:WindowBackdropManager.CurrentBackdropType" Value="Tabbed">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="GlassFrameThickness" Value="-1" />
             </Trigger>
         </Style.Triggers>
     </Style>

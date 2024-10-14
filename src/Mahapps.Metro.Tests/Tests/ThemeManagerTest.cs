@@ -8,26 +8,28 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using ControlzEx.Theming;
-using MahApps.Metro.Tests.TestHelpers;
-using Xunit;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class ThemeManagerTest : AutomationTestBase
+    [TestFixture]
+    public class ThemeManagerTest
     {
-        public override void Dispose()
+        [SetUp]
+        public void SetUp()
         {
-            Application.Current.Dispatcher.Invoke(ThemeManager.Current.ClearThemes);
-
-            base.Dispose();
+            ThemeManager.Current.ClearThemes();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task GetThemes()
+        [OneTimeTearDown]
+        public void Dispose()
         {
-            await TestHost.SwitchToAppThread();
+            ThemeManager.Current.ClearThemes();
+        }
 
+        [Test]
+        public Task GetThemes()
+        {
             var expectedThemes = new[]
                                  {
                                      "Amber (Dark)",
@@ -77,33 +79,38 @@ namespace MahApps.Metro.Tests.Tests
                                      "Yellow (Dark)",
                                      "Yellow (Light)"
                                  };
-            Assert.Equal(expectedThemes, CollectionViewSource.GetDefaultView(ThemeManager.Current.Themes).Cast<Theme>().Select(x => x.DisplayName).ToList());
+
+            var actual = CollectionViewSource.GetDefaultView(ThemeManager.Current.Themes).Cast<Theme>().Select(x => x.DisplayName).ToList();
+            Assert.That(actual, Is.EquivalentTo(expectedThemes));
+
+            return Task.CompletedTask;
         }
 
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task CreateDynamicAccentWithColorAndChangeBaseColorScheme()
+        [Test]
+        public Task CreateDynamicAccentWithColorAndChangeBaseColorScheme()
         {
-            await TestHost.SwitchToAppThread();
+            var themeManager = ThemeManager.Current;
 
-            var applicationTheme = ThemeManager.Current.DetectTheme(Application.Current);
+            var applicationTheme = themeManager.DetectTheme(Application.Current);
+            Assert.That(applicationTheme, Is.Not.Null);
 
-            var ex = Record.Exception(() => ThemeManager.Current.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red)));
-            Assert.Null(ex);
-            ex = Record.Exception(() => ThemeManager.Current.AddTheme(ThemeManager.Current.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Red))));
-            Assert.Null(ex);
+            Assert.DoesNotThrow(() => { themeManager.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red)); });
 
-            var detected = ThemeManager.Current.DetectTheme(Application.Current);
-            Assert.NotNull(detected);
-            Assert.Equal(Colors.Red.ToString(), detected.ColorScheme);
+            Assert.DoesNotThrow(() => { themeManager.AddTheme(themeManager.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Red))); });
 
-            var newTheme = ThemeManager.Current.ChangeThemeBaseColor(Application.Current, "Dark");
-            Assert.NotNull(newTheme);
+            var detected = themeManager.DetectTheme(Application.Current);
+            Assert.That(detected, Is.Not.Null);
+            Assert.That(detected.ColorScheme, Is.EqualTo(Colors.Red.ToString()));
 
-            newTheme = ThemeManager.Current.ChangeThemeBaseColor(Application.Current, "Light");
-            Assert.NotNull(newTheme);
+            var newTheme = themeManager.ChangeThemeBaseColor(Application.Current, "Dark");
+            Assert.That(newTheme, Is.Not.Null);
 
-            ThemeManager.Current.ChangeTheme(Application.Current, applicationTheme);
+            newTheme = themeManager.ChangeThemeBaseColor(Application.Current, "Light");
+            Assert.That(newTheme, Is.Not.Null);
+
+            themeManager.ChangeTheme(Application.Current, applicationTheme);
+
+            return Task.CompletedTask;
         }
     }
 }

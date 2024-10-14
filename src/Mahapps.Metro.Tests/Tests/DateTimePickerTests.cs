@@ -10,111 +10,112 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
-using Xunit;
+using MahApps.Metro.Tests.Views;
+using NUnit.Framework;
 
 namespace MahApps.Metro.Tests.Tests
 {
-    public class DateTimePickerTests : AutomationTestFixtureBase<DateTimePickerTestsFixture>
+    [TestFixture]
+    public class DateTimePickerTests
     {
-        public DateTimePickerTests(DateTimePickerTestsFixture fixture)
-            : base(fixture)
-        {
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task DateTimePickerSetCulture()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
 
-            Assert.NotNull(this.fixture.Window?.TheDateTimePicker.SelectedDateTime);
-            Assert.NotNull(this.fixture.Window?.TheDateTimePicker.Culture);
-            Assert.False(this.fixture.Window?.TheDateTimePicker.IsMilitaryTime);
-            Assert.Equal("pt-BR", this.fixture.Window?.TheDateTimePicker.Culture.IetfLanguageTag);
-            var datePickerTextBox = this.fixture.Window?.TheDateTimePicker.FindChild<DatePickerTextBox>(string.Empty);
-            Assert.NotNull(datePickerTextBox);
-            Assert.Equal("31/08/2016 14:00:01", datePickerTextBox?.Text);
+            Assert.That(window.TheDateTimePicker.SelectedDateTime, Is.Not.Null);
+            Assert.That(window.TheDateTimePicker.Culture, Is.Not.Null);
+            Assert.That(window.TheDateTimePicker.IsMilitaryTime, Is.False);
+            Assert.That(window.TheDateTimePicker.Culture.IetfLanguageTag, Is.EqualTo("pt-BR"));
+            var datePickerTextBox = window.TheDateTimePicker.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
+            Assert.That(datePickerTextBox?.Text, Is.EqualTo("31/08/2016 14:00:01"));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TimePickerCultureDeTest()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
 
-            Assert.NotNull(this.fixture.Window?.TheTimePickerDe.SelectedDateTime);
-            Assert.NotNull(this.fixture.Window?.TheTimePickerDe.Culture);
-            Assert.False(this.fixture.Window?.TheTimePickerDe.IsMilitaryTime);
-            Assert.Equal("de-DE", this.fixture.Window?.TheTimePickerDe.Culture.IetfLanguageTag);
-            var datePickerTextBox = this.fixture.Window?.TheTimePickerDe.FindChild<DatePickerTextBox>(string.Empty);
-            Assert.NotNull(datePickerTextBox);
-            Assert.Equal("14:00:01", datePickerTextBox?.Text);
+            Assert.That(window.TheTimePickerDe.SelectedDateTime, Is.Not.Null);
+            Assert.That(window.TheTimePickerDe.Culture, Is.Not.Null);
+            Assert.That(window.TheTimePickerDe.IsMilitaryTime, Is.False);
+            Assert.That(window.TheTimePickerDe.Culture.IetfLanguageTag, Is.EqualTo("de-DE"));
+            var datePickerTextBox = window.TheTimePickerDe.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
+            Assert.That(datePickerTextBox?.Text, Is.EqualTo("14:00:01"));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TimePickerCultureUsTest()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
 
-            Assert.NotNull(this.fixture.Window?.TheTimePickerUs.SelectedDateTime);
-            Assert.NotNull(this.fixture.Window?.TheTimePickerUs.Culture);
-            Assert.True(this.fixture.Window?.TheTimePickerUs.IsMilitaryTime);
-            Assert.Equal("en-US", this.fixture.Window?.TheTimePickerUs.Culture.IetfLanguageTag);
-            var datePickerTextBox = this.fixture.Window?.TheTimePickerUs.FindChild<DatePickerTextBox>(string.Empty);
-            Assert.NotNull(datePickerTextBox);
-            Assert.Equal("2:00:01 PM", datePickerTextBox?.Text);
+            Assert.That(window.TheTimePickerUs.SelectedDateTime, Is.Not.Null);
+            Assert.That(window.TheTimePickerUs.Culture, Is.Not.Null);
+            Assert.That(window.TheTimePickerUs.IsMilitaryTime, Is.True);
+            Assert.That(window.TheTimePickerUs.Culture.IetfLanguageTag, Is.EqualTo("en-US"));
+            var datePickerTextBox = window.TheTimePickerUs.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
+            Assert.That(datePickerTextBox?.Text, Is.EqualTo("2:00:01 PM"));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TheTimePickerCsCzTest()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
 
-            Assert.NotNull(this.fixture.Window?.TheTimePickerCsCz.SelectedDateTime);
-            Assert.NotNull(this.fixture.Window?.TheTimePickerCsCz.Culture);
-            Assert.False(this.fixture.Window?.TheTimePickerCsCz.IsMilitaryTime);
-            Assert.Equal("cs-CZ", this.fixture.Window?.TheTimePickerCsCz.Culture.IetfLanguageTag);
-            var datePickerTextBox = this.fixture.Window?.TheTimePickerCsCz.FindChild<DatePickerTextBox>(string.Empty);
-            Assert.NotNull(datePickerTextBox);
-            Assert.Equal("22:23:24", datePickerTextBox?.Text);
+            Assert.That(window.TheTimePickerCsCz.SelectedDateTime, Is.Not.Null);
+            Assert.That(window.TheTimePickerCsCz.Culture, Is.Not.Null);
+            Assert.That(window.TheTimePickerCsCz.IsMilitaryTime, Is.False);
+            Assert.That(window.TheTimePickerCsCz.Culture.IetfLanguageTag, Is.EqualTo("cs-CZ"));
+            var datePickerTextBox = window.TheTimePickerCsCz.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
+            Assert.That(datePickerTextBox?.Text, Is.EqualTo("22:23:24"));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TimePickerTimeFormat()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
 
-            Assert.NotNull(this.fixture.Window?.TheDateTimeFormatPicker.Culture);
-            Assert.Equal("it-IT", this.fixture.Window?.TheDateTimeFormatPicker.Culture.IetfLanguageTag);
-            Assert.False(this.fixture.Window?.TheDateTimeFormatPicker.IsMilitaryTime);
+            Assert.That(window.TheDateTimeFormatPicker.Culture, Is.Not.Null);
+            Assert.That(window.TheDateTimeFormatPicker.Culture.IetfLanguageTag, Is.EqualTo("it-IT"));
+            Assert.That(window.TheDateTimeFormatPicker.IsMilitaryTime, Is.False);
 
-            var datePickerTextBox = this.fixture.Window?.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty);
-            Assert.NotNull(datePickerTextBox);
+            var datePickerTextBox = window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
 
-            this.fixture.Window?.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Short);
-            Assert.Equal("31/08/2016 14:00", datePickerTextBox.Text);
+            window.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Short);
+            Assert.That(datePickerTextBox.Text, Is.EqualTo("31/08/2016 14:00"));
 
-            this.fixture.Window?.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Long);
-            Assert.Equal("31/08/2016 14:00:01", datePickerTextBox.Text);
+            window.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Long);
+            Assert.That(datePickerTextBox.Text, Is.EqualTo("31/08/2016 14:00:01"));
 
-            this.fixture.Window?.TheDateTimeFormatPicker.SetCurrentValue(DateTimePicker.SelectedDateFormatProperty, DatePickerFormat.Long);
-            Assert.Equal("mercoledì 31 agosto 2016 14:00:01", datePickerTextBox.Text);
+            window.TheDateTimeFormatPicker.SetCurrentValue(DateTimePicker.SelectedDateFormatProperty, DatePickerFormat.Long);
+            Assert.That(datePickerTextBox.Text, Is.EqualTo("mercoledì 31 agosto 2016 14:00:01"));
 
-            this.fixture.Window?.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Short);
-            Assert.Equal("mercoledì 31 agosto 2016 14:00", datePickerTextBox.Text);
+            window.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Short);
+            Assert.That(datePickerTextBox.Text, Is.EqualTo("mercoledì 31 agosto 2016 14:00"));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MilitaryTimeShouldBeConvertedToDateTime()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
 
-            var datePickerTextBox = this.fixture.Window?.EmptyTimePicker?.FindChild<DatePickerTextBox>(string.Empty);
-            Assert.NotNull(datePickerTextBox);
+            var datePickerTextBox = window.EmptyTimePicker?.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
 
             datePickerTextBox.SetCurrentValue(TextBox.TextProperty, "2:42:12 PM");
 
@@ -128,7 +129,9 @@ namespace MahApps.Metro.Tests.Tests
                                          }
             );
 
-            Assert.Equal(default(DateTime) + new TimeSpan(14, 42, 12), (this.fixture.Window?.EmptyTimePicker).SelectedDateTime);
+            Assert.That((window.EmptyTimePicker).SelectedDateTime, Is.EqualTo(default(DateTime) + new TimeSpan(14, 42, 12)));
+
+            window.Close();
         }
     }
 }

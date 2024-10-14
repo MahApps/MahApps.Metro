@@ -5,11 +5,10 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Tests.Views
 {
-    public partial class AnimatedTabControlWindow : MetroWindow
+    public partial class AnimatedTabControlWindow : TestWindow
     {
         public AnimatedTabControlWindow()
         {

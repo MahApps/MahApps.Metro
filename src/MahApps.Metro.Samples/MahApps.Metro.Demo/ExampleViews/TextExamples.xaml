@@ -376,9 +376,9 @@
                 </mah:MetroHeader>
 
                 <mah:MetroHeader Header="Min">
-                    <mah:NumericUpDown AutomationProperties.AutomationId="AutomationIdTested" 
-                                       Margin="{StaticResource ControlMargin}"
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
                                        mah:TextBoxHelper.ClearTextButton="True"
+                                       AutomationProperties.AutomationId="AutomationIdTested"
                                        Maximum="{Binding ElementName=NUD, Path=Maximum, Mode=OneWay}"
                                        Value="{Binding ElementName=NUD, Path=Minimum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </mah:MetroHeader>
