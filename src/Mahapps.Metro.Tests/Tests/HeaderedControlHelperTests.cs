@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,10 +20,66 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class HeaderedControlHelperTests
     {
-        [Test]
-        public async Task GroupBoxShouldUseHeaderBackgroundProperty()
+        private HeaderedControlHelperTestWindow? window;
+
+        [OneTimeSetUp]
+        public async Task OneTimeSetUp()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            this.window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            this.window?.Close();
+            this.window = null;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.PreparePropertiesForTest([
+                HeaderedControlHelper.HeaderBackgroundProperty.Name,
+                HeaderedControlHelper.HeaderForegroundProperty.Name,
+                HeaderedControlHelper.HeaderMarginProperty.Name,
+                HeaderedControlHelper.HeaderFontFamilyProperty.Name,
+                HeaderedControlHelper.HeaderFontSizeProperty.Name,
+                HeaderedControlHelper.HeaderFontStretchProperty.Name,
+                HeaderedControlHelper.HeaderFontWeightProperty.Name,
+                HeaderedControlHelper.HeaderHorizontalContentAlignmentProperty.Name,
+                HeaderedControlHelper.HeaderVerticalContentAlignmentProperty.Name,
+                TabItem.ForegroundProperty.Name,
+                Flyout.ForegroundProperty.Name,
+                TabItem.PaddingProperty.Name,
+            ]);
+        }
+
+        private void PreparePropertiesForTest(IList<string>? properties = null)
+        {
+            this.window?.TestGroupBox.ClearDependencyProperties(properties);
+            this.window?.TestGroupBoxClean.ClearDependencyProperties(properties);
+            this.window?.TestGroupBoxVS.ClearDependencyProperties(properties);
+            this.window?.TestMetroHeader.ClearDependencyProperties(properties);
+            this.window?.TestColorPalette.ClearDependencyProperties(properties);
+            this.window?.TestToggleSwitch.ClearDependencyProperties(properties);
+            this.window?.TestExpander.ClearDependencyProperties(properties);
+            this.window?.TestExpanderVS.ClearDependencyProperties(properties);
+            this.window?.TestTabControl.ClearDependencyProperties(properties);
+            this.window?.TestTabItem.ClearDependencyProperties(properties);
+            this.window?.TestTabItemUnselected.ClearDependencyProperties(properties);
+            this.window?.TestTabControlVS.ClearDependencyProperties(properties);
+            this.window?.TestTabItemVS.ClearDependencyProperties(properties);
+            this.window?.TestTabItemVSUnselected.ClearDependencyProperties(properties);
+            this.window?.TestMetroTabControl.ClearDependencyProperties(properties);
+            this.window?.TestMetroTabItem.ClearDependencyProperties(properties);
+            this.window?.TestMetroTabItemUnselected.ClearDependencyProperties(properties);
+            this.window?.TestFlyout.ClearDependencyProperties(properties);
+        }
+
+        [Test]
+        public void GroupBoxShouldUseHeaderBackgroundProperty()
+        {
+            Assert.That(this.window, Is.Not.Null);
 
             var headerBackground = Brushes.BlueViolet;
 
@@ -42,14 +99,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
             Assert.That(window.TestColorPalette.FindChild<Border>("HeaderSite")?.Background, Is.EqualTo(headerBackground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderBackgroundProperty()
+        public void ExpanderShouldUseHeaderBackgroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerBackground = Brushes.BlueViolet;
 
@@ -60,14 +115,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.Background, Is.EqualTo(headerBackground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderBackgroundProperty()
+        public void TabItemShouldUseHeaderBackgroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerBackground = Brushes.BlueViolet;
 
@@ -91,14 +144,12 @@ namespace MahApps.Metro.Tests.Tests
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
             Assert.That(window.TestMetroTabItem.Background, Is.EqualTo(headerBackground));
             Assert.That(window.TestMetroTabItem.FindChild<Border>("Border")?.Background, Is.EqualTo(headerBackground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderBackgroundProperty()
+        public void TabControlShouldUseHeaderBackgroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerBackground = Brushes.BlueViolet;
 
@@ -120,14 +171,12 @@ namespace MahApps.Metro.Tests.Tests
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
             Assert.That(window.TestMetroTabItem.Background, Is.EqualTo(headerBackground));
             Assert.That(window.TestMetroTabItem.FindChild<Border>("Border")?.Background, Is.EqualTo(headerBackground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderBackgroundProperty()
+        public void FlyoutShouldUseHeaderBackgroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerBackground = Brushes.BlueViolet;
 
@@ -135,14 +184,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderBackgroundProperty, headerBackground);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.Background, Is.EqualTo(headerBackground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseForegroundProperty()
+        public void GroupBoxShouldUseForegroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerForeground = Brushes.Crimson;
 
@@ -162,14 +209,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.Foreground, Is.EqualTo(headerForeground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseForegroundProperty()
+        public void ToggleSwitchShouldUseForegroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerForeground = Brushes.Crimson;
 
@@ -179,14 +224,12 @@ namespace MahApps.Metro.Tests.Tests
             var contentPresenter = window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter");
             Assert.That(contentPresenter, Is.Not.Null);
             Assert.That(TextElement.GetForeground(contentPresenter), Is.EqualTo(headerForeground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseForegroundProperty()
+        public void ExpanderShouldUseForegroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerForeground = Brushes.Crimson;
 
@@ -197,14 +240,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.Foreground, Is.EqualTo(headerForeground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseForegroundProperty()
+        public void TabItemShouldUseForegroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerForeground = Brushes.Crimson;
 
@@ -239,14 +280,12 @@ namespace MahApps.Metro.Tests.Tests
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
             Assert.That(window.TestMetroTabItem.Foreground, Is.EqualTo(tabForeground));
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground, Is.EqualTo(selectedHeaderForeground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseForegroundProperty()
+        public void TabControlShouldUseForegroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerForeground = Brushes.Crimson;
 
@@ -266,14 +305,12 @@ namespace MahApps.Metro.Tests.Tests
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.Foreground, Is.EqualTo(selectedHeaderForeground));
             Assert.That(window.TestMetroTabItemUnselected.FindChild<ContentControlEx>("ContentSite")?.Foreground, Is.EqualTo(headerForeground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseForegroundProperty()
+        public void FlyoutShouldUseForegroundProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerForeground = Brushes.Crimson;
 
@@ -285,14 +322,12 @@ namespace MahApps.Metro.Tests.Tests
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, headerForeground);
             Assert.That(window.TestFlyout.Foreground, Is.EqualTo(flyoutForeground));
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.Foreground, Is.EqualTo(headerForeground));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseHeaderMarginProperty()
+        public void GroupBoxShouldUseHeaderMarginProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerMargin = new Thickness(4);
 
@@ -312,14 +347,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.Margin, Is.EqualTo(headerMargin));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseHeaderMarginProperty()
+        public void ToggleSwitchShouldUseHeaderMarginProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerMargin = new Thickness(4);
 
@@ -327,14 +360,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestToggleSwitch.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")?.Margin, Is.EqualTo(headerMargin));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderMarginProperty()
+        public void ExpanderShouldUseHeaderMarginProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerMargin = new Thickness(4);
 
@@ -345,14 +376,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.Padding, Is.EqualTo(headerMargin));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderMarginProperty()
+        public void TabItemShouldUseHeaderMarginProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerMargin = new Thickness(4);
 
@@ -372,14 +401,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin, Is.EqualTo(headerMargin));
             window.TestMetroTabItem.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
             Assert.That(window.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin, Is.EqualTo(new Thickness(8)));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderMarginProperty()
+        public void TabControlShouldUseHeaderMarginProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerMargin = new Thickness(4);
 
@@ -393,14 +420,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestMetroTabItem.FindChild<Grid>("PART_ContentSite")?.Margin, Is.EqualTo(headerMargin));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderMarginProperty()
+        public void FlyoutShouldUseHeaderMarginProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var headerMargin = new Thickness(4);
 
@@ -408,14 +433,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.Padding, Is.EqualTo(headerMargin));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseHeaderContentAlignmentProperty()
+        public void GroupBoxShouldUseHeaderContentAlignmentProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
             const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
@@ -446,14 +469,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.HorizontalAlignment, Is.EqualTo(horizontalAlignment));
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.VerticalAlignment, Is.EqualTo(verticalAlignment));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseHeaderContentAlignmentProperty()
+        public void ToggleSwitchShouldUseHeaderContentAlignmentProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
             const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
@@ -464,14 +485,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")?.HorizontalAlignment, Is.EqualTo(horizontalAlignment));
             window.TestToggleSwitch.SetCurrentValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
             Assert.That(window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter")?.VerticalAlignment, Is.EqualTo(verticalAlignment));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderContentAlignmentProperty()
+        public void ExpanderShouldUseHeaderContentAlignmentProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
             const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
@@ -487,14 +506,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.HorizontalContentAlignment, Is.EqualTo(horizontalAlignment));
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.VerticalContentAlignment, Is.EqualTo(verticalAlignment));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderContentAlignmentProperty()
+        public void TabItemShouldUseHeaderContentAlignmentProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
             const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
@@ -515,14 +532,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment, Is.EqualTo(horizontalAlignment));
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment, Is.EqualTo(verticalAlignment));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderContentAlignmentProperty()
+        public void TabControlShouldUseHeaderContentAlignmentProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
             const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
@@ -543,14 +558,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.HorizontalAlignment, Is.EqualTo(horizontalAlignment));
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.VerticalAlignment, Is.EqualTo(verticalAlignment));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderContentAlignmentProperty()
+        public void FlyoutShouldUseHeaderContentAlignmentProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const HorizontalAlignment horizontalAlignment = HorizontalAlignment.Right;
             const VerticalAlignment verticalAlignment = VerticalAlignment.Top;
@@ -561,14 +574,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.HorizontalContentAlignment, Is.EqualTo(horizontalAlignment));
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderVerticalContentAlignmentProperty, verticalAlignment);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.VerticalContentAlignment, Is.EqualTo(verticalAlignment));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseHeaderFontFamilyProperty()
+        public void GroupBoxShouldUseHeaderFontFamilyProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamily("Arial");
 
@@ -588,14 +599,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontFamily, Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseHeaderFontFamilyProperty()
+        public void ToggleSwitchShouldUseHeaderFontFamilyProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamily("Arial");
 
@@ -605,14 +614,12 @@ namespace MahApps.Metro.Tests.Tests
             var contentPresenter = window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter");
             Assert.That(contentPresenter, Is.Not.Null);
             Assert.That(TextElement.GetFontFamily(contentPresenter), Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderFontFamilyProperty()
+        public void ExpanderShouldUseHeaderFontFamilyProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamily("Arial");
 
@@ -623,14 +630,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.FontFamily, Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderFontFamilyProperty()
+        public void TabItemShouldUseHeaderFontFamilyProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamily("Arial");
 
@@ -644,14 +649,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily, Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderFontFamilyProperty()
+        public void TabControlShouldUseHeaderFontFamilyProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamily("Arial");
 
@@ -665,14 +668,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontFamily, Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderFontFamilyProperty()
+        public void FlyoutShouldUseHeaderFontFamilyProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamily("Arial");
 
@@ -680,14 +681,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderFontFamilyProperty, fontFamily);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.FontFamily, Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseHeaderFontSizeProperty()
+        public void GroupBoxShouldUseHeaderFontSizeProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const double fontSize = 48d;
 
@@ -707,14 +706,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontSize, Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseHeaderFontSizeProperty()
+        public void ToggleSwitchShouldUseHeaderFontSizeProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const double fontSize = 48d;
 
@@ -724,14 +721,12 @@ namespace MahApps.Metro.Tests.Tests
             var contentPresenter = window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter");
             Assert.That(contentPresenter, Is.Not.Null);
             Assert.That(TextElement.GetFontSize(contentPresenter), Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderFontSizeProperty()
+        public void ExpanderShouldUseHeaderFontSizeProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const double fontSize = 48d;
 
@@ -742,14 +737,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.FontSize, Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderFontSizeProperty()
+        public void TabItemShouldUseHeaderFontSizeProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const double fontSize = 48d;
 
@@ -763,14 +756,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize, Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderFontSizeProperty()
+        public void TabControlShouldUseHeaderFontSizeProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const double fontSize = 48d;
 
@@ -784,14 +775,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontSize, Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderFontSizeProperty()
+        public void FlyoutShouldUseHeaderFontSizeProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const double fontSize = 48d;
 
@@ -799,14 +788,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderFontSizeProperty, fontSize);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.FontSize, Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseHeaderFontStretchProperty()
+        public void GroupBoxShouldUseHeaderFontStretchProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontStretch = FontStretches.Condensed;
 
@@ -826,14 +813,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontStretch, Is.EqualTo(fontStretch));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseHeaderFontStretchProperty()
+        public void ToggleSwitchShouldUseHeaderFontStretchProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontStretch = FontStretches.Condensed;
 
@@ -843,14 +828,12 @@ namespace MahApps.Metro.Tests.Tests
             var contentPresenter = window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter");
             Assert.That(contentPresenter, Is.Not.Null);
             Assert.That(TextElement.GetFontStretch(contentPresenter), Is.EqualTo(fontStretch));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderFontStretchProperty()
+        public void ExpanderShouldUseHeaderFontStretchProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontStretch = FontStretches.Condensed;
 
@@ -861,14 +844,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.FontStretch, Is.EqualTo(fontStretch));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderFontStretchProperty()
+        public void TabItemShouldUseHeaderFontStretchProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontStretch = FontStretches.Condensed;
 
@@ -882,14 +863,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch, Is.EqualTo(fontStretch));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderFontStretchProperty()
+        public void TabControlShouldUseHeaderFontStretchProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontStretch = FontStretches.Condensed;
 
@@ -903,14 +882,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontStretch, Is.EqualTo(fontStretch));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderFontStretchProperty()
+        public void FlyoutShouldUseHeaderFontStretchProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontStretch = FontStretches.Condensed;
 
@@ -918,14 +895,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderFontStretchProperty, fontStretch);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.FontStretch, Is.EqualTo(fontStretch));
-
-            window.Close();
         }
 
         [Test]
-        public async Task GroupBoxShouldUseHeaderFontWeightProperty()
+        public void GroupBoxShouldUseHeaderFontWeightProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontWeight = FontWeights.ExtraBold;
 
@@ -945,14 +920,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestColorPalette.SetCurrentValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
             Assert.That(window.TestColorPalette.FindChild<ContentControlEx>("HeaderContent")?.FontWeight, Is.EqualTo(fontWeight));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ToggleSwitchShouldUseHeaderFontWeightProperty()
+        public void ToggleSwitchShouldUseHeaderFontWeightProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontWeight = FontWeights.ExtraBold;
 
@@ -962,14 +935,12 @@ namespace MahApps.Metro.Tests.Tests
             var contentPresenter = window.TestToggleSwitch.FindChild<ContentPresenter>("HeaderContentPresenter");
             Assert.That(contentPresenter, Is.Not.Null);
             Assert.That(TextElement.GetFontWeight(contentPresenter), Is.EqualTo(fontWeight));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ExpanderShouldUseHeaderFontWeightProperty()
+        public void ExpanderShouldUseHeaderFontWeightProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontWeight = FontWeights.ExtraBold;
 
@@ -980,14 +951,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestExpanderVS.SetCurrentValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
             Assert.That(window.TestExpanderVS.FindChild<ToggleButton>("ToggleSite")?.FontWeight, Is.EqualTo(fontWeight));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabItemShouldUseHeaderFontWeightProperty()
+        public void TabItemShouldUseHeaderFontWeightProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontWeight = FontWeights.ExtraBold;
 
@@ -1001,14 +970,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight, Is.EqualTo(fontWeight));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TabControlShouldUseHeaderFontWeightProperty()
+        public void TabControlShouldUseHeaderFontWeightProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontWeight = FontWeights.ExtraBold;
 
@@ -1022,14 +989,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight, Is.EqualTo(fontWeight));
-
-            window.Close();
         }
 
         [Test]
-        public async Task FlyoutShouldUseHeaderFontWeightProperty()
+        public void FlyoutShouldUseHeaderFontWeightProperty()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<HeaderedControlHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontWeight = FontWeights.ExtraBold;
 
@@ -1037,8 +1002,6 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestFlyout.SetCurrentValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
             Assert.That(window.TestFlyout.FindChild<MetroThumbContentControl>("PART_Header")?.FontWeight, Is.EqualTo(fontWeight));
-
-            window.Close();
         }
     }
 }

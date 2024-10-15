@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -18,10 +19,36 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class DateTimePickerTests
     {
-        [Test]
-        public async Task DateTimePickerSetCulture()
+        private DateAndTimePickerWindow? window;
+
+        [OneTimeSetUp]
+        public async Task OneTimeSetUp()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+            this.window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            this.window?.Close();
+            this.window = null;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.PreparePropertiesForTest();
+        }
+
+        private void PreparePropertiesForTest(IList<string>? properties = null)
+        {
+            // nothing to do here
+        }
+
+        [Test]
+        public void DateTimePickerSetCulture()
+        {
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.TheDateTimePicker.SelectedDateTime, Is.Not.Null);
             Assert.That(window.TheDateTimePicker.Culture, Is.Not.Null);
@@ -30,14 +57,12 @@ namespace MahApps.Metro.Tests.Tests
             var datePickerTextBox = window.TheDateTimePicker.FindChild<DatePickerTextBox>(string.Empty);
             Assert.That(datePickerTextBox, Is.Not.Null);
             Assert.That(datePickerTextBox?.Text, Is.EqualTo("31/08/2016 14:00:01"));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TimePickerCultureDeTest()
+        public void TimePickerCultureDeTest()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.TheTimePickerDe.SelectedDateTime, Is.Not.Null);
             Assert.That(window.TheTimePickerDe.Culture, Is.Not.Null);
@@ -46,14 +71,12 @@ namespace MahApps.Metro.Tests.Tests
             var datePickerTextBox = window.TheTimePickerDe.FindChild<DatePickerTextBox>(string.Empty);
             Assert.That(datePickerTextBox, Is.Not.Null);
             Assert.That(datePickerTextBox?.Text, Is.EqualTo("14:00:01"));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TimePickerCultureUsTest()
+        public void TimePickerCultureUsTest()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.TheTimePickerUs.SelectedDateTime, Is.Not.Null);
             Assert.That(window.TheTimePickerUs.Culture, Is.Not.Null);
@@ -62,14 +85,12 @@ namespace MahApps.Metro.Tests.Tests
             var datePickerTextBox = window.TheTimePickerUs.FindChild<DatePickerTextBox>(string.Empty);
             Assert.That(datePickerTextBox, Is.Not.Null);
             Assert.That(datePickerTextBox?.Text, Is.EqualTo("2:00:01 PM"));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TheTimePickerCsCzTest()
+        public void TheTimePickerCsCzTest()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.TheTimePickerCsCz.SelectedDateTime, Is.Not.Null);
             Assert.That(window.TheTimePickerCsCz.Culture, Is.Not.Null);
@@ -78,14 +99,12 @@ namespace MahApps.Metro.Tests.Tests
             var datePickerTextBox = window.TheTimePickerCsCz.FindChild<DatePickerTextBox>(string.Empty);
             Assert.That(datePickerTextBox, Is.Not.Null);
             Assert.That(datePickerTextBox?.Text, Is.EqualTo("22:23:24"));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TimePickerTimeFormat()
+        public void TimePickerTimeFormat()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.TheDateTimeFormatPicker.Culture, Is.Not.Null);
             Assert.That(window.TheDateTimeFormatPicker.Culture.IetfLanguageTag, Is.EqualTo("it-IT"));
@@ -105,14 +124,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TheDateTimeFormatPicker.SetCurrentValue(TimePickerBase.SelectedTimeFormatProperty, TimePickerFormat.Short);
             Assert.That(datePickerTextBox.Text, Is.EqualTo("mercoledì 31 agosto 2016 14:00"));
-
-            window.Close();
         }
 
         [Test]
-        public async Task MilitaryTimeShouldBeConvertedToDateTime()
+        public void MilitaryTimeShouldBeConvertedToDateTime()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var datePickerTextBox = window.EmptyTimePicker?.FindChild<DatePickerTextBox>(string.Empty);
             Assert.That(datePickerTextBox, Is.Not.Null);
@@ -130,8 +147,6 @@ namespace MahApps.Metro.Tests.Tests
             );
 
             Assert.That((window.EmptyTimePicker).SelectedDateTime, Is.EqualTo(default(DateTime) + new TimeSpan(14, 42, 12)));
-
-            window.Close();
         }
     }
 }

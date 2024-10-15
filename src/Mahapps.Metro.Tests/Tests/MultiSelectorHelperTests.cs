@@ -12,10 +12,39 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class MultiSelectorHelperTests
     {
-        [Test]
-        public async Task SelectedItemsShouldBeSyncedByMultiSelectionHelper()
+        private MultiSelectorHelperTestWindow? window;
+
+        [OneTimeSetUp]
+        public async Task OneTimeSetUp()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            this.window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            this.window?.Close();
+            this.window = null;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.PreparePropertiesForTest();
+        }
+
+        private void PreparePropertiesForTest()
+        {
+            this.window?.SelectedItems?.Clear();
+            this.window?.MultiSelectionComboBox?.SelectedItems?.Clear();
+            this.window?.FirstListBox?.SelectedItems?.Clear();
+            this.window?.SecondListBox?.SelectedItems?.Clear();
+        }
+
+        [Test]
+        public void SelectedItemsShouldBeSyncedByMultiSelectionHelper()
+        {
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -29,14 +58,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.SelectedItems, Has.One.Items);
             Assert.That(window.MultiSelectionComboBox.SelectedItems, Has.One.Items);
             Assert.That(window.SecondListBox.SelectedItems, Has.One.Items);
-
-            window.Close();
         }
 
         [Test]
-        public async Task PreSelectedItemsShouldBeSyncedByMultiSelectionHelper()
+        public void PreSelectedItemsShouldBeSyncedByMultiSelectionHelper()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -50,14 +77,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.MultiSelectionComboBox.SelectedItems, Has.One.Items);
             Assert.That(window.FirstListBox.SelectedItems, Has.One.Items);
             Assert.That(window.SecondListBox.SelectedItems, Has.One.Items);
-
-            window.Close();
         }
 
         [Test]
-        public async Task SelectedItemsShouldBeSyncedAndContainsOnlyOnce()
+        public void SelectedItemsShouldBeSyncedAndContainsOnlyOnce()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -79,14 +104,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.MultiSelectionComboBox.SelectedItems, Has.One.Items);
             Assert.That(window.FirstListBox.SelectedItems, Has.One.Items);
             Assert.That(window.SecondListBox.SelectedItems, Has.One.Items);
-
-            window.Close();
         }
 
         [Test]
-        public async Task AddedItemShouldBeSynced()
+        public void AddedItemShouldBeSynced()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -118,14 +141,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.MultiSelectionComboBox.SelectedItems, Has.Count.EqualTo(4));
             Assert.That(window.FirstListBox.SelectedItems, Has.Count.EqualTo(4));
             Assert.That(window.SecondListBox.SelectedItems, Has.Count.EqualTo(4));
-
-            window.Close();
         }
 
         [Test]
-        public async Task RemovedItemShouldBeSynced()
+        public void RemovedItemShouldBeSynced()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -157,14 +178,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.MultiSelectionComboBox.SelectedItems, Is.Empty);
             Assert.That(window.FirstListBox.SelectedItems, Is.Empty);
             Assert.That(window.SecondListBox.SelectedItems, Is.Empty);
-
-            window.Close();
         }
 
         [Test]
-        public async Task MovedItemShouldBeSynced()
+        public void MovedItemShouldBeSynced()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -196,14 +215,12 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.That(window.SecondListBox.SelectedItems[0], Is.EqualTo(window.SelectedItems[0]));
             Assert.That(window.SecondListBox.SelectedItems[2], Is.EqualTo(window.SelectedItems[2]));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ReplacedItemShouldBeSynced()
+        public void ReplacedItemShouldBeSynced()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -242,14 +259,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.SecondListBox.SelectedItems[0], Is.EqualTo(window.SelectedItems[0]));
             Assert.That(window.SecondListBox.SelectedItems[1], Is.EqualTo(window.SelectedItems[1]));
             Assert.That(window.SecondListBox.SelectedItems[2], Is.EqualTo(window.SelectedItems[2]));
-
-            window.Close();
         }
 
         [Test]
-        public async Task ClearedItemShouldBeSynced()
+        public void ClearedItemShouldBeSynced()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MultiSelectorHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             Assert.That(window.SelectedItems, Is.Not.Null);
             Assert.That(window.SelectedItems, Is.Empty);
@@ -279,8 +294,6 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(window.MultiSelectionComboBox.SelectedItems, Is.Empty);
             Assert.That(window.FirstListBox.SelectedItems, Is.Empty);
             Assert.That(window.SecondListBox.SelectedItems, Is.Empty);
-
-            window.Close();
         }
     }
 }

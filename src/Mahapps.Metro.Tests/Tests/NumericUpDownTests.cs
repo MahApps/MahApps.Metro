@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +20,33 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class NumericUpDownTests
     {
-        public static bool NearlyEqual(double a, double b, double epsilon)
+        private NumericUpDownWindow? window;
+
+        [OneTimeSetUp]
+        public async Task OneTimeSetUp()
+        {
+            this.window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            this.window?.Close();
+            this.window = null;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.PreparePropertiesForTest();
+        }
+
+        private void PreparePropertiesForTest(IList<string>? properties = null)
+        {
+            this.window?.TheNUD.ClearDependencyProperties(properties);
+        }
+
+        private static bool NearlyEqual(double a, double b, double epsilon)
         {
             double absA = Math.Abs(a);
             double absB = Math.Abs(b);
@@ -44,34 +71,32 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        public async Task ShouldSnapToMultipleOfInterval()
+        public void ShouldSnapToMultipleOfInterval()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
 
-            window.TheNUD.Interval = 0.1;
-            window.TheNUD.SnapToMultipleOfInterval = true;
+            this.window.TheNUD.Interval = 0.1;
+            this.window.TheNUD.SnapToMultipleOfInterval = true;
 
-            window.TheNUD.Value = 0;
+            this.window.TheNUD.Value = 0;
             for (int i = 1; i < 15; i++)
             {
                 numUp.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-                Assert.That(window.TheNUD.Value, Is.EqualTo(0d + 0.1 * i));
+                Assert.That(this.window.TheNUD.Value, Is.EqualTo(0d + 0.1 * i));
             }
 
-            window.TheNUD.Value = 0;
+            this.window.TheNUD.Value = 0;
             for (int i = 1; i < 15; i++)
             {
                 numDown.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-                Assert.That(window.TheNUD.Value, Is.EqualTo(0d - 0.1 * i));
+                Assert.That(this.window.TheNUD.Value, Is.EqualTo(0d - 0.1 * i));
             }
-
-            window.Close();
         }
 
         [Theory]
@@ -96,28 +121,26 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(-1d, "x", "ffffffff")]
         [TestCase(255d, "x4", "00ff")]
         [TestCase(-1d, "X4", "FFFFFFFF")]
-        public async Task ShouldFormatValueInput(object? value, string format, string expectedText)
+        public void ShouldFormatValueInput(object? value, string format, string expectedText)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.Culture = CultureInfo.InvariantCulture;
-            window.TheNUD.NumericInputMode = NumericInput.All;
-            window.TheNUD.StringFormat = format;
+            this.window.TheNUD.Culture = CultureInfo.InvariantCulture;
+            this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.StringFormat = format;
 
-            window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, value);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, value);
 
             Assert.That(textBox.Text, Is.EqualTo(expectedText));
-            Assert.That(window.TheNUD.Value, Is.EqualTo(value));
-
-            window.Close();
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(value));
         }
 
         [Theory]
@@ -143,25 +166,23 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(".", NumericInput.Numbers, null)]
         [TestCase(".9", NumericInput.Numbers, 9d)]
         [TestCase("", NumericInput.Numbers, null)]
-        public async Task ShouldConvertManualTextInput(string text, NumericInput numericInput, object? expectedValue)
+        public void ShouldConvertManualTextInput(string text, NumericInput numericInput, object? expectedValue)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.NumericInputMode = numericInput;
+            this.window.TheNUD.NumericInputMode = numericInput;
 
             SetText(textBox, text);
 
-            Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
-
-            window.Close();
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
         }
 
         [Theory]
@@ -179,27 +200,25 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("15", "{}{0}mmHg", 15d, "15mmHg")] // GH-3551
         [TestCase("0.986", "{}{0:G3} mPa·s", 0.986d, "0.986 mPa·s")] // GH-3376#issuecomment-472324787
         [TestCase("", "{}{0:N2} cm", null, "")]
-        public async Task ShouldConvertTextInputWithStringFormat(string text, string format, object? expectedValue, string expectedText)
+        public void ShouldConvertTextInputWithStringFormat(string text, string format, object? expectedValue, string expectedText)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.NumericInputMode = NumericInput.All;
-            window.TheNUD.StringFormat = format;
+            this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.StringFormat = format;
 
             SetText(textBox, text);
 
-            Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
             Assert.That(textBox.Text, Is.EqualTo(expectedText));
-
-            window.Close();
         }
 
         [Theory]
@@ -220,39 +239,37 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("100", "{}{0}%", null, 100d, "100%", false)]
         [TestCase("100%", "{}{0}%", null, 100d, "100%", false)]
         [TestCase("100 %", "{}{0}%", null, 100d, "100%", false)]
-        public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string? culture, object expectedValue, string expectedText, bool useEpsilon)
+        public void ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string? culture, object expectedValue, string expectedText, bool useEpsilon)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.NumericInputMode = NumericInput.All;
-            window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
-            window.TheNUD.StringFormat = format;
+            this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
+            this.window.TheNUD.StringFormat = format;
 
             SetText(textBox, text);
 
             if (useEpsilon)
             {
-                Assert.That(window.TheNUD.Value.HasValue, Is.True);
-                Assert.That(NearlyEqual((double)expectedValue, window.TheNUD.Value.Value, 0.000005),
+                Assert.That(this.window.TheNUD.Value.HasValue, Is.True);
+                Assert.That(NearlyEqual((double)expectedValue, this.window.TheNUD.Value.Value, 0.000005),
                             Is.True,
-                            $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{window.TheNUD.Value.Value}'");
+                            $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.window.TheNUD.Value.Value}'");
             }
             else
             {
-                Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
+                Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
             }
 
             Assert.That(textBox.Text, Is.EqualTo(expectedText));
-
-            window.Close();
         }
 
         [Theory]
@@ -275,28 +292,26 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("1‰", "0.0‰", "en-EN", 0.001d, "1.0‰")]
         [TestCase("1 ‰", "0.0‰", "en-EN", 0.001d, "1.0‰")]
         [TestCase("0.25", "{0:0.0000}‰", null, 0.25d, "0.2500‰")]
-        public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string? culture, object expectedValue, string expectedText)
+        public void ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string? culture, object expectedValue, string expectedText)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.NumericInputMode = NumericInput.All;
-            window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
-            window.TheNUD.StringFormat = format;
+            this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
+            this.window.TheNUD.StringFormat = format;
 
             SetText(textBox, text);
 
-            Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
             Assert.That(textBox.Text, Is.EqualTo(expectedText));
-
-            window.Close();
         }
 
         [Theory]
@@ -305,26 +320,24 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("/", 0d)]
         [TestCase("/9", 0.9d)]
         [TestCase("/0115", 0.0115d)]
-        public async Task ShouldConvertDecimalTextInputWithSpecialCulture(string text, object expectedValue)
+        public void ShouldConvertDecimalTextInputWithSpecialCulture(string text, object expectedValue)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.NumericInputMode = NumericInput.Decimal;
-            window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
+            this.window.TheNUD.NumericInputMode = NumericInput.Decimal;
+            this.window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
 
             SetText(textBox, text);
 
-            Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
-
-            window.Close();
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
         }
 
         [Theory]
@@ -336,26 +349,24 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("10000", 65536d)]
         [TestCase("AFFE", 45054d)]
         [TestCase("AFFE0815", 2952661013d)]
-        public async Task ShouldConvertHexadecimalTextInput(string text, object expectedValue)
+        public void ShouldConvertHexadecimalTextInput(string text, object expectedValue)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.NumericInputMode = NumericInput.Numbers;
-            window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
+            this.window.TheNUD.NumericInputMode = NumericInput.Numbers;
+            this.window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
 
             SetText(textBox, text);
 
-            Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
-
-            window.Close();
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
         }
 
         [Theory]
@@ -371,26 +382,24 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("AFFE", "{}{0:X8}", 45054d, "0000AFFE")]
         [TestCase("AFFE", "{0:X8}", 45054d, "0000AFFE")]
         [TestCase("AFFE", "X8", 45054d, "0000AFFE")]
-        public async Task ShouldConvertHexadecimalTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
+        public void ShouldConvertHexadecimalTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            window.TheNUD.StringFormat = format;
+            this.window.TheNUD.StringFormat = format;
 
             SetText(textBox, text);
 
-            Assert.That(window.TheNUD.Value, Is.EqualTo(expectedValue));
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(expectedValue));
             Assert.That(textBox.Text, Is.EqualTo(expectedText));
-
-            window.Close();
         }
 
         private static void SetText(TextBox theTextBox, string theText)
@@ -409,19 +418,19 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        public async Task ShouldSetDefaultValue()
+        public void ShouldSetDefaultValue()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-            var textBox = window.TheNUD.FindChild<TextBox>();
-            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(window, Is.Not.Null);
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            var numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            var numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+
             Assert.That(numUp, Is.Not.Null);
             Assert.That(numDown, Is.Not.Null);
             Assert.That(textBox, Is.Not.Null);
 
-            var nud = window.TheNUD;
+            var nud = this.window.TheNUD;
             nud.Minimum = 0;
             nud.Maximum = 10;
 
@@ -452,8 +461,6 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.That(nud.DefaultValue, Is.EqualTo(nud.Minimum));
             Assert.That(nud.Value, Is.EqualTo(nud.Minimum));
-
-            window.Close();
         }
     }
 }

@@ -18,8 +18,8 @@
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
         </StackPanel.Resources>
-        <Button Name="DefaultButton" Content="SomeText" />
-        <Button Name="SquareButton"
+        <Button x:Name="DefaultButton" Content="SomeText" />
+        <Button x:Name="SquareButton"
                 Content="SomeText"
                 Style="{DynamicResource MahApps.Styles.Button.Square}" />
         <mah:DropDownButton x:Name="TheDropDownButton"

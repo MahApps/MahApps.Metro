@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +18,50 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class TextBoxHelperTests
     {
-        [Test]
-        public async Task TestAttachedPropertyButtonWidth()
+        private TextBoxHelperTestWindow? window;
+
+        [OneTimeSetUp]
+        public async Task OneTimeSetUp()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            this.window?.Close();
+            this.window = null;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.PreparePropertiesForTest([
+                TextBoxHelper.ButtonWidthProperty.Name,
+                TextBoxHelper.ButtonContentProperty.Name,
+                TextBoxHelper.ButtonContentTemplateProperty.Name,
+                TextBoxHelper.ButtonFontFamilyProperty.Name,
+                TextBoxHelper.ButtonFontSizeProperty.Name,
+                TextBoxHelper.ButtonTemplateProperty.Name,
+            ]);
+        }
+
+        private void PreparePropertiesForTest(IList<string>? properties = null)
+        {
+            this.window?.TestTextBox.ClearDependencyProperties(properties);
+            this.window?.TestButtonTextBox.ClearDependencyProperties(properties);
+            this.window?.TestPasswordBox.ClearDependencyProperties(properties);
+            this.window?.TestButtonRevealedPasswordBox.ClearDependencyProperties(properties);
+            this.window?.TestComboBox.ClearDependencyProperties(properties);
+            this.window?.TestEditableComboBox.ClearDependencyProperties(properties);
+            this.window?.TestNumericUpDown.ClearDependencyProperties(properties);
+            this.window?.TestHotKeyBox.ClearDependencyProperties(properties);
+        }
+
+        [Test]
+        public void TestAttachedPropertyButtonWidth()
+        {
+            Assert.That(this.window, Is.Not.Null);
 
             const double width = 42d;
 
@@ -50,14 +91,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
             Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.Width, Is.EqualTo(width));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TestAttachedPropertyButtonContent()
+        public void TestAttachedPropertyButtonContent()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var content = "M237.5 75A12.5 12.5 0 0 0 237.5 100A12.5 12.5 0 0 1 250 112.5V212.5A12.5 12.5 0 0 1 237.5 225H142.6875L136.8 241.675A12.5125 12.5125 0 0 1 125 250H62.5A12.5 12.5 0 0 1 50 237.5V112.5A12.5 12.5 0 0 1 62.5 100A12.5 12.5 0 0 0 62.5 75A37.5 37.5 0 0 0 25 112.5V237.5A37.5 37.5 0 0 0 62.5 275H125C141.325 275 155.2125 264.5625 160.375 250H237.5A37.5 37.5 0 0 0 275 212.5V112.5A37.5 37.5 0 0 0 237.5 75zM174.875 76.2A62.525 62.525 0 0 0 96.2125 172.5375A62.5 62.5 0 0 0 192.55 93.875L228.8 57.625A12.5 12.5 0 0 0 211.1125 39.9625L174.8625 76.2000000000001zM166.925 101.825A37.5 37.5 0 1 1 113.875 154.875A37.5 37.5 0 0 1 166.9125 101.8375z";
 
@@ -87,14 +126,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
             Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.Content, Is.EqualTo(content));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TestAttachedPropertyButtonContentTemplate()
+        public void TestAttachedPropertyButtonContentTemplate()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const string resourceKey = "TestDataTemplate";
             var dataTemplate = window.TryFindResource(resourceKey) as DataTemplate;
@@ -123,14 +160,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestHotKeyBox.SetResourceReference(TextBoxHelper.ButtonContentTemplateProperty, resourceKey);
             Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.ContentTemplate, Is.EqualTo(dataTemplate));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TestAttachedPropertyButtonFontFamily()
+        public void TestAttachedPropertyButtonFontFamily()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontFamily = new FontFamilyConverter().ConvertFromString("Arial");
 
@@ -157,14 +192,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
             Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.FontFamily, Is.EqualTo(fontFamily));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TestAttachedPropertyButtonFontSize()
+        public void TestAttachedPropertyButtonFontSize()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             var fontSize = 42d;
 
@@ -191,14 +224,12 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
             Assert.That(window.TestHotKeyBox.FindChild<Button>("PART_ClearText")?.FontSize, Is.EqualTo(fontSize));
-
-            window.Close();
         }
 
         [Test]
-        public async Task TestAttachedPropertyButtonTemplate()
+        public void TestAttachedPropertyButtonTemplate()
         {
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+            Assert.That(this.window, Is.Not.Null);
 
             const string resourceKey = "TestControlTemplate";
             var controlTemplate = window.TryFindResource(resourceKey) as ControlTemplate;
@@ -209,8 +240,6 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestButtonRevealedPasswordBox.SetResourceReference(TextBoxHelper.ButtonTemplateProperty, resourceKey);
             Assert.That(window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText")?.Template, Is.EqualTo(controlTemplate));
-
-            window.Close();
         }
     }
 }
