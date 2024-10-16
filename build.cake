@@ -7,9 +7,6 @@
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.15.0
 #tool dotnet:?package=XamlStyler.Console&version=3.2404.2
 #tool nuget:?package=GitVersion.CommandLine&version=5.12.0
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.18.3
-
-#addin nuget:?package=Cake.Figlet&version=2.0.1
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -28,6 +25,8 @@ var solution = srcDir + "/MahApps.Metro.sln";
 var publishDir = baseDir + "/Publish";
 var testResultsDir = Directory(baseDir + "/TestResults");
 
+var gitVersionPath = Context.Tools.Resolve("gitversion.exe");
+
 var styler = Context.Tools.Resolve("xstyler.exe");
 var stylerFile = baseDir + "/Settings.XAMLStyler";
 
@@ -38,8 +37,7 @@ public class BuildData
     public DotNetVerbosity DotNetVerbosity { get; }
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
-    public bool IsDevelopBranch { get; set; }
-    public bool IsReleaseBranch { get; set; }
+    public bool IsPrerelease { get; set; }
     public GitVersion GitVersion { get; set; }
 
     public BuildData(
@@ -56,9 +54,7 @@ public class BuildData
     public void SetGitVersion(GitVersion gitVersion)
     {
         GitVersion = gitVersion;
-        
-        IsDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", GitVersion.BranchName);
-        IsReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("main", GitVersion.BranchName);
+        IsPrerelease = GitVersion.NuGetVersion.Contains("-");
     }
 }
 
@@ -73,11 +69,7 @@ Setup<BuildData>(ctx =>
         throw new NotImplementedException($"{repoName} will only build on Windows because it's not possible to target WPF and Windows Forms from UNIX.");
     }
 
-    Information(Figlet(repoName));
-
-    var gitVersionPath = Context.Tools.Resolve("gitversion.exe");
-
-    Information("GitVersion             : {0}", gitVersionPath);
+    Spectre.Console.AnsiConsole.Write(new Spectre.Console.FigletText(repoName));
 
     var buildData = new BuildData(
         configuration: Argument("configuration", "Release"),
@@ -98,15 +90,18 @@ Setup<BuildData>(ctx =>
     }
     buildData.SetGitVersion(GitVersion(new GitVersionSettings { ToolPath = gitVersionPath, OutputType = GitVersionOutput.Json }));
 
+    Information("GitVersion             : {0}", gitVersionPath);
     Information("Branch                 : {0}", buildData.GitVersion.BranchName);
     Information("Configuration          : {0}", buildData.Configuration);
     Information("IsLocalBuild           : {0}", buildData.IsLocalBuild);
+    Information("IsPrerelease           : {0}", buildData.IsPrerelease);
     Information("Informational   Version: {0}", buildData.GitVersion.InformationalVersion);
     Information("SemVer          Version: {0}", buildData.GitVersion.SemVer);
     Information("AssemblySemVer  Version: {0}", buildData.GitVersion.AssemblySemVer);
     Information("MajorMinorPatch Version: {0}", buildData.GitVersion.MajorMinorPatch);
     Information("NuGet           Version: {0}", buildData.GitVersion.NuGetVersion);
     Information("Verbosity              : {0}", buildData.Verbosity);
+    Information("Publish folder         : {0}", publishDir);
 
     return buildData;
 });
@@ -123,8 +118,7 @@ Task("Clean")
     .ContinueOnError()
     .Does(() =>
 {
-    var filesToDelete = GetFiles("**/*_wpftmp.csproj")
-                        ;
+    var filesToDelete = GetFiles("**/*_wpftmp.csproj");
     DeleteFiles(filesToDelete);
 
     var directoriesToDelete = GetDirectories("./**/obj")
@@ -146,11 +140,11 @@ Task("Build")
     var msbuildSettings = new DotNetMSBuildSettings
     {
       MaxCpuCount = 0,
-      Version = data.IsReleaseBranch ? data.GitVersion.MajorMinorPatch : data.GitVersion.NuGetVersion,
+      Version = data.GitVersion.NuGetVersion,
       AssemblyVersion = data.GitVersion.AssemblySemVer,
       FileVersion = data.GitVersion.AssemblySemFileVer,
       InformationalVersion = data.GitVersion.InformationalVersion,
-      ContinuousIntegrationBuild = data.IsReleaseBranch,
+      ContinuousIntegrationBuild = true,
       ArgumentCustomization = args => args.Append("/m").Append("/nr:false") // The /nr switch tells msbuild to quite once it's done
     };
     // msbuildSettings.FileLoggers.Add(
@@ -182,7 +176,7 @@ Task("Pack")
     var msbuildSettings = new DotNetMSBuildSettings
     {
       MaxCpuCount = 0,
-      Version = data.IsReleaseBranch ? data.GitVersion.MajorMinorPatch : data.GitVersion.NuGetVersion,
+      Version = data.GitVersion.NuGetVersion,
       AssemblyVersion = data.GitVersion.AssemblySemVer,
       FileVersion = data.GitVersion.AssemblySemFileVer,
       InformationalVersion = data.GitVersion.InformationalVersion
@@ -306,6 +300,7 @@ Task("Tests")
             Configuration = data.Configuration,
             NoBuild = true,
             NoRestore = true,
+            Loggers = new[] { "trx" },
             ResultsDirectory = testResultsDir,
             Verbosity = data.DotNetVerbosity
         };
@@ -338,7 +333,7 @@ Task("CreateRelease")
     GitReleaseManagerCreate(token, "MahApps", repoName, new GitReleaseManagerCreateSettings {
         Milestone         = data.GitVersion.MajorMinorPatch,
         Name              = data.GitVersion.AssemblySemFileVer,
-        Prerelease        = data.IsDevelopBranch,
+        Prerelease        = data.IsPrerelease,
         TargetCommitish   = data.GitVersion.BranchName,
         WorkingDirectory  = "."
     });
