@@ -61,5 +61,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public string RememberCheckBoxText { get; set; } = DefaultRememberCheckBoxText;
 
         public bool RememberCheckBoxChecked { get; set; } = false;
+
+        public bool ChangeFocusWithEnterOnUsernameField { get; set; } = false;
     }
 }
