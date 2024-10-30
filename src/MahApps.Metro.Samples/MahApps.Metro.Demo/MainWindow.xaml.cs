@@ -440,7 +440,7 @@ namespace MetroDemo
 
         private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
         {
-            var result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings(this.MetroDialogOptions) { InitialUsername = "MahApps", EnablePasswordPreview = true, ChangeFocusWithEnterOnUsernameField = true });
+            var result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings(this.MetroDialogOptions) { InitialUsername = "MahApps", EnablePasswordPreview = true});
             if (result == null)
             {
                 //User pressed cancel
