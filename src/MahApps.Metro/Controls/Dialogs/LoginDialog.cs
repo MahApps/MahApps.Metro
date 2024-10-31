@@ -224,6 +224,19 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(RememberCheckBoxCheckedProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="ChangeFocusWithEnterOnUsernameField"/> dependency property.</summary>
+        public static readonly DependencyProperty ChangeFocusWithEnterOnUsernameFieldProperty
+            = DependencyProperty.Register(nameof(ChangeFocusWithEnterOnUsernameField),
+                                          typeof(bool),
+                                          typeof(LoginDialog),
+                                          new PropertyMetadata(default(bool)));
+
+        public bool ChangeFocusWithEnterOnUsernameField
+        {
+            get => (bool) this.GetValue(ChangeFocusWithEnterOnUsernameFieldProperty);
+            set => this.SetValue(ChangeFocusWithEnterOnUsernameFieldProperty, value);
+        }
+
         #endregion DependencyProperties
 
         #region Constructor
@@ -257,6 +270,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 this.SetCurrentValue(RememberCheckBoxVisibilityProperty, loginDialogSettings.RememberCheckBoxVisibility);
                 this.SetCurrentValue(RememberCheckBoxTextProperty, loginDialogSettings.RememberCheckBoxText);
                 this.SetCurrentValue(RememberCheckBoxCheckedProperty, loginDialogSettings.RememberCheckBoxChecked);
+                this.SetCurrentValue(ChangeFocusWithEnterOnUsernameFieldProperty, loginDialogSettings.ChangeFocusWithEnterOnUsernameField);
             }
         }
 
@@ -299,16 +313,23 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else if (e.Key == Key.Enter)
             {
-                this.CleanUpHandlers();
+                if (PART_TextBox != null && PART_TextBox.IsFocused && ChangeFocusWithEnterOnUsernameField)
+                {
+                    PART_PasswordBox?.Focus();
+                }
+                else
+                {
+                    this.CleanUpHandlers();
 
-                this.tcs.TrySetResult(!ReferenceEquals(sender, this.PART_NegativeButton)
-                                          ? new LoginDialogData
-                                            {
-                                                Username = this.Username,
-                                                SecurePassword = this.PART_PasswordBox?.SecurePassword,
-                                                ShouldRemember = this.RememberCheckBoxChecked
-                                            }
-                                          : null!);
+                    this.tcs.TrySetResult(!ReferenceEquals(sender, this.PART_NegativeButton)
+                                              ? new LoginDialogData
+                                              {
+                                                  Username = this.Username,
+                                                  SecurePassword = this.PART_PasswordBox?.SecurePassword,
+                                                  ShouldRemember = this.RememberCheckBoxChecked
+                                              }
+                                              : null!);
+                }
 
                 e.Handled = true;
             }
