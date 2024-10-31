@@ -51,7 +51,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string? Message
         {
-            get => (string?)this.GetValue(MessageProperty);
+            get => (string?) this.GetValue(MessageProperty);
             set => this.SetValue(MessageProperty, value);
         }
 
@@ -224,6 +224,19 @@ namespace MahApps.Metro.Controls.Dialogs
             set => this.SetValue(RememberCheckBoxCheckedProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="ChangeFocusWithEnterOnUsernameField"/> dependency property.</summary>
+        public static readonly DependencyProperty ChangeFocusWithEnterOnUsernameFieldProperty
+            = DependencyProperty.Register(nameof(ChangeFocusWithEnterOnUsernameField),
+                                          typeof(bool),
+                                          typeof(LoginDialog),
+                                          new PropertyMetadata(default(bool)));
+
+        public bool ChangeFocusWithEnterOnUsernameField
+        {
+            get => (bool)this.GetValue(ChangeFocusWithEnterOnUsernameFieldProperty);
+            set => this.SetValue(ChangeFocusWithEnterOnUsernameFieldProperty, value);
+        }
+
         #endregion DependencyProperties
 
         #region Constructor
@@ -257,6 +270,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 this.SetCurrentValue(RememberCheckBoxVisibilityProperty, loginDialogSettings.RememberCheckBoxVisibility);
                 this.SetCurrentValue(RememberCheckBoxTextProperty, loginDialogSettings.RememberCheckBoxText);
                 this.SetCurrentValue(RememberCheckBoxCheckedProperty, loginDialogSettings.RememberCheckBoxChecked);
+                this.SetCurrentValue(ChangeFocusWithEnterOnUsernameFieldProperty, loginDialogSettings.ChangeFocusWithEnterOnUsernameField);
             }
         }
 
@@ -270,17 +284,17 @@ namespace MahApps.Metro.Controls.Dialogs
         internal async Task<LoginDialogData?> WaitForButtonPressAsync()
         {
             await this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                this.Focus();
+                if (this.PART_TextBox is not null && string.IsNullOrEmpty(this.PART_TextBox.Text) && !this.ShouldHideUsername)
                 {
-                    this.Focus();
-                    if (this.PART_TextBox is not null && string.IsNullOrEmpty(this.PART_TextBox.Text) && !this.ShouldHideUsername)
-                    {
-                        this.PART_TextBox.Focus();
-                    }
-                    else
-                    {
-                        this.PART_PasswordBox?.Focus();
-                    }
-                }));
+                    this.PART_TextBox.Focus();
+                }
+                else
+                {
+                    this.PART_PasswordBox?.Focus();
+                }
+            }));
 
             this.SetUpHandlers();
 
@@ -299,16 +313,23 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else if (e.Key == Key.Enter)
             {
-                this.CleanUpHandlers();
+                if (PART_TextBox != null && PART_TextBox.IsFocused && ChangeFocusWithEnterOnUsernameField)
+                {
+                    PART_PasswordBox?.Focus();
+                }
+                else
+                {
+                    this.CleanUpHandlers();
 
-                this.tcs.TrySetResult(!ReferenceEquals(sender, this.PART_NegativeButton)
-                                          ? new LoginDialogData
-                                            {
-                                                Username = this.Username,
-                                                SecurePassword = this.PART_PasswordBox?.SecurePassword,
-                                                ShouldRemember = this.RememberCheckBoxChecked
-                                            }
-                                          : null!);
+                    this.tcs.TrySetResult(!ReferenceEquals(sender, this.PART_NegativeButton)
+                                              ? new LoginDialogData
+                                              {
+                                                  Username = this.Username,
+                                                  SecurePassword = this.PART_PasswordBox?.SecurePassword,
+                                                  ShouldRemember = this.RememberCheckBoxChecked
+                                              }
+                                              : null!);
+                }
 
                 e.Handled = true;
             }
@@ -320,11 +341,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             this.tcs.TrySetResult(ReferenceEquals(sender, this.PART_AffirmativeButton)
                                       ? new LoginDialogData
-                                        {
-                                            Username = this.Username,
-                                            SecurePassword = this.PART_PasswordBox?.SecurePassword,
-                                            ShouldRemember = this.RememberCheckBoxChecked
-                                        }
+                                      {
+                                          Username = this.Username,
+                                          SecurePassword = this.PART_PasswordBox?.SecurePassword,
+                                          ShouldRemember = this.RememberCheckBoxChecked
+                                      }
                                       : null!);
 
             e.Handled = true;
@@ -359,13 +380,13 @@ namespace MahApps.Metro.Controls.Dialogs
             this.cancellationTokenRegistration = this.DialogSettings
                                                      .CancellationToken
                                                      .Register(() =>
+                                                     {
+                                                         this.BeginInvoke(() =>
                                                          {
-                                                             this.BeginInvoke(() =>
-                                                                 {
-                                                                     this.CleanUpHandlers();
-                                                                     this.tcs.TrySetResult(null!);
-                                                                 });
+                                                             this.CleanUpHandlers();
+                                                             this.tcs.TrySetResult(null!);
                                                          });
+                                                     });
         }
 
         private void CleanUpHandlers()
