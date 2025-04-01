@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
@@ -23,37 +23,40 @@ namespace MahApps.Metro.Behaviors
     {
         protected override void OnAttached()
         {
-            AssociatedObject.SelectionChanged += OnSelectionChanged;
+            base.OnAttached();
+
+            this.AssociatedObject.SelectionChanged += this.OnSelectionChanged;
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            List<TabItem> tabItems = AssociatedObject.Items.Cast<TabItem>().ToList();
-            TabItem selectedItem = AssociatedObject.SelectedItem as TabItem;
-
-            //if the selected item is visible already, return
-            if (selectedItem != null && selectedItem.Visibility == Visibility.Visible)
+            // We don't need select the TabItem if the selected item is already visible
+            if (this.AssociatedObject.SelectedItem is TabItem selectedItem && selectedItem.Visibility == Visibility.Visible)
             {
                 return;
             }
 
-            //get first visible item
-            TabItem firstVisible = tabItems.FirstOrDefault(t => t.Visibility == Visibility.Visible);
+            // Get the first visible item
+            var tabItems = this.AssociatedObject.Items.OfType<TabItem>().ToList();
+            var firstVisible = tabItems.FirstOrDefault(t => t.Visibility == Visibility.Visible);
+
             if (firstVisible != null)
             {
-                AssociatedObject.SelectedIndex = tabItems.IndexOf(firstVisible);
+                this.AssociatedObject.SetCurrentValue(Selector.SelectedIndexProperty, tabItems.IndexOf(firstVisible));
             }
             else
             {
-                //there is no visible item
-                //Raises SelectionChanged again one time (second time, oldValue == newValue)
-                AssociatedObject.SelectedItem = null;
+                // There is no visible item
+                // Raises SelectionChanged again one time (second time, oldValue == newValue)
+                this.AssociatedObject.SetCurrentValue(Selector.SelectedItemProperty, null);
             }
         }
 
         protected override void OnDetaching()
         {
-            AssociatedObject.SelectionChanged -= OnSelectionChanged;
+            this.AssociatedObject.SelectionChanged -= this.OnSelectionChanged;
+
+            base.OnDetaching();
         }
     }
 }

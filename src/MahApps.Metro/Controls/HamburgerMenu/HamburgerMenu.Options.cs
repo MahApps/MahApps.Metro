@@ -22,7 +22,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets an object source used to generate the content of the options.
         /// </summary>
-        public object OptionsItemsSource
+        public object? OptionsItemsSource
         {
             get => this.GetValue(OptionsItemsSourceProperty);
             set => this.SetValue(OptionsItemsSourceProperty, value);
@@ -38,9 +38,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="Style"/> used for each item in the options.
         /// </summary>
-        public Style OptionsItemContainerStyle
+        public Style? OptionsItemContainerStyle
         {
-            get => (Style)this.GetValue(OptionsItemContainerStyleProperty);
+            get => (Style?)this.GetValue(OptionsItemContainerStyleProperty);
             set => this.SetValue(OptionsItemContainerStyleProperty, value);
         }
 
@@ -54,9 +54,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="DataTemplate"/> used to display each item in the options.
         /// </summary>
-        public DataTemplate OptionsItemTemplate
+        public DataTemplate? OptionsItemTemplate
         {
-            get => (DataTemplate)this.GetValue(OptionsItemTemplateProperty);
+            get => (DataTemplate?)this.GetValue(OptionsItemTemplateProperty);
             set => this.SetValue(OptionsItemTemplateProperty, value);
         }
 
@@ -70,9 +70,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="DataTemplateSelector"/> used to display each item in the options.
         /// </summary>
-        public DataTemplateSelector OptionsItemTemplateSelector
+        public DataTemplateSelector? OptionsItemTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(OptionsItemTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(OptionsItemTemplateSelectorProperty);
             set => this.SetValue(OptionsItemTemplateSelectorProperty, value);
         }
 
@@ -102,7 +102,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the selected options menu item.
         /// </summary>
-        public object SelectedOptionsItem
+        public object? SelectedOptionsItem
         {
             get => this.GetValue(SelectedOptionsItemProperty);
             set => this.SetValue(SelectedOptionsItemProperty, value);
@@ -134,9 +134,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a <see cref="ICommand"/> which will be executed if an options item was clicked by the user.
         /// </summary>
-        public ICommand OptionsItemCommand
+        public ICommand? OptionsItemCommand
         {
-            get => (ICommand)this.GetValue(OptionsItemCommandProperty);
+            get => (ICommand?)this.GetValue(OptionsItemCommandProperty);
             set => this.SetValue(OptionsItemCommandProperty, value);
         }
 
@@ -150,9 +150,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ICommand"/> parameter which will be passed by the <see cref="OptionsItemCommand"/>.
         /// </summary>
-        public object OptionsItemCommandParameter
+        public object? OptionsItemCommandParameter
         {
-            get => (object)this.GetValue(OptionsItemCommandParameterProperty);
+            get => this.GetValue(OptionsItemCommandParameterProperty);
             set => this.SetValue(OptionsItemCommandParameterProperty, value);
         }
 
@@ -166,7 +166,7 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (this.optionsListView == null)
+                if (this.optionsListView is null)
                 {
                     throw new Exception("OptionsListView is not defined yet. Please use OptionsItemsSource instead.");
                 }

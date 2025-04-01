@@ -1,36 +1,62 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
         <AssemblyName>MahApps.Metro</AssemblyName>
         <Title>MahApps.Metro</Title>
         <RootNamespace>MahApps.Metro</RootNamespace>
-        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DefineConstants>$(DefineConstants);INTERNAL_NULLABLE_ATTRIBUTES</DefineConstants>
     </PropertyGroup>
 
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
+    <!-- NuGet -->
+    <PropertyGroup>
+        <Authors>Jan Karger, Bastian Schmidt, Dennis Daume, Brendan Forster, Alex Mitchell, Paul Jenkins, Jake Ginnivan</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/MahApps/MahApps.Metro</PackageProjectUrl>
+        <PackageIcon>mahapps.metro.logo.png</PackageIcon>
+        <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
+        <PackageReleaseNotes>https://github.com/MahApps/MahApps.Metro/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/MahApps/MahApps.Metro.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SourceRoot Include="$(NuGetPackageRoot)" Condition="'$(NuGetPackageRoot)' != ''" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ControlzEx" />
+        <PackageReference Include="XAMLTools.MSBuild" PrivateAssets="all" IncludeAssets="build" />
+        <PackageReference Include="Microsoft.Windows.CsWin32">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Condition="'$(TargetFramework)' != 'net8.0-windows'" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
+        <PackageReference Include="System.Memory" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="ControlzEx" version="[4.*, 5)" Condition=" '$(TargetFramework)' == 'netcoreapp3.0' " />
-        <PackageReference Include="ControlzEx" version="[4.*, 6)" Condition=" '$(TargetFramework)' != 'netcoreapp3.0' " />
-        <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc0155" PrivateAssets="All" IncludeAssets="build" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
-
     <!-- Items include -->
     <ItemGroup>
-        <EmbeddedResource Include="**\*.Template.xaml" />
-        <EmbeddedResource Include="**\GeneratorParameters.json" />
-        <None Remove="Assets\Eyedropper.cur" />
-        <Resource Include="Assets\Eyedropper.cur" />
+        <None Include="..\..\mahapps.metro.logo.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="VisualStudioToolsManifest.xml" Pack="true" PackagePath="tools" />
+        <UpToDateCheckInput Include="**/*.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -39,26 +65,26 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>ColorNames.resx</DependentUpon>
         </Compile>
+        <Compile Update="Lang\MultiSelectionComboBox.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>MultiSelectionComboBox.resx</DependentUpon>
+        </Compile>
         <EmbeddedResource Update="Lang\ColorNames.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>ColorNames.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Update="Lang\MultiSelectionComboBox.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>MultiSelectionComboBox.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
-    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
-        <PropertyGroup>
-            <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
-            <!-- <XamlCombinePath>C:/DEV/OSS_Own/FluentRibbon/XamlCombine/bin/Debug/netcoreapp3.0/XamlCombine.exe</XamlCombinePath> -->
-        </PropertyGroup>       
-        <!-- Generate theme files -->
-        <Message Text="$(XamlColorSchemeGeneratorExecutable)" />
-        <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
-        <!-- Combine xaml files -->
-        <!-- <Exec Command="&quot;$(XamlCombinePath)&quot; &quot;Styles.txt&quot; &quot;Styles.xaml&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Themes" /> -->
-    </Target>
+    <ItemGroup>
+        <XAMLColorSchemeGeneratorItems Include="Styles\Themes\Theme.Template.xaml">
+            <ParametersFile>Styles\Themes\GeneratorParameters.json</ParametersFile>
+            <OutputPath>Styles\Themes</OutputPath>
+        </XAMLColorSchemeGeneratorItems>
+    </ItemGroup>
 
-    <!-- <ItemGroup> -->
-    <!--     <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" /> -->
-    <!--     <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" /> -->
-    <!-- </ItemGroup> -->
 </Project>

@@ -265,7 +265,3 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 
 # cake
 tools/*
-!tools/packages.config
-
-# XamlStyler
-!XamlStyler/

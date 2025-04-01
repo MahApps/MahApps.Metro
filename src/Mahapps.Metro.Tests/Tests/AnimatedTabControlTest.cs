@@ -2,122 +2,136 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MahApps.Metro.Tests
-{
-    using System.Threading.Tasks;
-    using System.Windows.Controls;
-    using MahApps.Metro.Controls;
-    using MahApps.Metro.Tests.TestHelpers;
-    using Xunit;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
+using NUnit.Framework;
 
-    public class AnimatedTabControlTest : AutomationTestBase
+namespace MahApps.Metro.Tests.Tests
+{
+    [TestFixture]
+    public class AnimatedTabControlTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MetroAnimatedSingleRowTabControlShouldSelectTheCorrectTemplate()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
-            Assert.NotNull(templateSelector);
+            Assert.That(templateSelector, Is.Not.Null);
 
             var tabControl = window.MetroTabControl;
-            Assert.Equal(2, tabControl.Items.Count);
+            Assert.That(tabControl.Items.Count, Is.EqualTo(2));
 
             var tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(0));
             var contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             var textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((FirstViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((FirstViewModel)tabItem.Content).Name));
 
             tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(1));
             window.Invoke(() => tabItem.IsSelected = true);
             contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((SecondViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((SecondViewModel)tabItem.Content).Name));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TabControlWithAnimatedSingleRowTabControlStyleShouldSelectTheCorrectTemplate()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
-            Assert.NotNull(templateSelector);
+            Assert.That(templateSelector, Is.Not.Null);
 
             var tabControl = window.NormalTabControl;
-            Assert.Equal(2, tabControl.Items.Count);
+            Assert.That(tabControl.Items.Count, Is.EqualTo(2));
 
             var tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(0));
             var contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             var textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((FirstViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((FirstViewModel)tabItem.Content).Name));
 
             tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(1));
             window.Invoke(() => tabItem.IsSelected = true);
             contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((SecondViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((SecondViewModel)tabItem.Content).Name));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task MetroAnimatedTabControlShouldSelectTheCorrectTemplate()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
-            Assert.NotNull(templateSelector);
+            Assert.That(templateSelector, Is.Not.Null);
 
             var tabControl = window.MetroTabControl2;
-            Assert.Equal(2, tabControl.Items.Count);
+            Assert.That(tabControl.Items.Count, Is.EqualTo(2));
 
             var tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(0));
             var contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             var textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((FirstViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((FirstViewModel)tabItem.Content).Name));
 
             tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(1));
             window.Invoke(() => tabItem.IsSelected = true);
             contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((SecondViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((SecondViewModel)tabItem.Content).Name));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TabControlWithAnimatedTabControlStyleShouldSelectTheCorrectTemplate()
         {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>().ConfigureAwait(false);
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<AnimatedTabControlWindow>();
             var templateSelector = window.TryFindResource("TabControlContentTemplateSelector") as TabControlContentTemplateSelector;
-            Assert.NotNull(templateSelector);
+            Assert.That(templateSelector, Is.Not.Null);
 
             var tabControl = window.NormalTabControl2;
-            Assert.Equal(2, tabControl.Items.Count);
+            Assert.That(tabControl.Items.Count, Is.EqualTo(2));
 
             var tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(0));
             var contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             var textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((FirstViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((FirstViewModel)tabItem.Content).Name));
 
             tabItem = ((TabItem)tabControl.ItemContainerGenerator.ContainerFromIndex(1));
             window.Invoke(() => tabItem.IsSelected = true);
             contentPresenter = tabControl.FindChild<ContentPresenter>("PART_SelectedContentHost");
+            Assert.That(contentPresenter, Is.Not.Null);
             contentPresenter.ApplyTemplate();
             textBlock = contentPresenter.FindChild<TextBlock>(null);
-            Assert.Equal(((SecondViewModel)tabItem.Content).Name, textBlock.Text);
+            Assert.That(textBlock, Is.Not.Null);
+            Assert.That(textBlock.Text, Is.EqualTo(((SecondViewModel)tabItem.Content).Name));
+
+            window.Close();
         }
     }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using MahApps.Metro;
 
 namespace Caliburn.Metro.Demo.Services
 {
@@ -19,16 +20,17 @@ namespace Caliburn.Metro.Demo.Services
             this.compositionContainer = compositionContainer;
         }
 
-        public T GetInstance<T>()
+        public T? GetInstance<T>()
             where T : class
         {
-            var instance = this.compositionContainer.GetExportedValue<T>();
-            if (instance != null)
+            try
             {
-                return instance;
+                return this.compositionContainer.GetExportedValue<T>();
             }
-
-            throw new Exception(string.Format("Could not locate any instances of contract {0}.", typeof(T)));
+            catch (Exception exception)
+            {
+                throw new MahAppsException($"Could not locate any instances of contract {typeof(T)}.", exception);
+            }
         }
     }
 }

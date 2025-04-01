@@ -16,9 +16,10 @@ namespace MahApps.Metro.Controls
     {
         public MetroTabItem()
         {
-            DefaultStyleKey = typeof(MetroTabItem);
+            this.DefaultStyleKey = typeof(MetroTabItem);
         }
 
+        /// <summary>Identifies the <see cref="CloseButtonEnabled"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonEnabledProperty =
             DependencyProperty.Register(nameof(CloseButtonEnabled),
                                         typeof(bool),
@@ -26,28 +27,30 @@ namespace MahApps.Metro.Controls
                                         new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets/sets whether the Close Button is visible.
+        /// Gets or sets whether the Close Button is visible.
         /// </summary>
         public bool CloseButtonEnabled
         {
-            get { return (bool)GetValue(CloseButtonEnabledProperty); }
-            set { SetValue(CloseButtonEnabledProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(CloseButtonEnabledProperty);
+            set => this.SetValue(CloseButtonEnabledProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="CloseTabCommand"/> dependency property.</summary>
         public static readonly DependencyProperty CloseTabCommandProperty =
             DependencyProperty.Register(nameof(CloseTabCommand),
                                         typeof(ICommand),
                                         typeof(MetroTabItem));
 
         /// <summary>
-        /// Gets/sets the command that is executed when the Close Button is clicked.
+        /// Gets or sets the command that is executed when the Close Button is clicked.
         /// </summary>
-        public ICommand CloseTabCommand
+        public ICommand? CloseTabCommand
         {
-            get { return (ICommand)GetValue(CloseTabCommandProperty); }
-            set { SetValue(CloseTabCommandProperty, value); }
+            get => (ICommand?)this.GetValue(CloseTabCommandProperty);
+            set => this.SetValue(CloseTabCommandProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CloseTabCommandParameter"/> dependency property.</summary>
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
             DependencyProperty.Register(nameof(CloseTabCommandParameter),
                                         typeof(object),
@@ -55,14 +58,15 @@ namespace MahApps.Metro.Controls
                                         new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets/sets the command parameter which is passed to the close button command.
+        /// Gets or sets the command parameter which is passed to the close button command.
         /// </summary>
-        public object CloseTabCommandParameter
+        public object? CloseTabCommandParameter
         {
-            get { return GetValue(CloseTabCommandParameterProperty); }
-            set { SetValue(CloseTabCommandParameterProperty, value); }
+            get => this.GetValue(CloseTabCommandParameterProperty);
+            set => this.SetValue(CloseTabCommandParameterProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CloseButtonMargin"/> dependency property.</summary>
         public static readonly DependencyProperty CloseButtonMarginProperty =
             DependencyProperty.Register(nameof(CloseButtonMargin),
                                         typeof(Thickness),
@@ -70,12 +74,12 @@ namespace MahApps.Metro.Controls
                                         new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets/sets the Close Button Margin.
+        /// Gets or sets the Margin of the close Button.
         /// </summary>
         public Thickness CloseButtonMargin
         {
-            get { return (Thickness)GetValue(CloseButtonMarginProperty); }
-            set { SetValue(CloseButtonMarginProperty, value); }
+            get => (Thickness)this.GetValue(CloseButtonMarginProperty);
+            set => this.SetValue(CloseButtonMarginProperty, value);
         }
     }
 }

@@ -12,11 +12,13 @@ namespace MahApps.Metro.Converters
     /// <summary>
     /// Filters a CornerRadius by the given Filter property. Result can be a new CornerRadius or a value of it's 4 corners.
     /// </summary>
+    [ValueConversion(typeof(CornerRadius), typeof(CornerRadius), ParameterType = typeof(RadiusType))]
+    [ValueConversion(typeof(CornerRadius), typeof(double), ParameterType = typeof(RadiusType))]
     public class CornerRadiusFilterConverter : IValueConverter
     {
         public RadiusType Filter { get; set; } = RadiusType.None;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is CornerRadius cornerRadius)
             {
@@ -28,33 +30,24 @@ namespace MahApps.Metro.Converters
                     filter = radiusType;
                 }
 
-                switch (filter)
+                return filter switch
                 {
-                    default:
-                        return cornerRadius;
-                    case RadiusType.Left:
-                        return new CornerRadius(cornerRadius.TopLeft, 0, 0, cornerRadius.BottomLeft);
-                    case RadiusType.Top:
-                        return new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, 0, 0);
-                    case RadiusType.Right:
-                        return new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, 0);
-                    case RadiusType.Bottom:
-                        return new CornerRadius(0, 0, cornerRadius.BottomRight, cornerRadius.BottomLeft);
-                    case RadiusType.TopLeft:
-                        return cornerRadius.TopLeft;
-                    case RadiusType.TopRight:
-                        return cornerRadius.TopRight;
-                    case RadiusType.BottomRight:
-                        return cornerRadius.BottomRight;
-                    case RadiusType.BottomLeft:
-                        return cornerRadius.BottomLeft;
-                }
+                    RadiusType.Left => new CornerRadius(cornerRadius.TopLeft, 0, 0, cornerRadius.BottomLeft),
+                    RadiusType.Top => new CornerRadius(cornerRadius.TopLeft, cornerRadius.TopRight, 0, 0),
+                    RadiusType.Right => new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, 0),
+                    RadiusType.Bottom => new CornerRadius(0, 0, cornerRadius.BottomRight, cornerRadius.BottomLeft),
+                    RadiusType.TopLeft => cornerRadius.TopLeft,
+                    RadiusType.TopRight => cornerRadius.TopRight,
+                    RadiusType.BottomRight => cornerRadius.BottomRight,
+                    RadiusType.BottomLeft => cornerRadius.BottomLeft,
+                    _ => cornerRadius
+                };
             }
 
             return Binding.DoNothing;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             // for now no back converting
             return DependencyProperty.UnsetValue;

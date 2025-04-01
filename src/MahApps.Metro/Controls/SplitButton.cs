@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -46,7 +47,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets an extra tag.
         /// </summary>
-        public object ExtraTag
+        public object? ExtraTag
         {
             get => this.GetValue(ExtraTagProperty);
             set => this.SetValue(ExtraTagProperty, value);
@@ -78,7 +79,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the content for the icon part.
         /// </summary>
         [Bindable(true)]
-        public object Icon
+        public object? Icon
         {
             get => this.GetValue(IconProperty);
             set => this.SetValue(IconProperty, value);
@@ -94,9 +95,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the DataTemplate for the icon part.
         /// </summary>
         [Bindable(true)]
-        public DataTemplate IconTemplate
+        public DataTemplate? IconTemplate
         {
-            get => (DataTemplate)this.GetValue(IconTemplateProperty);
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
             set => this.SetValue(IconTemplateProperty, value);
         }
 
@@ -109,15 +110,15 @@ namespace MahApps.Metro.Controls
 
         private static void OnCommandPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            (dependencyObject as SplitButton)?.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+            (dependencyObject as SplitButton)?.OnCommandChanged((ICommand?)e.OldValue, (ICommand?)e.NewValue);
         }
 
         /// <summary>
         /// Gets or sets the command to invoke when the content button is pressed.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
-            get => (ICommand)this.GetValue(CommandProperty);
+            get => (ICommand?)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
         }
 
@@ -131,9 +132,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the element on which to raise the specified command.
         /// </summary>
-        public IInputElement CommandTarget
+        public IInputElement? CommandTarget
         {
-            get => (IInputElement)this.GetValue(CommandTargetProperty);
+            get => (IInputElement?)this.GetValue(CommandTargetProperty);
             set => this.SetValue(CommandTargetProperty, value);
         }
 
@@ -147,7 +148,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the parameter to pass to the command property.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
             get => this.GetValue(CommandParameterProperty);
             set => this.SetValue(CommandParameterProperty, value);
@@ -163,9 +164,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the button content style.
         /// </summary>
-        public Style ButtonStyle
+        public Style? ButtonStyle
         {
-            get => (Style)this.GetValue(ButtonStyleProperty);
+            get => (Style?)this.GetValue(ButtonStyleProperty);
             set => this.SetValue(ButtonStyleProperty, value);
         }
 
@@ -179,9 +180,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the button arrow style.
         /// </summary>
-        public Style ButtonArrowStyle
+        public Style? ButtonArrowStyle
         {
-            get => (Style)this.GetValue(ButtonArrowStyleProperty);
+            get => (Style?)this.GetValue(ButtonArrowStyleProperty);
             set => this.SetValue(ButtonArrowStyleProperty, value);
         }
 
@@ -195,9 +196,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush for the button arrow icon.
         /// </summary>
-        public Brush ArrowBrush
+        public Brush? ArrowBrush
         {
-            get => (Brush)this.GetValue(ArrowBrushProperty);
+            get => (Brush?)this.GetValue(ArrowBrushProperty);
             set => this.SetValue(ArrowBrushProperty, value);
         }
 
@@ -211,9 +212,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush of the button arrow icon if the mouse is over the split button.
         /// </summary>
-        public Brush ArrowMouseOverBrush
+        public Brush? ArrowMouseOverBrush
         {
-            get => (Brush)this.GetValue(ArrowMouseOverBrushProperty);
+            get => (Brush?)this.GetValue(ArrowMouseOverBrushProperty);
             set => this.SetValue(ArrowMouseOverBrushProperty, value);
         }
 
@@ -227,9 +228,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush of the button arrow icon if the arrow button is pressed.
         /// </summary>
-        public Brush ArrowPressedBrush
+        public Brush? ArrowPressedBrush
         {
-            get => (Brush)this.GetValue(ArrowPressedBrushProperty);
+            get => (Brush?)this.GetValue(ArrowPressedBrushProperty);
             set => this.SetValue(ArrowPressedBrushProperty, value);
         }
 
@@ -237,10 +238,10 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
 
-            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(false, null, CoerceIsEditableProperty));
+            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, null, CoerceIsEditableProperty));
         }
 
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
             {
@@ -265,7 +266,7 @@ namespace MahApps.Metro.Controls
             this.UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             this.UpdateCanExecute();
         }
@@ -295,7 +296,8 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceIsEditableProperty(DependencyObject dependencyObject, object value)
+        [MustUseReturnValue]
+        private static object CoerceIsEditableProperty(DependencyObject dependencyObject, object? value)
         {
             // For now SplitButton is not editable
             return false;
@@ -344,7 +346,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private Button button;
-        private Button expanderButton;
+        private Button? button;
+        private Button? expanderButton;
     }
 }

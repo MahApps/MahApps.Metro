@@ -2,17 +2,57 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ControlzEx.Standard;
 using System.Configuration;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Media;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace MahApps.Metro.Controls
 {
+    public class WindowPlacementSetting
+    {
+        public uint showCmd;
+        public Point minPosition;
+        public Point maxPosition;
+        public Rect normalPosition;
+
+        internal WINDOWPLACEMENT ToWINDOWPLACEMENT()
+        {
+            return new WINDOWPLACEMENT
+                   {
+                       length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
+                       showCmd = (SHOW_WINDOW_CMD)this.showCmd,
+                       ptMinPosition = new System.Drawing.Point { X = (int)this.minPosition.X, Y = (int)this.minPosition.Y },
+                       ptMaxPosition = new System.Drawing.Point { X = (int)this.maxPosition.X, Y = (int)this.maxPosition.Y },
+                       rcNormalPosition = new RECT { left = (int)this.normalPosition.X, top = (int)this.normalPosition.Y, right = (int)this.normalPosition.Right, bottom = (int)this.normalPosition.Bottom }
+                   };
+        }
+
+        internal static WindowPlacementSetting FromWINDOWPLACEMENT(Window window, WINDOWPLACEMENT placement)
+        {
+            // Get the current DPI scale factor
+            var dpiScale = VisualTreeHelper.GetDpi(window);
+
+            // Adjust the size of the window for DPI scaling
+            var adjustedWidth = placement.rcNormalPosition.GetWidth() / dpiScale.DpiScaleX;
+            var adjustedHeight = placement.rcNormalPosition.GetHeight() / dpiScale.DpiScaleY;
+
+            return new WindowPlacementSetting
+                   {
+                       showCmd = (uint)placement.showCmd,
+                       minPosition = new Point(placement.ptMinPosition.X, placement.ptMinPosition.Y),
+                       maxPosition = new Point(placement.ptMaxPosition.X, placement.ptMaxPosition.Y),
+                       normalPosition = new Rect(placement.rcNormalPosition.left, placement.rcNormalPosition.top, adjustedWidth, adjustedHeight),
+                   };
+        }
+    }
+
     public interface IWindowPlacementSettings
     {
-#pragma warning disable 618
-        WINDOWPLACEMENT Placement { get; set; }
-#pragma warning restore 618
+        WindowPlacementSetting? Placement { get; set; }
 
         /// <summary>
         /// Refreshes the application settings property values from persistent storage.
@@ -33,6 +73,12 @@ namespace MahApps.Metro.Controls
         /// Stores the current values of the settings properties.
         /// </summary>
         void Save();
+
+        /// <summary>
+        /// Calls Reset on the providers.
+        /// Providers must implement IApplicationSettingsProvider to support this.
+        /// </summary>
+        void Reset();
     }
 
     /// <summary>
@@ -45,22 +91,28 @@ namespace MahApps.Metro.Controls
         {
         }
 
-#pragma warning disable 618
         [UserScopedSetting]
-        public WINDOWPLACEMENT Placement
+        public WindowPlacementSetting? Placement
         {
             get
             {
-                if (this["Placement"] != null)
+                try
                 {
-                    return ((WINDOWPLACEMENT)this["Placement"]);
+                    return this[nameof(Placement)] as WindowPlacementSetting;
                 }
+                catch (ConfigurationErrorsException? ex)
+                {
+                    string? filename = null;
+                    while (ex != null && (filename = ex.Filename) == null)
+                    {
+                        ex = ex.InnerException as ConfigurationErrorsException;
+                    }
 
-                return null;
+                    throw new MahAppsException($"The settings file '{filename ?? "<unknown>"}' seems to be corrupted", ex);
+                }
             }
-            set => this["Placement"] = value;
+            set => this[nameof(Placement)] = value;
         }
-#pragma warning restore 618
 
         /// <summary>
         /// Upgrades the application settings on loading.
@@ -72,14 +124,11 @@ namespace MahApps.Metro.Controls
             {
                 try
                 {
-                    if (this["UpgradeSettings"] != null)
-                    {
-                        return (bool)this["UpgradeSettings"];
-                    }
+                    return (this[nameof(UpgradeSettings)] as bool?).GetValueOrDefault(true);
                 }
-                catch (ConfigurationErrorsException ex)
+                catch (ConfigurationErrorsException? ex)
                 {
-                    string filename = null;
+                    string? filename = null;
                     while (ex != null && (filename = ex.Filename) == null)
                     {
                         ex = ex.InnerException as ConfigurationErrorsException;
@@ -87,10 +136,8 @@ namespace MahApps.Metro.Controls
 
                     throw new MahAppsException($"The settings file '{filename ?? "<unknown>"}' seems to be corrupted", ex);
                 }
-
-                return true;
             }
-            set => this["UpgradeSettings"] = value;
+            set => this[nameof(UpgradeSettings)] = value;
         }
     }
 }

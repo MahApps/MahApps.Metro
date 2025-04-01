@@ -6,29 +6,30 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ControlzEx.Theming;
 using MahApps.Metro.Tests.TestHelpers;
-using Xunit;
+using MahApps.Metro.Tests.Views;
+using NUnit.Framework;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
-    public class CleanWindowTest : AutomationTestBase
+    [TestFixture]
+    public class CleanWindowTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task DefaultWindowCommandColorIsBlack()
         {
-            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>().ConfigureAwait(false);
-
-            var theme = ThemeManager.Current.DetectTheme();
-            Assert.NotNull(theme);
+            var theme = ThemeManager.Current.DetectTheme(window);
+            Assert.That(theme, Is.Not.Null);
 
             var brush = theme.Resources["MahApps.Brushes.ThemeForeground"] as SolidColorBrush;
-            Assert.NotNull(brush);
+            Assert.That(brush, Is.Not.Null);
 
             var blackBrushColor = brush.Color;
 
             window.AssertWindowCommandsColor(blackBrushColor);
+
+            window.Close();
         }
     }
 }

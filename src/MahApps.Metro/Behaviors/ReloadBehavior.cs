@@ -19,10 +19,11 @@ namespace MahApps.Metro.Behaviors
         /// If the property is set to true, the transition of the <see cref="MetroContentControl"/> is triggered again when the DataContext is changed.
         /// </summary>
         public static readonly DependencyProperty OnDataContextChangedProperty
-            = DependencyProperty.RegisterAttached("OnDataContextChanged",
-                                                  typeof(bool),
-                                                  typeof(ReloadBehavior),
-                                                  new PropertyMetadata(BooleanBoxes.FalseBox, OnOnDataContextChanged));
+            = DependencyProperty.RegisterAttached(
+                "OnDataContextChanged",
+                typeof(bool),
+                typeof(ReloadBehavior),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnOnDataContextChanged));
 
         /// <summary>
         /// Helper for getting <see cref="OnDataContextChangedProperty"/> from <paramref name="element"/>.
@@ -73,10 +74,11 @@ namespace MahApps.Metro.Behaviors
         /// If the property is set to true, the transition is triggered again when the SelectionChanged event of a TabControl was raised.
         /// </summary>
         public static readonly DependencyProperty OnSelectedTabChangedProperty
-            = DependencyProperty.RegisterAttached("OnSelectedTabChanged",
-                                                  typeof(bool),
-                                                  typeof(ReloadBehavior),
-                                                  new PropertyMetadata(BooleanBoxes.FalseBox, OnSelectedTabChanged));
+            = DependencyProperty.RegisterAttached(
+                "OnSelectedTabChanged",
+                typeof(bool),
+                typeof(ReloadBehavior),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnSelectedTabChanged));
 
         /// <summary>
         /// Helper for getting <see cref="OnSelectedTabChangedProperty"/> from <paramref name="element"/>.
@@ -165,17 +167,18 @@ namespace MahApps.Metro.Behaviors
         }
 
         internal static readonly DependencyProperty ContentControlProperty
-            = DependencyProperty.RegisterAttached("ContentControl",
-                                                  typeof(ContentControl),
-                                                  typeof(ReloadBehavior),
-                                                  new PropertyMetadata(default(ContentControl)));
+            = DependencyProperty.RegisterAttached(
+                "ContentControl",
+                typeof(ContentControl),
+                typeof(ReloadBehavior),
+                new PropertyMetadata(default(ContentControl)));
 
-        internal static ContentControl GetContentControl(UIElement element)
+        internal static ContentControl? GetContentControl(UIElement element)
         {
-            return (ContentControl)element.GetValue(ContentControlProperty);
+            return (ContentControl?)element.GetValue(ContentControlProperty);
         }
 
-        internal static void SetContentControl(UIElement element, ContentControl value)
+        internal static void SetContentControl(UIElement element, ContentControl? value)
         {
             element.SetValue(ContentControlProperty, value);
         }

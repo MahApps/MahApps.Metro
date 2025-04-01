@@ -10,15 +10,15 @@ namespace MetroDemo.Models
 {
     public class CustomDialogExampleContent : ViewModelBase
     {
-        private string _firstName;
-        private string _lastName;
+        private string? _firstName;
+        private string? _lastName;
 
         public CustomDialogExampleContent(Action<CustomDialogExampleContent> closeHandler)
         {
-            this.CloseCommand = new SimpleCommand(o => true, o => closeHandler(this));
+            this.CloseCommand = new SimpleCommand<object>(o => true, o => closeHandler(this));
         }
 
-        public string FirstName
+        public string? FirstName
         {
             get => this._firstName;
             set
@@ -28,7 +28,7 @@ namespace MetroDemo.Models
             }
         }
 
-        public string LastName
+        public string? LastName
         {
             get => this._lastName;
             set

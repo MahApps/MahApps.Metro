@@ -1,0 +1,129 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="MahApps.Templates.ProgressDialog" TargetType="{x:Type dialogs:ProgressDialog}">
+        <Grid Background="{TemplateBinding Background}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ContentPresenter x:Name="PART_Top"
+                              Grid.Row="0"
+                              AutomationProperties.Name="Dialog top"
+                              Content="{TemplateBinding DialogTop}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+            <Grid Grid.Row="1" Margin="{TemplateBinding Padding}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
+                    <ColumnDefinition Width="{TemplateBinding DialogContentWidth}" />
+                    <ColumnDefinition Width="{TemplateBinding DialogContentMargin}" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ContentControl x:Name="PART_Icon"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                AutomationProperties.Name="Dialog icon"
+                                Content="{TemplateBinding Icon}"
+                                ContentTemplate="{TemplateBinding IconTemplate}"
+                                Focusable="False"
+                                UseLayoutRounding="False" />
+
+                <TextBlock x:Name="PART_Title"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           AutomationProperties.Name="Dialog title"
+                           FontSize="{TemplateBinding DialogTitleFontSize}"
+                           Foreground="{TemplateBinding Foreground}"
+                           Text="{TemplateBinding Title}"
+                           TextWrapping="Wrap" />
+
+                <Grid x:Name="PART_Content"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      Margin="0 10 0 0"
+                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                      AutomationProperties.Name="Dialog content"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Margin="0 5 0 0"
+                               FontSize="{TemplateBinding DialogMessageFontSize}"
+                               Foreground="{TemplateBinding Foreground}"
+                               Text="{TemplateBinding Message}"
+                               TextWrapping="Wrap" />
+
+                    <StackPanel Grid.Row="1"
+                                MinHeight="85"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button x:Name="PART_NegativeButton"
+                                Margin="5 0 0 0"
+                                Content="{TemplateBinding NegativeButtonText}"
+                                Cursor="Arrow"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
+                                Visibility="Hidden" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <ContentPresenter x:Name="PART_Bottom"
+                              Grid.Row="2"
+                              AutomationProperties.Name="Dialog bottom"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <ContentPresenter.Content>
+                    <mah:MetroProgressBar x:Name="PART_ProgressBar"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Bottom"
+                                          Panel.ZIndex="5"
+                                          Foreground="{TemplateBinding ProgressBarForeground}"
+                                          Maximum="1.0"
+                                          Minimum="0.0" />
+                </ContentPresenter.Content>
+            </ContentPresenter>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsCancelable" Value="True">
+                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger Property="ColorScheme" Value="Accented">
+                <Setter TargetName="PART_ProgressBar" Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
+
+            <Trigger Property="Title" Value="{x:Null}">
+                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Dialogs.Show}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ProgressDialog"
+           BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
+           TargetType="{x:Type dialogs:ProgressDialog}">
+        <Setter Property="ProgressBarForeground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ProgressDialog}" />
+    </Style>
+</ResourceDictionary>

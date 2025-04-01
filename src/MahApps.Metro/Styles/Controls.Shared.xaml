@@ -77,17 +77,6 @@
                          Duration="0:0:0.2" />
     </Storyboard>
 
-    <Storyboard x:Key="MahApps.Storyboard.WaitingForData" po:Freeze="True">
-        <DoubleAnimation AutoReverse="True"
-                         RepeatBehavior="Forever"
-                         Timeline.DesiredFrameRate="30"
-                         Storyboard.TargetName="PART_WaitingForDataEffectGrid"
-                         Storyboard.TargetProperty="(Effect).Opacity"
-                         From="0"
-                         To="1"
-                         Duration="00:00:02" />
-    </Storyboard>
-
     <Storyboard x:Key="MahApps.Storyboard.HideFloatingMessage" po:Freeze="True">
         <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.EaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"

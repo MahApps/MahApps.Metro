@@ -11,16 +11,19 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="Label"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(nameof(Label), typeof(string), typeof(HamburgerMenuHeaderItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty LabelProperty
+            = DependencyProperty.Register(nameof(Label),
+                                          typeof(string),
+                                          typeof(HamburgerMenuHeaderItem),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a value that specifies label to display.
         /// </summary>
-        public string Label
+        public string? Label
         {
-            get { return (string)GetValue(LabelProperty); }
-
-            set { SetValue(LabelProperty, value); }
+            get => (string?)this.GetValue(LabelProperty);
+            set => this.SetValue(LabelProperty, value);
         }
 
         protected override Freezable CreateInstanceCore()

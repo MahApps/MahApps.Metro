@@ -13,7 +13,7 @@ namespace MetroDemo
     {
         public PrivateView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

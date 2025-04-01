@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -74,7 +75,6 @@ namespace MahApps.Metro.Controls
         public static void GoToState(Control control, bool useTransitions, params string[] stateNames)
         {
             Debug.Assert(control != null, "control should not be null!");
-            Debug.Assert(stateNames != null, "stateNames should not be null!");
             Debug.Assert(stateNames.Length > 0, "stateNames should not be empty!");
 
             foreach (string name in stateNames)
@@ -86,20 +86,27 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static FrameworkElement GetImplementationRoot(DependencyObject dependencyObject)
+        public static FrameworkElement? GetImplementationRoot(DependencyObject? dependencyObject)
         {
-            Debug.Assert(dependencyObject != null, "DependencyObject should not be null.");
+            if (dependencyObject is null)
+            {
+                throw new ArgumentNullException(nameof(dependencyObject));
+            }
+
             return VisualTreeHelper.GetChildrenCount(dependencyObject) == 1
                 ? VisualTreeHelper.GetChild(dependencyObject, 0) as FrameworkElement
                 : null;
         }
 
-        public static VisualStateGroup TryGetVisualStateGroup(DependencyObject dependencyObject, string groupName)
+        public static VisualStateGroup? TryGetVisualStateGroup(DependencyObject? dependencyObject, string groupName)
         {
-            FrameworkElement root = GetImplementationRoot(dependencyObject);
-            return root == null
+            var root = GetImplementationRoot(dependencyObject);
+
+            return root is null
                 ? null
-                : VisualStateManager.GetVisualStateGroups(root)?.OfType<VisualStateGroup>().FirstOrDefault(group => string.CompareOrdinal(groupName, group.Name) == 0);
+                : VisualStateManager.GetVisualStateGroups(root)?
+                    .OfType<VisualStateGroup>()
+                    .FirstOrDefault(group => string.CompareOrdinal(groupName, group.Name) == 0);
         }
     }
 }

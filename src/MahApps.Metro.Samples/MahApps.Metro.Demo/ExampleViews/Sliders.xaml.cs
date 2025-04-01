@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public Sliders()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

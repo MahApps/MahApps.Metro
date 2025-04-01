@@ -12,6 +12,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -105,9 +106,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a style for the navigation index items.
         /// </summary>
-        public Style IndexItemContainerStyle
+        public Style? IndexItemContainerStyle
         {
-            get => (Style)this.GetValue(IndexItemContainerStyleProperty);
+            get => (Style?)this.GetValue(IndexItemContainerStyleProperty);
             set => this.SetValue(IndexItemContainerStyleProperty, value);
         }
 
@@ -373,9 +374,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the banner's content.
         /// </summary>
-        public DataTemplate BannerTextTemplate
+        public DataTemplate? BannerTextTemplate
         {
-            get => (DataTemplate)this.GetValue(BannerTextTemplateProperty);
+            get => (DataTemplate?)this.GetValue(BannerTextTemplateProperty);
             set => this.SetValue(BannerTextTemplateProperty, value);
         }
 
@@ -384,7 +385,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(BannerTextTemplateSelector),
                                           typeof(DataTemplateSelector),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a template selector for BannerText property that enables an application writer to provide custom template-selection logic .
@@ -394,9 +395,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public DataTemplateSelector BannerTextTemplateSelector
+        public DataTemplateSelector? BannerTextTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(BannerTextTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(BannerTextTemplateSelectorProperty);
             set => this.SetValue(BannerTextTemplateSelectorProperty, value);
         }
 
@@ -405,7 +406,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(BannerTextStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the BannerText property if it is displayed as a string.
@@ -415,18 +416,18 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string BannerTextStringFormat
+        public string? BannerTextStringFormat
         {
-            get => (string)this.GetValue(BannerTextStringFormatProperty);
+            get => (string?)this.GetValue(BannerTextStringFormatProperty);
             set => this.SetValue(BannerTextStringFormatProperty, value);
         }
 
         /// <summary>
         /// Gets or sets a <see cref="T:System.Windows.Media.Brush" /> that is used to fill the banner.
         /// </summary>
-        public Brush BannerBackground
+        public Brush? BannerBackground
         {
-            get => (Brush)this.GetValue(BannerBackgroundProperty);
+            get => (Brush?)this.GetValue(BannerBackgroundProperty);
             set => this.SetValue(BannerBackgroundProperty, value);
         }
 
@@ -472,9 +473,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> for the navigation buttons.
         /// </summary>
-        public Style NavigationButtonStyle
+        public Style? NavigationButtonStyle
         {
-            get => (Style)this.GetValue(NavigationButtonStyleProperty);
+            get => (Style?)this.GetValue(NavigationButtonStyleProperty);
             set => this.SetValue(NavigationButtonStyleProperty, value);
         }
 
@@ -489,7 +490,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Back Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonBackContent
+        public object? ButtonBackContent
         {
             get => this.GetValue(ButtonBackContentProperty);
             set => this.SetValue(ButtonBackContentProperty, value);
@@ -504,9 +505,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Back button's content.
         /// </summary>
-        public DataTemplate ButtonBackContentTemplate
+        public DataTemplate? ButtonBackContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonBackContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonBackContentTemplateProperty);
             set => this.SetValue(ButtonBackContentTemplateProperty, value);
         }
 
@@ -515,7 +516,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonBackContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonBackContent property if it is displayed as a string.
@@ -525,9 +526,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonBackContentStringFormat
+        public string? ButtonBackContentStringFormat
         {
-            get => (string)this.GetValue(ButtonBackContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonBackContentStringFormatProperty);
             set => this.SetValue(ButtonBackContentStringFormatProperty, value);
         }
 
@@ -542,7 +543,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Forward Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonForwardContent
+        public object? ButtonForwardContent
         {
             get => this.GetValue(ButtonForwardContentProperty);
             set => this.SetValue(ButtonForwardContentProperty, value);
@@ -557,9 +558,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Forward button's content.
         /// </summary>
-        public DataTemplate ButtonForwardContentTemplate
+        public DataTemplate? ButtonForwardContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonForwardContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonForwardContentTemplateProperty);
             set => this.SetValue(ButtonForwardContentTemplateProperty, value);
         }
 
@@ -568,7 +569,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonForwardContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonForwardContent property if it is displayed as a string.
@@ -578,9 +579,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonForwardContentStringFormat
+        public string? ButtonForwardContentStringFormat
         {
-            get => (string)this.GetValue(ButtonForwardContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonForwardContentStringFormatProperty);
             set => this.SetValue(ButtonForwardContentStringFormatProperty, value);
         }
 
@@ -595,7 +596,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Up Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonUpContent
+        public object? ButtonUpContent
         {
             get => this.GetValue(ButtonUpContentProperty);
             set => this.SetValue(ButtonUpContentProperty, value);
@@ -610,9 +611,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Up button's content.
         /// </summary>
-        public DataTemplate ButtonUpContentTemplate
+        public DataTemplate? ButtonUpContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonUpContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonUpContentTemplateProperty);
             set => this.SetValue(ButtonUpContentTemplateProperty, value);
         }
 
@@ -621,7 +622,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonUpContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonUpContent property if it is displayed as a string.
@@ -631,9 +632,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonUpContentStringFormat
+        public string? ButtonUpContentStringFormat
         {
-            get => (string)this.GetValue(ButtonUpContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonUpContentStringFormatProperty);
             set => this.SetValue(ButtonUpContentStringFormatProperty, value);
         }
 
@@ -648,7 +649,7 @@ namespace MahApps.Metro.Controls
         /// Provides the object content that should be displayed on the Down Button.
         /// </summary>
         [Category(AppName.MahApps)]
-        public object ButtonDownContent
+        public object? ButtonDownContent
         {
             get => this.GetValue(ButtonDownContentProperty);
             set => this.SetValue(ButtonDownContentProperty, value);
@@ -663,9 +664,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the DataTemplate used to display the Down button's content.
         /// </summary>
-        public DataTemplate ButtonDownContentTemplate
+        public DataTemplate? ButtonDownContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ButtonDownContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ButtonDownContentTemplateProperty);
             set => this.SetValue(ButtonDownContentTemplateProperty, value);
         }
 
@@ -674,7 +675,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ButtonDownContentStringFormat),
                                           typeof(string),
                                           typeof(FlipView),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the ButtonDownContent property if it is displayed as a string.
@@ -684,9 +685,9 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]
-        public string ButtonDownContentStringFormat
+        public string? ButtonDownContentStringFormat
         {
-            get => (string)this.GetValue(ButtonDownContentStringFormatProperty);
+            get => (string?)this.GetValue(ButtonDownContentStringFormatProperty);
             set => this.SetValue(ButtonDownContentStringFormatProperty, value);
         }
 
@@ -703,20 +704,20 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private bool loaded;
         private bool allowSelectedIndexChangedCallback = true;
-        private Grid bannerGrid;
-        private Label bannerLabel;
-        private ListBox indexListBox;
-        private Button backButton;
-        private Button forwardButton;
-        private Button downButton;
-        private Button upButton;
-        private Storyboard hideBannerStoryboard;
-        private Storyboard hideControlStoryboard;
-        private EventHandler hideControlStoryboardCompletedHandler;
-        private TransitioningContentControl presenter;
-        private Storyboard showBannerStoryboard;
-        private Storyboard showControlStoryboard;
-        private object savedBannerText;
+        private Grid? bannerGrid;
+        private Label? bannerLabel;
+        private ListBox? indexListBox;
+        private Button? backButton;
+        private Button? forwardButton;
+        private Button? downButton;
+        private Button? upButton;
+        private Storyboard? hideBannerStoryboard;
+        private Storyboard? hideControlStoryboard;
+        private EventHandler? hideControlStoryboardCompletedHandler;
+        private TransitioningContentControl? presenter;
+        private Storyboard? showBannerStoryboard;
+        private Storyboard? showControlStoryboard;
+        private object? savedBannerText;
 
         static FlipView()
         {
@@ -769,6 +770,7 @@ namespace MahApps.Metro.Controls
         /// <param name="d">The object that the property exists on.</param>
         /// <param name="value">The new value of the property, prior to any coercion attempt.</param>
         /// <returns>The coerced value (with appropriate type). </returns>
+        [MustUseReturnValue]
         private static object CoerceSelectedIndexProperty(DependencyObject d, object value)
         {
             // call ComputeTransition only if SelectedIndex is changed from outside and not from GoBack or GoForward
@@ -788,7 +790,11 @@ namespace MahApps.Metro.Controls
             this.allowSelectedIndexChangedCallback = false;
             try
             {
-                this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+                if (this.presenter is not null)
+                {
+                    this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+                }
+
                 if (this.SelectedIndex > 0)
                 {
                     this.SelectedIndex--;
@@ -815,7 +821,11 @@ namespace MahApps.Metro.Controls
             this.allowSelectedIndexChangedCallback = false;
             try
             {
-                this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+                if (this.presenter is not null)
+                {
+                    this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+                }
+                
                 if (this.SelectedIndex < this.Items.Count - 1)
                 {
                     this.SelectedIndex++;
@@ -941,7 +951,7 @@ namespace MahApps.Metro.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new FlipViewItem() { HorizontalAlignment = HorizontalAlignment.Stretch };
+            return new FlipViewItem { HorizontalAlignment = HorizontalAlignment.Stretch };
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
@@ -1038,7 +1048,7 @@ namespace MahApps.Metro.Controls
 
             this.GetNavigationButtons(out var prevButton, out var nextButton, out var inactiveButtons);
 
-            foreach (var button in inactiveButtons.Where(b => !(b is null)))
+            foreach (var button in inactiveButtons.OfType<Button>())
             {
                 inactiveButtonsApply(button);
             }
@@ -1054,12 +1064,15 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ChangeBannerText(object value = null)
+        private void ChangeBannerText(object? value = null)
         {
             if (this.IsBannerEnabled)
             {
-                var newValue = value ?? this.BannerText;
-                if (newValue == null || this.hideControlStoryboard == null)
+                var newValue = value ?? (object?)this.BannerText;
+                if (newValue is null
+                    || this.hideControlStoryboard is null
+                    || this.showControlStoryboard is null
+                    || this.bannerLabel is null)
                 {
                     return;
                 }
@@ -1090,7 +1103,13 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                this.ExecuteWhenLoaded(() => { this.bannerLabel.Content = value ?? this.BannerText; });
+                this.ExecuteWhenLoaded(() => 
+                                           {
+                                               if (this.bannerLabel is not null)
+                                               {
+                                                   this.bannerLabel.Content = value ?? this.BannerText;
+                                               }
+                                           });
             }
         }
 
@@ -1185,7 +1204,7 @@ namespace MahApps.Metro.Controls
         /// <param name="prevButton">Previous button.</param>
         /// <param name="nextButton">Next button.</param>
         /// <param name="inactiveButtons">Inactive buttons.</param>
-        private void GetNavigationButtons(out Button prevButton, out Button nextButton, out IEnumerable<Button> inactiveButtons)
+        private void GetNavigationButtons(out Button? prevButton, out Button? nextButton, out IEnumerable<Button?> inactiveButtons)
         {
             if (this.Orientation == Orientation.Horizontal)
             {
@@ -1205,8 +1224,15 @@ namespace MahApps.Metro.Controls
         {
             if (this.ActualHeight > 0.0)
             {
-                this.bannerLabel?.BeginStoryboard(this.hideControlStoryboard);
-                this.bannerGrid?.BeginStoryboard(this.hideBannerStoryboard);
+                if (this.hideControlStoryboard is not null)
+                {
+                    this.bannerLabel?.BeginStoryboard(this.hideControlStoryboard);
+                }
+
+                if (this.hideBannerStoryboard is not null)
+                {
+                    this.bannerGrid?.BeginStoryboard(this.hideBannerStoryboard);
+                }
             }
         }
 

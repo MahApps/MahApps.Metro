@@ -9,13 +9,11 @@
       Style="{DynamicResource MahApps.Styles.Page}"
       mc:Ignorable="d">
 
-    <StackPanel Margin="2">
-        <Label FontSize="25">Hello</Label>
+    <StackPanel Margin="10">
+        <Label FontSize="{DynamicResource MahApps.Font.Size.SubHeader}">Hello</Label>
+        <TextBlock FontSize="{DynamicResource MahApps.Font.Size.Default}">
+            Welcome to this page. It doesn't have much but maybe if you click the<Hyperlink NavigateUri="InterestingPage.xaml">link</Hyperlink>
+            , you will see something cool.</TextBlock>
         <TextBox>This should persist between navigations. If you're not convinced, try changing it.</TextBox>
-        <TextBlock>
-            Welcome to this page. It doesn't have much but maybe if you click
-            <Hyperlink NavigateUri="InterestingPage.xaml">this</Hyperlink>
-            , you will see something cool.
-        </TextBlock>
     </StackPanel>
 </Page>

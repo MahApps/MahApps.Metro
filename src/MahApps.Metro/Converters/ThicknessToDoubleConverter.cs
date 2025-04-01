@@ -14,7 +14,7 @@ namespace MahApps.Metro.Converters
     {
         public ThicknessSideType TakeThicknessSide { get; set; } = ThicknessSideType.None;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is Thickness thickness)
             {
@@ -26,25 +26,20 @@ namespace MahApps.Metro.Converters
                     takeThicknessSide = sideType;
                 }
 
-                switch (takeThicknessSide)
+                return takeThicknessSide switch
                 {
-                    case ThicknessSideType.Left:
-                        return thickness.Left;
-                    case ThicknessSideType.Top:
-                        return thickness.Top;
-                    case ThicknessSideType.Right:
-                        return thickness.Right;
-                    case ThicknessSideType.Bottom:
-                        return thickness.Bottom;
-                    default:
-                        return default(double);
-                }
+                    ThicknessSideType.Left => thickness.Left,
+                    ThicknessSideType.Top => thickness.Top,
+                    ThicknessSideType.Right => thickness.Right,
+                    ThicknessSideType.Bottom => thickness.Bottom,
+                    _ => default
+                };
             }
 
             return default(double);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
         }

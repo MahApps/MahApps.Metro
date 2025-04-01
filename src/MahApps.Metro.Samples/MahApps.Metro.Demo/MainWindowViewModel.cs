@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,30 +31,36 @@ namespace MetroDemo
 {
     public class AccentColorMenuData
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public Brush BorderColorBrush { get; set; }
+        public Brush? BorderColorBrush { get; set; }
 
-        public Brush ColorBrush { get; set; }
+        public Brush? ColorBrush { get; set; }
 
         public AccentColorMenuData()
         {
-            this.ChangeAccentCommand = new SimpleCommand(o => true, this.DoChangeTheme);
+            this.ChangeAccentCommand = new SimpleCommand<string?>(o => true, this.DoChangeTheme);
         }
 
         public ICommand ChangeAccentCommand { get; }
 
-        protected virtual void DoChangeTheme(object sender)
+        protected virtual void DoChangeTheme(string? name)
         {
-            ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
+            if (name is not null)
+            {
+                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, name);
+            }
         }
     }
 
     public class AppThemeMenuData : AccentColorMenuData
     {
-        protected override void DoChangeTheme(object sender)
+        protected override void DoChangeTheme(string? name)
         {
-            ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
+            if (name is not null)
+            {
+                ThemeManager.Current.ChangeThemeBaseColor(Application.Current, name);
+            }
         }
     }
 
@@ -80,10 +87,10 @@ namespace MetroDemo
             this.AppThemes = ThemeManager.Current.Themes
                                          .GroupBy(x => x.BaseColorScheme)
                                          .Select(x => x.First())
-                                         .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+                                         .Select(a => new AppThemeMenuData { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
                                          .ToList();
 
-            this.Albums = new ObservableCollection<Album>(SampleData.Albums);
+            this.Albums = new ObservableCollection<Album>(SampleData.Albums!);
             var cvs = CollectionViewSource.GetDefaultView(this.Albums);
             cvs.GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
 
@@ -96,102 +103,137 @@ namespace MetroDemo
                                       new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
                                   };
 
-            this.BrushResources = this.FindBrushResources();
+            this.ThemeResources = new ObservableCollection<ThemeResource>();
+            var view = CollectionViewSource.GetDefaultView(this.ThemeResources);
+            view.SortDescriptions.Add(new SortDescription(nameof(ThemeResource.Key), ListSortDirection.Ascending));
+            this.UpdateThemeResources();
 
             this.CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, (sender, e) => this.OnHotKey(sender, e));
+                if (this.HotKey is not null)
+                {
+                    HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, async (sender, e) => await this.OnHotKey(sender, e));
+                }
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
                 System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
             }
 
-            this.EndOfScrollReachedCmdWithParameter = new SimpleCommand(o => true, async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("End of scroll reached!", $"Parameter: {x}"); });
+            this.EndOfScrollReachedCmdWithParameter = new SimpleCommand<object>(o => true, async x => { await this._dialogCoordinator.ShowMessageAsync(this, "End of scroll reached!", $"Parameter: {x}"); });
 
-            this.CloseCmd = new SimpleCommand(o => this.CanCloseFlyout, x => ((Flyout)x).IsOpen = false);
+            this.CloseCmd = new SimpleCommand<Flyout>(f => f is not null && this.CanCloseFlyout, f => f!.IsOpen = false);
 
-            this.TextBoxButtonCmd = new SimpleCommand(
-                o => true,
-                async x =>
+            this.ControlButtonCommand = new SimpleCommand<object>(
+                o =>
                     {
-                        if (x is string s)
+                        return o switch
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", s).ConfigureAwait(false);
-                        }
-                        else if (x is RichTextBox richTextBox)
+                            RichTextBox richTextBox => TextBoxHelper.GetHasText(richTextBox),
+                            TextBox textBox => TextBoxHelper.GetHasText(textBox),
+                            _ => true
+                        };
+                    },
+                async o =>
+                    {
+                        switch (o)
                         {
-                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text).ConfigureAwait(false);
-                        }
-                        else if (x is TextBox textBox)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
-                        }
-                        else if (x is PasswordBox passwordBox)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
-                        }
-                        else if (x is DatePicker datePicker)
-                        {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
+                            case string s:
+                                await this._dialogCoordinator.ShowMessageAsync(this, "Wow, you typed Return and got", s).ConfigureAwait(false);
+                                break;
+                            case RichTextBox richTextBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text).ConfigureAwait(false);
+                                break;
+                            case TextBox textBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", textBox.Text).ConfigureAwait(false);
+                                break;
+                            case PasswordBox passwordBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", passwordBox.Password).ConfigureAwait(false);
+                                break;
+                            case DatePicker datePicker:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", datePicker.Text).ConfigureAwait(false);
+                                break;
+                            case ComboBox comboBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", comboBox.Text).ConfigureAwait(false);
+                                break;
+                            case HotKeyBox hotKeyBox:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", hotKeyBox.Text ?? hotKeyBox.HotKey?.ToString() ?? string.Empty).ConfigureAwait(false);
+                                break;
+                            case Control control:
+                                await this._dialogCoordinator.ShowMessageAsync(this, $"{o.GetType().Name} Button was clicked!", control.ToString() ?? string.Empty).ConfigureAwait(false);
+                                break;
                         }
                     }
             );
 
-            this.TextBoxButtonCmdWithParameter = new SimpleCommand(
+            this.ControlButtonCommandWithParameter = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
             );
 
-            this.SingleCloseTabCommand = new SimpleCommand(
+            this.SingleCloseTabCommand = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Closing tab!", $"You are now closing the '{x}' tab"); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "Closing tab!", $"You are now closing the '{x}' tab"); }
             );
 
-            this.NeverCloseTabCommand = new SimpleCommand(o => false);
+            this.NeverCloseTabCommand = new SimpleCommand<object>(o => false);
 
-            this.ShowInputDialogCommand = new SimpleCommand(
+            this.ShowInputDialogCommand = new SimpleCommand<object>(
                 o => true,
                 async x => { await this._dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result)); }
             );
 
-            this.ShowLoginDialogCommand = new SimpleCommand(
+            this.ShowLoginDialogCommand = new SimpleCommand<object>(
                 o => true,
                 async x => { await this._dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result)); }
             );
 
-            this.ShowMessageDialogCommand = new SimpleCommand(
-                o => true,
-                x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
+            this.ShowMessageDialogCommand = new SimpleCommand<string>(
+                x => !string.IsNullOrEmpty(x),
+                x => PerformDialogCoordinatorAction(this.ShowMessage(x!), x == "DISPATCHER_THREAD")
             );
 
-            this.ShowProgressDialogCommand = new SimpleCommand(o => true, x => this.RunProgressFromVm());
+            this.ShowProgressDialogCommand = new SimpleCommand<object>(o => true, x => this.RunProgressFromVm());
 
-            this.ShowCustomDialogCommand = new SimpleCommand(o => true, x => this.RunCustomFromVm());
+            this.ShowCustomDialogCommand = new SimpleCommand<object>(o => true, x => this.RunCustomFromVm());
 
-            this.ToggleIconScalingCommand = new SimpleCommand(o => true, this.ToggleIconScaling);
+            this.ToggleIconScalingCommand = new SimpleCommand<MultiFrameImageMode?>(m => m is not null, this.ToggleIconScaling);
 
-            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => (o as Flyout).IsOpen = !(o as Flyout).IsOpen);
+            this.OpenFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, true));
+            this.CloseFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.IsOpenProperty, false));
+            this.MoveLeftFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.PositionProperty, Position.Left));
+            this.MoveRightFlyoutCommand = new SimpleCommand<Flyout>(f => f is not null, f => f!.SetCurrentValue(Flyout.PositionProperty, Position.Right));
 
-            this.ArtistsDropDownCommand = new SimpleCommand(o => false);
+            this.ArtistsDropDownCommand = new SimpleCommand<object>(o => false);
 
-            this.GenreDropDownMenuItemCommand = new SimpleCommand(
+            this.GenreDropDownMenuItemCommand = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
             );
 
-            this.GenreSplitButtonItemCommand = new SimpleCommand(
+            this.GenreSplitButtonItemCommand = new SimpleCommand<object>(
                 o => true,
-                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Split Button", $"The selected item is '{x}'."); }
+                async x => { await this._dialogCoordinator.ShowMessageAsync(this, "Split Button", $"The selected item is '{x}'."); }
             );
 
             this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
 
-            this.ToggleSwitchCommand = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", $"The ToggleSwitch is now {((ToggleSwitch)x).IsOn}."); },
-                                                         canExecute: x => this.CanUseToggleSwitch);
+            this.ToggleSwitchCommand = new SimpleCommand<ToggleSwitch?>(x => x is not null && this.CanUseToggleSwitch,
+                                                                        async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", $"The ToggleSwitch is now {x!.IsOn}."); });
+
+            this.ToggleSwitchOnCommand = new SimpleCommand<MainWindowViewModel?>(x => x is not null && x.CanUseToggleSwitch,
+                                                                                 async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now On."); });
+
+            this.ToggleSwitchOffCommand = new SimpleCommand<MainWindowViewModel?>(x => x is not null && x.CanUseToggleSwitch,
+                                                                                  async x => { await this._dialogCoordinator.ShowMessageAsync(this, "ToggleSwitch", "The ToggleSwitch is now Off."); });
+
+            var r = new Random(Environment.TickCount);
+            this.SelectedAnimals.Add(this.Animals.ElementAt(r.Next(0, this.Animals.Count - 1)));
+            this.SelectedAnimals.Add(this.Animals.ElementAt(r.Next(0, this.Animals.Count - 1)));
+            this.SelectedAnimals.Add(this.Animals.ElementAt(r.Next(0, this.Animals.Count - 1)));
+            this.MyObjectParser = new ObjectParser(this, this._dialogCoordinator);
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -202,15 +244,23 @@ namespace MetroDemo
 
         public ICommand ShowHamburgerAboutCommand { get; }
 
-        public ICommand OpenFirstFlyoutCommand { get; }
+        public ICommand OpenFlyoutCommand { get; }
 
-        public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand(execute: x =>
-            {
-                ThemeManager.Current.ThemeSyncMode = (ThemeSyncMode)x;
-                ThemeManager.Current.SyncTheme();
-            });
+        public ICommand CloseFlyoutCommand { get; }
 
-        public ICommand SyncThemeNowCommand { get; } = new SimpleCommand(execute: x => ThemeManager.Current.SyncTheme());
+        public ICommand MoveLeftFlyoutCommand { get; }
+
+        public ICommand MoveRightFlyoutCommand { get; }
+
+        public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand<ThemeSyncMode?>(
+            x => x is not null,
+            x =>
+                {
+                    ThemeManager.Current.ThemeSyncMode = x!.Value;
+                    ThemeManager.Current.SyncTheme();
+                });
+
+        public ICommand SyncThemeNowCommand { get; } = new SimpleCommand<object>(execute: x => ThemeManager.Current.SyncTheme());
 
         public ICommand ToggleSwitchCommand { get; }
 
@@ -222,15 +272,21 @@ namespace MetroDemo
             set => this.Set(ref this.canUseToggleSwitch, value);
         }
 
-        public ICommand ToggleSwitchOnCommand { get; } = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", "The ToggleSwitch is now On."); },
-                                                                           canExecute: x => x is MainWindowViewModel viewModel && viewModel.CanUseToggleSwitch);
+        public ICommand ToggleSwitchOnCommand { get; }
 
-        public ICommand ToggleSwitchOffCommand { get; } = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", "The ToggleSwitch is now Off."); },
-                                                                            canExecute: x => x is MainWindowViewModel viewModel && viewModel.CanUseToggleSwitch);
+        public ICommand ToggleSwitchOffCommand { get; }
 
         public void Dispose()
         {
             HotkeyManager.Current.Remove("demo");
+        }
+
+        private bool showTitleColumn = true;
+
+        public bool ShowTitleColumn
+        {
+            get => showTitleColumn;
+            set => Set(ref showTitleColumn, value);
         }
 
         public string Title { get; set; }
@@ -239,14 +295,14 @@ namespace MetroDemo
 
         public ICollection<Album> Albums { get; set; }
 
-        public List<Artist> Artists { get; set; }
+        public List<Artist>? Artists { get; set; }
 
-        private ObservableCollection<Artist> _selectedArtists = new ObservableCollection<Artist>();
+        private ObservableCollection<Artist>? _selectedArtists = new ObservableCollection<Artist>();
 
-        public ObservableCollection<Artist> SelectedArtists
+        public ObservableCollection<Artist>? SelectedArtists
         {
-            get => _selectedArtists;
-            set => Set(ref _selectedArtists, value);
+            get => this._selectedArtists;
+            set => this.Set(ref this._selectedArtists, value);
         }
 
         public List<AccentColorMenuData> AccentColors { get; set; }
@@ -255,20 +311,28 @@ namespace MetroDemo
 
         public List<CultureInfo> CultureInfos { get; set; }
 
-        private CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        private CultureInfo? currentCulture = CultureInfo.CurrentCulture;
 
-        public CultureInfo CurrentCulture
+        public CultureInfo? CurrentCulture
         {
             get => this.currentCulture;
             set => this.Set(ref this.currentCulture, value);
         }
 
-        private double? numericUpDownValue = null;
+        private double numericUpDownValue = default;
 
-        public double? NumericUpDownValue
+        public double NumericUpDownValue
         {
             get => this.numericUpDownValue;
             set => this.Set(ref this.numericUpDownValue, value);
+        }
+
+        private double? nullableNumericUpDownValue = null;
+
+        public double? NullableNumericUpDownValue
+        {
+            get => this.nullableNumericUpDownValue;
+            set => this.Set(ref this.nullableNumericUpDownValue, value);
         }
 
         public ICommand EndOfScrollReachedCmdWithParameter { get; }
@@ -294,14 +358,6 @@ namespace MetroDemo
         {
             get => this._quitConfirmationEnabled;
             set => this.Set(ref this._quitConfirmationEnabled, value);
-        }
-
-        private bool showMyTitleBar = true;
-
-        public bool ShowMyTitleBar
-        {
-            get => this.showMyTitleBar;
-            set => this.Set(ref this.showMyTitleBar, value);
         }
 
         private bool canCloseFlyout = true;
@@ -330,40 +386,40 @@ namespace MetroDemo
             set => this.Set(ref this.isHamburgerMenuPaneOpen, value);
         }
 
-        public ICommand TextBoxButtonCmd { get; }
+        public ICommand ControlButtonCommand { get; }
 
-        public ICommand TextBoxButtonCmdWithParameter { get; }
+        public ICommand ControlButtonCommandWithParameter { get; }
 
         public string this[string columnName]
         {
             get
             {
-                if (columnName == nameof(IntegerGreater10Property) && this.IntegerGreater10Property < 10)
+                if (columnName == nameof(this.IntegerGreater10Property) && this.IntegerGreater10Property < 10)
                 {
                     return "Number is not greater than 10!";
                 }
 
-                if (columnName == nameof(DatePickerDate) && this.DatePickerDate == null)
+                if (columnName == nameof(this.DatePickerDate) && this.DatePickerDate == null)
                 {
                     return "No date given!";
                 }
 
-                if (columnName == nameof(HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
+                if (columnName == nameof(this.HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
                 {
                     return "SHIFT-D is not allowed";
                 }
 
-                if (columnName == nameof(TimePickerDate) && this.TimePickerDate == null)
+                if (columnName == nameof(this.TimePickerDate) && this.TimePickerDate == null)
                 {
                     return "No time given!";
                 }
 
-                if (columnName == nameof(IsToggleSwitchVisible) && !IsToggleSwitchVisible)
+                if (columnName == nameof(this.IsToggleSwitchVisible) && !this.IsToggleSwitchVisible)
                 {
                     return "There is something hidden... \nActivate me to show it up.";
                 }
 
-                return null;
+                return null!;
             }
         }
 
@@ -427,7 +483,7 @@ namespace MetroDemo
 
         private async void RunCustomFromVm()
         {
-            var customDialog = new CustomDialog() { Title = "Custom Dialog" };
+            var customDialog = new CustomDialog { Title = "Custom Dialog" };
 
             var dataContext = new CustomDialogExampleContent(instance =>
                 {
@@ -439,7 +495,7 @@ namespace MetroDemo
             await this._dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public IEnumerable<string> BrushResources { get; private set; }
+        public ObservableCollection<ThemeResource> ThemeResources { get; }
 
         public bool AnimateOnPositionChange
         {
@@ -447,42 +503,44 @@ namespace MetroDemo
             set => this.Set(ref this._animateOnPositionChange, value);
         }
 
-        private IEnumerable<string> FindBrushResources()
+        public void UpdateThemeResources()
         {
+            this.ThemeResources.Clear();
+
             if (Application.Current.MainWindow != null)
             {
                 var theme = ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
+                if (theme is not null)
+                {
+                    var libraryTheme = theme.LibraryThemes.FirstOrDefault(x => x.Origin == "MahApps.Metro");
+                    var resourceDictionary = libraryTheme?.Resources.MergedDictionaries.FirstOrDefault();
 
-                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
-
-                var brushResources = resources.Keys
-                                              .Cast<object>()
-                                              .Where(key => resources[key] is SolidColorBrush)
-                                              .Select(key => key.ToString())
-                                              .OrderBy(s => s)
-                                              .ToList();
-
-                return brushResources;
+                    if (resourceDictionary != null)
+                    {
+                        foreach (var dictionaryEntry in resourceDictionary.OfType<DictionaryEntry>())
+                        {
+                            this.ThemeResources.Add(new ThemeResource(theme, libraryTheme!, resourceDictionary, dictionaryEntry));
+                        }
+                    }
+                }
             }
-
-            return Enumerable.Empty<string>();
         }
 
         public Uri[] FlipViewImages { get; set; }
 
         public class RandomDataTemplateSelector : DataTemplateSelector
         {
-            public DataTemplate TemplateOne { get; set; }
+            public DataTemplate? TemplateOne { get; set; }
 
-            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            public override DataTemplate? SelectTemplate(object item, DependencyObject container)
             {
                 return this.TemplateOne;
             }
         }
 
-        private HotKey _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
+        private HotKey? _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
 
-        public HotKey HotKey
+        public HotKey? HotKey
         {
             get => this._hotKey;
             set
@@ -501,21 +559,20 @@ namespace MetroDemo
             }
         }
 
-        private async Task OnHotKey(object sender, HotkeyEventArgs e)
+        private async Task OnHotKey(object? sender, HotkeyEventArgs e)
         {
-            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
-                "Hotkey pressed",
-                "You pressed the hotkey '" + this.HotKey + "' registered with the name '" + e.Name + "'");
+            await this._dialogCoordinator.ShowMessageAsync(this,
+                                                           "Hotkey pressed",
+                                                           "You pressed the hotkey '" + this.HotKey + "' registered with the name '" + e.Name + "'");
         }
 
         public ICommand ToggleIconScalingCommand { get; }
 
-        private void ToggleIconScaling(object obj)
+        private void ToggleIconScaling(MultiFrameImageMode? multiFrameImageMode)
         {
-            var multiFrameImageMode = (MultiFrameImageMode)obj;
-            ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
-            this.OnPropertyChanged(nameof(IsScaleDownLargerFrame));
-            this.OnPropertyChanged(nameof(IsNoScaleSmallerFrame));
+            ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode!.Value;
+            this.OnPropertyChanged(nameof(this.IsScaleDownLargerFrame));
+            this.OnPropertyChanged(nameof(this.IsNoScaleSmallerFrame));
         }
 
         public bool IsScaleDownLargerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame;
@@ -523,5 +580,20 @@ namespace MetroDemo
         public bool IsNoScaleSmallerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame;
 
         public bool IsToggleSwitchVisible { get; set; }
+
+        public ObservableCollection<Models.Animals> Animals { get; } = new(Models.Animals.GenerateDate());
+
+        public ObservableCollection<Models.Animals> SelectedAnimals { get; } = new();
+
+        private object? myFavoriteAnimal;
+
+        [Display(Prompt = "Select your favorite animal(s)")]
+        public object? MyFavoriteAnimal
+        {
+            get => this.myFavoriteAnimal;
+            set => this.Set(ref this.myFavoriteAnimal, value);
+        }
+
+        public ObjectParser? MyObjectParser { get; }
     }
 }

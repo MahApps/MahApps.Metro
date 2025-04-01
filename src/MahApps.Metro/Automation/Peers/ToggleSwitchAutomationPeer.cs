@@ -32,7 +32,7 @@ namespace MahApps.Metro.Automation.Peers
         }
 
         /// <inheritdoc />
-        public override object GetPattern(PatternInterface patternInterface)
+        public override object? GetPattern(PatternInterface patternInterface)
         {
             return patternInterface == PatternInterface.Toggle ? this : base.GetPattern(patternInterface);
         }

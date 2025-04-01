@@ -299,9 +299,9 @@ namespace MahApps.Metro.Controls
         /// <remarks>
         /// The <see cref="ICommand"/> won't be executed when <see cref="IsOpen"/> property will be set to false/true.
         /// </remarks>
-        public ICommand CloseCommand
+        public ICommand? CloseCommand
         {
-            get => (ICommand)this.GetValue(CloseCommandProperty);
+            get => (ICommand?)this.GetValue(CloseCommandProperty);
             set => this.SetValue(CloseCommandProperty, value);
         }
 
@@ -314,9 +314,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the parameter for the <see cref="CloseCommand"/>.
         /// </summary>
-        public object CloseCommandParameter
+        public object? CloseCommandParameter
         {
-            get => (object)this.GetValue(CloseCommandParameterProperty);
+            get => this.GetValue(CloseCommandParameterProperty);
             set => this.SetValue(CloseCommandParameterProperty, value);
         }
 
@@ -419,9 +419,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the focused element.
         /// </summary>
-        public FrameworkElement FocusedElement
+        public FrameworkElement? FocusedElement
         {
-            get => (FrameworkElement)this.GetValue(FocusedElementProperty);
+            get => (FrameworkElement?)this.GetValue(FocusedElementProperty);
             set => this.SetValue(FocusedElementProperty, value);
         }
 
@@ -524,36 +524,36 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
         public static readonly DependencyProperty OwnerProperty = OwnerPropertyKey.DependencyProperty;
 
-        public FlyoutsControl Owner
+        public FlyoutsControl? Owner
         {
-            get => (FlyoutsControl)this.GetValue(OwnerProperty);
+            get => (FlyoutsControl?)this.GetValue(OwnerProperty);
             protected set => this.SetValue(OwnerPropertyKey, value);
         }
 
-        private DispatcherTimer autoCloseTimer;
-        private FrameworkElement flyoutRoot;
-        private Storyboard showStoryboard;
-        private Storyboard hideStoryboard;
-        private SplineDoubleKeyFrame hideFrame;
-        private SplineDoubleKeyFrame hideFrameY;
-        private SplineDoubleKeyFrame showFrame;
-        private SplineDoubleKeyFrame showFrameY;
-        private SplineDoubleKeyFrame fadeOutFrame;
-        private FrameworkElement flyoutHeader;
-        private FrameworkElement flyoutContent;
-        private MetroWindow parentWindow;
+        private DispatcherTimer? autoCloseTimer;
+        private FrameworkElement? flyoutRoot;
+        private Storyboard? showStoryboard;
+        private Storyboard? hideStoryboard;
+        private SplineDoubleKeyFrame? hideFrame;
+        private SplineDoubleKeyFrame? hideFrameY;
+        private SplineDoubleKeyFrame? showFrame;
+        private SplineDoubleKeyFrame? showFrameY;
+        private SplineDoubleKeyFrame? fadeOutFrame;
+        private FrameworkElement? flyoutHeader;
+        private FrameworkElement? flyoutContent;
+        private MetroWindow? parentWindow;
 
-        private MetroWindow ParentWindow => this.parentWindow ??= this.TryFindParent<MetroWindow>();
+        private MetroWindow? ParentWindow => this.parentWindow ??= this.TryFindParent<MetroWindow>();
 
         /// <summary>
         /// <see cref="IsOpen"/> property changed notifier used in <see cref="FlyoutsControl"/>.
         /// </summary>
-        internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier? IsOpenPropertyChangeNotifier { get; set; }
 
         /// <summary>
         /// <see cref="Theme"/> property changed notifier used in <see cref="FlyoutsControl"/>.
         /// </summary>
-        internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier? ThemePropertyChangeNotifier { get; set; }
 
         static Flyout()
         {
@@ -587,7 +587,7 @@ namespace MahApps.Metro.Controls
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                this.autoCloseTimer.Start();
+                this.autoCloseTimer?.Start();
             }
         }
 
@@ -599,7 +599,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void AutoCloseTimerCallback(object sender, EventArgs e)
+        private void AutoCloseTimerCallback(object? sender, EventArgs e)
         {
             this.StopAutoCloseTimer();
 
@@ -612,6 +612,11 @@ namespace MahApps.Metro.Controls
 
         private void UpdateFlyoutTheme()
         {
+            if (this.IsLoaded == false)
+            {
+                return;
+            }
+
             var flyoutsControl = this.Owner ?? this.TryFindParent<FlyoutsControl>();
 
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
@@ -637,7 +642,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static ControlzEx.Theming.Theme DetectTheme(Flyout flyout)
+        private static ControlzEx.Theming.Theme? DetectTheme(Flyout? flyout)
         {
             if (flyout is null)
             {
@@ -669,16 +674,15 @@ namespace MahApps.Metro.Controls
 
         internal void ChangeFlyoutTheme(ControlzEx.Theming.Theme windowTheme)
         {
+            if (windowTheme == ThemeManager.Current.DetectTheme(this.Resources))
+            {
+                return;
+            }
+
             switch (this.Theme)
             {
-                case FlyoutTheme.Accent:
-                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
-                    this.OverrideFlyoutResources(this.Resources, true);
-                    break;
-
                 case FlyoutTheme.Adapt:
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
@@ -690,7 +694,6 @@ namespace MahApps.Metro.Controls
                     }
 
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
@@ -702,7 +705,6 @@ namespace MahApps.Metro.Controls
                     }
 
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, darkTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
@@ -714,54 +716,8 @@ namespace MahApps.Metro.Controls
                     }
 
                     ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, lightTheme);
-                    this.OverrideFlyoutResources(this.Resources);
                     break;
             }
-        }
-
-        protected virtual void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
-        {
-            var fromColorKey = accent ? "MahApps.Colors.Highlight" : "MahApps.Colors.Flyout";
-
-            resources.BeginInit();
-
-            var fromColor = (Color)resources[fromColorKey];
-            resources["MahApps.Colors.ThemeBackground"] = fromColor;
-            resources["MahApps.Colors.Flyout"] = fromColor;
-
-            var newBrush = new SolidColorBrush(fromColor);
-            newBrush.Freeze();
-            resources["MahApps.Brushes.Flyout.Background"] = newBrush;
-            resources["MahApps.Brushes.Control.Background"] = newBrush;
-            resources["MahApps.Brushes.ThemeBackground"] = newBrush;
-            resources["MahApps.Brushes.Window.Background"] = newBrush;
-            resources[SystemColors.WindowBrushKey] = newBrush;
-
-            if (accent)
-            {
-                fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
-                newBrush = new SolidColorBrush(fromColor);
-                newBrush.Freeze();
-                resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
-                resources["MahApps.Brushes.Text"] = newBrush;
-
-                if (resources.Contains("MahApps.Colors.AccentBase"))
-                {
-                    fromColor = (Color)resources["MahApps.Colors.AccentBase"];
-                }
-                else
-                {
-                    var accentColor = (Color)resources["MahApps.Colors.Accent"];
-                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
-                }
-
-                newBrush = new SolidColorBrush(fromColor);
-                newBrush.Freeze();
-                resources["MahApps.Colors.Highlight"] = fromColor;
-                resources["MahApps.Brushes.Highlight"] = newBrush;
-            }
-
-            resources.EndInit();
         }
 
         private void UpdateOpacityChange()
@@ -786,9 +742,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void HideStoryboardCompleted(object sender, EventArgs e)
+        private void HideStoryboardCompleted(object? sender, EventArgs e)
         {
-            this.hideStoryboard.Completed -= this.HideStoryboardCompleted;
+            if (this.hideStoryboard is not null)
+            {
+                this.hideStoryboard.Completed -= this.HideStoryboardCompleted;
+            }
+
             this.Hide();
         }
 
@@ -799,9 +759,13 @@ namespace MahApps.Metro.Controls
             this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
         }
 
-        private void ShowStoryboardCompleted(object sender, EventArgs e)
+        private void ShowStoryboardCompleted(object? sender, EventArgs e)
         {
-            this.showStoryboard.Completed -= this.ShowStoryboardCompleted;
+            if (this.showStoryboard is not null)
+            {
+                this.showStoryboard.Completed -= this.ShowStoryboardCompleted;
+            }
+
             this.Shown();
         }
 

@@ -1,27 +1,89 @@
 <Project>
+    <PropertyGroup>
+        <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+        <IsBuildingWpfTempProj Condition="$(MSBuildProjectName.Contains('_wpftmp')) != 'true'">false</IsBuildingWpfTempProj>
+        <IsBuildingWpfTempProj Condition="$(MSBuildProjectName.Contains('_wpftmp')) == 'true'">true</IsBuildingWpfTempProj>
+    </PropertyGroup>
+
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net452;net46;net47;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net8.0-windows;net6.0-windows;net462</TargetFrameworks>
+        <LangVersion>latestmajor</LangVersion>
+
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
-        <AutoGenerateBindingRedirects Condition=" $(TargetFramework.StartsWith('net4')) ">true</AutoGenerateBindingRedirects>
-        <LangVersion>8.0</LangVersion>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
+        <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+        <AutoGenerateBindingRedirects Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">true</AutoGenerateBindingRedirects>
+
+        <UseWPF>true</UseWPF>
+        <Nullable>enable</Nullable>
+
         <NoWarn>$(NoWarn);CS1591</NoWarn>
         <NoError>$(NoError);CS1591</NoError>
-        <UseWPF>true</UseWPF>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <!-- AssemblyInfo -->
+    <PropertyGroup>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <!-- Required for Hot Reload (See https://github.com/dotnet/sdk/issues/36666) -->
+        <IncludeSourceRevisionInInformationalVersion Condition="'$(Configuration)' == 'Debug'">false</IncludeSourceRevisionInInformationalVersion>
+
+        <Company>MahApps</Company>
+        <Product>MahApps.Metro</Product>
+        <Copyright>Copyright © $([System.DateTime]::Today.ToString(yyyy)) .NET Foundation and Contributors. All rights reserved.</Copyright>
+        <Description>MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.</Description>
+
+        <Version Condition="'$(Version)' == ''">3.0.0.0</Version>
+        <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">3.0.0.0</AssemblyVersion>
+        <FileVersion Condition="'$(FileVersion)' == ''">3.0.0.0</FileVersion>
+        <InformationalVersion Condition="'$(InformationalVersion)' == ''">SRC</InformationalVersion>
+    </PropertyGroup>
+
+    <!-- Sign assembly -->
+    <PropertyGroup>
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)/mahapps.public.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>false</DelaySign>
+        <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    </PropertyGroup>
+
+    <!-- SourceLink -->
+    <PropertyGroup>
+        <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- By using EmbedAllSources we don't need SourceLink itself -->
+        <!-- https://github.com/dotnet/sourcelink/blob/master/docs/README.md#embedallsources -->
+        <EmbedAllSources>true</EmbedAllSources>
+    </PropertyGroup>
+
+    <!-- PDB-Options -->
+    <PropertyGroup>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>Embedded</DebugType>
     </PropertyGroup>
 
     <!-- Add the references for all projects and targets -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2020.*" PrivateAssets="All" includeAssets="build;compile" />
-        <PackageReference Include="WpfAnalyzers" Version="2.4.*" PrivateAssets="All" />
+        <PackageReference Include="JetBrains.Annotations">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>compile; build</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="WpfAnalyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>build;analyzers</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
-        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
+        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
+        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
     </ItemGroup>
 
 </Project>

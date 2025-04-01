@@ -2,41 +2,34 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net452;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
-        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
-    </PropertyGroup>
-    <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <NoWarn>SA1652</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup>
-        <Reference Include="System.ComponentModel.Composition" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
-        <PackageReference Include="Caliburn.Micro" Version="3.*" />
-        <PackageReference Include="Fody" Version="6.5.*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Costura.Fody" Version="5.6.*" PrivateAssets="All" />
-    </ItemGroup>
+
     <ItemGroup>
         <None Include="app.manifest" />
-        <None Remove="App.config" />
-        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).exe.config</TargetPath>
-        </AppConfigWithTargetPath>
     </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" />
+        <PackageReference Include="Caliburn.Micro" />
+        <PackageReference Include="System.ComponentModel.Composition" />
+    </ItemGroup>
+
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />

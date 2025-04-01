@@ -26,12 +26,12 @@ namespace MahApps.Metro.Automation.Peers
 
         protected override string GetNameCore()
         {
-            string nameCore = base.GetNameCore();
-            if (string.IsNullOrEmpty(nameCore))
+            var nameCore = base.GetNameCore();
+            if (string.IsNullOrEmpty(nameCore) && ((BaseMetroDialog)this.Owner).Title is string title)
             {
-                nameCore = ((BaseMetroDialog)this.Owner).Title;
+                nameCore = title;
             }
-
+            
             if (string.IsNullOrEmpty(nameCore))
             {
                 nameCore = ((BaseMetroDialog)this.Owner).Name;
@@ -42,7 +42,7 @@ namespace MahApps.Metro.Automation.Peers
                 nameCore = this.GetClassNameCore();
             }
 
-            return nameCore;
+            return nameCore!;
         }
     }
 }

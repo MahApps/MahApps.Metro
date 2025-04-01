@@ -2,14 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ControlzEx.Native;
-using ControlzEx.Standard;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -23,11 +24,11 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class CustomValidationPopup : Popup
     {
-        private Window hostWindow;
-        private ScrollViewer scrollViewer;
-        private MetroContentControl metroContentControl;
-        private TransitioningContentControl transitioningContentControl;
-        private Flyout flyout;
+        private Window? hostWindow;
+        private ScrollViewer? scrollViewer;
+        private MetroContentControl? metroContentControl;
+        private TransitioningContentControl? transitioningContentControl;
+        private Flyout? flyout;
 
         /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
@@ -61,6 +62,22 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ShowValidationErrorOnMouseOverProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="ShowValidationErrorOnKeyboardFocus"/> dependency property.</summary>
+        public static readonly DependencyProperty ShowValidationErrorOnKeyboardFocusProperty
+            = DependencyProperty.Register(nameof(ShowValidationErrorOnKeyboardFocus),
+                                          typeof(bool),
+                                          typeof(CustomValidationPopup),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the validation error text will be shown when the element has the keyboard focus.
+        /// </summary>
+        public bool ShowValidationErrorOnKeyboardFocus
+        {
+            get => (bool)this.GetValue(ShowValidationErrorOnKeyboardFocusProperty);
+            set => this.SetValue(ShowValidationErrorOnKeyboardFocusProperty, BooleanBoxes.Box(value));
+        }
+
         /// <summary>Identifies the <see cref="AdornedElement"/> dependency property.</summary>
         public static readonly DependencyProperty AdornedElementProperty
             = DependencyProperty.Register(nameof(AdornedElement),
@@ -71,9 +88,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="T:System.Windows.UIElement" /> that this <see cref="T:System.Windows.Controls.Primitives.Popup" /> object is reserving space for.
         /// </summary>
-        public UIElement AdornedElement
+        public UIElement? AdornedElement
         {
-            get => (UIElement)this.GetValue(AdornedElementProperty);
+            get => (UIElement?)this.GetValue(AdornedElementProperty);
             set => this.SetValue(AdornedElementProperty, value);
         }
 
@@ -122,7 +139,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
+        private void CustomValidationPopup_Loaded(object? sender, RoutedEventArgs e)
         {
             var adornedElement = this.AdornedElement;
             if (adornedElement is null)
@@ -218,57 +235,63 @@ namespace MahApps.Metro.Controls
             this.Unloaded += this.CustomValidationPopup_Unloaded;
         }
 
-        private void Flyout_OpeningFinished(object sender, RoutedEventArgs e)
+        private bool ShouldPopupOpen()
+        {
+            var adornedElement = this.AdornedElement;
+            var isOpen = adornedElement is not null
+                         && Validation.GetHasError(adornedElement)
+                         && (ValidationHelper.GetAlwaysShowValidationError(adornedElement)
+                             || (adornedElement.IsKeyboardFocusWithin
+                                 && this.ShowValidationErrorOnKeyboardFocus
+                                 && ValidationHelper.GetShowValidationErrorOnKeyboardFocus(adornedElement)));
+            return isOpen;
+        }
+
+        private void Flyout_OpeningFinished(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
 
-            var adornedElement = this.AdornedElement;
-            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
 
             this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
 
-        private void Flyout_IsOpenChanged(object sender, RoutedEventArgs e)
+        private void Flyout_IsOpenChanged(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
             this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
-        private void Flyout_ClosingFinished(object sender, RoutedEventArgs e)
+        private void Flyout_ClosingFinished(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
             this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
-        private void OnTransitionStarted(object sender, RoutedEventArgs e)
+        private void OnTransitionStarted(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
             this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
-        private void OnTransitionCompleted(object sender, RoutedEventArgs e)
+        private void OnTransitionCompleted(object? sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
 
-            var adornedElement = this.AdornedElement;
-            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
 
             this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
 
-        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        private void ScrollViewer_ScrollChanged(object? sender, ScrollChangedEventArgs e)
         {
-            if (e.VerticalChange > 0 || e.VerticalChange < 0 || e.HorizontalChange > 0 || e.HorizontalChange < 0)
+            if (e.VerticalChange is > 0 or < 0 || e.HorizontalChange is > 0 or < 0)
             {
                 this.RefreshPosition();
 
                 if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
                 {
-                    var adornedElement = this.AdornedElement;
-                    var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
+                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
                 }
                 else
                 {
@@ -277,7 +300,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static bool IsElementVisible(FrameworkElement element, FrameworkElement container)
+        private static bool IsElementVisible(FrameworkElement? element, FrameworkElement? container)
         {
             if (element is null || container is null || !element.IsVisible)
             {
@@ -290,22 +313,22 @@ namespace MahApps.Metro.Controls
             return rect.IntersectsWith(bounds);
         }
 
-        private void CustomValidationPopup_Opened(object sender, EventArgs e)
+        private void CustomValidationPopup_Opened(object? sender, EventArgs e)
         {
             this.SetTopmostState(true);
         }
 
-        private void OnHostWindowActivated(object sender, EventArgs e)
+        private void OnHostWindowActivated(object? sender, EventArgs e)
         {
             this.SetTopmostState(true);
         }
 
-        private void OnHostWindowDeactivated(object sender, EventArgs e)
+        private void OnHostWindowDeactivated(object? sender, EventArgs e)
         {
             this.SetTopmostState(false);
         }
 
-        private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
+        private void CustomValidationPopup_Unloaded(object? sender, RoutedEventArgs e)
         {
             this.OnUnLoaded();
 
@@ -359,7 +382,7 @@ namespace MahApps.Metro.Controls
         {
         }
 
-        private void OnHostWindowStateChanged(object sender, EventArgs e)
+        private void OnHostWindowStateChanged(object? sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
@@ -375,7 +398,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void OnSizeOrLocationChanged(object sender, EventArgs e)
+        private void OnSizeOrLocationChanged(object? sender, EventArgs e)
         {
             this.RefreshPosition();
         }
@@ -390,9 +413,9 @@ namespace MahApps.Metro.Controls
 
         private bool? appliedTopMost;
 
-        private void SetTopmostState(bool isTop)
+        private unsafe void SetTopmostState(bool isTop)
         {
-            // Dont apply state if its the same as incoming state
+            // Don't apply state if it's the same as incoming state
             if (this.appliedTopMost.HasValue && this.appliedTopMost == isTop)
             {
                 return;
@@ -408,22 +431,28 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var handle = hwndSource.Handle;
+            var handle = new HWND(hwndSource.Handle);
 
-#pragma warning disable 618
-            if (!UnsafeNativeMethods.GetWindowRect(handle, out var rect))
+            var rect = new RECT();
+            PInvoke.GetWindowRect(handle, &rect);
+            if (rect.left == 0
+                && rect.top == 0
+                && rect.right == 0
+                && rect.bottom == 0)
             {
                 return;
             }
             //Debug.WriteLine("setting z-order " + isTop);
 
-            var left = rect.Left;
-            var top = rect.Top;
-            var width = rect.Width;
-            var height = rect.Height;
+            const SET_WINDOW_POS_FLAGS SWP_TOPMOST = SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE | SET_WINDOW_POS_FLAGS.SWP_NOOWNERZORDER | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE | SET_WINDOW_POS_FLAGS.SWP_NOREDRAW | SET_WINDOW_POS_FLAGS.SWP_NOSENDCHANGING;
+
+            var left = rect.left;
+            var top = rect.top;
+            var width = rect.GetWidth();
+            var height = rect.GetHeight();
             if (isTop)
             {
-                NativeMethods.SetWindowPos(handle, Constants.HWND_TOPMOST, left, top, width, height, SWP.TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_TOPMOST, left, top, width, height, SWP_TOPMOST);
             }
             else
             {
@@ -431,13 +460,12 @@ namespace MahApps.Metro.Controls
                 // the titlebar (as opposed to other parts of the external
                 // window) unless I first set the popup to HWND_BOTTOM
                 // then HWND_TOP before HWND_NOTOPMOST
-                NativeMethods.SetWindowPos(handle, Constants.HWND_BOTTOM, left, top, width, height, SWP.TOPMOST);
-                NativeMethods.SetWindowPos(handle, Constants.HWND_TOP, left, top, width, height, SWP.TOPMOST);
-                NativeMethods.SetWindowPos(handle, Constants.HWND_NOTOPMOST, left, top, width, height, SWP.TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_BOTTOM, left, top, width, height, SWP_TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_TOP, left, top, width, height, SWP_TOPMOST);
+                PInvoke.SetWindowPos(handle, HWND.HWND_NOTOPMOST, left, top, width, height, SWP_TOPMOST);
             }
 
             this.appliedTopMost = isTop;
-#pragma warning restore 618
         }
     }
 }

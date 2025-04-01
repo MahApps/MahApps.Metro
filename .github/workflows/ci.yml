@@ -1,0 +1,39 @@
+
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: | 
+            6.x
+            8.x
+      - name: List dotnet sdks
+        run: dotnet --info
+      - name: Run the Cake script
+        uses: cake-build/cake-action@v1
+        with:
+          cake-version: tool-manifest
+          verbosity: Normal
+          script-path: build.cake
+          target: ci
+        env:
+          azure-key-vault-url: ${{ secrets.AZURE_KEY_VAULT_URL }}
+          azure-key-vault-client-id: ${{ secrets.AZURE_KEY_VAULT_CLIENT_ID }}
+          azure-key-vault-tenant-id: ${{ secrets.AZURE_KEY_VAULT_TENANT_ID }}
+          azure-key-vault-client-secret: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
+          azure-key-vault-certificate: ${{ secrets.AZURE_KEY_VAULT_CERTIFICATE }}

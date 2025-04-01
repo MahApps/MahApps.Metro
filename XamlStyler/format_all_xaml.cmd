@@ -1,1 +1,0 @@
-xstyler.exe -r -d ..\src\ -c .\Options\MahApps.Metro.XAMLStyler.json

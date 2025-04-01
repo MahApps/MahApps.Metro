@@ -7,33 +7,151 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              mc:Ignorable="d">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel>
-            <GroupBox Margin="5 5 5 0" Header="Eye Dropper">
-                <mah:ColorEyeDropper Height="Auto"
-                                     HorizontalContentAlignment="Center"
-                                     mah:ControlsHelper.CornerRadius="3"
-                                     SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor, Mode=TwoWay}">
-                    <TextBlock TextAlignment="Center" TextWrapping="Wrap">
-                        <Run Text="You selected this color: " />
-                        <Run FontWeight="Bold" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorEyeDropper}, Path=SelectedColor}" />
-                        <LineBreak />
-                        <Run Text="Press and hold to select a different color from screen." />
-                    </TextBlock>
-                </mah:ColorEyeDropper>
-            </GroupBox>
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
+        <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox">
+            <Setter Property="Margin" Value="5 5 5 0" />
+        </Style>
+    </UserControl.Resources>
 
-            <GroupBox Margin="5 5 5 0" Header="Color Canvas">
-                <mah:ColorCanvas x:Name="ColorCanvasExample" DefaultColor="{DynamicResource MahApps.Colors.AccentBase}" />
-            </GroupBox>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" MinWidth="250" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="3*" MinWidth="50" />
+        </Grid.ColumnDefinitions>
 
-            <GroupBox Margin="5" Header="Color Picker">
-                <mah:ColorPicker mah:TextBoxHelper.AutoWatermark="True"
-                                 mah:TextBoxHelper.ClearTextButton="True"
-                                 mah:TextBoxHelper.UseFloatingWatermark="True"
-                                 mah:TextBoxHelper.Watermark="Select a color"
-                                 SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" />
-            </GroupBox>
-        </StackPanel>
-    </ScrollViewer>
+        <ScrollViewer Grid.Column="0" Grid.IsSharedSizeScope="True">
+            <StackPanel>
+                <GroupBox Header="ARGB-Color">
+                    <StackPanel>
+                        <mah:MetroHeader Header="Alpha">
+                            <mah:NumericUpDown Maximum="255"
+                                               Minimum="0"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=A}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Red">
+                            <mah:NumericUpDown Maximum="255"
+                                               Minimum="0"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=R}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Green">
+                            <mah:NumericUpDown Maximum="255"
+                                               Minimum="0"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=G}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Blue">
+                            <mah:NumericUpDown Maximum="255"
+                                               Minimum="0"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=B}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="HSV-Color">
+                    <StackPanel>
+                        <mah:MetroHeader Header="Hue">
+                            <mah:NumericUpDown Maximum="360"
+                                               Minimum="0"
+                                               StringFormat="N1"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=Hue}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Saturation">
+                            <mah:NumericUpDown Maximum="100"
+                                               Minimum="0"
+                                               StringFormat="p0"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=Saturation}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Value">
+                            <mah:NumericUpDown Maximum="100"
+                                               Minimum="0"
+                                               StringFormat="p0"
+                                               Value="{Binding ElementName=ColorCanvasExample, Path=Value}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Localization">
+                    <StackPanel>
+                        <mah:MetroHeader Header="Color names">
+                            <ComboBox x:Name="cmbColorHelper" SelectedIndex="0">
+                                <ComboBoxItem Tag="{x:Static mah:ColorHelper.DefaultInstance}">Localized</ComboBoxItem>
+                                <ComboBoxItem Tag="{x:Static mah:ColorHelper.DefaultInstanceInvariant}">Invariant</ComboBoxItem>
+                            </ComboBox>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Palettes Tab Header">
+                            <TextBox Text="{Binding ElementName=colorPickerExample, Path=ColorPalettesTabHeader}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Advanced Tab Header">
+                            <TextBox Text="{Binding ElementName=colorPickerExample, Path=AdvancedTabHeader}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Standard Palette Header">
+                            <TextBox Text="{Binding ElementName=colorPickerExample, Path=StandardColorPaletteHeader}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Available Palette Header">
+                            <TextBox Text="{Binding ElementName=colorPickerExample, Path=AvailableColorPaletteHeader}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="Recent Palette Header">
+                            <TextBox Text="{Binding ElementName=colorPickerExample, Path=RecentColorPaletteHeader}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Behavior">
+                    <StackPanel>
+                        <mah:MetroHeader Header="AddToRecentColorTrigger">
+                            <ComboBox x:Name="cmbAddToRecentTrigger" SelectedIndex="0">
+                                <ComboBoxItem Tag="{x:Static mah:AddToRecentColorsTrigger.ColorPickerClosed}">ColorPickerClosed</ComboBoxItem>
+                                <ComboBoxItem Tag="{x:Static mah:AddToRecentColorsTrigger.SelectedColorChanged}">SelectedColorChanged</ComboBoxItem>
+                                <ComboBoxItem Tag="{x:Static mah:AddToRecentColorsTrigger.Never}">Never</ComboBoxItem>
+                            </ComboBox>
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="CloseOnSelectedColorChanged">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=colorPickerExample, Path=CloseOnSelectedColorChanged}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="1"
+                      Width="3"
+                      VerticalAlignment="Stretch" />
+
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Margin="5 5 5 0" Header="Eye Dropper">
+                    <mah:ColorEyeDropper Height="Auto"
+                                         HorizontalContentAlignment="Center"
+                                         mah:ControlsHelper.CornerRadius="3"
+                                         SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor, Mode=TwoWay}">
+                        <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                            <Run Text="You selected this color: " />
+                            <Run FontWeight="Bold" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorEyeDropper}, Path=SelectedColor}" />
+                            <LineBreak />
+                            <Run Text="Press and hold to select a different color from screen." />
+                        </TextBlock>
+                    </mah:ColorEyeDropper>
+                </GroupBox>
+
+                <GroupBox Margin="5 5 5 0" Header="Color Canvas">
+                    <mah:ColorCanvas x:Name="ColorCanvasExample"
+                                     ColorHelper="{Binding ElementName=cmbColorHelper, Path=SelectedItem.Tag}"
+                                     DefaultColor="{DynamicResource MahApps.Colors.AccentBase}" />
+                </GroupBox>
+
+                <GroupBox Margin="5" Header="Color Picker">
+                    <mah:ColorPicker x:Name="colorPickerExample"
+                                     mah:TextBoxHelper.AutoWatermark="True"
+                                     mah:TextBoxHelper.ClearTextButton="True"
+                                     mah:TextBoxHelper.UseFloatingWatermark="True"
+                                     mah:TextBoxHelper.Watermark="Select a color"
+                                     AddToRecentColorsTrigger="{Binding ElementName=cmbAddToRecentTrigger, Path=SelectedItem.Tag}"
+                                     ColorHelper="{Binding ElementName=cmbColorHelper, Path=SelectedItem.Tag}"
+                                     SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" />
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

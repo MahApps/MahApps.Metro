@@ -5,7 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -119,7 +121,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(EllipseDiameterScaleProperty, value);
         }
 
-        private List<Action> deferredActions = new List<Action>();
+        private List<Action>? deferredActions = new List<Action>();
 
         static ProgressRing()
         {
@@ -253,7 +255,9 @@ namespace MahApps.Metro.Controls
             // make sure the states get updated
             this.UpdateLargeState();
             this.UpdateActiveState();
+
             base.OnApplyTemplate();
+
             if (this.deferredActions != null)
             {
                 foreach (var action in this.deferredActions)
@@ -263,6 +267,11 @@ namespace MahApps.Metro.Controls
             }
 
             this.deferredActions = null;
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new ProgressRingAutomationPeer(this);
         }
     }
 }

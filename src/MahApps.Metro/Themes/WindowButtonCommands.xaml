@@ -1,13 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:controlzex="urn:controlzex"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <!--  WindowButtonCommands control templates  -->
 
     <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands" TargetType="{x:Type mah:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
+                    controlzex:NonClientControlProperties.ClickStrategy="MouseEvent"
+                    controlzex:NonClientControlProperties.HitTestResult="MINBUTTON"
                     AutomationProperties.AutomationId="Minimize"
                     AutomationProperties.Name="Minimize"
                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
@@ -15,12 +18,9 @@
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MIN">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Min}">
                         <Binding Mode="OneWay"
                                  Path="ShowMinButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
                                  Path="ResizeMode"
@@ -32,6 +32,8 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Max"
+                    controlzex:NonClientControlProperties.ClickStrategy="MouseEvent"
+                    controlzex:NonClientControlProperties.HitTestResult="MAXBUTTON"
                     AutomationProperties.AutomationId="MaximizeRestore"
                     AutomationProperties.Name="Maximize"
                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
@@ -39,12 +41,9 @@
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MAX">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Max}">
                         <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
                                  Path="ResizeMode"
@@ -60,6 +59,8 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Close"
+                    controlzex:NonClientControlProperties.ClickStrategy="MouseEvent"
+                    controlzex:NonClientControlProperties.HitTestResult="CLOSE"
                     AutomationProperties.AutomationId="Close"
                     AutomationProperties.Name="Close"
                     Command="{x:Static SystemCommands.CloseWindowCommand}"
@@ -68,12 +69,9 @@
                     RenderOptions.EdgeMode="Aliased"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="CLOSE">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Close}">
                         <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
@@ -127,6 +125,8 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
                     Width="46"
+                    controlzex:NonClientControlProperties.ClickStrategy="MouseEvent"
+                    controlzex:NonClientControlProperties.HitTestResult="MINBUTTON"
                     AutomationProperties.AutomationId="Minimize"
                     AutomationProperties.Name="Minimize"
                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
@@ -135,12 +135,9 @@
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MIN">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Min}">
                         <Binding Mode="OneWay"
                                  Path="ShowMinButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
                                  Path="ResizeMode"
@@ -159,6 +156,8 @@
             </Button>
             <Button x:Name="PART_Max"
                     Width="46"
+                    controlzex:NonClientControlProperties.ClickStrategy="MouseEvent"
+                    controlzex:NonClientControlProperties.HitTestResult="MAXBUTTON"
                     AutomationProperties.AutomationId="MaximizeRestore"
                     AutomationProperties.Name="Maximize"
                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
@@ -167,12 +166,9 @@
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MAX">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Max}">
                         <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                         <Binding Mode="OneWay"
                                  Path="ResizeMode"
@@ -193,6 +189,8 @@
             </Button>
             <Button x:Name="PART_Close"
                     Width="46"
+                    controlzex:NonClientControlProperties.ClickStrategy="MouseEvent"
+                    controlzex:NonClientControlProperties.HitTestResult="CLOSE"
                     AutomationProperties.AutomationId="Close"
                     AutomationProperties.Name="Close"
                     Command="{x:Static SystemCommands.CloseWindowCommand}"
@@ -201,12 +199,9 @@
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
-                    <MultiBinding Converter="{x:Static converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="CLOSE">
+                    <MultiBinding Converter="{x:Static mahConverters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="{x:Static mahConverters:ResizeModeButtonType.Close}">
                         <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
-                                 RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
-                        <Binding Mode="OneWay"
-                                 Path="UseNoneWindowStyle"
                                  RelativeSource="{RelativeSource AncestorType={x:Type mah:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>

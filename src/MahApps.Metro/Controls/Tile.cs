@@ -2,109 +2,113 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
     public class Tile : Button
     {
-        static Tile()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Tile), new FrameworkPropertyMetadata(typeof(Tile)));
-        }
+        /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleProperty
+            = DependencyProperty.Register(nameof(Title),
+                                          typeof(string),
+                                          typeof(Tile),
+                                          new PropertyMetadata(default(string)));
 
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
-
-        public string Title
-        {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
-
-        /// <summary> 
-        /// HorizontalTitleAlignment Dependency Property.
-        /// Default Value: HorizontalAlignment.Left
+        /// <summary>
+        /// Gets or sets the title of the <see cref="Tile"/>.
         /// </summary>
+        public string? Title
+        {
+            get => (string?)this.GetValue(TitleProperty);
+            set => this.SetValue(TitleProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="HorizontalTitleAlignment"/> dependency property.</summary>
         public static readonly DependencyProperty HorizontalTitleAlignmentProperty =
-            DependencyProperty.Register(
-                nameof(HorizontalTitleAlignment),
-                typeof(HorizontalAlignment),
-                typeof(Tile),
-                new FrameworkPropertyMetadata(HorizontalAlignment.Left));
+            DependencyProperty.Register(nameof(HorizontalTitleAlignment),
+                                        typeof(HorizontalAlignment),
+                                        typeof(Tile),
+                                        new FrameworkPropertyMetadata(HorizontalAlignment.Left));
 
         /// <summary> 
-        /// Gets/Sets the horizontal alignment of the title.
+        /// Gets or sets the horizontal alignment of the <see cref="Title"/>.
         /// </summary> 
         [Bindable(true), Category("Layout")]
         public HorizontalAlignment HorizontalTitleAlignment
         {
-            get { return (HorizontalAlignment)GetValue(HorizontalTitleAlignmentProperty); }
-            set { SetValue(HorizontalTitleAlignmentProperty, value); }
+            get => (HorizontalAlignment)this.GetValue(HorizontalTitleAlignmentProperty);
+            set => this.SetValue(HorizontalTitleAlignmentProperty, value);
         }
 
-        /// <summary>
-        /// VerticalTitleAlignment Dependency Property. 
-        /// Default Value: VerticalAlignment.Bottom
-        /// </summary> 
+        /// <summary>Identifies the <see cref="VerticalTitleAlignment"/> dependency property.</summary> 
         public static readonly DependencyProperty VerticalTitleAlignmentProperty =
-            DependencyProperty.Register(
-                nameof(VerticalTitleAlignment),
-                typeof(VerticalAlignment),
-                typeof(Tile),
-                new FrameworkPropertyMetadata(VerticalAlignment.Bottom));
+            DependencyProperty.Register(nameof(VerticalTitleAlignment),
+                                        typeof(VerticalAlignment),
+                                        typeof(Tile),
+                                        new FrameworkPropertyMetadata(VerticalAlignment.Bottom));
 
         /// <summary>
-        /// Gets/Sets the vertical alignment of the title.
+        /// Gets or sets the vertical alignment of the <see cref="Title"/>.
         /// </summary>
         [Bindable(true), Category("Layout")]
         public VerticalAlignment VerticalTitleAlignment
         {
-            get { return (VerticalAlignment)GetValue(VerticalTitleAlignmentProperty); }
-            set { SetValue(VerticalTitleAlignmentProperty, value); }
+            get => (VerticalAlignment)this.GetValue(VerticalTitleAlignmentProperty);
+            set => this.SetValue(VerticalTitleAlignmentProperty, value);
         }
 
-        public static readonly DependencyProperty CountProperty = DependencyProperty.Register(nameof(Count), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
+        /// <summary>Identifies the <see cref="Count"/> dependency property.</summary>
+        public static readonly DependencyProperty CountProperty
+            = DependencyProperty.Register(nameof(Count),
+                                          typeof(string),
+                                          typeof(Tile),
+                                          new PropertyMetadata(default(string)));
 
-        public string Count
+        /// <summary>
+        /// Gets or sets a Count text.
+        /// </summary>
+        public string? Count
         {
-            get { return (string)GetValue(CountProperty); }
-            set { SetValue(CountProperty, value); }
+            get => (string?)this.GetValue(CountProperty);
+            set => this.SetValue(CountProperty, value);
         }
 
-        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register(nameof(KeepDragging), typeof(bool), typeof(Tile), new PropertyMetadata(BooleanBoxes.TrueBox));
+        /// <summary>Identifies the <see cref="TitleFontSize"/> dependency property.</summary>
+        public static readonly DependencyProperty TitleFontSizeProperty
+            = DependencyProperty.Register(nameof(TitleFontSize),
+                                          typeof(double),
+                                          typeof(Tile),
+                                          new PropertyMetadata(16d));
 
-        public bool KeepDragging
-        {
-            get { return (bool)GetValue(KeepDraggingProperty); }
-            set { SetValue(KeepDraggingProperty, BooleanBoxes.Box(value)); }
-        }
-
-        public static readonly DependencyProperty TiltFactorProperty = DependencyProperty.Register(nameof(TiltFactor), typeof(int), typeof(Tile), new PropertyMetadata(5));
-
-        public int TiltFactor
-        {
-            get { return (Int32)GetValue(TiltFactorProperty); }
-            set { SetValue(TiltFactorProperty, value); }
-        }
-
-        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register(nameof(TitleFontSize), typeof(double), typeof(Tile), new PropertyMetadata(16d));
-
+        /// <summary>
+        /// Gets or sets the font size of the <see cref="Title"/>.
+        /// </summary>
         public double TitleFontSize
         {
-            get { return (double)GetValue(TitleFontSizeProperty); }
-            set { SetValue(TitleFontSizeProperty, value); }
+            get => (double)this.GetValue(TitleFontSizeProperty);
+            set => this.SetValue(TitleFontSizeProperty, value);
         }
 
-        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register(nameof(CountFontSize), typeof(double), typeof(Tile), new PropertyMetadata(28d));
+        /// <summary>Identifies the <see cref="CountFontSize"/> dependency property.</summary>
+        public static readonly DependencyProperty CountFontSizeProperty
+            = DependencyProperty.Register(nameof(CountFontSize),
+                                          typeof(double),
+                                          typeof(Tile),
+                                          new PropertyMetadata(28d));
 
+        /// Gets or sets the font size of the <see cref="Count"/>.
         public double CountFontSize
         {
-            get { return (double)GetValue(CountFontSizeProperty); }
-            set { SetValue(CountFontSizeProperty, value); }
+            get => (double)this.GetValue(CountFontSizeProperty);
+            set => this.SetValue(CountFontSizeProperty, value);
+        }
+
+        static Tile()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Tile), new FrameworkPropertyMetadata(typeof(Tile)));
         }
     }
 }

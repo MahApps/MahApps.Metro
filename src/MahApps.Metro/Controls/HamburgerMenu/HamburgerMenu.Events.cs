@@ -86,7 +86,7 @@ namespace MahApps.Metro.Controls
 
         private bool OnItemClick()
         {
-            var selectedItem = this.buttonsListView.SelectedItem;
+            var selectedItem = this.buttonsListView?.SelectedItem;
 
             if (!this.CanRaiseItemEvents(selectedItem))
             {
@@ -105,7 +105,7 @@ namespace MahApps.Metro.Controls
             return raiseItemEvents;
         }
 
-        private bool CanRaiseItemEvents(object selectedItem)
+        private bool CanRaiseItemEvents(object? selectedItem)
         {
             if (selectedItem is null)
             {
@@ -125,7 +125,7 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
-        private bool RaiseItemEvents(object selectedItem)
+        private bool RaiseItemEvents(object? selectedItem)
         {
             if (selectedItem is null)
             {
@@ -143,7 +143,7 @@ namespace MahApps.Metro.Controls
 
         private bool OnOptionsItemClick()
         {
-            var selectedItem = this.optionsListView.SelectedItem;
+            var selectedItem = this.optionsListView?.SelectedItem;
 
             if (!this.CanRaiseOptionsItemEvents(selectedItem))
             {
@@ -162,7 +162,7 @@ namespace MahApps.Metro.Controls
             return raiseOptionsItemEvents;
         }
 
-        private bool CanRaiseOptionsItemEvents(object selectedItem)
+        private bool CanRaiseOptionsItemEvents(object? selectedItem)
         {
             if (selectedItem is null)
             {
@@ -182,7 +182,7 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
-        private bool RaiseOptionsItemEvents(object selectedItem)
+        private bool RaiseOptionsItemEvents(object? selectedItem)
         {
             if (selectedItem is null)
             {
@@ -205,7 +205,7 @@ namespace MahApps.Metro.Controls
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(sender is ListBox listBox))
+            if (sender is not ListBox listBox)
             {
                 return;
             }
@@ -235,7 +235,7 @@ namespace MahApps.Metro.Controls
 
         private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(sender is ListBox listBox))
+            if (sender is not ListBox listBox)
             {
                 return;
             }

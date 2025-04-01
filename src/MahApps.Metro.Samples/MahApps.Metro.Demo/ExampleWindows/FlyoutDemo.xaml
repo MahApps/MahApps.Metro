@@ -14,9 +14,8 @@
                  MinWidth="700"
                  MinHeight="500"
                  d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
-                 BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                 BorderThickness="1"
                  IconOverlayBehavior="Never"
+                 ResizeMode="CanResizeWithGrip"
                  SaveWindowPosition="True"
                  TitleCharacterCasing="Normal"
                  WindowStartupLocation="CenterScreen"
@@ -92,14 +91,22 @@
 
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl x:Name="flyoutsControl">
-            <mah:Flyout x:Name="settingsFlyout"
+            <mah:Flyout x:Name="FirstFlyout"
                         Margin="200 30 0 0"
                         mah:ControlsHelper.ContentCharacterCasing="Upper"
+                        mah:HeaderedControlHelper.HeaderBackground="#FFEB3B"
                         mah:HeaderedControlHelper.HeaderFontFamily="Segoe Script"
+                        mah:HeaderedControlHelper.HeaderForeground="Black"
+                        mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Stretch"
                         AreAnimationsEnabled="True"
                         FocusedElement="{Binding ElementName=firstTB}"
                         Header="Settings"
                         Position="Right">
+                <mah:Flyout.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock HorizontalAlignment="Right" Text="{Binding}" />
+                    </DataTemplate>
+                </mah:Flyout.HeaderTemplate>
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -107,8 +114,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
-                        <TextBlock Grid.Row="0" Text="This Flyout animates its opacity when opening and closing." />
+                        <TextBlock Text="Something above the ScrollPanel" />
+                        <TextBlock Text="This Flyout animates its opacity when opening and closing." />
                     </StackPanel>
                     <TabControl Grid.Row="1" mah:TabControlHelper.Underlined="TabPanel">
                         <TabItem Header="Settings">
@@ -142,7 +149,8 @@
                 </Grid>
             </mah:Flyout>
 
-            <mah:Flyout HorizontalContentAlignment="Stretch"
+            <mah:Flyout x:Name="SecondFlyout"
+                        HorizontalContentAlignment="Stretch"
                         AnimateOpacity="True"
                         CloseButtonIsCancel="True"
                         Header="New Goodness"
@@ -157,37 +165,28 @@
                 </StackPanel>
             </mah:Flyout>
 
-            <exampleWindows:ShowcaseFlyout DataContext="{Binding}" />
+            <exampleWindows:ShowcaseFlyout x:Name="ShowcaseFlyout" DataContext="{Binding}" />
 
-            <mah:Flyout Header="Accented"
-                        Position="Right"
-                        Theme="Accent">
-                <Grid Width="400" Margin="10">
-                    <StackPanel>
-                        <TextBlock Text="This flyout adapts its theme to the current accent" />
-                        <GroupBox Height="250"
-                                  Margin="10"
-                                  Header="Flyout Group Box" />
-                        <Button Margin="10" Content="Button" />
-                        <ToggleButton Margin="10" Content="Toggle Button" />
-                    </StackPanel>
-                </Grid>
-            </mah:Flyout>
-            <mah:Flyout Header="Inverse"
+            <mah:Flyout x:Name="InverseFlyout"
+                        Header="Inverse"
                         Position="Right"
                         Theme="Inverse">
                 <Grid Width="400" Margin="10">
                     <TextBlock Text="This flyout has the inverse theme of the current window theme" />
                 </Grid>
             </mah:Flyout>
-            <mah:Flyout Header="Adapt"
+
+            <mah:Flyout x:Name="AdaptFlyout"
+                        Header="Adapt"
                         Position="Right"
                         Theme="Adapt">
                 <Grid Width="400" Margin="10">
                     <TextBlock Text="This flyout adapts the theme of the current window" />
                 </Grid>
             </mah:Flyout>
-            <mah:Flyout AnimateOnPositionChange="{Binding AnimateOnPositionChange}"
+
+            <mah:Flyout x:Name="SettingsFlyout"
+                        AnimateOnPositionChange="{Binding AnimateOnPositionChange}"
                         Header="Cool"
                         Position="Right">
                 <Grid Width="270" Margin="10">
@@ -210,15 +209,6 @@
                               Grid.Column="1"
                               Margin="0 5 5 5"
                               VerticalAlignment="Center" />
-                    <Button x:Name="flyoutSettingsButtonSave"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Width="75"
-                            Margin="5"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
-                            Content="Save"
-                            Style="{StaticResource MahApps.Styles.Button.Flat}" />
                     <UniformGrid Grid.Row="2"
                                  Grid.Column="0"
                                  Grid.ColumnSpan="2"
@@ -226,17 +216,22 @@
                                  Columns="3">
                         <CheckBox IsChecked="{Binding AnimateOnPositionChange}">Animate</CheckBox>
                         <Button Margin="10"
-                                Click="ShowSettingsLeft"
+                                Command="{Binding MoveLeftFlyoutCommand}"
+                                CommandParameter="{x:Reference SettingsFlyout}"
                                 Content="Left"
-                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Accent.Win10}" />
                         <Button Margin="10"
-                                Click="ShowSettingsRight"
+                                Command="{Binding MoveRightFlyoutCommand}"
+                                CommandParameter="{x:Reference SettingsFlyout}"
                                 Content="Right"
-                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Accent.Win10}" />
                     </UniformGrid>
                 </Grid>
             </mah:Flyout>
-            <mah:Flyout Header="Left" Position="Left">
+
+            <mah:Flyout x:Name="LeftFlyout"
+                        Header="Left"
+                        Position="Left">
                 <StackPanel Width="150" Margin="5 5 5 5">
                     <TextBlock Text="a test for left" />
                     <CheckBox Content="a simple checkbox" />
@@ -249,7 +244,8 @@
                 </StackPanel>
             </mah:Flyout>
 
-            <mah:Flyout Margin="50 0 50 0"
+            <mah:Flyout x:Name="CustomTopFlyout"
+                        Margin="50 0 50 0"
                         CloseButtonVisibility="Collapsed"
                         Header="Top"
                         IsModal="True"
@@ -273,7 +269,8 @@
                                 Style="{DynamicResource MahApps.Styles.Button.Flat}" />
                         <Button Grid.Column="2"
                                 Margin="5"
-                                Click="TopFlyoutCloseButtonOnClick"
+                                Command="{Binding CloseFlyoutCommand}"
+                                CommandParameter="{x:Reference CustomTopFlyout}"
                                 Content="_Close"
                                 IsCancel="True"
                                 Style="{DynamicResource MahApps.Styles.Button.Flat}" />
@@ -281,7 +278,8 @@
                 </Grid>
             </mah:Flyout>
 
-            <mah:Flyout Height="150"
+            <mah:Flyout x:Name="TopFlyout"
+                        Height="150"
                         Header="Top"
                         Position="Top">
                 <StackPanel Height="80"
@@ -297,7 +295,9 @@
                 </StackPanel>
             </mah:Flyout>
 
-            <mah:Flyout Header="Bottom" Position="Bottom">
+            <mah:Flyout x:Name="BottomFlyout"
+                        Header="Bottom"
+                        Position="Bottom">
                 <StackPanel Height="80"
                             Margin="5 5 5 5"
                             HorizontalAlignment="Right"
@@ -312,7 +312,8 @@
                 </StackPanel>
             </mah:Flyout>
 
-            <mah:Flyout Header="Modal"
+            <mah:Flyout x:Name="ModalFlyout"
+                        Header="Modal"
                         IsModal="True"
                         Position="Right">
                 <StackPanel Height="80"
@@ -321,13 +322,16 @@
                     <TextBlock>Modal Flyout</TextBlock>
                 </StackPanel>
             </mah:Flyout>
-            <mah:Flyout Height="75"
+
+            <mah:Flyout x:Name="AppBarFlyout"
+                        Height="75"
                         CloseButtonVisibility="Collapsed"
                         IsPinned="False"
                         Position="Bottom"
                         TitleVisibility="Collapsed">
                 <TextBlock VerticalAlignment="Center" Text="This is an AppBar" />
             </mah:Flyout>
+
             <mah:Flyout x:Name="AutoCloseFlyout"
                         AutoCloseInterval="6000"
                         CloseButtonVisibility="Collapsed"
@@ -374,10 +378,9 @@
 
         <TextBlock Grid.Row="0"
                    Grid.Column="0"
-                   Grid.ColumnSpan="3"
                    Margin="10"
                    FontSize="30"
-                   Text="Some Flyout Tests..." />
+                   Text="Flyout Tests..." />
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
@@ -385,38 +388,43 @@
                     Margin="5"
                     HorizontalAlignment="Center">
             <Button Margin="2"
-                    Command="{Binding OpenFirstFlyoutCommand}"
-                    CommandParameter="{Binding ElementName=settingsFlyout}"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference FirstFlyout}"
                     Content="Show 1" />
             <Button Margin="2"
-                    Click="ShowSecond"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference SecondFlyout}"
                     Content="Show 2" />
             <Button Margin="2"
-                    Click="ShowThird"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference ShowcaseFlyout}"
                     Content="Show 3" />
             <Button Margin="2"
-                    Click="ShowAccent"
-                    Content="Accent" />
-            <Button Margin="2"
-                    Click="ShowInverse"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference InverseFlyout}"
                     Content="Inverse" />
             <Button Margin="2"
-                    Click="ShowAdapt"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference AdaptFlyout}"
                     Content="Adapt" />
             <Button Margin="2"
-                    Click="ShowSettings"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference SettingsFlyout}"
                     Content="Settings" />
             <Button Margin="2"
-                    Click="ShowModal"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference ModalFlyout}"
                     Content="Modal" />
             <Button Margin="2"
-                    Click="ShowAppBar"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference AppBarFlyout}"
                     Content="AppBar" />
             <Button Margin="2"
                     Click="ShowDynamicFlyout"
                     Content="Dynamic" />
             <Button Margin="2"
-                    Click="ShowAutoCloseFlyout"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference AutoCloseFlyout}"
                     Content="AutoClose" />
         </StackPanel>
 
@@ -435,10 +443,6 @@
                     Margin="5"
                     HorizontalAlignment="Center"
                     Grid.IsSharedSizeScope="True">
-
-            <TextBlock Margin="5"
-                       FontSize="30"
-                       Text="OverlayBehavior" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -508,21 +512,33 @@
                           SelectedValue="{Binding ElementName=ThisView, Path=IconOverlayBehavior, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
-            <CheckBox Content="ShowTitleBar" IsChecked="{Binding ElementName=ThisView, Path=ShowTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Content="ShowTitleBar"
+                      IsChecked="{Binding ElementName=ThisView, Path=ShowTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
+            <CheckBox Content="IsWindowDraggable"
+                      IsChecked="{Binding ElementName=ThisView, Path=IsWindowDraggable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
+            <CheckBox Content="ShowFlyoutsOverDialogs"
+                      IsChecked="{Binding ElementName=ThisView, Path=ShowFlyoutsOverDialogs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
 
             <Button Margin="2 10 2 2"
-                    Click="ShowLeft"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference LeftFlyout}"
                     Content="Show Left" />
             <Button Margin="2"
-                    Click="ShowCustomTop"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference CustomTopFlyout}"
                     Content="Show Custom Top" />
             <Button Margin="2"
-                    Click="ShowTop"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference TopFlyout}"
                     Content="Show Top" />
             <Button Margin="2"
-                    Click="ShowBottom"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference BottomFlyout}"
                     Content="Show Bottom" />
-            <Button Margin="2"
+            <Button Margin="2 4 2 2"
                     Click="CloseMe"
                     Content="Close" />
         </StackPanel>

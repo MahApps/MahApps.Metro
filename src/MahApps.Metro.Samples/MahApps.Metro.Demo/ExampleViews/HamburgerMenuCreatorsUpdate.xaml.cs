@@ -17,7 +17,7 @@ namespace MetroDemo.ExampleViews
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
         {
-            HamburgerMenuControl.Content = e.InvokedItem;
+            this.HamburgerMenuControl.Content = e.InvokedItem;
         }
     }
 }

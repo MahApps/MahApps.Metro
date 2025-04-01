@@ -9,6 +9,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Tooltip}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="HasDropShadow" Value="True" />
         <Setter Property="Padding" Value="6 3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -18,12 +19,9 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             Opacity="0"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Border.Resources>
-                            <Storyboard x:Key="Visible State" />
-                            <Storyboard x:Key="Normal State" />
-                        </Border.Resources>
                         <mah:ContentControlEx x:Name="PART_ContentPresenter"
                                               Margin="{TemplateBinding Padding}"
                                               Content="{TemplateBinding Content}"
@@ -31,8 +29,6 @@
                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                              FontSize="{TemplateBinding FontSize}"
-                                              Foreground="{TemplateBinding Foreground}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
@@ -58,6 +54,12 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="True">
+                            <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.ToolTip}" />
+                            <Setter TargetName="Root" Property="Margin" Value="0 0 6 6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

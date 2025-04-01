@@ -30,11 +30,6 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Use the light theme for the <see cref="Flyout"/>.
         /// </summary>
-        Light,
-
-        /// <summary>
-        /// The <see cref="Flyout"/> theme will match the host window's accent color.
-        /// </summary>
-        Accent
+        Light
     }
 }

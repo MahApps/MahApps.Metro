@@ -17,10 +17,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the thumb.
         /// </summary>
         public static readonly DependencyProperty ThumbFillBrushProperty
-            = DependencyProperty.RegisterAttached("ThumbFillBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "ThumbFillBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the thumb.
@@ -28,9 +29,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetThumbFillBrush(UIElement element)
+        public static Brush? GetThumbFillBrush(UIElement element)
         {
-            return (Brush)element.GetValue(ThumbFillBrushProperty);
+            return (Brush?)element.GetValue(ThumbFillBrushProperty);
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetThumbFillBrush(UIElement element, Brush value)
+        public static void SetThumbFillBrush(UIElement element, Brush? value)
         {
             element.SetValue(ThumbFillBrushProperty, value);
         }
@@ -48,10 +49,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the thumb if the mouse is over the slider.
         /// </summary>
         public static readonly DependencyProperty ThumbFillHoverBrushProperty
-            = DependencyProperty.RegisterAttached("ThumbFillHoverBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "ThumbFillHoverBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the thumb if the mouse is over the slider.
@@ -59,9 +61,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetThumbFillHoverBrush(UIElement element)
+        public static Brush? GetThumbFillHoverBrush(UIElement element)
         {
-            return (Brush)element.GetValue(ThumbFillHoverBrushProperty);
+            return (Brush?)element.GetValue(ThumbFillHoverBrushProperty);
         }
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetThumbFillHoverBrush(UIElement element, Brush value)
+        public static void SetThumbFillHoverBrush(UIElement element, Brush? value)
         {
             element.SetValue(ThumbFillHoverBrushProperty, value);
         }
@@ -79,10 +81,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the thumb if the mouse button is pressed.
         /// </summary>
         public static readonly DependencyProperty ThumbFillPressedBrushProperty
-            = DependencyProperty.RegisterAttached("ThumbFillPressedBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "ThumbFillPressedBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the thumb if the mouse button is pressed.
@@ -90,9 +93,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetThumbFillPressedBrush(UIElement element)
+        public static Brush? GetThumbFillPressedBrush(UIElement element)
         {
-            return (Brush)element.GetValue(ThumbFillPressedBrushProperty);
+            return (Brush?)element.GetValue(ThumbFillPressedBrushProperty);
         }
 
         /// <summary>
@@ -101,7 +104,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetThumbFillPressedBrush(UIElement element, Brush value)
+        public static void SetThumbFillPressedBrush(UIElement element, Brush? value)
         {
             element.SetValue(ThumbFillPressedBrushProperty, value);
         }
@@ -110,10 +113,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the thumb if the slider is disabled.
         /// </summary>
         public static readonly DependencyProperty ThumbFillDisabledBrushProperty
-            = DependencyProperty.RegisterAttached("ThumbFillDisabledBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "ThumbFillDisabledBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the thumb if the slider is disabled.
@@ -121,9 +125,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetThumbFillDisabledBrush(UIElement element)
+        public static Brush? GetThumbFillDisabledBrush(UIElement element)
         {
-            return (Brush)element.GetValue(ThumbFillDisabledBrushProperty);
+            return (Brush?)element.GetValue(ThumbFillDisabledBrushProperty);
         }
 
         /// <summary>
@@ -132,7 +136,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetThumbFillDisabledBrush(UIElement element, Brush value)
+        public static void SetThumbFillDisabledBrush(UIElement element, Brush? value)
         {
             element.SetValue(ThumbFillDisabledBrushProperty, value);
         }
@@ -141,10 +145,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track.
         /// </summary>
         public static readonly DependencyProperty TrackFillBrushProperty
-            = DependencyProperty.RegisterAttached("TrackFillBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackFillBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track.
@@ -152,9 +157,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackFillBrush(UIElement element)
+        public static Brush? GetTrackFillBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackFillBrushProperty);
+            return (Brush?)element.GetValue(TrackFillBrushProperty);
         }
 
         /// <summary>
@@ -163,7 +168,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackFillBrush(UIElement element, Brush value)
+        public static void SetTrackFillBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackFillBrushProperty, value);
         }
@@ -172,10 +177,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track if the mouse is over the slider.
         /// </summary>
         public static readonly DependencyProperty TrackFillHoverBrushProperty
-            = DependencyProperty.RegisterAttached("TrackFillHoverBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackFillHoverBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track if the mouse is over the slider.
@@ -183,9 +189,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackFillHoverBrush(UIElement element)
+        public static Brush? GetTrackFillHoverBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackFillHoverBrushProperty);
+            return (Brush?)element.GetValue(TrackFillHoverBrushProperty);
         }
 
         /// <summary>
@@ -194,7 +200,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackFillHoverBrush(UIElement element, Brush value)
+        public static void SetTrackFillHoverBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackFillHoverBrushProperty, value);
         }
@@ -203,10 +209,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track if the mouse button is pressed.
         /// </summary>
         public static readonly DependencyProperty TrackFillPressedBrushProperty
-            = DependencyProperty.RegisterAttached("TrackFillPressedBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackFillPressedBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track if the mouse button is pressed.
@@ -214,9 +221,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackFillPressedBrush(UIElement element)
+        public static Brush? GetTrackFillPressedBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackFillPressedBrushProperty);
+            return (Brush?)element.GetValue(TrackFillPressedBrushProperty);
         }
 
         /// <summary>
@@ -225,7 +232,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackFillPressedBrush(UIElement element, Brush value)
+        public static void SetTrackFillPressedBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackFillPressedBrushProperty, value);
         }
@@ -234,10 +241,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track if the slider is disabled.
         /// </summary>
         public static readonly DependencyProperty TrackFillDisabledBrushProperty
-            = DependencyProperty.RegisterAttached("TrackFillDisabledBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackFillDisabledBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track if the slider is disabled.
@@ -245,9 +253,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackFillDisabledBrush(UIElement element)
+        public static Brush? GetTrackFillDisabledBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackFillDisabledBrushProperty);
+            return (Brush?)element.GetValue(TrackFillDisabledBrushProperty);
         }
 
         /// <summary>
@@ -256,7 +264,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackFillDisabledBrush(UIElement element, Brush value)
+        public static void SetTrackFillDisabledBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackFillDisabledBrushProperty, value);
         }
@@ -265,10 +273,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track value.
         /// </summary>
         public static readonly DependencyProperty TrackValueFillBrushProperty
-            = DependencyProperty.RegisterAttached("TrackValueFillBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackValueFillBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track value.
@@ -276,9 +285,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackValueFillBrush(UIElement element)
+        public static Brush? GetTrackValueFillBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackValueFillBrushProperty);
+            return (Brush?)element.GetValue(TrackValueFillBrushProperty);
         }
 
         /// <summary>
@@ -287,7 +296,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackValueFillBrush(UIElement element, Brush value)
+        public static void SetTrackValueFillBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackValueFillBrushProperty, value);
         }
@@ -296,10 +305,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track value if the mouse is over the slider.
         /// </summary>
         public static readonly DependencyProperty TrackValueFillHoverBrushProperty
-            = DependencyProperty.RegisterAttached("TrackValueFillHoverBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackValueFillHoverBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track value if the mouse is over the slider.
@@ -307,9 +317,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackValueFillHoverBrush(UIElement element)
+        public static Brush? GetTrackValueFillHoverBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackValueFillHoverBrushProperty);
+            return (Brush?)element.GetValue(TrackValueFillHoverBrushProperty);
         }
 
         /// <summary>
@@ -318,7 +328,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackValueFillHoverBrush(UIElement element, Brush value)
+        public static void SetTrackValueFillHoverBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackValueFillHoverBrushProperty, value);
         }
@@ -327,10 +337,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track value if the mouse button is pressed.
         /// </summary>
         public static readonly DependencyProperty TrackValueFillPressedBrushProperty
-            = DependencyProperty.RegisterAttached("TrackValueFillPressedBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackValueFillPressedBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track value if the mouse button is pressed.
@@ -338,9 +349,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackValueFillPressedBrush(UIElement element)
+        public static Brush? GetTrackValueFillPressedBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackValueFillPressedBrushProperty);
+            return (Brush?)element.GetValue(TrackValueFillPressedBrushProperty);
         }
 
         /// <summary>
@@ -349,7 +360,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackValueFillPressedBrush(UIElement element, Brush value)
+        public static void SetTrackValueFillPressedBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackValueFillPressedBrushProperty, value);
         }
@@ -358,10 +369,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the brush of the track value if the slider is disabled.
         /// </summary>
         public static readonly DependencyProperty TrackValueFillDisabledBrushProperty
-            = DependencyProperty.RegisterAttached("TrackValueFillDisabledBrush",
-                                                  typeof(Brush),
-                                                  typeof(SliderHelper),
-                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "TrackValueFillDisabledBrush",
+                typeof(Brush),
+                typeof(SliderHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush of the track value if the slider is disabled.
@@ -369,9 +381,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static Brush GetTrackValueFillDisabledBrush(UIElement element)
+        public static Brush? GetTrackValueFillDisabledBrush(UIElement element)
         {
-            return (Brush)element.GetValue(TrackValueFillDisabledBrushProperty);
+            return (Brush?)element.GetValue(TrackValueFillDisabledBrushProperty);
         }
 
         /// <summary>
@@ -380,16 +392,17 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
-        public static void SetTrackValueFillDisabledBrush(UIElement element, Brush value)
+        public static void SetTrackValueFillDisabledBrush(UIElement element, Brush? value)
         {
             element.SetValue(TrackValueFillDisabledBrushProperty, value);
         }
 
         public static readonly DependencyProperty ChangeValueByProperty
-            = DependencyProperty.RegisterAttached("ChangeValueBy",
-                                                  typeof(MouseWheelChange),
-                                                  typeof(SliderHelper),
-                                                  new PropertyMetadata(MouseWheelChange.SmallChange));
+            = DependencyProperty.RegisterAttached(
+                "ChangeValueBy",
+                typeof(MouseWheelChange),
+                typeof(SliderHelper),
+                new PropertyMetadata(MouseWheelChange.SmallChange));
 
         /// <summary>
         /// Gets/Sets the type how the value will be changed if the user rotates the mouse wheel.
@@ -414,10 +427,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty EnableMouseWheelProperty
-            = DependencyProperty.RegisterAttached("EnableMouseWheel",
-                                                  typeof(MouseWheelState),
-                                                  typeof(SliderHelper),
-                                                  new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
+            = DependencyProperty.RegisterAttached(
+                "EnableMouseWheel",
+                typeof(MouseWheelState),
+                typeof(SliderHelper),
+                new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
 
         /// <summary>
         /// Gets/Sets the value when the slider will be changed. Possible values are if the slider is focused or if the mouse is over the slider.
@@ -445,22 +459,27 @@ namespace MahApps.Metro.Controls
         {
             if (e.NewValue != e.OldValue)
             {
-                if (d is Slider)
+                switch (d)
                 {
-                    var slider = (Slider)d;
-                    slider.PreviewMouseWheel -= OnSliderPreviewMouseWheel;
-                    if ((MouseWheelState)e.NewValue != MouseWheelState.None)
+                    case Slider slider:
                     {
-                        slider.PreviewMouseWheel += OnSliderPreviewMouseWheel;
+                        slider.PreviewMouseWheel -= OnSliderPreviewMouseWheel;
+                        if ((MouseWheelState)e.NewValue != MouseWheelState.None)
+                        {
+                            slider.PreviewMouseWheel += OnSliderPreviewMouseWheel;
+                        }
+
+                        break;
                     }
-                }
-                else if (d is RangeSlider)
-                {
-                    var rangeSlider = (RangeSlider)d;
-                    rangeSlider.PreviewMouseWheel -= OnRangeSliderPreviewMouseWheel;
-                    if ((MouseWheelState)e.NewValue != MouseWheelState.None)
+                    case RangeSlider rangeSlider:
                     {
-                        rangeSlider.PreviewMouseWheel += OnRangeSliderPreviewMouseWheel;
+                        rangeSlider.PreviewMouseWheel -= OnRangeSliderPreviewMouseWheel;
+                        if ((MouseWheelState)e.NewValue != MouseWheelState.None)
+                        {
+                            rangeSlider.PreviewMouseWheel += OnRangeSliderPreviewMouseWheel;
+                        }
+
+                        break;
                     }
                 }
             }
@@ -468,15 +487,14 @@ namespace MahApps.Metro.Controls
 
         internal static object ConstrainToRange(RangeBase rangeBase, double value)
         {
-            double minimum = rangeBase.Minimum;
-            double num = value;
-            if (num < minimum)
+            var minimum = rangeBase.Minimum;
+            if (value < minimum)
             {
                 return minimum;
             }
 
-            double maximum = rangeBase.Maximum;
-            if (num > maximum)
+            var maximum = rangeBase.Maximum;
+            if (value > maximum)
             {
                 return maximum;
             }
@@ -486,8 +504,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnSliderPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var slider = sender as Slider;
-            if (slider != null && (slider.IsFocused || MouseWheelState.MouseHover.Equals(slider.GetValue(EnableMouseWheelProperty))))
+            if (sender is Slider slider && (slider.IsFocused || MouseWheelState.MouseHover.Equals(slider.GetValue(EnableMouseWheelProperty))))
             {
                 var changeType = (MouseWheelChange)slider.GetValue(ChangeValueByProperty);
                 var difference = changeType == MouseWheelChange.LargeChange ? slider.LargeChange : slider.SmallChange;
@@ -495,7 +512,7 @@ namespace MahApps.Metro.Controls
                 var currentValue = slider.Value;
                 var newValue = ConstrainToRange(slider, e.Delta > 0 ? currentValue + difference : currentValue - difference);
 
-                slider.SetCurrentValue(Slider.ValueProperty, newValue);
+                slider.SetCurrentValue(RangeBase.ValueProperty, newValue);
 
                 e.Handled = true;
             }
@@ -503,8 +520,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnRangeSliderPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var rangeSlider = sender as RangeSlider;
-            if (rangeSlider != null && (rangeSlider.IsFocused || MouseWheelState.MouseHover.Equals(rangeSlider.GetValue(EnableMouseWheelProperty))))
+            if (sender is RangeSlider rangeSlider && (rangeSlider.IsFocused || MouseWheelState.MouseHover.Equals(rangeSlider.GetValue(EnableMouseWheelProperty))))
             {
                 var changeType = (MouseWheelChange)rangeSlider.GetValue(ChangeValueByProperty);
                 var difference = changeType == MouseWheelChange.LargeChange ? rangeSlider.LargeChange : rangeSlider.SmallChange;

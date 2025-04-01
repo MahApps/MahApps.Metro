@@ -16,7 +16,12 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ControlsHelper
     {
-        public static readonly DependencyProperty DisabledVisualElementVisibilityProperty = DependencyProperty.RegisterAttached("DisabledVisualElementVisibility", typeof(Visibility), typeof(ControlsHelper), new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty DisabledVisualElementVisibilityProperty
+            = DependencyProperty.RegisterAttached(
+                "DisabledVisualElementVisibility",
+                typeof(Visibility),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets the value to handle the visibility of the DisabledVisualElement in the template.
@@ -25,6 +30,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static Visibility GetDisabledVisualElementVisibility(UIElement element)
         {
             return (Visibility)element.GetValue(DisabledVisualElementVisibilityProperty);
@@ -33,6 +39,11 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Sets the value to handle the visibility of the DisabledVisualElement in the template.
         /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static void SetDisabledVisualElementVisibility(UIElement element, Visibility value)
         {
             element.SetValue(DisabledVisualElementVisibilityProperty, value);
@@ -40,7 +51,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// The DependencyProperty for the CharacterCasing property.
-        /// Controls whether or not content is converted to upper or lower case
+        /// The Controls content will be converted to upper or lower case if it is a string.
         /// </summary>
         public static readonly DependencyProperty ContentCharacterCasingProperty =
             DependencyProperty.RegisterAttached(
@@ -48,7 +59,7 @@ namespace MahApps.Metro.Controls
                 typeof(CharacterCasing),
                 typeof(ControlsHelper),
                 new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.AffectsMeasure),
-                new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper));
+                value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
 
         /// <summary>
         /// Gets the character casing of the control
@@ -67,6 +78,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Sets the character casing of the control
         /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        [AttachedPropertyBrowsableForType(typeof(SplitButton))]
+        [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
         public static void SetContentCharacterCasing(UIElement element, CharacterCasing value)
         {
             element.SetValue(ContentCharacterCasingProperty, value);
@@ -104,10 +121,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty
-            = DependencyProperty.RegisterAttached("FocusBorderBrush",
-                                                  typeof(Brush),
-                                                  typeof(ControlsHelper),
-                                                  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "FocusBorderBrush",
+                typeof(Brush),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the focus border.
@@ -136,10 +154,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty FocusBorderThicknessProperty
-            = DependencyProperty.RegisterAttached("FocusBorderThickness",
-                                                  typeof(Thickness),
-                                                  typeof(ControlsHelper),
-                                                  new FrameworkPropertyMetadata(default(Thickness), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "FocusBorderThickness",
+                typeof(Thickness),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(default(Thickness), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the focus border.
@@ -168,10 +187,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty MouseOverBorderBrushProperty
-            = DependencyProperty.RegisterAttached("MouseOverBorderBrush",
-                                                  typeof(Brush),
-                                                  typeof(ControlsHelper),
-                                                  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+            = DependencyProperty.RegisterAttached(
+                "MouseOverBorderBrush",
+                typeof(Brush),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the mouse over brush.
@@ -207,10 +227,11 @@ namespace MahApps.Metro.Controls
         /// DependencyProperty for <see cref="CornerRadius" /> property.
         /// </summary>
         public static readonly DependencyProperty CornerRadiusProperty
-            = DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ControlsHelper),
-                                                  new FrameworkPropertyMetadata(
-                                                      new CornerRadius(),
-                                                      FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+            = DependencyProperty.RegisterAttached(
+                "CornerRadius",
+                typeof(CornerRadius),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(new CornerRadius(), FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary> 
         /// The CornerRadius property allows users to control the roundness of the button corners independently by 
@@ -224,6 +245,7 @@ namespace MahApps.Metro.Controls
             return (CornerRadius)element.GetValue(CornerRadiusProperty);
         }
 
+        [Category(AppName.MahApps)]
         public static void SetCornerRadius(UIElement element, CornerRadius value)
         {
             element.SetValue(CornerRadiusProperty, value);
@@ -233,10 +255,11 @@ namespace MahApps.Metro.Controls
         /// Gets or sets a value indicating whether the child contents of the control are not editable.
         /// </summary>
         public static readonly DependencyProperty IsReadOnlyProperty
-            = DependencyProperty.RegisterAttached("IsReadOnly",
-                                                  typeof(bool),
-                                                  typeof(ControlsHelper),
-                                                  new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
+            = DependencyProperty.RegisterAttached(
+                "IsReadOnly",
+                typeof(bool),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets a value indicating whether the child contents of the control are not editable.

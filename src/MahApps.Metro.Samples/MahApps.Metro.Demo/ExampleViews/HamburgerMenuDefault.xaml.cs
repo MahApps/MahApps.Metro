@@ -37,8 +37,8 @@ namespace MetroDemo.ExampleViews
         // Another option to handle the options menu item click
         private async void HamburgerMenuControl_OnOptionsItemClick(object sender, ItemClickEventArgs e)
         {
-            var menuItem = e.ClickedItem as HamburgerMenuItem;
-            await this.TryFindParent<MetroWindow>().ShowMessageAsync("", $"You clicked on {menuItem.Label} button");
+            var menuItem = (HamburgerMenuItem)e.ClickedItem!;
+            await this.TryFindParent<MetroWindow>()!.ShowMessageAsync("", $"You clicked on {menuItem.Label} button");
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
@@ -50,26 +50,6 @@ namespace MetroDemo.ExampleViews
                 // close the menu if a item was selected
                 this.HamburgerMenuControl.IsPaneOpen = false;
             }
-        }
-    }
-
-    // This class can be used to avoid the following error message
-    // System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=
-    // WPF doesn’t know which FrameworkElement to use to get the DataContext, because the HamburgerMenuItem doesn’t belong to the visual or logical tree of the HamburgerMenu.
-    public class BindingProxy : Freezable
-    {
-        // Using a DependencyProperty as the backing store for Data. This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DataProperty = DependencyProperty.Register(nameof(Data), typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
-
-        public object Data
-        {
-            get { return (object)this.GetValue(DataProperty); }
-            set { this.SetValue(DataProperty, value); }
-        }
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BindingProxy();
         }
     }
 

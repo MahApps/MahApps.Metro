@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls
     /// This ensures that the first hour that is selectable is 12 (AM/PM). <br></br>
     /// This comparer is used only if in the corresponding <see cref="TimePickerBase"/> the value for <see cref="TimePickerBase.IsMilitaryTime"/> is false.
     /// </remarks>
-    internal class AmPmComparer : IComparer<int>
+    public class AmPmComparer : IComparer<int>
     {
         public int Compare(int x, int y)
         {

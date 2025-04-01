@@ -25,7 +25,7 @@
                 <mah:Underline x:Name="Underline"
                                Background="Transparent"
                                BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
-                               LineThickness="1"
+                               LineThickness="{DynamicResource TabControlUnderlineThickness}"
                                Placement="Bottom"
                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                Visibility="Collapsed" />
@@ -39,6 +39,7 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                     KeyboardNavigation.DirectionalNavigation="Contained"
                     KeyboardNavigation.TabIndex="2"
                     KeyboardNavigation.TabNavigation="Local">
@@ -102,7 +103,7 @@
                 <mah:Underline x:Name="Underline"
                                Background="Transparent"
                                BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
-                               LineThickness="1"
+                               LineThickness="{DynamicResource TabControlUnderlineThickness}"
                                Placement="Bottom"
                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                Visibility="Collapsed" />
@@ -116,6 +117,7 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                     KeyboardNavigation.DirectionalNavigation="Contained"
                     KeyboardNavigation.TabIndex="2"
                     KeyboardNavigation.TabNavigation="Local">

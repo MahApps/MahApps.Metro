@@ -18,8 +18,8 @@ namespace MahApps.Metro.Controls
     {
         #region Fields
 
-        private StreamGeometry _backgroundGeometryCache;
-        private StreamGeometry _borderGeometryCache;
+        private StreamGeometry? _backgroundGeometryCache;
+        private StreamGeometry? _borderGeometryCache;
 
         #endregion
 
@@ -52,9 +52,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="value">Thickness</param>
         /// <returns></returns>
-        private static bool OnValidateThickness(object value)
+        private static bool OnValidateThickness(object? value)
         {
-            var th = (Thickness)value;
+            var th = (Thickness)(value ?? default(Thickness));
             return th.IsValid(false, false, false, false);
         }
 
@@ -131,9 +131,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="value">CornerRadius</param>
         /// <returns></returns>
-        private static bool OnValidateCornerRadius(object value)
+        private static bool OnValidateCornerRadius(object? value)
         {
-            var cr = (CornerRadius)value;
+            var cr = (CornerRadius)(value ?? default(CornerRadius));
             return cr.IsValid(false, false, false, false);
         }
 
@@ -164,9 +164,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the BorderBrush property. This dependency property 
         /// indicates the BorderBrush with which the Border is drawn.
         /// </summary>
-        public Brush BorderBrush
+        public Brush? BorderBrush
         {
-            get => (Brush)this.GetValue(BorderBrushProperty);
+            get => (Brush?)this.GetValue(BorderBrushProperty);
             set => this.SetValue(BorderBrushProperty, value);
         }
 
@@ -187,9 +187,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the Background property. This dependency property 
         /// indicates the Background with which the Background is drawn.
         /// </summary>
-        public Brush Background
+        public Brush? Background
         {
-            get => (Brush)this.GetValue(BackgroundProperty);
+            get => (Brush?)this.GetValue(BackgroundProperty);
             set => this.SetValue(BackgroundProperty, value);
         }
 
@@ -400,7 +400,9 @@ namespace MahApps.Metro.Controls
                 else if (borderBrush.IsOpaqueSolidColorBrush())
                 {
                     if ((borderGeometry == null) || (backgroundGeometry == null))
+                    {
                         return;
+                    }
 
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();
@@ -416,7 +418,9 @@ namespace MahApps.Metro.Controls
                 else
                 {
                     if ((borderGeometry == null) || (backgroundGeometry == null))
+                    {
                         return;
+                    }
 
                     var borderOutlinePath = borderGeometry.GetOutlinedPathGeometry();
                     var backgroundOutlinePath = backgroundGeometry.GetOutlinedPathGeometry();

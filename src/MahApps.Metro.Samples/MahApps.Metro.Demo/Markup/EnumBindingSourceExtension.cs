@@ -10,15 +10,17 @@ namespace MetroDemo.Markup
     /// <summary>
     /// Markup extension for Enum values.
     /// </summary>
+    [MarkupExtensionReturnType(typeof(Array))]
     public class EnumBindingSourceExtension : MarkupExtension
     {
-        private Type enumType;
+        private Type? enumType;
 
         /// <summary>
         /// Gets or sets the type of the Enum.
         /// </summary>
         /// <exception cref="ArgumentException">Value is not an Enum type.</exception>
-        public Type EnumType
+        [ConstructorArgument("enumType")]
+        public Type? EnumType
         {
             get => this.enumType;
             set

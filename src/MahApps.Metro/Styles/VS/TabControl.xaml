@@ -50,6 +50,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local"
@@ -97,6 +98,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="12 5" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.TabItemClose.VisualStudio" TargetType="{x:Type Button}">
@@ -143,7 +146,6 @@
            BasedOn="{StaticResource MahApps.Styles.TabItem}"
            TargetType="{x:Type TabItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
-        <Setter Property="Padding" Value="12 5 12 5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
@@ -152,13 +154,16 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <StackPanel x:Name="PART_Content"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Orientation="Horizontal">
                             <mah:ContentControlEx x:Name="ContentSite"
-                                                  Padding="{TemplateBinding Padding}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   Content="{TemplateBinding Header}"
                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
@@ -169,7 +174,7 @@
                                                   FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
                                                   FontStyle="{TemplateBinding FontStyle}"
                                                   FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                  Foreground="{TemplateBinding Foreground}"
+                                                  Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Button x:Name="PART_CloseButton"

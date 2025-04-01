@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
+<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -65,14 +65,22 @@
         <GroupBox Grid.Row="0"
                   Grid.Column="0"
                   Margin="4 2"
-                  Header="TextBox">
+                  Header="TextBox"
+                  UseLayoutRounding="True">
             <AdornerDecorator>
                 <StackPanel>
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Text="Clear with Escape">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Escape" Command="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <mah:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
                         <mah:MetroHeader.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="FaceProfile" />
+                                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="TextBox" />
                                     <TextBlock Margin="2 0 0 0"
                                                VerticalAlignment="Center"
                                                Text="{Binding}" />
@@ -90,12 +98,11 @@
                     <TextBox Margin="{StaticResource ControlMargin}"
                              HorizontalContentAlignment="Stretch"
                              mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.IsWaitingForData="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Watermark"
+                             mah:TextBoxHelper.Watermark="Watermark..."
                              mah:TextBoxHelper.WatermarkAlignment="Right"
                              SpellCheck.IsEnabled="True"
-                             ToolTip="Default alignment">
+                             ToolTip="WatermarkAlignment Right">
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Custom Item" />
@@ -107,9 +114,8 @@
                         </TextBox.ContextMenu>
                     </TextBox>
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              ContextMenu="{x:Null}"
-                             Text="Clear button and no ContextMenu">
+                             Text="No ContextMenu...">
                         <TextBox.Style>
                             <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                                 <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
@@ -126,13 +132,12 @@
                         </TextBox.Style>
                     </TextBox>
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
                              mah:TextBoxHelper.Watermark="Search...">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Return"
-                                        Command="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                        Command="{Binding ControlButtonCommand, Mode=OneWay}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
                         </TextBox.InputBindings>
                         <TextBox.Style>
@@ -141,24 +146,35 @@
                                     <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
                                         <Setter Property="mah:TextBoxHelper.ButtonContent" Value="r" />
                                         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                    <TextBox Name="test2"
-                             Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
-                             mah:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
-                             mah:TextBoxHelper.Watermark="Enter parameter"
+                    <!--  Entypo MagnifyingGlass  -->
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommandWithParameter, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonContent="M17.545,15.467l-3.779-3.779c0.57-0.935,0.898-2.035,0.898-3.21c0-3.417-2.961-6.377-6.378-6.377  C4.869,2.1,2.1,4.87,2.1,8.287c0,3.416,2.961,6.377,6.377,6.377c1.137,0,2.2-0.309,3.115-0.844l3.799,3.801  c0.372,0.371,0.975,0.371,1.346,0l0.943-0.943C18.051,16.307,17.916,15.838,17.545,15.467z M4.004,8.287  c0-2.366,1.917-4.283,4.282-4.283c2.366,0,4.474,2.107,4.474,4.474c0,2.365-1.918,4.283-4.283,4.283  C6.111,12.76,4.004,10.652,4.004,8.287z"
+                             mah:TextBoxHelper.Watermark="Search something..."
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonContent="M17.545,15.467l-3.779-3.779c0.57-0.935,0.898-2.035,0.898-3.21c0-3.417-2.961-6.377-6.378-6.377  C4.869,2.1,2.1,4.87,2.1,8.287c0,3.416,2.961,6.377,6.377,6.377c1.137,0,2.2-0.309,3.115-0.844l3.799,3.801  c0.372,0.371,0.975,0.371,1.346,0l0.943-0.943C18.051,16.307,17.916,15.838,17.545,15.467z M4.004,8.287  c0-2.366,1.917-4.283,4.282-4.283c2.366,0,4.474,2.107,4.474,4.474c0,2.365-1.918,4.283-4.283,4.283  C6.111,12.76,4.004,10.652,4.004,8.287z"
+                             mah:TextBoxHelper.Watermark="Find something..."
+                             Style="{DynamicResource MahApps.Styles.TextBox.Search}">
+                        <TextBox.CommandBindings>
+                            <CommandBinding CanExecute="TextBoxSearchOnCanExecute"
+                                            Command="{x:Static mah:MahAppsCommands.SearchCommand}"
+                                            Executed="TextBoxSearchOnExecuted" />
+                        </TextBox.CommandBindings>
+                    </TextBox>
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="s"
-                             mah:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
+                             mah:TextBoxHelper.Watermark="Custom icon style" />
                     <TextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.Watermark="Number smaller than 10"
+                             mah:ValidationHelper.AlwaysShowValidationError="True"
                              Text="{Binding IntegerGreater10Property, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
@@ -175,7 +191,7 @@
                              IsEnabled="False"
                              Text="Clear button" />
                     <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Search style"
+                             mah:TextBoxHelper.Watermark="Search style..."
                              IsEnabled="False"
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
                     <TextBox Margin="{StaticResource ControlMargin}"
@@ -189,8 +205,14 @@
         <GroupBox Grid.Row="0"
                   Grid.Column="1"
                   Margin="4 2"
-                  Header="RichTextBox">
+                  Header="RichTextBox"
+                  UseLayoutRounding="True">
             <StackPanel>
+                <RichTextBox Margin="{StaticResource ControlMargin}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <FlowDocument PageWidth="NaN">
+                        <Paragraph>Hello</Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
                 <RichTextBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.Watermark="Type something in..."
@@ -203,60 +225,51 @@
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="s"
                              mah:TextBoxHelper.Watermark="Type in..."
                              IsDocumentEnabled="True"
-                             SpellCheck.IsEnabled="True"
-                             Style="{StaticResource MahApps.Styles.RichTextBox.Button}" />
+                             SpellCheck.IsEnabled="True" />
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             Padding="5"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True">
-                    <!--
-                        Workaround for: RichTextBox behaves oddly inside a ScrollViewer
-                        
-                        The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
-                    -->
-                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                    <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="Normal" />
                             </Hyperlink>
                             <LineBreak />
-                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             Padding="5"
                              IsDocumentEnabled="True"
                              IsReadOnly="True">
-                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                    <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="ReadOnly" />
                             </Hyperlink>
                             <LineBreak />
-                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             Padding="5"
                              IsDocumentEnabled="True"
                              IsEnabled="False">
-                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                    <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="Disabled" />
                             </Hyperlink>
                             <LineBreak />
-                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
@@ -266,35 +279,34 @@
         <GroupBox Grid.Row="0"
                   Grid.Column="2"
                   Margin="4 2"
-                  Header="PasswordBox">
+                  Header="PasswordBox"
+                  UseLayoutRounding="True">
             <StackPanel>
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Password"
+                             mah:TextBoxHelper.Watermark="Password..."
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Win8"
+                             mah:TextBoxHelper.Watermark="Win8..."
                              Password="Win8"
                              Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText), Mode=OneWay}"
-                             mah:TextBoxHelper.IsWaitingForData="True"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Revealed PasswordBox"
-                             Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+                             mah:TextBoxHelper.Watermark="Revealed..."
+                             Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Password"
+                             mah:TextBoxHelper.Watermark="Password..."
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:PasswordBoxHelper.CapsLockIcon="!"
-                             mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
                              mah:TextBoxHelper.ButtonContent="4"
                              mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MahApps.Styles.PasswordBox.Button}">
+                             mah:TextBoxHelper.Watermark="Custom icon...">
                     <mah:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />
@@ -312,8 +324,6 @@
                              mah:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
                              Password="Password" />
-
-                <Label Content="Select all on focus" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              mah:TextBoxHelper.SelectAllOnFocus="True"
                              Password="Password"
@@ -324,322 +334,224 @@
         <GroupBox Grid.Row="0"
                   Grid.Column="3"
                   Margin="4 2"
-                  Header="NumericUpDown">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="21*" MinWidth="100" />
-                    <ColumnDefinition Width="4*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                  Grid.IsSharedSizeScope="True"
+                  Header="NumericUpDown"
+                  UseLayoutRounding="True">
+            <GroupBox.Resources>
+                <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
+                <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="mah:ToggleSwitch">
+                    <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+                    <Setter Property="MinHeight" Value="1" />
+                </Style>
+                <GridLength x:Key="ToggleSwitchPreContentMargin">2</GridLength>
+                <GridLength x:Key="ToggleSwitchPostContentMargin">2</GridLength>
+            </GroupBox.Resources>
+            <StackPanel>
+                <mah:MetroHeader Header="IsReadOnly">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="0"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="IsReadOnly" />
-                <CheckBox Grid.Row="0"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="InterceptArrowKeys">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=InterceptArrowKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="1"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="InterceptArrowKeys" />
-                <CheckBox Grid.Row="1"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=InterceptArrowKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="InterceptMouseWheel">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=InterceptMouseWheel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="2"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="InterceptMouseWheel" />
-                <CheckBox Grid.Row="2"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=InterceptMouseWheel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="InterceptManualEnter">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=InterceptManualEnter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="3"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="InterceptManualEnter" />
-                <CheckBox Grid.Row="3"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=InterceptManualEnter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="HideUpDownButtons">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=HideUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="4"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="HideUpDownButtons" />
-                <CheckBox Grid.Row="4"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=HideUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="SwitchUpDownButtons">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=SwitchUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="5"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="SwitchUpDownButtons" />
-                <CheckBox Grid.Row="5"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=SwitchUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="ClearTextButton">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.ClearTextButton), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="6"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="ClearTextButton" />
-                <CheckBox Grid.Row="6"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.ClearTextButton), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="Min">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       AutomationProperties.AutomationId="AutomationIdTested"
+                                       Maximum="{Binding ElementName=NUD, Path=Maximum, Mode=OneWay}"
+                                       Value="{Binding ElementName=NUD, Path=Minimum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="7"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="Min" />
-                <mah:NumericUpDown Grid.Row="7"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   Margin="{StaticResource ControlMargin}"
-                                   mah:TextBoxHelper.ClearTextButton="True"
-                                   Maximum="{Binding ElementName=NUD, Path=Maximum, Mode=OneWay}"
-                                   Value="{Binding ElementName=NUD, Path=Minimum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Label Grid.Row="8"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="Max" />
-                <mah:NumericUpDown Grid.Row="8"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   Margin="{StaticResource ControlMargin}"
-                                   mah:TextBoxHelper.ClearTextButton="True"
-                                   Minimum="{Binding ElementName=NUD, Path=Minimum, Mode=OneWay}"
-                                   Value="{Binding ElementName=NUD, Path=Maximum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="Max">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Minimum="{Binding ElementName=NUD, Path=Minimum, Mode=OneWay}"
+                                       Value="{Binding ElementName=NUD, Path=Maximum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="9"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="Interval" />
-                <mah:NumericUpDown Grid.Row="9"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   Margin="{StaticResource ControlMargin}"
-                                   mah:TextBoxHelper.ClearTextButton="True"
-                                   Value="{Binding ElementName=NUD, Path=Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="Interval">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Value="{Binding ElementName=NUD, Path=Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="10"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="SnapToMultipleOfInterval" />
-                <CheckBox Grid.Row="10"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=SnapToMultipleOfInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="DefaultValue">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Value="{Binding ElementName=NUD, Path=DefaultValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="11"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="SpeedUp" />
-                <CheckBox Grid.Row="11"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
-                          IsChecked="{Binding ElementName=NUD, Path=Speedup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="SnapToMultipleOfInterval">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=SnapToMultipleOfInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="12"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="NumericInputMode" />
-                <ComboBox Grid.Row="12"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
-                          SelectedItem="{Binding ElementName=NUD, Path=NumericInputMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="SpeedUp">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=Speedup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="13"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="StringFormat" />
-                <ComboBox Grid.Row="13"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          mah:TextBoxHelper.ClearTextButton="True"
-                          IsEditable="True"
-                          ItemsSource="{x:Static exampleViews:TextExamples.NUD_StringFormats}"
-                          SelectedItem="{Binding ElementName=NUD, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="NumericInputMode">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
+                              SelectedItem="{Binding ElementName=NUD, Path=NumericInputMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="14"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="CultureInfo" />
-                <ComboBox x:Name="NUD_CultureInfo"
-                          Grid.Row="14"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          HorizontalAlignment="Stretch"
-                          mah:TextBoxHelper.ClearTextButton="True"
-                          ItemsSource="{Binding CultureInfos, Mode=OneWay}"
-                          SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type globalization:CultureInfo}">
-                            <TextBlock VerticalAlignment="Center">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} ({1})">
-                                        <Binding Mode="OneWay" Path="DisplayName" />
-                                        <Binding Mode="OneWay" Path="IetfLanguageTag" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <mah:MetroHeader Header="StringFormat">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              IsEditable="True"
+                              ItemsSource="{x:Static exampleViews:TextExamples.NUD_StringFormats}"
+                              Text="{Binding ElementName=NUD, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="15"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="NumberDecimalSeparator" />
-                <TextBox Grid.Row="15"
-                         Grid.Column="1"
-                         Grid.ColumnSpan="2"
-                         Margin="{StaticResource ControlMargin}"
-                         IsReadOnly="True"
-                         Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberDecimalSeparator}" />
+                <mah:MetroHeader Header="CultureInfo">
+                    <ComboBox x:Name="NUD_CultureInfo"
+                              Margin="{StaticResource ControlMargin}"
+                              HorizontalAlignment="Stretch"
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                              SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                                <TextBlock VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                            <Binding Mode="OneWay" Path="DisplayName" />
+                                            <Binding Mode="OneWay" Path="IetfLanguageTag" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </mah:MetroHeader>
 
-                <Label Grid.Row="16"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="NumberGroupSeparator" />
-                <TextBox Grid.Row="16"
-                         Grid.Column="1"
-                         Grid.ColumnSpan="2"
-                         Margin="{StaticResource ControlMargin}"
-                         IsReadOnly="True"
-                         Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberGroupSeparator}" />
+                <mah:MetroHeader Header="NumberDecimalSeparator">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             IsReadOnly="True"
+                             Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberDecimalSeparator}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="17"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="DecimalPointCorrection" />
-                <ComboBox Grid.Row="17"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          ItemsSource="{Binding Source={StaticResource DecimalPointCorrectionValues}}"
-                          SelectedItem="{Binding ElementName=NUD, Path=DecimalPointCorrection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="NumberGroupSeparator">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             IsReadOnly="True"
+                             Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberGroupSeparator}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="18"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="TextAlignment" />
-                <ComboBox Grid.Row="18"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
-                          SelectedItem="{Binding ElementName=NUD, Path=TextAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="DecimalPointCorrection">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource DecimalPointCorrectionValues}}"
+                              SelectedItem="{Binding ElementName=NUD, Path=DecimalPointCorrection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="19"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="ButtonsAlignment" />
-                <ComboBox Grid.Row="19"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
-                          SelectedItem="{Binding ElementName=NUD, Path=ButtonsAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="TextAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
+                              SelectedItem="{Binding ElementName=NUD, Path=TextAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="20"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="Watermark" />
-                <TextBox x:Name="NUD_Watermark"
-                         Grid.Row="20"
-                         Grid.Column="1"
-                         Grid.ColumnSpan="2"
-                         Margin="{StaticResource ControlMargin}"
-                         mah:TextBoxHelper.ClearTextButton="True"
-                         Text="Type a number" />
+                <mah:MetroHeader Header="WatermarkAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
+                              SelectedItem="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="21"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="NumericUpDown"
-                       FontWeight="Bold" />
-                <mah:NumericUpDown x:Name="NUD"
-                                   Grid.Row="21"
-                                   Grid.Column="1"
-                                   Grid.ColumnSpan="2"
-                                   Margin="{StaticResource ControlMargin}"
-                                   mah:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text, Mode=OneWay}"
-                                   Maximum="10"
-                                   Minimum="0"
-                                   Value="{Binding NumericUpDownValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <mah:MetroHeader Header="ButtonsAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
+                              SelectedItem="{Binding ElementName=NUD, Path=ButtonsAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
 
-                <Label Grid.Row="22"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="Stored Value" />
-                <TextBox Grid.Row="22"
-                         Grid.Column="1"
-                         Grid.ColumnSpan="2"
-                         Margin="{StaticResource ControlMargin}"
-                         IsReadOnly="True"
-                         Text="{Binding ElementName=NUD, Path=Value, Mode=OneWay}" />
-            </Grid>
+                <mah:MetroHeader Header="Watermark">
+                    <TextBox x:Name="NUD_Watermark"
+                             Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Text="Type a number" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Stored Value (non-nullable)">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             IsReadOnly="True"
+                             Text="{Binding ElementName=NUD, Path=Value, Mode=OneWay}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Stored Value (nullable)">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             IsReadOnly="True"
+                             Text="{Binding ElementName=NUD_Nullable, Path=Value, Mode=OneWay}" />
+                </mah:MetroHeader>
+
+
+                <Separator Margin="0 5" />
+
+                <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                 mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                 Header="Non-Nullable">
+                    <mah:NumericUpDown x:Name="NUD"
+                                       Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text, Mode=OneWay}"
+                                       Maximum="10"
+                                       Minimum="0"
+                                       Value="{Binding NumericUpDownValue}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                 mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                 Header="Nullable">
+                    <mah:NumericUpDown x:Name="NUD_Nullable"
+                                       Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.ClearTextButton="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                       mah:TextBoxHelper.Watermark="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.Watermark)}"
+                                       mah:TextBoxHelper.WatermarkAlignment="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment)}"
+                                       ButtonsAlignment="{Binding ElementName=NUD, Path=ButtonsAlignment}"
+                                       Culture="{Binding ElementName=NUD, Path=Culture}"
+                                       DecimalPointCorrection="{Binding ElementName=NUD, Path=DecimalPointCorrection}"
+                                       DefaultValue="{Binding ElementName=NUD, Path=DefaultValue}"
+                                       HideUpDownButtons="{Binding ElementName=NUD, Path=HideUpDownButtons}"
+                                       InterceptArrowKeys="{Binding ElementName=NUD, Path=InterceptArrowKeys}"
+                                       InterceptManualEnter="{Binding ElementName=NUD, Path=InterceptManualEnter}"
+                                       InterceptMouseWheel="{Binding ElementName=NUD, Path=InterceptMouseWheel}"
+                                       Interval="{Binding ElementName=NUD, Path=Interval}"
+                                       IsReadOnly="{Binding ElementName=NUD, Path=IsReadOnly}"
+                                       Maximum="{Binding ElementName=NUD, Path=Maximum}"
+                                       Minimum="{Binding ElementName=NUD, Path=Minimum}"
+                                       NumericInputMode="{Binding ElementName=NUD, Path=NumericInputMode}"
+                                       SnapToMultipleOfInterval="{Binding ElementName=NUD, Path=SnapToMultipleOfInterval}"
+                                       Speedup="{Binding ElementName=NUD, Path=Speedup}"
+                                       StringFormat="{Binding ElementName=NUD, Path=StringFormat}"
+                                       Style="{DynamicResource MahApps.Styles.NumericUpDown.Fluent}"
+                                       SwitchUpDownButtons="{Binding ElementName=NUD, Path=SwitchUpDownButtons}"
+                                       TextAlignment="{Binding ElementName=NUD, Path=TextAlignment}"
+                                       Value="{Binding NullableNumericUpDownValue}" />
+                </mah:MetroHeader>
+            </StackPanel>
         </GroupBox>
 
         <GroupBox Grid.Row="1"
                   Grid.Column="0"
                   Margin="4 2"
-                  Header="HotKeyBox">
+                  Header="HotKeyBox"
+                  UseLayoutRounding="True">
             <StackPanel>
                 <CheckBox x:Name="ModifierKeysRequired"
                           Margin="{StaticResource ControlMargin}"
@@ -647,6 +559,12 @@
                 <TextBlock Margin="{StaticResource ControlMargin}" Text="Try SHIFT+D to demonstrate validation" />
                 <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
                                mah:TextBoxHelper.ClearTextButton="True"
+                               mah:TextBoxHelper.Watermark="Enter hot key"
+                               AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
+                               HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
+                               mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                               mah:TextBoxHelper.ButtonContent="s"
                                mah:TextBoxHelper.Watermark="Enter hot key"
                                AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />

@@ -56,10 +56,16 @@ namespace Caliburn.Metro.Demo.Controls
         public void ApplyViewLocatorOverride()
         {
             var themeManager = this.serviceLocator.GetInstance<IThemeManager>();
-            Application.Current.Resources.MergedDictionaries.Add(themeManager.GetThemeResources());
+            if (themeManager is not null)
+            {
+                Application.Current.Resources.MergedDictionaries.Add(themeManager.GetThemeResources());
+            }
 
             var viewLocator = this.serviceLocator.GetInstance<IViewLocator>();
-            Micro.ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
+            if (viewLocator is not null)
+            {
+                Micro.ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
+            }
         }
     }
 }

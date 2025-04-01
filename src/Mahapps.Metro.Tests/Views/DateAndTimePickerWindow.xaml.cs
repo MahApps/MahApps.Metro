@@ -2,15 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MahApps.Metro.Controls;
-
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Views
 {
-    public partial class DateAndTimePickerWindow : MetroWindow
+    public partial class DateAndTimePickerWindow : TestWindow
     {
         public DateAndTimePickerWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }
