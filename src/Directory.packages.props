@@ -29,6 +29,7 @@
         <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
         <PackageVersion Include="System.Memory" Version="4.6.2" />
         <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.1" Condition="'$(TargetFramework)' != 'net8.0-windows'" />
+        <PackageVersion Include="System.ValueTuple" Version="4.6.1" Condition="$(DefineConstants.Contains(NETCOREAPP)) == false" />
 
         <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
     </ItemGroup>
