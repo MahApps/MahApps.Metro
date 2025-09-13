@@ -4,29 +4,31 @@ branches:
   only:
     - develop
     - main
+    - \d*\.\d*\.\d*/
 
 environment:
+  # bad, but without this, gitversion doesn't work anymore
   IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   azure-key-vault-url:
     secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
   azure-key-vault-client-id:
     secure: JfSqzmsJdXB6uIxttCRoQw1NygwxqXHDj9uIqQnWOb9VCnQYlRPlAnxgW0yTSX4b
+  azure-key-vault-tenant-id:
+    secure: FxjkcqtpulfpDpfSAu4onaLVP/H1S1ORRCQCqsZkDC6YhCSmFoMxYNsWv5uGe3ah
   azure-key-vault-client-secret:
     secure: CUpRJxMLeUZwNPMcqI0wECaWfy5AMnWn1UZhBd9WnQ3Z16lJP1Vzrkf24mccbhUD
   azure-key-vault-certificate:
     secure: BSPdW2TgnQtoQXXbeDECug==
 
-skip_tags: true
-image: Visual Studio 2019
-test: off
-
-install:
-  #- cinst dotnetcore-sdk --version=3.1.100
+image: Visual Studio 2022
+test: false
 
 pull_requests:
   do_not_increment_build_number: false
 
 build_script:
+  - ps: dotnet --info
+  - ps: gitversion /version
   - ps: .\build.ps1 -target appveyor
 
 after_build:
