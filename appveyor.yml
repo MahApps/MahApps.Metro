@@ -4,7 +4,7 @@ branches:
   only:
     - develop
     - main
-    - /v\d*\.\d*\.\d*/
+    - /\d*\.\d*\.\d*/
 
 environment:
   # bad, but without this, gitversion doesn't work anymore
@@ -23,9 +23,6 @@ environment:
 image: Visual Studio 2022
 test: false
 
-pull_requests:
-  do_not_increment_build_number: false
-
 install:
   # Appveyor uses git checkout -qf FETCH_HEAD but all GitVersion versions above 5.6.3 doesn't support this detached header
   # This is a workaround for this issue
@@ -36,6 +33,9 @@ install:
       }
   - ps: Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile 'dotnet-install.ps1'
   - ps: ./dotnet-install.ps1 -Version 8.0.401 -InstallDir "C:\Program Files\dotnet"
+
+pull_requests:
+  do_not_increment_build_number: false
 
 build_script:
   - ps: dotnet --info
