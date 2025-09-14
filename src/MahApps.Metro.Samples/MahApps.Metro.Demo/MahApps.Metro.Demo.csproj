@@ -28,7 +28,7 @@
         <PackageReference Include="MaterialDesignThemes" />
         <PackageReference Include="MaterialDesignColors" />
         <PackageReference Include="MahApps.Metro.IconPacks.Entypo" />
-        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" />
+        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome5" />
         <PackageReference Include="MahApps.Metro.IconPacks.Material" />
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" />
