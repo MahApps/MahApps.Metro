@@ -1170,9 +1170,7 @@ namespace MahApps.Metro.Controls
             var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
             var textIsValid = this.ValidateText(fullText, out var convertedValue);
-            // Value must be valid and not coerced
-            var coerceValue = CoerceValue(this, convertedValue as double?);
-            e.Handled = !textIsValid || !coerceValue.isValid;
+            e.Handled = !textIsValid;
             this.manualChange = !e.Handled;
         }
 
