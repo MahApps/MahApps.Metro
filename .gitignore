@@ -265,7 +265,3 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 
 # cake
 tools/*
-/src/MahApps.Metro.Samples/MahApps.Metro.Demo/MainWindow.xaml
-/src/MahApps.Metro.sln
-/src/MahApps.Metro.sln
-/src/MahApps.Metro.sln
