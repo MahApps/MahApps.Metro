@@ -1168,7 +1168,14 @@ namespace MahApps.Metro.Controls
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textBox = (TextBox)sender;
-            var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
+
+            var inputText = e.Text;
+            if (inputText == "-" && this.SpecificCultureInfo.NumberFormat.NegativeSign != "-")
+            {
+                inputText = this.SpecificCultureInfo.NumberFormat.NegativeSign;
+            }
+
+            var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, inputText);
             var textIsValid = this.ValidateText(fullText, out var convertedValue);
             e.Handled = !textIsValid;
             this.manualChange = !e.Handled;
@@ -1676,6 +1683,9 @@ namespace MahApps.Metro.Controls
                 return true;
             }
 
+            number = number.Replace(this.SpecificCultureInfo.NumberFormat.NegativeSign, "-")
+                           .Replace(this.SpecificCultureInfo.NumberFormat.PositiveSign, "+");
+
             if (!double.TryParse(number, this.ParsingNumberStyle, this.SpecificCultureInfo, out convertedValue))
             {
                 return false;
@@ -1714,8 +1724,12 @@ namespace MahApps.Metro.Controls
 
             if (this.regexNumber is null)
             {
+                var negativeSign = Regex.Escape(this.SpecificCultureInfo.NumberFormat.NegativeSign);
+                var positiveSign = Regex.Escape(this.SpecificCultureInfo.NumberFormat.PositiveSign);
+
                 this.regexNumber = new Regex(RawRegexNumberString.Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
-                                                                 .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),
+                                                                 .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator)
+                                                                 .Replace("[-+]", $"[-+{negativeSign}{positiveSign}]"),
                                              RegexOptions.Compiled);
             }
 
