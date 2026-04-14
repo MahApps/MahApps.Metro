@@ -340,7 +340,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out var dateTime))
+            // Use AssumeLocal to ensure consistent DateTimeKind.Local
+            if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, System.Globalization.DateTimeStyles.AssumeLocal, out var dateTime))
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, dateTime);
                 this.SetCurrentValue(DisplayDateProperty, dateTime);

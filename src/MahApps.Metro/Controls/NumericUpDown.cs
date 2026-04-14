@@ -1020,6 +1020,19 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            // Clean up old event handlers to prevent memory leaks
+            if (this.repeatUp != null)
+            {
+                this.repeatUp.Click -= this.OnRepeatUpClick;
+                this.repeatUp.PreviewMouseUp -= this.OnRepeatButtonMouseUp;
+            }
+
+            if (this.repeatDown != null)
+            {
+                this.repeatDown.Click -= this.OnRepeatDownClick;
+                this.repeatDown.PreviewMouseUp -= this.OnRepeatButtonMouseUp;
+            }
+
             this.repeatUp = this.GetTemplateChild(PART_NumericUp) as RepeatButton;
             this.repeatDown = this.GetTemplateChild(PART_NumericDown) as RepeatButton;
 
@@ -1032,15 +1045,31 @@ namespace MahApps.Metro.Controls
 
             this.ToggleReadOnlyMode(this.IsReadOnly);
 
-            this.repeatUp.Click += (_, _) => { this.ChangeValueWithSpeedUp(true); };
-            this.repeatDown.Click += (_, _) => { this.ChangeValueWithSpeedUp(false); };
+            // Use named methods for event handlers so they can be properly removed
+            this.repeatUp.Click += this.OnRepeatUpClick;
+            this.repeatDown.Click += this.OnRepeatDownClick;
 
-            this.repeatUp.PreviewMouseUp += (_, _) => this.ResetInternal();
-            this.repeatDown.PreviewMouseUp += (_, _) => this.ResetInternal();
+            this.repeatUp.PreviewMouseUp += this.OnRepeatButtonMouseUp;
+            this.repeatDown.PreviewMouseUp += this.OnRepeatButtonMouseUp;
 
             this.OnValueChanged(this.Value, this.Value);
 
             this.scrollViewer = null;
+        }
+
+        private void OnRepeatUpClick(object sender, RoutedEventArgs e)
+        {
+            this.ChangeValueWithSpeedUp(true);
+        }
+
+        private void OnRepeatDownClick(object sender, RoutedEventArgs e)
+        {
+            this.ChangeValueWithSpeedUp(false);
+        }
+
+        private void OnRepeatButtonMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.ResetInternal();
         }
 
         /// <summary>
@@ -1192,9 +1221,10 @@ namespace MahApps.Metro.Controls
             var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
             var textIsValid = this.ValidateText(fullText, out var convertedValue);
-            // Value must be valid and not coerced
-            var coerceValue = CoerceValue(this, convertedValue as double?);
-            e.Handled = !textIsValid || !coerceValue.isValid;
+            
+            // Allow typing intermediate values (e.g., typing "5" when minimum is 50)
+            // Only block input if the text format is invalid, not if it would be coerced
+            e.Handled = !textIsValid;
             this.manualChange = !e.Handled;
         }
 
@@ -1376,16 +1406,25 @@ namespace MahApps.Metro.Controls
             var match = RegexStringFormatHexadecimal.Match(format);
             if (match.Success)
             {
+                // Validate value is within int range and has no decimal part
+                if (newValue < int.MinValue || newValue > int.MaxValue || Math.Abs(newValue % 1) > double.Epsilon)
+                {
+                    output = null;
+                    return false;
+                }
+
+                var intValue = (int)newValue;
+
                 if (match.Groups["simpleHEX"].Success)
                 {
                     // HEX DOES SUPPORT INT ONLY.
-                    output = ((int)newValue).ToString(match.Groups["simpleHEX"].Value, culture);
+                    output = intValue.ToString(match.Groups["simpleHEX"].Value, culture);
                     return true;
                 }
 
                 if (match.Groups["complexHEX"].Success)
                 {
-                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue);
+                    output = string.Format(culture, match.Groups["complexHEX"].Value, intValue);
                     return true;
                 }
             }
@@ -1488,7 +1527,9 @@ namespace MahApps.Metro.Controls
                 value = this.Minimum;
             }
 
-            this.SetCurrentValue(ValueProperty, CoerceValue(this, value).value);
+            // Remove manual coercion - the dependency property system will handle it automatically
+            // via the CoerceValueCallback registered on ValueProperty
+            this.SetCurrentValue(ValueProperty, value);
         }
 
         private void EnableDisableUpDown()
@@ -1532,10 +1573,7 @@ namespace MahApps.Metro.Controls
         /// <param name="textBox">The TextBox which will be used for the correction</param>
         /// <param name="mode">The decimal correction mode.</param>
         /// <param name="culture">The culture with the decimal-point information.</param>
-        /// <remarks>
-        /// Typical "async-void" pattern as "fire-and-forget" behavior.
-        /// </remarks>
-        private static async void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
+        private static void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
         {
             // Select the proper decimal-point string upon the context
             string? replace;
@@ -1565,8 +1603,6 @@ namespace MahApps.Metro.Controls
 
                 TextCompositionManager.StartComposition(tc);
             }
-
-            await Task.FromResult(true);
         }
 
         private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
@@ -1628,7 +1664,9 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            this.OnValueChanged(oldValue, this.Value);
+            // REMOVED: this.OnValueChanged(oldValue, this.Value);
+            // SetValueTo already triggers ValueProperty change which calls OnValueChanged
+            // Calling it again causes double event firing
 
             this.manualChange = false;
         }
