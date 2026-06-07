@@ -156,7 +156,7 @@ namespace MahApps.Metro.Behaviors
 
             try
             {
-                var wp = placement.ToWINDOWPLACEMENT();
+                var wp = placement!.ToWINDOWPLACEMENT();
                 WinApiHelper.SetWindowPlacement(window, wp);
             }
             catch (Exception ex)
