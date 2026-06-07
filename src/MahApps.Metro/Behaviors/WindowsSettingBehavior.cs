@@ -6,7 +6,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+#if !NET462
 using System.Text.Json;
+#endif
 using System.Windows;
 using System.Windows.Interop;
 using Windows.Win32;
@@ -135,11 +137,13 @@ namespace MahApps.Metro.Behaviors
             // check for existing placement and prevent empty bounds
             if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
             {
+#if !NET462
                 // Fallback: try to load from JSON backup if settings has no valid placement
                 if (TryLoadFromJsonFallback(window, out var fallbackPlacement))
                 {
                     settings.Placement = fallbackPlacement;
                 }
+#endif
             }
 
             // If we still have no valid placement, nothing to restore
@@ -223,12 +227,15 @@ namespace MahApps.Metro.Behaviors
             {
                 settings.Save();
 
+#if !NET462
                 // On successful save, also save to JSON fallback for .NET version resilience
                 SaveToJsonFallback(window, settings.Placement);
+#endif
             }
             catch (Exception e)
             {
                 Trace.TraceError($"{this}: The settings could not be saved! {e}");
+#if !NET462
                 // Fallback: save to JSON file when ApplicationSettingsBase.Save() fails
                 // (e.g. .NET 9 < 9.0.3 bug where ClientConfigurationHost fails on UNC paths)
                 try
@@ -240,8 +247,11 @@ namespace MahApps.Metro.Behaviors
                 {
                     Trace.TraceError($"{this}: The JSON fallback save also failed! {fallbackEx}");
                 }
+#endif
             }
         }
+
+#if !NET462
         private static readonly JsonSerializerOptions JsonOptions = new()
         {
             IncludeFields = true
@@ -295,5 +305,6 @@ namespace MahApps.Metro.Behaviors
             var windowTypeName = window.GetType().FullName?.Replace('.', '_') ?? "MetroWindow";
             return Path.Combine(localAppData, appName, "WindowPlacement", $"{windowTypeName}.json");
         }
+#endif
     }
 }
