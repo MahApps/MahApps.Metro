@@ -135,12 +135,14 @@ namespace MahApps.Metro.Behaviors
             }
 
             // check for existing placement and prevent empty bounds
-            if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
+            var placement = settings.Placement;
+            if (placement is null || placement.normalPosition.IsEmpty)
             {
 #if !NET462
                 // Fallback: try to load from JSON backup if settings has no valid placement
                 if (TryLoadFromJsonFallback(window, out var fallbackPlacement))
                 {
+                    placement = fallbackPlacement;
                     settings.Placement = fallbackPlacement;
                 }
                 else
@@ -154,7 +156,7 @@ namespace MahApps.Metro.Behaviors
 
             try
             {
-                var wp = settings.Placement.ToWINDOWPLACEMENT();
+                var wp = placement.ToWINDOWPLACEMENT();
                 WinApiHelper.SetWindowPlacement(window, wp);
             }
             catch (Exception ex)
