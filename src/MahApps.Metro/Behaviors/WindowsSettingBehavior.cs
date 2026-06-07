@@ -143,13 +143,13 @@ namespace MahApps.Metro.Behaviors
                 {
                     settings.Placement = fallbackPlacement;
                 }
-#endif
-            }
-
-            // If we still have no valid placement, nothing to restore
-            if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
-            {
+                else
+                {
+                    return;
+                }
+#else
                 return;
+#endif
             }
 
             try
