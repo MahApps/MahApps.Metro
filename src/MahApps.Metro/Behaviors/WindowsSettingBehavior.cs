@@ -4,7 +4,9 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Interop;
 using Windows.Win32;
@@ -127,10 +129,20 @@ namespace MahApps.Metro.Behaviors
             catch (Exception e)
             {
                 Trace.TraceError($"{this}: The settings for {window} could not be reloaded! {e}");
-                return;
+                // Don't return yet — try JSON fallback below
             }
 
             // check for existing placement and prevent empty bounds
+            if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
+            {
+                // Fallback: try to load from JSON backup if settings has no valid placement
+                if (TryLoadFromJsonFallback(window, out var fallbackPlacement))
+                {
+                    settings.Placement = fallbackPlacement;
+                }
+            }
+
+            // If we still have no valid placement, nothing to restore
             if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
             {
                 return;
@@ -210,11 +222,78 @@ namespace MahApps.Metro.Behaviors
             try
             {
                 settings.Save();
+
+                // On successful save, also save to JSON fallback for .NET version resilience
+                SaveToJsonFallback(window, settings.Placement);
             }
             catch (Exception e)
             {
                 Trace.TraceError($"{this}: The settings could not be saved! {e}");
+                // Fallback: save to JSON file when ApplicationSettingsBase.Save() fails
+                // (e.g. .NET 9 < 9.0.3 bug where ClientConfigurationHost fails on UNC paths)
+                try
+                {
+                    SaveToJsonFallback(window, settings.Placement);
+                    Trace.TraceInformation($"{this}: Window placement saved to JSON fallback instead.");
+                }
+                catch (Exception fallbackEx)
+                {
+                    Trace.TraceError($"{this}: The JSON fallback save also failed! {fallbackEx}");
+                }
             }
+        }
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            IncludeFields = true
+        };
+
+        private void SaveToJsonFallback(Window window, WindowPlacementSetting? placement)
+        {
+            if (placement is null)
+            {
+                return;
+            }
+
+            var filePath = GetFallbackFilePath(window);
+            var directory = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            var json = JsonSerializer.Serialize(placement, JsonOptions);
+            File.WriteAllText(filePath, json);
+        }
+
+        private bool TryLoadFromJsonFallback(Window window, out WindowPlacementSetting? placement)
+        {
+            placement = null;
+
+            try
+            {
+                var filePath = GetFallbackFilePath(window);
+                if (!File.Exists(filePath))
+                {
+                    return false;
+                }
+
+                var json = File.ReadAllText(filePath);
+                placement = JsonSerializer.Deserialize<WindowPlacementSetting>(json, JsonOptions);
+                return placement != null;
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceWarning($"{this}: Could not load JSON fallback for {window}: {ex.Message}");
+                return false;
+            }
+        }
+
+        private static string GetFallbackFilePath(Window window)
+        {
+            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var appName = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Name ?? "MahApps.Metro";
+            var windowTypeName = window.GetType().FullName?.Replace('.', '_') ?? "MetroWindow";
+            return Path.Combine(localAppData, appName, "WindowPlacement", $"{windowTypeName}.json");
         }
     }
 }
