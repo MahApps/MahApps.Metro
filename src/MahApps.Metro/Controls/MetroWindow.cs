@@ -558,6 +558,35 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(NonActiveBorderBrushProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="GlowBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty GlowBrushProperty
+            = DependencyProperty.Register(nameof(GlowBrush),
+                                          typeof(Brush),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(default(Brush), OnGlowBrushChanged));
+
+        /// <summary>
+        /// Gets or sets the brush used for the glow effect of the window border when the window is active.
+        /// This property wraps the inherited <see cref="GlowColor"/> property from ControlzEx.
+        /// </summary>
+        public Brush GlowBrush
+        {
+            get => (Brush)this.GetValue(GlowBrushProperty);
+            set => this.SetValue(GlowBrushProperty, value);
+        }
+
+        private static void OnGlowBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is MetroWindow window && e.NewValue is SolidColorBrush brush)
+            {
+                window.GlowColor = brush.Color;
+            }
+            else if (d is MetroWindow window && e.NewValue is null)
+            {
+                window.GlowColor = null;
+            }
+        }
+
         /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
         public static readonly DependencyProperty OverlayBrushProperty
             = DependencyProperty.Register(nameof(OverlayBrush),
