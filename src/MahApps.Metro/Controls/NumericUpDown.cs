@@ -1126,6 +1126,11 @@ namespace MahApps.Metro.Controls
                 if (!string.Equals(this.valueTextBox.Text, expectedText, StringComparison.Ordinal))
                 {
                     this.InternalSetText(newValue);
+                    
+                    if (this.valueTextBox.IsKeyboardFocused)
+                    {
+                        this.valueTextBox.SelectAll();
+                    }
                 }
             }
 
