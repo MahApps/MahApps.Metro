@@ -1121,12 +1121,14 @@ namespace MahApps.Metro.Controls
             }
             else if (this.SyncTextWithValueWhileEditing && this.valueTextBox != null)
             {
-                var expectedText = newValue.HasValue ? FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo)
-                                                     : null;
-                if (!string.Equals(this.valueTextBox.Text, expectedText, StringComparison.Ordinal))
+                var textRepresentsValue = newValue.HasValue
+                                          && this.ValidateText(this.valueTextBox.Text, out var textValue)
+                                          && FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo) == newValue.Value;
+
+                if (!textRepresentsValue)
                 {
                     this.InternalSetText(newValue);
-                    
+
                     if (this.valueTextBox.IsKeyboardFocused)
                     {
                         this.valueTextBox.SelectAll();
