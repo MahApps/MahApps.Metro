@@ -4,11 +4,15 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using ControlzEx.Native;
-using ControlzEx.Standard;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.WindowsAndMessaging;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Native;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
@@ -20,22 +24,10 @@ namespace MahApps.Metro.Behaviors
         {
             base.OnAttached();
 
-            this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
-        }
-
-        /// <inheritdoc />
-        protected override void OnDetaching()
-        {
-            this.CleanUp("from OnDetaching");
-            base.OnDetaching();
-        }
-
-        private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
-        {
             this.LoadWindowState();
 
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 // if the associated object is null at this point, then there is really something wrong!
                 Trace.TraceError($"{this}: Can not attach to nested events, cause the AssociatedObject is null.");
@@ -56,22 +48,29 @@ namespace MahApps.Metro.Behaviors
                 });
         }
 
-        private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        /// <inheritdoc />
+        protected override void OnDetaching()
+        {
+            this.CleanUp("from OnDetaching");
+            base.OnDetaching();
+        }
+
+        private void AssociatedObject_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             this.SaveWindowState();
         }
 
-        private void AssociatedObject_Closed(object sender, EventArgs e)
+        private void AssociatedObject_Closed(object? sender, EventArgs e)
         {
             this.CleanUp("from AssociatedObject closed event");
         }
 
-        private void CurrentApplicationSessionEnding(object sender, SessionEndingCancelEventArgs e)
+        private void CurrentApplicationSessionEnding(object? sender, SessionEndingCancelEventArgs e)
         {
             this.SaveWindowState();
         }
 
-        private void AssociatedObject_StateChanged(object sender, EventArgs e)
+        private void AssociatedObject_StateChanged(object? sender, EventArgs e)
         {
             // save the settings on this state change, because hidden windows gets no window placements
             // all the saving stuff could be so much easier with ReactiveUI :-D
@@ -84,7 +83,7 @@ namespace MahApps.Metro.Behaviors
         private void CleanUp(string fromWhere)
         {
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 // it's bad if the associated object is null, so trace this here
                 Trace.TraceWarning($"{this}: Can not clean up {fromWhere}, cause the AssociatedObject is null. This can maybe happen if this Behavior was already detached.");
@@ -96,7 +95,6 @@ namespace MahApps.Metro.Behaviors
             window.StateChanged -= this.AssociatedObject_StateChanged;
             window.Closing -= this.AssociatedObject_Closing;
             window.Closed -= this.AssociatedObject_Closed;
-            window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
 
             // This operation must be thread safe
             Application.Current?.BeginInvoke(app =>
@@ -108,17 +106,16 @@ namespace MahApps.Metro.Behaviors
                 });
         }
 
-#pragma warning disable 618
         private void LoadWindowState()
         {
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 return;
             }
 
             var settings = window.GetWindowPlacementSettings();
-            if (null == settings || !window.SaveWindowPosition)
+            if (settings is null || !window.SaveWindowPosition)
             {
                 return;
             }
@@ -129,76 +126,84 @@ namespace MahApps.Metro.Behaviors
             }
             catch (Exception e)
             {
-                Trace.TraceError($"{this}: The settings could not be reloaded! {e}");
+                Trace.TraceError($"{this}: The settings for {window} could not be reloaded! {e}");
                 return;
             }
 
             // check for existing placement and prevent empty bounds
-            if (null == settings.Placement || settings.Placement.normalPosition.IsEmpty)
+            if (settings.Placement is null || settings.Placement.normalPosition.IsEmpty)
             {
                 return;
             }
 
             try
             {
-                var wp = settings.Placement;
-                wp.flags = 0;
-                wp.showCmd = (wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd);
-
-                // this fixes wrong monitor positioning together with different Dpi usage for SetWindowPlacement
-                window.Left = wp.normalPosition.Left;
-                window.Top = wp.normalPosition.Top;
-
-                var hwnd = new WindowInteropHelper(window).Handle;
-                if (!NativeMethods.SetWindowPlacement(hwnd, wp))
-                {
-                    Trace.TraceWarning($"{this}: The WINDOWPLACEMENT {wp} could not be set by SetWindowPlacement.");
-                }
+                var wp = settings.Placement.ToWINDOWPLACEMENT();
+                WinApiHelper.SetWindowPlacement(window, wp);
             }
             catch (Exception ex)
             {
-                throw new MahAppsException("Failed to set the window state from the settings file", ex);
+                throw new MahAppsException($"Failed to set the window state for {window} from the settings.", ex);
             }
         }
 
         private void SaveWindowState()
         {
             var window = this.AssociatedObject;
-            if (null == window)
+            if (window is null)
             {
                 return;
             }
 
             var settings = window.GetWindowPlacementSettings();
-            if (null == settings || !window.SaveWindowPosition)
+            if (settings is null || !window.SaveWindowPosition)
             {
                 return;
             }
 
-            var hwnd = new WindowInteropHelper(window).Handle;
-            var wp = NativeMethods.GetWindowPlacement(hwnd);
-            // check for saveable values
-            if (wp.showCmd != SW.HIDE && wp.length > 0)
+            var windowHandle = new WindowInteropHelper(window).EnsureHandle();
+            var wp = new WINDOWPLACEMENT
+                     {
+                         length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>()
+                     };
+            unsafe
             {
-                if (wp.showCmd == SW.NORMAL)
-                {
-                    RECT rect;
-                    if (UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
-                    {
-                        var monitor = NativeMethods.MonitorFromWindow(hwnd, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-                        if (monitor != IntPtr.Zero)
-                        {
-                            var monitorInfo = NativeMethods.GetMonitorInfo(monitor);
-                            rect.Offset(monitorInfo.rcMonitor.Left - monitorInfo.rcWork.Left, monitorInfo.rcMonitor.Top - monitorInfo.rcWork.Top);
-                        }
+                PInvoke.GetWindowPlacement(new HWND(windowHandle), &wp);
+            }
 
-                        wp.normalPosition = rect;
+            // check for saveable values
+            if (wp.showCmd != SHOW_WINDOW_CMD.SW_HIDE && wp.length > 0)
+            {
+                if (wp.showCmd == SHOW_WINDOW_CMD.SW_NORMAL)
+                {
+                    unsafe
+                    {
+                        var rect = new RECT();
+                        PInvoke.GetWindowRect(new HWND(windowHandle), &rect);
+                        if (rect.left != 0
+                            || rect.top != 0
+                            || rect.right != 0
+                            || rect.bottom != 0)
+                        {
+                            var monitor = PInvoke.MonitorFromWindow(new HWND(windowHandle), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+                            if (monitor != IntPtr.Zero)
+                            {
+                                var monitorInfo = new MONITORINFO
+                                                  {
+                                                      cbSize = (uint)Marshal.SizeOf<MONITORINFO>()
+                                                  };
+                                PInvoke.GetMonitorInfo(monitor, &monitorInfo);
+                                rect.Offset(monitorInfo.rcMonitor.left - monitorInfo.rcWork.left, monitorInfo.rcMonitor.top - monitorInfo.rcWork.top);
+                            }
+
+                            wp.rcNormalPosition = rect;
+                        }
                     }
                 }
 
-                if (!wp.normalPosition.IsEmpty)
+                if (!wp.rcNormalPosition.IsEmpty())
                 {
-                    settings.Placement = wp;
+                    settings.Placement = WindowPlacementSetting.FromWINDOWPLACEMENT(window, wp);
                 }
             }
 
@@ -211,6 +216,5 @@ namespace MahApps.Metro.Behaviors
                 Trace.TraceError($"{this}: The settings could not be saved! {e}");
             }
         }
-#pragma warning restore 618
     }
 }

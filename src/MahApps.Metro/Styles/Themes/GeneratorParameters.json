@@ -29,6 +29,7 @@
         "MahApps.Colors.ContextMenu.Border": "#E0717070",
         "MahApps.Colors.SubMenu.Border": "#E0717070",
         "MahApps.Colors.MenuShadow": "#99B2B2B2",
+        "MahApps.Colors.ToolTipShadow": "#99B2B2B2",
         "MahApps.Colors.MenuItem.DisabledForeground": "#FF7E7E7E",
         "MahApps.Colors.SliderValue.Disabled": "#FF535353",
         "MahApps.Colors.SliderTrack.Disabled": "#FF383838",
@@ -76,7 +77,9 @@
         "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.9",
         "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.6",
         "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.8",
-        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36"
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36",
+        "MahApps.Brushes.Window.Background.Backdrop.Acrylic": "#60000000",
+        "MahApps.Brushes.Window.Background.Backdrop.Auto": "#BB000000"
       }
     },
     {
@@ -104,6 +107,7 @@
         "MahApps.Colors.ContextMenu.Border": "#E0717070",
         "MahApps.Colors.SubMenu.Border": "#E0717070",
         "MahApps.Colors.MenuShadow": "#FF000000",
+        "MahApps.Colors.ToolTipShadow": "#FF000000",
         "MahApps.Colors.MenuItem.DisabledForeground": "#FF7F7F7F",
         "MahApps.Colors.SliderValue.Disabled": "#FFBABABA",
         "MahApps.Colors.SliderTrack.Disabled": "#FFDBDBDB",
@@ -151,7 +155,9 @@
         "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.7",
         "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.4",
         "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.6",
-        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14"
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14",
+        "MahApps.Brushes.Window.Background.Backdrop.Acrylic": "#60FFFFFF",
+        "MahApps.Brushes.Window.Background.Backdrop.Auto": "#BBFFFFFF"
       }
     }
   ],

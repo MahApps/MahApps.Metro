@@ -26,7 +26,7 @@ namespace MahApps.Metro.Automation.Peers
 
         protected override string GetNameCore()
         {
-            string nameCore = base.GetNameCore();
+            string? nameCore = base.GetNameCore();
             if (string.IsNullOrEmpty(nameCore))
             {
                 nameCore = ((Flyout)this.Owner).Header as string;
@@ -42,7 +42,7 @@ namespace MahApps.Metro.Automation.Peers
                 nameCore = this.GetClassNameCore();
             }
 
-            return nameCore;
+            return nameCore!;
         }
     }
 }

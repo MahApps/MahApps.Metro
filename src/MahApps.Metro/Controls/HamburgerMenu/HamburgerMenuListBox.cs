@@ -12,7 +12,7 @@ namespace MahApps.Metro.Controls
 {
     public class HamburgerMenuListBox : ListBox
     {
-        private readonly BooleanToVisibilityConverter booleanToVisibilityConverter = new BooleanToVisibilityConverter();
+        private static readonly BooleanToVisibilityConverter BooleanToVisibilityConverter = new();
 
         static HamburgerMenuListBox()
         {
@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
                                            {
                                                Source = baseMenuItem,
                                                Path = new PropertyPath(nameof(IHamburgerMenuItemBase.IsVisible)),
-                                               Converter = this.booleanToVisibilityConverter,
+                                               Converter = BooleanToVisibilityConverter,
                                                FallbackValue = Visibility.Visible
                                            });
                 }

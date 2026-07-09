@@ -17,19 +17,16 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(SizeToCornerRadiusConverter))]
     public class SizeToCornerRadiusConverter : MarkupConverter
     {
-        protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <inheritdoc />
+        protected override object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return value is double val ? new CornerRadius(val / 2) : new CornerRadius();
+            return value is double dValue ? new CornerRadius(dValue / 2) : new CornerRadius();
         }
 
-        protected override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <inheritdoc />
+        protected override object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return Binding.DoNothing;
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
         }
     }
 }

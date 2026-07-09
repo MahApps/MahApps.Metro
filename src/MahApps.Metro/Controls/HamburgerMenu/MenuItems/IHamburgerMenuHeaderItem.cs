@@ -9,6 +9,6 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a value that specifies label to display.
         /// </summary>
-        string Label { get; set; }
+        string? Label { get; set; }
     }
 }

@@ -14,10 +14,7 @@ namespace Caliburn.Metro.Demo.ViewModels.Flyouts
         private readonly IObservableCollection<object> artists =
             new BindableCollection<object>();
 
-        public IObservableCollection<object> Artists
-        {
-            get { return this.artists; }
-        }
+        public IObservableCollection<object> Artists => this.artists;
 
         public Flyout3ViewModel()
         {

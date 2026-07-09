@@ -65,7 +65,7 @@ namespace MahApps.Metro.Controls
                 this.SetCurrentValue(SelectedDateTimeProperty, null);
                 if (this.SelectedDateTime == null)
                 {
-                    // if already null, overwrite wrong data in textbox
+                    // if already null, overwrite wrong data in TextBox
                     this.WriteValueToTextBox();
                 }
             }

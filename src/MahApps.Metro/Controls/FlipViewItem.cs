@@ -37,9 +37,9 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
         public static readonly DependencyProperty OwnerProperty = OwnerPropertyKey.DependencyProperty;
 
-        public FlipView Owner
+        public FlipView? Owner
         {
-            get => (FlipView)this.GetValue(OwnerProperty);
+            get => (FlipView?)this.GetValue(OwnerProperty);
             protected set => this.SetValue(OwnerPropertyKey, value);
         }
 

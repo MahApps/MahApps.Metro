@@ -12,7 +12,7 @@ namespace MahApps.Metro.Controls
     public class Underline : ContentControl
     {
         public const string UnderlineBorderPartName = "PART_UnderlineBorder";
-        private Border underlineBorder;
+        private Border? underlineBorder;
 
         public static readonly DependencyProperty PlacementProperty
             = DependencyProperty.Register(nameof(Placement),

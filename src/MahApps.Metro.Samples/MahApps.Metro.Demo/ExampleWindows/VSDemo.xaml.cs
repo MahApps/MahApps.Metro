@@ -11,14 +11,14 @@ namespace MetroDemo.ExampleWindows
     {
         public VSDemo()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        public ICommand QuickLaunchBarFocusCommand => new ActionCommand(FocusQuickLaunchBar);
+        public ICommand QuickLaunchBarFocusCommand => new ActionCommand(this.FocusQuickLaunchBar);
 
         private void FocusQuickLaunchBar()
         {
-            QuickLaunchBar.Focus();
+            this.QuickLaunchBar.Focus();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public DateExamples()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

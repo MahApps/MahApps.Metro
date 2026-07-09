@@ -4,6 +4,8 @@
 
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -15,23 +17,15 @@ namespace MahApps.Metro.Controls
                 typeof(bool?),
                 typeof(VisibilityHelper),
                 new FrameworkPropertyMetadata(default(bool?),
-                                              FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                                              IsVisibleChangedCallback));
+                                              FrameworkPropertyMetadataOptions.AffectsArrange |
+                                              FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                              FrameworkPropertyMetadataOptions.AffectsRender,
+                                              (d, e) => SetVisibility(d, (e.NewValue as bool?).GetValueOrDefault() ? Visibility.Visible : Visibility.Collapsed)));
 
-        private static void IsVisibleChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var fe = d as FrameworkElement;
-            if (fe == null)
-                return;
-
-            fe.Visibility = ((bool?)e.NewValue) == true
-                ? Visibility.Visible
-                : Visibility.Collapsed;
-        }
-
+        [Category(AppName.MahApps)]
         public static void SetIsVisible(DependencyObject element, bool? value)
         {
-            element.SetValue(IsVisibleProperty, value);
+            element.SetValue(IsVisibleProperty, BooleanBoxes.Box(value));
         }
 
         [Category(AppName.MahApps)]
@@ -46,23 +40,15 @@ namespace MahApps.Metro.Controls
                 typeof(bool?),
                 typeof(VisibilityHelper),
                 new FrameworkPropertyMetadata(default(bool?),
-                                              FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                                              IsCollapsedChangedCallback));
+                                              FrameworkPropertyMetadataOptions.AffectsArrange |
+                                              FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                              FrameworkPropertyMetadataOptions.AffectsRender,
+                                              (d, e) => SetVisibility(d, (e.NewValue as bool?).GetValueOrDefault() ? Visibility.Collapsed : Visibility.Visible)));
 
-        private static void IsCollapsedChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var fe = d as FrameworkElement;
-            if (fe == null)
-                return;
-
-            fe.Visibility = ((bool?)e.NewValue) == true
-                ? Visibility.Collapsed
-                : Visibility.Visible;
-        }
-
+        [Category(AppName.MahApps)]
         public static void SetIsCollapsed(DependencyObject element, bool? value)
         {
-            element.SetValue(IsCollapsedProperty, value);
+            element.SetValue(IsCollapsedProperty, BooleanBoxes.Box(value));
         }
 
         [Category(AppName.MahApps)]
@@ -77,29 +63,34 @@ namespace MahApps.Metro.Controls
                 typeof(bool?),
                 typeof(VisibilityHelper),
                 new FrameworkPropertyMetadata(default(bool?),
-                                              FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                                              IsHiddenChangedCallback));
+                                              FrameworkPropertyMetadataOptions.AffectsArrange |
+                                              FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                              FrameworkPropertyMetadataOptions.AffectsRender,
+                                              (d, e) => SetVisibility(d, (e.NewValue as bool?).GetValueOrDefault() ? Visibility.Hidden : Visibility.Visible)));
 
-        private static void IsHiddenChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var fe = d as FrameworkElement;
-            if (fe == null)
-                return;
-
-            fe.Visibility = ((bool?)e.NewValue) == true
-                ? Visibility.Hidden
-                : Visibility.Visible;
-        }
-
+        [Category(AppName.MahApps)]
         public static void SetIsHidden(DependencyObject element, bool? value)
         {
-            element.SetValue(IsHiddenProperty, value);
+            element.SetValue(IsHiddenProperty, BooleanBoxes.Box(value));
         }
 
         [Category(AppName.MahApps)]
         public static bool? GetIsHidden(DependencyObject element)
         {
             return (bool?)element.GetValue(IsHiddenProperty);
+        }
+
+        private static void SetVisibility(DependencyObject depObject, Visibility visibility)
+        {
+            switch (depObject)
+            {
+                case FrameworkElement fe:
+                    fe.Visibility = visibility;
+                    break;
+                case DataGridColumn dataGridColumn:
+                    dataGridColumn.Visibility = visibility;
+                    break;
+            }
         }
     }
 }

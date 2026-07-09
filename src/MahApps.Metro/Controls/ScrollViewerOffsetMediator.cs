@@ -9,34 +9,43 @@ namespace MahApps.Metro.Controls
 {
     public class ScrollViewerOffsetMediator : FrameworkElement
     {
-        public static readonly DependencyProperty ScrollViewerProperty = DependencyProperty.Register(nameof(ScrollViewer), typeof(ScrollViewer), typeof(ScrollViewerOffsetMediator), new PropertyMetadata(default(ScrollViewer), OnScrollViewerChanged));
-        public static readonly DependencyProperty HorizontalOffsetProperty = DependencyProperty.Register(nameof(HorizontalOffset), typeof(double), typeof(ScrollViewerOffsetMediator), new PropertyMetadata(default(double), OnHorizontalOffsetChanged));
-
-        public ScrollViewer ScrollViewer
-        {
-            get { return (ScrollViewer)GetValue(ScrollViewerProperty); }
-            set { SetValue(ScrollViewerProperty, value); }
-        }
-
-        public double HorizontalOffset
-        {
-            get { return (double)GetValue(HorizontalOffsetProperty); }
-            set { SetValue(HorizontalOffsetProperty, value); }
-        }
+        public static readonly DependencyProperty ScrollViewerProperty
+            = DependencyProperty.Register(nameof(ScrollViewer),
+                                          typeof(ScrollViewer),
+                                          typeof(ScrollViewerOffsetMediator),
+                                          new PropertyMetadata(default(ScrollViewer), OnScrollViewerChanged));
 
         private static void OnScrollViewerChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            var mediator = (ScrollViewerOffsetMediator)o;
-            var scrollViewer = (ScrollViewer)(e.NewValue);
-            if (scrollViewer != null)
+            if (e.NewValue is ScrollViewer scrollViewer)
+            {
+                var mediator = (ScrollViewerOffsetMediator)o;
                 scrollViewer.ScrollToHorizontalOffset(mediator.HorizontalOffset);
+            }
+        }
+
+        public ScrollViewer? ScrollViewer
+        {
+            get => (ScrollViewer?)this.GetValue(ScrollViewerProperty);
+            set => this.SetValue(ScrollViewerProperty, value);
+        }
+
+        public static readonly DependencyProperty HorizontalOffsetProperty
+            = DependencyProperty.Register(nameof(HorizontalOffset),
+                                          typeof(double),
+                                          typeof(ScrollViewerOffsetMediator),
+                                          new PropertyMetadata(default(double), OnHorizontalOffsetChanged));
+
+        public double HorizontalOffset
+        {
+            get => (double)this.GetValue(HorizontalOffsetProperty);
+            set => this.SetValue(HorizontalOffsetProperty, value);
         }
 
         private static void OnHorizontalOffsetChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var mediator = (ScrollViewerOffsetMediator)o;
-            if (mediator.ScrollViewer != null)
-                mediator.ScrollViewer.ScrollToHorizontalOffset((double)(e.NewValue));
+            mediator.ScrollViewer?.ScrollToHorizontalOffset((double)e.NewValue);
         }
     }
 }

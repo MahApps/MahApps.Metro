@@ -14,8 +14,16 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
-                            <mah:ContentControlEx x:Name="PART_Header"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="PART_Header"
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
+                            <mah:ContentControlEx x:Name="HeaderContent"
                                                   Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                                   HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
@@ -33,15 +41,26 @@
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
-                        <Grid Grid.Row="1" Background="{TemplateBinding Background}">
-                            <ContentPresenter x:Name="PART_Content"
-                                              Margin="{TemplateBinding Padding}"
+                        <Grid x:Name="PART_Content"
+                              Grid.Row="1"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Background="{TemplateBinding Background}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               ContentSource="Content"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Horizontal">
+                            <Setter TargetName="PART_Content" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_Content" Property="Grid.ColumnSpan" Value="1" />
+                            <Setter TargetName="PART_Header" Property="Grid.ColumnSpan" Value="1" />
+                            <Setter TargetName="PART_Header" Property="Grid.Row" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

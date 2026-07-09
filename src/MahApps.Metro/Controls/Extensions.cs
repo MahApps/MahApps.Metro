@@ -13,12 +13,12 @@ namespace MahApps.Metro.Controls
     {
         public static T Invoke<T>([NotNull] this DispatcherObject dispatcherObject, [NotNull] Func<T> func)
         {
-            if (dispatcherObject == null)
+            if (dispatcherObject is null)
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
 
-            if (func == null)
+            if (func is null)
             {
                 throw new ArgumentNullException(nameof(func));
             }
@@ -35,12 +35,12 @@ namespace MahApps.Metro.Controls
 
         public static void Invoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction)
         {
-            if (dispatcherObject == null)
+            if (dispatcherObject is null)
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
 
-            if (invokeAction == null)
+            if (invokeAction is null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
@@ -63,12 +63,12 @@ namespace MahApps.Metro.Controls
         /// <param name="priority">The dispatcher priority.</param> 
         public static void BeginInvoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction, DispatcherPriority priority = DispatcherPriority.Background)
         {
-            if (dispatcherObject == null)
+            if (dispatcherObject is null)
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
 
-            if (invokeAction == null)
+            if (invokeAction is null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
@@ -79,12 +79,12 @@ namespace MahApps.Metro.Controls
         public static void BeginInvoke<T>([NotNull] this T dispatcherObject, [NotNull] Action<T> invokeAction, DispatcherPriority priority = DispatcherPriority.Background)
             where T : DispatcherObject
         {
-            if (dispatcherObject == null)
+            if (dispatcherObject is null)
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
 
-            if (invokeAction == null)
+            if (invokeAction is null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }

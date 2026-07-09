@@ -44,7 +44,8 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsExpandedPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if (dependencyObject is DropDownButton dropDownButton)
+            if (dependencyObject is DropDownButton dropDownButton
+                && dropDownButton.contextMenu is not null)
             {
                 dropDownButton.SetContextMenuPlacementTarget(dropDownButton.contextMenu);
             }
@@ -76,7 +77,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets an extra tag.
         /// </summary>
-        public object ExtraTag
+        public object? ExtraTag
         {
             get => this.GetValue(ExtraTagProperty);
             set => this.SetValue(ExtraTagProperty, value);
@@ -108,7 +109,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the content for the icon part.
         /// </summary>
         [Bindable(true)]
-        public object Icon
+        public object? Icon
         {
             get => this.GetValue(IconProperty);
             set => this.SetValue(IconProperty, value);
@@ -124,9 +125,9 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the DataTemplate for the icon part.
         /// </summary>
         [Bindable(true)]
-        public DataTemplate IconTemplate
+        public DataTemplate? IconTemplate
         {
-            get => (DataTemplate)this.GetValue(IconTemplateProperty);
+            get => (DataTemplate?)this.GetValue(IconTemplateProperty);
             set => this.SetValue(IconTemplateProperty, value);
         }
 
@@ -139,15 +140,15 @@ namespace MahApps.Metro.Controls
 
         private static void OnCommandPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            (dependencyObject as DropDownButton)?.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+            (dependencyObject as DropDownButton)?.OnCommandChanged((ICommand?)e.OldValue, (ICommand?)e.NewValue);
         }
 
         /// <summary>
         /// Gets or sets the command to invoke when the content button is pressed.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
-            get => (ICommand)this.GetValue(CommandProperty);
+            get => (ICommand?)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
         }
 
@@ -161,9 +162,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the element on which to raise the specified command.
         /// </summary>
-        public IInputElement CommandTarget
+        public IInputElement? CommandTarget
         {
-            get => (IInputElement)this.GetValue(CommandTargetProperty);
+            get => (IInputElement?)this.GetValue(CommandTargetProperty);
             set => this.SetValue(CommandTargetProperty, value);
         }
 
@@ -177,9 +178,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the parameter to pass to the command property.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
-            get => (object)this.GetValue(CommandParameterProperty);
+            get => (object?)this.GetValue(CommandParameterProperty);
             set => this.SetValue(CommandParameterProperty, value);
         }
 
@@ -192,9 +193,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the content of this control.
         /// </summary>
-        public object Content
+        public object? Content
         {
-            get => (object)this.GetValue(ContentProperty);
+            get => (object?)this.GetValue(ContentProperty);
             set => this.SetValue(ContentProperty, value);
         }
 
@@ -203,15 +204,15 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ContentTemplate),
                                           typeof(DataTemplate),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata((DataTemplate)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary> 
         /// Gets or sets the data template used to display the content of the DropDownButton.
         /// </summary>
         [Bindable(true)]
-        public DataTemplate ContentTemplate
+        public DataTemplate? ContentTemplate
         {
-            get => (DataTemplate)this.GetValue(ContentTemplateProperty);
+            get => (DataTemplate?)this.GetValue(ContentTemplateProperty);
             set => this.SetValue(ContentTemplateProperty, value);
         }
 
@@ -220,7 +221,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ContentTemplateSelector),
                                           typeof(DataTemplateSelector),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata((DataTemplateSelector)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a template selector that enables an application writer to provide custom template-selection logic.
@@ -229,9 +230,9 @@ namespace MahApps.Metro.Controls
         /// This property is ignored if <seealso cref="ContentTemplate"/> is set.
         /// </remarks>
         [Bindable(true)]
-        public DataTemplateSelector ContentTemplateSelector
+        public DataTemplateSelector? ContentTemplateSelector
         {
-            get => (DataTemplateSelector)this.GetValue(ContentTemplateSelectorProperty);
+            get => (DataTemplateSelector?)this.GetValue(ContentTemplateSelectorProperty);
             set => this.SetValue(ContentTemplateSelectorProperty, value);
         }
 
@@ -240,7 +241,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ContentStringFormat),
                                           typeof(string),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata((string)null));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a composite string that specifies how to format the content property if it is displayed as a string.
@@ -249,9 +250,9 @@ namespace MahApps.Metro.Controls
         /// This property is ignored if <seealso cref="ContentTemplate"/> is set.
         /// </remarks>
         [Bindable(true)]
-        public string ContentStringFormat
+        public string? ContentStringFormat
         {
-            get => (string)this.GetValue(ContentStringFormatProperty);
+            get => (string?)this.GetValue(ContentStringFormatProperty);
             set => this.SetValue(ContentStringFormatProperty, value);
         }
 
@@ -265,9 +266,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the button content style.
         /// </summary>
-        public Style ButtonStyle
+        public Style? ButtonStyle
         {
-            get => (Style)this.GetValue(ButtonStyleProperty);
+            get => (Style?)this.GetValue(ButtonStyleProperty);
             set => this.SetValue(ButtonStyleProperty, value);
         }
 
@@ -281,9 +282,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the "popup" menu style.
         /// </summary>
-        public Style MenuStyle
+        public Style? MenuStyle
         {
-            get => (Style)this.GetValue(MenuStyleProperty);
+            get => (Style?)this.GetValue(MenuStyleProperty);
             set => this.SetValue(MenuStyleProperty, value);
         }
 
@@ -297,9 +298,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush for the button arrow icon.
         /// </summary>
-        public Brush ArrowBrush
+        public Brush? ArrowBrush
         {
-            get => (Brush)this.GetValue(ArrowBrushProperty);
+            get => (Brush?)this.GetValue(ArrowBrushProperty);
             set => this.SetValue(ArrowBrushProperty, value);
         }
 
@@ -313,9 +314,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush of the button arrow icon if the mouse is over the drop down button.
         /// </summary>
-        public Brush ArrowMouseOverBrush
+        public Brush? ArrowMouseOverBrush
         {
-            get => (Brush)this.GetValue(ArrowMouseOverBrushProperty);
+            get => (Brush?)this.GetValue(ArrowMouseOverBrushProperty);
             set => this.SetValue(ArrowMouseOverBrushProperty, value);
         }
 
@@ -329,9 +330,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the foreground brush of the button arrow icon if the arrow button is pressed.
         /// </summary>
-        public Brush ArrowPressedBrush
+        public Brush? ArrowPressedBrush
         {
-            get => (Brush)this.GetValue(ArrowPressedBrushProperty);
+            get => (Brush?)this.GetValue(ArrowPressedBrushProperty);
             set => this.SetValue(ArrowPressedBrushProperty, value);
         }
 
@@ -356,7 +357,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DropDownButton), new FrameworkPropertyMetadata(typeof(DropDownButton)));
         }
 
-        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        private void OnCommandChanged(ICommand? oldCommand, ICommand? newCommand)
         {
             if (oldCommand != null)
             {
@@ -381,7 +382,7 @@ namespace MahApps.Metro.Controls
             this.UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             this.UpdateCanExecute();
         }
@@ -462,13 +463,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
+#if NET5_0_OR_GREATER
+        private void OnGroupStyleCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
         private void OnGroupStyleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
         {
             if (e.OldItems != null)
             {
                 foreach (var groupStyle in e.OldItems.OfType<GroupStyle>())
                 {
-                    this.contextMenu.GroupStyle.Remove(groupStyle);
+                    this.contextMenu?.GroupStyle.Remove(groupStyle);
                 }
             }
 
@@ -476,7 +481,7 @@ namespace MahApps.Metro.Controls
             {
                 foreach (var groupStyle in e.NewItems.OfType<GroupStyle>())
                 {
-                    this.contextMenu.GroupStyle.Add(groupStyle);
+                    this.contextMenu?.GroupStyle.Add(groupStyle);
                 }
             }
         }
@@ -488,7 +493,7 @@ namespace MahApps.Metro.Controls
             e.Handled = true;
         }
 
-        private void TryRemoveVisualFromOldTree(object item)
+        private void TryRemoveVisualFromOldTree(object? item)
         {
             if (item is Visual visual)
             {
@@ -571,7 +576,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private Button button;
-        private ContextMenu contextMenu;
+        private Button? button;
+        private ContextMenu? contextMenu;
     }
 }

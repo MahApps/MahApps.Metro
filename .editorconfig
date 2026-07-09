@@ -17,3 +17,6 @@ indent_size = 2
 [*.cs]
 # WPF0011: Containing type should be used as registered owner.
 dotnet_diagnostic.WPF0011.severity = error
+
+# WPF0132: Use PART prefix.
+dotnet_diagnostic.WPF0132.severity = suggestion

@@ -13,7 +13,7 @@ namespace MetroDemo.ExampleViews
     {
         public ProgressBars()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

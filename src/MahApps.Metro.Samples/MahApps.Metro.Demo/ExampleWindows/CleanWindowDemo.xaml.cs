@@ -27,16 +27,26 @@ namespace MetroDemo.ExampleWindows
 
         private bool closeMe;
 
+#if NET6_0_OR_GREATER
+        private async void CleanWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
+#else
         private async void CleanWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+#endif
         {
-            if (e.Cancel) return;
+            if (e.Cancel)
+            {
+                return;
+            }
 
             // we want manage the closing itself!
             e.Cancel = !this.closeMe;
             // yes we want now really close the window
-            if (this.closeMe) return;
+            if (this.closeMe)
+            {
+                return;
+            }
 
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Quit",
                                  NegativeButtonText = "Cancel",
@@ -50,18 +60,21 @@ namespace MetroDemo.ExampleWindows
 
             this.closeMe = result == MessageDialogResult.Affirmative;
 
-            if (this.closeMe) this.Close();
+            if (this.closeMe)
+            {
+                this.Close();
+            }
         }
 
         internal class SuperDataTemplateSelector : DataTemplateSelector
         {
-            public DataTemplate FirstTemplate { get; set; }
+            public DataTemplate? FirstTemplate { get; set; }
 
-            public DataTemplate SecondTemplate { get; set; }
+            public DataTemplate? SecondTemplate { get; set; }
 
-            public DataTemplate NullTemplate { get; set; }
+            public DataTemplate? NullTemplate { get; set; }
 
-            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            public override DataTemplate? SelectTemplate(object? item, DependencyObject container)
             {
                 if (item == null)
                 {
@@ -83,15 +96,15 @@ namespace MetroDemo.ExampleWindows
             this.settingsFlyout.IsOpen = !this.settingsFlyout.IsOpen;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            this.ShowMessageAsync("Something",
-                                  "Something should be displayed here.",
-                                  MessageDialogStyle.Affirmative,
-                                  new MetroDialogSettings()
-                                  {
-                                      ColorScheme = MetroDialogColorScheme.Inverted
-                                  });
+            await this.ShowMessageAsync("Something",
+                                        "Something should be displayed here.",
+                                        MessageDialogStyle.Affirmative,
+                                        new MetroDialogSettings
+                                        {
+                                            ColorScheme = MetroDialogColorScheme.Inverted
+                                        });
         }
     }
 }

@@ -9,14 +9,14 @@ namespace Caliburn.Metro.Demo.ViewModels
 {
     public abstract class FlyoutBaseViewModel : PropertyChangedBase
     {
-        private string header;
+        private string? header;
         private bool isOpen;
         private Position position;
         private FlyoutTheme theme = FlyoutTheme.Dark;
 
-        public string Header
+        public string? Header
         {
-            get { return this.header; }
+            get => this.header;
             set
             {
                 if (value == this.header)
@@ -31,7 +31,7 @@ namespace Caliburn.Metro.Demo.ViewModels
 
         public bool IsOpen
         {
-            get { return this.isOpen; }
+            get => this.isOpen;
             set
             {
                 if (value.Equals(this.isOpen))
@@ -46,7 +46,7 @@ namespace Caliburn.Metro.Demo.ViewModels
 
         public Position Position
         {
-            get { return this.position; }
+            get => this.position;
             set
             {
                 if (value == this.position)
@@ -61,7 +61,7 @@ namespace Caliburn.Metro.Demo.ViewModels
 
         public FlyoutTheme Theme
         {
-            get { return this.theme; }
+            get => this.theme;
             set
             {
                 if (value == this.theme)

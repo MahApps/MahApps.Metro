@@ -9,7 +9,7 @@ namespace MahApps.Metro.Controls
 {
     public class MetroThumb : Thumb, IMetroThumb
     {
-        private TouchDevice currentDevice = null;
+        private TouchDevice? currentDevice = null;
 
         protected override void OnPreviewTouchDown(TouchEventArgs e)
         {

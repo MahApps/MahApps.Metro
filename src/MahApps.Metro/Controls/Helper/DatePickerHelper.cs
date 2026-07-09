@@ -24,9 +24,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        public static object GetDropDownButtonContent(DependencyObject d)
+        public static object? GetDropDownButtonContent(DependencyObject d)
         {
-            return (object)d.GetValue(DropDownButtonContentProperty);
+            return d.GetValue(DropDownButtonContentProperty);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        public static void SetDropDownButtonContent(DependencyObject obj, object value)
+        public static void SetDropDownButtonContent(DependencyObject obj, object? value)
         {
             obj.SetValue(DropDownButtonContentProperty, value);
         }
@@ -45,7 +45,7 @@ namespace MahApps.Metro.Controls
                 "DropDownButtonContentTemplate",
                 typeof(DataTemplate),
                 typeof(DatePickerHelper),
-                new FrameworkPropertyMetadata((DataTemplate)null));
+                new FrameworkPropertyMetadata(null));
 
         /// <summary> 
         /// Gets the data template used to display the content of the DropDown Button.
@@ -53,9 +53,9 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        public static DataTemplate GetDropDownButtonContentTemplate(DependencyObject d)
+        public static DataTemplate? GetDropDownButtonContentTemplate(DependencyObject d)
         {
-            return (DataTemplate)d.GetValue(DropDownButtonContentTemplateProperty);
+            return (DataTemplate?)d.GetValue(DropDownButtonContentTemplateProperty);
         }
 
         /// <summary> 
@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        public static void SetDropDownButtonContentTemplate(DependencyObject obj, DataTemplate value)
+        public static void SetDropDownButtonContentTemplate(DependencyObject obj, DataTemplate? value)
         {
             obj.SetValue(DropDownButtonContentTemplateProperty, value);
         }

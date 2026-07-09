@@ -16,7 +16,7 @@
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button.Dialogs}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.Accent"
@@ -25,7 +25,7 @@
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button.Dialogs.Accent}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.AccentHighlight"
@@ -34,7 +34,7 @@
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button.Dialogs.AccentHighlight}" />
     </Style>
 
     <Storyboard x:Key="MahApps.Storyboard.Dialogs.Show" po:Freeze="True">
@@ -65,25 +65,33 @@
                               AutomationProperties.Name="Dialog top"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding DialogContentMargin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                     <ColumnDefinition Width="{Binding DialogContentWidth, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                     <ColumnDefinition Width="{Binding DialogContentMargin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 </Grid.ColumnDefinitions>
-                <!--  Content area  -->
+
                 <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="PART_Title"
-                               Grid.Row="0"
-                               AutomationProperties.Name="Dialog title"
-                               FontSize="{TemplateBinding DialogTitleFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
-                               Text="{TemplateBinding Title}"
-                               TextWrapping="Wrap" />
+
+                    <ContentPresenter x:Name="PART_Title"
+                                      Grid.Row="0"
+                                      AutomationProperties.Name="Dialog title"
+                                      Content="{TemplateBinding Title}"
+                                      TextElement.FontSize="{TemplateBinding DialogTitleFontSize}"
+                                      TextElement.Foreground="{TemplateBinding Foreground}">
+                        <ContentPresenter.Resources>
+                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap" />
+                            </Style>
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
+
                     <ContentPresenter x:Name="PART_Content"
                                       Grid.Row="1"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -96,6 +104,7 @@
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </Grid>
             </Grid>
+
             <ContentPresenter x:Name="PART_Bottom"
                               Grid.Row="2"
                               AutomationProperties.Name="Dialog bottom"
@@ -115,12 +124,12 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.BaseMetroDialog" TargetType="{x:Type dialogs:BaseMetroDialog}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Dialog.Background}" />
         <Setter Property="DialogButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Dialog.Button}" />
         <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Font.Size.Dialog.Message}" />
         <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Font.Size.Dialog.Title}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Dialog.Foreground}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
@@ -131,5 +140,11 @@
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.BaseMetroDialog}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding DialogSettings.ColorScheme, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="{x:Static dialogs:MetroDialogColorScheme.Accented}">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Dialog.Background.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Dialog.Foreground.Accent}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

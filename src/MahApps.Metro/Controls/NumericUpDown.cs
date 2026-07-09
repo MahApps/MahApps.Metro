@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
+using MahApps.Metro.Automation.Peers;
+using System.Windows.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {
@@ -23,6 +27,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_NumericUp, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_NumericDown, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
+    [StyleTypedProperty(Property = nameof(SpinButtonStyle), StyleTargetType = typeof(ButtonBase))]
     public class NumericUpDown : Control
     {
         private const string PART_NumericDown = "PART_NumericDown";
@@ -34,19 +39,19 @@ namespace MahApps.Metro.Controls
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
         private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
-        private Regex regexNumber = null;
+        private Regex? regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
-        private Lazy<PropertyInfo> handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
+        private Lazy<PropertyInfo?> handlesMouseWheelScrolling = new Lazy<PropertyInfo?>();
         private double internalIntervalMultiplierForCalculation = DefaultInterval;
         private double internalLargeChange = DefaultInterval * 100;
         private double intervalValueSinceReset;
         private bool manualChange;
-        private RepeatButton repeatDown;
-        private RepeatButton repeatUp;
-        private TextBox valueTextBox;
-        private ScrollViewer scrollViewer;
+        private RepeatButton? repeatDown;
+        private RepeatButton? repeatUp;
+        private TextBox? valueTextBox;
+        private ScrollViewer? scrollViewer;
 
         /// <summary>Identifies the <see cref="ValueIncremented"/> routed event.</summary>
         public static readonly RoutedEvent ValueIncrementedEvent
@@ -226,7 +231,7 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="IsReadOnly"/> dependency property.</summary>
         public static readonly DependencyProperty IsReadOnlyProperty
             = TextBoxBase.IsReadOnlyProperty.AddOwner(typeof(NumericUpDown),
-                                                      new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, OnIsReadOnlyPropertyChanged));
+                                                      new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits, OnIsReadOnlyPropertyChanged));
 
         private static void OnIsReadOnlyPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -248,7 +253,7 @@ namespace MahApps.Metro.Controls
         public bool IsReadOnly
         {
             get => (bool)this.GetValue(IsReadOnlyProperty);
-            set => this.SetValue(IsReadOnlyProperty, value);
+            set => this.SetValue(IsReadOnlyProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="StringFormat"/> dependency property.</summary>
@@ -275,7 +280,8 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceStringFormat(DependencyObject d, object baseValue)
+        [MustUseReturnValue]
+        private static object CoerceStringFormat(DependencyObject d, object? baseValue)
         {
             return baseValue ?? string.Empty;
         }
@@ -301,7 +307,7 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can use the arrow keys <see cref="Key.Up"/> and <see cref="Key.Down"/> to change the value. 
+        /// Gets or sets a value indicating whether the user can use the arrow keys <see cref="Key.Up"/> and <see cref="Key.Down"/> to change the value.
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -386,7 +392,10 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(Value),
                                           typeof(double?),
                                           typeof(NumericUpDown),
-                                          new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValuePropertyChanged, CoerceValue));
+                                          new FrameworkPropertyMetadata(default(double?),
+                                                                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                                                                        OnValuePropertyChanged,
+                                                                        (o, value) => CoerceValue(o, value).value));
 
         private static void OnValuePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -396,32 +405,33 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceValue(DependencyObject d, object value)
+        [MustUseReturnValue]
+        private static (double? value, bool isValid) CoerceValue(DependencyObject d, object? baseValue)
         {
-            if (value == null)
+            var numericUpDown = (NumericUpDown)d;
+            if (baseValue is null)
             {
-                return null;
+                return (numericUpDown.DefaultValue, false);
             }
 
-            var numericUpDown = (NumericUpDown)d;
-            double val = ((double?)value).Value;
+            var value = ((double?)baseValue).Value;
 
             if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
             {
-                val = Math.Truncate(val);
+                value = Math.Truncate(value);
             }
 
-            if (val < numericUpDown.Minimum)
+            if (value < numericUpDown.Minimum)
             {
-                return numericUpDown.Minimum;
+                return (numericUpDown.Minimum, false);
             }
 
-            if (val > numericUpDown.Maximum)
+            if (value > numericUpDown.Maximum)
             {
-                return numericUpDown.Maximum;
+                return (numericUpDown.Maximum, false);
             }
 
-            return val;
+            return (value, true);
         }
 
         /// <summary>
@@ -434,6 +444,56 @@ namespace MahApps.Metro.Controls
         {
             get => (double?)this.GetValue(ValueProperty);
             set => this.SetValue(ValueProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="DefaultValue"/> dependency property.</summary>
+        public static readonly DependencyProperty DefaultValueProperty
+            = DependencyProperty.Register(nameof(DefaultValue),
+                                          typeof(double?),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(null, OnDefaultValuePropertyChanged, CoerceDefaultValue));
+
+        private static void OnDefaultValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            if (!numericUpDown.Value.HasValue && numericUpDown.DefaultValue.HasValue)
+            {
+                numericUpDown.SetValueTo(numericUpDown.DefaultValue.Value);
+            }
+        }
+
+        [MustUseReturnValue]
+        private static object? CoerceDefaultValue(DependencyObject d, object? baseValue)
+        {
+            if (baseValue is double val)
+            {
+                var minimum = ((NumericUpDown)d).Minimum;
+                var maximum = ((NumericUpDown)d).Maximum;
+
+                if (val < minimum)
+                {
+                    return minimum;
+                }
+                else if (val > maximum)
+                {
+                    return maximum;
+                }
+            }
+
+            return baseValue;
+        }
+
+        /// <summary>
+        /// Gets or sets the default value of the NumericUpDown which will be used if the <see cref="Value"/> is <see langword="null"/>.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(null)]
+        public double? DefaultValue
+        {
+            get => (double?)this.GetValue(DefaultValueProperty);
+            set => this.SetValue(DefaultValueProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
@@ -449,6 +509,7 @@ namespace MahApps.Metro.Controls
 
             numericUpDown.CoerceValue(MaximumProperty);
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(DefaultValueProperty);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -477,11 +538,15 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(DefaultValueProperty);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
 
+#pragma warning disable WPF0024
+        [MustUseReturnValue]
         private static object CoerceMaximum(DependencyObject d, object value)
+#pragma warning restore WPF0024
         {
             double minimum = ((NumericUpDown)d).Minimum;
             double val = (double)value;
@@ -545,6 +610,22 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty);
             set => this.SetValue(TrackMouseWheelWhenMouseOverProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="SpinButtonStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty SpinButtonStyleProperty
+            = DependencyProperty.Register(nameof(SpinButtonStyle),
+                                          typeof(Style),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="FrameworkElement.Style"/> for the spin buttons.
+        /// </summary>
+        public Style? SpinButtonStyle
+        {
+            get => (Style?)this.GetValue(SpinButtonStyleProperty);
+            set => this.SetValue(SpinButtonStyleProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ButtonsAlignment"/> dependency property.</summary>
@@ -655,21 +736,112 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(SwitchUpDownButtonsProperty, BooleanBoxes.Box(value));
         }
 
-        /// <summary>Identifies the <see cref="ChangeValueOnTextChanged"/> dependency property.</summary>
-        public static readonly DependencyProperty ChangeValueOnTextChangedProperty
-            = DependencyProperty.Register(nameof(ChangeValueOnTextChanged),
-                                          typeof(bool),
+        /// <summary>Identifies the <see cref="ButtonUpContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentProperty
+            = DependencyProperty.Register(nameof(ButtonUpContent),
+                                          typeof(object),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets a value indicating whether the value will be changed directly on every TextBox text changed input event or when using the Enter key.
+        /// Provides the object content that should be displayed on the Up Button.
         /// </summary>
-        [Category("Behavior")]
-        public bool ChangeValueOnTextChanged
+        [Category(AppName.MahApps)]
+        public object? ButtonUpContent
         {
-            get => (bool)this.GetValue(ChangeValueOnTextChangedProperty);
-            set => this.SetValue(ChangeValueOnTextChangedProperty, BooleanBoxes.Box(value));
+            get => (object?)this.GetValue(ButtonUpContentProperty);
+            set => this.SetValue(ButtonUpContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonUpContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(NumericUpDown));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Up button's content.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public DataTemplate? ButtonUpContentTemplate
+        {
+            get => (DataTemplate?)this.GetValue(ButtonUpContentTemplateProperty);
+            set => this.SetValue(ButtonUpContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonUpContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonUpContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonUpContentStringFormat),
+                                          typeof(string),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonUpContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks>
+        /// This property is ignored if <seealso cref="ButtonUpContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string? ButtonUpContentStringFormat
+        {
+            get => (string?)this.GetValue(ButtonUpContentStringFormatProperty);
+            set => this.SetValue(ButtonUpContentStringFormatProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContent"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentProperty
+            = DependencyProperty.Register(nameof(ButtonDownContent),
+                                          typeof(object),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Provides the object content that should be displayed on the Down Button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public object? ButtonDownContent
+        {
+            get => (object?)this.GetValue(ButtonDownContentProperty);
+            set => this.SetValue(ButtonDownContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContentTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentTemplateProperty
+            = DependencyProperty.Register(nameof(ButtonDownContentTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(NumericUpDown));
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used to display the Down button's content.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public DataTemplate? ButtonDownContentTemplate
+        {
+            get => (DataTemplate?)this.GetValue(ButtonDownContentTemplateProperty);
+            set => this.SetValue(ButtonDownContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonDownContentStringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonDownContentStringFormatProperty
+            = DependencyProperty.Register(nameof(ButtonDownContentStringFormat),
+                                          typeof(string),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a composite string that specifies how to format the ButtonDownContent property if it is displayed as a string.
+        /// </summary>
+        /// <remarks>
+        /// This property is ignored if <seealso cref="ButtonDownContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public string? ButtonDownContentStringFormat
+        {
+            get => (string?)this.GetValue(ButtonDownContentStringFormatProperty);
+            set => this.SetValue(ButtonDownContentStringFormatProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
@@ -693,9 +865,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category("Behavior")]
         [DefaultValue(null)]
-        public CultureInfo Culture
+        public CultureInfo? Culture
         {
-            get => (CultureInfo)this.GetValue(CultureProperty);
+            get => (CultureInfo?)this.GetValue(CultureProperty);
             set => this.SetValue(CultureProperty, value);
         }
 
@@ -810,7 +982,7 @@ namespace MahApps.Metro.Controls
             EventManager.RegisterClassHandler(typeof(NumericUpDown), GotFocusEvent, new RoutedEventHandler(OnGotFocus));
         }
 
-        /// <summary> 
+        /// <summary>
         ///     Called when this element or any below gets focus.
         /// </summary>
         private static void OnGotFocus(object sender, RoutedEventArgs e)
@@ -853,45 +1025,35 @@ namespace MahApps.Metro.Controls
 
             this.valueTextBox = this.GetTemplateChild(PART_TextBox) as TextBox;
 
-            if (this.repeatUp == null || this.repeatDown == null || this.valueTextBox == null)
+            if (this.repeatUp is null || this.repeatDown is null || this.valueTextBox is null)
             {
                 throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
             this.ToggleReadOnlyMode(this.IsReadOnly);
 
-            this.repeatUp.Click += (o, e) =>
-                {
-                    this.ChangeValueWithSpeedUp(true);
+            this.repeatUp.Click += (_, _) => { this.ChangeValueWithSpeedUp(true); };
+            this.repeatDown.Click += (_, _) => { this.ChangeValueWithSpeedUp(false); };
 
-                    if (!this.UpDownButtonsFocusable)
-                    {
-                        this.manualChange = false;
-                        this.InternalSetText(this.Value);
-                    }
-                };
-            this.repeatDown.Click += (o, e) =>
-                {
-                    this.ChangeValueWithSpeedUp(false);
-
-                    if (!this.UpDownButtonsFocusable)
-                    {
-                        this.manualChange = false;
-                        this.InternalSetText(this.Value);
-                    }
-                };
-
-            this.repeatUp.PreviewMouseUp += (o, e) => this.ResetInternal();
-            this.repeatDown.PreviewMouseUp += (o, e) => this.ResetInternal();
+            this.repeatUp.PreviewMouseUp += (_, _) => this.ResetInternal();
+            this.repeatDown.PreviewMouseUp += (_, _) => this.ResetInternal();
 
             this.OnValueChanged(this.Value, this.Value);
 
             this.scrollViewer = null;
         }
 
+        /// <summary>
+        /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
+        /// </summary>
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new NumericUpdDownAutomationPeer(this);
+        }
+
         private void ToggleReadOnlyMode(bool isReadOnly)
         {
-            if (this.repeatUp == null || this.repeatDown == null || this.valueTextBox == null)
+            if (this.repeatUp is null || this.repeatDown is null || this.valueTextBox is null)
             {
                 return;
             }
@@ -973,14 +1135,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (e.Key == Key.Enter)
-            {
-                if (!this.ChangeValueOnTextChanged)
-                {
-                    this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
-                }
-            }
-            else if (e.Key == Key.Up)
+            if (e.Key == Key.Up)
             {
                 this.ChangeValueWithSpeedUp(true);
                 e.Handled = true;
@@ -989,12 +1144,6 @@ namespace MahApps.Metro.Controls
             {
                 this.ChangeValueWithSpeedUp(false);
                 e.Handled = true;
-            }
-
-            if (e.Handled)
-            {
-                this.manualChange = false;
-                this.InternalSetText(this.Value);
             }
         }
 
@@ -1013,16 +1162,15 @@ namespace MahApps.Metro.Controls
         {
             base.OnPreviewMouseWheel(e);
 
-            if (this.InterceptMouseWheel && (this.IsFocused || this.valueTextBox.IsFocused || this.TrackMouseWheelWhenMouseOver))
+            if (this.InterceptMouseWheel && (this.IsFocused || this.valueTextBox?.IsFocused == true || this.TrackMouseWheelWhenMouseOver))
             {
                 bool increment = e.Delta > 0;
-                this.manualChange = false;
-                this.ChangeValueInternal(increment);
+                this.ChangeValueWithSpeedUp(increment);
             }
 
             var sv = this.TryFindScrollViewer();
 
-            if (sv != null && this.handlesMouseWheelScrolling.Value != null)
+            if (sv != null && this.handlesMouseWheelScrolling.Value is not null)
             {
                 if (this.TrackMouseWheelWhenMouseOver)
                 {
@@ -1030,7 +1178,7 @@ namespace MahApps.Metro.Controls
                 }
                 else if (this.InterceptMouseWheel)
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(sv, this.valueTextBox.IsFocused, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, this.valueTextBox?.IsFocused == true, null);
                 }
                 else
                 {
@@ -1043,8 +1191,11 @@ namespace MahApps.Metro.Controls
         {
             var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
-            e.Handled = !this.ValidateText(fullText, out _);
-            this.manualChange = true;
+            var textIsValid = this.ValidateText(fullText, out var convertedValue);
+            // Value must be valid and not coerced
+            var coerceValue = CoerceValue(this, convertedValue as double?);
+            e.Handled = !textIsValid || !coerceValue.isValid;
+            this.manualChange = !e.Handled;
         }
 
         /// <summary>
@@ -1067,6 +1218,8 @@ namespace MahApps.Metro.Controls
                         this.valueTextBox.Text = null;
                     }
 
+                    this.EnableDisableUpDown();
+
                     if (oldValue != newValue)
                     {
                         this.RaiseEvent(new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent));
@@ -1075,22 +1228,12 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
-                if (this.repeatUp != null && !this.repeatUp.IsEnabled)
-                {
-                    this.repeatUp.IsEnabled = true;
-                }
-
-                if (this.repeatDown != null && !this.repeatDown.IsEnabled)
-                {
-                    this.repeatDown.IsEnabled = true;
-                }
+                this.repeatUp?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.TrueBox);
+                this.repeatDown?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.TrueBox);
 
                 if (newValue <= this.Minimum)
                 {
-                    if (this.repeatDown != null)
-                    {
-                        this.repeatDown.IsEnabled = false;
-                    }
+                    this.repeatDown?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.FalseBox);
 
                     this.ResetInternal();
 
@@ -1102,12 +1245,10 @@ namespace MahApps.Metro.Controls
 
                 if (newValue >= this.Maximum)
                 {
-                    if (this.repeatUp != null)
-                    {
-                        this.repeatUp.IsEnabled = false;
-                    }
+                    this.repeatUp?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.FalseBox);
 
                     this.ResetInternal();
+
                     if (this.IsLoaded)
                     {
                         this.RaiseEvent(new RoutedEventArgs(MaximumReachedEvent));
@@ -1136,6 +1277,8 @@ namespace MahApps.Metro.Controls
                 }
             }
 
+            this.EnableDisableUpDown();
+
             if (oldValue != newValue)
             {
                 this.RaiseEvent(new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent));
@@ -1146,24 +1289,32 @@ namespace MahApps.Metro.Controls
         {
             if (!newValue.HasValue)
             {
-                this.valueTextBox.Text = null;
+                if (this.valueTextBox is not null)
+                {
+                    this.valueTextBox.Text = null;
+                }
+
                 return;
             }
 
-            this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
+            if (this.valueTextBox is not null)
+            {
+                this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
+            }
 
             if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
             {
-                this.SetValue(TextBoxHelper.TextLengthProperty, this.valueTextBox.Text.Length);
+                var textLength = this.valueTextBox?.Text?.Length ?? 0;
+                this.SetValue(TextBoxHelper.TextLengthPropertyKey, textLength);
             }
         }
 
-        private static string FormattedValueString(double newValue, string format, CultureInfo culture)
+        private static string? FormattedValueString(double newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                if (TryFormatHexadecimal(newValue, format, culture, out var hexValue))
                 {
                     return hexValue;
                 }
@@ -1189,7 +1340,7 @@ namespace MahApps.Metro.Controls
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (!TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                if (!TryFormatHexadecimal(newValue, format, culture, out _))
                 {
                     var match = RegexStringFormat.Match(format);
                     if (match.Success)
@@ -1220,7 +1371,7 @@ namespace MahApps.Metro.Controls
             return value;
         }
 
-        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, out string output)
+        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, [NotNullWhen(true)] out string? output)
         {
             var match = RegexStringFormatHexadecimal.Match(format);
             if (match.Success)
@@ -1243,19 +1394,19 @@ namespace MahApps.Metro.Controls
             return false;
         }
 
-        private ScrollViewer TryFindScrollViewer()
+        private ScrollViewer? TryFindScrollViewer()
         {
             if (this.scrollViewer != null)
             {
                 return this.scrollViewer;
             }
 
-            this.valueTextBox.ApplyTemplate();
+            this.valueTextBox?.ApplyTemplate();
 
-            this.scrollViewer = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
+            this.scrollViewer = this.valueTextBox?.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
             if (this.scrollViewer != null)
             {
-                this.handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
+                this.handlesMouseWheelScrolling = new Lazy<PropertyInfo?>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
 
             return this.scrollViewer;
@@ -1269,6 +1420,7 @@ namespace MahApps.Metro.Controls
             }
 
             double direction = toPositive ? 1 : -1;
+
             if (this.Speedup)
             {
                 double d = this.Interval * this.internalLargeChange;
@@ -1286,17 +1438,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ChangeValueInternal(bool addInterval)
-        {
-            this.ChangeValueInternal(addInterval ? this.Interval : -this.Interval);
-        }
-
         private void ChangeValueInternal(double interval)
         {
             if (this.IsReadOnly)
             {
                 return;
             }
+
+            this.manualChange = false;
 
             NumericUpDownChangedRoutedEventArgs routedEvent = interval > 0 ? new NumericUpDownChangedRoutedEventArgs(ValueIncrementedEvent, interval) : new NumericUpDownChangedRoutedEventArgs(ValueDecrementedEvent, interval);
 
@@ -1305,7 +1454,13 @@ namespace MahApps.Metro.Controls
             if (!routedEvent.Handled)
             {
                 this.ChangeValueBy(routedEvent.Interval);
-                this.valueTextBox.CaretIndex = this.valueTextBox.Text.Length;
+
+                this.InternalSetText(this.Value);
+
+                if (this.valueTextBox is not null)
+                {
+                    this.valueTextBox.CaretIndex = this.valueTextBox.Text.Length;
+                }
             }
         }
 
@@ -1333,29 +1488,13 @@ namespace MahApps.Metro.Controls
                 value = this.Minimum;
             }
 
-            this.SetCurrentValue(ValueProperty, CoerceValue(this, value));
-        }
-
-        private void EnableDisableDown()
-        {
-            if (this.repeatDown != null)
-            {
-                this.repeatDown.IsEnabled = this.Value == null || this.Value > this.Minimum;
-            }
-        }
-
-        private void EnableDisableUp()
-        {
-            if (this.repeatUp != null)
-            {
-                this.repeatUp.IsEnabled = this.Value == null || this.Value < this.Maximum;
-            }
+            this.SetCurrentValue(ValueProperty, CoerceValue(this, value).value);
         }
 
         private void EnableDisableUpDown()
         {
-            this.EnableDisableUp();
-            this.EnableDisableDown();
+            this.repeatUp?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.Box(this.Value is null || this.Value < this.Maximum));
+            this.repeatDown?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.Box(this.Value is null || this.Value > this.Minimum));
         }
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
@@ -1399,7 +1538,7 @@ namespace MahApps.Metro.Controls
         private static async void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
         {
             // Select the proper decimal-point string upon the context
-            string replace;
+            string? replace;
             switch (mode)
             {
                 case DecimalPointCorrectionMode.Number:
@@ -1430,51 +1569,68 @@ namespace MahApps.Metro.Controls
             await Task.FromResult(true);
         }
 
-        private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
         {
-            this.ChangeValueFromTextInput(sender as TextBox);
-        }
-
-        private void ChangeValueFromTextInput(TextBox textBox)
-        {
-            if (textBox is null || !this.InterceptManualEnter)
-            {
-                return;
-            }
-
-            if (this.manualChange)
+            if (this.valueTextBox is not null)
             {
                 this.manualChange = false;
-
-                if (this.ValidateText(textBox.Text, out var convertedValue))
-                {
-                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
-                    this.SetValueTo(convertedValue);
-                }
+                this.valueTextBox.TextChanged -= this.OnTextChanged;
+                this.InternalSetText(this.Value);
+                this.valueTextBox.TextChanged += this.OnTextChanged;
             }
-
-            this.OnValueChanged(this.Value, this.Value);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!this.ChangeValueOnTextChanged)
+            var text = ((TextBox)sender).Text;
+            this.ChangeValueFromTextInput(text);
+        }
+
+        private void ChangeValueFromTextInput(string text)
+        {
+            if (!this.InterceptManualEnter)
             {
                 return;
             }
 
-            if (string.IsNullOrEmpty(((TextBox)sender).Text))
+            var oldValue = this.Value;
+
+            if (string.IsNullOrEmpty(text))
             {
-                this.Value = null;
+                if (this.DefaultValue.HasValue)
+                {
+                    this.SetValueTo(this.DefaultValue.Value);
+                    if (!this.manualChange)
+                    {
+                        this.InternalSetText(this.DefaultValue.Value);
+                    }
+                }
+                else
+                {
+                    this.SetCurrentValue(ValueProperty, null);
+                }
             }
-            else if (this.manualChange || e.UndoAction == UndoAction.Undo || e.UndoAction == UndoAction.Redo)
+            else if (this.manualChange)
             {
-                if (this.ValidateText(((TextBox)sender).Text, out var convertedValue))
+                if (this.ValidateText(text, out var convertedValue))
                 {
                     convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
+                else if (this.DefaultValue.HasValue)
+                {
+                    this.SetValueTo(this.DefaultValue.Value);
+                    this.InternalSetText(oldValue);
+                }
+                else
+                {
+                    this.SetCurrentValue(ValueProperty, null);
+                }
             }
+
+            this.OnValueChanged(oldValue, this.Value);
+
+            this.manualChange = false;
         }
 
         private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
@@ -1526,7 +1682,8 @@ namespace MahApps.Metro.Controls
 
             if (text.Count(c => c == this.SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 2
                 || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 2
-                || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1)
+                // || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1
+               )
             {
                 return false;
             }
@@ -1551,7 +1708,10 @@ namespace MahApps.Metro.Controls
 
             if (number == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
                 || number == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
-                || number == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator)
+                || number == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator
+                || number == (this.SpecificCultureInfo.NumberFormat.NegativeSign + this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+                || number == (this.SpecificCultureInfo.NumberFormat.PositiveSign + this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+               )
             {
                 return true;
             }
@@ -1592,7 +1752,7 @@ namespace MahApps.Metro.Controls
                 return hexMatches.Count > 0 ? hexMatches[0].Value : text;
             }
 
-            if (this.regexNumber == null)
+            if (this.regexNumber is null)
             {
                 this.regexNumber = new Regex(RawRegexNumberString.Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
                                                                  .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),

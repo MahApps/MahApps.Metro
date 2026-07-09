@@ -30,9 +30,9 @@ namespace MahApps.Metro.Controls
     [MarkupExtensionReturnType(typeof(DataGridColumnStylesHelperExtension))]
     public class DataGridColumnStylesHelperExtension : MarkupExtension, IDataGridColumnStylesHelper
     {
-        private WeakReference dataGridReference;
+        private WeakReference? dataGridReference;
 
-        private DataGrid DataGrid => this.dataGridReference != null && this.dataGridReference.IsAlive ? this.dataGridReference.Target as DataGrid : null;
+        private DataGrid? DataGrid => this.dataGridReference != null && this.dataGridReference.IsAlive ? this.dataGridReference.Target as DataGrid : null;
 
         /// <inheritdoc />
         public void Attach(DataGrid aDataGrid)
@@ -75,7 +75,11 @@ namespace MahApps.Metro.Controls
             this.dataGridReference = null;
         }
 
+#if NET5_0_OR_GREATER
+        private void OnColumnsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+#else
         private void OnColumnsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+#endif
         {
             if (e.OldItems != null)
             {

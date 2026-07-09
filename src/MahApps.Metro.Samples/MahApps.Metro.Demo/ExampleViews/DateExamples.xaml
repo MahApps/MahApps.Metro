@@ -7,6 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:MetroDemo"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:markup="clr-namespace:MetroDemo.Markup"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
@@ -44,7 +45,7 @@
                             SelectedDate="{x:Static system:DateTime.Now}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
-                            mah:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd}"
+                            mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand}"
                             mah:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             mah:TextBoxHelper.Watermark="" />
                 <DatePicker Width="200"
@@ -159,17 +160,8 @@
                                       Grid.Row="1"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static mah:TimePartVisibility.All}">
-                                <ComboBox.ItemsSource>
-                                    <x:Array Type="mah:TimePartVisibility">
-                                        <mah:TimePartVisibility>All</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>HourMinute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Hour</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Minute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Second</mah:TimePartVisibility>
-                                    </x:Array>
-                                </ComboBox.ItemsSource>
-                            </ComboBox>
+                                      ItemsSource="{Binding Source={markup:EnumBindingSource {x:Type mah:TimePartVisibility}}, Mode=OneTime}"
+                                      SelectedItem="{x:Static mah:TimePartVisibility.All}" />
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
@@ -179,17 +171,8 @@
                                       Grid.Row="2"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
-                                      SelectedItem="{x:Static mah:TimePartVisibility.All}">
-                                <ComboBox.ItemsSource>
-                                    <x:Array Type="mah:TimePartVisibility">
-                                        <mah:TimePartVisibility>All</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>HourMinute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Hour</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Minute</mah:TimePartVisibility>
-                                        <mah:TimePartVisibility>Second</mah:TimePartVisibility>
-                                    </x:Array>
-                                </ComboBox.ItemsSource>
-                            </ComboBox>
+                                      ItemsSource="{Binding Source={markup:EnumBindingSource {x:Type mah:TimePartVisibility}}, Mode=OneTime}"
+                                      SelectedItem="{x:Static mah:TimePartVisibility.All}" />
 
                             <Label Grid.Row="3"
                                    Grid.Column="0"

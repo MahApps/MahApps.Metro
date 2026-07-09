@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Threading;
 using System.Windows;
 
@@ -13,75 +12,96 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public class MetroDialogSettings
     {
+        private const string DefaultAffirmativeButtonText = "OK";
+        private const string DefaultNegativeButtonText = "Cancel";
+
         public MetroDialogSettings()
         {
-            this.OwnerCanCloseWithDialog = false;
+        }
 
-            this.AffirmativeButtonText = "OK";
-            this.NegativeButtonText = "Cancel";
+        public MetroDialogSettings(MetroDialogSettings? source)
+            : this()
+        {
+            if (source is null)
+            {
+                return;
+            }
 
-            this.ColorScheme = MetroDialogColorScheme.Theme;
-            this.AnimateShow = this.AnimateHide = true;
+            this.OwnerCanCloseWithDialog = source.OwnerCanCloseWithDialog;
 
-            this.MaximumBodyHeight = Double.NaN;
+            this.AffirmativeButtonText = source.AffirmativeButtonText;
+            this.NegativeButtonText = source.NegativeButtonText;
+            this.DefaultText = source.DefaultText;
+            this.FirstAuxiliaryButtonText = source.FirstAuxiliaryButtonText;
+            this.SecondAuxiliaryButtonText = source.SecondAuxiliaryButtonText;
 
-            this.DefaultText = "";
-            this.DefaultButtonFocus = MessageDialogResult.Negative;
-            this.CancellationToken = CancellationToken.None;
-            this.DialogTitleFontSize = Double.NaN;
-            this.DialogMessageFontSize = Double.NaN;
-            this.DialogButtonFontSize = Double.NaN;
-            this.DialogResultOnCancel = null;
+            this.ColorScheme = source.ColorScheme;
+            this.CustomResourceDictionary = source.CustomResourceDictionary;
+
+            this.AnimateShow = source.AnimateShow;
+            this.AnimateHide = source.AnimateHide;
+
+            this.MaximumBodyHeight = source.MaximumBodyHeight;
+
+            this.DefaultButtonFocus = source.DefaultButtonFocus;
+            this.CancellationToken = source.CancellationToken;
+            this.DialogTitleFontSize = source.DialogTitleFontSize;
+            this.DialogMessageFontSize = source.DialogMessageFontSize;
+            this.DialogButtonFontSize = source.DialogButtonFontSize;
+            this.DialogResultOnCancel = source.DialogResultOnCancel;
+
+            this.Icon = source.Icon;
+            this.IconTemplate = source.IconTemplate;
         }
 
         /// <summary>
-        /// Gets or sets wheater the owner of the dialog can be closed.
+        /// Gets or sets whether the owner of the dialog can be closed.
         /// </summary>
         public bool OwnerCanCloseWithDialog { get; set; }
 
         /// <summary>
         /// Gets or sets the text used for the Affirmative button. For example: "OK" or "Yes".
         /// </summary>
-        public string AffirmativeButtonText { get; set; }
+        public string AffirmativeButtonText { get; set; } = DefaultAffirmativeButtonText;
 
         /// <summary>
         /// Enable or disable dialog hiding animation
         /// "True" - play hiding animation.
         /// "False" - skip hiding animation.
         /// </summary>
-        public bool AnimateHide { get; set; }
+        public bool AnimateHide { get; set; } = true;
 
         /// <summary>
         /// Enable or disable dialog showing animation.
         /// "True" - play showing animation.
         /// "False" - skip showing animation.
         /// </summary>
-        public bool AnimateShow { get; set; }
+        public bool AnimateShow { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a token to cancel the dialog.
         /// </summary>
-        public CancellationToken CancellationToken { get; set; }
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
         /// <summary>
         /// Gets or sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.
         /// </summary>
-        public MetroDialogColorScheme ColorScheme { get; set; }
+        public MetroDialogColorScheme ColorScheme { get; set; } = MetroDialogColorScheme.Theme;
 
         /// <summary>
         /// Gets or sets a custom resource dictionary which can contains custom styles, brushes or something else.
         /// </summary>
-        public ResourceDictionary CustomResourceDictionary { get; set; }
+        public ResourceDictionary? CustomResourceDictionary { get; set; }
 
         /// <summary>
         /// Gets or sets which button should be focused by default
         /// </summary>
-        public MessageDialogResult DefaultButtonFocus { get; set; }
+        public MessageDialogResult DefaultButtonFocus { get; set; } = MessageDialogResult.Negative;
 
         /// <summary>
-        /// Gets or sets the default text (just the inputdialog needed)
+        /// Gets or sets the default text for <see cref="InputDialog"/>.
         /// </summary>
-        public string DefaultText { get; set; }
+        public string DefaultText { get; set; } = "";
 
         /// <summary>
         /// Gets or sets the size of the dialog message font.
@@ -89,7 +109,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <value>
         /// The size of the dialog message font.
         /// </value>
-        public double DialogMessageFontSize { get; set; }
+        public double DialogMessageFontSize { get; set; } = double.NaN;
 
         /// <summary>
         /// Gets or sets the size of the dialog button font.
@@ -97,24 +117,15 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <value>
         /// The size of the dialog button font.
         /// </value>
-        public double DialogButtonFontSize { get; set; }
+        public double DialogButtonFontSize { get; set; } = double.NaN;
 
         /// <summary>
-        /// Gets or sets the dialog result when the user cancelled the dialog with 'ESC' key
+        /// Gets or sets the message dialog result when the user cancelled the dialog with 'ESC' key
         /// </summary>
-        /// <remarks>If the value is <see langword="null"/> the default behavior is determined 
-        /// by the <see cref="MessageDialogStyle"/>.
-        /// <table>
-        /// <tr><td><see cref="MessageDialogStyle"/></td><td><see cref="MessageDialogResult"/></td></tr>
-        /// <tr><td><see cref="MessageDialogStyle.Affirmative"/></td><td><see cref="MessageDialogResult.Affirmative"/></td></tr>
-        /// <tr><td>
-        /// <list type="bullet">
-        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegative"/></item>
-        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary"/></item>
-        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary"/></item>
-        /// </list></td>
-        /// <td><see cref="MessageDialogResult.Negative"/></td></tr></table></remarks>
-        public MessageDialogResult? DialogResultOnCancel { get; set; }
+        /// <remarks>
+        /// If the value is <see langword="null"/> the default behavior is determined by the <see cref="MessageDialogStyle"/>.
+        /// </remarks>
+        public MessageDialogResult? DialogResultOnCancel { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the size of the dialog title font.
@@ -122,26 +133,36 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <value>
         /// The size of the dialog title font.
         /// </value>
-        public double DialogTitleFontSize { get; set; }
+        public double DialogTitleFontSize { get; set; } = double.NaN;
 
         /// <summary>
         /// Gets or sets the text used for the first auxiliary button.
         /// </summary>
-        public string FirstAuxiliaryButtonText { get; set; }
+        public string? FirstAuxiliaryButtonText { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
         /// </summary>
-        public double MaximumBodyHeight { get; set; }
+        public double MaximumBodyHeight { get; set; } = double.NaN;
 
         /// <summary>
         /// Gets or sets the text used for the Negative button. For example: "Cancel" or "No".
         /// </summary>
-        public string NegativeButtonText { get; set; }
+        public string NegativeButtonText { get; set; } = DefaultNegativeButtonText;
 
         /// <summary>
         /// Gets or sets the text used for the second auxiliary button.
         /// </summary>
-        public string SecondAuxiliaryButtonText { get; set; }
+        public string? SecondAuxiliaryButtonText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content used for the Icon ContentPresenter.
+        /// </summary>
+        public object? Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DataTemplate used for the Icon ContentPresenter.
+        /// </summary>
+        public DataTemplate? IconTemplate { get; set; }
     }
 }

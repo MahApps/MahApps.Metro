@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0">
-            <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Default Button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <mah:Badged Width="100"
                         Margin="{StaticResource ControlMargin}"
                         Badge="3">
@@ -64,29 +64,38 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <Label Content="Square button" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Button Width="100"
+            <Label Content="Square Button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled"
                     Style="{DynamicResource MahApps.Styles.Button.Square}" />
-            <Button Width="100"
-                    Margin="{StaticResource ControlMargin}"
-                    Content="Enabled"
-                    Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
-            <Button Width="100"
+            <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
                     IsEnabled="False"
                     Style="{DynamicResource MahApps.Styles.Button.Square}" />
-            <Button Width="100"
+            <Button Width="110"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Enabled"
+                    Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
+            <Button Width="110"
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
                     IsEnabled="False"
                     Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
+            <Button Width="110"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Enabled"
+                    Style="{DynamicResource MahApps.Styles.Button.Square.Highlight}" />
+            <Button Width="110"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Disabled"
+                    IsEnabled="False"
+                    Style="{DynamicResource MahApps.Styles.Button.Square.Highlight}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="2">
-            <Label Content="Toggle button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Toggle Button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="Enabled" />
@@ -101,6 +110,12 @@
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="Disabled"
+                          IsEnabled="False"
+                          Style="{DynamicResource MahApps.Styles.ToggleButton.Flat}" />
+            <ToggleButton Width="100"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="Disabled"
+                          IsChecked="True"
                           IsEnabled="False"
                           Style="{DynamicResource MahApps.Styles.ToggleButton.Flat}" />
 
@@ -159,20 +174,49 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="3">
-            <Label Content="Flat button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Flat Button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Enabled"
+                    Content="Flat"
                     Style="{StaticResource MahApps.Styles.Button.Flat}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Disabled"
+                    Content="Flat"
                     IsEnabled="False"
                     Style="{StaticResource MahApps.Styles.Button.Flat}" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Flat Accent"
+                    Style="{StaticResource MahApps.Styles.Button.Flat.Accent}" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Flat Accent"
+                    IsEnabled="False"
+                    Style="{StaticResource MahApps.Styles.Button.Flat.Accent}" />
+
+            <Label Content="Button Win10" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Content"
+                    Style="{StaticResource MahApps.Styles.Button.Win10}" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Content"
+                    IsEnabled="False"
+                    Style="{StaticResource MahApps.Styles.Button.Win10}" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Accent"
+                    Style="{StaticResource MahApps.Styles.Button.Accent.Win10}" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Content="Accent"
+                    IsEnabled="False"
+                    Style="{StaticResource MahApps.Styles.Button.Accent.Win10}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="4">
-            <Label Content="Circle button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Circle Button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
@@ -285,7 +329,8 @@
 
             <mah:ToggleSwitch Margin="{StaticResource ControlMargin}"
                               Header="Header"
-                              IsOn="{Binding CanUseToggleSwitch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                              IsOn="{Binding CanUseToggleSwitch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Toggled="ToggleSwitch_OnToggled" />
             <mah:ToggleSwitch Margin="{StaticResource ControlMargin}"
                               CommandParameter="{Binding}"
                               OffCommand="{Binding ToggleSwitchOffCommand}"
@@ -321,7 +366,9 @@
                 </StackPanel.Resources>
 
                 <Label Content="CheckBox Win10" Style="{DynamicResource DescriptionHeaderStyle}" />
-                <CheckBox IsChecked="False" IsEnabled="True" mah:CheckBoxHelper.CheckCornerRadius="2" />
+                <CheckBox mah:CheckBoxHelper.CheckCornerRadius="2"
+                          IsChecked="False"
+                          IsEnabled="True" />
                 <CheckBox IsChecked="False" IsEnabled="False" />
                 <CheckBox IsChecked="True" IsEnabled="False" />
                 <CheckBox IsChecked="True" IsEnabled="True" />

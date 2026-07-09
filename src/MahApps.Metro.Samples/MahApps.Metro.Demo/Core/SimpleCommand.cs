@@ -7,33 +7,49 @@ using System.Windows.Input;
 
 namespace MetroDemo.Core
 {
-    public class SimpleCommand : ICommand
+    public class SimpleCommand<T> : ICommand
     {
-        public SimpleCommand(Func<object, bool> canExecute = null, Action<object> execute = null)
+        public SimpleCommand(Func<T?, bool>? canExecute = null, Action<T?>? execute = null)
         {
             this.CanExecuteDelegate = canExecute;
             this.ExecuteDelegate = execute;
         }
 
-        public Func<object, bool> CanExecuteDelegate { get; set; }
+        public Func<T?, bool>? CanExecuteDelegate { get; }
 
-        public Action<object> ExecuteDelegate { get; set; }
+        public Action<T?>? ExecuteDelegate { get; }
 
+#if NET5_0_OR_GREATER
+        public bool CanExecute(object? parameter)
+#else
         public bool CanExecute(object parameter)
+#endif
         {
             var canExecute = this.CanExecuteDelegate;
-            return canExecute == null || canExecute(parameter);
+#pragma warning disable CS8604 // Possible null reference argument.
+            return canExecute is null || canExecute(parameter is T t ? t : default);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
+#if NET5_0_OR_GREATER
+        public event EventHandler? CanExecuteChanged
+#else
         public event EventHandler CanExecuteChanged
+#endif
         {
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
         }
 
+#if NET5_0_OR_GREATER
+        public void Execute(object? parameter)
+#else
         public void Execute(object parameter)
+#endif
         {
-            this.ExecuteDelegate?.Invoke(parameter);
+#pragma warning disable CS8604 // Possible null reference argument.
+            this.ExecuteDelegate?.Invoke(parameter is T t ? t : default);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
     }
 }

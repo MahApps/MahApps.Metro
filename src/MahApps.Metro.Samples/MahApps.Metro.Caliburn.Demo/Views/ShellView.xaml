@@ -8,8 +8,6 @@
                  Title="Flyouts Demo"
                  Width="800"
                  Height="600"
-                 BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                 BorderThickness="1"
                  SaveWindowPosition="True"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
@@ -50,9 +48,10 @@
                     Margin="2"
                     caliburn:Message.Attach="[Event Click] = [Action ToggleFlyout(3)]"
                     Content="Settings" />
-            <Button x:Name="Close"
+            <Button x:Name="CloseButton"
                     MinWidth="90"
                     Margin="2"
+                    caliburn:Message.Attach="[Event Click] = [Action Close]"
                     Content="Close" />
         </StackPanel>
 

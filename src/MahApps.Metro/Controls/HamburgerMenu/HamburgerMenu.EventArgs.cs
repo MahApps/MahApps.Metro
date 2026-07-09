@@ -31,7 +31,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the clicked item (options item).
         /// </summary>
-        public object ClickedItem { get; internal set; }
+        public object? ClickedItem { get; internal set; }
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the invoked item.
         /// </summary>
-        public object InvokedItem { get; internal set; }
+        public object? InvokedItem { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether the invoked item is an options item

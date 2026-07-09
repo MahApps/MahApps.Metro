@@ -19,9 +19,9 @@ namespace MahApps.Metro.Controls
                                           typeof(Badged),
                                           new PropertyMetadata(default(Storyboard)));
 
-        public Storyboard BadgeChangedStoryboard
+        public Storyboard? BadgeChangedStoryboard
         {
-            get => (Storyboard)this.GetValue(BadgeChangedStoryboardProperty);
+            get => (Storyboard?)this.GetValue(BadgeChangedStoryboardProperty);
             set => this.SetValue(BadgeChangedStoryboardProperty, value);
         }
 
@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls
                 }
                 catch (Exception exception)
                 {
-                    throw new MahAppsException("Uups, it seems like there is something wrong with the given Storyboard.", exception);
+                    throw new MahAppsException("Uups, it seems like there is something wrong with the given BadgeChangedStoryboard.", exception);
                 }
             }
         }

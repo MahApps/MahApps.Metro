@@ -13,7 +13,7 @@ namespace MetroDemo
     {
         public SettingsView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

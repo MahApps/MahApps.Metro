@@ -45,16 +45,19 @@ namespace MahApps.Metro.Controls
             var from = (GridLength)this.GetValue(FromProperty);
             var to = (GridLength)this.GetValue(ToProperty);
             if (from.GridUnitType != to.GridUnitType) // We can't animate different types, so just skip straight to it
+            {
                 return to;
+            }
+
             var fromVal = from.Value;
             var toVal = to.Value;
 
             if (fromVal > toVal)
             {
-                return new GridLength((1 - animationClock.CurrentProgress.Value) * (fromVal - toVal) + toVal, GridUnitType.Star);
+                return new GridLength((1 - animationClock.CurrentProgress.GetValueOrDefault()) * (fromVal - toVal) + toVal, GridUnitType.Star);
             }
 
-            return new GridLength(animationClock.CurrentProgress.Value * (toVal - fromVal) + fromVal, GridUnitType.Star);
+            return new GridLength(animationClock.CurrentProgress.GetValueOrDefault() * (toVal - fromVal) + fromVal, GridUnitType.Star);
         }
 
         protected override Freezable CreateInstanceCore()

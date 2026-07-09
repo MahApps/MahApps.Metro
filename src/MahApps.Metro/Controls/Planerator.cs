@@ -91,13 +91,13 @@ namespace MahApps.Metro.Controls
         private readonly QuaternionRotation3D quaternionRotation = new QuaternionRotation3D();
         private readonly RotateTransform3D rotationTransform = new RotateTransform3D();
         private readonly ScaleTransform3D scaleTransform = new ScaleTransform3D();
-        private Decorator logicalChild;
-        private FrameworkElement originalChild;
-        private Viewport3D viewport3D;
-        private FrameworkElement visualChild;
-        private Viewport2DVisual3D frontModel;
+        private Decorator? logicalChild;
+        private FrameworkElement? originalChild;
+        private Viewport3D? viewport3D;
+        private FrameworkElement? visualChild;
+        private Viewport2DVisual3D? frontModel;
 
-        public FrameworkElement Child
+        public FrameworkElement? Child
         {
             get => this.originalChild;
             set
@@ -134,7 +134,7 @@ namespace MahApps.Metro.Controls
                 // Measure based on the size of the logical child, since we want to align with it.
                 this.logicalChild.Measure(availableSize);
                 var result = this.logicalChild.DesiredSize;
-                this.visualChild.Measure(result);
+                this.visualChild?.Measure(result);
                 return result;
             }
 
@@ -146,14 +146,14 @@ namespace MahApps.Metro.Controls
             if (this.logicalChild != null)
             {
                 this.logicalChild.Arrange(new Rect(finalSize));
-                this.visualChild.Arrange(new Rect(finalSize));
+                this.visualChild?.Arrange(new Rect(finalSize));
                 this.Update3D();
             }
 
             return base.ArrangeOverride(finalSize);
         }
 
-        protected override Visual GetVisualChild(int index)
+        protected override Visual? GetVisualChild(int index)
         {
             return this.visualChild;
         }
@@ -248,6 +248,12 @@ namespace MahApps.Metro.Controls
 
         private void Update3D()
         {
+            if (this.viewport3D is null
+                || this.logicalChild is null)
+            {
+                return;
+            }
+
             // Use GetDescendantBounds for sizing and centering since DesiredSize includes layout whitespace, whereas GetDescendantBounds 
             // is tighter
             Rect logicalBounds = VisualTreeHelper.GetDescendantBounds(this.logicalChild);

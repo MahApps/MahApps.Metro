@@ -40,7 +40,10 @@
                 <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse.Fast}" />
             </Style>
 
-            <Style x:Key="MahApps.Styles.MetroHeader.Horizontal" TargetType="mah:MetroHeader">
+            <Style x:Key="MahApps.Styles.MetroHeader.Horizontal"
+                   BasedOn="{StaticResource MahApps.Styles.MetroHeader}"
+                   TargetType="mah:MetroHeader">
+                <Setter Property="Padding" Value="0 2" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="mah:MetroHeader">

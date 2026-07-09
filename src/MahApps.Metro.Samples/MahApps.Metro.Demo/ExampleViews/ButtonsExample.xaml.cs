@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using MahApps.Metro.Controls;
 
 namespace MetroDemo.ExampleViews
 {
@@ -21,13 +22,9 @@ namespace MetroDemo.ExampleViews
 
         private void CountingButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (this.CountingBadge.Badge == null || Equals(this.CountingBadge.Badge, ""))
-            {
-                this.CountingBadge.Badge = 0;
-            }
-
-            var next = int.Parse(this.CountingBadge.Badge.ToString()) + 1;
-            this.CountingBadge.Badge = next < 43 ? (object)next : null;
+            var badge = (this.CountingBadge.Badge as int?).GetValueOrDefault(0);
+            var next = badge + 1;
+            this.CountingBadge.SetCurrentValue(Badged.BadgeProperty, next < 43 ? next : null);
         }
 
         private void SplitButton_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -36,6 +33,11 @@ namespace MetroDemo.ExampleViews
             var item = ((Selector)sender).SelectedItem;
             var value = ((Selector)sender).SelectedValue;
             Debug.WriteLine($">> SplitButton SelectionChanged: index={index}, item={item}, value={value}");
+        }
+
+        private void ToggleSwitch_OnToggled(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine($">> ToggleSwitch Toggled: sender={sender}, OriginalSource={e.OriginalSource}, Source={e.Source}, IsOn={(sender as ToggleSwitch)?.IsOn}");
         }
     }
 }

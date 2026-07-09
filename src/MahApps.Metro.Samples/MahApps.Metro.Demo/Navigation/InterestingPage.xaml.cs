@@ -13,7 +13,7 @@ namespace MetroDemo.Navigation
     {
         public InterestingPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

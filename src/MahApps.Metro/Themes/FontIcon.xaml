@@ -16,7 +16,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:FontIcon}">
                     <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        <TextBlock x:Name="PART_Glyph"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    FontFamily="{TemplateBinding FontFamily}"
                                    FontSize="{TemplateBinding FontSize}"
@@ -31,6 +32,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="TextOptions.TextRenderingMode" Value="Aliased" />
+        <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 

@@ -18,15 +18,15 @@ namespace MahApps.Metro.Converters
             return this;
         }
 
-        protected abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
+        protected abstract object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
 
-        protected abstract object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture);
+        protected abstract object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture);
 
-        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        object? IValueConverter.Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             try
             {
-                return Convert(value, targetType, parameter, culture);
+                return this.Convert(value, targetType, parameter, culture);
             }
             catch
             {
@@ -34,11 +34,11 @@ namespace MahApps.Metro.Converters
             }
         }
 
-        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        object? IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             try
             {
-                return ConvertBack(value, targetType, parameter, culture);
+                return this.ConvertBack(value, targetType, parameter, culture);
             }
             catch
             {
@@ -50,13 +50,13 @@ namespace MahApps.Metro.Converters
     [MarkupExtensionReturnType(typeof(MarkupMultiConverter))]
     public abstract class MarkupMultiConverter : MarkupExtension, IValueConverter, IMultiValueConverter
     {
-        public abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
+        public abstract object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture);
 
-        public abstract object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
+        public abstract object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture);
 
-        public abstract object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture);
+        public abstract object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture);
 
-        public abstract object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture);
+        public abstract object[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture);
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {

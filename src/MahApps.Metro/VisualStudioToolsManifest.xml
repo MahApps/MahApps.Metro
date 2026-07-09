@@ -18,6 +18,7 @@
             <Item Type="MahApps.Metro.Controls.MetroProgressBar" />
             <Item Type="MahApps.Metro.Controls.MetroTabControl" />
             <Item Type="MahApps.Metro.Controls.MetroThumbContentControl" />
+            <Item Type="MahApps.Metro.Controls.MultiSelectionComboBox" />
             <Item Type="MahApps.Metro.Controls.MultiFrameImage" />
             <Item Type="MahApps.Metro.Controls.NumericUpDown" />
             <Item Type="MahApps.Metro.Controls.Pivot" />

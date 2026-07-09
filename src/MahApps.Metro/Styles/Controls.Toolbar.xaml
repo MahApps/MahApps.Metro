@@ -31,7 +31,7 @@
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="Border"
                             Margin="0"
                             Background="{TemplateBinding Background}"

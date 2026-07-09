@@ -32,10 +32,10 @@ namespace MahApps.Metro.Actions
         /// <summary>
         /// Gets or sets the command that this trigger is bound to.
         /// </summary>
-        public ICommand Command
+        public ICommand? Command
         {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
+            get => (ICommand?)this.GetValue(CommandProperty);
+            set => this.SetValue(CommandProperty, value);
         }
 
         /// <summary>
@@ -58,10 +58,21 @@ namespace MahApps.Metro.Actions
         /// <summary>
         /// Gets or sets an object that will be passed to the <see cref="Command" /> attached to this trigger.
         /// </summary>
-        public object CommandParameter
+        public object? CommandParameter
         {
-            get { return this.GetValue(CommandParameterProperty); }
-            set { this.SetValue(CommandParameterProperty, value); }
+            get => this.GetValue(CommandParameterProperty);
+            set => this.SetValue(CommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// Specifies whether the AssociatedObject should be passed to the bound RelayCommand.
+        /// This happens only if the <see cref="CommandParameter"/> is not set.
+        /// </summary>
+        public bool PassAssociatedObjectToCommand { get; set; }
+
+        public CommandTriggerAction()
+        {
+            this.PassAssociatedObjectToCommand = true;
         }
 
         protected override void OnAttached()
@@ -72,7 +83,7 @@ namespace MahApps.Metro.Actions
 
         protected override void Invoke(object parameter)
         {
-            if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
+            if (this.AssociatedObject is null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
             {
                 return;
             }
@@ -88,44 +99,49 @@ namespace MahApps.Metro.Actions
             }
         }
 
-        private static void OnCommandChanged(CommandTriggerAction action, DependencyPropertyChangedEventArgs e)
+        private static void OnCommandChanged(CommandTriggerAction? action, DependencyPropertyChangedEventArgs e)
         {
-            if (action == null)
+            if (action is null)
             {
                 return;
             }
 
-            if (e.OldValue != null)
+            if (e.OldValue is ICommand oldCommand)
             {
-                ((ICommand)e.OldValue).CanExecuteChanged -= action.OnCommandCanExecuteChanged;
+                oldCommand.CanExecuteChanged -= action.OnCommandCanExecuteChanged;
             }
 
-            var command = (ICommand)e.NewValue;
-            if (command != null)
+            if (e.NewValue is ICommand newCommand)
             {
-                command.CanExecuteChanged += action.OnCommandCanExecuteChanged;
+                newCommand.CanExecuteChanged += action.OnCommandCanExecuteChanged;
             }
 
             action.EnableDisableElement();
         }
 
-        protected virtual object GetCommandParameter()
+        protected virtual object? GetCommandParameter()
         {
-            return this.CommandParameter ?? this.AssociatedObject;
+            var parameter = this.CommandParameter;
+            if (parameter is null && this.PassAssociatedObjectToCommand)
+            {
+                parameter = this.AssociatedObject;
+            }
+
+            return parameter;
         }
 
         private void EnableDisableElement()
         {
-            if (this.AssociatedObject == null)
+            if (this.AssociatedObject is null)
             {
                 return;
             }
 
             var command = this.Command;
-            this.AssociatedObject.SetCurrentValue(UIElement.IsEnabledProperty, BooleanBoxes.Box(command == null || command.CanExecute(this.GetCommandParameter())));
+            this.AssociatedObject.SetCurrentValue(UIElement.IsEnabledProperty, BooleanBoxes.Box(command is null || command.CanExecute(this.GetCommandParameter())));
         }
 
-        private void OnCommandCanExecuteChanged(object sender, EventArgs e)
+        private void OnCommandCanExecuteChanged(object? sender, EventArgs e)
         {
             this.EnableDisableElement();
         }

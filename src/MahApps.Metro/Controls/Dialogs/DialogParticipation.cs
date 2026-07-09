@@ -12,11 +12,11 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         private static readonly IDictionary<object, DependencyObject> ContextRegistrationIndex = new Dictionary<object, DependencyObject>();
 
-        public static readonly DependencyProperty RegisterProperty = DependencyProperty.RegisterAttached(
-            "Register",
-            typeof(object),
-            typeof(DialogParticipation),
-            new PropertyMetadata(default(object), RegisterPropertyChangedCallback));
+        public static readonly DependencyProperty RegisterProperty
+            = DependencyProperty.RegisterAttached("Register",
+                                                  typeof(object),
+                                                  typeof(DialogParticipation),
+                                                  new PropertyMetadata(null, RegisterPropertyChangedCallback));
 
         private static void RegisterPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -31,19 +31,19 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
-        public static void SetRegister(DependencyObject element, object context)
+        public static void SetRegister(DependencyObject element, object? context)
         {
             element.SetValue(RegisterProperty, context);
         }
 
-        public static object GetRegister(DependencyObject element)
+        public static object? GetRegister(DependencyObject element)
         {
             return element.GetValue(RegisterProperty);
         }
 
         internal static bool IsRegistered(object context)
         {
-            if (context == null)
+            if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
@@ -53,7 +53,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         internal static DependencyObject GetAssociation(object context)
         {
-            if (context == null)
+            if (context is null)
             {
                 throw new ArgumentNullException(nameof(context));
             }

@@ -15,6 +15,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Flyout.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FlyoutsControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FontIcon.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/PathIcon.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroAnimatedSingleRowTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroAnimatedTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroContentControl.xaml" />
@@ -27,6 +28,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RevealImage.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
@@ -37,17 +39,23 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HotKeyBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorEyeDropper.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorCanvas.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPalette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MultiSelectionComboBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/MessageDialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/InputDialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/LoginDialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/ProgressDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <theming:MahAppsLibraryThemeProvider x:Key="{x:Static theming:MahAppsLibraryThemeProvider.DefaultInstance}" />
 
     <!--  set up default styles for our custom controls  -->
 
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Flyout}" TargetType="{x:Type mah:Flyout}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type mah:ToggleSwitch}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentControlEx}" TargetType="{x:Type mah:ContentControlEx}" />
@@ -58,8 +66,8 @@
     <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenuListBox}" TargetType="{x:Type mah:HamburgerMenuListBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}" TargetType="{x:Type mah:HamburgerMenu}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RevealImage}" TargetType="{x:Type mah:RevealImage}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type mah:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipViewItem}" TargetType="{x:Type mah:FlipViewItem}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type mah:FlipView}" />
@@ -68,6 +76,14 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}" TargetType="{x:Type mah:ColorEyeDropper}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette}" TargetType="{x:Type mah:ColorPalette}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type mah:ColorPicker}" />
+    <!--#endregion-->
+    <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
+    <!--#region Dialogs-->
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.InputDialog}" TargetType="{x:Type dialogs:InputDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.LoginDialog}" TargetType="{x:Type dialogs:LoginDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressDialog}" TargetType="{x:Type dialogs:ProgressDialog}" />
     <!--#endregion-->
 
 </ResourceDictionary>

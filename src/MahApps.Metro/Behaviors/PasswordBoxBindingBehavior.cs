@@ -18,31 +18,41 @@ namespace MahApps.Metro.Behaviors
     public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
     {
         /// <summary>
-        ///     Gets or sets the bindable Password property on the PasswordBox control. This is a dependency property.
+        /// Gets or sets the Password property on the PasswordBox control. This is a dependency property.
         /// </summary>
         public static readonly DependencyProperty PasswordProperty
-            = DependencyProperty.RegisterAttached("Password", typeof(string),
-                                                  typeof(PasswordBoxBindingBehavior),
-                                                  new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPasswordPropertyChanged)));
+            = DependencyProperty.RegisterAttached(
+                "Password",
+                typeof(string),
+                typeof(PasswordBoxBindingBehavior),
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnPasswordPropertyChanged));
 
+        /// <summary>Helper for getting <see cref="PasswordProperty"/> from <paramref name="dpo"/>.</summary>
+        /// <param name="dpo"><see cref="DependencyObject"/> to read <see cref="PasswordProperty"/> from.</param>
+        /// <returns>Password property value.</returns>
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static string GetPassword(DependencyObject dpo)
         {
             return (string)dpo.GetValue(PasswordProperty);
         }
 
+        /// <summary>Helper for setting <see cref="PasswordProperty"/> on <paramref name="dpo"/>.</summary>
+        /// <param name="dpo"><see cref="DependencyObject"/> to set <see cref="PasswordProperty"/> on.</param>
+        /// <param name="value">Password property value.</param>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static void SetPassword(DependencyObject dpo, string value)
         {
             dpo.SetValue(PasswordProperty, value);
         }
 
         /// <summary>
-        ///     Handles changes to the 'Password' attached property.
+        /// Handles changes to the 'Password' attached property.
         /// </summary>
         private static void OnPasswordPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var targetPasswordBox = sender as PasswordBox;
-            if (targetPasswordBox != null)
+            if (sender is PasswordBox targetPasswordBox)
             {
                 targetPasswordBox.PasswordChanged -= PasswordBoxPasswordChanged;
                 if (!GetIsChanging(targetPasswordBox))
@@ -55,14 +65,16 @@ namespace MahApps.Metro.Behaviors
         }
 
         /// <summary>
-        ///     Handle the 'PasswordChanged'-event on the PasswordBox
+        /// Handle the 'PasswordChanged'-event on the PasswordBox
         /// </summary>
         private static void PasswordBoxPasswordChanged(object sender, RoutedEventArgs e)
         {
-            var passwordBox = (PasswordBox)sender;
-            SetIsChanging(passwordBox, true);
-            SetPassword(passwordBox, passwordBox.Password);
-            SetIsChanging(passwordBox, false);
+            if (sender is PasswordBox passwordBox)
+            {
+                SetIsChanging(passwordBox, true);
+                SetPassword(passwordBox, passwordBox.Password);
+                SetIsChanging(passwordBox, false);
+            }
         }
 
         private static void SetRevealedPasswordCaretIndex(PasswordBox passwordBox)
@@ -86,10 +98,10 @@ namespace MahApps.Metro.Behaviors
         }
 
         /// <summary>
-        ///     Called after the behavior is attached to an AssociatedObject.
+        /// Called after the behavior is attached to an AssociatedObject.
         /// </summary>
         /// <remarks>
-        ///     Override this to hook up functionality to the AssociatedObject.
+        /// Override this to hook up functionality to the AssociatedObject.
         /// </remarks>
         protected override void OnAttached()
         {
@@ -112,7 +124,7 @@ namespace MahApps.Metro.Behaviors
             if (textBox != null)
             {
                 var selection = GetSelection(this.AssociatedObject);
-                if (selection == null)
+                if (selection is null)
                 {
                     var infos = this.AssociatedObject.GetType().GetProperty("Selection", BindingFlags.NonPublic | BindingFlags.Instance);
                     selection = infos?.GetValue(this.AssociatedObject, null) as TextSelection;
@@ -128,16 +140,16 @@ namespace MahApps.Metro.Behaviors
             }
         }
 
-        private void PasswordBoxSelectionChanged(object sender, EventArgs e)
+        private void PasswordBoxSelectionChanged(object? sender, EventArgs e)
         {
             SetRevealedPasswordCaretIndex(this.AssociatedObject);
         }
 
         /// <summary>
-        ///     Called when the behavior is being detached from its AssociatedObject, but before it has actually occurred.
+        /// Called when the behavior is being detached from its AssociatedObject, but before it has actually occurred.
         /// </summary>
         /// <remarks>
-        ///     Override this to unhook functionality from the AssociatedObject.
+        /// Override this to unhook functionality from the AssociatedObject.
         /// </remarks>
         protected override void OnDetaching()
         {
@@ -158,10 +170,11 @@ namespace MahApps.Metro.Behaviors
         }
 
         private static readonly DependencyProperty IsChangingProperty
-            = DependencyProperty.RegisterAttached("IsChanging",
-                                                  typeof(bool),
-                                                  typeof(PasswordBoxBindingBehavior),
-                                                  new UIPropertyMetadata(BooleanBoxes.FalseBox));
+            = DependencyProperty.RegisterAttached(
+                "IsChanging",
+                typeof(bool),
+                typeof(PasswordBoxBindingBehavior),
+                new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
         private static bool GetIsChanging(UIElement element)
         {
@@ -174,33 +187,35 @@ namespace MahApps.Metro.Behaviors
         }
 
         private static readonly DependencyProperty SelectionProperty
-            = DependencyProperty.RegisterAttached("Selection",
-                                                  typeof(TextSelection),
-                                                  typeof(PasswordBoxBindingBehavior),
-                                                  new UIPropertyMetadata(default(TextSelection)));
+            = DependencyProperty.RegisterAttached(
+                "Selection",
+                typeof(TextSelection),
+                typeof(PasswordBoxBindingBehavior),
+                new UIPropertyMetadata(default(TextSelection)));
 
-        private static TextSelection GetSelection(DependencyObject obj)
+        private static TextSelection? GetSelection(DependencyObject obj)
         {
-            return (TextSelection)obj.GetValue(SelectionProperty);
+            return (TextSelection?)obj.GetValue(SelectionProperty);
         }
 
-        private static void SetSelection(DependencyObject obj, TextSelection value)
+        private static void SetSelection(DependencyObject obj, TextSelection? value)
         {
             obj.SetValue(SelectionProperty, value);
         }
 
         private static readonly DependencyProperty RevealedPasswordTextBoxProperty
-            = DependencyProperty.RegisterAttached("RevealedPasswordTextBox",
-                                                  typeof(TextBox),
-                                                  typeof(PasswordBoxBindingBehavior),
-                                                  new UIPropertyMetadata(default(TextBox)));
+            = DependencyProperty.RegisterAttached(
+                "RevealedPasswordTextBox",
+                typeof(TextBox),
+                typeof(PasswordBoxBindingBehavior),
+                new UIPropertyMetadata(default(TextBox)));
 
-        private static TextBox GetRevealedPasswordTextBox(DependencyObject obj)
+        private static TextBox? GetRevealedPasswordTextBox(DependencyObject obj)
         {
-            return (TextBox)obj.GetValue(RevealedPasswordTextBoxProperty);
+            return (TextBox?)obj.GetValue(RevealedPasswordTextBoxProperty);
         }
 
-        private static void SetRevealedPasswordTextBox(DependencyObject obj, TextBox value)
+        private static void SetRevealedPasswordTextBox(DependencyObject obj, TextBox? value)
         {
             obj.SetValue(RevealedPasswordTextBoxProperty, value);
         }

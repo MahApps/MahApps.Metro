@@ -22,7 +22,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the preview image while the cursor is moving
         /// </summary>
-        public ImageSource PreviewImage => (ImageSource)this.GetValue(PreviewImageProperty);
+        public ImageSource? PreviewImage => (ImageSource?)this.GetValue(PreviewImageProperty);
 
         /// <summary>Identifies the <see cref="PreviewBrushProperty"/> dependency property.</summary>
         internal static readonly DependencyPropertyKey PreviewBrushPropertyKey

@@ -14,18 +14,25 @@ namespace MahApps.Metro.Controls
 {
     public class MultiFrameImage : Image
     {
+        /// <summary>Identifies the <see cref="MultiFrameImageMode"/> dependency property.</summary>
+        public static readonly DependencyProperty MultiFrameImageModeProperty
+            = DependencyProperty.Register(nameof(MultiFrameImageMode),
+                                          typeof(MultiFrameImageMode),
+                                          typeof(MultiFrameImage),
+                                          new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets or sets the mode for the rendered image.
+        /// </summary>
+        public MultiFrameImageMode MultiFrameImageMode
+        {
+            get => (MultiFrameImageMode)this.GetValue(MultiFrameImageModeProperty);
+            set => this.SetValue(MultiFrameImageModeProperty, value);
+        }
+
         static MultiFrameImage()
         {
             SourceProperty.OverrideMetadata(typeof(MultiFrameImage), new FrameworkPropertyMetadata(OnSourceChanged));
-        }
-
-        public static readonly DependencyProperty MultiFrameImageModeProperty = DependencyProperty.Register(
-            nameof(MultiFrameImageMode), typeof(MultiFrameImageMode), typeof(MultiFrameImage), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
-
-        public MultiFrameImageMode MultiFrameImageMode
-        {
-            get { return (MultiFrameImageMode)GetValue(MultiFrameImageModeProperty); }
-            set { SetValue(MultiFrameImageModeProperty, value); }
         }
 
         private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -34,53 +41,46 @@ namespace MahApps.Metro.Controls
             multiFrameImage.UpdateFrameList();
         }
 
-        private readonly List<BitmapSource> _frames = new List<BitmapSource>();
+        private readonly List<BitmapSource> frames = new List<BitmapSource>();
 
         private void UpdateFrameList()
         {
-            _frames.Clear();
+            this.frames.Clear();
 
-            var bitmapFrame = Source as BitmapFrame;
-            if (bitmapFrame == null)
-            {
-                return;
-            }
-
-            var decoder = bitmapFrame.Decoder;
-            if (decoder == null || decoder.Frames.Count == 0)
+            var decoder = (this.Source as BitmapFrame)?.Decoder;
+            if (decoder is null || decoder.Frames.Count == 0)
             {
                 return;
             }
 
             // order all frames by size, take the frame with the highest color depth per size
-            _frames.AddRange(
-                decoder
-                    .Frames
-                    .GroupBy(f => f.PixelWidth * f.PixelHeight)
-                    .OrderBy(g => g.Key)
-                    .Select(g => g.OrderByDescending(f => f.Format.BitsPerPixel).First())
+            this.frames.AddRange(decoder
+                                 .Frames
+                                 .GroupBy(f => f.PixelWidth * f.PixelHeight)
+                                 .OrderBy(g => g.Key)
+                                 .Select(g => g.OrderByDescending(f => f.Format.BitsPerPixel).First())
             );
         }
 
         protected override void OnRender(DrawingContext dc)
         {
-            if (_frames.Count == 0)
+            if (this.frames.Count == 0)
             {
                 base.OnRender(dc);
                 return;
             }
 
-            switch (MultiFrameImageMode)
+            switch (this.MultiFrameImageMode)
             {
                 case MultiFrameImageMode.ScaleDownLargerFrame:
-                    var minSize = Math.Max(RenderSize.Width, RenderSize.Height);
-                    var minFrame = _frames.FirstOrDefault(f => f.Width >= minSize && f.Height >= minSize) ?? _frames.Last();
-                    dc.DrawImage(minFrame, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+                    var minSize = Math.Max(this.RenderSize.Width, this.RenderSize.Height);
+                    var minFrame = this.frames.FirstOrDefault(f => f.Width >= minSize && f.Height >= minSize) ?? this.frames.Last();
+                    dc.DrawImage(minFrame, new Rect(0, 0, this.RenderSize.Width, this.RenderSize.Height));
                     break;
                 case MultiFrameImageMode.NoScaleSmallerFrame:
-                    var maxSize = Math.Min(RenderSize.Width, RenderSize.Height);
-                    var maxFrame = _frames.LastOrDefault(f => f.Width <= maxSize && f.Height <= maxSize) ?? _frames.First();
-                    dc.DrawImage(maxFrame, new Rect((RenderSize.Width - maxFrame.Width) / 2, (RenderSize.Height - maxFrame.Height) / 2, maxFrame.Width, maxFrame.Height));
+                    var maxSize = Math.Min(this.RenderSize.Width, this.RenderSize.Height);
+                    var maxFrame = this.frames.LastOrDefault(f => f.Width <= maxSize && f.Height <= maxSize) ?? this.frames.First();
+                    dc.DrawImage(maxFrame, new Rect((this.RenderSize.Width - maxFrame.Width) / 2, (this.RenderSize.Height - maxFrame.Height) / 2, maxFrame.Width, maxFrame.Height));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

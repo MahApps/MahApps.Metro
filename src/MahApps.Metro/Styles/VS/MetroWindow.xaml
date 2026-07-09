@@ -8,7 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.MetroWindow.VisualStudio" TargetType="{x:Type mah:MetroWindow}">
-        <Setter Property="GlowBrush" Value="{DynamicResource MahApps.Brushes.Window.Glow}" />
+        <Setter Property="GlowColor" Value="{DynamicResource MahApps.Colors.Accent}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ShowTitleBar" Value="True" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.WindowTitle.Foreground}" />
@@ -53,7 +53,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.TextBox.Window.QuickLaunch.VisualStudio"
-           BasedOn="{StaticResource MahApps.Styles.TextBox.Button}"
+           BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
         <Setter Property="FontSize" Value="12" />

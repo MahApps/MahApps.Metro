@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
         private const string PART_ContentPresenter = "PART_ContentPresenter";
         private const string PART_Separator = "PART_Separator";
 
-        internal PropertyChangeNotifier VisibilityPropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier? VisibilityPropertyChangeNotifier { get; set; }
 
         /// <summary>Identifies the <see cref="IsSeparatorVisible"/> dependency property.</summary>
         public static readonly DependencyProperty IsSeparatorVisibleProperty =
@@ -45,9 +45,9 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="ParentWindowCommands"/> dependency property.</summary>
         public static readonly DependencyProperty ParentWindowCommandsProperty = ParentWindowCommandsPropertyKey.DependencyProperty;
 
-        public WindowCommands ParentWindowCommands
+        public WindowCommands? ParentWindowCommands
         {
-            get => (WindowCommands)this.GetValue(ParentWindowCommandsProperty);
+            get => (WindowCommands?)this.GetValue(ParentWindowCommandsProperty);
             protected set => this.SetValue(ParentWindowCommandsPropertyKey, value);
         }
 

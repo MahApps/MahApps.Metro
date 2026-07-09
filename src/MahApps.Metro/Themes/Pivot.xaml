@@ -8,6 +8,13 @@
                    Text="{Binding}" />
     </DataTemplate>
 
+    <DataTemplate x:Key="MahApps.Templates.PivotItemHeader" DataType="{x:Type mah:PivotItem}">
+        <TextBlock Margin="0 0 25 0"
+                   FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
+                   FontSize="{DynamicResource SubMahApps.Sizes.HeaderFont}"
+                   Text="{Binding}" />
+    </DataTemplate>
+
     <Style x:Key="MahApps.Styles.ListViewItem.Pivot" TargetType="{x:Type ListViewItem}">
         <Setter Property="Border.BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
@@ -67,17 +74,9 @@
                                   Style="{x:Null}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
+                                    <StackPanel IsItemsHost="True" Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="{x:Type mah:PivotItem}">
-                                    <TextBlock Margin="0 0 25 0"
-                                               FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
-                                               FontSize="{DynamicResource SubMahApps.Sizes.HeaderFont}"
-                                               Text="{Binding Header}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
                         </ListView>
 
                         <ScrollViewer x:Name="PART_Scroll"
@@ -90,7 +89,7 @@
                                           ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type mah:Pivot}}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" />
+                                        <StackPanel IsItemsHost="True" Orientation="Horizontal" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
@@ -119,10 +118,14 @@
     </Style>
 
     <Style TargetType="{x:Type mah:PivotItem}">
+        <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.PivotItemHeader}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:PivotItem}">
-                    <ContentPresenter />
+                    <ContentPresenter Content="{TemplateBinding Header}"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

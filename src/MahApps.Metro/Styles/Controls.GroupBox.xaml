@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
-    <converters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
+    <mahConverters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
+    <mahConverters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
 
     <Thickness x:Key="GroupBoxHeaderThemePadding">4</Thickness>
 
@@ -27,15 +27,15 @@
                                 Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Bottom}}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Bottom}}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 UseLayoutRounding="True">
                             <mah:ContentControlEx x:Name="HeaderContent"
-                                                  Margin="{DynamicResource GroupBoxHeaderThemePadding}"
+                                                  Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                                   HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   Content="{TemplateBinding Header}"
-                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
@@ -47,7 +47,7 @@
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   UseLayoutRounding="False">
                                 <TextElement.Foreground>
-                                    <MultiBinding Converter="{x:Static converters:BackgroundToForegroundConverter.Instance}">
+                                    <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
                                         <Binding Mode="OneWay"
                                                  Path="(mah:HeaderedControlHelper.HeaderBackground)"
                                                  RelativeSource="{RelativeSource TemplatedParent}" />
@@ -61,8 +61,8 @@
                         <Border Grid.Row="1"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static converters:ThicknessSideType.Top}}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static converters:RadiusType.Top}}"
+                                BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Top}}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 UseLayoutRounding="True">
                             <ContentPresenter Margin="{TemplateBinding Padding}"
@@ -75,9 +75,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.GroupBox}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource GroupBoxHeaderThemePadding}" />
     </Style>
 </ResourceDictionary>

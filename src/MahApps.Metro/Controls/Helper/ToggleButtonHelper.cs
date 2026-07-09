@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +16,11 @@ namespace MahApps.Metro.Controls
         /// LeftToRight means content left and button right and RightToLeft vise versa
         /// </summary>
         public static readonly DependencyProperty ContentDirectionProperty =
-            DependencyProperty.RegisterAttached("ContentDirection", typeof(FlowDirection), typeof(ToggleButtonHelper),
-                                                new FrameworkPropertyMetadata(FlowDirection.LeftToRight,
-                                                                              //FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits,
-                                                                              ContentDirectionPropertyChanged));
+            DependencyProperty.RegisterAttached(
+                "ContentDirection",
+                typeof(FlowDirection),
+                typeof(ToggleButtonHelper),
+                new FrameworkPropertyMetadata(FlowDirection.LeftToRight));
 
         /// <summary>
         /// This property can be used to handle the style for CheckBox and RadioButton
@@ -37,15 +37,6 @@ namespace MahApps.Metro.Controls
         public static void SetContentDirection(UIElement element, FlowDirection value)
         {
             element.SetValue(ContentDirectionProperty, value);
-        }
-
-        private static void ContentDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var tb = d as ToggleButton;
-            if (null == tb)
-            {
-                throw new InvalidOperationException("The property 'ContentDirection' may only be set on ToggleButton elements.");
-            }
         }
     }
 }

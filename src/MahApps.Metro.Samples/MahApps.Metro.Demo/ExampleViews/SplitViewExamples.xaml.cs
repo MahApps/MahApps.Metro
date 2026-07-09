@@ -25,7 +25,9 @@ namespace MetroDemo.ExampleViews
             var splitView = sender as SplitView;
 
             if (splitView == null)
+            {
                 return;
+            }
 
             e.Cancel = (bool)splitView.Tag;
         }

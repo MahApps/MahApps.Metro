@@ -12,43 +12,43 @@ namespace MahApps.Metro.Converters
     /// Converts a double representing either hour/minute/second to the corresponding angle.
     /// </summary>
     [ValueConversion(typeof(double), typeof(double))]
-    public class ClockDegreeConverter : IValueConverter
+    public sealed class ClockDegreeConverter : IValueConverter
     {
         public double TotalParts { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value == null)
+            if (value is null)
             {
                 return 0;
             }
 
-            if (value is DateTime)
+            if (value is DateTime dateTime && parameter is string timePart)
             {
-                var dateTime = (DateTime)value;
-
-                switch ((string)parameter)
+                return timePart switch
                 {
-                    case "h":
-                        return 360.0 / 12 * dateTime.TimeOfDay.TotalHours;
-                    case "m":
-                        return 360.0 / 60 * dateTime.TimeOfDay.TotalMinutes;
-                    case "s":
-                        return 360.0 / 60 * dateTime.TimeOfDay.Seconds;
-                    default:
-                        throw new ArgumentException("must be \"h\", \"m\", or \"s", nameof(parameter));
+                    "h" => 360.0 / 12 * dateTime.TimeOfDay.TotalHours,
+                    "m" => 360.0 / 60 * dateTime.TimeOfDay.TotalMinutes,
+                    "s" => 360.0 / 60 * dateTime.TimeOfDay.Seconds,
+                    _ => throw new ArgumentException("must be \"h\", \"m\", or \"s", nameof(parameter))
+                };
+            }
+
+            if (this.TotalParts != 0)
+            {
+                switch (value)
+                {
+                    case int valueAsInt when valueAsInt != 0:
+                        return 360 / this.TotalParts * valueAsInt;
+                    case double valueAsDouble when valueAsDouble != 0:
+                        return 360 / this.TotalParts * valueAsDouble;
                 }
             }
 
-            if (value is int)
-            {
-                return 360 / TotalParts * (int)value;
-            }
-
-            return 360 / TotalParts * (double)value;
+            return 0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new InvalidOperationException();
         }

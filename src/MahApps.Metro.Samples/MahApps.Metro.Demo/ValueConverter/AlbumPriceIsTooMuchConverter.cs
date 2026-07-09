@@ -36,13 +36,13 @@ namespace MetroDemo.ValueConverter
 
     public class AlbumPriceIsReallyTooMuchValidation : ValidationRule
     {
-        public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var bindingGroup = value as BindingGroup;
             var album = bindingGroup?.Items.OfType<Album>().ElementAtOrDefault(0);
             if (album != null && album.Price >= 20)
             {
-                return new ValidationResult(false, $"The price {album.Price} of the album '{album.Title}' by '{album.Artist.Name}' is too much!");
+                return new ValidationResult(false, $"The price {album.Price} of the album '{album.Title}' by '{album.Artist?.Name}' is too much!");
             }
 
             return ValidationResult.ValidResult;

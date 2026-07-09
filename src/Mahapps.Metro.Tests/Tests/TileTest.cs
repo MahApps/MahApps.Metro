@@ -6,43 +6,46 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
-using Xunit;
+using NUnit.Framework;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
-    public class TileTest : AutomationTestBase
+    [TestFixture]
+    public class TileTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task TemplateBindingShouldGetTheFontSize()
         {
-            await TestHost.SwitchToAppThread();
-
             var testTile = new Tile();
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w =>
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>(w =>
                 {
                     var grid = new Grid();
                     grid.Children.Add(testTile);
                     w.Content = grid;
-                }).ConfigureAwait(false);
-
-            window.Invoke(() =>
-                {
-                    // default values
-
-                    Assert.Equal(16d, testTile.FindChild<AccessText>(string.Empty).FontSize);
-                    Assert.Equal(28d, testTile.FindChild<TextBlock>(string.Empty).FontSize);
-
-                    // now change it
-
-                    var fontSize = 42d;
-
-                    testTile.TitleFontSize = fontSize;
-                    Assert.Equal(fontSize, testTile.FindChild<AccessText>(string.Empty).FontSize);
-
-                    testTile.CountFontSize = fontSize;
-                    Assert.Equal(fontSize, testTile.FindChild<TextBlock>(string.Empty).FontSize);
                 });
+
+            // default values
+
+            var accessText = testTile.FindChild<AccessText>(string.Empty);
+            var findChild = testTile.FindChild<TextBlock>(string.Empty);
+
+            Assert.That(accessText, Is.Not.Null);
+            Assert.That(findChild, Is.Not.Null);
+
+            Assert.That(accessText.FontSize, Is.EqualTo(16d));
+            Assert.That(findChild.FontSize, Is.EqualTo(28d));
+
+            // now change it
+
+            var fontSize = 42d;
+
+            testTile.TitleFontSize = fontSize;
+            Assert.That(accessText.FontSize, Is.EqualTo(fontSize));
+
+            testTile.CountFontSize = fontSize;
+            Assert.That(findChild.FontSize, Is.EqualTo(fontSize));
+
+            window.Close();
         }
     }
 }

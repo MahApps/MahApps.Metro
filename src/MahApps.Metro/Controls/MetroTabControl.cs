@@ -29,12 +29,16 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="KeepVisualTreeInMemoryWhenChangingTabs"/> dependency property.</summary>
-        public static readonly DependencyProperty KeepVisualTreeInMemoryWhenChangingTabsProperty = DependencyProperty.Register(nameof(KeepVisualTreeInMemoryWhenChangingTabs), typeof(bool), typeof(MetroTabControl), new PropertyMetadata(BooleanBoxes.FalseBox));
+        public static readonly DependencyProperty KeepVisualTreeInMemoryWhenChangingTabsProperty
+            = DependencyProperty.Register(nameof(KeepVisualTreeInMemoryWhenChangingTabs),
+                                          typeof(bool),
+                                          typeof(MetroTabControl),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public bool KeepVisualTreeInMemoryWhenChangingTabs
         {
-            get { return (bool)GetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty); }
-            set { SetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty, BooleanBoxes.Box(value)); }
+            get => (bool)this.GetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty);
+            set => this.SetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty, BooleanBoxes.Box(value));
         }
     }
 
@@ -48,15 +52,36 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMetroTabControl), new FrameworkPropertyMetadata(typeof(BaseMetroTabControl)));
         }
 
+        // Using a DependencyProperty as the backing store for TabStripMargin.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TabStripMarginProperty
+            = DependencyProperty.Register(nameof(TabStripMargin),
+                                          typeof(Thickness),
+                                          typeof(BaseMetroTabControl),
+                                          new PropertyMetadata(new Thickness(0)));
+
+        /// <summary>
+        /// Gets or sets the margin of the TabStrip.
+        /// </summary>
         public Thickness TabStripMargin
         {
-            get { return (Thickness)GetValue(TabStripMarginProperty); }
-            set { SetValue(TabStripMarginProperty, value); }
+            get => (Thickness)this.GetValue(TabStripMarginProperty);
+            set => this.SetValue(TabStripMarginProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for TabStripMargin.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TabStripMarginProperty =
-            DependencyProperty.Register(nameof(TabStripMargin), typeof(Thickness), typeof(BaseMetroTabControl), new PropertyMetadata(new Thickness(0)));
+        public static readonly DependencyProperty CloseTabCommandProperty
+            = DependencyProperty.Register(nameof(CloseTabCommand),
+                                          typeof(ICommand),
+                                          typeof(BaseMetroTabControl),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Get or sets the command that executes when a MetroTabItem's close button is clicked.
+        /// </summary>
+        public ICommand? CloseTabCommand
+        {
+            get => (ICommand?)this.GetValue(CloseTabCommandProperty);
+            set => this.SetValue(CloseTabCommandProperty, value);
+        }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
@@ -78,25 +103,13 @@ namespace MahApps.Metro.Controls
             base.PrepareContainerForItemOverride(element, item);
         }
 
-        /// <summary>
-        /// Get/sets the command that executes when a MetroTabItem's close button is clicked.
-        /// </summary>
-        public ICommand CloseTabCommand
-        {
-            get { return (ICommand)GetValue(CloseTabCommandProperty); }
-            set { SetValue(CloseTabCommandProperty, value); }
-        }
-
-        public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register(nameof(CloseTabCommand), typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
-
         public delegate void TabItemClosingEventHandler(object sender, TabItemClosingEventArgs e);
 
         /// <summary>
         /// An event that is raised when a TabItem is closed.
         /// </summary>
         // Todo Rename this to TabItemClosing
-        public event TabItemClosingEventHandler TabItemClosingEvent;
+        public event TabItemClosingEventHandler? TabItemClosingEvent;
 
         internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
         {
@@ -124,7 +137,7 @@ namespace MahApps.Metro.Controls
         {
             internal TabItemClosingEventArgs(MetroTabItem item)
             {
-                ClosingTabItem = item;
+                this.ClosingTabItem = item;
             }
 
             /// <summary>
@@ -135,7 +148,7 @@ namespace MahApps.Metro.Controls
 
         internal void CloseThisTabItem([NotNull] MetroTabItem tabItem)
         {
-            if (tabItem == null)
+            if (tabItem is null)
             {
                 throw new ArgumentNullException(nameof(tabItem));
             }
@@ -160,7 +173,7 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
-                if (this.ItemsSource == null)
+                if (this.ItemsSource is null)
                 {
                     // if the list is hard-coded (i.e. has no ItemsSource)
                     // then we remove the item from the collection
@@ -171,7 +184,7 @@ namespace MahApps.Metro.Controls
                 {
                     // if ItemsSource is something we cannot work with, bail out
                     var collection = this.ItemsSource as IList;
-                    if (collection == null)
+                    if (collection is null)
                     {
                         return;
                     }

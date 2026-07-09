@@ -4,7 +4,7 @@
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  Title="SizeToContent Demo"
-                 GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+                 GlowColor="{DynamicResource MahApps.Colors.Accent}"
                  SizeToContent="WidthAndHeight"
                  WindowStartupLocation="CenterOwner">
     <Grid Width="50"

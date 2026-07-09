@@ -1,15 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:actions="clr-namespace:MahApps.Metro.Actions"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <converters:MetroTabItemCloseButtonWidthConverter x:Key="MetroTabItemCloseButtonWidthConverter" />
 
     <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type mah:MetroTabItem}">
         <Setter Property="Template">
@@ -20,6 +18,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Grid HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
@@ -35,6 +34,7 @@
                             <Grid x:Name="PART_ContentSite"
                                   Grid.Row="0"
                                   Grid.Column="0"
+                                  Margin="{TemplateBinding Padding}"
                                   UseLayoutRounding="False">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -42,7 +42,8 @@
                                 </Grid.ColumnDefinitions>
                                 <mah:ContentControlEx x:Name="ContentSite"
                                                       Grid.Column="0"
-                                                      Padding="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                       Content="{TemplateBinding Header}"
                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
@@ -53,12 +54,12 @@
                                                       FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
                                                       FontStyle="{TemplateBinding FontStyle}"
                                                       FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                      Foreground="{TemplateBinding Foreground}"
+                                                      Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                                       RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Button x:Name="PART_CloseButton"
                                         Grid.Column="1"
-                                        Width="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
+                                        Width="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize, Converter={mahConverters:MathMultiplyConverter}, ConverterParameter=0.5}"
                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Mode=OneWay}"
                                         Margin="{TemplateBinding CloseButtonMargin}"
                                         VerticalAlignment="Top"
@@ -93,12 +94,13 @@
                             <mah:Underline x:Name="Underline"
                                            Grid.Row="1"
                                            Grid.Column="0"
+                                           Margin="{TemplateBinding mah:TabControlHelper.UnderlineMargin}"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch"
-                                           Background="{TemplateBinding Background}"
+                                           Background="{x:Null}"
                                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay}"
-                                           LineExtent="3"
-                                           LineThickness="2"
+                                           LineExtent="{DynamicResource TabItemUnderlineExtent}"
+                                           LineThickness="{DynamicResource TabItemUnderlineThickness}"
                                            Placement="Bottom"
                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
@@ -145,11 +147,12 @@
                             <Setter TargetName="Underline" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="SelectedTabItem">
-                            <Setter TargetName="Underline" Property="LineThickness" Value="0" />
+                            <Setter TargetName="Underline" Property="LineExtent" Value="{DynamicResource TabItemUnderlineExtentSelectedTabItem}" />
+                            <Setter TargetName="Underline" Property="LineThickness" Value="{DynamicResource TabItemUnderlineThicknessSelectedTabItem}" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="TabPanel">
-                            <Setter TargetName="Underline" Property="LineExtent" Value="4" />
-                            <Setter TargetName="Underline" Property="LineThickness" Value="1" />
+                            <Setter TargetName="Underline" Property="LineExtent" Value="{DynamicResource TabItemUnderlineExtentTabPanel}" />
+                            <Setter TargetName="Underline" Property="LineThickness" Value="{DynamicResource TabItemUnderlineThicknessTabPanel}" />
                         </DataTrigger>
 
                         <MultiTrigger>
@@ -171,23 +174,21 @@
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
                         </Trigger>
-                        <Trigger Property="IsSelected" Value="false">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray}" />
-                        </Trigger>
 
+                        <!--  Selected  -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="TabPanel" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="3" />
+                            <Setter TargetName="Underline" Property="LineThickness" Value="{DynamicResource TabItemSelectedUnderlineThicknessTabPanel}" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
+                            <Setter TargetName="Underline" Property="LineThickness" Value="{DynamicResource TabItemSelectedUnderlineThicknessSelectedTabItem}" />
                         </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
@@ -205,13 +206,14 @@
                             <Setter TargetName="PART_CloseButton" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
 
+                        <!--  MouseOver  -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="TabPanel" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
                                 <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
+                            <Setter TargetName="Underline" Property="LineThickness" Value="{DynamicResource TabItemMouseOverUnderlineThicknessTabPanel}" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -219,7 +221,7 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
                                 <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
+                            <Setter TargetName="Underline" Property="LineThickness" Value="{DynamicResource TabItemMouseOverUnderlineThicknessSelectedTabItem}" />
                         </MultiDataTrigger>
 
                         <MultiTrigger>
@@ -233,53 +235,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="TabPanel" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="3" />
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
-                        </MultiDataTrigger>
-
-                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
-                            <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
-                        </Trigger>
-
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="TabPanel" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
-                                <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
-                                <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
-                        </MultiDataTrigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                            <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
-                        </MultiTrigger>
-
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Top" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -290,7 +246,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Bottom" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -301,7 +257,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Left" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -312,7 +268,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.UnderlinePlacement), Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Right" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />

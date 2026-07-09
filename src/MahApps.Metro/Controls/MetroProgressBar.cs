@@ -16,20 +16,40 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class MetroProgressBar : ProgressBar
     {
+        /// <summary>Identifies the <see cref="EllipseDiameter"/> dependency property.</summary>
         public static readonly DependencyProperty EllipseDiameterProperty
             = DependencyProperty.Register(nameof(EllipseDiameter),
                                           typeof(double),
                                           typeof(MetroProgressBar),
                                           new PropertyMetadata(default(double)));
 
+        /// <summary>
+        /// Gets or sets the diameter of the ellipses used in the indeterminate animation.
+        /// </summary>
+        public double EllipseDiameter
+        {
+            get => (double)this.GetValue(EllipseDiameterProperty);
+            set => this.SetValue(EllipseDiameterProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="EllipseOffset"/> dependency property.</summary>
         public static readonly DependencyProperty EllipseOffsetProperty =
             DependencyProperty.Register(nameof(EllipseOffset),
                                         typeof(double),
                                         typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
+        /// <summary>
+        /// Gets or sets the offset of the ellipses used in the indeterminate animation.
+        /// </summary>
+        public double EllipseOffset
+        {
+            get => (double)this.GetValue(EllipseOffsetProperty);
+            set => this.SetValue(EllipseOffsetProperty, value);
+        }
+
         private readonly object lockme = new object();
-        private Storyboard indeterminateStoryboard;
+        private Storyboard? indeterminateStoryboard;
 
         static MetroProgressBar()
         {
@@ -89,25 +109,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        /// <summary>
-        /// Gets/sets the diameter of the ellipses used in the indeterminate animation.
-        /// </summary>
-        public double EllipseDiameter
-        {
-            get { return (double)this.GetValue(EllipseDiameterProperty); }
-            set { this.SetValue(EllipseDiameterProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the offset of the ellipses used in the indeterminate animation.
-        /// </summary>
-        public double EllipseOffset
-        {
-            get { return (double)this.GetValue(EllipseOffsetProperty); }
-            set { this.SetValue(EllipseOffsetProperty, value); }
-        }
-
-        private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
+        private void SizeChangedHandler(object? sender, SizeChangedEventArgs? e)
         {
             var size = this.ActualSize(false);
             var bar = this;
@@ -207,14 +209,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private VisualState GetIndeterminate()
+        private VisualState? GetIndeterminate()
         {
             var templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
-            if (templateGrid == null)
+            if (templateGrid is null)
             {
                 this.ApplyTemplate();
                 templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
-                if (templateGrid == null) return null;
+                if (templateGrid is null)
+                {
+                    return null;
+                }
             }
 
             var groups = VisualStateManager.GetVisualStateGroups(templateGrid);

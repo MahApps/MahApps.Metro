@@ -36,12 +36,14 @@
 
     <Style x:Key="MahApps.Styles.MenuItem" TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Background}" />
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, FallbackValue={x:Static HorizontalAlignment.Left}}" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, FallbackValue={x:Static VerticalAlignment.Top}}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding Path=(mah:ControlsHelper.CornerRadius), FallbackValue=0, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Padding" Value="7 5 8 6" />
@@ -192,14 +194,6 @@
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
-    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}" TargetType="{x:Type ContentControl}">
-        <Border Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
-                BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
-                BorderThickness="1">
-            <ContentPresenter />
-        </Border>
-    </ControlTemplate>
-
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="True">
             <Rectangle x:Name="Bg"
@@ -234,23 +228,23 @@
                    Placement="Bottom"
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                    VerticalOffset="-2">
-                <Grid x:Name="SubMenuRoot">
-                    <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
-                    <ContentControl x:Name="SubMenuBorder"
-                                    IsTabStop="False"
-                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                        <ScrollViewer x:Name="SubMenuScrollViewer"
-                                      CanContentScroll="True"
-                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                            <ItemsPresenter x:Name="ItemsPresenter"
-                                            Margin="0"
-                                            Grid.IsSharedSizeScope="True"
-                                            KeyboardNavigation.DirectionalNavigation="Cycle"
-                                            KeyboardNavigation.TabNavigation="Cycle"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </ContentControl>
-                </Grid>
+                <mah:ClipBorder x:Name="Border"
+                                Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <ScrollViewer x:Name="SubMenuScrollViewer"
+                                  CanContentScroll="True"
+                                  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                        <ItemsPresenter x:Name="ItemsPresenter"
+                                        Margin="0"
+                                        Grid.IsSharedSizeScope="True"
+                                        KeyboardNavigation.DirectionalNavigation="Cycle"
+                                        KeyboardNavigation.TabNavigation="Cycle"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </ScrollViewer>
+                </mah:ClipBorder>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -265,8 +259,8 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
-                <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
-                <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.SelectionStroke}" />
@@ -354,6 +348,7 @@
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon"
                                   Margin="1"
+                                  HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   ContentSource="Icon"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -389,23 +384,23 @@
                        Placement="Right"
                        PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                        VerticalOffset="-3">
-                    <Grid x:Name="SubMenuRoot">
-                        <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
-                        <ContentControl x:Name="SubMenuBorder"
-                                        IsTabStop="False"
-                                        Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                            <ScrollViewer x:Name="SubMenuScrollViewer"
-                                          CanContentScroll="True"
-                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                                <ItemsPresenter x:Name="ItemsPresenter"
-                                                Margin="0"
-                                                Grid.IsSharedSizeScope="True"
-                                                KeyboardNavigation.DirectionalNavigation="Cycle"
-                                                KeyboardNavigation.TabNavigation="Cycle"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </ScrollViewer>
-                        </ContentControl>
-                    </Grid>
+                    <mah:ClipBorder x:Name="Border"
+                                    Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
+                                    BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Margin="0"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </mah:ClipBorder>
                 </Popup>
             </Grid>
         </Grid>
@@ -421,8 +416,8 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
-                <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
-                <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
                 <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />

@@ -10,8 +10,8 @@
       mc:Ignorable="d">
 
     <StackPanel Margin="10" Orientation="Vertical">
-        <Label>Sorry, nothing is here.</Label>
-        <TextBlock>Only for testing purposes.</TextBlock>
+        <Label FontSize="{DynamicResource MahApps.Font.Size.SubHeader}">Sorry</Label>
+        <TextBlock>Nothing is here, it's only for testing purposes.</TextBlock>
         <TextBlock>TestInput</TextBlock>
     </StackPanel>
 </Page>

@@ -11,7 +11,7 @@
            TargetType="{x:Type mah:WindowCommands}">
         <Setter Property="SeparatorHeight" Value="11" />
         <Setter Property="ShowLastSeparator" Value="False" />
-        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.WindowCommands.Clean}" />
     </Style>
 
 </ResourceDictionary>

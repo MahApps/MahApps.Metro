@@ -15,8 +15,8 @@ namespace MahApps.Metro.Controls
 {
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {
-        private static Style _defaultEditingElementStyle;
-        private static Style _defaultElementStyle;
+        private static Style? _defaultEditingElementStyle;
+        private static Style? _defaultElementStyle;
 
         static DataGridNumericUpDownColumn()
         {
@@ -82,7 +82,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ApplyBinding(BindingBase binding, DependencyObject target, DependencyProperty property)
+        private static void ApplyBinding(BindingBase? binding, DependencyObject target, DependencyProperty property)
         {
             if (binding != null)
             {
@@ -96,8 +96,8 @@ namespace MahApps.Metro.Controls
 
         private void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
-            Style style = this.PickStyle(isEditing, defaultToElementStyle);
-            if (style != null)
+            var style = this.PickStyle(isEditing, defaultToElementStyle);
+            if (style is not null)
             {
                 element.Style = style;
             }
@@ -169,7 +169,7 @@ namespace MahApps.Metro.Controls
         /// <param name="editingElement">A reference to element returned by GenerateEditingElement.</param>
         /// <param name="editingEventArgs">The event args of the input event that caused the cell to go into edit mode. May be null.</param>
         /// <returns>The unedited value of the cell.</returns>
-        protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
+        protected override object? PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
             if (editingElement is NumericUpDown numericUpDown)
             {
@@ -206,10 +206,10 @@ namespace MahApps.Metro.Controls
             return DependencyPropertyHelper.GetValueSource(d, dp).BaseValueSource == BaseValueSource.Default;
         }
 
-        private Style PickStyle(bool isEditing, bool defaultToElementStyle)
+        private Style? PickStyle(bool isEditing, bool defaultToElementStyle)
         {
-            Style style = isEditing ? this.EditingElementStyle : this.ElementStyle;
-            if (isEditing && defaultToElementStyle && (style == null))
+            var style = isEditing ? this.EditingElementStyle : this.ElementStyle;
+            if (isEditing && defaultToElementStyle && style is null)
             {
                 style = this.ElementStyle;
             }
@@ -231,8 +231,8 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         public string StringFormat
         {
-            get { return (string)this.GetValue(StringFormatProperty); }
-            set { this.SetValue(StringFormatProperty, value); }
+            get => (string)this.GetValue(StringFormatProperty);
+            set => this.SetValue(StringFormatProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
@@ -241,10 +241,10 @@ namespace MahApps.Metro.Controls
                 typeof(DataGridNumericUpDownColumn),
                 new FrameworkPropertyMetadata((CultureInfo)NumericUpDown.CultureProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
-        public CultureInfo Culture
+        public CultureInfo? Culture
         {
-            get { return (CultureInfo)this.GetValue(CultureProperty); }
-            set { this.SetValue(CultureProperty, value); }
+            get => (CultureInfo?)this.GetValue(CultureProperty);
+            set => this.SetValue(CultureProperty, value);
         }
 
         public static readonly DependencyProperty TextAlignmentProperty =
@@ -254,8 +254,8 @@ namespace MahApps.Metro.Controls
 
         public TextAlignment TextAlignment
         {
-            get { return (TextAlignment)this.GetValue(TextAlignmentProperty); }
-            set { this.SetValue(TextAlignmentProperty, value); }
+            get => (TextAlignment)this.GetValue(TextAlignmentProperty);
+            set => this.SetValue(TextAlignmentProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
@@ -266,8 +266,8 @@ namespace MahApps.Metro.Controls
 
         public double Minimum
         {
-            get { return (double)this.GetValue(MinimumProperty); }
-            set { this.SetValue(MinimumProperty, value); }
+            get => (double)this.GetValue(MinimumProperty);
+            set => this.SetValue(MinimumProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
@@ -278,8 +278,8 @@ namespace MahApps.Metro.Controls
 
         public double Maximum
         {
-            get { return (double)this.GetValue(MaximumProperty); }
-            set { this.SetValue(MaximumProperty, value); }
+            get => (double)this.GetValue(MaximumProperty);
+            set => this.SetValue(MaximumProperty, value);
         }
 
         /// <summary>Identifies the <see cref="NumericInputMode"/> dependency property.</summary>
@@ -290,8 +290,8 @@ namespace MahApps.Metro.Controls
 
         public NumericInput NumericInputMode
         {
-            get { return (NumericInput)this.GetValue(NumericInputModeProperty); }
-            set { this.SetValue(NumericInputModeProperty, value); }
+            get => (NumericInput)this.GetValue(NumericInputModeProperty);
+            set => this.SetValue(NumericInputModeProperty, value);
         }
 
         /// <summary>Identifies the <see cref="DecimalPointCorrection"/> dependency property.</summary>
@@ -318,8 +318,8 @@ namespace MahApps.Metro.Controls
 
         public double Interval
         {
-            get { return (double)this.GetValue(IntervalProperty); }
-            set { this.SetValue(IntervalProperty, value); }
+            get => (double)this.GetValue(IntervalProperty);
+            set => this.SetValue(IntervalProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Delay"/> dependency property.</summary>
@@ -330,8 +330,8 @@ namespace MahApps.Metro.Controls
 
         public int Delay
         {
-            get { return (int)this.GetValue(DelayProperty); }
-            set { this.SetValue(DelayProperty, value); }
+            get => (int)this.GetValue(DelayProperty);
+            set => this.SetValue(DelayProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Speedup"/> dependency property.</summary>
@@ -342,8 +342,8 @@ namespace MahApps.Metro.Controls
 
         public bool Speedup
         {
-            get { return (bool)this.GetValue(SpeedupProperty); }
-            set { this.SetValue(SpeedupProperty, value); }
+            get => (bool)this.GetValue(SpeedupProperty);
+            set => this.SetValue(SpeedupProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SnapToMultipleOfInterval"/> dependency property.</summary>
@@ -354,8 +354,8 @@ namespace MahApps.Metro.Controls
 
         public bool SnapToMultipleOfInterval
         {
-            get { return (bool)this.GetValue(SnapToMultipleOfIntervalProperty); }
-            set { this.SetValue(SnapToMultipleOfIntervalProperty, value); }
+            get => (bool)this.GetValue(SnapToMultipleOfIntervalProperty);
+            set => this.SetValue(SnapToMultipleOfIntervalProperty, value);
         }
 
         /// <summary>Identifies the <see cref="InterceptArrowKeys"/> dependency property.</summary>
@@ -366,8 +366,8 @@ namespace MahApps.Metro.Controls
 
         public bool InterceptArrowKeys
         {
-            get { return (bool)this.GetValue(InterceptArrowKeysProperty); }
-            set { this.SetValue(InterceptArrowKeysProperty, value); }
+            get => (bool)this.GetValue(InterceptArrowKeysProperty);
+            set => this.SetValue(InterceptArrowKeysProperty, value);
         }
 
         /// <summary>Identifies the <see cref="InterceptManualEnter"/> dependency property.</summary>
@@ -378,8 +378,8 @@ namespace MahApps.Metro.Controls
 
         public bool InterceptManualEnter
         {
-            get { return (bool)this.GetValue(InterceptManualEnterProperty); }
-            set { this.SetValue(InterceptManualEnterProperty, value); }
+            get => (bool)this.GetValue(InterceptManualEnterProperty);
+            set => this.SetValue(InterceptManualEnterProperty, value);
         }
 
         /// <summary>Identifies the <see cref="InterceptMouseWheel"/> dependency property.</summary>
@@ -390,8 +390,8 @@ namespace MahApps.Metro.Controls
 
         public bool InterceptMouseWheel
         {
-            get { return (bool)this.GetValue(InterceptMouseWheelProperty); }
-            set { this.SetValue(InterceptMouseWheelProperty, value); }
+            get => (bool)this.GetValue(InterceptMouseWheelProperty);
+            set => this.SetValue(InterceptMouseWheelProperty, value);
         }
 
         /// <summary>Identifies the <see cref="TrackMouseWheelWhenMouseOver"/> dependency property.</summary>
@@ -402,8 +402,8 @@ namespace MahApps.Metro.Controls
 
         public bool TrackMouseWheelWhenMouseOver
         {
-            get { return (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty); }
-            set { this.SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
+            get => (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty);
+            set => this.SetValue(TrackMouseWheelWhenMouseOverProperty, value);
         }
 
         /// <summary>Identifies the <see cref="HideUpDownButtons"/> dependency property.</summary>
@@ -414,8 +414,8 @@ namespace MahApps.Metro.Controls
 
         public bool HideUpDownButtons
         {
-            get { return (bool)this.GetValue(HideUpDownButtonsProperty); }
-            set { this.SetValue(HideUpDownButtonsProperty, value); }
+            get => (bool)this.GetValue(HideUpDownButtonsProperty);
+            set => this.SetValue(HideUpDownButtonsProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SwitchUpDownButtons"/> dependency property.</summary>
@@ -426,8 +426,8 @@ namespace MahApps.Metro.Controls
 
         public bool SwitchUpDownButtons
         {
-            get { return (bool)this.GetValue(SwitchUpDownButtonsProperty); }
-            set { this.SetValue(SwitchUpDownButtonsProperty, value); }
+            get => (bool)this.GetValue(SwitchUpDownButtonsProperty);
+            set => this.SetValue(SwitchUpDownButtonsProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ButtonsAlignment"/> dependency property.</summary>
@@ -438,8 +438,8 @@ namespace MahApps.Metro.Controls
 
         public ButtonsAlignment ButtonsAlignment
         {
-            get { return (ButtonsAlignment)this.GetValue(ButtonsAlignmentProperty); }
-            set { this.SetValue(ButtonsAlignmentProperty, value); }
+            get => (ButtonsAlignment)this.GetValue(ButtonsAlignmentProperty);
+            set => this.SetValue(ButtonsAlignmentProperty, value);
         }
 
         /// <summary>Identifies the <see cref="UpDownButtonsWidth"/> dependency property.</summary>
@@ -450,8 +450,8 @@ namespace MahApps.Metro.Controls
 
         public double UpDownButtonsWidth
         {
-            get { return (double)this.GetValue(UpDownButtonsWidthProperty); }
-            set { this.SetValue(UpDownButtonsWidthProperty, value); }
+            get => (double)this.GetValue(UpDownButtonsWidthProperty);
+            set => this.SetValue(UpDownButtonsWidthProperty, value);
         }
 
         /// <summary>Identifies the <see cref="FontFamily"/> dependency property.</summary>
@@ -465,8 +465,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontFamily FontFamily
         {
-            get { return (FontFamily)this.GetValue(FontFamilyProperty); }
-            set { this.SetValue(FontFamilyProperty, value); }
+            get => (FontFamily)this.GetValue(FontFamilyProperty);
+            set => this.SetValue(FontFamilyProperty, value);
         }
 
         /// <summary>Identifies the <see cref="FontSize"/> dependency property.</summary>
@@ -482,8 +482,8 @@ namespace MahApps.Metro.Controls
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double)this.GetValue(FontSizeProperty); }
-            set { this.SetValue(FontSizeProperty, value); }
+            get => (double)this.GetValue(FontSizeProperty);
+            set => this.SetValue(FontSizeProperty, value);
         }
 
         /// <summary>Identifies the <see cref="FontStyle"/> dependency property.</summary>
@@ -497,8 +497,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontStyle FontStyle
         {
-            get { return (FontStyle)this.GetValue(FontStyleProperty); }
-            set { this.SetValue(FontStyleProperty, value); }
+            get => (FontStyle)this.GetValue(FontStyleProperty);
+            set => this.SetValue(FontStyleProperty, value);
         }
 
         /// <summary>Identifies the <see cref="FontWeight"/> dependency property.</summary>
@@ -512,8 +512,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight)this.GetValue(FontWeightProperty); }
-            set { this.SetValue(FontWeightProperty, value); }
+            get => (FontWeight)this.GetValue(FontWeightProperty);
+            set => this.SetValue(FontWeightProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Foreground"/> dependency property.</summary>
@@ -527,8 +527,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush Foreground
         {
-            get { return (Brush)this.GetValue(ForegroundProperty); }
-            set { this.SetValue(ForegroundProperty, value); }
+            get => (Brush)this.GetValue(ForegroundProperty);
+            set => this.SetValue(ForegroundProperty, value);
         }
 
         /// <summary>

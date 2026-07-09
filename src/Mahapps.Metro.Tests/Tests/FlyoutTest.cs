@@ -2,255 +2,455 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
-using ControlzEx.Theming;
-using ExposedObject;
-using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;
-using Xunit;
+using MahApps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.Views;
+using NUnit.Framework;
 
-namespace MahApps.Metro.Tests
+namespace MahApps.Metro.Tests.Tests
 {
-    public class FlyoutTest : AutomationTestBase
+    [TestFixture]
+    public class FlyoutTest
     {
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task AdaptsWindowCommandsToDarkFlyout()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             var flyout = new Flyout { Theme = FlyoutTheme.Dark };
-            window.Flyouts.Items.Add(flyout);
+            window.Flyouts?.Items.Add(flyout);
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                completionSource.SetResult(flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.Current.GetTheme("Dark.Blue").Resources["MahApps.Brushes.ThemeForeground"]).Color;
+            var opened = await completionSource.Task;
+            Assert.That(opened, Is.True);
 
-            window.AssertWindowCommandsColor(expectedColor);
+            window.AssertWindowButtonCommandsColor(((SolidColorBrush)flyout.Foreground).Color);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task DefaultFlyoutPositionIsLeft()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(Position.Left, window.DefaultFlyout.Position);
+            Assert.That(window.DefaultFlyout.Position, Is.EqualTo(Position.Left));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task FlyoutIsClosedByDefault()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.False(window.DefaultFlyout.IsOpen);
+            Assert.That(window.DefaultFlyout.IsOpen, Is.False);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task FlyoutIsHiddenByDefault()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             // root grid should be hidden
-            Assert.Equal(Visibility.Hidden, window.DefaultFlyout.Visibility);
+            Assert.That(window.DefaultFlyout.Visibility, Is.EqualTo(Visibility.Hidden));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task HiddenIconIsBelowFlyout()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
             window.IconOverlayBehavior = OverlayBehavior.Never;
-            window.LeftFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int iconZIndex = Panel.GetZIndex(exposedWindow.icon);
-            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+            Assert.That(window.Icon, Is.Not.Null);
+            var icon = window.FindChild<FrameworkElement>("PART_Icon");
+            Assert.That(icon, Is.Not.Null);
 
-            Assert.True(flyoutindex < iconZIndex);
+            var flyout = window.LeftFlyout;
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                completionSource.SetResult(flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await completionSource.Task;
+            Assert.That(opened, Is.True);
+
+            var iconZIndex = Panel.GetZIndex(icon);
+            var flyoutZIndex = Panel.GetZIndex(flyout);
+
+            Assert.That(flyoutZIndex, Is.EqualTo(0));
+            Assert.That(iconZIndex, Is.EqualTo(1));
+            Assert.That(flyoutZIndex < iconZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task HiddenLeftWindowCommandsAreBelowFlyout()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
             window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
-            window.LeftFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.LeftWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_LeftWindowCommands");
+            Assert.That(windowCommands, Is.Not.Null);
 
-            Assert.True(flyoutindex < windowCommandsZIndex);
+            var flyout = window.LeftFlyout;
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                completionSource.SetResult(flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await completionSource.Task;
+            Assert.That(opened, Is.True);
+
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(flyout);
+
+            Assert.That(flyoutZIndex, Is.EqualTo(0));
+            Assert.That(windowCommandsZIndex, Is.EqualTo(1));
+            Assert.That(flyoutZIndex < windowCommandsZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task HiddenRightWindowCommandsAreBelowFlyout()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
             window.RightWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
-            window.RightFlyout.IsOpen = true;
 
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.RightWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_RightWindowCommands");
+            Assert.That(windowCommands, Is.Not.Null);
 
-            Assert.True(flyoutindex < windowCommandsZIndex);
+            var flyout = window.RightFlyout;
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                completionSource.SetResult(flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await completionSource.Task;
+            Assert.That(opened, Is.True);
+
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(flyout);
+
+            Assert.That(flyoutZIndex, Is.EqualTo(0));
+            Assert.That(windowCommandsZIndex, Is.EqualTo(1));
+            Assert.That(flyoutZIndex < windowCommandsZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task LeftWindowCommandsAreOverFlyout()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.LeftFlyout.IsOpen = true;
-
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.LeftWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
-
-            Assert.True(windowCommandsZIndex > flyoutindex);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task RightWindowCommandsAreOverFlyout()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.IsOpen = true;
-
-            var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.RightWindowCommandsPresenter);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
-
-            Assert.True(windowCommandsZIndex > flyoutindex);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task WindowButtonCommandsAreOverFlyout()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.IsOpen = true;
 
-            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands.TryFindParent<ContentPresenter>());
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+            var windowCommands = window.FindChild<ContentPresenter>("PART_WindowButtonCommands");
+            Assert.That(windowCommands, Is.Not.Null);
 
-            Assert.True(windowCommandsZIndex > flyoutindex);
+            var flyout = window.RightFlyout;
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                completionSource.SetResult(flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await completionSource.Task;
+            Assert.That(opened, Is.True);
+
+            var windowCommandsZIndex = Panel.GetZIndex(windowCommands);
+            var flyoutZIndex = Panel.GetZIndex(flyout);
+
+            Assert.That(windowCommandsZIndex > flyoutZIndex, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task RaisesIsOpenChangedEvent()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            bool eventRaised = false;
+            var flyout = window.RightFlyout;
 
-            window.RightFlyout.IsOpenChanged += (sender, args) => { eventRaised = true; };
+            var completionSource = new TaskCompletionSource<bool>();
 
-            window.RightFlyout.IsOpen = true;
+            void FlyoutOnIsOpenChanged(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.IsOpenChanged -= FlyoutOnIsOpenChanged;
+                completionSource.SetResult(flyout.IsOpen);
+            }
 
-            // IsOpen fires IsOpenChangedEvent with DispatcherPriority.Background
-            window.RightFlyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Assert.True(eventRaised)));
+            flyout.IsOpenChanged += FlyoutOnIsOpenChanged;
+
+            flyout.IsOpen = true;
+
+            var opened = await completionSource.Task;
+            Assert.That(opened, Is.True);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
+        public async Task RaisesClosingFinishedEvent()
+        {
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            var flyout = window.RightFlyout;
+
+            var openingCompletionSource = new TaskCompletionSource<bool>();
+            var closingCompletionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                openingCompletionSource.SetResult(flyout.IsOpen);
+            }
+
+            void FlyoutOnClosingFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.ClosingFinished -= FlyoutOnClosingFinished;
+                closingCompletionSource.SetResult(!flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+            flyout.ClosingFinished += FlyoutOnClosingFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await openingCompletionSource.Task;
+            Assert.That(opened, Is.True);
+
+            flyout.IsOpen = false;
+
+            var closed = await closingCompletionSource.Task;
+            Assert.That(closed, Is.True);
+
+            window.Close();
+        }
+
+        [Test]
         public async Task FindFlyoutWithFindChildren()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            var ex = Record.Exception(() =>
+            Assert.DoesNotThrow(() =>
                 {
                     var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
-                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
-                    Assert.NotNull(flyoutOnGrid);
+                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == nameof(window.FlyoutOnGrid));
+                    Assert.That(flyoutOnGrid, Is.Not.Null);
                 });
-            Assert.Null(ex);
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task DefaultFlyoutThemeIsDark()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
+            Assert.That(window.DefaultFlyout.Theme, Is.EqualTo(FlyoutTheme.Dark));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
+        [Test]
         public async Task WindowButtonCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.OverrideDefaultWindowCommandsBrush = Brushes.Red;
-            window.RightFlyout.IsOpen = true;
 
-            Assert.Equal(Brushes.Red, window.WindowButtonCommands.Foreground);
-            window.RightFlyout.IsOpen = false;
+            Assert.That(window.WindowButtonCommands, Is.Not.Null);
 
-            Assert.Equal(Brushes.Red, window.WindowButtonCommands.Foreground);
+            var brush = Brushes.Red;
+
+            window.OverrideDefaultWindowCommandsBrush = brush;
+
+            var flyout = window.RightFlyout;
+
+            var openingCompletionSource = new TaskCompletionSource<bool>();
+            var closingCompletionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                openingCompletionSource.SetResult(flyout.IsOpen);
+            }
+
+            void FlyoutOnClosingFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.ClosingFinished -= FlyoutOnClosingFinished;
+                closingCompletionSource.SetResult(!flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+            flyout.ClosingFinished += FlyoutOnClosingFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await openingCompletionSource.Task;
+            Assert.That(opened, Is.True);
+
+            Assert.That(window.WindowButtonCommands.Foreground, Is.EqualTo(brush));
+
+            flyout.IsOpen = false;
+
+            var closed = await closingCompletionSource.Task;
+            Assert.That(closed, Is.True);
+
+            Assert.That(window.WindowButtonCommands.Foreground, Is.EqualTo(brush));
+
+            window.Close();
         }
 
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task WindowCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
+        [Test]
+        public async Task LeftWindowCommandsForegroundBrushShouldAlwaysOverrideDefaultWindowCommandsBrush()
         {
-            await TestHost.SwitchToAppThread();
-
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.OverrideDefaultWindowCommandsBrush = Brushes.Red;
 
-            window.RightFlyout.IsOpen = true;
-            Assert.Equal(Brushes.Red, window.RightWindowCommands.Foreground);
+            Assert.That(window.LeftWindowCommands, Is.Not.Null);
 
-            window.RightFlyout.IsOpen = false;
-            Assert.Equal(Brushes.Red, window.RightWindowCommands.Foreground);
+            var brush = Brushes.Red;
 
-            window.LeftFlyout.IsOpen = true;
-            Assert.Equal(Brushes.Red, window.LeftWindowCommands.Foreground);
+            window.OverrideDefaultWindowCommandsBrush = brush;
 
-            window.LeftFlyout.IsOpen = false;
-            Assert.Equal(Brushes.Red, window.LeftWindowCommands.Foreground);
+            var flyout = window.LeftFlyout;
+
+            var openingCompletionSource = new TaskCompletionSource<bool>();
+            var closingCompletionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                openingCompletionSource.SetResult(flyout.IsOpen);
+            }
+
+            void FlyoutOnClosingFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.ClosingFinished -= FlyoutOnClosingFinished;
+                closingCompletionSource.SetResult(!flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+            flyout.ClosingFinished += FlyoutOnClosingFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await openingCompletionSource.Task;
+            Assert.That(opened, Is.True);
+
+            Assert.That(window.LeftWindowCommands.Foreground, Is.EqualTo(brush));
+
+            flyout.IsOpen = false;
+
+            var closed = await closingCompletionSource.Task;
+            Assert.That(closed, Is.True);
+
+            Assert.That(window.LeftWindowCommands.Foreground, Is.EqualTo(brush));
+
+            window.Close();
+        }
+
+        [Test]
+        public async Task RightWindowCommandsForegroundBrushShouldAlwaysOverrideDefaultWindowCommandsBrush()
+        {
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            Assert.That(window.RightWindowCommands, Is.Not.Null);
+
+            var brush = Brushes.Red;
+
+            window.OverrideDefaultWindowCommandsBrush = brush;
+
+            var flyout = window.RightFlyout;
+
+            var openingCompletionSource = new TaskCompletionSource<bool>();
+            var closingCompletionSource = new TaskCompletionSource<bool>();
+
+            void FlyoutOnOpeningFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.OpeningFinished -= FlyoutOnOpeningFinished;
+                openingCompletionSource.SetResult(flyout.IsOpen);
+            }
+
+            void FlyoutOnClosingFinished(object o, RoutedEventArgs routedEventArgs)
+            {
+                flyout.ClosingFinished -= FlyoutOnClosingFinished;
+                closingCompletionSource.SetResult(!flyout.IsOpen);
+            }
+
+            flyout.OpeningFinished += FlyoutOnOpeningFinished;
+            flyout.ClosingFinished += FlyoutOnClosingFinished;
+
+            flyout.IsOpen = true;
+
+            var opened = await openingCompletionSource.Task;
+            Assert.That(opened, Is.True);
+
+            Assert.That(window.RightWindowCommands.Foreground, Is.EqualTo(brush));
+
+            flyout.IsOpen = false;
+
+            var closed = await closingCompletionSource.Task;
+            Assert.That(closed, Is.True);
+
+            Assert.That(window.RightWindowCommands.Foreground, Is.EqualTo(brush));
+
+            window.Close();
         }
     }
 }

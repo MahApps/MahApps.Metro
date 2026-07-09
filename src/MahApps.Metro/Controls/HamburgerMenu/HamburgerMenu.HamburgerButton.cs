@@ -85,9 +85,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="FrameworkElement.Style"/> for the HamburgerMenu button.
         /// </summary>
-        public Style HamburgerButtonStyle
+        public Style? HamburgerButtonStyle
         {
-            get => (Style)this.GetValue(HamburgerButtonStyleProperty);
+            get => (Style?)this.GetValue(HamburgerButtonStyleProperty);
             set => this.SetValue(HamburgerButtonStyleProperty, value);
         }
 
@@ -101,9 +101,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ContentControl.ContentTemplate"/> for the HamburgerMenu button.
         /// </summary>
-        public DataTemplate HamburgerButtonTemplate
+        public DataTemplate? HamburgerButtonTemplate
         {
-            get => (DataTemplate)this.GetValue(HamburgerButtonTemplateProperty);
+            get => (DataTemplate?)this.GetValue(HamburgerButtonTemplateProperty);
             set => this.SetValue(HamburgerButtonTemplateProperty, value);
         }
 
@@ -151,13 +151,13 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the <see cref="ContentControl.ContentTemplate"/> for the HamburgerMenu pane header.
         /// </summary>
-        public DataTemplate HamburgerMenuHeaderTemplate
+        public DataTemplate? HamburgerMenuHeaderTemplate
         {
-            get => (DataTemplate)this.GetValue(HamburgerMenuHeaderTemplateProperty);
+            get => (DataTemplate?)this.GetValue(HamburgerMenuHeaderTemplateProperty);
             set => this.SetValue(HamburgerMenuHeaderTemplateProperty, value);
         }
 
-        private static bool IsNotNull(object value)
+        private static bool IsNotNull(object? value)
         {
             return value != null;
         }

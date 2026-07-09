@@ -376,8 +376,8 @@
                               Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
 
                 <mah:MetroThumb x:Name="PART_LeftThumb"
-                                Width="8"
-                                Height="24"
+                                Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Width.Win10}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height.Win10}"
                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
                                 Cursor="Arrow"
                                 Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
@@ -387,8 +387,8 @@
                                 Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillBrush)}"
                                 Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSlider.Horizontal.Middle.Win10}" />
                 <mah:MetroThumb x:Name="PART_RightThumb"
-                                Width="8"
-                                Height="24"
+                                Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Width.Win10}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height.Win10}"
                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
                                 Cursor="Arrow"
                                 Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
@@ -511,8 +511,8 @@
                               Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
 
                 <mah:MetroThumb x:Name="PART_RightThumb"
-                                Width="24"
-                                Height="8"
+                                Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Width.Win10}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Height.Win10}"
                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
                                 Cursor="Arrow"
                                 Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
@@ -522,8 +522,8 @@
                                 Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillBrush)}"
                                 Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSlider.Vertical.Middle.Win10}" />
                 <mah:MetroThumb x:Name="PART_LeftThumb"
-                                Width="24"
-                                Height="8"
+                                Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Width.Win10}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Height.Win10}"
                                 Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
                                 Cursor="Arrow"
                                 Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />

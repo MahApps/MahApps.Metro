@@ -33,7 +33,11 @@ namespace MahApps.Metro.Controls
         public static bool IsCloseTo(this double value1, double value2)
         {
             //in case they are Infinities (then epsilon check does not work)
-            if (value1 == value2) return true;
+            if (value1 == value2)
+            {
+                return true;
+            }
+
             // This computes (|value1-value2| / (|value1| + |value2| + 10.0)) < DBL_EPSILON
             var eps = (Math.Abs(value1) + Math.Abs(value2) + 10.0) * DBL_EPSILON;
             var delta = value1 - value2;
@@ -233,14 +237,18 @@ namespace MahApps.Metro.Controls
             if (!allowNegative)
             {
                 if (thick.Left < 0d || thick.Right < 0d || thick.Top < 0d || thick.Bottom < 0d)
+                {
                     return false;
+                }
             }
 
             if (!allowNaN)
             {
                 if (IsNaN(thick.Left) || IsNaN(thick.Right)
                                       || IsNaN(thick.Top) || IsNaN(thick.Bottom))
+                {
                     return false;
+                }
             }
 
             if (!allowPositiveInfinity)
@@ -435,10 +443,14 @@ namespace MahApps.Metro.Controls
         public static bool IsEqualTo(this Brush brush, Brush otherBrush)
         {
             if (brush.GetType() != otherBrush.GetType())
+            {
                 return false;
+            }
 
             if (ReferenceEquals(brush, otherBrush))
+            {
                 return true;
+            }
 
             // Are both instances of SolidColorBrush
             var solidBrushA = brush as SolidColorBrush;
@@ -463,7 +475,9 @@ namespace MahApps.Metro.Controls
                              && (linGradBrushA.SpreadMethod == linGradBrushB.SpreadMethod)
                              && (linGradBrushA.GradientStops.Count == linGradBrushB.GradientStops.Count);
                 if (!result)
+                {
                     return false;
+                }
 
                 for (var i = 0; i < linGradBrushA.GradientStops.Count; i++)
                 {
@@ -471,7 +485,9 @@ namespace MahApps.Metro.Controls
                              && linGradBrushA.GradientStops[i].Offset.IsCloseTo(linGradBrushB.GradientStops[i].Offset);
 
                     if (!result)
+                    {
                         break;
+                    }
                 }
 
                 return result;
@@ -493,7 +509,9 @@ namespace MahApps.Metro.Controls
                              && (radGradBrushA.GradientStops.Count == radGradBrushB.GradientStops.Count);
 
                 if (!result)
+                {
                     return false;
+                }
 
                 for (var i = 0; i < radGradBrushA.GradientStops.Count; i++)
                 {
@@ -501,7 +519,9 @@ namespace MahApps.Metro.Controls
                              && radGradBrushA.GradientStops[i].Offset.IsCloseTo(radGradBrushB.GradientStops[i].Offset);
 
                     if (!result)
+                    {
                         break;
+                    }
                 }
 
                 return result;

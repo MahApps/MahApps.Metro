@@ -3,6 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
+using System.Windows.Input;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace MetroDemo.ExampleViews
 {
@@ -23,6 +26,19 @@ namespace MetroDemo.ExampleViews
         public TextExamples()
         {
             this.InitializeComponent();
+        }
+
+        private void TextBoxSearchOnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private async void TextBoxSearchOnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter is TextBox textBox)
+            {
+                await this.TryFindParent<MetroWindow>()!.ShowMessageAsync("TextBox Search Button was clicked!", textBox.Text).ConfigureAwait(false);
+            }
         }
     }
 }

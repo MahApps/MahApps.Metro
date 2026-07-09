@@ -7,7 +7,7 @@
                  Title="CleanWindowDemo"
                  Width="800"
                  Height="400"
-                 GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+                 GlowColor="{DynamicResource MahApps.Colors.Accent}"
                  Icon="..\mahapps.metro.logo2.ico"
                  ResizeMode="CanResizeWithGrip"
                  ShowIconOnTitleBar="True"
@@ -116,11 +116,9 @@
                         </ContextMenu>
                     </TextBlock.ContextMenu>
                 </TextBlock>
-                <!--  This would cause a memory leak with MahApps.DropShadowEffect.WaitingForData: [x:Shared = True]  -->
                 <TextBox Width="120"
                          Margin="4"
                          VerticalAlignment="Center"
-                         mah:TextBoxHelper.IsWaitingForData="True"
                          DockPanel.Dock="Right" />
                 <TextBlock HorizontalAlignment="Right"
                            VerticalAlignment="Center"
