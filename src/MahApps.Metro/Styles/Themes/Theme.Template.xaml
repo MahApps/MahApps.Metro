@@ -7,7 +7,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="options">
 
-    <!--  Matadata  -->
+    <!--  Metadata  -->
     <system:String x:Key="Theme.Name">{{ThemeName}}</system:String>
     <system:String x:Key="Theme.Origin">MahApps.Metro</system:String>
     <system:String x:Key="Theme.DisplayName">{{ThemeDisplayName}}</system:String>

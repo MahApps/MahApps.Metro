@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -18,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.Windows.Interop;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using ControlzEx;
@@ -220,7 +220,7 @@ namespace MahApps.Metro.Controls
             if (d is MetroWindow window && window.Flyouts != null)
             {
                 // It's not allowed to change this if any Flyout is open
-                // TODO Find a way to reset the zIndex of any open Flyout if <see cref="ShowFlyoutsOverDialogs"/> is changed by the user 
+                // TODO Find a way to reset the zIndex of any open Flyout if <see cref="ShowFlyoutsOverDialogs"/> is changed by the user
                 var anyFlyoutOpen = window.Flyouts.GetFlyouts().Any(f => f.IsOpen);
                 if (anyFlyoutOpen)
                 {
@@ -1457,16 +1457,6 @@ namespace MahApps.Metro.Controls
             return new MetroWindowAutomationPeer(this);
         }
 
-        protected internal IntPtr CriticalHandle
-        {
-            get
-            {
-                this.VerifyAccess();
-                var value = typeof(Window).GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(this, new object[0]) ?? IntPtr.Zero;
-                return (IntPtr)value;
-            }
-        }
-
         private void ClearWindowEvents()
         {
             if (this.windowTitleThumb != null)
@@ -1642,7 +1632,8 @@ namespace MahApps.Metro.Controls
             var wpfPoint = window.PointToScreen(Mouse.GetPosition(window));
             var x = (int)wpfPoint.X;
             var y = (int)wpfPoint.Y;
-            PInvoke.SendMessage(new HWND(window.CriticalHandle), PInvoke.WM_NCLBUTTONDOWN, new WPARAM((nuint)HT.CAPTION), new IntPtr(x | (y << 16)));
+            var windowHandle = new WindowInteropHelper(window).EnsureHandle();
+            PInvoke.SendMessage(new HWND(windowHandle), PInvoke.WM_NCLBUTTONDOWN, new WPARAM((nuint)HT.CAPTION), new IntPtr(x | (y << 16)));
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)

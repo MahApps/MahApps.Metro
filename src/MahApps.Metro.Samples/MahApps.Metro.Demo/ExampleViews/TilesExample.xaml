@@ -67,9 +67,9 @@
                       Margin="3"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
-                <iconPacks:PackIconFontAwesome Width="40"
-                                               Height="40"
-                                               Kind="DesktopSolid" />
+                <iconPacks:PackIconFontAwesome5 Width="40"
+                                                Height="40"
+                                                Kind="DesktopSolid" />
             </mah:Tile>
             <mah:Tile Title="Finance"
                       Background="DimGray"

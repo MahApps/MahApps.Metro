@@ -70,6 +70,65 @@
 
 [![Join the chat at https://gitter.im/MahApps/MahApps.Metro](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://matrix.to/#/#MahApps_MahApps.Metro:gitter.im)
 
+## Awesome Application Samples
+
+### Master Packager
+
+<div align="center">
+  <a href="https://www.masterpackager.com/master-packager">
+    <img alt="Master Packager" src="./docs/master_packager.png" width="600">
+  </a>
+  <p>Software to view, create and edit Microsoft Windows Installer (MSI)/MST files for free</p>
+</div>
+
+### Markdown Monster
+
+<div align="center">
+  <a href="https://markdownmonster.west-wind.com">
+    <img alt="Markdown Monster" src="./docs/markdown_monster.png" width="600">
+  </a>
+  <p>An extensible Markdown Editor, Viewer and Weblog Publisher for Windows by <a href="https://github.com/RickStrahl">@RickStrahl</a></p>
+</div>
+
+### Chocolatey GUI
+
+<div align="center">
+  <a href="https://github.com/chocolatey/ChocolateyGUI">
+    <img alt="Chocolatey GUI" src="./docs/chocolatey_gui.png" width="600">
+  </a>
+  <p>A user interface for <a href="https://chocolatey.org/">Chocolatey</a> (a Machine Package Manager for Windows)</p>
+</div>
+
+### NETworkManager
+
+<div align="center">
+  <a href="https://github.com/BornToBeRoot/NETworkManager">
+    <img alt="NETworkManager" src="./docs/networkmanager.png" width="600">
+  </a>
+  <p>A powerful tool for managing networks and troubleshoot network problems by <a href="https://github.com/BornToBeRoot">@BornToBeRoot</a></p>
+</div>
+
+### Other Projects
+
+* [Showcase/Demo application](./src/MahApps.Metro.Samples/MahApps.Metro.Demo) The showcase/demo application built by the MahApps.Metro team. Compiled versions can be downloaded from [releases](https://github.com/MahApps/MahApps.Metro/releases) and preview versions can be downloaded from [CI artifacts](https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop/artifacts)
+* [Azuser](https://github.com/Inzanit/azuser) by [@Inzanit](https://github.com/Inzanit) Azure SQL Server User Management
+* [Carnac](https://github.com/Code52/carnac) by [@Code52](https://github.com/Code52) the Magnificent Keyboard Utility
+* [Certify The Web](https://github.com/webprofusion/certify) by [@webprofusion](https://github.com/webprofusion) The GUI to manage free certificates from Let's Encrypt
+* [CodeTrack](http://www.getcodetrack.com) by [Nico Van Goethem](https://twitter.com/GoethemNico) CodeTrack is a versatile profiler with some extra tricks up its sleeve.
+* [FolderSecurityViewer](https://www.foldersecurityviewer.com) Easy to use NTFS permissions reporter to get all effective security owners of your data
+* [Hearthstone-Deck-Tracker](https://github.com/Epix37/Hearthstone-Deck-Tracker) by [@Epix37](https://github.com/Epix37) HDT is an automatic deck tracker and manager for Hearthstone
+* [Markdown Edit](https://github.com/mike-ward/Markdown-Edit) by [@mike-ward](https://github.com/mike-ward) A full-featured Markdown editor for Windows with an emphasis on content and keyboard shortcuts
+* [MarkPad (DownmarkerWPF)](https://github.com/Code52/DownmarkerWPF) by [@Code52](https://github.com/Code52) a visual Markdown editor
+* [Modern UI for WPF (MUI)](https://github.com/firstfloorsoftware/mui) Inspired by MahApps.Metro
+* [Papercut](https://github.com/jaben/papercut) by [@Jaben](https://github.com/Jaben) Simple Desktop SMTP Server / Email Receiver
+* [RainyDay Backup](https://www.copidal.com) Backup system for Azure DevOps Services and Azure Devops Server
+* [SimpleMP](https://github.com/punker76/simple-music-player) by [@punker76](https://github.com/punker76) Simple Music Player - SimpleMP - Keeps it simple and plays your music
+* [Solutionizer](https://github.com/thoemmi/Solutionizer) by [@thoemmi](https://github.com/thoemmi) Creating ad-hoc solutions for Visual Studio
+* [Version Changer](https://marketplace.visualstudio.com/items?itemName=Newky2k.VersionChanger2022) Version Changer is a Visual Studio extension that makes it simple to change the version numbers of all the projects in a solution.
+* [WinReform](https://github.com/AKruimink/WinReform) by [@AKruimink](https://github.com/AKruimink) A simple tool to help resize and relocate stubborn windows.
+* [Xamarin Inspector](https://docs.microsoft.com/en-us/xamarin/tools/inspector/release-notes/) Visualize and debug your live app
+* [Xamarin Workbooks](https://github.com/microsoft/workbooks) Xamarin Workbooks provide a blend of documentation and code that is perfect for experimentation, learning, and creating guides and teaching aids.
+
 ## License
 
 Copyright © .NET Foundation, Jan Karger, Brendan Forster, Dennis Daume, Alex Mitchell, Paul Jenkins and contributors.
@@ -106,30 +165,6 @@ A big thank goes to [JetBrains](https://www.jetbrains.com) who provide an [Open 
 A big virtual hug :hugs: goes to all the great people around the world who contributed to this project!
 
 [![Contributors](https://opencollective.com/mahappsmetro/contributors.svg?width=900&button=false)](https://github.com/MahApps/MahApps.Metro/graphs/contributors)
-
-## Awesome Application Samples
-
-* [Showcase/Demo application](./src/MahApps.Metro.Samples/MahApps.Metro.Demo) The showcase/demo application built by the MahApps.Metro team. Compiled versions can be downloaded from [releases](https://github.com/MahApps/MahApps.Metro/releases) and preview versions can be downloaded from [CI artifacts](https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop/artifacts)
-* [Azuser](https://github.com/Inzanit/azuser) by [@Inzanit](https://github.com/Inzanit) Azure SQL Server User Management
-* [Carnac](https://github.com/Code52/carnac) by [@Code52](https://github.com/Code52) the Magnificent Keyboard Utility
-* [Certify The Web](https://github.com/webprofusion/certify) by [@webprofusion](https://github.com/webprofusion) The GUI to manage free certificates from Let's Encrypt
-* [Chocolatey GUI](https://github.com/chocolatey/ChocolateyGUI) Chocolatey GUI is a user interface for [Chocolatey](https://chocolatey.org/) (a Machine Package Manager for Windows)
-* [CodeTrack](http://www.getcodetrack.com) by [Nico Van Goethem](https://twitter.com/GoethemNico) CodeTrack is a versatile profiler with some extra tricks up its sleeve.
-* [FolderSecurityViewer](https://www.foldersecurityviewer.com) Easy to use NTFS permissions reporter to get all effective security owners of your data
-* [Hearthstone-Deck-Tracker](https://github.com/Epix37/Hearthstone-Deck-Tracker) by [@Epix37](https://github.com/Epix37) HDT is an automatic deck tracker and manager for Hearthstone
-* [Markdown Edit](https://github.com/mike-ward/Markdown-Edit) by [@mike-ward](https://github.com/mike-ward) A full-featured Markdown editor for Windows with an emphasis on content and keyboard shortcuts
-* [Markdown Monster](https://markdownmonster.west-wind.com) by [@RickStrahl](https://github.com/RickStrahl) An extensible Markdown Editor, Viewer and Weblog Publisher for Windows
-* [MarkPad (DownmarkerWPF)](https://github.com/Code52/DownmarkerWPF) by [@Code52](https://github.com/Code52) a visual Markdown editor
-* [Modern UI for WPF (MUI)](https://github.com/firstfloorsoftware/mui) Inspired by MahApps.Metro
-* [NETworkManager](https://github.com/BornToBeRoot/NETworkManager) by [@BornToBeRoot](https://github.com/BornToBeRoot) A powerful tool for managing networks and troubleshoot network problems!
-* [Papercut](https://github.com/jaben/papercut) by [@Jaben](https://github.com/Jaben) Simple Desktop SMTP Server / Email Receiver
-* [RainyDay Backup](https://www.copidal.com) Backup system for Azure DevOps Services and Azure Devops Server
-* [SimpleMP](https://github.com/punker76/simple-music-player) by [@punker76](https://github.com/punker76) Simple Music Player - SimpleMP - Keeps it simple and plays your music
-* [Solutionizer](https://github.com/thoemmi/Solutionizer) by [@thoemmi](https://github.com/thoemmi) Creating ad-hoc solutions for Visual Studio
-* [Version Changer](https://marketplace.visualstudio.com/items?itemName=Newky2k.VersionChanger2022) Version Changer is a Visual Studio extension that makes it simple to change the version numbers of all the projects in a solution.
-* [WinReform](https://github.com/AKruimink/WinReform) by [@AKruimink](https://github.com/AKruimink) A simple tool to help resize and relocate stubborn windows.
-* [Xamarin Inspector](https://docs.microsoft.com/en-us/xamarin/tools/inspector/release-notes/) Visualize and debug your live app
-* [Xamarin Workbooks](https://github.com/microsoft/workbooks) Xamarin Workbooks provide a blend of documentation and code that is perfect for experimentation, learning, and creating guides and teaching aids.
 
 ## Something missing?
 

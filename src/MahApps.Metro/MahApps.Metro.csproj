@@ -33,15 +33,11 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
         </PackageReference>
-
-        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Condition="'$(TargetFramework)' != 'net8.0-windows'" />
+        <PackageReference Include="System.Memory" Condition="'$(IsBuildingForLegacyFramework)' == 'false'" />
+        <PackageReference Include="System.ValueTuple" Condition="'$(IsBuildingForLegacyFramework)' == 'true'" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
-        <PackageReference Include="System.Memory" />
-    </ItemGroup>
-
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+    <ItemGroup Condition="'$(IsBuildingForLegacyFramework)' == 'true'">
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>

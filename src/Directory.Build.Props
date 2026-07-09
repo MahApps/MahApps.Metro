@@ -10,10 +10,14 @@
         <TargetFrameworks>net8.0-windows;net6.0-windows;net462</TargetFrameworks>
         <LangVersion>latestmajor</LangVersion>
 
+        <IsBuildingForLegacyFramework>false</IsBuildingForLegacyFramework>
+        <IsBuildingForLegacyFramework Condition="$(TargetFramework.Contains('net46')) == 'true' or $(TargetFramework.Contains('net47')) == 'true' or $(TargetFramework.Contains('net48')) == 'true'">true</IsBuildingForLegacyFramework>
+
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
-        <AutoGenerateBindingRedirects Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">true</AutoGenerateBindingRedirects>
+
+        <AutoGenerateBindingRedirects Condition="'$(IsBuildingForLegacyFramework)' == 'true'">true</AutoGenerateBindingRedirects>
 
         <UseWPF>true</UseWPF>
         <Nullable>enable</Nullable>

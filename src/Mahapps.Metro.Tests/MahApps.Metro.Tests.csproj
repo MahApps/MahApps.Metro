@@ -1,16 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
+        <TargetFrameworks>net9.0-windows;net8.0-windows;net6.0-windows;net462</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Tests</AssemblyName>
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
 
         <IsTestProject>true</IsTestProject>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-        
+
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
         <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
-        
+
         <Nullable>annotations</Nullable>
     </PropertyGroup>
 
@@ -18,12 +19,12 @@
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+    <ItemGroup Condition="'$(IsBuildingForLegacyFramework)' == 'true'">
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == true">
+    <ItemGroup Condition="'$(IsBuildingForLegacyFramework)' == 'false'">
         <!-- Use NLS instead of ICU https://docs.microsoft.com/en-us/dotnet/standard/globalization-localization/globalization-icu -->
         <RuntimeHostConfigurationOption Include="System.Globalization.UseNls" Value="true" />
 

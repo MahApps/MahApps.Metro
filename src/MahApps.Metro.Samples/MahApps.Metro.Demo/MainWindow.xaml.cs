@@ -590,16 +590,5 @@ namespace MetroDemo
             w.Content = new Button { Content = "MetroWindow with Glow", ToolTip = "This is a tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.Show();
         }
-
-        private void MenuWindowWithoutGlowOnClick(object sender, RoutedEventArgs e)
-        {
-            var w = this.GetTestWindow();
-            w.Content = new TextBlock { Text = "MetroWindow without Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
-            w.GlowColor = null;
-            w.NonActiveGlowColor = null;
-            w.BorderThickness = new Thickness(1);
-            w.WindowStyle = WindowStyle.None;
-            w.Show();
-        }
     }
 }

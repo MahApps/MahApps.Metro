@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
+        <TargetFrameworks>net9.0-windows;net8.0-windows;net6.0-windows;net462</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
         <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
@@ -20,7 +21,7 @@
         <None Include="app.manifest" />
     </ItemGroup>
 
-    <ItemGroup Condition="$(DefineConstants.Contains(NETCOREAPP)) == false">
+    <ItemGroup Condition="'$(IsBuildingForLegacyFramework)' == 'true'">
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
 
