@@ -1264,7 +1264,7 @@ namespace MahApps.Metro.Controls
             {
                 var textRepresentsValue = newValue.HasValue
                                           && this.ValidateText(this.valueTextBox.Text, out var textValue)
-                                          && FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo) == newValue.Value;
+                                          && FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo).IsCloseTo(newValue.Value);
 
                 if (!textRepresentsValue)
                 {
