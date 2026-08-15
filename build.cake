@@ -7,6 +7,7 @@
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.15.0
 #tool dotnet:?package=XamlStyler.Console&version=3.2404.2
 #tool nuget:?package=GitVersion.CommandLine&version=5.12.0
+#addin nuget:?package=Cake.Powershell&version=4.0.0&loaddependencies=true
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -29,6 +30,10 @@ var gitVersionPath = Context.Tools.Resolve("gitversion.exe");
 
 var styler = Context.Tools.Resolve("xstyler.exe");
 var stylerFile = baseDir + "/Settings.XAMLStyler";
+
+// The SignPath PowerShell module (https://www.powershellgallery.com/packages/SignPath)
+var signPathModuleVersion = "4.4.6";
+var signPathModuleDir = Directory(baseDir + "/tools/SignPath." + signPathModuleVersion);
 
 public class BuildData
 {
@@ -280,6 +285,28 @@ Task("SignNuGet")
     }
 });
 
+Task("SignPath_Files")
+    .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
+    .ContinueOnError()
+    .Does(() =>
+{
+    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro*.dll");
+    SignPathSignFiles(files, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+
+    files = GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe");
+    SignPathSignFiles(files, "Demo application of MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+});
+
+Task("SignPath_NuGet")
+    .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
+    .WithCriteria<BuildData>((context, data) => DirectoryExists(Directory(publishDir)))
+    .ContinueOnError()
+    .Does(() =>
+{
+    var nugetFiles = GetFiles(publishDir + "/*.nupkg");
+    SignPathSignFiles(nugetFiles, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+});
+
 Task("Zip")
     .Does<BuildData>(data =>
 {
@@ -396,6 +423,101 @@ void SignFiles(IEnumerable<FilePath> files, string description)
                     );
 }
 
+// Downloads the SignPath PowerShell module from the PowerShell Gallery, because it can't be restored
+// with a #tool directive (Cake doesn't find any assemblies inside a plain PowerShell module package).
+FilePath GetSignPathModule()
+{
+    var modulePath = new FilePath(MakeAbsolute(signPathModuleDir).FullPath + "/SignPath.psd1");
+
+    if (!FileExists(modulePath))
+    {
+        var packagePath = new FilePath(MakeAbsolute(signPathModuleDir).FullPath + ".nupkg");
+
+        Information($"Downloading the SignPath PowerShell module {signPathModuleVersion}");
+
+        DownloadFile($"https://www.powershellgallery.com/api/v2/package/SignPath/{signPathModuleVersion}", packagePath);
+        Unzip(packagePath, signPathModuleDir);
+        DeleteFile(packagePath);
+    }
+
+    if (!FileExists(modulePath))
+    {
+        throw new Exception($"Could not find the SignPath PowerShell module: {modulePath}");
+    }
+
+    return modulePath;
+}
+
+// Signs the given files with SignPath (https://about.signpath.io/).
+// The user of the api token must be a submitter for the given signing policy!
+void SignPathSignFiles(IEnumerable<FilePath> files, string description)
+{
+    var organizationId = EnvironmentVariable("SignPath_OrganizationId");
+    if(string.IsNullOrWhiteSpace(organizationId)) {
+        Error("Could not resolve the SignPath organization id (SignPath_OrganizationId).");
+        return;
+    }
+
+    var apiToken = EnvironmentVariable("SignPath_ApiToken");
+    if(string.IsNullOrWhiteSpace(apiToken)) {
+        Error("Could not resolve the SignPath api token (SignPath_ApiToken).");
+        return;
+    }
+
+    var signingPolicySlug = EnvironmentVariable("SignPath_SigningPolicySlug");
+    if(string.IsNullOrWhiteSpace(signingPolicySlug)) {
+        Error("Could not resolve the SignPath signing policy slug (SignPath_SigningPolicySlug).");
+        return;
+    }
+
+    var modulePath = GetSignPathModule();
+
+    foreach(var file in files)
+    {
+        Information($"Sign file: {file}");
+
+        var inputArtifact = MakeAbsolute(file);
+        var outputArtifact = new FilePath(inputArtifact.FullPath + ".signed");
+
+        if (FileExists(outputArtifact))
+        {
+            DeleteFile(outputArtifact);
+        }
+
+        try
+        {
+            StartPowershellScript("Submit-SigningRequest",
+                                    new PowershellSettings { FormatOutput = true, LogOutput = true, ExceptionOnScriptError = true }
+                                        .WithModule(modulePath.FullPath)
+                                        .WithArguments(args => args
+                                            .AppendQuoted("InputArtifactPath", inputArtifact.FullPath)
+                                            .AppendQuoted("OutputArtifactPath", outputArtifact.FullPath)
+                                            .AppendQuotedSecret("ApiToken", apiToken)
+                                            .AppendQuotedSecret("OrganizationId", organizationId)
+                                            .AppendQuoted("ProjectSlug", repoName)
+                                            .AppendQuoted("SigningPolicySlug", signingPolicySlug)
+                                            .AppendQuoted("Description", description)
+                                            .Append("-WaitForCompletion")
+                                        ));
+        }
+        catch (Exception exception)
+        {
+            // Cake doesn't log the reason of a failing task which continues on error
+            Error(exception.Message);
+            throw;
+        }
+
+        if (!FileExists(outputArtifact))
+        {
+            throw new Exception($"The signed file was not created: {outputArtifact}");
+        }
+
+        // Replace the original file with the signed one
+        DeleteFile(inputArtifact);
+        MoveFile(outputArtifact, inputArtifact);
+    }
+}
+
 void ExecuteProcess(FilePath fileName, ProcessArgumentBuilder arguments, string workingDirectory = null)
 {
   if (!FileExists(fileName))
@@ -457,9 +579,9 @@ Task("Default")
 
 Task("ci")
     .IsDependentOn("Default")
-    .IsDependentOn("Sign")
+    .IsDependentOn("SignPath_Files")
     .IsDependentOn("Pack")
-    .IsDependentOn("SignNuGet")
+    .IsDependentOn("SignPath_NuGet")
     .IsDependentOn("Zip")
     ;
 
