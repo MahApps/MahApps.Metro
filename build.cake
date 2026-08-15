@@ -35,6 +35,8 @@ var stylerFile = baseDir + "/Settings.XAMLStyler";
 var signPathModuleVersion = "4.4.6";
 var signPathModuleDir = Directory(baseDir + "/tools/SignPath." + signPathModuleVersion);
 var signPathSigningPolicySlug = "test-signing";
+// The default artifact configuration signs pe-files, NuGet packages need their own one
+var signPathNuGetArtifactConfigurationSlug = "nuget-package";
 
 public class BuildData
 {
@@ -305,7 +307,7 @@ Task("SignPath_NuGet")
     .Does(() =>
 {
     var nugetFiles = GetFiles(publishDir + "/*.nupkg");
-    SignPathSignFiles(nugetFiles, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+    SignPathSignFiles(nugetFiles, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.", signPathNuGetArtifactConfigurationSlug);
 });
 
 Task("Zip")
@@ -451,7 +453,7 @@ FilePath GetSignPathModule()
 
 // Signs the given files with SignPath (https://about.signpath.io/).
 // The user of the api token must be a submitter for the given signing policy!
-void SignPathSignFiles(IEnumerable<FilePath> files, string description)
+void SignPathSignFiles(IEnumerable<FilePath> files, string description, string artifactConfigurationSlug = null)
 {
     var organizationId = EnvironmentVariable("SignPath_OrganizationId");
     if(string.IsNullOrWhiteSpace(organizationId)) {
@@ -486,17 +488,24 @@ void SignPathSignFiles(IEnumerable<FilePath> files, string description)
         StartPowershellScript("Submit-SigningRequest",
                                 new PowershellSettings { FormatOutput = true, LogOutput = true, ExceptionOnScriptError = true }
                                     .WithModule($"'{modulePath.FullPath}'") // Cake.Powershell doesn't quote the module itself
-                                    .WithArguments(args => args
-                                        .AppendQuoted("InputArtifactPath", inputArtifact.FullPath)
-                                        .AppendQuoted("OutputArtifactPath", outputArtifact.FullPath)
-                                        .AppendQuotedSecret("ApiToken", apiToken)
-                                        .AppendQuotedSecret("OrganizationId", organizationId)
-                                        .AppendQuoted("ProjectSlug", repoName)
-                                        .AppendQuoted("SigningPolicySlug", signPathSigningPolicySlug)
-                                        .AppendQuoted("Description", description)
-                                        .Append("-WaitForCompletion")
-                                        .Append("-Verbose 3>&1 4>&1") // redirect the warning and verbose stream, so that Cake logs them too
-                                    ));
+                                    .WithArguments(args =>
+                                    {
+                                        args.AppendQuoted("InputArtifactPath", inputArtifact.FullPath)
+                                            .AppendQuoted("OutputArtifactPath", outputArtifact.FullPath)
+                                            .AppendQuotedSecret("ApiToken", apiToken)
+                                            .AppendQuotedSecret("OrganizationId", organizationId)
+                                            .AppendQuoted("ProjectSlug", repoName)
+                                            .AppendQuoted("SigningPolicySlug", signPathSigningPolicySlug)
+                                            .AppendQuoted("Description", description);
+
+                                        if (!string.IsNullOrWhiteSpace(artifactConfigurationSlug))
+                                        {
+                                            args.AppendQuoted("ArtifactConfigurationSlug", artifactConfigurationSlug);
+                                        }
+
+                                        args.Append("-WaitForCompletion")
+                                            .Append("-Verbose 3>&1 4>&1"); // redirect the warning and verbose stream, so that Cake logs them too
+                                    }));
 
         if (!FileExists(outputArtifact))
         {
