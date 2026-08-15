@@ -34,6 +34,7 @@ var stylerFile = baseDir + "/Settings.XAMLStyler";
 // The SignPath PowerShell module (https://www.powershellgallery.com/packages/SignPath)
 var signPathModuleVersion = "4.4.6";
 var signPathModuleDir = Directory(baseDir + "/tools/SignPath." + signPathModuleVersion);
+var signPathSigningPolicySlug = "test-signing";
 
 public class BuildData
 {
@@ -287,7 +288,7 @@ Task("SignNuGet")
 
 Task("SignPath_Files")
     .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
-    .OnError(exception => Error(exception.Message)) // continue on error, but log the reason
+    .OnError(exception => Error(exception.ToString())) // continue on error, but log the reason
     .Does(() =>
 {
     var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro*.dll");
@@ -300,7 +301,7 @@ Task("SignPath_Files")
 Task("SignPath_NuGet")
     .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
     .WithCriteria<BuildData>((context, data) => DirectoryExists(Directory(publishDir)))
-    .OnError(exception => Error(exception.Message)) // continue on error, but log the reason
+    .OnError(exception => Error(exception.ToString())) // continue on error, but log the reason
     .Does(() =>
 {
     var nugetFiles = GetFiles(publishDir + "/*.nupkg");
@@ -464,12 +465,6 @@ void SignPathSignFiles(IEnumerable<FilePath> files, string description)
         return;
     }
 
-    var signingPolicySlug = EnvironmentVariable("SignPath_SigningPolicySlug");
-    if(string.IsNullOrWhiteSpace(signingPolicySlug)) {
-        Error("Could not resolve the SignPath signing policy slug (SignPath_SigningPolicySlug).");
-        return;
-    }
-
     var modulePath = GetSignPathModule();
 
     // Cake.Powershell hosts PowerShell in process, so this sets the execution policy of the process scope.
@@ -497,9 +492,10 @@ void SignPathSignFiles(IEnumerable<FilePath> files, string description)
                                         .AppendQuotedSecret("ApiToken", apiToken)
                                         .AppendQuotedSecret("OrganizationId", organizationId)
                                         .AppendQuoted("ProjectSlug", repoName)
-                                        .AppendQuoted("SigningPolicySlug", signingPolicySlug)
+                                        .AppendQuoted("SigningPolicySlug", signPathSigningPolicySlug)
                                         .AppendQuoted("Description", description)
                                         .Append("-WaitForCompletion")
+                                        .Append("-Verbose 3>&1 4>&1") // redirect the warning and verbose stream, so that Cake logs them too
                                     ));
 
         if (!FileExists(outputArtifact))
