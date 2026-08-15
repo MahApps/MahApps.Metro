@@ -287,7 +287,7 @@ Task("SignNuGet")
 
 Task("SignPath_Files")
     .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
-    .ContinueOnError()
+    .OnError(exception => Error(exception.Message)) // continue on error, but log the reason
     .Does(() =>
 {
     var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro*.dll");
@@ -300,7 +300,7 @@ Task("SignPath_Files")
 Task("SignPath_NuGet")
     .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
     .WithCriteria<BuildData>((context, data) => DirectoryExists(Directory(publishDir)))
-    .ContinueOnError()
+    .OnError(exception => Error(exception.Message)) // continue on error, but log the reason
     .Does(() =>
 {
     var nugetFiles = GetFiles(publishDir + "/*.nupkg");
@@ -472,6 +472,10 @@ void SignPathSignFiles(IEnumerable<FilePath> files, string description)
 
     var modulePath = GetSignPathModule();
 
+    // Cake.Powershell hosts PowerShell in process, so this sets the execution policy of the process scope.
+    // Without it the module can't be imported on a build agent which has scripts disabled.
+    System.Environment.SetEnvironmentVariable("PSExecutionPolicyPreference", "Bypass");
+
     foreach(var file in files)
     {
         Information($"Sign file: {file}");
@@ -484,28 +488,19 @@ void SignPathSignFiles(IEnumerable<FilePath> files, string description)
             DeleteFile(outputArtifact);
         }
 
-        try
-        {
-            StartPowershellScript("Submit-SigningRequest",
-                                    new PowershellSettings { FormatOutput = true, LogOutput = true, ExceptionOnScriptError = true }
-                                        .WithModule(modulePath.FullPath)
-                                        .WithArguments(args => args
-                                            .AppendQuoted("InputArtifactPath", inputArtifact.FullPath)
-                                            .AppendQuoted("OutputArtifactPath", outputArtifact.FullPath)
-                                            .AppendQuotedSecret("ApiToken", apiToken)
-                                            .AppendQuotedSecret("OrganizationId", organizationId)
-                                            .AppendQuoted("ProjectSlug", repoName)
-                                            .AppendQuoted("SigningPolicySlug", signingPolicySlug)
-                                            .AppendQuoted("Description", description)
-                                            .Append("-WaitForCompletion")
-                                        ));
-        }
-        catch (Exception exception)
-        {
-            // Cake doesn't log the reason of a failing task which continues on error
-            Error(exception.Message);
-            throw;
-        }
+        StartPowershellScript("Submit-SigningRequest",
+                                new PowershellSettings { FormatOutput = true, LogOutput = true, ExceptionOnScriptError = true }
+                                    .WithModule($"'{modulePath.FullPath}'") // Cake.Powershell doesn't quote the module itself
+                                    .WithArguments(args => args
+                                        .AppendQuoted("InputArtifactPath", inputArtifact.FullPath)
+                                        .AppendQuoted("OutputArtifactPath", outputArtifact.FullPath)
+                                        .AppendQuotedSecret("ApiToken", apiToken)
+                                        .AppendQuotedSecret("OrganizationId", organizationId)
+                                        .AppendQuoted("ProjectSlug", repoName)
+                                        .AppendQuoted("SigningPolicySlug", signingPolicySlug)
+                                        .AppendQuoted("Description", description)
+                                        .Append("-WaitForCompletion")
+                                    ));
 
         if (!FileExists(outputArtifact))
         {
