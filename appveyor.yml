@@ -45,7 +45,7 @@ pull_requests:
 
 build_script:
   - ps: dotnet --info
-  - ps: gitversion /version
+  # - ps: gitversion /version
   - ps: .\build.ps1 --target=ci --verbosity=diagnostic
 
 after_build:
