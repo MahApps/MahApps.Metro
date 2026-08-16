@@ -11,13 +11,13 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using MahApps.Metro.ValueBoxes;
 using MahApps.Metro.Automation.Peers;
-using System.Windows.Automation.Peers;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {

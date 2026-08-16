@@ -5,27 +5,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Media;
-using MetroDemo.Models;
 using System.Windows.Input;
+using System.Windows.Media;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.Core;
 using MetroDemo.ExampleViews;
+using MetroDemo.Models;
 using NHotkey;
 using NHotkey.Wpf;
-using System.Collections.ObjectModel;
-using System.Windows.Data;
-using ControlzEx.Theming;
 
 namespace MetroDemo
 {

@@ -13,6 +13,9 @@
         <IsBuildingForLegacyFramework>false</IsBuildingForLegacyFramework>
         <IsBuildingForLegacyFramework Condition="$(TargetFramework.Contains('net46')) == 'true' or $(TargetFramework.Contains('net47')) == 'true' or $(TargetFramework.Contains('net48')) == 'true'">true</IsBuildingForLegacyFramework>
 
+        <IsBuildingForLegacyDotNet>false</IsBuildingForLegacyDotNet>
+        <IsBuildingForLegacyDotNet Condition="$(TargetFramework.Contains('net6.0')) == 'true' or $(TargetFramework.Contains('net7.0')) == 'true' or $(TargetFramework.Contains('net8.0')) == 'true'">true</IsBuildingForLegacyDotNet>
+
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
@@ -82,8 +85,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
-        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
+        <None Remove="**\*.bmp;**\*.cur;**\*.gif;**\*.ico;**\*.jpg;**\*.png;**\*.ttf" />
+        <Resource Include="**\*.bmp;**\*.cur;**\*.gif;**\*.ico;**\*.jpg;**\*.png;**\*.ttf"
+                  Exclude="**\bin\**\*.*;**\obj\**\*.*" />
     </ItemGroup>
 
     <ItemGroup>

@@ -6,8 +6,8 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace MahApps.Metro.Converters

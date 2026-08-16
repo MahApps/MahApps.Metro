@@ -9,8 +9,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ControlzEx.Theming;
 using ControlzEx;
+using ControlzEx.Theming;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls

@@ -4,35 +4,38 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup Label="Library">
-    <PackageVersion Include="ControlzEx" version="7.0.2" />
+    <PackageVersion Include="ControlzEx" version="7.0.4" />
     <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0167" />
     <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.162" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
-    <PackageVersion Include="System.ValueTuple" Version="4.6.1" />
+    <PackageVersion Include="System.ValueTuple" Version="4.6.2" />
   </ItemGroup>
   <ItemGroup Label="Additional">
-    <PackageVersion Include="JetBrains.Annotations" Version="2025.2.2" />
+    <PackageVersion Include="JetBrains.Annotations" Version="2026.2.0" />
     <PackageVersion Include="Caliburn.Micro" Version="4.0.230" />
-    <PackageVersion Include="MahApps.Metro.IconPacks.Entypo" Version="6.1.0" />
-    <PackageVersion Include="MahApps.Metro.IconPacks.FontAwesome5" Version="6.1.0" />
-    <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
-    <PackageVersion Include="MahApps.Metro.IconPacks.Modern" Version="6.1.0" />
-    <PackageVersion Include="MahApps.Metro.IconPacks.Octicons" Version="6.1.0" />
+    <PackageVersion Include="MahApps.Metro.IconPacks.Entypo" Version="6.2.1" />
+    <PackageVersion Include="MahApps.Metro.IconPacks.FontAwesome5" Version="6.2.1" />
+    <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
+    <PackageVersion Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
+    <PackageVersion Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
     <PackageVersion Include="MaterialDesignThemes" Version="3.0.1" Condition="'$(IsBuildingForLegacyFramework)' == 'true'" />
     <PackageVersion Include="MaterialDesignColors" Version="1.2.7" Condition="'$(IsBuildingForLegacyFramework)' == 'true'" />
     <PackageVersion Include="MaterialDesignThemes" Version="4.9.0" Condition="'$(IsBuildingForLegacyFramework)' == 'false'" />
     <PackageVersion Include="MaterialDesignColors" Version="2.1.4" Condition="'$(IsBuildingForLegacyFramework)' == 'false'" />
-    <PackageVersion Include="NHotkey.Wpf" Version="3.0.0" />
-    <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
-    <PackageVersion Include="System.ComponentModel.Composition" Version="8.0.0" />
-    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
+    <PackageVersion Include="NHotkey.Wpf" Version="4.0.0" />
+    <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.4129.50" />
+    <PackageVersion Include="System.ComponentModel.Composition" Version="10.0.11" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" Condition="'$(IsBuildingForLegacyDotNet)' == 'true'" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.0.11" Condition="'$(IsBuildingForLegacyDotNet)' == 'false'" />
     <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
   </ItemGroup>
   <ItemGroup Label="Test">
-    <PackageVersion Include="NUnit" Version="4.4.0" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="5.2.0" />
-    <PackageVersion Include="NUnit.Analyzers" Version="4.10.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageVersion Include="NUnit" Version="4.6.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="5.2.0" Condition="'$(IsBuildingForLegacyDotNet)' == 'true'" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="6.2.0" Condition="'$(IsBuildingForLegacyDotNet)' == 'false'" />
+    <PackageVersion Include="NUnit.Analyzers" Version="4.14.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" Condition="'$(IsBuildingForLegacyDotNet)' == 'true'" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" Condition="'$(IsBuildingForLegacyDotNet)' == 'false'" />
   </ItemGroup>
 </Project>

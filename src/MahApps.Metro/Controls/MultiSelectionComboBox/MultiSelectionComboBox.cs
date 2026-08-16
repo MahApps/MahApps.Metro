@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using ControlzEx;
-using MahApps.Metro.Controls.Helper;
-using MahApps.Metro.ValueBoxes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +16,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ControlzEx;
 using JetBrains.Annotations;
+using MahApps.Metro.Controls.Helper;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {

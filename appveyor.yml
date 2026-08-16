@@ -26,7 +26,7 @@ environment:
   SignPath_SigningPolicySlug:
     secure: SWZaNfP7arLimR05NS08cw==
 
-image: Visual Studio 2022
+image: Visual Studio 2026
 test: false
 
 install:
