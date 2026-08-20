@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -404,6 +406,16 @@ namespace MahApps.Metro.Tests.Tests
 
         private static void SetText(TextBox theTextBox, string theText)
         {
+            TypeText(theTextBox, theText);
+
+            theTextBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+        }
+
+        /// <summary>
+        /// Simulates the manual text input, but keeps the control in editing state, so no LostFocus event is raised here.
+        /// </summary>
+        private static void TypeText(TextBox theTextBox, string theText)
+        {
             theTextBox.Clear();
             foreach (var c in theText)
             {
@@ -413,8 +425,6 @@ namespace MahApps.Metro.Tests.Tests
                 textCompositionEventArgs.RoutedEvent = UIElement.TextInputEvent;
                 theTextBox.RaiseEvent(textCompositionEventArgs);
             }
-
-            theTextBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
         [Test]
@@ -461,6 +471,158 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.That(nud.DefaultValue, Is.EqualTo(nud.Minimum));
             Assert.That(nud.Value, Is.EqualTo(nud.Minimum));
+        }
+
+        [Test]
+        public void ShouldNotSyncTextWithValueWhileEditingByDefault()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            Assert.That(this.window.TheNUD.SyncTextWithValueWhileEditing, Is.False);
+        }
+
+        [Theory]
+        // The value coerced by the view model is shown while the user is still editing
+        [TestCase(true, "", "10", "10")]
+        [TestCase(true, "{}{0:N2} cm", "10.00 cm", "10.00 cm")]
+        // The old behavior: the typed text stays until the control loses the focus
+        [TestCase(false, "", "50", "10")]
+        [TestCase(false, "{}{0:N2} cm", "50", "10.00 cm")]
+        public void ShouldSyncTextWithCoercedValueFromBindingWhileEditing(bool syncTextWithValueWhileEditing, string format, string expectedText, string expectedTextAfterLostFocus)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+
+            Assert.That(textBox, Is.Not.Null);
+
+            var nud = this.window.TheNUD;
+            nud.Culture = CultureInfo.InvariantCulture;
+            nud.NumericInputMode = NumericInput.All;
+            nud.StringFormat = format;
+            nud.SyncTextWithValueWhileEditing = syncTextWithValueWhileEditing;
+
+            var viewModel = new ClampingTestViewModel { MaxAllowedValue = 10d };
+
+            BindingOperations.SetBinding(nud,
+                                        NumericUpDown.ValueProperty,
+                                        new Binding(nameof(ClampingTestViewModel.Value))
+                                        {
+                                            Source = viewModel,
+                                            Mode = BindingMode.TwoWay,
+                                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                                        });
+
+            // The user types a value which is too large for the view model, so it gets clamped there
+            TypeText(textBox, "50");
+
+            Assert.That(viewModel.Value, Is.EqualTo(10d));
+            Assert.That(nud.Value, Is.EqualTo(10d));
+            Assert.That(textBox.Text, Is.EqualTo(expectedText));
+
+            // On lost focus the text is refreshed from the value in both cases
+            textBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+
+            Assert.That(textBox.Text, Is.EqualTo(expectedTextAfterLostFocus));
+
+            BindingOperations.ClearBinding(nud, NumericUpDown.ValueProperty);
+        }
+
+        [Test]
+        public void ShouldSelectTextAfterExternalValueSyncWhileEditing()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+
+            Assert.That(textBox, Is.Not.Null);
+
+            var nud = this.window.TheNUD;
+            nud.Culture = CultureInfo.InvariantCulture;
+            nud.NumericInputMode = NumericInput.All;
+            nud.SyncTextWithValueWhileEditing = true;
+
+            var viewModel = new ClampingTestViewModel { MaxAllowedValue = 10d };
+
+            BindingOperations.SetBinding(nud,
+                                        NumericUpDown.ValueProperty,
+                                        new Binding(nameof(ClampingTestViewModel.Value))
+                                        {
+                                            Source = viewModel,
+                                            Mode = BindingMode.TwoWay,
+                                            UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                                        });
+
+            textBox.Focus();
+
+            // The text is only selected if the TextBox really has the keyboard focus,
+            // which is not always possible on a build agent.
+            Assume.That(textBox.IsKeyboardFocused, Is.True);
+
+            try
+            {
+                TypeText(textBox, "50");
+
+                Assert.That(textBox.Text, Is.EqualTo("10"));
+                Assert.That(textBox.SelectedText, Is.EqualTo("10"));
+            }
+            finally
+            {
+                Keyboard.ClearFocus();
+
+                BindingOperations.ClearBinding(nud, NumericUpDown.ValueProperty);
+            }
+        }
+
+        [Theory]
+        [TestCase("42.", "")]
+        [TestCase("42.", "{}{0:N2} cm")]
+        [TestCase("-.5", "")]
+        [TestCase("-0.39678", "{}{0:P1}")] // The rounded value must not overwrite the typed text
+        public void ShouldKeepInProgressTextWhileTypingWithSyncTextWithValueWhileEditing(string text, string format)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+
+            Assert.That(textBox, Is.Not.Null);
+
+            var nud = this.window.TheNUD;
+            nud.Culture = CultureInfo.InvariantCulture;
+            nud.NumericInputMode = NumericInput.All;
+            nud.StringFormat = format;
+            nud.SyncTextWithValueWhileEditing = true;
+
+            // The typed text must not be reformatted while the user is still typing
+            TypeText(textBox, text);
+
+            Assert.That(textBox.Text, Is.EqualTo(text));
+        }
+
+        private sealed class ClampingTestViewModel : INotifyPropertyChanged
+        {
+            private double? value;
+
+            public double? MaxAllowedValue { get; set; }
+
+            public double? Value
+            {
+                get => this.value;
+                set
+                {
+                    var coercedValue = value > this.MaxAllowedValue ? this.MaxAllowedValue : value;
+
+                    if (Nullable.Equals(this.value, coercedValue))
+                    {
+                        return;
+                    }
+
+                    this.value = coercedValue;
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Value)));
+                }
+            }
+
+            public event PropertyChangedEventHandler? PropertyChanged;
         }
     }
 }
