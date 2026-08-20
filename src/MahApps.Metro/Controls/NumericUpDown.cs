@@ -365,6 +365,28 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(InterceptManualEnterProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="SyncTextWithValueWhileEditing"/> dependency property.</summary>
+        public static readonly DependencyProperty SyncTextWithValueWhileEditingProperty
+            = DependencyProperty.Register(nameof(SyncTextWithValueWhileEditing),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the displayed text is kept in sync with the
+        /// <see cref="Value"/> while the control is being edited (has keyboard focus), when the value
+        /// is changed from an external source such as a binding. When set to <see langword="false"/>
+        /// (the default), the current behavior is kept: the text is only refreshed from the value once
+        /// the control loses focus.
+        /// </summary>
+        [Category("Behavior")]
+        [DefaultValue(false)]
+        public bool SyncTextWithValueWhileEditing
+        {
+            get => (bool)this.GetValue(SyncTextWithValueWhileEditingProperty);
+            set => this.SetValue(SyncTextWithValueWhileEditingProperty, BooleanBoxes.Box(value));
+        }
+
         /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty
             = DependencyProperty.Register(nameof(Value),
@@ -1236,6 +1258,22 @@ namespace MahApps.Metro.Controls
                 if (this.valueTextBox != null)
                 {
                     this.InternalSetText(newValue);
+                }
+            }
+            else if (this.SyncTextWithValueWhileEditing && this.valueTextBox != null)
+            {
+                var textRepresentsValue = newValue.HasValue
+                                          && this.ValidateText(this.valueTextBox.Text, out var textValue)
+                                          && FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo).IsCloseTo(newValue.Value);
+
+                if (!textRepresentsValue)
+                {
+                    this.InternalSetText(newValue);
+
+                    if (this.valueTextBox.IsKeyboardFocused)
+                    {
+                        this.valueTextBox.SelectAll();
+                    }
                 }
             }
 
