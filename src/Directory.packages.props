@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup Label="Library">
     <PackageVersion Include="ControlzEx" version="7.0.4" />
-    <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha0167" />
+    <PackageVersion Include="XAMLTools.MSBuild" Version="1.0.0-alpha.189" />
     <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.162" />
     <PackageVersion Include="System.Memory" Version="4.6.3" />
     <PackageVersion Include="System.ValueTuple" Version="4.6.2" />
