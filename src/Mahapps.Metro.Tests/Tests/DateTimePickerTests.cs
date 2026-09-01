@@ -229,6 +229,10 @@ namespace MahApps.Metro.Tests.Tests
 
                 Assert.That(picker.SelectedDateTime, Is.Not.Null, "selecting an hour did not set a value");
                 Assert.That(picker.SelectedDateTime!.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+                // On an empty picker the drop down fills the date from today, where the text
+                // path uses default(DateTime). Documented on the TimePicker page.
+                Assert.That(picker.SelectedDateTime!.Value.Date, Is.EqualTo(DateTime.Today));
             }
             finally
             {
