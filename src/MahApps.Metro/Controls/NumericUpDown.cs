@@ -1020,6 +1020,20 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            // Detach the handlers of a previous template pass. Without this, every further pass
+            // leaves another handler on the same button and one click changes the value once per pass.
+            if (this.repeatUp is not null)
+            {
+                this.repeatUp.Click -= this.OnRepeatUpClick;
+                this.repeatUp.PreviewMouseUp -= this.OnRepeatButtonPreviewMouseUp;
+            }
+
+            if (this.repeatDown is not null)
+            {
+                this.repeatDown.Click -= this.OnRepeatDownClick;
+                this.repeatDown.PreviewMouseUp -= this.OnRepeatButtonPreviewMouseUp;
+            }
+
             this.repeatUp = this.GetTemplateChild(PART_NumericUp) as RepeatButton;
             this.repeatDown = this.GetTemplateChild(PART_NumericDown) as RepeatButton;
 
@@ -1032,15 +1046,31 @@ namespace MahApps.Metro.Controls
 
             this.ToggleReadOnlyMode(this.IsReadOnly);
 
-            this.repeatUp.Click += (_, _) => { this.ChangeValueWithSpeedUp(true); };
-            this.repeatDown.Click += (_, _) => { this.ChangeValueWithSpeedUp(false); };
+            // Named methods, so that a later template pass can detach them again.
+            this.repeatUp.Click += this.OnRepeatUpClick;
+            this.repeatDown.Click += this.OnRepeatDownClick;
 
-            this.repeatUp.PreviewMouseUp += (_, _) => this.ResetInternal();
-            this.repeatDown.PreviewMouseUp += (_, _) => this.ResetInternal();
+            this.repeatUp.PreviewMouseUp += this.OnRepeatButtonPreviewMouseUp;
+            this.repeatDown.PreviewMouseUp += this.OnRepeatButtonPreviewMouseUp;
 
             this.OnValueChanged(this.Value, this.Value);
 
             this.scrollViewer = null;
+        }
+
+        private void OnRepeatUpClick(object sender, RoutedEventArgs e)
+        {
+            this.ChangeValueWithSpeedUp(true);
+        }
+
+        private void OnRepeatDownClick(object sender, RoutedEventArgs e)
+        {
+            this.ChangeValueWithSpeedUp(false);
+        }
+
+        private void OnRepeatButtonPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            this.ResetInternal();
         }
 
         /// <summary>
@@ -1191,10 +1221,11 @@ namespace MahApps.Metro.Controls
         {
             var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
-            var textIsValid = this.ValidateText(fullText, out var convertedValue);
-            // Value must be valid and not coerced
-            var coerceValue = CoerceValue(this, convertedValue as double?);
-            e.Handled = !textIsValid || !coerceValue.isValid;
+            var textIsValid = this.ValidateText(fullText, out _);
+            // Only the text format decides here. A number that is out of range on its own is
+            // still the beginning of an in-range one, so the keystroke must not be swallowed.
+            // Coercion happens when the value is committed.
+            e.Handled = !textIsValid;
             this.manualChange = !e.Handled;
         }
 
@@ -1628,8 +1659,9 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            this.OnValueChanged(oldValue, this.Value);
-
+            // No OnValueChanged call here: setting ValueProperty above already ran the property
+            // changed callback, which raises ValueChanged. Calling it again reported every
+            // change to the consumer twice.
             this.manualChange = false;
         }
 
