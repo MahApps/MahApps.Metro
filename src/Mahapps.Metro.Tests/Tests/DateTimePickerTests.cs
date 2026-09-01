@@ -225,10 +225,19 @@ namespace MahApps.Metro.Tests.Tests
                 var hourPicker = content.FindChild<Selector>("PART_HourPicker");
                 Assert.That(hourPicker, Is.Not.Null, "no PART_HourPicker inside the popup");
 
+                // The control reads DateTime.Today itself, so bracket the selection instead of
+                // reading it again afterwards. Both values are the same day unless the test
+                // happens to cross local midnight, and then either day is correct.
+                var dayBefore = DateTime.Today;
                 hourPicker.SetCurrentValue(Selector.SelectedIndexProperty, 7);
+                var dayAfter = DateTime.Today;
 
                 Assert.That(picker.SelectedDateTime, Is.Not.Null, "selecting an hour did not set a value");
                 Assert.That(picker.SelectedDateTime!.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+                // On an empty picker the drop down fills the date from today, where the text
+                // path uses default(DateTime). Documented on the TimePicker page.
+                Assert.That(picker.SelectedDateTime!.Value.Date, Is.AnyOf(dayBefore, dayAfter));
             }
             finally
             {
