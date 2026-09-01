@@ -1407,16 +1407,23 @@ namespace MahApps.Metro.Controls
             var match = RegexStringFormatHexadecimal.Match(format);
             if (match.Success)
             {
+                // HEX DOES SUPPORT INTEGRAL TYPES ONLY. Inside the int range the operand stays an
+                // int, so negative values keep their 32 bit form (-1 renders as "ffffffff").
+                // Outside it, the cast to int saturates, which rendered 3e9 as 7FFFFFFF. A value
+                // beyond the long range still saturates, there is no integral type left for it.
+                var hexOperand = newValue >= int.MinValue && newValue <= int.MaxValue
+                                     ? (object)(int)newValue
+                                     : (long)newValue;
+
                 if (match.Groups["simpleHEX"].Success)
                 {
-                    // HEX DOES SUPPORT INT ONLY.
-                    output = ((int)newValue).ToString(match.Groups["simpleHEX"].Value, culture);
+                    output = ((IFormattable)hexOperand).ToString(match.Groups["simpleHEX"].Value, culture);
                     return true;
                 }
 
                 if (match.Groups["complexHEX"].Success)
                 {
-                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue);
+                    output = string.Format(culture, match.Groups["complexHEX"].Value, hexOperand);
                     return true;
                 }
             }

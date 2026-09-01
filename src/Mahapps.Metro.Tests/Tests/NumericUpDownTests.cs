@@ -43,6 +43,16 @@ namespace MahApps.Metro.Tests.Tests
             this.PreparePropertiesForTest();
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            // The control's editing flag is private state that ClearDependencyProperties cannot
+            // reach. A test that types without committing would leave it set, and OnValueChanged
+            // then stops updating the text box for every test that follows. Ending the edit here
+            // keeps that failure mode out of the fixture.
+            this.window?.TheNUD.FindChild<TextBox>()?.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+        }
+
         private void PreparePropertiesForTest(IList<string>? properties = null)
         {
             this.window?.TheNUD.ClearDependencyProperties(properties);
@@ -123,6 +133,9 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(-1d, "x", "ffffffff")]
         [TestCase(255d, "x4", "00ff")]
         [TestCase(-1d, "X4", "FFFFFFFF")]
+        [TestCase(3000000000d, "X", "B2D05E00")] // GH-4565: was saturated to int.MaxValue and rendered 7FFFFFFF
+        [TestCase(2147483648d, "X", "80000000")] // GH-4565: int.MaxValue + 1
+        [TestCase(-3000000000d, "X", "FFFFFFFF4D2FA200")] // GH-4565: below int.MinValue
         public void ShouldFormatValueInput(object? value, string format, string expectedText)
         {
             Assert.That(this.window, Is.Not.Null);
@@ -665,16 +678,8 @@ namespace MahApps.Metro.Tests.Tests
 
             textBox.RaiseEvent(args);
 
-            try
-            {
-                Assert.That(args.Handled, Is.False, "the keystroke was swallowed, so the value can never be typed");
-            }
-            finally
-            {
-                // Raising PreviewTextInput on its own leaves the control in editing state, and
-                // that flag is private, so no [SetUp] can reset it. End the edit here instead.
-                textBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
-            }
+            // The edit is left open on purpose; [TearDown] closes it.
+            Assert.That(args.Handled, Is.False, "the keystroke was swallowed, so the value can never be typed");
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -196,25 +197,43 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
-        /// GH-4551: picking the time first runs through ClockSelectedTimeChanged, which falls
-        /// back to DateTime.Today and thus produces DateTimeKind.Local, while every other path
-        /// of the control produces Unspecified. Consumers saw two kinds from one control.
+        /// GH-4551: picking the time before the date ran through ClockSelectedTimeChanged, whose
+        /// fallback was DateTime.Today and therefore carried DateTimeKind.Local, while the
+        /// calendar and the text box both produce Unspecified. One control handed its consumer
+        /// two different kinds depending on the order the user picked things in.
         /// </summary>
-        /// <remarks>
-        /// Drives the protected handler directly. The real trigger is a selection change inside
-        /// the drop down, whose template is not loaded in an off-screen test window.
-        /// </remarks>
         [Test]
-        public void ShouldReportUnspecifiedKindWhenTimeIsPickedFirst()
+        public void ShouldReportUnspecifiedKindWhenTimeIsPickedFromDropDown()
         {
-            var picker = new TestableTimePicker();
+            Assert.That(this.window, Is.Not.Null);
 
-            Assert.That(picker.SelectedDateTime, Is.Null, "the fallback path needs an empty picker");
+            var picker = this.window.EmptyTimePicker;
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+            picker.ApplyTemplate();
+            picker.SetCurrentValue(TimePickerBase.IsDropDownOpenProperty, true);
 
-            picker.PickTimeFromClock();
+            try
+            {
+                var popup = picker.FindChild<Popup>(string.Empty);
+                Assert.That(popup, Is.Not.Null, "no popup found");
 
-            Assert.That(picker.SelectedDateTime, Is.Not.Null);
-            Assert.That(picker.SelectedDateTime!.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+                var content = popup.Child as FrameworkElement;
+                Assert.That(content, Is.Not.Null, "popup has no child");
+
+                content.ApplyTemplate();
+
+                var hourPicker = content.FindChild<Selector>("PART_HourPicker");
+                Assert.That(hourPicker, Is.Not.Null, "no PART_HourPicker inside the popup");
+
+                hourPicker.SetCurrentValue(Selector.SelectedIndexProperty, 7);
+
+                Assert.That(picker.SelectedDateTime, Is.Not.Null, "selecting an hour did not set a value");
+                Assert.That(picker.SelectedDateTime!.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+            }
+            finally
+            {
+                picker.SetCurrentValue(TimePickerBase.IsDropDownOpenProperty, false);
+            }
         }
 
         /// <summary>
@@ -237,16 +256,5 @@ namespace MahApps.Metro.Tests.Tests
                                          });
         }
 
-        /// <summary>
-        /// Exposes the protected clock handler, which is otherwise only reachable through the
-        /// drop down's item selection.
-        /// </summary>
-        private sealed class TestableTimePicker : TimePicker
-        {
-            public void PickTimeFromClock()
-            {
-                this.ClockSelectedTimeChanged();
-            }
-        }
     }
 }
