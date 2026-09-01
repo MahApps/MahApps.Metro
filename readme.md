@@ -11,7 +11,7 @@
     A toolkit for creating awesome WPF applications. Lots of goodness out-of-the box.
   </p>
   <p>
-    Supporting .NET Framework 4.6.2 and greater, .NET Core 3.1, .NET 5 and .NET 6 (on Windows)
+    Supporting .NET Framework 4.6.2 and greater, .NET 6 and .NET 8 (on Windows)
   </p>
   <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">
@@ -53,10 +53,36 @@
   </a>
 </div>
 
+## What it is
+
+MahApps.Metro is a UI toolkit for WPF. It takes the standard WPF controls, the ones you already use, gives them a clean and modern look, and adds the pieces WPF never shipped: a proper window chrome, a theming engine, dialogs that do not block, and a set of navigation controls.
+
+The project started on 29 January 2011, is MIT licensed, and has been part of the [.NET Foundation](https://dotnetfoundation.org) since 2020. More than 160 people have contributed to it.
+
+**It restyles what you already have.** Most UI libraries ask you to swap your controls for theirs. MahApps.Metro does the opposite: reference it, merge two resource dictionaries, and your existing `Button`, `TextBox`, `DataGrid` and `TreeView` are restyled in place. No rewrite, no new control names, no vendor lock-in on your XAML.
+
+**A window that looks like an app.** `MetroWindow` replaces the Windows title bar with one you control: your own commands to the left and right of the title, a coloured glow border, an overlay for dialogs, and flyouts that slide in from any edge.
+
+**Theming is a first-class feature.** A theme is a base theme (Light or Dark) plus an accent colour, switchable at runtime, and `ThemeManager` can follow the Windows accent colour and the system light/dark setting. You can generate your own themes from the same scheme the built-in ones use.
+
+**Helpers instead of subclasses.** Watermarks, clear buttons, per-control corner radii, spell-check styling and selected-item brushes arrive as attached properties such as `TextBoxHelper.Watermark`, so you attach behaviour to a stock control instead of inheriting from a special one.
+
+## What you can build with it
+
+- [Windows and chrome](https://mahapps.github.io/mahapps.com/docs/controls/): `MetroWindow` with custom title-bar commands and glow borders, `MetroNavigationWindow` for page-based navigation.
+- Navigation: a `HamburgerMenu` for the side-bar pattern, a `SplitView` underneath it, flyouts from any edge, and animated tab controls.
+- [Dialogs](https://mahapps.github.io/mahapps.com/docs/dialogs/): message, input, login and progress dialogs shown as an overlay inside your window instead of a blocking modal. They are awaitable and usable from a view model.
+- Input and data: `ColorPicker`, `DateTimePicker`, `NumericUpDown`, `MultiSelectionComboBox`, `HotKeyBox` and a [restyled `DataGrid`](https://mahapps.github.io/mahapps.com/docs/styles/).
+- Feedback: badges, progress bars and rings, toggle switches and validation popups.
+- Look and feel: [themes](https://mahapps.github.io/mahapps.com/docs/themes/) you can switch at runtime and [style variants](https://mahapps.github.io/mahapps.com/docs/stylevariants/) that follow Visual Studio, Windows 10 or WinUI conventions.
+
+## Versions
+
+Version 2.4 runs on .NET Framework 4.5.2 and newer as well as .NET Core 3.x. Version 3.0, on NuGet as a release candidate, targets .NET Framework 4.6.2, .NET 6 and .NET 8, and brings the window chrome up to date with Windows 11: the caption buttons are registered as non-client controls, so the maximise button takes part in snap layouts, and the window can use the newer backdrop materials.
+
 ## Let's get started
 
-- [Documentation](https://github.com/MahApps/MahApps.Metro/wiki/Documentation)
-- [Quick Start](https://github.com/MahApps/MahApps.Metro/wiki/Quick-Start)
+- [Documentation](https://mahapps.github.io/mahapps.com/) and [Quick Start](https://mahapps.github.io/mahapps.com/docs/guides/)
 - [Icons](https://github.com/MahApps/MahApps.Metro/wiki/Icons) (MahApps.Metro.IconPacks)
 - [Contributing](https://github.com/MahApps/MahApps.Metro/wiki/Contributing) to MahApps.Metro
 - [Building](https://github.com/MahApps/MahApps.Metro/wiki/Building-the-MahApps.Metro-solution) the MahApps.Metro solution

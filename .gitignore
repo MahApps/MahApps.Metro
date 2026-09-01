@@ -265,3 +265,7 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 
 # cake
 tools/*
+
+# Local AI assistant files
+CLAUDE.md
+.claude/
