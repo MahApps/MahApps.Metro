@@ -268,4 +268,5 @@ tools/*
 
 # Local AI assistant files
 CLAUDE.md
+PRODUCT.md
 .claude/
