@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,6 +41,16 @@ namespace MahApps.Metro.Tests.Tests
         public void SetUp()
         {
             this.PreparePropertiesForTest();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            // The control's editing flag is private state that ClearDependencyProperties cannot
+            // reach. A test that types without committing would leave it set, and OnValueChanged
+            // then stops updating the text box for every test that follows. Ending the edit here
+            // keeps that failure mode out of the fixture.
+            this.window?.TheNUD.FindChild<TextBox>()?.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
         private void PreparePropertiesForTest(IList<string>? properties = null)
@@ -123,6 +133,9 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(-1d, "x", "ffffffff")]
         [TestCase(255d, "x4", "00ff")]
         [TestCase(-1d, "X4", "FFFFFFFF")]
+        [TestCase(3000000000d, "X", "B2D05E00")] // GH-4565: was saturated to int.MaxValue and rendered 7FFFFFFF
+        [TestCase(2147483648d, "X", "80000000")] // GH-4565: int.MaxValue + 1
+        [TestCase(-3000000000d, "X", "FFFFFFFF4D2FA200")] // GH-4565: below int.MinValue
         public void ShouldFormatValueInput(object? value, string format, string expectedText)
         {
             Assert.That(this.window, Is.Not.Null);
@@ -597,6 +610,97 @@ namespace MahApps.Metro.Tests.Tests
             TypeText(textBox, text);
 
             Assert.That(textBox.Text, Is.EqualTo(text));
+        }
+
+
+        /// <summary>
+        /// GH-4565: ChangeValueFromTextInput called OnValueChanged in addition to the change
+        /// already raised by the ValueProperty callback, so every single value change was
+        /// reported to the consumer twice.
+        /// </summary>
+        [Test]
+        public void ShouldRaiseValueChangedOnlyOncePerChangeOnManualTextInput()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, 0d);
+
+            // Typing "42" legitimately walks the value through several states, so the count
+            // itself is not the contract. No single transition may be reported twice.
+            var transitions = new List<string>();
+
+            void OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+            {
+                transitions.Add(FormattableString.Invariant($"{e.OldValue} -> {e.NewValue}"));
+            }
+
+            this.window.TheNUD.ValueChanged += OnValueChanged;
+            try
+            {
+                SetText(textBox, "42");
+            }
+            finally
+            {
+                this.window.TheNUD.ValueChanged -= OnValueChanged;
+            }
+
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(42d));
+            Assert.That(transitions, Is.Not.Empty);
+            Assert.That(transitions, Is.Unique, $"a value change was reported more than once: {string.Join(" | ", transitions)}");
+        }
+
+        /// <summary>
+        /// GH-4565: OnPreviewTextInput rejected any keystroke whose resulting text would be
+        /// coerced, so a value below Minimum could never be typed digit by digit.
+        /// </summary>
+        [Test]
+        public void ShouldNotBlockTypingADigitBelowMinimum()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MinimumProperty, 50d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MaximumProperty, 100d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, 60d);
+
+            textBox.Clear();
+
+            // "5" is the first keystroke of "55", but on its own it is below Minimum.
+            var args = new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, textBox, "5"))
+                       {
+                           RoutedEvent = UIElement.PreviewTextInputEvent
+                       };
+
+            textBox.RaiseEvent(args);
+
+            // The edit is left open on purpose; [TearDown] closes it.
+            Assert.That(args.Handled, Is.False, "the keystroke was swallowed, so the value can never be typed");
+        }
+
+        /// <summary>
+        /// GH-4565: guards the hexadecimal formatting fallback. A value outside the int range
+        /// must not end up at double.ToString("X"), which throws a FormatException.
+        /// </summary>
+        [Test]
+        public void ShouldNotThrowWhenFormattingHexadecimalValueAboveIntMax()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheNUD.Culture = CultureInfo.InvariantCulture;
+            this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.StringFormat = "X";
+
+            Assert.That(() => this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, (double)int.MaxValue + 1d),
+                        Throws.Nothing);
+            Assert.That(textBox.Text, Is.Not.Empty);
         }
 
         private sealed class ClampingTestViewModel : INotifyPropertyChanged

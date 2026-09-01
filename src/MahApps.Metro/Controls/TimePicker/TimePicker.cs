@@ -53,8 +53,8 @@ namespace MahApps.Metro.Controls
             }
 
             const DateTimeStyles dateTimeParseStyle = DateTimeStyles.AllowWhiteSpaces
-                                                      & DateTimeStyles.AssumeLocal
-                                                      & DateTimeStyles.NoCurrentDateDefault;
+                                                      | DateTimeStyles.AssumeLocal
+                                                      | DateTimeStyles.NoCurrentDateDefault;
 
             if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, dateTimeParseStyle, out var timeSpan))
             {

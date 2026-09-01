@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -148,5 +149,112 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.That((window.EmptyTimePicker).SelectedDateTime, Is.EqualTo(default(DateTime) + new TimeSpan(14, 42, 12)));
         }
+
+        /// <summary>
+        /// GH-4586: TimePicker.SetSelectedDateTime combined its DateTimeStyles flags with "&"
+        /// instead of "|", which folds the constant to DateTimeStyles.None.
+        /// Nails down the parse behaviour the control actually offers, so that correcting the
+        /// operator, or touching the flags later, cannot change it unnoticed.
+        /// </summary>
+        [Theory]
+        [TestCase("2:30:45 PM", 14, 30, 45)]
+        [TestCase("2 : 30 : 45 PM", 14, 30, 45)] // inner whitespace
+        [TestCase("  2:30:45 PM  ", 14, 30, 45)] // leading and trailing whitespace
+        [TestCase("2  :  30  :  45  PM", 14, 30, 45)]
+        public void ShouldParseTimeWithWhitespace(string text, int hours, int minutes, int seconds)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+            Assert.That(picker, Is.Not.Null);
+
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+
+            CommitText(picker, text);
+
+            Assert.That(picker.SelectedDateTime, Is.EqualTo(default(DateTime) + new TimeSpan(hours, minutes, seconds)));
+        }
+
+        /// <summary>
+        /// GH-4586 and GH-4551: the DateTimeStyles of the TimePicker contain AssumeLocal, which
+        /// never reaches the stored value because the result is built from the previous value's
+        /// date. Documents that the control reports Unspecified, matching the calendar path.
+        /// </summary>
+        [Test]
+        public void ShouldReportUnspecifiedKindForTextInput()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+            Assert.That(picker, Is.Not.Null);
+
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+
+            CommitText(picker, "2:42:12 PM");
+
+            Assert.That(picker.SelectedDateTime, Is.Not.Null);
+            Assert.That(picker.SelectedDateTime!.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+        }
+
+        /// <summary>
+        /// GH-4551: picking the time before the date ran through ClockSelectedTimeChanged, whose
+        /// fallback was DateTime.Today and therefore carried DateTimeKind.Local, while the
+        /// calendar and the text box both produce Unspecified. One control handed its consumer
+        /// two different kinds depending on the order the user picked things in.
+        /// </summary>
+        [Test]
+        public void ShouldReportUnspecifiedKindWhenTimeIsPickedFromDropDown()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+            picker.ApplyTemplate();
+            picker.SetCurrentValue(TimePickerBase.IsDropDownOpenProperty, true);
+
+            try
+            {
+                var popup = picker.FindChild<Popup>(string.Empty);
+                Assert.That(popup, Is.Not.Null, "no popup found");
+
+                var content = popup.Child as FrameworkElement;
+                Assert.That(content, Is.Not.Null, "popup has no child");
+
+                content.ApplyTemplate();
+
+                var hourPicker = content.FindChild<Selector>("PART_HourPicker");
+                Assert.That(hourPicker, Is.Not.Null, "no PART_HourPicker inside the popup");
+
+                hourPicker.SetCurrentValue(Selector.SelectedIndexProperty, 7);
+
+                Assert.That(picker.SelectedDateTime, Is.Not.Null, "selecting an hour did not set a value");
+                Assert.That(picker.SelectedDateTime!.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+            }
+            finally
+            {
+                picker.SetCurrentValue(TimePickerBase.IsDropDownOpenProperty, false);
+            }
+        }
+
+        /// <summary>
+        /// Commits text into a picker's text box the way a user does: type it, then press Return.
+        /// </summary>
+        private static void CommitText(TimePickerBase picker, string text)
+        {
+            var datePickerTextBox = picker.FindChild<DatePickerTextBox>(string.Empty);
+            Assert.That(datePickerTextBox, Is.Not.Null);
+
+            datePickerTextBox.SetCurrentValue(TextBox.TextProperty, text);
+
+            datePickerTextBox.RaiseEvent(new KeyEventArgs(
+                                             Keyboard.PrimaryDevice,
+                                             new HwndSource(0, 0, 0, 0, 0, "", IntPtr.Zero), // dummy presentation source
+                                             0,
+                                             Key.Return)
+                                         {
+                                             RoutedEvent = Keyboard.KeyDownEvent
+                                         });
+        }
+
     }
 }

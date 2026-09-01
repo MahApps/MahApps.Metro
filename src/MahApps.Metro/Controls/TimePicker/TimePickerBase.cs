@@ -686,7 +686,10 @@ namespace MahApps.Metro.Controls
         protected virtual void ClockSelectedTimeChanged()
         {
             var time = this.GetSelectedTimeFromGUI() ?? TimeSpan.Zero;
-            var date = this.SelectedDateTime ?? DateTime.Today;
+
+            // Today's date, but without a kind: the calendar and the text box both produce
+            // Unspecified, and DateTime.Today would make this the one path yielding Local.
+            var date = this.SelectedDateTime ?? DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
 
             this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
         }
