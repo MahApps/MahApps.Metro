@@ -9,6 +9,10 @@ using Windows.Win32;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// An immutable key combination of one <see cref="System.Windows.Input.Key"/> and its <see cref="System.Windows.Input.ModifierKeys"/>.
+    /// Two instances that carry the same key and the same modifier keys are equal, for <see cref="Equals(HotKey)"/> as well as for <c>==</c>.
+    /// </summary>
     public class HotKey : IEquatable<HotKey>
     {
         public HotKey(Key key, ModifierKeys modifierKeys = ModifierKeys.None)
@@ -42,6 +46,28 @@ namespace MahApps.Metro.Controls
             }
 
             return this.Key == other.Key && this.ModifierKeys == other.ModifierKeys;
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="HotKey"/> instances describe the same key combination.
+        /// </summary>
+        /// <param name="left">The first hot key to compare, or <see langword="null"/>.</param>
+        /// <param name="right">The second hot key to compare, or <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if both are <see langword="null"/> or both carry the same <see cref="Key"/> and <see cref="ModifierKeys"/>.</returns>
+        public static bool operator ==(HotKey? left, HotKey? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="HotKey"/> instances describe different key combinations.
+        /// </summary>
+        /// <param name="left">The first hot key to compare, or <see langword="null"/>.</param>
+        /// <param name="right">The second hot key to compare, or <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the two differ in <see cref="Key"/> or <see cref="ModifierKeys"/>, or if only one of them is <see langword="null"/>.</returns>
+        public static bool operator !=(HotKey? left, HotKey? right)
+        {
+            return !(left == right);
         }
 
         public override string ToString()
