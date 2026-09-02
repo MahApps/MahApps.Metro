@@ -27,9 +27,15 @@ namespace MahApps.Metro.Controls
         {
             if (d is HotKeyBox hotKeyBox)
             {
-                if (e.OldValue != e.NewValue)
+                // WPF compares dependency property values of reference types by reference, so this
+                // callback also runs for a new instance that describes the same hot key. Comparing
+                // the typed values keeps HotKeyChanged an event about a changed hot key.
+                var oldHotKey = e.OldValue as HotKey;
+                var newHotKey = e.NewValue as HotKey;
+
+                if (oldHotKey != newHotKey)
                 {
-                    hotKeyBox.RaiseEvent(new RoutedPropertyChangedEventArgs<HotKey?>(e.OldValue as HotKey, e.NewValue as HotKey, HotKeyChangedEvent));
+                    hotKeyBox.RaiseEvent(new RoutedPropertyChangedEventArgs<HotKey?>(oldHotKey, newHotKey, HotKeyChangedEvent));
                 }
 
                 hotKeyBox.UpdateText();
