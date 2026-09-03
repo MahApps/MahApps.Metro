@@ -5,7 +5,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -224,7 +223,7 @@ namespace MahApps.Metro.Controls
                     // revert to old value
                     source.SetValue(TransitionProperty, oldTransition);
 
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Temporary removed exception message", newTransition));
+                    throw new MahAppsException($"'{newTransition}' transition could not be found!");
                 }
             }
             else
