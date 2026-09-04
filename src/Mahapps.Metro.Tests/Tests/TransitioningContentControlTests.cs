@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using MahApps.Metro.Controls;
@@ -18,7 +17,7 @@ namespace MahApps.Metro.Tests.Tests
     {
         private TransitioningContentControlWindow? window;
 
-        private class TransitionViewModel : INotifyPropertyChanged
+        private sealed class TransitionViewModel : INotifyPropertyChanged
         {
             private TransitionType transition;
 
@@ -33,16 +32,11 @@ namespace MahApps.Metro.Tests.Tests
                     }
 
                     this.transition = value;
-                    this.OnPropertyChanged();
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Transition)));
                 }
             }
 
             public event PropertyChangedEventHandler? PropertyChanged;
-
-            private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-            {
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
         [OneTimeSetUp]
