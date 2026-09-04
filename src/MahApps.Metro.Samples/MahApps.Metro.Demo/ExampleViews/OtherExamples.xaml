@@ -73,6 +73,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
@@ -107,13 +109,36 @@
                           Margin="2"
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:NavigationIndexPlacement}}, Mode=OneTime}"
                           SelectedValue="{Binding ElementName=FlipView1st, Path=IndexPlacement, FallbackValue={x:Static mah:NavigationIndexPlacement.Bottom}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Content="Navigation Index Horizontal Alignment" />
+                <ComboBox x:Name="IndexHorizontalAlignment"
+                          Grid.Row="3"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type HorizontalAlignment}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=IndexHorizontalAlignment, FallbackValue={x:Static HorizontalAlignment.Center}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Only used when the index sits on the top or the bottom side" />
+
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Content="Navigation Index Vertical Alignment" />
+                <ComboBox x:Name="IndexVerticalAlignment"
+                          Grid.Row="4"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type VerticalAlignment}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=IndexVerticalAlignment, FallbackValue={x:Static VerticalAlignment.Center}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Only used when the index sits on the left or the right side" />
             </Grid>
 
             <mah:FlipView x:Name="FlipView1st"
                           Height="200"
                           Margin="0 0 5 0"
                           Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                          IndexHorizontalAlignment="Right"
                           IndexPlacement="TopOverItem"
                           ShowIndex="True">
                 <mah:FlipView.Items>
