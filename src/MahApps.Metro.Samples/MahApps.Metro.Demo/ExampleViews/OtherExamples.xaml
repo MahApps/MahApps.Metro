@@ -25,7 +25,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -185,36 +185,149 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="0"
-              Grid.RowSpan="2"
-              Grid.Column="0">
+        <StackPanel Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Width="440"
+                    Margin="0 0 20 0">
+
             <Label Content="Context menu" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Label HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   HorizontalContentAlignment="Center"
-                   VerticalContentAlignment="Center"
-                   Content="Right click here to open a context menu">
-                <Label.ContextMenu>
+
+            <TextBlock Margin="0 4 0 8"
+                       Text="A ContextMenu takes the MahApps look from the implicit style, with the icon column, the input gesture column and the check mark the templates bring along. Both areas below carry the same menu and differ only in what is set on the ContextMenu itself."
+                       TextWrapping="Wrap" />
+
+            <Border Height="110"
+                    Padding="8"
+                    Background="{DynamicResource MahApps.Brushes.Gray10}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
+                    BorderThickness="1">
+                <Border.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Menu 1">
-                            <MenuItem Header="Submenu 1" IsChecked="True" />
-                            <MenuItem Header="Submenu 1"
-                                      IsChecked="True"
-                                      IsEnabled="False" />
-                            <MenuItem Header="Submenu 2" />
-                            <MenuItem Header="Submenu 3" IsEnabled="False" />
+                        <MenuItem Header="Cut" InputGestureText="Ctrl+X">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="ContentCut" />
+                            </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Menu 2" />
-                        <MenuItem Header="Menu 3" IsChecked="True" />
-                        <MenuItem Header="Menu 4"
-                                  IsChecked="True"
-                                  IsEnabled="False" />
-                        <MenuItem Header="Menu 5" />
-                        <MenuItem Header="Menu 6" IsEnabled="False" />
+                        <MenuItem Header="Copy" InputGestureText="Ctrl+C">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="ContentCopy" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Paste" InputGestureText="Ctrl+V">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="ContentPaste" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Show line numbers"
+                                  IsCheckable="True"
+                                  IsChecked="True" />
+                        <MenuItem Header="Word wrap" IsCheckable="True" />
+                        <Separator />
+                        <MenuItem Header="Open with">
+                            <MenuItem Header="Editor" />
+                            <MenuItem Header="Browser" />
+                            <Separator />
+                            <MenuItem Header="Choose another app" />
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Delete"
+                                  InputGestureText="Del"
+                                  IsEnabled="False">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="DeleteOutline" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Properties" InputGestureText="Alt+Enter" />
                     </ContextMenu>
-                </Label.ContextMenu>
-            </Label>
-        </Grid>
+                </Border.ContextMenu>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Width="24"
+                                                Height="24"
+                                                HorizontalAlignment="Center"
+                                                Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                                                Kind="CursorDefaultClickOutline" />
+                    <TextBlock Margin="0 6 0 0"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold"
+                               Text="Right click here" />
+                    <TextBlock HorizontalAlignment="Center"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                               Text="square corners, drop shadow" />
+                </StackPanel>
+            </Border>
+
+            <Border Height="110"
+                    Margin="0 8 0 0"
+                    Padding="8"
+                    mah:ControlsHelper.CornerRadius="8"
+                    Background="{DynamicResource MahApps.Brushes.Gray10}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
+                    BorderThickness="1">
+                <Border.ContextMenu>
+                    <ContextMenu mah:ControlsHelper.CornerRadius="8" HasDropShadow="False">
+                        <MenuItem Header="Cut" InputGestureText="Ctrl+X">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="ContentCut" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Copy" InputGestureText="Ctrl+C">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="ContentCopy" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Paste" InputGestureText="Ctrl+V">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="ContentPaste" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Show line numbers"
+                                  IsCheckable="True"
+                                  IsChecked="True" />
+                        <MenuItem Header="Word wrap" IsCheckable="True" />
+                        <Separator />
+                        <MenuItem Header="Open with">
+                            <MenuItem Header="Editor" />
+                            <MenuItem Header="Browser" />
+                            <Separator />
+                            <MenuItem Header="Choose another app" />
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="Delete"
+                                  InputGestureText="Del"
+                                  IsEnabled="False">
+                            <MenuItem.Icon>
+                                <iconPacks:PackIconMaterial Kind="DeleteOutline" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Properties" InputGestureText="Alt+Enter" />
+                    </ContextMenu>
+                </Border.ContextMenu>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Width="24"
+                                                Height="24"
+                                                HorizontalAlignment="Center"
+                                                Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                                                Kind="CursorDefaultClickOutline" />
+                    <TextBlock Margin="0 6 0 0"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold"
+                               Text="Right click here" />
+                    <TextBlock HorizontalAlignment="Center"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                               Text="mah:ControlsHelper.CornerRadius 8, no drop shadow" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock Margin="0 12 0 4"
+                       Text="A TextBox brings its own menu from the MahApps.TextBox.ContextMenu resource."
+                       TextWrapping="Wrap" />
+
+            <TextBox mah:TextBoxHelper.Watermark="Right click for Cut, Copy and Paste" Text="Select a word in here and right click it" />
+
+        </StackPanel>
     </Grid>
 
 </UserControl>
