@@ -16,13 +16,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <!--  better results for this examples  -->
-            <Style BasedOn="{StaticResource {x:Type mah:TransitioningContentControl}}" TargetType="{x:Type mah:TransitioningContentControl}">
-                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-            </Style>
-
             <DataTemplate x:Key="ImageDataTemplate" x:Shared="False">
                 <Image Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}, Converter={mah:NullToUnsetValueConverter}}" Stretch="Fill" />
             </DataTemplate>
@@ -40,69 +33,6 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Column="0">
-            <Label Content="Transitions" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <mah:TransitioningContentControl x:Name="transitioning"
-                                             Width="250"
-                                             Height="50"
-                                             Margin="0 10 0 0"
-                                             Transition="Down" />
-            <mah:TransitioningContentControl x:Name="customTransitioning"
-                                             Width="250"
-                                             Height="50"
-                                             Margin="0 10 0 0"
-                                             Transition="Custom">
-                <mah:TransitioningContentControl.CustomVisualStates>
-                    <VisualState x:Name="CustomTransition">
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="CurrentContentPresentationSite"
-                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.700" Value="1" />
-                            </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="PreviousContentPresentationSite"
-                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.700" Value="0" />
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                </mah:TransitioningContentControl.CustomVisualStates>
-            </mah:TransitioningContentControl>
-            <mah:TransitioningContentControl x:Name="SecondcustomTransitioning"
-                                             Width="250"
-                                             Height="50"
-                                             Margin="0 10 0 0"
-                                             CustomVisualStatesName="SecondCustomTransition"
-                                             Transition="Custom">
-                <mah:TransitioningContentControl.CustomVisualStates>
-                    <VisualState x:Name="SecondCustomTransition">
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="CurrentContentPresentationSite"
-                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="0" />
-                                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="1">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <SineEase />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="PreviousContentPresentationSite"
-                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="0" />
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                </mah:TransitioningContentControl.CustomVisualStates>
-            </mah:TransitioningContentControl>
-        </StackPanel>
 
         <StackPanel Grid.Row="0"
                     Grid.RowSpan="2"
@@ -255,7 +185,9 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="0"
+              Grid.RowSpan="2"
+              Grid.Column="0">
             <Label Content="Context menu" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Label HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"

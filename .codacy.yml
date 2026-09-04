@@ -1,0 +1,5 @@
+---
+# The generated .g.i.cs half of a WPF code behind file is not part of the analysis, so the
+# partial modifier that the compiler requires there is reported as gratuitous (SonarC# S2333).
+exclude_paths:
+  - "**/*.xaml.cs"

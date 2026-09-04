@@ -103,11 +103,30 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>Identifies the <see cref="Transition"/> dependency property.</summary>
+        /// <remarks>
+        /// This is an attached property, so the transition can be set on any element above the control and
+        /// every <see cref="TransitioningContentControl"/> underneath inherits it.
+        /// </remarks>
         public static readonly DependencyProperty TransitionProperty
-            = DependencyProperty.Register(nameof(Transition),
-                                          typeof(TransitionType),
-                                          typeof(TransitioningContentControl),
-                                          new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
+            = DependencyProperty.RegisterAttached(nameof(Transition),
+                                                  typeof(TransitionType),
+                                                  typeof(TransitioningContentControl),
+                                                  new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged, CoerceTransition));
+
+        /// <summary>Helper for getting <see cref="TransitionProperty"/> from <paramref name="element"/>.</summary>
+        [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
+        public static TransitionType GetTransition(DependencyObject element)
+        {
+            return (TransitionType)element.GetValue(TransitionProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="TransitionProperty"/> on <paramref name="element"/>.</summary>
+        [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
+        public static void SetTransition(DependencyObject element, TransitionType value)
+        {
+            element.SetValue(TransitionProperty, value);
+        }
 
         /// <summary>
         /// Gets or sets the transition type.
@@ -195,41 +214,59 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static object CoerceTransition(DependencyObject d, object? baseValue)
+        {
+            if (baseValue is not TransitionType newTransition)
+            {
+                return DefaultTransitionState;
+            }
+
+            // The property is attached, so it can sit on any element above the control. Only a control
+            // knows its visual states, everything else passes the value on to its children untouched.
+            if (d is not TransitioningContentControl source)
+            {
+                return baseValue;
+            }
+
+            // Could be during initialization of xaml that the presentation group was not yet defined.
+            // The value is checked again in OnApplyTemplate, so take it as it is for now.
+            if (VisualStates.TryGetVisualStateGroup(source, PresentationGroup) is null)
+            {
+                return baseValue;
+            }
+
+            if (source.GetStoryboard(newTransition) is not null)
+            {
+                return baseValue;
+            }
+
+            // The transition could not be found, so keep the transition the control has right now.
+            // Coercing instead of writing the old value back from inside the changed callback leaves
+            // a binding on Transition alone and cannot recurse. If that transition cannot be resolved
+            // either, which happens for a template without any of the known states, fall back to the
+            // default one and let the control live without a transition.
+            var currentTransition = (TransitionType)source.GetValue(TransitionProperty);
+
+            return source.GetStoryboard(currentTransition) is not null
+                ? currentTransition
+                : DefaultTransitionState;
+        }
+
         private static void OnTransitionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var source = (TransitioningContentControl)d;
-            var oldTransition = (TransitionType)e.OldValue;
-            var newTransition = (TransitionType)e.NewValue;
+            if (d is not TransitioningContentControl source)
+            {
+                return;
+            }
 
             if (source.IsTransitioning)
             {
                 source.AbortTransition();
             }
 
-            // find new transition
-            var newStoryboard = source.GetStoryboard(newTransition);
-
-            // unable to find the transition.
-            if (newStoryboard is null)
-            {
-                // could be during initialization of xaml that presentationgroups was not yet defined
-                if (VisualStates.TryGetVisualStateGroup(source, PresentationGroup) is null)
-                {
-                    // will delay check
-                    source.CurrentTransition = null;
-                }
-                else
-                {
-                    // revert to old value
-                    source.SetValue(TransitionProperty, oldTransition);
-
-                    throw new MahAppsException($"'{newTransition}' transition could not be found!");
-                }
-            }
-            else
-            {
-                source.CurrentTransition = newStoryboard;
-            }
+            // The value passed the coercion, so it is either a transition that could be found
+            // or one that has to be checked again as soon as the template is applied.
+            source.CurrentTransition = source.GetStoryboard((TransitionType)e.NewValue);
         }
 
         private static void OnRestartTransitionOnContentChangePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -272,16 +309,9 @@ namespace MahApps.Metro.Controls
             this.currentContentPresentationSite = this.GetTemplateChild(CurrentContentPresentationSitePartName) as ContentPresenter;
 
             // hookup currenttransition
-            var transition = this.GetStoryboard(this.Transition);
-            this.CurrentTransition = transition;
-            if (transition is null)
-            {
-                var invalidTransition = this.Transition;
-                // revert to default
-                this.Transition = DefaultTransitionState;
-
-                throw new MahAppsException($"'{invalidTransition}' transition could not be found!");
-            }
+            // The states are known now, so let the coercion decide whether the current transition survives the new template.
+            this.CoerceValue(TransitionProperty);
+            this.CurrentTransition = this.GetStoryboard(this.Transition);
 
             VisualStateManager.GoToState(this, HiddenState, false);
         }
