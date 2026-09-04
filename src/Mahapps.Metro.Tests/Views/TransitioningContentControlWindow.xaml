@@ -8,6 +8,20 @@
                   d:DesignHeight="300"
                   d:DesignWidth="300"
                   mc:Ignorable="d">
+    <tests:TestWindow.Resources>
+        <!--  A template whose PresentationStates group knows no DefaultTransition at all.  -->
+        <ControlTemplate x:Key="TransitioningContentControlWithoutAnyTransition" TargetType="mah:TransitioningContentControl">
+            <Grid>
+                <ContentPresenter x:Name="PreviousContentPresentationSite" Content="{x:Null}" />
+                <ContentPresenter x:Name="CurrentContentPresentationSite" Content="{TemplateBinding Content}" />
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="PresentationStates">
+                        <VisualState x:Name="Hidden" />
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+        </ControlTemplate>
+    </tests:TestWindow.Resources>
     <StackPanel>
         <mah:TransitioningContentControl x:Name="TheTransitioningContentControl">
             <mah:TransitioningContentControl.CustomVisualStates>
@@ -23,5 +37,28 @@
             </mah:TransitioningContentControl.CustomVisualStates>
             <TextBlock Text="Content" />
         </mah:TransitioningContentControl>
+
+        <mah:TransitioningContentControl x:Name="TheTransitioningContentControlWithoutAnyTransition" Template="{StaticResource TransitioningContentControlWithoutAnyTransition}">
+            <TextBlock Text="Content" />
+        </mah:TransitioningContentControl>
+
+        <!--  The transition is set in xaml, so it is set before the template knows any state.  -->
+        <mah:TransitioningContentControl x:Name="TheTransitioningContentControlWithTransitionFromXaml"
+                                         CustomVisualStatesName="TransitionFromXaml"
+                                         Transition="Custom">
+            <mah:TransitioningContentControl.CustomVisualStates>
+                <VisualState x:Name="TransitionFromXaml">
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="CurrentContentPresentationSite"
+                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                         From="0"
+                                         To="1"
+                                         Duration="00:00:00.100" />
+                    </Storyboard>
+                </VisualState>
+            </mah:TransitioningContentControl.CustomVisualStates>
+            <TextBlock Text="Content" />
+        </mah:TransitioningContentControl>
+
     </StackPanel>
 </tests:TestWindow>

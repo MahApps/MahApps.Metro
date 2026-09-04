@@ -2,7 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
@@ -14,6 +17,33 @@ namespace MahApps.Metro.Tests.Tests
     public class TransitioningContentControlTests
     {
         private TransitioningContentControlWindow? window;
+
+        private class TransitionViewModel : INotifyPropertyChanged
+        {
+            private TransitionType transition;
+
+            public TransitionType Transition
+            {
+                get => this.transition;
+                set
+                {
+                    if (value == this.transition)
+                    {
+                        return;
+                    }
+
+                    this.transition = value;
+                    this.OnPropertyChanged();
+                }
+            }
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+            {
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
@@ -32,18 +62,7 @@ namespace MahApps.Metro.Tests.Tests
         public void SetUp()
         {
             this.window?.TheTransitioningContentControl.ClearDependencyProperties(new[] { nameof(TransitioningContentControl.Transition), nameof(TransitioningContentControl.CustomVisualStatesName) });
-        }
-
-        [Test]
-        public void ShouldNameTheTransitionThatCouldNotBeFound()
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            this.window.TheTransitioningContentControl.CustomVisualStatesName = "ThisStateDoesNotExist";
-
-            var exception = Assert.Throws<MahAppsException>(() => this.window.TheTransitioningContentControl.Transition = TransitionType.Custom);
-
-            Assert.That(exception?.Message, Is.EqualTo("'Custom' transition could not be found!"));
+            this.window?.TheTransitioningContentControlWithoutAnyTransition.ClearDependencyProperties(new[] { nameof(TransitioningContentControl.Transition), nameof(TransitioningContentControl.CustomVisualStatesName) });
         }
 
         [Test]
@@ -54,9 +73,50 @@ namespace MahApps.Metro.Tests.Tests
             this.window.TheTransitioningContentControl.Transition = TransitionType.Left;
             this.window.TheTransitioningContentControl.CustomVisualStatesName = "ThisStateDoesNotExist";
 
-            Assert.Throws<MahAppsException>(() => this.window.TheTransitioningContentControl.Transition = TransitionType.Custom);
+            Assert.DoesNotThrow(() => this.window.TheTransitioningContentControl.Transition = TransitionType.Custom);
 
             Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Left));
+        }
+
+        [Test]
+        public void ShouldKeepABindingOnTransitionWhenTheTransitionCouldNotBeFound()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheTransitioningContentControl.CustomVisualStatesName = "ThisStateDoesNotExist";
+
+            var viewModel = new TransitionViewModel { Transition = TransitionType.Left };
+            BindingOperations.SetBinding(this.window.TheTransitioningContentControl,
+                                         TransitioningContentControl.TransitionProperty,
+                                         new Binding(nameof(TransitionViewModel.Transition)) { Source = viewModel });
+
+            Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Left));
+
+            Assert.DoesNotThrow(() => viewModel.Transition = TransitionType.Custom);
+
+            Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Left));
+
+            viewModel.Transition = TransitionType.Up;
+
+            Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Up));
+        }
+
+        [Test]
+        public void ShouldNotRecurseWhenTheFallbackTransitionIsMissingAsWell()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            Assert.DoesNotThrow(() => this.window.TheTransitioningContentControlWithoutAnyTransition.Transition = TransitionType.Up);
+
+            Assert.That(this.window.TheTransitioningContentControlWithoutAnyTransition.Transition, Is.EqualTo(TransitioningContentControl.DefaultTransitionState));
+        }
+
+        [Test]
+        public void ShouldKeepATransitionThatWasSetBeforeTheTemplateWasApplied()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            Assert.That(this.window.TheTransitioningContentControlWithTransitionFromXaml.Transition, Is.EqualTo(TransitionType.Custom));
         }
 
         [Test]
@@ -67,6 +127,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window.TheTransitioningContentControl.CustomVisualStatesName, Is.EqualTo("CustomTransition"));
 
             Assert.DoesNotThrow(() => this.window.TheTransitioningContentControl.Transition = TransitionType.Custom);
+
+            Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Custom));
         }
     }
 }
