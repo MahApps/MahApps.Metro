@@ -103,11 +103,30 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>Identifies the <see cref="Transition"/> dependency property.</summary>
+        /// <remarks>
+        /// This is an attached property, so the transition can be set on any element above the control and
+        /// every <see cref="TransitioningContentControl"/> underneath inherits it.
+        /// </remarks>
         public static readonly DependencyProperty TransitionProperty
-            = DependencyProperty.Register(nameof(Transition),
-                                          typeof(TransitionType),
-                                          typeof(TransitioningContentControl),
-                                          new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged, CoerceTransition));
+            = DependencyProperty.RegisterAttached(nameof(Transition),
+                                                  typeof(TransitionType),
+                                                  typeof(TransitioningContentControl),
+                                                  new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged, CoerceTransition));
+
+        /// <summary>Helper for getting <see cref="TransitionProperty"/> from <paramref name="element"/>.</summary>
+        [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
+        public static TransitionType GetTransition(DependencyObject element)
+        {
+            return (TransitionType)element.GetValue(TransitionProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="TransitionProperty"/> on <paramref name="element"/>.</summary>
+        [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
+        public static void SetTransition(DependencyObject element, TransitionType value)
+        {
+            element.SetValue(TransitionProperty, value);
+        }
 
         /// <summary>
         /// Gets or sets the transition type.
@@ -197,11 +216,16 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceTransition(DependencyObject d, object? baseValue)
         {
-            var source = (TransitioningContentControl)d;
-
             if (baseValue is not TransitionType newTransition)
             {
                 return DefaultTransitionState;
+            }
+
+            // The property is attached, so it can sit on any element above the control. Only a control
+            // knows its visual states, everything else passes the value on to its children untouched.
+            if (d is not TransitioningContentControl source)
+            {
+                return baseValue;
             }
 
             // Could be during initialization of xaml that the presentation group was not yet defined.
@@ -230,7 +254,10 @@ namespace MahApps.Metro.Controls
 
         private static void OnTransitionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var source = (TransitioningContentControl)d;
+            if (d is not TransitioningContentControl source)
+            {
+                return;
+            }
 
             if (source.IsTransitioning)
             {

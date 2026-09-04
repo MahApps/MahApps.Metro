@@ -371,7 +371,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Transition" Value="Default" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 

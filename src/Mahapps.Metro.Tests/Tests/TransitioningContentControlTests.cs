@@ -63,6 +63,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window?.TheTransitioningContentControl.ClearDependencyProperties(new[] { nameof(TransitioningContentControl.Transition), nameof(TransitioningContentControl.CustomVisualStatesName) });
             this.window?.TheTransitioningContentControlWithoutAnyTransition.ClearDependencyProperties(new[] { nameof(TransitioningContentControl.Transition), nameof(TransitioningContentControl.CustomVisualStatesName) });
+            this.window?.TheInheritedTransitionPanel.ClearValue(TransitioningContentControl.TransitionProperty);
         }
 
         [Test]
@@ -117,6 +118,24 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window, Is.Not.Null);
 
             Assert.That(this.window.TheTransitioningContentControlWithTransitionFromXaml.Transition, Is.EqualTo(TransitionType.Custom));
+        }
+
+        [Test]
+        public void ShouldInheritTheTransitionFromAParentPanel()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheInheritedTransitionPanel.SetValue(TransitioningContentControl.TransitionProperty, TransitionType.Up);
+
+            Assert.That(this.window.TheInheritedTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Up));
+        }
+
+        [Test]
+        public void ShouldInheritTheTransitionSetOnAParentPanelInXaml()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            Assert.That(this.window.TheTransitioningContentControlWithInheritedTransitionFromXaml.Transition, Is.EqualTo(TransitionType.LeftReplace));
         }
 
         [Test]

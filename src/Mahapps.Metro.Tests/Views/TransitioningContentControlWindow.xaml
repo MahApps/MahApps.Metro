@@ -60,5 +60,18 @@
             <TextBlock Text="Content" />
         </mah:TransitioningContentControl>
 
+        <!--  The transition is set in xaml on the panel above the control.  -->
+        <StackPanel mah:TransitioningContentControl.Transition="LeftReplace">
+            <mah:TransitioningContentControl x:Name="TheTransitioningContentControlWithInheritedTransitionFromXaml">
+                <TextBlock Text="Content" />
+            </mah:TransitioningContentControl>
+        </StackPanel>
+
+        <!--  The transition comes from the panel above the control.  -->
+        <StackPanel x:Name="TheInheritedTransitionPanel">
+            <mah:TransitioningContentControl x:Name="TheInheritedTransitioningContentControl">
+                <TextBlock Text="Content" />
+            </mah:TransitioningContentControl>
+        </StackPanel>
     </StackPanel>
 </tests:TestWindow>
