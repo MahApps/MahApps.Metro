@@ -395,6 +395,14 @@
                 <exampleViews:MultiSelectionComboBoxExample />
             </TabItem>
 
+            <TabItem Header="transitions">
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:TransitionExamples />
+                </ScrollViewer>
+            </TabItem>
+
             <TabItem Header="others">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
