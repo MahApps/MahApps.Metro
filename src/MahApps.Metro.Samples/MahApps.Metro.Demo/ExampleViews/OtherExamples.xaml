@@ -75,6 +75,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
@@ -133,6 +137,54 @@
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type VerticalAlignment}}, Mode=OneTime}"
                           SelectedValue="{Binding ElementName=FlipView1st, Path=IndexVerticalAlignment, FallbackValue={x:Static VerticalAlignment.Center}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           ToolTip="Only used when the index sits on the left or the right side" />
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Content="Left Transition" />
+                <ComboBox x:Name="LeftTransition"
+                          Grid.Row="5"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:TransitionType}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=LeftTransition, FallbackValue={x:Static mah:TransitionType.LeftReplace}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Used when moving forward while the orientation is horizontal" />
+
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Content="Right Transition" />
+                <ComboBox x:Name="RightTransition"
+                          Grid.Row="6"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:TransitionType}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=RightTransition, FallbackValue={x:Static mah:TransitionType.RightReplace}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Used when moving back while the orientation is horizontal" />
+
+                <Label Grid.Row="7"
+                       Grid.Column="0"
+                       Content="Down Transition" />
+                <ComboBox x:Name="DownTransition"
+                          Grid.Row="7"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:TransitionType}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=DownTransition, FallbackValue={x:Static mah:TransitionType.Down}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Used when moving forward while the orientation is vertical" />
+
+                <Label Grid.Row="8"
+                       Grid.Column="0"
+                       Content="Up Transition" />
+                <ComboBox x:Name="UpTransition"
+                          Grid.Row="8"
+                          Grid.Column="1"
+                          Width="120"
+                          Margin="2"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type mah:TransitionType}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=UpTransition, FallbackValue={x:Static mah:TransitionType.Up}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="Used when moving back while the orientation is vertical" />
             </Grid>
 
             <mah:FlipView x:Name="FlipView1st"
