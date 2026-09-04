@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -17,26 +17,24 @@ namespace MahApps.Metro.Tests.Tests
     {
         private TransitioningContentControlWindow? window;
 
-        private sealed class TransitionViewModel : INotifyPropertyChanged
+        /// <summary>
+        /// The binding source for the tests. A DependencyObject notifies the binding on its own,
+        /// so the source needs no INotifyPropertyChanged of its own.
+        /// </summary>
+        private sealed class TransitionSource : DependencyObject
         {
-            private TransitionType transition;
+            /// <summary>Identifies the <see cref="Transition"/> dependency property.</summary>
+            public static readonly DependencyProperty TransitionProperty
+                = DependencyProperty.Register(nameof(Transition),
+                                              typeof(TransitionType),
+                                              typeof(TransitionSource),
+                                              new PropertyMetadata(TransitioningContentControl.DefaultTransitionState));
 
             public TransitionType Transition
             {
-                get => this.transition;
-                set
-                {
-                    if (value == this.transition)
-                    {
-                        return;
-                    }
-
-                    this.transition = value;
-                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Transition)));
-                }
+                get => (TransitionType)this.GetValue(TransitionProperty);
+                set => this.SetValue(TransitionProperty, value);
             }
-
-            public event PropertyChangedEventHandler? PropertyChanged;
         }
 
         [OneTimeSetUp]
@@ -80,18 +78,18 @@ namespace MahApps.Metro.Tests.Tests
 
             this.window.TheTransitioningContentControl.CustomVisualStatesName = "ThisStateDoesNotExist";
 
-            var viewModel = new TransitionViewModel { Transition = TransitionType.Left };
+            var source = new TransitionSource { Transition = TransitionType.Left };
             BindingOperations.SetBinding(this.window.TheTransitioningContentControl,
                                          TransitioningContentControl.TransitionProperty,
-                                         new Binding(nameof(TransitionViewModel.Transition)) { Source = viewModel });
+                                         new Binding(nameof(TransitionSource.Transition)) { Source = source });
 
             Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Left));
 
-            Assert.DoesNotThrow(() => viewModel.Transition = TransitionType.Custom);
+            Assert.DoesNotThrow(() => source.Transition = TransitionType.Custom);
 
             Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Left));
 
-            viewModel.Transition = TransitionType.Up;
+            source.Transition = TransitionType.Up;
 
             Assert.That(this.window.TheTransitioningContentControl.Transition, Is.EqualTo(TransitionType.Up));
         }
