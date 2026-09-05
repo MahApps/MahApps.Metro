@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             window.Dispatcher.VerifyAccess();
 
-            settings ??= new LoginDialogSettings();
+            settings ??= new LoginDialogSettings(window.MetroDialogOptions);
 
             await HandleOverlayOnShowAsync(settings, window);
 
@@ -574,7 +574,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = CreateModalExternalWindow(window);
 
-            settings ??= new LoginDialogSettings();
+            settings ??= new LoginDialogSettings(window.MetroDialogOptions);
 
             //create the dialog control
             LoginDialog dialog = new LoginDialog(win, settings)
