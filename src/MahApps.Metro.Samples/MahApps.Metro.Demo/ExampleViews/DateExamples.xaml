@@ -52,7 +52,7 @@
                             mah:TextBoxHelper.Watermark="Please select a date"
                             mah:TextBoxHelper.WatermarkAlignment="Right" />
 
-                <TextBlock Style="{StaticResource ExampleCaption}" Text="Read only, the drop down still opens" />
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Read only, so there is no typing and no calendar button either" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
                             HorizontalAlignment="Left"
