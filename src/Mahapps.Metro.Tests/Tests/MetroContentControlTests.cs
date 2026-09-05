@@ -16,6 +16,8 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class MetroContentControlTests
     {
+        private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(5);
+
         private MetroContentControlWindow? window;
 
         [OneTimeSetUp]
@@ -32,8 +34,26 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
-        /// Runs the dispatcher until the condition holds or the time is up. The transition is an animation,
-        /// so the test has to let the dispatcher work while it waits.
+        /// Runs the dispatcher for a while. The transition is an animation, so the test has to let the
+        /// dispatcher work instead of blocking the thread it runs on.
+        /// </summary>
+        private static void Pump(TimeSpan duration)
+        {
+            var frame = new DispatcherFrame();
+            var timer = new DispatcherTimer(duration, DispatcherPriority.Background, (_, _) => frame.Continue = false, Dispatcher.CurrentDispatcher);
+
+            try
+            {
+                Dispatcher.PushFrame(frame);
+            }
+            finally
+            {
+                timer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// Runs the dispatcher until the condition holds, and reports whether it did before the time was up.
         /// </summary>
         private static bool PumpUntil(Func<bool> condition, TimeSpan timeout)
         {
@@ -71,8 +91,15 @@ namespace MahApps.Metro.Tests.Tests
             var started = 0;
             var completed = 0;
 
-            void OnStarted(object? sender, RoutedEventArgs e) => started++;
-            void OnCompleted(object? sender, RoutedEventArgs e) => completed++;
+            void OnStarted(object? sender, RoutedEventArgs e)
+            {
+                started++;
+            }
+
+            void OnCompleted(object? sender, RoutedEventArgs e)
+            {
+                completed++;
+            }
 
             control.TransitionStarted += OnStarted;
             control.TransitionCompleted += OnCompleted;
@@ -82,12 +109,14 @@ namespace MahApps.Metro.Tests.Tests
 
                 // Reload ends the previous storyboard, which raises a completed event right away, so
                 // wait for the new transition to start before waiting for it to finish.
-                PumpUntil(() => started > 0, TimeSpan.FromSeconds(5));
+                Assert.That(PumpUntil(() => started > 0, Timeout), Is.True, "the transition did not start in time");
 
                 // that early completed belongs to the previous storyboard, only count from here on
                 completed = 0;
-                PumpUntil(() => control.IsTransitioning == false && completed > 0, TimeSpan.FromSeconds(5));
-                PumpUntil(() => false, TimeSpan.FromMilliseconds(300));
+                Assert.That(PumpUntil(() => control.IsTransitioning == false && completed > 0, Timeout), Is.True, "the transition did not finish in time");
+
+                // the clock keeps ticking for a moment after the storyboard completed
+                Pump(TimeSpan.FromMilliseconds(300));
             }
             finally
             {
@@ -105,11 +134,14 @@ namespace MahApps.Metro.Tests.Tests
 
             var control = this.window.TheMetroContentControl;
 
-            PumpUntil(() => control.IsTransitioning == false, TimeSpan.FromSeconds(5));
+            Assert.That(PumpUntil(() => control.IsTransitioning == false, Timeout), Is.True, "the control should settle before the test starts");
 
             bool? whileStarting = null;
 
-            void OnStarted(object? sender, RoutedEventArgs e) => whileStarting ??= control.IsTransitioning;
+            void OnStarted(object? sender, RoutedEventArgs e)
+            {
+                whileStarting ??= control.IsTransitioning;
+            }
 
             control.TransitionStarted += OnStarted;
             try
@@ -132,8 +164,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var control = this.window.TheMetroContentControl;
 
-            // the control transitions once while it loads, let that one finish first
-            PumpUntil(() => control.IsTransitioning == false, TimeSpan.FromSeconds(5));
+            Assert.That(PumpUntil(() => control.IsTransitioning == false, Timeout), Is.True, "the control should settle before the test starts");
 
             var (started, completed) = RunTransition(control, control.Reload);
 
