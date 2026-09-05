@@ -326,8 +326,15 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(0d, MinRangeChanged, CoerceMinRange), IsValidMinRange);
 
         /// <summary>
-        /// Get/sets the minimum range that can be selected.
+        /// Get/sets the smallest distance there may be between <see cref="LowerValue"/> and
+        /// <see cref="UpperValue"/>, in the units of <see cref="RangeBase.Minimum"/> and
+        /// <see cref="RangeBase.Maximum"/>. Raising it pushes the two values apart.
+        /// Defaults to 0, which lets them meet.
         /// </summary>
+        /// <remarks>
+        /// This is about the values. For the smallest width the selected range may be drawn with,
+        /// see <see cref="MinRangeWidth"/>.
+        /// </remarks>
         [Bindable(true)]
         [Category("Common")]
         public double MinRange
@@ -383,8 +390,16 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(30d, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
 
         /// <summary>
-        /// Get/sets the minimal distance between two thumbs.
+        /// Get/sets the smallest width, in device-independent pixels, that the middle thumb between
+        /// the two other thumbs may be drawn with. It is coerced to at most half of the track.
+        /// Defaults to 30, so even an empty range stays visible and can be grabbed.
         /// </summary>
+        /// <remarks>
+        /// This is about the drawing, not about the values: <see cref="LowerValue"/> and
+        /// <see cref="UpperValue"/> can still be equal while the thumbs stay this far apart, and the
+        /// width is taken off the track before the values are mapped onto it. For the smallest
+        /// distance between the values, see <see cref="MinRange"/>.
+        /// </remarks>
         [Bindable(true)]
         [Category("Common")]
         public double MinRangeWidth
