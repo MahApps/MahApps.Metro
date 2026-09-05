@@ -55,10 +55,16 @@ namespace MahApps.Metro.Tests.Tests
         /// </summary>
         private sealed class BrokenPlacementSettings : IWindowPlacementSettings
         {
+            /// <summary>
+            /// Gets the placement the behavior handed over on the way out. Reading <see cref="Placement"/>
+            /// throws, so this is how a test sees what was written.
+            /// </summary>
+            public WindowPlacementSetting? Written { get; private set; }
+
             public WindowPlacementSetting? Placement
             {
                 get => throw new MahAppsException("the settings file seems to be corrupted");
-                set { }
+                set => this.Written = value;
             }
 
             public bool UpgradeSettings { get; set; }
@@ -70,14 +76,17 @@ namespace MahApps.Metro.Tests.Tests
 
             public void Upgrade()
             {
+                // a store this broken has nothing to carry over
             }
 
             public void Save()
             {
+                // writing works, it is reading that is broken here
             }
 
             public void Reset()
             {
+                // there is no state to drop
             }
         }
 
@@ -196,6 +205,7 @@ namespace MahApps.Metro.Tests.Tests
         [Test]
         public void ShouldOpenTheWindowWhenTheSettingsAreBroken()
         {
+            var settings = new BrokenPlacementSettings();
             var window = new TestWindow
                          {
                              Width = 800,
@@ -205,7 +215,7 @@ namespace MahApps.Metro.Tests.Tests
                              Top = int.MinValue
                          };
             window.SetCurrentValue(MetroWindow.SaveWindowPositionProperty, true);
-            window.SetCurrentValue(MetroWindow.WindowPlacementSettingsProperty, new BrokenPlacementSettings());
+            window.SetCurrentValue(MetroWindow.WindowPlacementSettingsProperty, settings);
 
             try
             {
@@ -215,6 +225,8 @@ namespace MahApps.Metro.Tests.Tests
             {
                 window.Close();
             }
+
+            Assert.That(settings.Written, Is.Not.Null, "the placement should still be written on the way out");
         }
 
         [Test]
