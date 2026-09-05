@@ -38,6 +38,37 @@ namespace MahApps.Metro.Controls
             element.SetValue(RadioSizeProperty, value);
         }
 
+        /// <summary>
+        /// The height of the box the radio circle is centred in. It keeps the circle on whole device pixels
+        /// on a scaled display, which centring the box inside the control does not.
+        /// </summary>
+        public static readonly DependencyProperty RadioBoxHeightProperty
+            = DependencyProperty.RegisterAttached(
+                "RadioBoxHeight",
+                typeof(double),
+                typeof(RadioButtonHelper),
+                new FrameworkPropertyMetadata(18.0));
+
+        /// <summary>Helper for getting <see cref="RadioBoxHeightProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to read <see cref="RadioBoxHeightProperty"/> from.</param>
+        /// <returns>RadioBoxHeight property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static double GetRadioBoxHeight(UIElement element)
+        {
+            return (double)element.GetValue(RadioBoxHeightProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="RadioBoxHeightProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to set <see cref="RadioBoxHeightProperty"/> on.</param>
+        /// <param name="value">RadioBoxHeight property value.</param>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static void SetRadioBoxHeight(UIElement element, double value)
+        {
+            element.SetValue(RadioBoxHeightProperty, value);
+        }
+
         public static readonly DependencyProperty RadioCheckSizeProperty
             = DependencyProperty.RegisterAttached(
                 "RadioCheckSize",

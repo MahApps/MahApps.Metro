@@ -31,9 +31,16 @@
                                 <ColumnDefinition x:Name="LeftCol" Width="Auto" />
                                 <ColumnDefinition x:Name="RightCol" Width="*" />
                             </Grid.ColumnDefinitions>
+                            <!--
+                                The ellipses sit in a box of their own, aligned to the top, the way the Windows
+                                template does it. Centring the box inside the control instead puts it on half a
+                                device pixel as soon as the display is scaled, which shifts the ring against the
+                                glyph inside it. The height is a setting of its own rather than the MinHeight of
+                                the control, which callers set for other reasons.
+                            -->
                             <Grid x:Name="Radio"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center">
+                                  MinHeight="{TemplateBinding mah:RadioButtonHelper.RadioBoxHeight}"
+                                  VerticalAlignment="Top">
                                 <Ellipse x:Name="OuterEllipse"
                                          Width="{TemplateBinding mah:RadioButtonHelper.RadioSize}"
                                          Height="{TemplateBinding mah:RadioButtonHelper.RadioSize}"
@@ -169,6 +176,7 @@
         <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokeDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePointerOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
         <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="mah:RadioButtonHelper.RadioBoxHeight" Value="18" />
         <Setter Property="mah:RadioButtonHelper.RadioSize" Value="18" />
         <Style.Triggers>
             <Trigger Property="mah:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
@@ -223,6 +231,8 @@
         <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokeDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokeDisabled}" />
         <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokePointerOver}" />
         <Setter Property="mah:RadioButtonHelper.OuterEllipseStrokePressed" Value="{DynamicResource MahApps.Brushes.RadioButton.OuterEllipseStrokePressed}" />
+        <Setter Property="mah:RadioButtonHelper.RadioBoxHeight" Value="32" />
+        <Setter Property="mah:RadioButtonHelper.RadioCheckSize" Value="12" />
         <Setter Property="mah:RadioButtonHelper.RadioSize" Value="20" />
         <Setter Property="mah:RadioButtonHelper.RadioStrokeThickness" Value="{DynamicResource RadioButtonBorderThemeThickness}" />
         <Style.Triggers>
