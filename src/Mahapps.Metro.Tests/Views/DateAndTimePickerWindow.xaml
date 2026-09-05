@@ -25,5 +25,7 @@
                         Culture="cs-CZ"
                         SelectedDateTime="22:23:24" />
         <mah:TimePicker x:Name="EmptyTimePicker" />
+        <mah:DateTimePicker x:Name="TheRoundedDateTimePicker" mah:ControlsHelper.CornerRadius="8" />
+        <mah:TimePicker x:Name="TheRoundedTimePicker" mah:ControlsHelper.CornerRadius="4" />
     </StackPanel>
 </tests:TestWindow>
