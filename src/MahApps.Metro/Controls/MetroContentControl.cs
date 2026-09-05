@@ -225,7 +225,9 @@ namespace MahApps.Metro.Controls
         {
             if (sender is Clock clock)
             {
-                if (clock.CurrentState == ClockState.Active)
+                // This runs on every frame while the clock is ticking, so the transition has only
+                // started when the control was not transitioning before.
+                if (clock.CurrentState == ClockState.Active && !this.IsTransitioning)
                 {
                     this.SetValue(IsTransitioningPropertyKey, BooleanBoxes.TrueBox);
                     this.RaiseEvent(new RoutedEventArgs(TransitionStartedEvent));
