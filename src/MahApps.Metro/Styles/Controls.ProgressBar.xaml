@@ -6,7 +6,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Progress}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="MinHeight" Value="10" />
@@ -23,7 +23,7 @@
                             <Grid x:Name="IndeterminateRoot" Visibility="Collapsed">
                                 <Rectangle x:Name="IndeterminateSolidFill"
                                            Margin="{TemplateBinding BorderThickness}"
-                                           Fill="{DynamicResource MahApps.Brushes.Progress}"
+                                           Fill="{TemplateBinding Foreground}"
                                            Opacity="1"
                                            RenderTransformOrigin="0.5,0.5"
                                            StrokeThickness="0" />
@@ -51,7 +51,7 @@
                                 <Border x:Name="PART_Indicator"
                                         Margin="-1"
                                         HorizontalAlignment="Left"
-                                        Background="{DynamicResource MahApps.Brushes.Progress}">
+                                        Background="{TemplateBinding Foreground}">
                                     <Rectangle x:Name="GradientFill"
                                                Opacity="0.7"
                                                Visibility="Collapsed">
