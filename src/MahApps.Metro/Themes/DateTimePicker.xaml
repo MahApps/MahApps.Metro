@@ -248,10 +248,11 @@
                                                 PlacementTarget="{Binding ElementName=PART_Root}"
                                                 PopupAnimation="Fade"
                                                 StaysOpen="False">
-                                <Border x:Name="PART_PopupBorder"
-                                        Background="{DynamicResource MahApps.Brushes.Control.Background}"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
-                                        BorderThickness="1">
+                                <mah:ClipBorder x:Name="PART_PopupBorder"
+                                                Background="{DynamicResource MahApps.Brushes.Control.Background}"
+                                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
+                                                BorderThickness="1"
+                                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}">
                                     <StackPanel x:Name="PART_PopupContainer" Background="Transparent">
                                         <ContentPresenter x:Name="PART_Calendar"
                                                           Margin="2 0"
@@ -381,7 +382,7 @@
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
-                                </Border>
+                                </mah:ClipBorder>
                             </controlzex:PopupEx>
                         </Grid>
 

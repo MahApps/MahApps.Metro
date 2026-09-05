@@ -17,7 +17,18 @@
 
     <UserControl.Resources>
         <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
-        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+        <Thickness x:Key="ControlMargin">0 2 0 0</Thickness>
+
+        <Style x:Key="ExampleCaption" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+            <Setter Property="Margin" Value="0 10 0 0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <Style x:Key="SettingLabel" TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="0 2 4 0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
     </UserControl.Resources>
 
     <AdornerDecorator>
@@ -31,37 +42,57 @@
             <StackPanel Grid.Column="0" Margin="{StaticResource ColumnMargin}">
                 <Label Content="Date picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Floating watermark, aligned right" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             HorizontalContentAlignment="Stretch"
                             mah:TextBoxHelper.ClearTextButton="True"
                             mah:TextBoxHelper.UseFloatingWatermark="True"
                             mah:TextBoxHelper.Watermark="Please select a date"
                             mah:TextBoxHelper.WatermarkAlignment="Right" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Read only, so there is no typing and no calendar button either" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             mah:ControlsHelper.IsReadOnly="True"
                             mah:TextBoxHelper.ClearTextButton="True"
                             SelectedDate="{x:Static system:DateTime.Now}" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="A command of your own instead of the clear button" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand}"
                             mah:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             mah:TextBoxHelper.Watermark="" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Buttons on the left" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             mah:TextBoxHelper.ButtonsAlignment="Left"
                             mah:TextBoxHelper.ClearTextButton="True"
                             mah:TextBoxHelper.Watermark="{x:Null}" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Disabled" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             IsEnabled="False" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="AutoWatermark takes the text from the binding" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             mah:TextBoxHelper.AutoWatermark="True"
                             SelectedDate="{Binding DatePickerDate}" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Larger font, the button width follows the font size, and an empty date fails validation" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
                             mah:TextBoxHelper.Watermark="Select a date"
                             FontSize="22"
                             SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
@@ -81,31 +112,39 @@
                 <Label Content="Calendar" Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <CheckBox x:Name="IsTodayHighlightedCheckBox"
-                          Margin="{StaticResource ControlMargin}"
+                          Margin="0 10 0 0"
                           Content="IsTodayHighlighted"
                           IsChecked="True" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Several ranges at once, and nothing before today" />
                 <Calendar Margin="{StaticResource ControlMargin}"
+                          HorizontalAlignment="Left"
                           DisplayDateStart="{x:Static system:DateTime.Now}"
                           IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectionMode="MultipleRange" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Several ranges at once, any date" />
                 <Calendar Margin="{StaticResource ControlMargin}"
+                          HorizontalAlignment="Left"
                           IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectionMode="MultipleRange" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="Disabled" />
                 <Calendar Margin="{StaticResource ControlMargin}"
+                          HorizontalAlignment="Left"
                           IsEnabled="False"
                           IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
-            <StackPanel Grid.Column="2" Margin="{StaticResource ColumnMargin}">
-                <Label Content="DateTime/Time picker" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <StackPanel Grid.Column="2"
+                        MaxWidth="480"
+                        Margin="{StaticResource ColumnMargin}"
+                        HorizontalAlignment="Left">
+                <Label Content="Date and time picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <mah:DateTimePicker Margin="{StaticResource ControlMargin}">
-                    <i:Interaction.Behaviors>
-                        <behaviors:DateTimeNowBehavior />
-                    </i:Interaction.Behaviors>
-                </mah:DateTimePicker>
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="DateTimePicker and TimePicker share their drop down, so what a setting does to one of them it does to the other." />
 
-                <GroupBox Margin="{StaticResource ControlMargin}" Header="Try it yourself">
+                <GroupBox Margin="0 10 0 0" Header="Try it yourself">
                     <StackPanel>
                         <CheckBox x:Name="DateTimePickerClearTextButton"
                                   Margin="{StaticResource ControlMargin}"
@@ -121,8 +160,10 @@
                                   Margin="{StaticResource ControlMargin}"
                                   Content="IsClockVisible"
                                   IsChecked="True" />
-                        <Grid>
+
+                        <Grid Margin="0 4 0 0">
                             <Grid.RowDefinitions>
+                                <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
@@ -131,14 +172,14 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Row="0"
                                    Grid.Column="0"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Content="Orientation" />
+                                   Content="Orientation"
+                                   Style="{StaticResource SettingLabel}" />
                             <ComboBox Name="DateTimePickerOrientation"
                                       Grid.Row="0"
                                       Grid.Column="1"
@@ -154,8 +195,8 @@
 
                             <Label Grid.Row="1"
                                    Grid.Column="0"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Content="PickerVisibility" />
+                                   Content="PickerVisibility"
+                                   Style="{StaticResource SettingLabel}" />
                             <ComboBox Name="DateTimePickerPickerVisibility"
                                       Grid.Row="1"
                                       Grid.Column="1"
@@ -165,8 +206,8 @@
 
                             <Label Grid.Row="2"
                                    Grid.Column="0"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Content="HandVisibility" />
+                                   Content="HandVisibility"
+                                   Style="{StaticResource SettingLabel}" />
                             <ComboBox Name="DateTimePickerHandVisibility"
                                       Grid.Row="2"
                                       Grid.Column="1"
@@ -176,8 +217,8 @@
 
                             <Label Grid.Row="3"
                                    Grid.Column="0"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Content="SelectedDateFormat" />
+                                   Content="SelectedDateFormat"
+                                   Style="{StaticResource SettingLabel}" />
                             <ComboBox Name="DateTimePickerDateFormat"
                                       Grid.Row="3"
                                       Grid.Column="1"
@@ -193,8 +234,8 @@
 
                             <Label Grid.Row="4"
                                    Grid.Column="0"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Content="SelectedTimeFormat" />
+                                   Content="SelectedTimeFormat"
+                                   Style="{StaticResource SettingLabel}" />
                             <ComboBox Name="DateTimePickerTimeFormat"
                                       Grid.Row="4"
                                       Grid.Column="1"
@@ -210,10 +251,34 @@
 
                             <Label Grid.Row="5"
                                    Grid.Column="0"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Content="CultureInfo" />
-                            <ComboBox Name="DateTimePickerCulture"
+                                   Content="CornerRadius"
+                                   Style="{StaticResource SettingLabel}" />
+                            <ComboBox Name="DateTimePickerCornerRadius"
                                       Grid.Row="5"
+                                      Grid.Column="1"
+                                      Margin="{StaticResource ControlMargin}"
+                                      SelectedIndex="0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TopLeft, Mode=OneWay}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="CornerRadius">
+                                        <CornerRadius>0</CornerRadius>
+                                        <CornerRadius>4</CornerRadius>
+                                        <CornerRadius>8</CornerRadius>
+                                        <CornerRadius>16</CornerRadius>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+
+                            <Label Grid.Row="6"
+                                   Grid.Column="0"
+                                   Content="CultureInfo"
+                                   Style="{StaticResource SettingLabel}" />
+                            <ComboBox Name="DateTimePickerCulture"
+                                      Grid.Row="6"
                                       Grid.Column="1"
                                       Margin="{StaticResource ControlMargin}"
                                       mah:TextBoxHelper.ClearTextButton="True"
@@ -236,7 +301,9 @@
                             </ComboBox>
                         </Grid>
 
-                        <mah:DateTimePicker Margin="{StaticResource ControlMargin}"
+                        <mah:DateTimePicker x:Name="PlaygroundDateTimePicker"
+                                            Margin="0 10 0 0"
+                                            mah:ControlsHelper.CornerRadius="{Binding Path=SelectedItem, ElementName=DateTimePickerCornerRadius}"
                                             mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
                                             Culture="{Binding CurrentCulture, Mode=OneWay}"
@@ -249,39 +316,30 @@
                                             SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
                                             SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
 
+                        <mah:TimePicker Margin="{StaticResource ControlMargin}"
+                                        mah:ControlsHelper.CornerRadius="{Binding Path=SelectedItem, ElementName=DateTimePickerCornerRadius}"
+                                        mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
+                                        Culture="{Binding CurrentCulture, Mode=OneWay}"
+                                        HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                        IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                        IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                        PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                        SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=PlaygroundDateTimePicker}"
+                                        SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Margin="{StaticResource ControlMargin}" Header="Current time">
+                <GroupBox Margin="0 10 0 0" Header="Current time">
                     <AdornerDecorator>
                         <StackPanel>
-                            <mah:DateTimePicker x:Name="DateTimePicker"
-                                                Margin="{StaticResource ControlMargin}"
-                                                mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
-                                                Culture="{Binding CurrentCulture, Mode=OneWay}"
-                                                HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
-                                                IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
-                                                IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
-                                                SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
+                            <TextBlock Style="{StaticResource ExampleCaption}" Text="A behavior sets the time once a second" />
+                            <mah:DateTimePicker Margin="{StaticResource ControlMargin}" Culture="{Binding CurrentCulture, Mode=OneWay}">
                                 <i:Interaction.Behaviors>
                                     <behaviors:DateTimeNowBehavior />
                                 </i:Interaction.Behaviors>
                             </mah:DateTimePicker>
 
-                            <mah:TimePicker Margin="{StaticResource ControlMargin}"
-                                            mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
-                                            Culture="{Binding CurrentCulture, Mode=OneWay}"
-                                            HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                            IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
-                                            IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                            PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                            SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
-                                            SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
-
+                            <TextBlock Style="{StaticResource ExampleCaption}" Text="Hours and minutes only, and an empty time fails validation" />
                             <mah:TimePicker Margin="{StaticResource ControlMargin}"
                                             mah:TextBoxHelper.AutoWatermark="True"
                                             PickerVisibility="HourMinute"

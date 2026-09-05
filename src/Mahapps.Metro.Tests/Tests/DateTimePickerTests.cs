@@ -265,5 +265,49 @@ namespace MahApps.Metro.Tests.Tests
                                          });
         }
 
+        /// <summary>
+        /// Reaches the border around the drop down. It lives in the popup, so it is not part of the
+        /// visual tree of the picker itself.
+        /// </summary>
+        private static ClipBorder? GetPopupBorder(TimePickerBase picker)
+        {
+            var popup = picker.FindChild<Popup>("PART_Popup");
+            Assert.That(popup, Is.Not.Null, "the template should carry a popup");
+
+            return popup!.Child as ClipBorder;
+        }
+
+        [Test]
+        public void DateTimePickerDropDownShouldFollowTheCornerRadius()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var border = GetPopupBorder(this.window.TheRoundedDateTimePicker);
+
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a ClipBorder, so that rounded corners cut the content too");
+            Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(8)), "the drop down should take the corner radius of the picker");
+        }
+
+        [Test]
+        public void TimePickerDropDownShouldFollowTheCornerRadius()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var border = GetPopupBorder(this.window.TheRoundedTimePicker);
+
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a ClipBorder, so that rounded corners cut the content too");
+            Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(4)), "the drop down should take the corner radius of the picker");
+        }
+
+        [Test]
+        public void DropDownShouldHaveSquareCornersByDefault()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var border = GetPopupBorder(this.window.TheDateTimePicker);
+
+            Assert.That(border, Is.Not.Null);
+            Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(0)), "a picker without a corner radius should keep its square drop down");
+        }
     }
 }
