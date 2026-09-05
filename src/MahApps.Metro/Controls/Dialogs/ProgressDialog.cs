@@ -11,7 +11,7 @@ using MahApps.Metro.ValueBoxes;
 namespace MahApps.Metro.Controls.Dialogs
 {
     /// <summary>
-    /// An internal control that represents a message dialog. Please use MetroWindow.ShowMessage instead!
+    /// An internal control that represents a progress dialog. Please use MetroWindow.ShowProgressAsync instead!
     /// </summary>
     [TemplatePart(Name = nameof(PART_ProgressBar), Type = typeof(MetroProgressBar))]
     [TemplatePart(Name = nameof(PART_NegativeButton), Type = typeof(Button))]

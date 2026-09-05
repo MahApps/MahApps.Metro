@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -102,7 +102,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Sets the dialog's progress bar value and sets IsIndeterminate to false.
         /// </summary>
-        /// <param name="value">The percentage to set as the value.</param>
+        /// <param name="value">
+        /// The value to set, somewhere between <see cref="Minimum"/> and <see cref="Maximum"/>. Those are
+        /// 0.0 and 1.0 unless you have changed them, so a quarter of the way through is 0.25 and not 25.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="value"/> is below <see cref="Minimum"/> or above <see cref="Maximum"/>.
+        /// </exception>
         public void SetProgress(double value)
         {
             this.WrappedDialog.Invoke(() =>
@@ -117,7 +123,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        ///  Gets/Sets the minimum restriction of the progress Value property.
+        /// Gets/Sets the minimum restriction of the progress Value property. Defaults to 0.0.
         /// </summary>
         public double Minimum
         {
@@ -126,7 +132,8 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        ///  Gets/Sets the maximum restriction of the progress Value property.
+        /// Gets/Sets the maximum restriction of the progress Value property. Defaults to 1.0. Raise it to
+        /// 100.0 if you would rather hand <see cref="SetProgress"/> a percentage.
         /// </summary>
         public double Maximum
         {

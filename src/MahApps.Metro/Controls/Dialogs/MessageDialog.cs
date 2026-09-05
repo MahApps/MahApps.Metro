@@ -13,7 +13,7 @@ using ControlzEx;
 namespace MahApps.Metro.Controls.Dialogs
 {
     /// <summary>
-    /// An internal control that represents a message dialog. Please use MetroWindow.ShowMessage instead!
+    /// An internal control that represents a message dialog. Please use MetroWindow.ShowMessageAsync instead!
     /// </summary>
     [TemplatePart(Name = nameof(PART_AffirmativeButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_NegativeButton), Type = typeof(Button))]
