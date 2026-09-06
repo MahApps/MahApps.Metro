@@ -1,0 +1,154 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:local="clr-namespace:MahApps.Demo.Controls"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Demo_v2;component/Themes/DemoViewDataTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="local:DemoView">
+        <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=SelectedItem.Label}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DemoView">
+                    <Grid>
+                        <Grid.Resources>
+                            <CollectionViewSource x:Key="MahAppsDemo.CollectionViewSource.DemoProperties" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=DemoProperties}">
+                                <CollectionViewSource.GroupDescriptions>
+                                    <PropertyGroupDescription PropertyName="GroupName" />
+                                </CollectionViewSource.GroupDescriptions>
+                            </CollectionViewSource>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" MinWidth="300" />
+                            <ColumnDefinition Width="3" />
+                            <ColumnDefinition Width="2*" MinWidth="300" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <!--  Header  -->
+                        <Border Grid.Row="0"
+                                Grid.ColumnSpan="3"
+                                Height="48"
+                                Background="{DynamicResource MahApps.HamburgerMenu.Pane.Background}">
+                            <DockPanel>
+                                <Button Width="40"
+                                        Height="40"
+                                        BorderThickness="0"
+                                        Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=NavigateToOnlineDocs}"
+                                        CommandParameter="{TemplateBinding HyperlinkOnlineDocs}"
+                                        Content="{iconPacks:BoxIcons Kind=RegularLinkExternal}"
+                                        DockPanel.Dock="Right"
+                                        Foreground="White"
+                                        Style="{StaticResource MahApps.Styles.Button.WindowCommands}"
+                                        ToolTip="{TemplateBinding HyperlinkOnlineDocs}" />
+                                <ContentControl Margin="5 0"
+                                                VerticalAlignment="Center"
+                                                Content="{TemplateBinding Header}"
+                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                DockPanel.Dock="Left"
+                                                FontSize="20"
+                                                Foreground="{DynamicResource MahApps.HamburgerMenu.Pane.Foreground}" />
+
+                            </DockPanel>
+                        </Border>
+
+                        <!--  PropertyPresenter  -->
+                        <ItemsControl x:Name="PART_PropertiesList"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Margin="5 5 0 5"
+                                      Grid.IsSharedSizeScope="True"
+                                      ItemsSource="{Binding Source={StaticResource MahAppsDemo.CollectionViewSource.DemoProperties}}"
+                                      VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+                            <ItemsControl.Template>
+                                <ControlTemplate>
+                                    <ScrollViewer x:Name="ScrollViewer"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </ControlTemplate>
+                            </ItemsControl.Template>
+                            <ItemsControl.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                        <Expander Margin="0 0 5 5"
+                                                                  Header="{Binding}"
+                                                                  IsExpanded="True">
+                                                            <ItemsPresenter />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ItemsControl.GroupStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" SharedSizeGroup="Col01" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <ContentControl Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        Content="{Binding PropertyName}" />
+                                        <ContentControl Grid.Column="1"
+                                                        Margin="5"
+                                                        VerticalAlignment="Center"
+                                                        Content="{Binding}">
+                                            <ContentControl.ContentTemplateSelector>
+                                                <local:DemoViewPropertyTemplateSelector FallbackTemplate="{StaticResource MahDemo.DataTemplates.PropertyPresenter.String}" />
+                                            </ContentControl.ContentTemplateSelector>
+                                        </ContentControl>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <GridSplitter Grid.Row="1"
+                                      Grid.Column="1"
+                                      VerticalAlignment="Stretch" />
+
+                        <!--  Content Area  -->
+                        <TabControl Grid.Row="1"
+                                    Grid.Column="2"
+                                    mah:TabControlHelper.Underlined="TabPanel"
+                                    TabStripPlacement="Bottom">
+                            <TabItem Header="Preview">
+                                <ScrollViewer>
+                                    <ContentControl Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
+                                </ScrollViewer>
+                            </TabItem>
+                            <TabItem Header="XAML">
+                                <avalon:TextEditor x:Name="PART_AvalonEdit"
+                                                   Background="White"
+                                                   FontFamily="Courier New"
+                                                   IsReadOnly="True"
+                                                   ShowLineNumbers="True"
+                                                   SyntaxHighlighting="XML" />
+                            </TabItem>
+                        </TabControl>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
