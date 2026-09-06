@@ -84,6 +84,44 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
+        public async Task OwningWindowShouldBeLetGoWhenTheDialogIsHidden()
+        {
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
+            var dialog = new OwningWindowProbeDialog();
+
+            try
+            {
+                await window.ShowMetroDialogAsync(dialog);
+                await window.HideMetroDialogAsync(dialog);
+
+                Assert.That(dialog.Owner, Is.Null, "a dialog that is not shown any more should not hold on to the window");
+            }
+            finally
+            {
+                window.Close();
+            }
+        }
+
+        [Test]
+        public async Task OwningWindowShouldFallBackToTheOneFromTheConstructor()
+        {
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
+            var dialog = new OwningWindowProbeDialog(window, null);
+
+            try
+            {
+                await window.ShowMetroDialogAsync(dialog);
+                await window.HideMetroDialogAsync(dialog);
+
+                Assert.That(dialog.Owner, Is.SameAs(window), "what the caller handed to the constructor is not ours to drop");
+            }
+            finally
+            {
+                window.Close();
+            }
+        }
+
+        [Test]
         public async Task ADialogDeclaredInXamlShouldGetItsWindowToo()
         {
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();

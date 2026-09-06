@@ -295,6 +295,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             AccessKeyHelper.SetIsAccessKeyScope(this, true);
 
+            this.owningWindowFromConstructor = owningWindow;
             this.OwningWindow = owningWindow;
             this.DialogSettings = this.ConfigureSettings(settings ?? owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
 
@@ -484,8 +485,14 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Gets the window this dialog belongs to. It is the window that was handed to the constructor
-        /// until the dialog is shown, and from then on the window that shows it.
+        /// The window the constructor was given, if any. It is what <see cref="OwningWindow"/> falls back
+        /// to once the dialog is not shown any more.
+        /// </summary>
+        private MetroWindow? owningWindowFromConstructor;
+
+        /// <summary>
+        /// Gets the window this dialog belongs to. While the dialog is shown that is the window showing
+        /// it, otherwise the one handed to the constructor, if there was one.
         /// </summary>
         protected MetroWindow? OwningWindow { get; private set; }
 
@@ -496,6 +503,15 @@ namespace MahApps.Metro.Controls.Dialogs
         internal void SetOwningWindow(MetroWindow owningWindow)
         {
             this.OwningWindow = owningWindow;
+        }
+
+        /// <summary>
+        /// Called while the dialog is removed from a window. A dialog that is not shown any more should
+        /// not hold on to a window it was never given, so this falls back to the one of the constructor.
+        /// </summary>
+        internal void ResetOwningWindow()
+        {
+            this.OwningWindow = this.owningWindowFromConstructor;
         }
 
         /// <summary>

@@ -491,6 +491,8 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(window.metroActiveDialogContainer.Children.Count > 0));
+
+            dialog.ResetOwningWindow();
         }
 
         private static MetroWindow CreateExternalWindow(Window? windowOwner = null)
