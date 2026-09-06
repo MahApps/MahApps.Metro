@@ -394,6 +394,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static SizeChangedEventHandler SetupAndAddDialog(MetroWindow window, BaseMetroDialog dialog)
         {
+            dialog.SetOwningWindow(window);
+
             dialog.SetValue(Panel.ZIndexProperty, (int)(window.overlayBox?.GetValue(Panel.ZIndexProperty) ?? 0) + 1);
 
             var fixedMinHeight = dialog.MinHeight > 0;

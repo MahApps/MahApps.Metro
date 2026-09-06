@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -484,9 +484,19 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
+        /// Gets the window this dialog belongs to. It is the window that was handed to the constructor
+        /// until the dialog is shown, and from then on the window that shows it.
         /// </summary>
         protected MetroWindow? OwningWindow { get; private set; }
+
+        /// <summary>
+        /// Tells the dialog which window is showing it. Called while the dialog is added to a window, so
+        /// that a dialog the caller created without one can still reach it.
+        /// </summary>
+        internal void SetOwningWindow(MetroWindow owningWindow)
+        {
+            this.OwningWindow = owningWindow;
+        }
 
         /// <summary>
         /// Waits until this dialog gets unloaded.
