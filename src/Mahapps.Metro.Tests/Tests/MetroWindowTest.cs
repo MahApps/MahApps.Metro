@@ -286,8 +286,11 @@ namespace MahApps.Metro.Tests.Tests
         public async Task WindowSettingsUpgradeSettingsShouldBeTrueByDefault()
         {
             var window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>();
-            window.SaveWindowPosition = true;
 
+            // SaveWindowPosition stays off on purpose. GetWindowPlacementSettings does not look at it,
+            // while closing the window with it on writes the placement into the user configuration of
+            // whoever runs the tests, and a second test host reading that file at the same moment then
+            // fails on the lock.
             var settings = window.GetWindowPlacementSettings();
             Assert.That(settings, Is.Not.Null);
             Assert.That(settings.UpgradeSettings, Is.True);
