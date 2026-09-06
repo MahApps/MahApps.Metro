@@ -5,6 +5,7 @@
                   xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  xmlns:views="clr-namespace:MahApps.Metro.Tests.Views"
                   d:DesignHeight="300"
                   d:DesignWidth="300"
                   mc:Ignorable="d">
@@ -13,6 +14,9 @@
             <mah:CustomDialog x:Key="CustomDialog" Title="{Binding Path=Title}">
                 <TextBlock x:Name="TheDialogBody" Text="{Binding Path=Text}" />
             </mah:CustomDialog>
+            <views:OwningWindowProbeDialog x:Key="ProbeDialog" Title="Probe">
+                <TextBlock Text="Probe" />
+            </views:OwningWindowProbeDialog>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
 </tests:TestWindow>

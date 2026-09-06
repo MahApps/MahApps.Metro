@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -295,6 +295,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             AccessKeyHelper.SetIsAccessKeyScope(this, true);
 
+            this.owningWindowFromConstructor = owningWindow;
             this.OwningWindow = owningWindow;
             this.DialogSettings = this.ConfigureSettings(settings ?? owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
 
@@ -484,9 +485,34 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
+        /// The window the constructor was given, if any. It is what <see cref="OwningWindow"/> falls back
+        /// to once the dialog is not shown any more.
+        /// </summary>
+        private MetroWindow? owningWindowFromConstructor;
+
+        /// <summary>
+        /// Gets the window this dialog belongs to. While the dialog is shown that is the window showing
+        /// it, otherwise the one handed to the constructor, if there was one.
         /// </summary>
         protected MetroWindow? OwningWindow { get; private set; }
+
+        /// <summary>
+        /// Tells the dialog which window is showing it. Called while the dialog is added to a window, so
+        /// that a dialog the caller created without one can still reach it.
+        /// </summary>
+        internal void SetOwningWindow(MetroWindow owningWindow)
+        {
+            this.OwningWindow = owningWindow;
+        }
+
+        /// <summary>
+        /// Called while the dialog is removed from a window. A dialog that is not shown any more should
+        /// not hold on to a window it was never given, so this falls back to the one of the constructor.
+        /// </summary>
+        internal void ResetOwningWindow()
+        {
+            this.OwningWindow = this.owningWindowFromConstructor;
+        }
 
         /// <summary>
         /// Waits until this dialog gets unloaded.
