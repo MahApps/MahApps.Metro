@@ -14,34 +14,11 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class DialogOwningWindowTests
     {
-        /// <summary>
-        /// A dialog the way a caller writes one: it reaches its window through <see cref="BaseMetroDialog.OwningWindow"/>,
-        /// which is protected and therefore only available from within a dialog of your own.
-        /// </summary>
-        private class ProbeDialog : CustomDialog
-        {
-            public ProbeDialog()
-            {
-            }
-
-            public ProbeDialog(MetroWindow? owningWindow, MetroDialogSettings? settings)
-                : base(owningWindow, settings)
-            {
-            }
-
-            public MetroWindow? Owner => this.OwningWindow;
-
-            public Task CloseItselfAsync()
-            {
-                return this.OwningWindow!.HideMetroDialogAsync(this);
-            }
-        }
-
         [Test]
         public async Task OwningWindowShouldBeTheWindowThatShowsTheDialog()
         {
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
-            var dialog = new ProbeDialog();
+            var dialog = new OwningWindowProbeDialog();
 
             Assert.That(dialog.Owner, Is.Null, "a dialog nobody has shown yet has no window");
 
@@ -64,7 +41,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var first = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
             var second = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
-            var dialog = new ProbeDialog();
+            var dialog = new OwningWindowProbeDialog();
 
             try
             {
@@ -88,7 +65,7 @@ namespace MahApps.Metro.Tests.Tests
         public async Task OwningWindowShouldStillComeFromTheConstructor()
         {
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
-            var dialog = new ProbeDialog(window, null);
+            var dialog = new OwningWindowProbeDialog(window, null);
 
             try
             {
@@ -107,10 +84,34 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
+        public async Task ADialogDeclaredInXamlShouldGetItsWindowToo()
+        {
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
+            var dialog = (OwningWindowProbeDialog)window.Resources["ProbeDialog"];
+
+            Assert.That(dialog.Owner, Is.Null, "markup builds the dialog with its parameterless constructor, so it starts without a window");
+
+            try
+            {
+                await window.ShowMetroDialogAsync(dialog);
+
+                Assert.That(dialog.Owner, Is.SameAs(window), "a dialog written in XAML should reach its window like any other");
+
+                await dialog.CloseItselfAsync();
+
+                Assert.That(await window.GetCurrentDialogAsync<OwningWindowProbeDialog>(), Is.Null);
+            }
+            finally
+            {
+                window.Close();
+            }
+        }
+
+        [Test]
         public async Task ADialogShouldBeAbleToCloseItself()
         {
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
-            var dialog = new ProbeDialog();
+            var dialog = new OwningWindowProbeDialog();
 
             try
             {
@@ -118,7 +119,7 @@ namespace MahApps.Metro.Tests.Tests
 
                 await dialog.CloseItselfAsync();
 
-                Assert.That(await window.GetCurrentDialogAsync<ProbeDialog>(), Is.Null, "a dialog should be able to close itself through its own window");
+                Assert.That(await window.GetCurrentDialogAsync<OwningWindowProbeDialog>(), Is.Null, "a dialog should be able to close itself through its own window");
             }
             finally
             {
