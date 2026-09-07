@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
 
@@ -228,23 +229,35 @@
                    Placement="Bottom"
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                    VerticalOffset="-2">
-                <mah:ClipBorder x:Name="Border"
-                                Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <ScrollViewer x:Name="SubMenuScrollViewer"
-                                  CanContentScroll="True"
-                                  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                        <ItemsPresenter x:Name="ItemsPresenter"
-                                        Margin="0"
-                                        Grid.IsSharedSizeScope="True"
-                                        KeyboardNavigation.DirectionalNavigation="Cycle"
-                                        KeyboardNavigation.TabNavigation="Cycle"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </ScrollViewer>
-                </mah:ClipBorder>
+                <Border x:Name="Border"
+                        Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid x:Name="ContentGrid">
+                        <Grid.Clip>
+                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                <Binding ElementName="Border" Path="CornerRadius" />
+                                <Binding ElementName="Border" Path="BorderThickness" />
+                                <Binding ElementName="Border" Path="Padding" />
+                            </MultiBinding>
+                        </Grid.Clip>
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Margin="0"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -384,23 +397,35 @@
                        Placement="Right"
                        PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                        VerticalOffset="-3">
-                    <mah:ClipBorder x:Name="Border"
-                                    Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
-                                    BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ScrollViewer x:Name="SubMenuScrollViewer"
-                                      CanContentScroll="True"
-                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                            <ItemsPresenter x:Name="ItemsPresenter"
-                                            Margin="0"
-                                            Grid.IsSharedSizeScope="True"
-                                            KeyboardNavigation.DirectionalNavigation="Cycle"
-                                            KeyboardNavigation.TabNavigation="Cycle"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
-                    </mah:ClipBorder>
+                    <Border x:Name="Border"
+                            Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="Border" Path="CornerRadius" />
+                                    <Binding ElementName="Border" Path="BorderThickness" />
+                                    <Binding ElementName="Border" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
+                            <ScrollViewer x:Name="SubMenuScrollViewer"
+                                          CanContentScroll="True"
+                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                Margin="0"
+                                                Grid.IsSharedSizeScope="True"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </Popup>
             </Grid>
         </Grid>
