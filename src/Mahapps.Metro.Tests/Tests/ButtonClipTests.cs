@@ -74,15 +74,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var button = this.ShowButton(styleKey, isToggleButton);
 
-            var grid = button.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null, "the template should carry the grid the clip sits on");
-            Assert.That(grid!.ActualWidth, Is.GreaterThan(0), "the button should be laid out, otherwise this test proves nothing");
-            Assert.That(grid.Clip, Is.Not.Null, "the content should be clipped");
-
-            Assert.That(grid.Clip!.Bounds.Width, Is.EqualTo(grid.ActualWidth).Within(0.001), "a wider clip leaves the content unclipped on the right");
-            Assert.That(grid.Clip.Bounds.Height, Is.EqualTo(grid.ActualHeight).Within(0.001), "a taller clip leaves it unclipped at the bottom");
-            Assert.That(grid.Clip.Bounds.X, Is.EqualTo(0).Within(0.001));
-            Assert.That(grid.Clip.Bounds.Y, Is.EqualTo(0).Within(0.001));
+            ClipAssert.CoversElement(ClipAssert.ContentGrid(button), "button");
         }
 
         [TestCaseSource(nameof(ClippedStyles))]
@@ -90,20 +82,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var button = this.ShowButton(styleKey, isToggleButton);
 
-            var grid = button.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null);
-
-            var clip = grid!.Clip;
-            Assert.That(clip, Is.Not.Null);
-
-            var width = grid.ActualWidth;
-            var height = grid.ActualHeight;
-
-            Assert.That(clip!.FillContains(new Point(width / 2, height / 2)), Is.True, "the middle belongs to the clip");
-            Assert.That(clip.FillContains(new Point(1, 1)), Is.False, "top left should be cut");
-            Assert.That(clip.FillContains(new Point(width - 1, 1)), Is.False, "top right should be cut");
-            Assert.That(clip.FillContains(new Point(width - 1, height - 1)), Is.False, "bottom right should be cut");
-            Assert.That(clip.FillContains(new Point(1, height - 1)), Is.False, "bottom left should be cut");
+            ClipAssert.CutsEveryCorner(ClipAssert.ContentGrid(button), "button");
         }
 
         [TestCaseSource(nameof(ClippedStyles))]
@@ -116,12 +95,7 @@ namespace MahApps.Metro.Tests.Tests
             ControlsHelper.SetCornerRadius(button, new CornerRadius(0));
             button.UpdateLayout();
 
-            var grid = button.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null);
-            Assert.That(grid!.Clip, Is.Not.Null);
-
-            Assert.That(grid.Clip!.FillContains(new Point(0.5, 0.5)), Is.True, "square corners belong to the clip");
-            Assert.That(grid.Clip.FillContains(new Point(grid.ActualWidth - 0.5, grid.ActualHeight - 0.5)), Is.True);
+            ClipAssert.KeepsEveryCorner(ClipAssert.ContentGrid(button), "button");
         }
     }
 }

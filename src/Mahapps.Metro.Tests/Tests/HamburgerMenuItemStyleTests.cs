@@ -69,14 +69,6 @@ namespace MahApps.Metro.Tests.Tests
             return border!;
         }
 
-        private static FrameworkElement GetContentGrid(ListBoxItem item)
-        {
-            var grid = item.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null, "the template should carry the grid the clip sits on");
-
-            return grid!;
-        }
-
         [Test]
         public async Task TheClipShouldCoverTheGridItSitsOn()
         {
@@ -85,16 +77,10 @@ namespace MahApps.Metro.Tests.Tests
             try
             {
                 var item = await ShowItemAsync(window);
-                var grid = GetContentGrid(item);
+                var grid = ClipAssert.ContentGrid(item);
 
-                Assert.That(grid.ActualWidth, Is.GreaterThan(0), "the item should be laid out, otherwise this test proves nothing");
-                Assert.That(grid.Clip, Is.Not.Null, "the content should be clipped");
-
-                Assert.That(grid.Clip!.Bounds.Width, Is.EqualTo(grid.ActualWidth).Within(0.001), "a wider clip leaves the content unclipped on the right");
-                Assert.That(grid.Clip.Bounds.Height, Is.EqualTo(grid.ActualHeight).Within(0.001), "a taller clip leaves it unclipped at the bottom");
-
-                Assert.That(grid.Clip.FillContains(new Point(1, 1)), Is.False, "the corners should be cut");
-                Assert.That(grid.Clip.FillContains(new Point(grid.ActualWidth - 1, grid.ActualHeight - 1)), Is.False);
+                ClipAssert.CoversElement(grid, "item");
+                ClipAssert.CutsEveryCorner(grid, "item");
             }
             finally
             {

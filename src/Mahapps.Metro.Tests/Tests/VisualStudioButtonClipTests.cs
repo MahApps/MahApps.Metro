@@ -73,11 +73,7 @@ namespace MahApps.Metro.Tests.Tests
                 var button = await ShowButtonAsync(window, new Thickness(padding));
                 var content = GetClippedElement(button);
 
-                Assert.That(content.Clip, Is.Not.Null, "the content should be clipped");
-                Assert.That(content.ActualWidth, Is.GreaterThan(0), "the button should be laid out, otherwise this test proves nothing");
-
-                Assert.That(content.Clip!.Bounds.Width, Is.EqualTo(content.ActualWidth).Within(0.001), "a wider clip leaves the content unclipped on the right");
-                Assert.That(content.Clip.Bounds.Height, Is.EqualTo(content.ActualHeight).Within(0.001), "a taller clip leaves it unclipped at the bottom");
+                ClipAssert.CoversElement(content, "button");
             }
             finally
             {
@@ -95,17 +91,8 @@ namespace MahApps.Metro.Tests.Tests
                 var button = await ShowButtonAsync(window, new Thickness(0));
                 var content = GetClippedElement(button);
 
-                Assert.That(content.Clip, Is.Not.Null);
-
-                var clip = content.Clip!;
-                var width = content.ActualWidth;
-                var height = content.ActualHeight;
-
-                Assert.That(clip.FillContains(new Point(width / 2, height / 2)), Is.True, "the middle belongs to the clip");
-                Assert.That(clip.FillContains(new Point(1, 1)), Is.False, "top left should be cut");
-                Assert.That(clip.FillContains(new Point(width - 1, 1)), Is.False, "top right should be cut");
-                Assert.That(clip.FillContains(new Point(width - 1, height - 1)), Is.False, "bottom right should be cut, which is what the report was about");
-                Assert.That(clip.FillContains(new Point(1, height - 1)), Is.False, "bottom left should be cut");
+                // The bottom right corner is what the report was about.
+                ClipAssert.CutsEveryCorner(content, "button");
             }
             finally
             {

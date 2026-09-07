@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -41,24 +40,6 @@ namespace MahApps.Metro.Tests.Tests
             this.window = null;
         }
 
-        /// <summary>
-        /// Lets the dispatcher work, which the drop down needs before it has a size.
-        /// </summary>
-        private static void Pump()
-        {
-            var frame = new DispatcherFrame();
-            var timer = new DispatcherTimer(TimeSpan.FromMilliseconds(300), DispatcherPriority.Background, (_, _) => frame.Continue = false, Dispatcher.CurrentDispatcher);
-
-            try
-            {
-                Dispatcher.PushFrame(frame);
-            }
-            finally
-            {
-                timer.Stop();
-            }
-        }
-
         private ComboBox ShowComboBox()
         {
             Assert.That(this.window, Is.Not.Null);
@@ -74,7 +55,7 @@ namespace MahApps.Metro.Tests.Tests
             comboBox.UpdateLayout();
 
             // Let the box finish loading before a test reaches into its template.
-            Pump();
+            ClipAssert.Pump();
             Assert.That(comboBox.IsLoaded, Is.True, "the box should be loaded before a test looks at it");
 
             return comboBox;
@@ -118,38 +99,12 @@ namespace MahApps.Metro.Tests.Tests
             this.window!.Content = host;
             this.window.UpdateLayout();
             host.UpdateLayout();
-            Pump();
+            ClipAssert.Pump();
 
             var border = content!.FindChild<Border>("PopupBorder") ?? content as Border;
             Assert.That(border, Is.Not.Null, "the drop down should sit in a border");
 
             return border!;
-        }
-
-        private static void AssertClipCoversElement(FrameworkElement element, string what)
-        {
-            Assert.That(element.ActualWidth, Is.GreaterThan(0), $"the {what} should be laid out, otherwise this test proves nothing");
-            Assert.That(element.Clip, Is.Not.Null, $"the {what} should be clipped");
-
-            Assert.That(element.Clip!.Bounds.Width, Is.EqualTo(element.ActualWidth).Within(0.001), $"a wider clip leaves the {what} unclipped on the right");
-            Assert.That(element.Clip.Bounds.Height, Is.EqualTo(element.ActualHeight).Within(0.001), $"a taller clip leaves the {what} unclipped at the bottom");
-            Assert.That(element.Clip.Bounds.X, Is.EqualTo(0).Within(0.001));
-            Assert.That(element.Clip.Bounds.Y, Is.EqualTo(0).Within(0.001));
-        }
-
-        private static void AssertEveryCornerIsCut(FrameworkElement element, string what)
-        {
-            var clip = element.Clip;
-            Assert.That(clip, Is.Not.Null);
-
-            var width = element.ActualWidth;
-            var height = element.ActualHeight;
-
-            Assert.That(clip!.FillContains(new Point(width / 2, height / 2)), Is.True, $"the middle of the {what} belongs to the clip");
-            Assert.That(clip.FillContains(new Point(1, 1)), Is.False, $"top left of the {what} should be cut");
-            Assert.That(clip.FillContains(new Point(width - 1, 1)), Is.False, $"top right of the {what} should be cut");
-            Assert.That(clip.FillContains(new Point(width - 1, height - 1)), Is.False, $"bottom right of the {what} should be cut");
-            Assert.That(clip.FillContains(new Point(1, height - 1)), Is.False, $"bottom left of the {what} should be cut");
         }
 
         [Test]
@@ -176,10 +131,9 @@ namespace MahApps.Metro.Tests.Tests
             var comboBox = this.ShowComboBox();
             var popupBorder = this.ShowDropDownContent(comboBox);
 
-            var grid = popupBorder.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null, "the drop down should carry the grid the clip sits on");
+            var grid = ClipAssert.ContentGrid(popupBorder);
 
-            AssertClipCoversElement(grid!, "drop down");
+            ClipAssert.CoversElement(grid, "drop down");
         }
 
         [Test]
@@ -198,11 +152,10 @@ namespace MahApps.Metro.Tests.Tests
         {
             var item = this.ShowItem();
 
-            var grid = item.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null, "the item template should carry the grid the clip sits on");
+            var grid = ClipAssert.ContentGrid(item);
 
-            AssertClipCoversElement(grid!, "item");
-            AssertEveryCornerIsCut(grid!, "item");
+            ClipAssert.CoversElement(grid, "item");
+            ClipAssert.CutsEveryCorner(grid, "item");
         }
 
         [Test]
@@ -213,12 +166,7 @@ namespace MahApps.Metro.Tests.Tests
             ControlsHelper.SetCornerRadius(item, new CornerRadius(0));
             item.UpdateLayout();
 
-            var grid = item.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null);
-            Assert.That(grid!.Clip, Is.Not.Null);
-
-            Assert.That(grid.Clip!.FillContains(new Point(0.5, 0.5)), Is.True, "square corners belong to the clip");
-            Assert.That(grid.Clip.FillContains(new Point(grid.ActualWidth - 0.5, grid.ActualHeight - 0.5)), Is.True);
+            ClipAssert.KeepsEveryCorner(ClipAssert.ContentGrid(item), "item");
         }
     }
 }

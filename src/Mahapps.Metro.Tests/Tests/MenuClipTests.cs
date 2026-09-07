@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -48,24 +47,6 @@ namespace MahApps.Metro.Tests.Tests
             return new ResourceDictionary { Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/{fileName}", UriKind.Absolute) };
         }
 
-        /// <summary>
-        /// Lets the dispatcher work, which the templates need before anything has a size.
-        /// </summary>
-        private static void Pump()
-        {
-            var frame = new DispatcherFrame();
-            var timer = new DispatcherTimer(TimeSpan.FromMilliseconds(300), DispatcherPriority.Background, (_, _) => frame.Continue = false, Dispatcher.CurrentDispatcher);
-
-            try
-            {
-                Dispatcher.PushFrame(frame);
-            }
-            finally
-            {
-                timer.Stop();
-            }
-        }
-
         private T Show<T>(T element)
             where T : FrameworkElement
         {
@@ -74,7 +55,7 @@ namespace MahApps.Metro.Tests.Tests
             this.window!.Content = element;
             this.window.UpdateLayout();
             element.UpdateLayout();
-            Pump();
+            ClipAssert.Pump();
 
             return element;
         }
@@ -106,40 +87,6 @@ namespace MahApps.Metro.Tests.Tests
             return border!;
         }
 
-        private static Grid GetContentGrid(FrameworkElement root)
-        {
-            var grid = root.FindChild<Grid>("ContentGrid");
-            Assert.That(grid, Is.Not.Null, "the template should carry the grid the clip sits on");
-
-            return grid!;
-        }
-
-        private static void AssertClipCoversElement(FrameworkElement element, string what)
-        {
-            Assert.That(element.ActualWidth, Is.GreaterThan(0), $"the {what} should be laid out, otherwise this test proves nothing");
-            Assert.That(element.Clip, Is.Not.Null, $"the {what} should be clipped");
-
-            Assert.That(element.Clip!.Bounds.Width, Is.EqualTo(element.ActualWidth).Within(0.001), $"a wider clip leaves the {what} unclipped on the right");
-            Assert.That(element.Clip.Bounds.Height, Is.EqualTo(element.ActualHeight).Within(0.001), $"a taller clip leaves the {what} unclipped at the bottom");
-            Assert.That(element.Clip.Bounds.X, Is.EqualTo(0).Within(0.001));
-            Assert.That(element.Clip.Bounds.Y, Is.EqualTo(0).Within(0.001));
-        }
-
-        private static void AssertEveryCornerIsCut(FrameworkElement element, string what)
-        {
-            var clip = element.Clip;
-            Assert.That(clip, Is.Not.Null);
-
-            var width = element.ActualWidth;
-            var height = element.ActualHeight;
-
-            Assert.That(clip!.FillContains(new Point(width / 2, height / 2)), Is.True, $"the middle of the {what} belongs to the clip");
-            Assert.That(clip.FillContains(new Point(1, 1)), Is.False, $"top left of the {what} should be cut");
-            Assert.That(clip.FillContains(new Point(width - 1, 1)), Is.False, $"top right of the {what} should be cut");
-            Assert.That(clip.FillContains(new Point(width - 1, height - 1)), Is.False, $"bottom right of the {what} should be cut");
-            Assert.That(clip.FillContains(new Point(1, height - 1)), Is.False, $"bottom left of the {what} should be cut");
-        }
-
         private MenuItem ShowMenuItemWithTemplate(string templateResourceId)
         {
             var template = (ControlTemplate)this.menuItemDictionary![new ComponentResourceKey(typeof(MenuItem), templateResourceId)];
@@ -166,10 +113,10 @@ namespace MahApps.Metro.Tests.Tests
 
             this.Show(menu);
 
-            var grid = GetContentGrid(menu);
+            var grid = ClipAssert.ContentGrid(menu);
 
-            AssertClipCoversElement(grid, "menu bar");
-            AssertEveryCornerIsCut(grid, "menu bar");
+            ClipAssert.CoversElement(grid, "menu bar");
+            ClipAssert.CutsEveryCorner(grid, "menu bar");
         }
 
         [Test]
@@ -187,20 +134,20 @@ namespace MahApps.Metro.Tests.Tests
             this.Show(owner);
 
             contextMenu.SetCurrentValue(ContextMenu.IsOpenProperty, true);
-            Pump();
+            ClipAssert.Pump();
             Assert.That(contextMenu.IsOpen, Is.True, "the context menu should be open, otherwise there is nothing to measure");
 
-            var grid = GetContentGrid(contextMenu);
+            var grid = ClipAssert.ContentGrid(contextMenu);
 
             try
             {
-                AssertClipCoversElement(grid, "context menu");
-                AssertEveryCornerIsCut(grid, "context menu");
+                ClipAssert.CoversElement(grid, "context menu");
+                ClipAssert.CutsEveryCorner(grid, "context menu");
             }
             finally
             {
                 contextMenu.SetCurrentValue(ContextMenu.IsOpenProperty, false);
-                Pump();
+                ClipAssert.Pump();
             }
         }
 
@@ -211,9 +158,9 @@ namespace MahApps.Metro.Tests.Tests
             var menuItem = this.ShowMenuItemWithTemplate(templateResourceId);
             var border = this.ShowPopupContent(menuItem);
 
-            var grid = GetContentGrid(border);
+            var grid = ClipAssert.ContentGrid(border);
 
-            AssertClipCoversElement(grid, "submenu");
+            ClipAssert.CoversElement(grid, "submenu");
         }
     }
 }
