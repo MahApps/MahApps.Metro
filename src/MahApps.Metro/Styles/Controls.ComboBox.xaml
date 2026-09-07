@@ -416,18 +416,30 @@
                                Placement="Bottom"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                             <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
-                                <mah:ClipBorder x:Name="PopupBorder"
-                                                Height="Auto"
-                                                HorizontalAlignment="Stretch"
-                                                Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                                                BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
-                                                BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
-                                                CornerRadius="{DynamicResource ComboBoxPopupBorderThemeCornerRadius}"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <ScrollViewer Padding="{DynamicResource ComboBoxPopupBorderThemePadding}" BorderThickness="0">
-                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </ScrollViewer>
-                                </mah:ClipBorder>
+                                <Border x:Name="PopupBorder"
+                                        Height="Auto"
+                                        HorizontalAlignment="Stretch"
+                                        Background="{DynamicResource MahApps.Brushes.ComboBox.PopupBackground}"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
+                                        BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
+                                        CornerRadius="{DynamicResource ComboBoxPopupBorderThemeCornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                    <Grid x:Name="ContentGrid">
+                                        <Grid.Clip>
+                                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                                <Binding ElementName="PopupBorder" Path="CornerRadius" />
+                                                <Binding ElementName="PopupBorder" Path="BorderThickness" />
+                                                <Binding ElementName="PopupBorder" Path="Padding" />
+                                            </MultiBinding>
+                                        </Grid.Clip>
+                                        <ScrollViewer Padding="{DynamicResource ComboBoxPopupBorderThemePadding}" BorderThickness="0">
+                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
                             </Grid>
                         </Popup>
                         <VisualStateManager.VisualStateGroups>
@@ -618,22 +630,34 @@
                           Background="Transparent"
                           RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <mah:ClipBorder x:Name="Background"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border x:Name="Background"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
-                        <mah:ClipBorder x:Name="Border"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </mah:ClipBorder>
+                        <Border x:Name="Border"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid x:Name="ContentGrid">
+                                <Grid.Clip>
+                                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                        <Binding ElementName="Border" Path="CornerRadius" />
+                                        <Binding ElementName="Border" Path="BorderThickness" />
+                                        <Binding ElementName="Border" Path="Padding" />
+                                    </MultiBinding>
+                                </Grid.Clip>
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
