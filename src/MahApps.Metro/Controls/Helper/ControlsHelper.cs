@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -153,6 +154,8 @@ namespace MahApps.Metro.Controls
             obj.SetValue(FocusBorderBrushProperty, value);
         }
 
+        /// <summary>Identifies the FocusBorderThickness attached property.</summary>
+        [Obsolete("Changing the border thickness on focus makes the control jump, because the content has to move with it. Set FocusBorderBrush instead, which colours the border it already has.")]
         public static readonly DependencyProperty FocusBorderThicknessProperty
             = DependencyProperty.RegisterAttached(
                 "FocusBorderThickness",
@@ -161,8 +164,9 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(default(Thickness), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
-        /// Gets the brush used to draw the focus border.
+        /// Gets the thickness the border is drawn with while the control has the focus.
         /// </summary>
+        [Obsolete("Changing the border thickness on focus makes the control jump, because the content has to move with it. Set FocusBorderBrush instead, which colours the border it already has.")]
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
@@ -174,8 +178,9 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the brush used to draw the focus border.
+        /// Sets the thickness the border is drawn with while the control has the focus.
         /// </summary>
+        [Obsolete("Changing the border thickness on focus makes the control jump, because the content has to move with it. Set FocusBorderBrush instead, which colours the border it already has.")]
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
