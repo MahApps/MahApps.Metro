@@ -269,12 +269,12 @@ namespace MahApps.Metro.Tests.Tests
         /// Reaches the border around the drop down. It lives in the popup, so it is not part of the
         /// visual tree of the picker itself.
         /// </summary>
-        private static ClipBorder? GetPopupBorder(TimePickerBase picker)
+        private static Border? GetPopupBorder(TimePickerBase picker)
         {
             var popup = picker.FindChild<Popup>("PART_Popup");
             Assert.That(popup, Is.Not.Null, "the template should carry a popup");
 
-            return popup!.Child as ClipBorder;
+            return popup!.Child as Border;
         }
 
         [Test]
@@ -284,7 +284,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var border = GetPopupBorder(this.window.TheRoundedDateTimePicker);
 
-            Assert.That(border, Is.Not.Null, "the drop down should sit in a ClipBorder, so that rounded corners cut the content too");
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a border of its own");
             Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(8)), "the drop down should take the corner radius of the picker");
         }
 
@@ -295,8 +295,50 @@ namespace MahApps.Metro.Tests.Tests
 
             var border = GetPopupBorder(this.window.TheRoundedTimePicker);
 
-            Assert.That(border, Is.Not.Null, "the drop down should sit in a ClipBorder, so that rounded corners cut the content too");
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a border of its own");
             Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(4)), "the drop down should take the corner radius of the picker");
+        }
+
+        [Test]
+        public void TheFieldShouldClipItsContentToItsBorder()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.TheRoundedDateTimePicker;
+            picker.UpdateLayout();
+
+            var grid = ClipAssert.ContentGrid(picker, "PART_InnerGrid");
+
+            ClipAssert.CoversElement(grid, "field");
+            ClipAssert.CutsEveryCorner(grid, "field");
+        }
+
+        [Test]
+        public void TheDropDownShouldClipItsContentToItsBorder()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.TheRoundedDateTimePicker;
+
+            var popup = picker.FindChild<Popup>("PART_Popup");
+            Assert.That(popup, Is.Not.Null, "the template should carry a popup");
+
+            // The drop down is measured outside of its popup, which closes again whenever its window
+            // loses activation. The geometry and the names the clip binds to are the same either way.
+            var content = popup!.Child as FrameworkElement;
+            Assert.That(content, Is.Not.Null, "the popup should carry its content");
+            popup.Child = null;
+
+            var host = new Grid { Width = 320, Height = 320 };
+            host.Children.Add(content);
+            this.window.Content = host;
+            this.window.UpdateLayout();
+            ClipAssert.Pump();
+
+            var border = (content as Border) ?? content!.FindChild<Border>("PART_PopupBorder");
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a border");
+
+            ClipAssert.CoversElement(ClipAssert.ContentGrid(border!), "drop down");
         }
 
         [Test]

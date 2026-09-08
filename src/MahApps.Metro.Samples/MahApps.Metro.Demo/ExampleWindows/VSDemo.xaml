@@ -93,6 +93,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <GroupBox Grid.Row="0"
@@ -181,9 +182,16 @@
                                 </Expander>
                             </StackPanel>
                         </Expander>
-                        <Button Grid.Row="2"
-                                Margin="20"
+                        <Button x:Name="TestButton1"
+                                Grid.Row="2"
+                                Margin="20 10"
                                 Content="Beam me up..." />
+                        <Button x:Name="TestButton2"
+                                Grid.Row="3"
+                                Margin="20 10"
+                                Padding="4"
+                                mah:ControlsHelper.CornerRadius="4"
+                                Content="...Scotty!" />
                     </Grid>
                 </TabItem>
                 <TabItem Header="Demo">

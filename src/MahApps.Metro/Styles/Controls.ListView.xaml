@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <Style x:Key="MahApps.Styles.ScrollViewer.GridView"
            BasedOn="{StaticResource {x:Static GridView.GridViewScrollViewerStyleKey}}"
@@ -112,15 +113,27 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ScrollViewer Padding="{TemplateBinding Padding}"
-                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                                      Focusable="False"
-                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      Style="{DynamicResource MahApps.Styles.ScrollViewer.GridView}"
-                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="Border" Path="CornerRadius" />
+                                    <Binding ElementName="Border" Path="BorderThickness" />
+                                    <Binding ElementName="Border" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
+                            <ScrollViewer Padding="{TemplateBinding Padding}"
+                                          CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                          Focusable="False"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Style="{DynamicResource MahApps.Styles.ScrollViewer.GridView}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -166,28 +179,38 @@
                           Background="Transparent"
                           RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <mah:ClipBorder x:Name="Background"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border x:Name="Background"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
-                        <mah:ClipBorder x:Name="Border"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Grid>
+                        <Border x:Name="Border"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid x:Name="ContentGrid">
+                                <Grid.Clip>
+                                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                        <Binding ElementName="Border" Path="CornerRadius" />
+                                        <Binding ElementName="Border" Path="BorderThickness" />
+                                        <Binding ElementName="Border" Path="Padding" />
+                                    </MultiBinding>
+                                </Grid.Clip>
                                 <GridViewRowPresenter x:Name="PART_RowPresenter"
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <ContentPresenter x:Name="PART_ContentPresenter"
-                                                  Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   Visibility="Collapsed" />
                             </Grid>
-                        </mah:ClipBorder>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
@@ -301,28 +324,38 @@
                           Background="Transparent"
                           RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <mah:ClipBorder x:Name="Background"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border x:Name="Background"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
-                        <mah:ClipBorder x:Name="Border"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Grid>
+                        <Border x:Name="Border"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid x:Name="ContentGrid">
+                                <Grid.Clip>
+                                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                        <Binding ElementName="Border" Path="CornerRadius" />
+                                        <Binding ElementName="Border" Path="BorderThickness" />
+                                        <Binding ElementName="Border" Path="Padding" />
+                                    </MultiBinding>
+                                </Grid.Clip>
                                 <GridViewRowPresenter x:Name="PART_RowPresenter"
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <ContentPresenter x:Name="PART_ContentPresenter"
-                                                  Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   Visibility="Collapsed" />
                             </Grid>
-                        </mah:ClipBorder>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">

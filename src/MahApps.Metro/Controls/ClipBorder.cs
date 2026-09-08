@@ -14,6 +14,7 @@ namespace MahApps.Metro.Controls
     /// Represents a border whose contents are clipped within the bounds
     /// of the border. The border may have rounded corners.
     /// </summary>
+    [Obsolete("Use a Border and clip its content instead: put a Grid inside it and bind the Clip of that grid to ClipGeometryConverter, passing the size of the grid and the corner radius, the border thickness and the padding of the border. That is what the styles in here do, and it keeps every feature of the WPF Border.")]
     public sealed class ClipBorder : Decorator
     {
         #region Fields

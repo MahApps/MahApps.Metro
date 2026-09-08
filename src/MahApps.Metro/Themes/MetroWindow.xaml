@@ -14,19 +14,29 @@
     <mahConverters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <ControlTemplate x:Key="MahApps.Templates.MetroWindow" TargetType="{x:Type mah:MetroWindow}">
-        <mah:ClipBorder x:Name="PART_Border"
-                        Margin="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                        UseLayoutRounding="True">
+        <Border x:Name="PART_Border"
+                Margin="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                UseLayoutRounding="True">
             <AdornerDecorator UseLayoutRounding="False">
-                <Grid Background="{x:Null}"
+                <Grid x:Name="ContentGrid"
                       LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
                       RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                       UseLayoutRounding="False">
+                    <Grid.Clip>
+                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                            <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                            <Binding ElementName="PART_Border" Path="CornerRadius" />
+                            <Binding ElementName="PART_Border" Path="BorderThickness" />
+                            <Binding ElementName="PART_Border" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <!--  icon  -->
@@ -205,7 +215,7 @@
                                 Visibility="Collapsed" />
                 </Grid>
             </AdornerDecorator>
-        </mah:ClipBorder>
+        </Border>
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
@@ -260,19 +270,29 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="MahApps.Templates.MetroWindow.Center" TargetType="{x:Type mah:MetroWindow}">
-        <mah:ClipBorder x:Name="PART_Border"
-                        Margin="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                        UseLayoutRounding="True">
+        <Border x:Name="PART_Border"
+                Margin="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{Binding Path=GlowColor, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                UseLayoutRounding="True">
             <AdornerDecorator UseLayoutRounding="False">
-                <Grid Background="{x:Null}"
+                <Grid x:Name="ContentGrid"
                       LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
                       RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                       UseLayoutRounding="True">
+                    <Grid.Clip>
+                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                            <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                            <Binding ElementName="PART_Border" Path="CornerRadius" />
+                            <Binding ElementName="PART_Border" Path="BorderThickness" />
+                            <Binding ElementName="PART_Border" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <!--  icon  -->
@@ -458,7 +478,7 @@
                                 Visibility="Collapsed" />
                 </Grid>
             </AdornerDecorator>
-        </mah:ClipBorder>
+        </Border>
 
         <ControlTemplate.Resources>
             <Storyboard x:Key="OverlayFastSemiFadeIn"

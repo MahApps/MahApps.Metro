@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <ControlTemplate x:Key="MahApps.Templates.SplitButton.Horizontal" TargetType="{x:Type mah:SplitButton}">
         <Grid UseLayoutRounding="True">
@@ -10,73 +11,79 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                <mah:ClipBorder x:Name="PART_ClipBorder"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <Grid x:Name="PART_Container"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="PART_Button"
-                                Grid.Column="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                Foreground="{TemplateBinding Foreground}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{TemplateBinding ButtonStyle}">
-                            <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Orientation="Horizontal">
-                                <ContentPresenter HorizontalAlignment="Center"
+                <Grid x:Name="PART_Container"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.Clip>
+                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="PART_Container" Path="ActualWidth" />
+                            <Binding ElementName="PART_Container" Path="ActualHeight" />
+                            <Binding ElementName="PART_Border" Path="CornerRadius" />
+                            <Binding ElementName="PART_Border" Path="BorderThickness" />
+                            <Binding ElementName="PART_Border" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="PART_Button"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            Foreground="{TemplateBinding Foreground}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Style="{TemplateBinding ButtonStyle}">
+                        <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Orientation="Horizontal">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Icon}"
+                                              ContentTemplate="{TemplateBinding IconTemplate}"
+                                              Focusable="False"
+                                              RecognizesAccessKey="True"
+                                              UseLayoutRounding="False" />
+                            <mah:ContentControlEx x:Name="PART_ButtonContent"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
-                                                  Content="{TemplateBinding Icon}"
-                                                  ContentTemplate="{TemplateBinding IconTemplate}"
-                                                  Focusable="False"
-                                                  RecognizesAccessKey="True"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   UseLayoutRounding="False" />
-                                <mah:ContentControlEx x:Name="PART_ButtonContent"
-                                                      Padding="{TemplateBinding Padding}"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      Content="{TemplateBinding SelectionBoxItem}"
-                                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
-                                                      ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                      IsHitTestVisible="False"
-                                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                      UseLayoutRounding="False" />
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="PART_Expander"
-                                Grid.Column="1"
-                                Width="20"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                Foreground="{TemplateBinding ArrowBrush}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{TemplateBinding ButtonArrowStyle}">
-                            <!--  Material - ChevronDown  -->
-                            <mah:PathIcon Width="9"
-                                          Height="9"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                        </Button>
-                    </Grid>
-                </mah:ClipBorder>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="PART_Expander"
+                            Grid.Column="1"
+                            Width="20"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            Foreground="{TemplateBinding ArrowBrush}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Style="{TemplateBinding ButtonArrowStyle}">
+                        <!--  Material - ChevronDown  -->
+                        <mah:PathIcon Width="9"
+                                      Height="9"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </Button>
+                </Grid>
             </Border>
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
@@ -136,73 +143,79 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                <mah:ClipBorder x:Name="PART_ClipBorder"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <Grid x:Name="PART_Container"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Button x:Name="PART_Button"
-                                Grid.Row="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                VerticalContentAlignment="Stretch"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                Foreground="{TemplateBinding Foreground}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{TemplateBinding ButtonStyle}">
-                            <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Orientation="Vertical">
-                                <ContentPresenter HorizontalAlignment="Center"
+                <Grid x:Name="PART_Container"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.Clip>
+                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="PART_Container" Path="ActualWidth" />
+                            <Binding ElementName="PART_Container" Path="ActualHeight" />
+                            <Binding ElementName="PART_Border" Path="CornerRadius" />
+                            <Binding ElementName="PART_Border" Path="BorderThickness" />
+                            <Binding ElementName="PART_Border" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Button x:Name="PART_Button"
+                            Grid.Row="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            Foreground="{TemplateBinding Foreground}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Style="{TemplateBinding ButtonStyle}">
+                        <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Orientation="Vertical">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Icon}"
+                                              ContentTemplate="{TemplateBinding IconTemplate}"
+                                              Focusable="False"
+                                              RecognizesAccessKey="True"
+                                              UseLayoutRounding="False" />
+                            <mah:ContentControlEx x:Name="PART_ButtonContent"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
-                                                  Content="{TemplateBinding Icon}"
-                                                  ContentTemplate="{TemplateBinding IconTemplate}"
-                                                  Focusable="False"
-                                                  RecognizesAccessKey="True"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   UseLayoutRounding="False" />
-                                <mah:ContentControlEx x:Name="PART_ButtonContent"
-                                                      Padding="{TemplateBinding Padding}"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      Content="{TemplateBinding SelectionBoxItem}"
-                                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
-                                                      ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                      IsHitTestVisible="False"
-                                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                      UseLayoutRounding="False" />
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="PART_Expander"
-                                Grid.Row="1"
-                                Height="20"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                Foreground="{TemplateBinding ArrowBrush}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{TemplateBinding ButtonArrowStyle}">
-                            <!--  Material - ChevronDown  -->
-                            <mah:PathIcon Width="9"
-                                          Height="9"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                        </Button>
-                    </Grid>
-                </mah:ClipBorder>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="PART_Expander"
+                            Grid.Row="1"
+                            Height="20"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            Foreground="{TemplateBinding ArrowBrush}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Style="{TemplateBinding ButtonArrowStyle}">
+                        <!--  Material - ChevronDown  -->
+                        <mah:PathIcon Width="9"
+                                      Height="9"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                    </Button>
+                </Grid>
             </Border>
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"

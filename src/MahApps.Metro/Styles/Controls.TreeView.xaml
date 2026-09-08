@@ -84,37 +84,50 @@
                               Background="Transparent"
                               RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <mah:ClipBorder x:Name="Background"
-                                            Background="{TemplateBinding Background}"
-                                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Border x:Name="Background"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
-                            <mah:ClipBorder x:Name="Border"
-                                            Padding="{TemplateBinding Padding}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                <Grid Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
-                                      VerticalAlignment="Stretch"
-                                      Background="Transparent">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <ToggleButton x:Name="Expander"
-                                                  Grid.Column="0"
-                                                  ClickMode="Press"
-                                                  IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
-                                                  Style="{TemplateBinding mah:TreeViewItemHelper.ToggleButtonStyle}" />
-                                    <ContentPresenter x:Name="PART_Header"
-                                                      Grid.Column="1"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      ContentSource="Header"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Border x:Name="Border"
+                                    Padding="{TemplateBinding Padding}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <Grid x:Name="ContentGrid">
+                                    <Grid.Clip>
+                                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over. It sits on the whole inside of the border rather than on the indented header, which starts somewhere in the middle of the item and has no corners of its own.  -->
+                                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                            <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                            <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                            <Binding ElementName="Border" Path="CornerRadius" />
+                                            <Binding ElementName="Border" Path="BorderThickness" />
+                                            <Binding ElementName="Border" Path="Padding" />
+                                        </MultiBinding>
+                                    </Grid.Clip>
+                                    <Grid x:Name="HeaderGrid"
+                                          Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
+                                          VerticalAlignment="Stretch"
+                                          Background="Transparent">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton x:Name="Expander"
+                                                      Grid.Column="0"
+                                                      ClickMode="Press"
+                                                      IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
+                                                      Style="{TemplateBinding mah:TreeViewItemHelper.ToggleButtonStyle}" />
+                                        <ContentPresenter x:Name="PART_Header"
+                                                          Grid.Column="1"
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          ContentSource="Header"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Grid>
                                 </Grid>
-                            </mah:ClipBorder>
+                            </Border>
                         </Grid>
 
                         <ItemsPresenter x:Name="ItemsHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -244,15 +257,27 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ScrollViewer x:Name="TreeViewScrollViewer"
-                                      Padding="{TemplateBinding Padding}"
-                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                                      Focusable="False"
-                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <ItemsPresenter />
-                        </ScrollViewer>
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="Border" Path="CornerRadius" />
+                                    <Binding ElementName="Border" Path="BorderThickness" />
+                                    <Binding ElementName="Border" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
+                            <ScrollViewer x:Name="TreeViewScrollViewer"
+                                          Padding="{TemplateBinding Padding}"
+                                          CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                          Focusable="False"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

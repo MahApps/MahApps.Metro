@@ -27,6 +27,7 @@
         <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type MenuBase}}}" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -37,8 +38,18 @@
                             BorderBrush="Transparent"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="False">
-                        <Grid x:Name="Grid">
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="Border" Path="CornerRadius" />
+                                    <Binding ElementName="Border" Path="BorderThickness" />
+                                    <Binding ElementName="Border" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="Col0"
                                                   Width="Auto"
@@ -99,15 +110,24 @@
                                 <Grid Margin="0 0 5 5">
                                     <!--  Border 2  -->
                                     <Border x:Name="SubMenuBorder"
+                                            Padding="2"
                                             Background="{DynamicResource MahApps.Brushes.SubmenuItem.Background}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.MenuSeparator.Border}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
                                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                             Effect="{DynamicResource MahApps.DropShadowEffect.Menu.VisualStudio}"
-                                            SnapsToDevicePixels="True">
-                                        <Grid x:Name="SubMenu"
-                                              Margin="2"
-                                              Grid.IsSharedSizeScope="True">
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        <Grid x:Name="SubMenu" Grid.IsSharedSizeScope="True">
+                                            <Grid.Clip>
+                                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                                    <Binding ElementName="SubMenu" Path="ActualWidth" />
+                                                    <Binding ElementName="SubMenu" Path="ActualHeight" />
+                                                    <Binding ElementName="SubMenuBorder" Path="CornerRadius" />
+                                                    <Binding ElementName="SubMenuBorder" Path="BorderThickness" />
+                                                    <Binding ElementName="SubMenuBorder" Path="Padding" />
+                                                </MultiBinding>
+                                            </Grid.Clip>
                                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                                         </Grid>
                                     </Border>
@@ -121,7 +141,7 @@
                                             Background="{DynamicResource MahApps.Brushes.SubmenuItem.Background}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.SubmenuItem.Background}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                            SnapsToDevicePixels="False" />
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
                             </Popup>
                         </Grid>
@@ -136,7 +156,7 @@
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="SubMenu" Property="Margin" Value="2 3 2 2" />
                             <Setter TargetName="SubMenuPopup" Property="Placement" Value="Bottom" />
-                            <Setter TargetName="TransitionBorder" Property="Width" Value="{Binding ActualWidth, ElementName=Grid}" />
+                            <Setter TargetName="TransitionBorder" Property="Width" Value="{Binding ActualWidth, ElementName=ContentGrid}" />
                         </Trigger>
                         <Trigger Property="Role" Value="TopLevelItem">
                             <Setter Property="Padding" Value="6 2 6 2" />
