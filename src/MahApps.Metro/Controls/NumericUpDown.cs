@@ -1363,7 +1363,34 @@ namespace MahApps.Metro.Controls
                 }
             }
 
-            return newValue.ToString(culture);
+            return PlainValueString(newValue, culture);
+        }
+
+        /// <summary>
+        /// The lowest and the highest magnitude that reads better without an exponent. Past the upper
+        /// one a decimal format would drop digits, since a custom format rounds at the fifteenth
+        /// significant one; past the lower one the zeroes in front of the number take over.
+        /// </summary>
+        private const double SmallestPlainValue = 1e-15;
+
+        private const double LargestPlainValue = 1e15;
+
+        /// <summary>
+        /// Writes a value the way it would be typed, for as long as that reads better than an exponent.
+        /// Without this the framework decides, and it answers 5E-05 for a small number and every digit
+        /// a calculation left behind for the rest, neither of which belongs in a text box that was
+        /// never asked to format anything.
+        /// </summary>
+        private static string PlainValueString(double value, CultureInfo culture)
+        {
+            var magnitude = Math.Abs(value);
+
+            if (magnitude != 0 && (magnitude < SmallestPlainValue || magnitude >= LargestPlainValue))
+            {
+                return value.ToString(culture);
+            }
+
+            return value.ToString("0.############################", culture);
         }
 
         private static double FormattedValue(double newValue, string format, CultureInfo culture)
