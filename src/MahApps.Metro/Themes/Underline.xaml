@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="{x:Type mah:Underline}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
@@ -18,15 +19,24 @@
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
-                        <mah:ClipBorder Background="{TemplateBinding Background}"
-                                        BorderThickness="0"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="PART_UnderlineBorder" Path="CornerRadius" />
+                                    <Binding ElementName="PART_UnderlineBorder" Path="BorderThickness" />
+                                    <Binding ElementName="PART_UnderlineBorder" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
                             <ContentPresenter Margin="{TemplateBinding Padding}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               UseLayoutRounding="False" />
-                        </mah:ClipBorder>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

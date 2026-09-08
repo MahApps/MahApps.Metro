@@ -659,7 +659,7 @@
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.Button}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
-        <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="2" />
+        <Setter Property="mah:ControlsHelper.FocusBorderThickness" Value="1" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
     </Style>
 
