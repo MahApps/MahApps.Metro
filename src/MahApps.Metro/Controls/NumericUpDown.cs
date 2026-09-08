@@ -38,7 +38,7 @@ namespace MahApps.Metro.Controls
         private const int DefaultDelay = 500;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
-        private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
+        private const string RawRegexNumberString = @"[<Sign>]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
         private Regex? regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
@@ -1709,20 +1709,38 @@ namespace MahApps.Metro.Controls
             this.intervalValueSinceReset = 0;
         }
 
+        /// <summary>
+        /// The characters that count as a sign here: the ones the culture uses, and the ASCII hyphen
+        /// and plus on top of them. Several cultures sign a number with characters no keyboard has,
+        /// Norwegian with U+2212 for one, so what is typed has to be accepted as well.
+        /// </summary>
+        private string SignCharacters
+        {
+            get
+            {
+                var signs = "-+"
+                            + this.SpecificCultureInfo.NumberFormat.NegativeSign
+                            + this.SpecificCultureInfo.NumberFormat.PositiveSign;
+
+                return new string(signs.Distinct().ToArray());
+            }
+        }
+
+        private bool IsSign(string text)
+        {
+            return text.Length == 1 && this.SignCharacters.Contains(text[0]);
+        }
+
         private bool ValidateText(string text, out double convertedValue)
         {
             convertedValue = 0d;
 
-            if (text == this.SpecificCultureInfo.NumberFormat.PositiveSign
-                || text == this.SpecificCultureInfo.NumberFormat.NegativeSign)
+            if (this.IsSign(text))
             {
                 return true;
             }
 
-            if (text.Count(c => c == this.SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 2
-                || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 2
-                // || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1
-               )
+            if (text.Count(c => this.SignCharacters.Contains(c)) > 2)
             {
                 return false;
             }
@@ -1745,11 +1763,13 @@ namespace MahApps.Metro.Controls
                 return this.ConvertNumber(number, out convertedValue);
             }
 
-            if (number == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
-                || number == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
-                || number == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator
-                || number == (this.SpecificCultureInfo.NumberFormat.NegativeSign + this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
-                || number == (this.SpecificCultureInfo.NumberFormat.PositiveSign + this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+            // A decimal separator on its own is the start of a number typed without its leading zero,
+            // and so is one behind a sign.
+            var withoutSign = number.Length > 0 && this.IsSign(number.Substring(0, 1)) ? number.Substring(1) : number;
+
+            if (withoutSign == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
+                || withoutSign == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
+                || withoutSign == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator
                )
             {
                 return true;
@@ -1793,7 +1813,8 @@ namespace MahApps.Metro.Controls
 
             if (this.regexNumber is null)
             {
-                this.regexNumber = new Regex(RawRegexNumberString.Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+                this.regexNumber = new Regex(RawRegexNumberString.Replace("<Sign>", Regex.Escape(this.SignCharacters))
+                                                                 .Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
                                                                  .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),
                                              RegexOptions.Compiled);
             }
