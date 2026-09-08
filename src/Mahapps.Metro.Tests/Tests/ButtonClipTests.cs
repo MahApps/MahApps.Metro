@@ -86,6 +86,21 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [TestCaseSource(nameof(ClippedStyles))]
+        public void TheCornersOutsideTheRoundingShouldNotBeClickable(string styleKey, bool isToggleButton)
+        {
+            var button = this.ShowButton(styleKey, isToggleButton);
+            ControlsHelper.SetCornerRadius(button, new CornerRadius(20));
+            button.UpdateLayout();
+
+            // A rounded button should not answer to a click in the corner of its bounding box, which is
+            // why ClipBorder was put into these templates in the first place (#3876). A Border hit tests
+            // against the background it draws, so the rounding is kept without it.
+            Assert.That(button.InputHitTest(new Point(2, 2)), Is.Null, "the top left corner sits outside the rounding");
+            Assert.That(button.InputHitTest(new Point(button.ActualWidth - 2, button.ActualHeight - 2)), Is.Null, "and so does the bottom right one");
+            Assert.That(button.InputHitTest(new Point(button.ActualWidth / 2, button.ActualHeight / 2)), Is.Not.Null, "while the middle of the button answers as it should");
+        }
+
+        [TestCaseSource(nameof(ClippedStyles))]
         public void WithoutACornerRadiusTheClipShouldKeepTheWholeRectangle(string styleKey, bool isToggleButton)
         {
             var button = this.ShowButton(styleKey, isToggleButton);
