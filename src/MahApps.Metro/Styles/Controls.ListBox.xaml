@@ -24,16 +24,28 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ScrollViewer Padding="{TemplateBinding Padding}"
-                                      mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer="{TemplateBinding mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer}"
-                                      mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
-                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                                      Focusable="False"
-                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </ScrollViewer>
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="Border" Path="CornerRadius" />
+                                    <Binding ElementName="Border" Path="BorderThickness" />
+                                    <Binding ElementName="Border" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
+                            <ScrollViewer Padding="{TemplateBinding Padding}"
+                                          mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer="{TemplateBinding mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer}"
+                                          mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
+                                          CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                          Focusable="False"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>

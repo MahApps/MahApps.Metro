@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -68,6 +69,79 @@ namespace MahApps.Metro.Tests.Tests
             ControlsHelper.SetCornerRadius(item, new CornerRadius(12));
 
             return this.Show(item);
+        }
+
+        /// <summary>
+        /// The element the template of the list puts its clip on. It is reached through the visual tree
+        /// rather than by name, because every item in the list carries a grid of that name as well.
+        /// </summary>
+        private static FrameworkElement RootContent(Control list)
+        {
+            var root = VisualTreeHelper.GetChild(list, 0) as FrameworkElement;
+            Assert.That(root, Is.InstanceOf<Border>(), "the template of the list should start with a border");
+
+            var content = VisualTreeHelper.GetChild(root!, 0) as FrameworkElement;
+            Assert.That(content, Is.InstanceOf<Grid>(), "the border should carry the grid that clips what the list shows");
+
+            return content!;
+        }
+
+        /// <summary>
+        /// The list itself rounds its frame, and the items paint an opaque background right up against
+        /// it, so without a clip the first and the last item bite the corners out of the arc.
+        /// </summary>
+        private T ShowList<T>(T list, ResourceDictionary dictionary, string styleKey)
+            where T : ItemsControl
+        {
+            list.Width = 190;
+            list.Height = 120;
+            list.BorderThickness = new Thickness(1);
+            list.SetValue(FrameworkElement.StyleProperty, dictionary[styleKey]);
+            ControlsHelper.SetCornerRadius(list, new CornerRadius(8));
+
+            return this.Show(list);
+        }
+
+        [Test]
+        public void AListBoxShouldClipItsItemsToItsBorder()
+        {
+            var listBox = new ListBox();
+            listBox.Items.Add(new ListBoxItem { Content = "Ada Lovelace" });
+            listBox.Items.Add(new ListBoxItem { Content = "Grace Hopper" });
+            this.ShowList(listBox, this.listBoxDictionary!, "MahApps.Styles.ListBox");
+
+            var content = RootContent(listBox);
+
+            ClipAssert.CoversElement(content, "list box");
+            ClipAssert.CutsEveryCorner(content, "list box");
+        }
+
+        [Test]
+        public void AListViewShouldClipItsItemsToItsBorder()
+        {
+            var listView = new ListView();
+            listView.Items.Add(new ListViewItem { Content = "Ada Lovelace" });
+            listView.Items.Add(new ListViewItem { Content = "Grace Hopper" });
+            this.ShowList(listView, this.listViewDictionary!, "MahApps.Styles.ListView");
+
+            var content = RootContent(listView);
+
+            ClipAssert.CoversElement(content, "list view");
+            ClipAssert.CutsEveryCorner(content, "list view");
+        }
+
+        [Test]
+        public void ATreeViewShouldClipItsItemsToItsBorder()
+        {
+            var treeView = new TreeView();
+            treeView.Items.Add(new TreeViewItem { Header = "Ada Lovelace" });
+            treeView.Items.Add(new TreeViewItem { Header = "Grace Hopper" });
+            this.ShowList(treeView, this.treeViewDictionary!, "MahApps.Styles.TreeView");
+
+            var content = RootContent(treeView);
+
+            ClipAssert.CoversElement(content, "tree view");
+            ClipAssert.CutsEveryCorner(content, "tree view");
         }
 
         [Test]
