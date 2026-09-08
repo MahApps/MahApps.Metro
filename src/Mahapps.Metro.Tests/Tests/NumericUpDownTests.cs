@@ -746,6 +746,32 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
+        /// GH-4560: what a runtime accepts for a culture whose negative sign is neither the hyphen nor
+        /// U+2212 differs between frameworks, so this pins the sign down with one no parser would take
+        /// on its own.
+        /// </summary>
+        [Test]
+        public void ShouldTranslateTheHyphenIntoWhateverSignTheCultureHas()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            var culture = (CultureInfo)CultureInfo.GetCultureInfo("nb-NO").Clone();
+            culture.NumberFormat.NegativeSign = "¬";
+
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MinimumProperty, -1000d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MaximumProperty, 1000d);
+            this.window.TheNUD.Culture = culture;
+
+            TypeText(textBox!, "-12");
+
+            Assert.That(textBox!.Text, Is.EqualTo("-12"));
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(-12d), "the hyphen has to reach the parser as the sign the culture uses");
+        }
+
+        /// <summary>
         /// GH-4560: the sign of such a culture is not on any keyboard, so what is typed is the hyphen.
         /// </summary>
         [Test]

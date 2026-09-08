@@ -1731,6 +1731,33 @@ namespace MahApps.Metro.Controls
             return text.Length == 1 && this.SignCharacters.Contains(text[0]);
         }
 
+        /// <summary>
+        /// Puts the sign of the culture in front of a number that carries the hyphen or the plus. What
+        /// a runtime accepts for a culture whose sign is neither of those differs between frameworks,
+        /// so the text is made to match the culture before it is parsed rather than after.
+        /// </summary>
+        private string WithSignOfCulture(string text)
+        {
+            if (text.Length == 0)
+            {
+                return text;
+            }
+
+            var format = this.SpecificCultureInfo.NumberFormat;
+
+            if (text[0] == '-' && format.NegativeSign != "-")
+            {
+                return format.NegativeSign + text.Substring(1);
+            }
+
+            if (text[0] == '+' && format.PositiveSign != "+")
+            {
+                return format.PositiveSign + text.Substring(1);
+            }
+
+            return text;
+        }
+
         private bool ValidateText(string text, out double convertedValue)
         {
             convertedValue = 0d;
@@ -1755,7 +1782,7 @@ namespace MahApps.Metro.Controls
                         || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
                         || this.ParsingNumberStyle == NumberStyles.HexNumber;
 
-            var number = this.TryGetNumberFromText(text, isHex);
+            var number = this.WithSignOfCulture(this.TryGetNumberFromText(text, isHex));
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
