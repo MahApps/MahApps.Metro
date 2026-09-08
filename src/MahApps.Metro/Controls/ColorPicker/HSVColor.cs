@@ -133,7 +133,10 @@ namespace MahApps.Metro.Controls
 
         public bool Equals(HSVColor other)
         {
-            return this.Hue.IsCloseTo(other.Hue) && this.A.IsCloseTo(other.A) && this.Saturation.IsCloseTo(other.Saturation) && this.Value.IsCloseTo(other.Value);
+            return DoubleUtil.AreClose(this.Hue, other.Hue)
+                   && DoubleUtil.AreClose(this.A, other.A)
+                   && DoubleUtil.AreClose(this.Saturation, other.Saturation)
+                   && DoubleUtil.AreClose(this.Value, other.Value);
         }
     }
 }

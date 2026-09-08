@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1295,7 +1295,7 @@ namespace MahApps.Metro.Controls
             {
                 var textRepresentsValue = newValue.HasValue
                                           && this.ValidateText(this.valueTextBox.Text, out var textValue)
-                                          && FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo).IsCloseTo(newValue.Value);
+                                          && DoubleUtil.AreClose(FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo), newValue.Value);
 
                 if (!textRepresentsValue)
                 {

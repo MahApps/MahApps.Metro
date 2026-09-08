@@ -12,6 +12,7 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// A few very useful extension methods
     /// </summary>
+    [Obsolete("These extensions were written for ClipBorder, which is obsolete as well, and nothing else in the library uses them any more. DoubleUtil.AreClose covers the one comparison that was of general use.")]
     public static class Utils
     {
         #region Double
