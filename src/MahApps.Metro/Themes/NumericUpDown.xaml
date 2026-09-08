@@ -81,7 +81,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.NumericUpDown" TargetType="{x:Type mah:NumericUpDown}">
+    <Style x:Key="MahApps.Styles.NumericUpDown" TargetType="{x:Type mah:NumericUpDownBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="{DynamicResource NumericUpDownBorderThickness}" />
@@ -122,7 +122,7 @@
         <Setter Property="SpinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.NumericUpDown.Spin}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type mah:NumericUpDown}">
+                <ControlTemplate TargetType="{x:Type mah:NumericUpDownBase}">
                     <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
@@ -348,7 +348,7 @@
 
     <Style x:Key="MahApps.Styles.NumericUpDown.Fluent"
            BasedOn="{StaticResource MahApps.Styles.NumericUpDown}"
-           TargetType="{x:Type mah:NumericUpDown}">
+           TargetType="{x:Type mah:NumericUpDownBase}">
         <Style.Resources>
             <Thickness x:Key="NumericUpDownSelectedBorderThickness">2,2,2,2</Thickness>
             <Thickness x:Key="NumericUpDownSpinButtonRightBorderThickness">1,0,0,0</Thickness>

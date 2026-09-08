@@ -34,23 +34,23 @@ namespace MahApps.Metro.Controls
         private const string PART_NumericUp = "PART_NumericUp";
         private const string PART_TextBox = "PART_TextBox";
         private const string PART_ContentHost = "PART_ContentHost";
-        private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
 
-        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
-        private const string RawRegexNumberString = @"[<Sign>]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
-        private Regex? regexNumber = null;
-        private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
-        private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
+        private protected static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
+        private protected const string RawRegexNumberString = @"[<Sign>]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
+        private protected Regex? regexNumber = null;
+        private protected static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
+        private protected static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
         private Lazy<PropertyInfo?> handlesMouseWheelScrolling = new Lazy<PropertyInfo?>();
-        private double internalIntervalMultiplierForCalculation = DefaultInterval;
-        private double internalLargeChange = DefaultInterval * 100;
-        private double intervalValueSinceReset;
-        private bool manualChange;
-        private RepeatButton? repeatDown;
-        private RepeatButton? repeatUp;
-        private TextBox? valueTextBox;
+        /// <summary>Whether the value is being changed by someone typing rather than from the outside.</summary>
+        protected bool manualChange;
+        /// <summary>The button that steps the value down.</summary>
+        protected RepeatButton? repeatDown;
+        /// <summary>The button that steps the value up.</summary>
+        protected RepeatButton? repeatUp;
+        /// <summary>The text box the value is shown in, once the template has been applied.</summary>
+        protected TextBox? valueTextBox;
         private ScrollViewer? scrollViewer;
 
         /// <summary>Identifies the <see cref="ValueIncremented"/> routed event.</summary>
@@ -138,23 +138,6 @@ namespace MahApps.Metro.Controls
             remove => this.RemoveHandler(MinimumReachedEvent, value);
         }
 
-        /// <summary>Identifies the <see cref="ValueChanged"/> routed event.</summary>
-        public static readonly RoutedEvent ValueChangedEvent
-            = EventManager.RegisterRoutedEvent(nameof(ValueChanged),
-                                               RoutingStrategy.Bubble,
-                                               typeof(RoutedPropertyChangedEventHandler<double?>),
-                                               typeof(NumericUpDownBase));
-
-        /// <summary>
-        /// Add / Remove ValueChangedEvent handler
-        /// Event which will be fired from this NumericUpDownBase when its value has been changed.
-        /// </summary>
-        public event RoutedPropertyChangedEventHandler<double?> ValueChanged
-        {
-            add => this.AddHandler(ValueChangedEvent, value);
-            remove => this.RemoveHandler(ValueChangedEvent, value);
-        }
-
         /// <summary>Identifies the <see cref="Delay"/> dependency property.</summary>
         public static readonly DependencyProperty DelayProperty
             = DependencyProperty.Register(nameof(Delay),
@@ -174,7 +157,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// Gets or sets the amount of time, in milliseconds, the NumericUpDownBase waits while the up/down button is pressed
-        /// before it starts increasing/decreasing the <see cref="Value" /> for the specified <see cref="Interval" /> .
+        /// before it starts increasing/decreasing the value by the interval.
         /// The value must be non-negative.
         /// </summary>
         [Bindable(true)]
@@ -217,8 +200,8 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the value to be added to or subtracted from <see cref="Value" /> remains
-        /// always <see cref="Interval" /> or if it will increase faster after pressing the up/down button/arrow some time.
+        /// Gets or sets a value indicating whether the amount added to or subtracted from the value stays
+        /// at the interval or grows the longer the up/down button or arrow key is held.
         /// </summary>
         [Category("Common")]
         [DefaultValue(true)]
@@ -267,9 +250,9 @@ namespace MahApps.Metro.Controls
         {
             if (e.OldValue != e.NewValue && d is NumericUpDownBase numericUpDown)
             {
-                if (numericUpDown.valueTextBox != null && numericUpDown.Value.HasValue)
+                if (numericUpDown.valueTextBox != null && numericUpDown.HasValue)
                 {
-                    numericUpDown.InternalSetText(numericUpDown.Value);
+                    numericUpDown.RefreshTextFromValue();
                 }
 
                 if (e.NewValue is string format && !string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
@@ -287,7 +270,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets the formatting for the displaying <see cref="Value" />
+        /// Gets or sets the formatting for the displayed value
         /// </summary>
         /// <remarks>
         /// <see href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings"></see>
@@ -374,7 +357,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// Gets or sets a value indicating whether the displayed text is kept in sync with the
-        /// <see cref="Value"/> while the control is being edited (has keyboard focus), when the value
+        /// value while the control is being edited (has keyboard focus), when the value
         /// is changed from an external source such as a binding. When set to <see langword="false"/>
         /// (the default), the current behavior is kept: the text is only refreshed from the value once
         /// the control loses focus.
@@ -385,208 +368,6 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(SyncTextWithValueWhileEditingProperty);
             set => this.SetValue(SyncTextWithValueWhileEditingProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
-        public static readonly DependencyProperty ValueProperty
-            = DependencyProperty.Register(nameof(Value),
-                                          typeof(double?),
-                                          typeof(NumericUpDownBase),
-                                          new FrameworkPropertyMetadata(default(double?),
-                                                                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                                                                        OnValuePropertyChanged,
-                                                                        (o, value) => CoerceValue(o, value).value));
-
-        private static void OnValuePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue)
-            {
-                (dependencyObject as NumericUpDownBase)?.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
-            }
-        }
-
-        [MustUseReturnValue]
-        private static (double? value, bool isValid) CoerceValue(DependencyObject d, object? baseValue)
-        {
-            var numericUpDown = (NumericUpDownBase)d;
-            if (baseValue is null)
-            {
-                return (numericUpDown.DefaultValue, false);
-            }
-
-            var value = ((double?)baseValue).Value;
-
-            if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
-            {
-                value = Math.Truncate(value);
-            }
-
-            if (value < numericUpDown.Minimum)
-            {
-                return (numericUpDown.Minimum, false);
-            }
-
-            if (value > numericUpDown.Maximum)
-            {
-                return (numericUpDown.Maximum, false);
-            }
-
-            return (value, true);
-        }
-
-        /// <summary>
-        /// Gets or sets the value of the NumericUpDownBase.
-        /// </summary>
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(null)]
-        public double? Value
-        {
-            get => (double?)this.GetValue(ValueProperty);
-            set => this.SetValue(ValueProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="DefaultValue"/> dependency property.</summary>
-        public static readonly DependencyProperty DefaultValueProperty
-            = DependencyProperty.Register(nameof(DefaultValue),
-                                          typeof(double?),
-                                          typeof(NumericUpDownBase),
-                                          new PropertyMetadata(null, OnDefaultValuePropertyChanged, CoerceDefaultValue));
-
-        private static void OnDefaultValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDownBase)d;
-
-            if (!numericUpDown.Value.HasValue && numericUpDown.DefaultValue.HasValue)
-            {
-                numericUpDown.SetValueTo(numericUpDown.DefaultValue.Value);
-            }
-        }
-
-        [MustUseReturnValue]
-        private static object? CoerceDefaultValue(DependencyObject d, object? baseValue)
-        {
-            if (baseValue is double val)
-            {
-                var minimum = ((NumericUpDownBase)d).Minimum;
-                var maximum = ((NumericUpDownBase)d).Maximum;
-
-                if (val < minimum)
-                {
-                    return minimum;
-                }
-                else if (val > maximum)
-                {
-                    return maximum;
-                }
-            }
-
-            return baseValue;
-        }
-
-        /// <summary>
-        /// Gets or sets the default value of the NumericUpDownBase which will be used if the <see cref="Value"/> is <see langword="null"/>.
-        /// </summary>
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(null)]
-        public double? DefaultValue
-        {
-            get => (double?)this.GetValue(DefaultValueProperty);
-            set => this.SetValue(DefaultValueProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
-        public static readonly DependencyProperty MinimumProperty
-            = DependencyProperty.Register(nameof(Minimum),
-                                          typeof(double),
-                                          typeof(NumericUpDownBase),
-                                          new FrameworkPropertyMetadata(double.MinValue, OnMinimumPropertyChanged));
-
-        private static void OnMinimumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDownBase)d;
-
-            numericUpDown.CoerceValue(MaximumProperty);
-            numericUpDown.CoerceValue(ValueProperty);
-            numericUpDown.CoerceValue(DefaultValueProperty);
-            numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
-            numericUpDown.EnableDisableUpDown();
-        }
-
-        /// <summary>
-        /// Minimum restricts the minimum value of the Value property.
-        /// </summary>
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(double.MinValue)]
-        public double Minimum
-        {
-            get => (double)this.GetValue(MinimumProperty);
-            set => this.SetValue(MinimumProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
-        public static readonly DependencyProperty MaximumProperty
-            = DependencyProperty.Register(nameof(Maximum),
-                                          typeof(double),
-                                          typeof(NumericUpDownBase),
-                                          new FrameworkPropertyMetadata(double.MaxValue, OnMaximumPropertyChanged, CoerceMaximum));
-
-        private static void OnMaximumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDownBase)d;
-
-            numericUpDown.CoerceValue(ValueProperty);
-            numericUpDown.CoerceValue(DefaultValueProperty);
-            numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
-            numericUpDown.EnableDisableUpDown();
-        }
-
-#pragma warning disable WPF0024
-        [MustUseReturnValue]
-        private static object CoerceMaximum(DependencyObject d, object value)
-#pragma warning restore WPF0024
-        {
-            double minimum = ((NumericUpDownBase)d).Minimum;
-            double val = (double)value;
-            return val < minimum ? minimum : val;
-        }
-
-        /// <summary>
-        /// Maximum restricts the maximum value of the Value property.
-        /// </summary>
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(double.MaxValue)]
-        public double Maximum
-        {
-            get => (double)this.GetValue(MaximumProperty);
-            set => this.SetValue(MaximumProperty, value);
-        }
-
-        /// <summary>Identifies the <see cref="Interval"/> dependency property.</summary>
-        public static readonly DependencyProperty IntervalProperty
-            = DependencyProperty.Register(nameof(Interval),
-                                          typeof(double),
-                                          typeof(NumericUpDownBase),
-                                          new FrameworkPropertyMetadata(DefaultInterval, OnIntervalPropertyChanged));
-
-        private static void OnIntervalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as NumericUpDownBase)?.ResetInternal();
-        }
-
-        /// <summary>
-        /// Gets or sets the interval value for increasing/decreasing the <see cref="Value" /> .
-        /// </summary>
-        [Bindable(true)]
-        [Category("Behavior")]
-        [DefaultValue(DefaultInterval)]
-        public double Interval
-        {
-            get => (double)this.GetValue(IntervalProperty);
-            set => this.SetValue(IntervalProperty, value);
         }
 
         /// <summary>Identifies the <see cref="TrackMouseWheelWhenMouseOver"/> dependency property.</summary>
@@ -658,7 +439,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets a value indicating whether the up/down button of the control are visible.
         /// </summary>
         /// <remarks>
-        /// If the value is false then the <see cref="Value" /> of the control can be changed only if one of the following cases is satisfied:
+        /// If the value is false then the value of the control can be changed only if one of the following cases is satisfied:
         /// <list type="bullet">
         ///     <item>
         ///         <description><see cref="InterceptArrowKeys" /> is true.</description>
@@ -856,7 +637,7 @@ namespace MahApps.Metro.Controls
             if (e.NewValue != e.OldValue && d is NumericUpDownBase numericUpDown)
             {
                 numericUpDown.regexNumber = null;
-                numericUpDown.OnValueChanged(numericUpDown.Value, numericUpDown.Value);
+                numericUpDown.RefreshFromCurrentValue();
             }
         }
 
@@ -880,11 +661,11 @@ namespace MahApps.Metro.Controls
 
         private static void OnNumericInputModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue != e.NewValue && e.NewValue is NumericInput numericInput && d is NumericUpDownBase numericUpDown && numericUpDown.Value != null)
+            if (e.OldValue != e.NewValue && e.NewValue is NumericInput numericInput && d is NumericUpDownBase numericUpDown)
             {
                 if (!numericInput.HasFlag(NumericInput.Decimal))
                 {
-                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                    numericUpDown.TruncateValue();
                 }
             }
         }
@@ -932,11 +713,7 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
-                if (Math.Abs(numericUpDown.Interval) > 0)
-                {
-                    var value = numericUpDown.Value.GetValueOrDefault();
-                    numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
-                }
+                numericUpDown.SnapValueToInterval();
             }
         }
 
@@ -970,7 +747,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(ParsingNumberStyleProperty, value);
         }
 
-        private CultureInfo SpecificCultureInfo => this.Culture ?? this.Language.GetSpecificCulture();
+        private protected CultureInfo SpecificCultureInfo => this.Culture ?? this.Language.GetSpecificCulture();
 
         static NumericUpDownBase()
         {
@@ -1016,6 +793,40 @@ namespace MahApps.Metro.Controls
         ///     When overridden in a derived class, is invoked whenever application code or internal processes call
         ///     <see cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.
         /// </summary>
+        /// <summary>
+        /// What the control needs from the type it holds. Everything above this line describes how the
+        /// control looks and behaves and says nothing about numbers.
+        /// </summary>
+        protected abstract bool ValidateText(string text);
+
+        /// <summary>Takes what is in the text box and turns it into the value.</summary>
+        protected abstract void ChangeValueFromTextInput(string? text);
+
+        /// <summary>Steps the value up or down, faster the longer a button is held.</summary>
+        protected abstract void ChangeValueWithSpeedUp(bool toPositive);
+
+        /// <summary>Puts the speed up back to where it starts.</summary>
+        protected abstract void ResetSpeedUp();
+
+        /// <summary>Writes the value into the text box.</summary>
+        protected abstract void RefreshTextFromValue();
+
+        /// <summary>Called once the template is in place and the parts are known.</summary>
+        /// <summary>Runs the current value through again, after something around it changed.</summary>
+        protected abstract void RefreshFromCurrentValue();
+
+        /// <summary>Whether a value is set at all.</summary>
+        protected abstract bool HasValue { get; }
+
+        /// <summary>Drops everything behind the decimal separator, for a control that takes no decimals.</summary>
+        protected abstract void TruncateValue();
+
+        /// <summary>Rounds the value to the nearest multiple of the interval.</summary>
+        protected abstract void SnapValueToInterval();
+
+        /// <summary>Turns the up and down buttons on or off for where the value stands.</summary>
+        protected abstract void EnableDisableUpDown();
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -1053,7 +864,7 @@ namespace MahApps.Metro.Controls
             this.repeatUp.PreviewMouseUp += this.OnRepeatButtonPreviewMouseUp;
             this.repeatDown.PreviewMouseUp += this.OnRepeatButtonPreviewMouseUp;
 
-            this.OnValueChanged(this.Value, this.Value);
+            this.RefreshFromCurrentValue();
 
             this.scrollViewer = null;
         }
@@ -1136,26 +947,6 @@ namespace MahApps.Metro.Controls
             // nothing here
         }
 
-        /// <summary>
-        /// This method is invoked when the Maximum property changes.
-        /// </summary>
-        /// <param name="oldMaximum">The old value of the Maximum property.</param>
-        /// <param name="newMaximum">The new value of the Maximum property.</param>
-        protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum)
-        {
-            // nothing here
-        }
-
-        /// <summary>
-        /// This method is invoked when the Minimum property changes.
-        /// </summary>
-        /// <param name="oldMinimum">The old value of the Minimum property.</param>
-        /// <param name="newMinimum">The new value of the Minimum property.</param>
-        protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum)
-        {
-            // nothing here
-        }
-
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
@@ -1221,242 +1012,12 @@ namespace MahApps.Metro.Controls
         {
             var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
-            var textIsValid = this.ValidateText(fullText, out _);
+            var textIsValid = this.ValidateText(fullText);
             // Only the text format decides here. A number that is out of range on its own is
             // still the beginning of an in-range one, so the keystroke must not be swallowed.
             // Coercion happens when the value is committed.
             e.Handled = !textIsValid;
             this.manualChange = !e.Handled;
-        }
-
-        /// <summary>
-        ///     Raises the <see cref="ValueChanged" /> routed event.
-        /// </summary>
-        /// <param name="oldValue">
-        ///     Old value of the <see cref="Value" /> property
-        /// </param>
-        /// <param name="newValue">
-        ///     New value of the <see cref="Value" /> property
-        /// </param>
-        protected virtual void OnValueChanged(double? oldValue, double? newValue)
-        {
-            if (!this.manualChange)
-            {
-                if (!newValue.HasValue)
-                {
-                    if (this.valueTextBox != null)
-                    {
-                        this.valueTextBox.Text = null;
-                    }
-
-                    this.EnableDisableUpDown();
-
-                    if (oldValue != newValue)
-                    {
-                        this.RaiseEvent(new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent));
-                    }
-
-                    return;
-                }
-
-                this.repeatUp?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.TrueBox);
-                this.repeatDown?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.TrueBox);
-
-                if (newValue <= this.Minimum)
-                {
-                    this.repeatDown?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.FalseBox);
-
-                    this.ResetInternal();
-
-                    if (this.IsLoaded)
-                    {
-                        this.RaiseEvent(new RoutedEventArgs(MinimumReachedEvent));
-                    }
-                }
-
-                if (newValue >= this.Maximum)
-                {
-                    this.repeatUp?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.FalseBox);
-
-                    this.ResetInternal();
-
-                    if (this.IsLoaded)
-                    {
-                        this.RaiseEvent(new RoutedEventArgs(MaximumReachedEvent));
-                    }
-                }
-
-                if (this.valueTextBox != null)
-                {
-                    this.InternalSetText(newValue);
-                }
-            }
-            else if (this.SyncTextWithValueWhileEditing && this.valueTextBox != null)
-            {
-                var textRepresentsValue = newValue.HasValue
-                                          && this.ValidateText(this.valueTextBox.Text, out var textValue)
-                                          && DoubleUtil.AreClose(FormattedValue(textValue, this.StringFormat, this.SpecificCultureInfo), newValue.Value);
-
-                if (!textRepresentsValue)
-                {
-                    this.InternalSetText(newValue);
-
-                    if (this.valueTextBox.IsKeyboardFocused)
-                    {
-                        this.valueTextBox.SelectAll();
-                    }
-                }
-            }
-
-            this.EnableDisableUpDown();
-
-            if (oldValue != newValue)
-            {
-                this.RaiseEvent(new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent));
-            }
-        }
-
-        private void InternalSetText(double? newValue)
-        {
-            if (!newValue.HasValue)
-            {
-                if (this.valueTextBox is not null)
-                {
-                    this.valueTextBox.Text = null;
-                }
-
-                return;
-            }
-
-            if (this.valueTextBox is not null)
-            {
-                this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
-            }
-
-            if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
-            {
-                var textLength = this.valueTextBox?.Text?.Length ?? 0;
-                this.SetValue(TextBoxHelper.TextLengthPropertyKey, textLength);
-            }
-        }
-
-        private static string? FormattedValueString(double newValue, string format, CultureInfo culture)
-        {
-            format = format.Replace("{}", string.Empty);
-            if (!string.IsNullOrWhiteSpace(format))
-            {
-                if (TryFormatHexadecimal(newValue, format, culture, out var hexValue))
-                {
-                    return hexValue;
-                }
-                else
-                {
-                    var match = RegexStringFormat.Match(format);
-                    if (match.Success)
-                    {
-                        // we have a format template such as "{0:N0}"
-                        return string.Format(culture, format, newValue);
-                    }
-
-                    // we have a format such as "N0"
-                    return newValue.ToString(format, culture);
-                }
-            }
-
-            return PlainValueString(newValue, culture);
-        }
-
-        /// <summary>
-        /// The lowest and the highest magnitude that reads better without an exponent. Past the upper
-        /// one a decimal format would drop digits, since a custom format rounds at the fifteenth
-        /// significant one; past the lower one the zeroes in front of the number take over.
-        /// </summary>
-        private const double SmallestPlainValue = 1e-15;
-
-        private const double LargestPlainValue = 1e15;
-
-        /// <summary>
-        /// Writes a value the way it would be typed, for as long as that reads better than an exponent.
-        /// Without this the framework decides, and it answers 5E-05 for a small number and every digit
-        /// a calculation left behind for the rest, neither of which belongs in a text box that was
-        /// never asked to format anything.
-        /// </summary>
-        private static string PlainValueString(double value, CultureInfo culture)
-        {
-            var magnitude = Math.Abs(value);
-
-            if (magnitude != 0 && (magnitude < SmallestPlainValue || magnitude >= LargestPlainValue))
-            {
-                return value.ToString(culture);
-            }
-
-            return value.ToString("0.############################", culture);
-        }
-
-        private static double FormattedValue(double newValue, string format, CultureInfo culture)
-        {
-            format = format.Replace("{}", string.Empty);
-            if (!string.IsNullOrWhiteSpace(format))
-            {
-                if (!TryFormatHexadecimal(newValue, format, culture, out _))
-                {
-                    var match = RegexStringFormat.Match(format);
-                    if (match.Success)
-                    {
-                        // we have a format template such as "{0:N0}"
-                        return ConvertStringFormatValue(newValue, match.Groups["format"].Value);
-                    }
-
-                    // we have a format such as "N0"
-                    return ConvertStringFormatValue(newValue, format);
-                }
-            }
-
-            return newValue;
-        }
-
-        private static double ConvertStringFormatValue(double value, string format)
-        {
-            if (format.ToUpperInvariant().Contains("P") || format.Contains("%"))
-            {
-                value /= 100d;
-            }
-            else if (format.Contains("‰"))
-            {
-                value /= 1000d;
-            }
-
-            return value;
-        }
-
-        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, [NotNullWhen(true)] out string? output)
-        {
-            var match = RegexStringFormatHexadecimal.Match(format);
-            if (match.Success)
-            {
-                // HEX DOES SUPPORT INTEGRAL TYPES ONLY. Inside the int range the operand stays an
-                // int, so negative values keep their 32 bit form (-1 renders as "ffffffff").
-                // Outside it, the cast to int saturates, which rendered 3e9 as 7FFFFFFF. A value
-                // beyond the long range still saturates, there is no integral type left for it.
-                var hexOperand = newValue >= int.MinValue && newValue <= int.MaxValue
-                                     ? (object)(int)newValue
-                                     : (long)newValue;
-
-                if (match.Groups["simpleHEX"].Success)
-                {
-                    output = ((IFormattable)hexOperand).ToString(match.Groups["simpleHEX"].Value, culture);
-                    return true;
-                }
-
-                if (match.Groups["complexHEX"].Success)
-                {
-                    output = string.Format(culture, match.Groups["complexHEX"].Value, hexOperand);
-                    return true;
-                }
-            }
-
-            output = null;
-            return false;
         }
 
         private ScrollViewer? TryFindScrollViewer()
@@ -1475,91 +1036,6 @@ namespace MahApps.Metro.Controls
             }
 
             return this.scrollViewer;
-        }
-
-        private void ChangeValueWithSpeedUp(bool toPositive)
-        {
-            if (this.IsReadOnly)
-            {
-                return;
-            }
-
-            double direction = toPositive ? 1 : -1;
-
-            if (this.Speedup)
-            {
-                double d = this.Interval * this.internalLargeChange;
-                if ((this.intervalValueSinceReset += this.Interval * this.internalIntervalMultiplierForCalculation) > d)
-                {
-                    this.internalLargeChange *= 10;
-                    this.internalIntervalMultiplierForCalculation *= 10;
-                }
-
-                this.ChangeValueInternal(direction * this.internalIntervalMultiplierForCalculation);
-            }
-            else
-            {
-                this.ChangeValueInternal(direction * this.Interval);
-            }
-        }
-
-        private void ChangeValueInternal(double interval)
-        {
-            if (this.IsReadOnly)
-            {
-                return;
-            }
-
-            this.manualChange = false;
-
-            NumericUpDownChangedRoutedEventArgs routedEvent = interval > 0 ? new NumericUpDownChangedRoutedEventArgs(ValueIncrementedEvent, interval) : new NumericUpDownChangedRoutedEventArgs(ValueDecrementedEvent, interval);
-
-            this.RaiseEvent(routedEvent);
-
-            if (!routedEvent.Handled)
-            {
-                this.ChangeValueBy(routedEvent.Interval);
-
-                this.InternalSetText(this.Value);
-
-                if (this.valueTextBox is not null)
-                {
-                    this.valueTextBox.CaretIndex = this.valueTextBox.Text.Length;
-                }
-            }
-        }
-
-        private void ChangeValueBy(double difference)
-        {
-            var newValue = this.Value.GetValueOrDefault() + difference;
-            this.SetValueTo(newValue);
-        }
-
-        private void SetValueTo(double newValue)
-        {
-            var value = newValue;
-
-            if (this.SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
-            {
-                value = Math.Round(newValue / this.Interval) * this.Interval;
-            }
-
-            if (value > this.Maximum)
-            {
-                value = this.Maximum;
-            }
-            else if (value < this.Minimum)
-            {
-                value = this.Minimum;
-            }
-
-            this.SetCurrentValue(ValueProperty, CoerceValue(this, value).value);
-        }
-
-        private void EnableDisableUpDown()
-        {
-            this.repeatUp?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.Box(this.Value is null || this.Value < this.Maximum));
-            this.repeatDown?.SetCurrentValue(RepeatButton.IsEnabledProperty, BooleanBoxes.Box(this.Value is null || this.Value > this.Minimum));
         }
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
@@ -1640,7 +1116,7 @@ namespace MahApps.Metro.Controls
             {
                 this.manualChange = false;
                 this.valueTextBox.TextChanged -= this.OnTextChanged;
-                this.InternalSetText(this.Value);
+                this.RefreshTextFromValue();
                 this.valueTextBox.TextChanged += this.OnTextChanged;
             }
         }
@@ -1649,54 +1125,6 @@ namespace MahApps.Metro.Controls
         {
             var text = ((TextBox)sender).Text;
             this.ChangeValueFromTextInput(text);
-        }
-
-        private void ChangeValueFromTextInput(string text)
-        {
-            if (!this.InterceptManualEnter)
-            {
-                return;
-            }
-
-            var oldValue = this.Value;
-
-            if (string.IsNullOrEmpty(text))
-            {
-                if (this.DefaultValue.HasValue)
-                {
-                    this.SetValueTo(this.DefaultValue.Value);
-                    if (!this.manualChange)
-                    {
-                        this.InternalSetText(this.DefaultValue.Value);
-                    }
-                }
-                else
-                {
-                    this.SetCurrentValue(ValueProperty, null);
-                }
-            }
-            else if (this.manualChange)
-            {
-                if (this.ValidateText(text, out var convertedValue))
-                {
-                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
-                    this.SetValueTo(convertedValue);
-                }
-                else if (this.DefaultValue.HasValue)
-                {
-                    this.SetValueTo(this.DefaultValue.Value);
-                    this.InternalSetText(oldValue);
-                }
-                else
-                {
-                    this.SetCurrentValue(ValueProperty, null);
-                }
-            }
-
-            // No OnValueChanged call here: setting ValueProperty above already ran the property
-            // changed callback, which raises ValueChanged. Calling it again reported every
-            // change to the consumer twice.
-            this.manualChange = false;
         }
 
         private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
@@ -1714,7 +1142,7 @@ namespace MahApps.Metro.Controls
             var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
 
             string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
-            if (!this.ValidateText(newText, out _))
+            if (!this.ValidateText(newText))
             {
                 e.CancelCommand();
             }
@@ -1724,157 +1152,16 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ResetInternal()
+        /// <summary>Puts the speed up back to where it starts, unless the control is read only.</summary>
+        protected void ResetInternal()
         {
             if (this.IsReadOnly)
             {
                 return;
             }
 
-            this.internalLargeChange = 100 * this.Interval;
-            this.internalIntervalMultiplierForCalculation = this.Interval;
-            this.intervalValueSinceReset = 0;
+            this.ResetSpeedUp();
         }
 
-        /// <summary>
-        /// The characters that count as a sign here: the ones the culture uses, and the ASCII hyphen
-        /// and plus on top of them. Several cultures sign a number with characters no keyboard has,
-        /// Norwegian with U+2212 for one, so what is typed has to be accepted as well.
-        /// </summary>
-        private string SignCharacters
-        {
-            get
-            {
-                var signs = "-+"
-                            + this.SpecificCultureInfo.NumberFormat.NegativeSign
-                            + this.SpecificCultureInfo.NumberFormat.PositiveSign;
-
-                return new string(signs.Distinct().ToArray());
-            }
-        }
-
-        private bool IsSign(string text)
-        {
-            return text.Length == 1 && this.SignCharacters.Contains(text[0]);
-        }
-
-        /// <summary>
-        /// Puts the sign of the culture in front of a number that carries the hyphen or the plus. What
-        /// a runtime accepts for a culture whose sign is neither of those differs between frameworks,
-        /// so the text is made to match the culture before it is parsed rather than after.
-        /// </summary>
-        private string WithSignOfCulture(string text)
-        {
-            if (text.Length == 0)
-            {
-                return text;
-            }
-
-            var format = this.SpecificCultureInfo.NumberFormat;
-
-            if (text[0] == '-' && format.NegativeSign != "-")
-            {
-                return format.NegativeSign + text.Substring(1);
-            }
-
-            if (text[0] == '+' && format.PositiveSign != "+")
-            {
-                return format.PositiveSign + text.Substring(1);
-            }
-
-            return text;
-        }
-
-        private bool ValidateText(string text, out double convertedValue)
-        {
-            convertedValue = 0d;
-
-            if (this.IsSign(text))
-            {
-                return true;
-            }
-
-            if (text.Count(c => this.SignCharacters.Contains(c)) > 2)
-            {
-                return false;
-            }
-
-            var isNumeric = this.NumericInputMode == NumericInput.Numbers
-                            || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
-                            || this.ParsingNumberStyle == NumberStyles.HexNumber
-                            || this.ParsingNumberStyle == NumberStyles.Integer
-                            || this.ParsingNumberStyle == NumberStyles.Number;
-
-            var isHex = this.NumericInputMode == NumericInput.Numbers
-                        || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
-                        || this.ParsingNumberStyle == NumberStyles.HexNumber;
-
-            var number = this.WithSignOfCulture(this.TryGetNumberFromText(text, isHex));
-
-            // If we are only accepting numbers then attempt to parse as an integer.
-            if (isNumeric)
-            {
-                return this.ConvertNumber(number, out convertedValue);
-            }
-
-            // A decimal separator on its own is the start of a number typed without its leading zero,
-            // and so is one behind a sign.
-            var withoutSign = number.Length > 0 && this.IsSign(number.Substring(0, 1)) ? number.Substring(1) : number;
-
-            if (withoutSign == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
-                || withoutSign == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
-                || withoutSign == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator
-               )
-            {
-                return true;
-            }
-
-            if (!double.TryParse(number, this.ParsingNumberStyle, this.SpecificCultureInfo, out convertedValue))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool ConvertNumber(string text, out double convertedValue)
-        {
-            if (text.Any(c => c == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator[0]
-                              || c == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator[0]
-                              || c == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator[0]))
-            {
-                convertedValue = 0d;
-                return false;
-            }
-
-            if (!long.TryParse(text, this.ParsingNumberStyle, this.SpecificCultureInfo, out var convertedInt))
-            {
-                convertedValue = convertedInt;
-                return false;
-            }
-
-            convertedValue = convertedInt;
-            return true;
-        }
-
-        private string TryGetNumberFromText(string text, bool isHex)
-        {
-            if (isHex)
-            {
-                var hexMatches = RegexHexadecimal.Matches(text);
-                return hexMatches.Count > 0 ? hexMatches[0].Value : text;
-            }
-
-            if (this.regexNumber is null)
-            {
-                this.regexNumber = new Regex(RawRegexNumberString.Replace("<Sign>", Regex.Escape(this.SignCharacters))
-                                                                 .Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
-                                                                 .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),
-                                             RegexOptions.Compiled);
-            }
-
-            var matches = this.regexNumber.Matches(text);
-            return matches.Count > 0 ? matches[0].Value : text;
-        }
     }
 }

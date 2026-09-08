@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,6 +13,9 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    // Minimum, Maximum and Interval are registered one level up, in a generic class, so their type
+    // reads as T here and the analyzer cannot tell that a NumericUpDown closes it as a double.
+#pragma warning disable WPF0012, WPF0014
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {
         private static Style? _defaultEditingElementStyle;
@@ -628,4 +631,5 @@ namespace MahApps.Metro.Controls
             base.RefreshCellContent(element, propertyName);
         }
     }
+#pragma warning restore WPF0012, WPF0014
 }
