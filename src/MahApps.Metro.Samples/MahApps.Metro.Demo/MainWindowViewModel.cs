@@ -335,29 +335,55 @@ namespace MetroDemo
             set => this.Set(ref this.nullableNumericUpDownValue, value);
         }
 
-        private decimal? decimalUpDownValue = 1234.56m;
+        private decimal decimalUpDownValue = 1234.56m;
 
-        public decimal? DecimalUpDownValue
+        public decimal DecimalUpDownValue
         {
             get => this.decimalUpDownValue;
             set => this.Set(ref this.decimalUpDownValue, value);
         }
 
-        private int? integerUpDownValue = 42;
+        private decimal? nullableDecimalUpDownValue = null;
 
-        public int? IntegerUpDownValue
+        public decimal? NullableDecimalUpDownValue
+        {
+            get => this.nullableDecimalUpDownValue;
+            set => this.Set(ref this.nullableDecimalUpDownValue, value);
+        }
+
+        private int integerUpDownValue = 42;
+
+        public int IntegerUpDownValue
         {
             get => this.integerUpDownValue;
             set => this.Set(ref this.integerUpDownValue, value);
         }
 
-        private long? longUpDownValue = 9007199254740993;
+        private int? nullableIntegerUpDownValue = null;
 
-        public long? LongUpDownValue
+        public int? NullableIntegerUpDownValue
+        {
+            get => this.nullableIntegerUpDownValue;
+            set => this.Set(ref this.nullableIntegerUpDownValue, value);
+        }
+
+        private long longUpDownValue = 9007199254740993;
+
+        public long LongUpDownValue
         {
             get => this.longUpDownValue;
             set => this.Set(ref this.longUpDownValue, value);
         }
+
+        private long? nullableLongUpDownValue = null;
+
+        public long? NullableLongUpDownValue
+        {
+            get => this.nullableLongUpDownValue;
+            set => this.Set(ref this.nullableLongUpDownValue, value);
+        }
+
+        public NumericUpDownSettings UpDownSettings { get; } = new NumericUpDownSettings();
 
         public ICommand EndOfScrollReachedCmdWithParameter { get; }
 

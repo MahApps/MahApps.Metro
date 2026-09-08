@@ -1,0 +1,511 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.NumericUpDownExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
+             xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+             xmlns:local="clr-namespace:MetroDemo"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
+             d:DesignHeight="800"
+             d:DesignWidth="1000"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+
+        <ObjectDataProvider x:Key="NumericInputValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type mah:NumericInput}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mah:NumericInput" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="DecimalPointCorrectionValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type mah:DecimalPointCorrectionMode}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mah:DecimalPointCorrectionMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="TextAlignmentValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type TextAlignment}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="TextAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="ParsingNumberStyleValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type globalization:NumberStyles}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="globalization:NumberStyles" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="ButtonsAlignmentValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type mah:ButtonsAlignment}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="mah:ButtonsAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!--
+            Every setting below is bound once, here, and reaches all four controls: the style targets
+            the shared base class, so one setter covers a double, a decimal, an int and a long.
+            Value, Minimum, Maximum, Interval and DefaultValue are not in here. Those live one level
+            down, where the type is known, so a style on the base class cannot see them and each
+            control carries its own. The range is held as a double and converted on the way in.
+        -->
+        <Style x:Key="DemoUpDownSettings"
+               BasedOn="{StaticResource MahApps.Styles.NumericUpDown}"
+               TargetType="{x:Type mah:NumericUpDownBase}">
+            <Setter Property="ButtonsAlignment" Value="{Binding UpDownSettings.ButtonsAlignment, Mode=OneWay}" />
+            <Setter Property="Culture" Value="{Binding UpDownSettings.Culture, Mode=OneWay}" />
+            <Setter Property="DecimalPointCorrection" Value="{Binding UpDownSettings.DecimalPointCorrection, Mode=OneWay}" />
+            <Setter Property="Delay" Value="{Binding UpDownSettings.Delay, Mode=OneWay}" />
+            <Setter Property="HideUpDownButtons" Value="{Binding UpDownSettings.HideUpDownButtons, Mode=OneWay}" />
+            <Setter Property="InterceptArrowKeys" Value="{Binding UpDownSettings.InterceptArrowKeys, Mode=OneWay}" />
+            <Setter Property="InterceptManualEnter" Value="{Binding UpDownSettings.InterceptManualEnter, Mode=OneWay}" />
+            <Setter Property="InterceptMouseWheel" Value="{Binding UpDownSettings.InterceptMouseWheel, Mode=OneWay}" />
+            <Setter Property="IsReadOnly" Value="{Binding UpDownSettings.IsReadOnly, Mode=OneWay}" />
+            <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+            <Setter Property="NumericInputMode" Value="{Binding UpDownSettings.NumericInputMode, Mode=OneWay}" />
+            <Setter Property="ParsingNumberStyle" Value="{Binding UpDownSettings.ParsingNumberStyle, Mode=OneWay}" />
+            <Setter Property="SnapToMultipleOfInterval" Value="{Binding UpDownSettings.SnapToMultipleOfInterval, Mode=OneWay}" />
+            <Setter Property="Speedup" Value="{Binding UpDownSettings.Speedup, Mode=OneWay}" />
+            <Setter Property="StringFormat" Value="{Binding UpDownSettings.StringFormat, Mode=OneWay}" />
+            <Setter Property="SwitchUpDownButtons" Value="{Binding UpDownSettings.SwitchUpDownButtons, Mode=OneWay}" />
+            <Setter Property="SyncTextWithValueWhileEditing" Value="{Binding UpDownSettings.SyncTextWithValueWhileEditing, Mode=OneWay}" />
+            <Setter Property="TextAlignment" Value="{Binding UpDownSettings.TextAlignment, Mode=OneWay}" />
+            <Setter Property="TrackMouseWheelWhenMouseOver" Value="{Binding UpDownSettings.TrackMouseWheelWhenMouseOver, Mode=OneWay}" />
+            <Setter Property="UpDownButtonsFocusable" Value="{Binding UpDownSettings.UpDownButtonsFocusable, Mode=OneWay}" />
+            <Setter Property="UpDownButtonsWidth" Value="{Binding UpDownSettings.UpDownButtonsWidth, Mode=OneWay}" />
+            <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="{Binding UpDownSettings.ClearTextButton, Mode=OneWay}" />
+            <Setter Property="mah:TextBoxHelper.Watermark" Value="{Binding UpDownSettings.Watermark, Mode=OneWay}" />
+            <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="{Binding UpDownSettings.WatermarkAlignment, Mode=OneWay}" />
+        </Style>
+
+        <!--
+            The same settings again, on top of the Fluent style, because a style can only be based on
+            one other. This is the one the nullable examples use.
+        -->
+        <Style x:Key="DemoUpDownSettings.Fluent"
+               BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Fluent}"
+               TargetType="{x:Type mah:NumericUpDownBase}">
+            <Setter Property="ButtonsAlignment" Value="{Binding UpDownSettings.ButtonsAlignment, Mode=OneWay}" />
+            <Setter Property="Culture" Value="{Binding UpDownSettings.Culture, Mode=OneWay}" />
+            <Setter Property="DecimalPointCorrection" Value="{Binding UpDownSettings.DecimalPointCorrection, Mode=OneWay}" />
+            <Setter Property="Delay" Value="{Binding UpDownSettings.Delay, Mode=OneWay}" />
+            <Setter Property="HideUpDownButtons" Value="{Binding UpDownSettings.HideUpDownButtons, Mode=OneWay}" />
+            <Setter Property="InterceptArrowKeys" Value="{Binding UpDownSettings.InterceptArrowKeys, Mode=OneWay}" />
+            <Setter Property="InterceptManualEnter" Value="{Binding UpDownSettings.InterceptManualEnter, Mode=OneWay}" />
+            <Setter Property="InterceptMouseWheel" Value="{Binding UpDownSettings.InterceptMouseWheel, Mode=OneWay}" />
+            <Setter Property="IsReadOnly" Value="{Binding UpDownSettings.IsReadOnly, Mode=OneWay}" />
+            <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+            <Setter Property="NumericInputMode" Value="{Binding UpDownSettings.NumericInputMode, Mode=OneWay}" />
+            <Setter Property="ParsingNumberStyle" Value="{Binding UpDownSettings.ParsingNumberStyle, Mode=OneWay}" />
+            <Setter Property="SnapToMultipleOfInterval" Value="{Binding UpDownSettings.SnapToMultipleOfInterval, Mode=OneWay}" />
+            <Setter Property="Speedup" Value="{Binding UpDownSettings.Speedup, Mode=OneWay}" />
+            <Setter Property="StringFormat" Value="{Binding UpDownSettings.StringFormat, Mode=OneWay}" />
+            <Setter Property="SwitchUpDownButtons" Value="{Binding UpDownSettings.SwitchUpDownButtons, Mode=OneWay}" />
+            <Setter Property="SyncTextWithValueWhileEditing" Value="{Binding UpDownSettings.SyncTextWithValueWhileEditing, Mode=OneWay}" />
+            <Setter Property="TextAlignment" Value="{Binding UpDownSettings.TextAlignment, Mode=OneWay}" />
+            <Setter Property="TrackMouseWheelWhenMouseOver" Value="{Binding UpDownSettings.TrackMouseWheelWhenMouseOver, Mode=OneWay}" />
+            <Setter Property="UpDownButtonsFocusable" Value="{Binding UpDownSettings.UpDownButtonsFocusable, Mode=OneWay}" />
+            <Setter Property="UpDownButtonsWidth" Value="{Binding UpDownSettings.UpDownButtonsWidth, Mode=OneWay}" />
+            <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="{Binding UpDownSettings.ClearTextButton, Mode=OneWay}" />
+            <Setter Property="mah:TextBoxHelper.Watermark" Value="{Binding UpDownSettings.Watermark, Mode=OneWay}" />
+            <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="{Binding UpDownSettings.WatermarkAlignment, Mode=OneWay}" />
+        </Style>
+
+        <Style x:Key="StoredValueBox" TargetType="{x:Type TextBox}">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+        </Style>
+
+        <Style x:Key="TypeCaption" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 0 0 4" />
+            <Setter Property="Opacity" Value="0.8" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Margin="4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="260" />
+            <ColumnDefinition Width="*" MinWidth="420" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0"
+                  Margin="4 2"
+                  Grid.IsSharedSizeScope="True"
+                  Header="Settings for all of them"
+                  UseLayoutRounding="True">
+            <GroupBox.Resources>
+                <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
+                <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="mah:ToggleSwitch">
+                    <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+                    <Setter Property="MinHeight" Value="1" />
+                </Style>
+                <GridLength x:Key="ToggleSwitchPreContentMargin">2</GridLength>
+                <GridLength x:Key="ToggleSwitchPostContentMargin">2</GridLength>
+            </GroupBox.Resources>
+
+            <StackPanel>
+                <mah:MetroHeader Header="Limit the range">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.LimitRange, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Minimum">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       IsEnabled="{Binding UpDownSettings.LimitRange}"
+                                       Maximum="{Binding UpDownSettings.Maximum, Mode=OneWay}"
+                                       Value="{Binding UpDownSettings.Minimum, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Maximum">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       IsEnabled="{Binding UpDownSettings.LimitRange}"
+                                       Minimum="{Binding UpDownSettings.Minimum, Mode=OneWay}"
+                                       Value="{Binding UpDownSettings.Maximum, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Interval">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}" Value="{Binding UpDownSettings.Interval, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="DefaultValue">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Value="{Binding UpDownSettings.DefaultValue, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="IsReadOnly">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.IsReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="InterceptArrowKeys">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.InterceptArrowKeys, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="InterceptMouseWheel">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.InterceptMouseWheel, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="TrackMouseWheelWhenMouseOver">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.TrackMouseWheelWhenMouseOver, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="InterceptManualEnter">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.InterceptManualEnter, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="SyncTextWithValueWhileEditing">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.SyncTextWithValueWhileEditing, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="HideUpDownButtons">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.HideUpDownButtons, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="SwitchUpDownButtons">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.SwitchUpDownButtons, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="UpDownButtonsFocusable">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.UpDownButtonsFocusable, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="UpDownButtonsWidth">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Value="{Binding UpDownSettings.UpDownButtonsWidth, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="ButtonsAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
+                              SelectedItem="{Binding UpDownSettings.ButtonsAlignment, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Delay">
+                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                       Interval="50"
+                                       Maximum="5000"
+                                       Minimum="0"
+                                       Value="{Binding UpDownSettings.Delay, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Speedup">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.Speedup, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="SnapToMultipleOfInterval">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.SnapToMultipleOfInterval, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="NumericInputMode">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
+                              SelectedItem="{Binding UpDownSettings.NumericInputMode, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="StringFormat">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              IsEditable="True"
+                              ItemsSource="{x:Static exampleViews:NumericUpDownExamples.StringFormats}"
+                              Text="{Binding UpDownSettings.StringFormat, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="CultureInfo">
+                    <ComboBox x:Name="TheCulture"
+                              Margin="{StaticResource ControlMargin}"
+                              HorizontalAlignment="Stretch"
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                              SelectedItem="{Binding UpDownSettings.Culture, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                                <TextBlock VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ({1})">
+                                            <Binding Mode="OneWay" Path="DisplayName" />
+                                            <Binding Mode="OneWay" Path="IetfLanguageTag" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="NumberDecimalSeparator">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             IsReadOnly="True"
+                             Text="{Binding ElementName=TheCulture, Path=SelectedItem.NumberFormat.NumberDecimalSeparator, Mode=OneWay}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="NumberGroupSeparator">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             IsReadOnly="True"
+                             Text="{Binding ElementName=TheCulture, Path=SelectedItem.NumberFormat.NumberGroupSeparator, Mode=OneWay}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="ParsingNumberStyle">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource ParsingNumberStyleValues}}"
+                              SelectedItem="{Binding UpDownSettings.ParsingNumberStyle, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="DecimalPointCorrection">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource DecimalPointCorrectionValues}}"
+                              SelectedItem="{Binding UpDownSettings.DecimalPointCorrection, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="TextAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
+                              SelectedItem="{Binding UpDownSettings.TextAlignment, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="WatermarkAlignment">
+                    <ComboBox Margin="{StaticResource ControlMargin}"
+                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
+                              SelectedItem="{Binding UpDownSettings.WatermarkAlignment, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="Watermark">
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Text="{Binding UpDownSettings.Watermark, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+
+                <mah:MetroHeader Header="ClearTextButton">
+                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding UpDownSettings.ClearTextButton, UpdateSourceTrigger=PropertyChanged}" />
+                </mah:MetroHeader>
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="210" />
+                <ColumnDefinition Width="*" MinWidth="210" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <GroupBox Grid.Row="0"
+                      Grid.Column="0"
+                      Margin="4 2"
+                      Header="NumericUpDown (double)"
+                      UseLayoutRounding="True">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TypeCaption}" Text="For a measurement: a length, a weight, a rate." />
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Non-Nullable">
+                        <mah:NumericUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                           Style="{StaticResource DemoUpDownSettings}"
+                                           Value="{Binding NumericUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Nullable, Fluent style">
+                        <mah:NumericUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                           Style="{StaticResource DemoUpDownSettings.Fluent}"
+                                           Value="{Binding NullableNumericUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding NumericUpDownValue, Mode=OneWay}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value (nullable)">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding NullableNumericUpDownValue, Mode=OneWay, TargetNullValue=null}" />
+                    </mah:MetroHeader>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Row="0"
+                      Grid.Column="1"
+                      Margin="4 2"
+                      Header="DecimalUpDown (decimal)"
+                      UseLayoutRounding="True">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TypeCaption}" Text="For money: the digits typed in are the digits that come back out." />
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Non-Nullable">
+                        <mah:DecimalUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                           Style="{StaticResource DemoUpDownSettings}"
+                                           Value="{Binding DecimalUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Nullable, Fluent style">
+                        <mah:DecimalUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                           Style="{StaticResource DemoUpDownSettings.Fluent}"
+                                           Value="{Binding NullableDecimalUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding DecimalUpDownValue, Mode=OneWay}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value (nullable)">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding NullableDecimalUpDownValue, Mode=OneWay, TargetNullValue=null}" />
+                    </mah:MetroHeader>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1"
+                      Grid.Column="0"
+                      Margin="4 2"
+                      Header="IntegerUpDown (int)"
+                      UseLayoutRounding="True">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TypeCaption}" Text="For something counted: copies, a page number. It starts out refusing the decimal separator." />
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Non-Nullable">
+                        <mah:IntegerUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                           Style="{StaticResource DemoUpDownSettings}"
+                                           Value="{Binding IntegerUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Nullable, Fluent style">
+                        <mah:IntegerUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                           Style="{StaticResource DemoUpDownSettings.Fluent}"
+                                           Value="{Binding NullableIntegerUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding IntegerUpDownValue, Mode=OneWay}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value (nullable)">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding NullableIntegerUpDownValue, Mode=OneWay, TargetNullValue=null}" />
+                    </mah:MetroHeader>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1"
+                      Grid.Column="1"
+                      Margin="4 2"
+                      Header="LongUpDown (long)"
+                      UseLayoutRounding="True">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TypeCaption}" Text="For a count past what a double holds exactly: a file size in bytes, a database identifier." />
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Non-Nullable">
+                        <mah:LongUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                        Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                        Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                        Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                        Style="{StaticResource DemoUpDownSettings}"
+                                        Value="{Binding LongUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
+                                     mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
+                                     Header="Nullable, Fluent style">
+                        <mah:LongUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
+                                        Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
+                                        Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
+                                        Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                                        Style="{StaticResource DemoUpDownSettings.Fluent}"
+                                        Value="{Binding NullableLongUpDownValue}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding LongUpDownValue, Mode=OneWay}" />
+                    </mah:MetroHeader>
+
+                    <mah:MetroHeader Header="Stored value (nullable)">
+                        <TextBox Style="{StaticResource StoredValueBox}" Text="{Binding NullableLongUpDownValue, Mode=OneWay, TargetNullValue=null}" />
+                    </mah:MetroHeader>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+
+</UserControl>

@@ -333,6 +333,13 @@
                     <exampleViews:TextExamples DataContext="{Binding}" />
                 </ScrollViewer>
             </TabItem>
+            <TabItem Header="up-down">
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:NumericUpDownExamples DataContext="{Binding}" />
+                </ScrollViewer>
+            </TabItem>
             <TabItem Header="dates">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
