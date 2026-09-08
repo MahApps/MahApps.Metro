@@ -219,6 +219,36 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(textBox.Text, Is.EqualTo("2.675"));
         }
 
+        [Test]
+        [Description("A control nobody handed an interval to still steps by the one its type brought.")]
+        public void TheFirstStepMovesTheValueWithoutAnIntervalBeingSet()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheLong.SetCurrentValue(LongUpDown.ValueProperty, 5L);
+
+            StepUp(this.window.TheLong);
+
+            Assert.That(this.window.TheLong.Value, Is.EqualTo(6L));
+        }
+
+        [Test]
+        [Description("Holding a button down is a run of clicks, and every one of them has to move the value.")]
+        public void EveryClickOfARepeatMovesTheValue()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheInteger.SetCurrentValue(IntegerUpDown.ValueProperty, 0);
+
+            for (var i = 0; i < 10; i++)
+            {
+                StepUp(this.window.TheInteger);
+            }
+
+            // Ten steps of one, with the speed-up not yet at the hundred it takes to grow.
+            Assert.That(this.window.TheInteger.Value, Is.EqualTo(10));
+        }
+
         private static void StepUp(NumericUpDownBase control)
         {
             control.FindChild<RepeatButton>("PART_NumericUp")?.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));

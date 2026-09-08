@@ -33,6 +33,20 @@ namespace MahApps.Metro.Controls
         private T internalLargeChange;
         private T intervalValueSinceReset;
 
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        /// <remarks>
+        /// The three fields above start from the interval, which a field initializer cannot say for
+        /// an open generic type: it has no literal one to write and no way to multiply. Without this
+        /// they stay at zero until something changes the interval, and every step taken before that,
+        /// a held button included, moves the value by nothing at all.
+        /// </remarks>
+        protected NumericUpDownBase()
+        {
+            this.ResetSpeedUp();
+        }
+
         #region What the type has to answer
 
         /// <summary>Reads a value out of text, the way the culture writes it.</summary>
