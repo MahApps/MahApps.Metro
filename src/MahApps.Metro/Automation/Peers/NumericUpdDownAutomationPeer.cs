@@ -10,14 +10,16 @@ namespace MahApps.Metro.Automation.Peers
 {
     public class NumericUpdDownAutomationPeer : FrameworkElementAutomationPeer
     {
-        public NumericUpdDownAutomationPeer([NotNull] NumericUpDown owner)
+        public NumericUpdDownAutomationPeer([NotNull] NumericUpDownBase owner)
             : base(owner)
         {
         }
 
         protected override string GetClassNameCore()
         {
-            return nameof(NumericUpDown);
+            // Every control built on the same base reports itself, so a DecimalUpDown does not
+            // announce that it is a NumericUpDown.
+            return this.Owner.GetType().Name;
         }
 
         protected override AutomationControlType GetAutomationControlTypeCore()
