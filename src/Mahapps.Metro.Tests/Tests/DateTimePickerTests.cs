@@ -284,7 +284,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var border = GetPopupBorder(this.window.TheRoundedDateTimePicker);
 
-            Assert.That(border, Is.Not.Null, "the drop down should sit in a ClipBorder, so that rounded corners cut the content too");
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a border of its own");
             Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(8)), "the drop down should take the corner radius of the picker");
         }
 
@@ -295,7 +295,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var border = GetPopupBorder(this.window.TheRoundedTimePicker);
 
-            Assert.That(border, Is.Not.Null, "the drop down should sit in a ClipBorder, so that rounded corners cut the content too");
+            Assert.That(border, Is.Not.Null, "the drop down should sit in a border of its own");
             Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(4)), "the drop down should take the corner radius of the picker");
         }
 

@@ -40,8 +40,8 @@ namespace MahApps.Metro.Converters
             var padding = values.Length > 4 && values[4] is Thickness thicknessPadding ? thicknessPadding : default;
 
             // Half of the border and the whole padding, which is how the WPF Border draws the inner edge
-            // of its own frame and what ClipBorder clips its child to. Taking the whole thickness would
-            // leave a gap between the frame and the content along every rounded corner.
+            // of its own frame. Taking the whole thickness would leave a gap between the frame and the
+            // content along every rounded corner.
             var inset = new Thickness(0.5 * borderThickness.Left + padding.Left,
                                       0.5 * borderThickness.Top + padding.Top,
                                       0.5 * borderThickness.Right + padding.Right,

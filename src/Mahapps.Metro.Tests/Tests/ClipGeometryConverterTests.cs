@@ -59,9 +59,8 @@ namespace MahApps.Metro.Tests.Tests
         public void TheRadiusShouldLoseHalfTheBorderThickness()
         {
             // A corner radius of 22 with a border of 8 leaves 18 on the inside, which is how the WPF
-            // Border draws its own inner edge and what ClipBorder clips its child to. Taking the whole
-            // thickness would leave 14 and cut a visible gap between the border and the content, and
-            // the two points below tell those apart.
+            // Border draws its own inner edge. Taking the whole thickness would leave 14 and cut a
+            // visible gap between the border and the content, and the two points below tell those apart.
             var geometry = Convert(200, 45, new CornerRadius(22), new Thickness(8));
 
             Assert.That(geometry.FillContains(new Point(5.5, 5.5)), Is.True, "the inner radius should be 18");
