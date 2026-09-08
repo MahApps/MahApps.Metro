@@ -120,6 +120,15 @@ namespace MahApps.Metro.Controls
 
             if (magnitude > 0 && (magnitude < SmallestPlainValue || magnitude >= LargestPlainValue))
             {
+                // A whole number that still fits in a long is written out in full. Neither of the
+                // two ways below gets there: the format further down rounds at the fifteenth
+                // significant digit, and what the framework answers on its own differs per target,
+                // .NET Framework reaching for an exponent where .NET does not.
+                if (magnitude < long.MaxValue && Math.Abs(value - Math.Truncate(value)) <= 0)
+                {
+                    return ((long)value).ToString(culture);
+                }
+
                 return value.ToString(culture);
             }
 
