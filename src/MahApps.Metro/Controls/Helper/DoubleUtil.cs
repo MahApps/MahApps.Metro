@@ -25,10 +25,12 @@ namespace MahApps.Metro.Controls
         /// <param name="value2">The second double to compare.</param>
         public static bool AreClose(double value1, double value2)
         {
-            // Infinities compare equal to themselves, which the epsilon check below cannot do.
-            if (value1 == value2)
+            // The epsilon check below cannot answer for infinities: subtracting one from itself gives
+            // NaN, and every comparison against NaN is false. So they are answered here, on whether
+            // they are the same value, which for two infinities means the same sign.
+            if (double.IsInfinity(value1) || double.IsInfinity(value2))
             {
-                return true;
+                return value1.CompareTo(value2) == 0;
             }
 
             // This computes (|value1-value2| / (|value1| + |value2| + 10.0)) < Epsilon

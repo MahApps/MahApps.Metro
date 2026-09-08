@@ -57,6 +57,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(DoubleUtil.AreClose(double.NegativeInfinity, double.NegativeInfinity), Is.True);
             Assert.That(DoubleUtil.AreClose(double.PositiveInfinity, double.NegativeInfinity), Is.False);
             Assert.That(DoubleUtil.AreClose(double.PositiveInfinity, double.MaxValue), Is.False);
+            Assert.That(DoubleUtil.AreClose(double.NegativeInfinity, double.MinValue), Is.False);
+            Assert.That(DoubleUtil.AreClose(0d, double.NegativeInfinity), Is.False, "whichever side the infinity is on");
         }
 
         [Test]
