@@ -683,6 +683,56 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
+        /// GH-4561: the whole of what the report asks for. Every digit of a number above Minimum has to
+        /// arrive even while the text so far is below it, and leaving the control settles what is left
+        /// at Minimum.
+        /// </summary>
+        [Test]
+        public void ShouldTypeANumberWhoseFirstDigitsAreBelowMinimum()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MinimumProperty, 100d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MaximumProperty, 10000d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, 500d);
+
+            TypeText(textBox!, "1000");
+
+            Assert.That(textBox!.Text, Is.EqualTo("1000"), "every keystroke has to arrive, however small the text is on its own");
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(1000d));
+        }
+
+        /// <summary>
+        /// GH-4561: what stays below Minimum is settled when the control is left, which is what makes it
+        /// safe to let the digits through in the first place.
+        /// </summary>
+        [Test]
+        public void ShouldSettleAtMinimumWhenLeavingTheControl()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MinimumProperty, 100d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.MaximumProperty, 10000d);
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, 500d);
+
+            TypeText(textBox!, "50");
+
+            Assert.That(textBox!.Text, Is.EqualTo("50"), "the text stands as typed until the control is left");
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(100d), "the value is held at Minimum in the meantime");
+
+            textBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(100d));
+            Assert.That(textBox.Text, Is.EqualTo("100"), "leaving the control puts the text back to what the value really is");
+        }
+
+        /// <summary>
         /// GH-4565: guards the hexadecimal formatting fallback. A value outside the int range
         /// must not end up at double.ToString("X"), which throws a FormatException.
         /// </summary>
