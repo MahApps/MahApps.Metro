@@ -3,10 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Converters;
 
 namespace MahApps.Metro.Controls
 {
@@ -86,7 +86,7 @@ namespace MahApps.Metro.Controls
         private IMultiValueConverter? textConverter;
 
         /// <inheritdoc />
-        protected override IMultiValueConverter TextConverter => this.textConverter ??= new ValueToText(this.formatter);
+        protected override IMultiValueConverter TextConverter => this.textConverter ??= new NumericValueToTextConverter<T>(this.formatter);
 
         /// <inheritdoc />
         protected override NumericUpDownBase TakeOrMakeControl(DataGridCell? cell)
@@ -133,46 +133,6 @@ namespace MahApps.Metro.Controls
         protected override object? ValueOf(NumericUpDownBase control)
         {
             return ((TControl)control).Value;
-        }
-
-        /// <summary>
-        /// Turns the value of a cell into the text the control would have shown, given the format and
-        /// the culture the column carries.
-        /// </summary>
-        private sealed class ValueToText : IMultiValueConverter
-        {
-            private readonly TControl formatter;
-
-            public ValueToText(TControl formatter)
-            {
-                this.formatter = formatter;
-            }
-
-            public object Convert(object[] values, Type targetType, object? parameter, CultureInfo culture)
-            {
-                if (values.Length < 3 || values[0] == DependencyProperty.UnsetValue)
-                {
-                    return string.Empty;
-                }
-
-                var value = values[0] switch
-                             {
-                                 T typed => typed,
-                                 null => (T?)null,
-                                 IConvertible convertible => (T)System.Convert.ChangeType(convertible, typeof(T), culture),
-                                 _ => (T?)null
-                             };
-
-                var format = values[1] as string ?? string.Empty;
-                var itsCulture = values[2] as CultureInfo ?? culture;
-
-                return this.formatter.TextFor(value, format, itsCulture) ?? string.Empty;
-            }
-
-            public object[] ConvertBack(object value, Type[] targetTypes, object? parameter, CultureInfo culture)
-            {
-                throw new NotSupportedException();
-            }
         }
     }
 }
