@@ -1,9 +1,7 @@
-<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
+﻿<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
-             xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:MetroDemo"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -16,45 +14,12 @@
     <UserControl.Resources>
         <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
 
-        <ObjectDataProvider x:Key="NumericInputValues"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type mah:NumericInput}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="mah:NumericInput" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
-        <ObjectDataProvider x:Key="DecimalPointCorrectionValues"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type mah:DecimalPointCorrectionMode}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="mah:DecimalPointCorrectionMode" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
-        <ObjectDataProvider x:Key="TextAlignmentValues"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type TextAlignment}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="TextAlignment" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
-        <ObjectDataProvider x:Key="ButtonsAlignmentValues"
-                            MethodName="GetValues"
-                            ObjectType="{x:Type mah:ButtonsAlignment}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="mah:ButtonsAlignment" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
     </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="250" />
             <ColumnDefinition Width="*" MinWidth="200" />
-            <ColumnDefinition Width="*" MinWidth="250" />
             <ColumnDefinition Width="*" MinWidth="250" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -331,221 +296,6 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Grid.Row="0"
-                  Grid.Column="3"
-                  Margin="4 2"
-                  Grid.IsSharedSizeScope="True"
-                  Header="NumericUpDown"
-                  UseLayoutRounding="True">
-            <GroupBox.Resources>
-                <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
-                <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="mah:ToggleSwitch">
-                    <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
-                    <Setter Property="MinHeight" Value="1" />
-                </Style>
-                <GridLength x:Key="ToggleSwitchPreContentMargin">2</GridLength>
-                <GridLength x:Key="ToggleSwitchPostContentMargin">2</GridLength>
-            </GroupBox.Resources>
-            <StackPanel>
-                <mah:MetroHeader Header="IsReadOnly">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="InterceptArrowKeys">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=InterceptArrowKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="InterceptMouseWheel">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=InterceptMouseWheel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="InterceptManualEnter">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=InterceptManualEnter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="HideUpDownButtons">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=HideUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="SwitchUpDownButtons">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=SwitchUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="ClearTextButton">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.ClearTextButton), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="Min">
-                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       AutomationProperties.AutomationId="AutomationIdTested"
-                                       Maximum="{Binding ElementName=NUD, Path=Maximum, Mode=OneWay}"
-                                       Value="{Binding ElementName=NUD, Path=Minimum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="Max">
-                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       Minimum="{Binding ElementName=NUD, Path=Minimum, Mode=OneWay}"
-                                       Value="{Binding ElementName=NUD, Path=Maximum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="Interval">
-                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       Value="{Binding ElementName=NUD, Path=Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="DefaultValue">
-                    <mah:NumericUpDown Margin="{StaticResource ControlMargin}"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       Value="{Binding ElementName=NUD, Path=DefaultValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="SnapToMultipleOfInterval">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=SnapToMultipleOfInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="SpeedUp">
-                    <mah:ToggleSwitch Margin="{StaticResource ControlMargin}" IsOn="{Binding ElementName=NUD, Path=Speedup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="NumericInputMode">
-                    <ComboBox Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
-                              SelectedItem="{Binding ElementName=NUD, Path=NumericInputMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="StringFormat">
-                    <ComboBox Margin="{StaticResource ControlMargin}"
-                              mah:TextBoxHelper.ClearTextButton="True"
-                              IsEditable="True"
-                              ItemsSource="{x:Static exampleViews:TextExamples.NUD_StringFormats}"
-                              Text="{Binding ElementName=NUD, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="CultureInfo">
-                    <ComboBox x:Name="NUD_CultureInfo"
-                              Margin="{StaticResource ControlMargin}"
-                              HorizontalAlignment="Stretch"
-                              mah:TextBoxHelper.ClearTextButton="True"
-                              ItemsSource="{Binding CultureInfos, Mode=OneWay}"
-                              SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="{x:Type globalization:CultureInfo}">
-                                <TextBlock VerticalAlignment="Center">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} ({1})">
-                                            <Binding Mode="OneWay" Path="DisplayName" />
-                                            <Binding Mode="OneWay" Path="IetfLanguageTag" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="NumberDecimalSeparator">
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             IsReadOnly="True"
-                             Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberDecimalSeparator}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="NumberGroupSeparator">
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             IsReadOnly="True"
-                             Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberGroupSeparator}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="DecimalPointCorrection">
-                    <ComboBox Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource DecimalPointCorrectionValues}}"
-                              SelectedItem="{Binding ElementName=NUD, Path=DecimalPointCorrection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="TextAlignment">
-                    <ComboBox Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
-                              SelectedItem="{Binding ElementName=NUD, Path=TextAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="WatermarkAlignment">
-                    <ComboBox Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
-                              SelectedItem="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="ButtonsAlignment">
-                    <ComboBox Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
-                              SelectedItem="{Binding ElementName=NUD, Path=ButtonsAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="Watermark">
-                    <TextBox x:Name="NUD_Watermark"
-                             Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             Text="Type a number" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="Stored Value (non-nullable)">
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             IsReadOnly="True"
-                             Text="{Binding ElementName=NUD, Path=Value, Mode=OneWay}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader Header="Stored Value (nullable)">
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             IsReadOnly="True"
-                             Text="{Binding ElementName=NUD_Nullable, Path=Value, Mode=OneWay}" />
-                </mah:MetroHeader>
-
-
-                <Separator Margin="0 5" />
-
-                <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
-                                 mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
-                                 Header="Non-Nullable">
-                    <mah:NumericUpDown x:Name="NUD"
-                                       Margin="{StaticResource ControlMargin}"
-                                       mah:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text, Mode=OneWay}"
-                                       Maximum="10"
-                                       Minimum="0"
-                                       Value="{Binding NumericUpDownValue}" />
-                </mah:MetroHeader>
-
-                <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
-                                 mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
-                                 Header="Nullable">
-                    <mah:NumericUpDown x:Name="NUD_Nullable"
-                                       Margin="{StaticResource ControlMargin}"
-                                       mah:TextBoxHelper.ClearTextButton="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.ClearTextButton)}"
-                                       mah:TextBoxHelper.Watermark="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.Watermark)}"
-                                       mah:TextBoxHelper.WatermarkAlignment="{Binding ElementName=NUD, Path=(mah:TextBoxHelper.WatermarkAlignment)}"
-                                       ButtonsAlignment="{Binding ElementName=NUD, Path=ButtonsAlignment}"
-                                       Culture="{Binding ElementName=NUD, Path=Culture}"
-                                       DecimalPointCorrection="{Binding ElementName=NUD, Path=DecimalPointCorrection}"
-                                       DefaultValue="{Binding ElementName=NUD, Path=DefaultValue}"
-                                       HideUpDownButtons="{Binding ElementName=NUD, Path=HideUpDownButtons}"
-                                       InterceptArrowKeys="{Binding ElementName=NUD, Path=InterceptArrowKeys}"
-                                       InterceptManualEnter="{Binding ElementName=NUD, Path=InterceptManualEnter}"
-                                       InterceptMouseWheel="{Binding ElementName=NUD, Path=InterceptMouseWheel}"
-                                       Interval="{Binding ElementName=NUD, Path=Interval}"
-                                       IsReadOnly="{Binding ElementName=NUD, Path=IsReadOnly}"
-                                       Maximum="{Binding ElementName=NUD, Path=Maximum}"
-                                       Minimum="{Binding ElementName=NUD, Path=Minimum}"
-                                       NumericInputMode="{Binding ElementName=NUD, Path=NumericInputMode}"
-                                       SnapToMultipleOfInterval="{Binding ElementName=NUD, Path=SnapToMultipleOfInterval}"
-                                       Speedup="{Binding ElementName=NUD, Path=Speedup}"
-                                       StringFormat="{Binding ElementName=NUD, Path=StringFormat}"
-                                       Style="{DynamicResource MahApps.Styles.NumericUpDown.Fluent}"
-                                       SwitchUpDownButtons="{Binding ElementName=NUD, Path=SwitchUpDownButtons}"
-                                       TextAlignment="{Binding ElementName=NUD, Path=TextAlignment}"
-                                       Value="{Binding NullableNumericUpDownValue}" />
-                </mah:MetroHeader>
-            </StackPanel>
-        </GroupBox>
 
         <GroupBox Grid.Row="1"
                   Grid.Column="0"

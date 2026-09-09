@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static Visibility GetDisabledVisualElementVisibility(UIElement element)
         {
@@ -43,7 +43,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         public static void SetDisabledVisualElementVisibility(UIElement element, Visibility value)
         {

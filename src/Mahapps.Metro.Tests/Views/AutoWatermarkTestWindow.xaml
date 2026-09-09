@@ -26,6 +26,15 @@
         <mah:NumericUpDown x:Name="TestNumericUpDown"
                            mah:TextBoxHelper.AutoWatermark="True"
                            Value="{Binding NumericUpDownValue}" />
+        <mah:DecimalUpDown x:Name="TestDecimalUpDown"
+                           mah:TextBoxHelper.AutoWatermark="True"
+                           Value="{Binding DecimalUpDownValue}" />
+        <mah:IntegerUpDown x:Name="TestIntegerUpDown"
+                           mah:TextBoxHelper.AutoWatermark="True"
+                           Value="{Binding IntegerUpDownValue}" />
+        <mah:LongUpDown x:Name="TestLongUpDown"
+                        mah:TextBoxHelper.AutoWatermark="True"
+                        Value="{Binding LongUpDownValue}" />
         <DatePicker x:Name="TestDatePicker"
                     mah:TextBoxHelper.AutoWatermark="True"
                     SelectedDate="{Binding DatePickerDate}" />

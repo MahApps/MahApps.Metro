@@ -26,6 +26,9 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(window.TestTextBoxSubModel.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
                     Assert.That(window.TestComboBox.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
                     Assert.That(window.TestNumericUpDown.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestDecimalUpDown.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestIntegerUpDown.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
+                    Assert.That(window.TestLongUpDown.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
                     Assert.That(window.TestDatePicker.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
                     Assert.That(window.TestHotKeyBox.GetValue(TextBoxHelper.WatermarkProperty), Is.EqualTo(autoWatermark));
                 });
