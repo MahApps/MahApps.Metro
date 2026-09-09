@@ -230,8 +230,10 @@
                                                 ItemsSource="{x:Static models:SampleData.Artists}"
                                                 SelectedItemBinding="{Binding Artist}" />
                         <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
-                        <mah:DataGridNumericUpDownColumn Binding="{Binding Price}"
+                        <!--  A price is a decimal, so it belongs in the column that holds one.  -->
+                        <mah:DataGridDecimalUpDownColumn Binding="{Binding Price}"
                                                          Header="Price"
+                                                         Interval="0.01"
                                                          Minimum="0"
                                                          StringFormat="{}{0:C}" />
                     </DataGrid.Columns>

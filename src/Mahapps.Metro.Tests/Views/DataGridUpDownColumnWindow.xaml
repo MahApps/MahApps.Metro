@@ -1,0 +1,26 @@
+﻿<tests:TestWindow x:Class="MahApps.Metro.Tests.Views.DataGridUpDownColumnWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  d:DesignHeight="300"
+                  d:DesignWidth="600"
+                  mc:Ignorable="d">
+    <!--
+        The MahApps style is what brings the column style helper along, and with it the styles the
+        columns hand to their controls. Without it this window would never ask for them.
+    -->
+    <DataGrid x:Name="TheGrid"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False"
+              Style="{StaticResource MahApps.Styles.DataGrid}">
+        <DataGrid.Columns>
+            <mah:DataGridNumericUpDownColumn Binding="{Binding Measurement}" Header="double" />
+            <mah:DataGridDecimalUpDownColumn Binding="{Binding Price}" Header="decimal" />
+            <mah:DataGridIntegerUpDownColumn Binding="{Binding Count}" Header="int" />
+            <mah:DataGridLongUpDownColumn Binding="{Binding Size}" Header="long" />
+        </DataGrid.Columns>
+    </DataGrid>
+</tests:TestWindow>

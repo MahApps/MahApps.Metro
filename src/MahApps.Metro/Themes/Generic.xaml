@@ -55,6 +55,11 @@
 
     <!--  set up default styles for our custom controls  -->
 
+    <!--
+        The base class is abstract, so nothing is ever styled by this one implicitly. It is here
+        because a style meant for all four can stand on it, which is what the DataGrid ones do.
+    -->
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDownBase}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:DecimalUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:IntegerUpDown}" />
