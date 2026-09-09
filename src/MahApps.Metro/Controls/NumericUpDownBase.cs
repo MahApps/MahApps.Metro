@@ -814,6 +814,12 @@ namespace MahApps.Metro.Controls
         /// <summary>Runs the current value through again, after something around it changed.</summary>
         protected abstract void RefreshFromCurrentValue();
 
+        /// <summary>
+        /// Reads the part of a text that looks like a number, the way the culture writes one, and
+        /// hands back what it found. A text with nothing number-shaped in it comes back unchanged.
+        /// </summary>
+        protected abstract string TakeNumberFrom(string text);
+
         /// <summary>Whether a value is set at all. The value itself is a matter for the typed half.</summary>
         public abstract bool HasValue { get; }
 
@@ -1149,17 +1155,25 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
+            var text = e.SourceDataObject.GetData(DataFormats.Text) as string ?? string.Empty;
 
-            string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
+            // Only the number is taken out of what arrives. The rest would sit in the field until the
+            // focus leaves and then be dropped anyway, since the value never held it.
+            var number = this.TakeNumberFrom(text);
+
+            var newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), number, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
             if (!this.ValidateText(newText))
             {
                 e.CancelCommand();
+                return;
             }
-            else
+
+            if (!string.Equals(number, text, StringComparison.Ordinal))
             {
-                this.manualChange = true;
+                e.DataObject = new DataObject(DataFormats.Text, number);
             }
+
+            this.manualChange = true;
         }
 
         /// <summary>Puts the speed up back to where it starts, unless the control is read only.</summary>
