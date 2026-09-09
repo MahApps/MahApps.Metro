@@ -125,6 +125,12 @@ namespace MahApps.Metro.Controls
         }
 
         /// <inheritdoc />
+        protected override string TakeNumberFrom(string text)
+        {
+            return this.TryGetNumberFromText(text, this.ReadsHexadecimal);
+        }
+
+        /// <inheritdoc />
         public override bool HasValue => this.Value.HasValue;
 
         /// <inheritdoc />
@@ -799,17 +805,11 @@ var interval = this.ToDouble(amount) * (toPositive ? 1d : -1d);
                 return false;
             }
 
-            var isNumeric = this.NumericInputMode == NumericInput.Numbers
-                            || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
-                            || this.ParsingNumberStyle == NumberStyles.HexNumber
+            var isNumeric = this.ReadsHexadecimal
                             || this.ParsingNumberStyle == NumberStyles.Integer
                             || this.ParsingNumberStyle == NumberStyles.Number;
 
-            var isHex = this.NumericInputMode == NumericInput.Numbers
-                        || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
-                        || this.ParsingNumberStyle == NumberStyles.HexNumber;
-
-            var number = this.WithSignOfCulture(this.TryGetNumberFromText(text, isHex));
+            var number = this.WithSignOfCulture(this.TryGetNumberFromText(text, this.ReadsHexadecimal));
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
@@ -855,6 +855,11 @@ var interval = this.ToDouble(amount) * (toPositive ? 1d : -1d);
             convertedValue = this.Truncate(convertedValue);
             return true;
         }
+
+        /// <summary>Whether text is read as hexadecimal, which is a different shape of number.</summary>
+        private bool ReadsHexadecimal => this.NumericInputMode == NumericInput.Numbers
+                                         || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
+                                         || this.ParsingNumberStyle == NumberStyles.HexNumber;
 
         private string TryGetNumberFromText(string text, bool isHex)
         {
