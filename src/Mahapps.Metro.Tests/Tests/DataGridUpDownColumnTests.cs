@@ -31,6 +31,17 @@ namespace MahApps.Metro.Tests.Tests
             this.window = null;
         }
 
+        [SetUp]
+        public void SetUp()
+        {
+            // a test that edited a cell leaves the control in it, and the next one would find that.
+            // The row has to be let go of as well, or the grid stays in a transaction that refuses
+            // to have the items refreshed.
+            this.window?.TheGrid.CancelEdit(DataGridEditingUnit.Cell);
+            this.window?.TheGrid.CancelEdit(DataGridEditingUnit.Row);
+            this.window?.TheGrid.UpdateLayout();
+        }
+
         private FrameworkElement? CellContent(int column)
         {
             Assert.That(this.window, Is.Not.Null);
@@ -39,29 +50,125 @@ namespace MahApps.Metro.Tests.Tests
             return this.window.TheGrid.Columns[column].GetCellContent(item);
         }
 
+        /// <summary>Puts the first row of a column into edit mode and hands back what is in the cell.</summary>
+        private FrameworkElement? EditingContent(int column)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var grid = this.window.TheGrid;
+            var item = grid.Items[0];
+
+            grid.CancelEdit();
+            grid.CurrentCell = new DataGridCellInfo(item, grid.Columns[column]);
+            grid.BeginEdit();
+            grid.UpdateLayout();
+
+            return grid.Columns[column].GetCellContent(item);
+        }
+
         [Test]
-        [Description("Each column puts the control that holds its own type into the cell.")]
-        public void EveryColumnMakesTheControlOfItsType()
+        [Description("A cell that is only showing its value holds text, not a control.")]
+        public void AShowingCellHoldsText()
         {
             Assert.Multiple(() =>
                 {
-                    Assert.That(this.CellContent(0), Is.TypeOf<NumericUpDown>());
-                    Assert.That(this.CellContent(1), Is.TypeOf<DecimalUpDown>());
-                    Assert.That(this.CellContent(2), Is.TypeOf<IntegerUpDown>());
-                    Assert.That(this.CellContent(3), Is.TypeOf<LongUpDown>());
+                    for (var column = 0; column < 4; column++)
+                    {
+                        Assert.That(this.CellContent(column), Is.TypeOf<TextBlock>(), "column " + column);
+                    }
                 });
         }
 
         [Test]
-        [Description("The value reaches the cell in the type the row holds, without a double in between.")]
+        [Description("Each column puts the control that holds its own type into a cell being edited.")]
+        public void EveryColumnMakesTheControlOfItsTypeToEditIn()
+        {
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.EditingContent(0), Is.TypeOf<NumericUpDown>());
+                    Assert.That(this.EditingContent(1), Is.TypeOf<DecimalUpDown>());
+                    Assert.That(this.EditingContent(2), Is.TypeOf<IntegerUpDown>());
+                    Assert.That(this.EditingContent(3), Is.TypeOf<LongUpDown>());
+                });
+        }
+
+        [Test]
+        [Description("The value shows as the control would have written it, the long one digit for digit.")]
+        public void AShowingCellReadsLikeTheControlWould()
+        {
+            Assert.Multiple(() =>
+                {
+                    Assert.That(((TextBlock)this.CellContent(0)!).Text, Is.EqualTo("2.5"));
+                    Assert.That(((TextBlock)this.CellContent(1)!).Text, Is.EqualTo("19.99"));
+                    Assert.That(((TextBlock)this.CellContent(2)!).Text, Is.EqualTo("3"));
+                    Assert.That(((TextBlock)this.CellContent(3)!).Text, Is.EqualTo("9007199254740993"));
+                });
+        }
+
+        [Test]
+        [Description("A number reads right aligned in a showing cell, the way the control writes it.")]
+        public void AShowingCellReadsRightAligned()
+        {
+            Assert.Multiple(() =>
+                {
+                    for (var column = 0; column < 4; column++)
+                    {
+                        var block = (TextBlock)this.CellContent(column)!;
+                        Assert.That(block.TextAlignment, Is.EqualTo(TextAlignment.Right), "column " + column);
+                        Assert.That(block.VerticalAlignment, Is.EqualTo(VerticalAlignment.Center), "column " + column);
+                    }
+                });
+        }
+
+        [Test]
+        [Description("A TextAlignment set on the column wins over what the style asks for.")]
+        public void WhatTheColumnAsksForWinsOverTheStyle()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var column = (DataGridDecimalUpDownColumn)this.window.TheGrid.Columns[1];
+
+            try
+            {
+                column.TextAlignment = TextAlignment.Left;
+                this.window.TheGrid.Items.Refresh();
+                this.window.TheGrid.UpdateLayout();
+
+                Assert.That(((TextBlock)this.CellContent(1)!).TextAlignment, Is.EqualTo(TextAlignment.Left));
+            }
+            finally
+            {
+                column.ClearValue(DataGridDecimalUpDownColumn.TextAlignmentProperty);
+                this.window.TheGrid.Items.Refresh();
+                this.window.TheGrid.UpdateLayout();
+            }
+        }
+
+        [Test]
+        [Description("A StringFormat on the column decides the text of a cell that is only showing.")]
+        public void AStringFormatDecidesWhatAShowingCellReads()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var column = (DataGridDecimalUpDownColumn)this.window.TheGrid.Columns[1];
+            column.StringFormat = "{}{0:N2} EUR";
+            this.window.TheGrid.UpdateLayout();
+
+            Assert.That(((TextBlock)this.CellContent(1)!).Text, Is.EqualTo("19.99 EUR"));
+
+            column.ClearValue(DataGridDecimalUpDownColumn.StringFormatProperty);
+        }
+
+        [Test]
+        [Description("The value reaches the cell being edited in the type the row holds, without a double in between.")]
         public void EveryColumnCarriesTheValueOfItsType()
         {
             Assert.Multiple(() =>
                 {
-                    Assert.That(((NumericUpDown)this.CellContent(0)!).Value, Is.EqualTo(2.5d));
-                    Assert.That(((DecimalUpDown)this.CellContent(1)!).Value, Is.EqualTo(19.99m));
-                    Assert.That(((IntegerUpDown)this.CellContent(2)!).Value, Is.EqualTo(3));
-                    Assert.That(((LongUpDown)this.CellContent(3)!).Value, Is.EqualTo(9007199254740993L));
+                    Assert.That(((NumericUpDown)this.EditingContent(0)!).Value, Is.EqualTo(2.5d));
+                    Assert.That(((DecimalUpDown)this.EditingContent(1)!).Value, Is.EqualTo(19.99m));
+                    Assert.That(((IntegerUpDown)this.EditingContent(2)!).Value, Is.EqualTo(3));
+                    Assert.That(((LongUpDown)this.EditingContent(3)!).Value, Is.EqualTo(9007199254740993L));
                 });
         }
 
@@ -109,7 +216,7 @@ namespace MahApps.Metro.Tests.Tests
             column.StringFormat = "C2";
             column.HideUpDownButtons = true;
 
-            var control = (DecimalUpDown)this.CellContent(1)!;
+            var control = (DecimalUpDown)this.EditingContent(1)!;
 
             Assert.Multiple(() =>
                 {
@@ -160,7 +267,7 @@ namespace MahApps.Metro.Tests.Tests
                 {
                     for (var column = 0; column < 4; column++)
                     {
-                        var content = this.CellContent(column);
+                        var content = this.EditingContent(column);
                         Assert.That(content, Is.Not.Null, "column " + column);
                         Assert.That(content!.Style, Is.Not.Null, content.GetType().Name);
                         Assert.That(content.Style.TargetType.IsInstanceOfType(content), Is.True, content.GetType().Name);
@@ -177,7 +284,7 @@ namespace MahApps.Metro.Tests.Tests
             var column = (DataGridIntegerUpDownColumn)this.window.TheGrid.Columns[2];
 
             Assert.That(column.NumericInputMode, Is.EqualTo(NumericInput.Numbers));
-            Assert.That(((IntegerUpDown)this.CellContent(2)!).NumericInputMode, Is.EqualTo(NumericInput.Numbers));
+            Assert.That(((IntegerUpDown)this.EditingContent(2)!).NumericInputMode, Is.EqualTo(NumericInput.Numbers));
         }
     }
 }

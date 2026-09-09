@@ -114,7 +114,53 @@ namespace MahApps.Metro.Controls
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            return this.GenerateNumericUpDown(false, cell);
+            return this.GenerateTextBlock(cell);
+        }
+
+        /// <summary>Says what a value looks like in this column, for the cell that only shows it.</summary>
+        protected abstract IMultiValueConverter TextConverter { get; }
+
+        /// <summary>
+        /// A cell that is not being edited shows its value as text. It used to hold a whole up-down
+        /// control that was made unfocusable, untouchable and stripped of its buttons, which is forty
+        /// odd visual elements pretending to be one.
+        /// </summary>
+        private TextBlock GenerateTextBlock(DataGridCell? cell)
+        {
+            var textBlock = cell?.Content as TextBlock ?? new TextBlock();
+
+            SyncColumnProperty(this, textBlock, FontFamilyProperty, TextElement.FontFamilyProperty);
+            SyncColumnProperty(this, textBlock, FontSizeProperty, TextElement.FontSizeProperty);
+            SyncColumnProperty(this, textBlock, FontStyleProperty, TextElement.FontStyleProperty);
+            SyncColumnProperty(this, textBlock, FontWeightProperty, TextElement.FontWeightProperty);
+            SyncColumnProperty(this, textBlock, TextAlignmentProperty, TextBlock.TextAlignmentProperty);
+
+            if (!SyncColumnProperty(this, textBlock, ForegroundProperty, TextElement.ForegroundProperty))
+            {
+                ApplyBinding(new Binding(Control.ForegroundProperty.Name) { Source = cell, Mode = BindingMode.OneWay }, textBlock, TextElement.ForegroundProperty);
+            }
+
+            this.ApplyStyle(false, false, textBlock);
+            this.BindText(textBlock);
+
+            return textBlock;
+        }
+
+        /// <summary>Binds the text to the value, formatted the way the control would have shown it.</summary>
+        private void BindText(TextBlock textBlock)
+        {
+            if (this.Binding is null)
+            {
+                BindingOperations.ClearBinding(textBlock, TextBlock.TextProperty);
+                return;
+            }
+
+            var binding = new MultiBinding { Converter = this.TextConverter, Mode = BindingMode.OneWay };
+            binding.Bindings.Add(this.Binding);
+            binding.Bindings.Add(new Binding(nameof(this.StringFormat)) { Source = this, Mode = BindingMode.OneWay });
+            binding.Bindings.Add(new Binding(nameof(this.Culture)) { Source = this, Mode = BindingMode.OneWay });
+
+            BindingOperations.SetBinding(textBlock, TextBlock.TextProperty, binding);
         }
 
         /// <summary>Makes the control this column puts in a cell, or takes the one already there.</summary>
@@ -529,6 +575,35 @@ namespace MahApps.Metro.Controls
         protected override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
             var cell = element as DataGridCell;
+
+            if (cell?.Content is TextBlock textBlock)
+            {
+                switch (propertyName)
+                {
+                    case nameof(this.FontFamily):
+                        SyncColumnProperty(this, textBlock, FontFamilyProperty, TextElement.FontFamilyProperty);
+                        break;
+                    case nameof(this.FontSize):
+                        SyncColumnProperty(this, textBlock, FontSizeProperty, TextElement.FontSizeProperty);
+                        break;
+                    case nameof(this.FontStyle):
+                        SyncColumnProperty(this, textBlock, FontStyleProperty, TextElement.FontStyleProperty);
+                        break;
+                    case nameof(this.FontWeight):
+                        SyncColumnProperty(this, textBlock, FontWeightProperty, TextElement.FontWeightProperty);
+                        break;
+                    case nameof(this.Foreground):
+                        SyncColumnProperty(this, textBlock, ForegroundProperty, TextElement.ForegroundProperty);
+                        break;
+                    case nameof(this.TextAlignment):
+                        SyncColumnProperty(this, textBlock, TextAlignmentProperty, TextBlock.TextAlignmentProperty);
+                        break;
+                    default:
+                        // StringFormat and Culture reach the text through their own bindings.
+                        break;
+                }
+            }
+
             var numericUpDown = cell?.Content as NumericUpDownBase;
             if (numericUpDown != null)
             {

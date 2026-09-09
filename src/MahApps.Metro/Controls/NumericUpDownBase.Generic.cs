@@ -513,6 +513,16 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Writes a value the way this control would show it, for whoever has to show the same thing
+        /// without being one. The two parts only the type can answer, what a value looks like with no
+        /// format at all and what it looks like in hexadecimal, are in here and nowhere else.
+        /// </summary>
+        internal string? TextFor(T? value, string format, CultureInfo culture)
+        {
+            return value.HasValue ? this.FormattedValueString(value.Value, format, culture) : null;
+        }
+
         private string? FormattedValueString(T newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
