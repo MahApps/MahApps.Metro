@@ -101,6 +101,10 @@ namespace MahApps.Metro.Controls
                 case nameof(this.Interval):
                     SyncColumnProperty(this, control, IntervalProperty, NumericUpDownBase<T>.IntervalProperty);
                     break;
+                default:
+                    // Everything else on the column does not depend on the type, and the half that
+                    // holds those has already dealt with it by the time this is asked.
+                    break;
             }
         }
 
