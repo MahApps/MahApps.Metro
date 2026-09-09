@@ -79,7 +79,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static string GetWatermark(DependencyObject obj)
@@ -94,7 +94,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static void SetWatermark(DependencyObject obj, string value)
@@ -122,7 +122,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static TextAlignment GetWatermarkAlignment(DependencyObject obj)
@@ -140,7 +140,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static void SetWatermarkAlignment(DependencyObject obj, TextAlignment value)
@@ -168,7 +168,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static TextTrimming GetWatermarkTrimming(DependencyObject obj)
@@ -186,7 +186,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static void SetWatermarkTrimming(DependencyObject obj, TextTrimming value)
@@ -235,7 +235,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static bool GetUseFloatingWatermark(DependencyObject obj)
@@ -248,7 +248,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static void SetUseFloatingWatermark(DependencyObject obj, bool value)
@@ -338,7 +338,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static bool GetAutoWatermark(DependencyObject element)
@@ -366,7 +366,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
         public static void SetAutoWatermark(DependencyObject element, bool value)
@@ -423,7 +423,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         public static bool GetHasText(DependencyObject obj)
         {
             return (bool)obj.GetValue(HasTextProperty);
@@ -435,7 +435,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
         public static void SetHasText(DependencyObject obj, bool value)
         {
             obj.SetValue(HasTextProperty, BooleanBoxes.Box(value));
