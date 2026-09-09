@@ -815,8 +815,24 @@ namespace MahApps.Metro.Controls
         /// <summary>Runs the current value through again, after something around it changed.</summary>
         protected abstract void RefreshFromCurrentValue();
 
-        /// <summary>Whether a value is set at all.</summary>
-        protected abstract bool HasValue { get; }
+        /// <summary>Whether a value is set at all. The value itself is a matter for the typed half.</summary>
+        public abstract bool HasValue { get; }
+
+        /// <summary>Sets the value back to the default value, which is what the clear button does.</summary>
+        public abstract void Clear();
+
+        /// <summary>
+        /// Raised whenever the value changed, saying nothing about what it now is. The typed half has
+        /// an event carrying the value, but that one is a different event per type, so the parts that
+        /// only need to know that something happened cannot subscribe to it.
+        /// </summary>
+        internal event EventHandler? ValueChangedInternal;
+
+        /// <summary>Tells everyone listening that the value changed.</summary>
+        protected void RaiseValueChangedInternal()
+        {
+            this.ValueChangedInternal?.Invoke(this, EventArgs.Empty);
+        }
 
         /// <summary>Drops everything behind the decimal separator, for a control that takes no decimals.</summary>
         protected abstract void TruncateValue();

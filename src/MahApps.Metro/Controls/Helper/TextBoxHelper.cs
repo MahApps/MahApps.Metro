@@ -380,6 +380,9 @@ namespace MahApps.Metro.Controls
                   { typeof(TextBox), TextBox.TextProperty },
                   { typeof(ComboBox), Selector.SelectedItemProperty },
                   { typeof(NumericUpDown), NumericUpDown.ValueProperty },
+                  { typeof(DecimalUpDown), DecimalUpDown.ValueProperty },
+                  { typeof(IntegerUpDown), IntegerUpDown.ValueProperty },
+                  { typeof(LongUpDown), LongUpDown.ValueProperty },
                   { typeof(HotKeyBox), HotKeyBox.HotKeyProperty },
                   { typeof(DatePicker), DatePicker.SelectedDateProperty },
                   { typeof(TimePicker), TimePickerBase.SelectedDateTimeProperty },
@@ -888,18 +891,18 @@ namespace MahApps.Metro.Controls
                     hotKeyBox.HotKeyChanged -= OnHotKeyBoxHotKeyChanged;
                 }
             }
-            else if (d is NumericUpDown numericUpDown)
+            else if (d is NumericUpDownBase numericUpDown)
             {
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
-                    numericUpDown.BeginInvoke(() => OnNumericUpDownValueChanged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
+                    numericUpDown.BeginInvoke(() => OnNumericUpDownValueChanged(numericUpDown, EventArgs.Empty));
 
-                    numericUpDown.ValueChanged += OnNumericUpDownValueChanged;
+                    numericUpDown.ValueChangedInternal += OnNumericUpDownValueChanged;
                 }
                 else
                 {
-                    numericUpDown.ValueChanged -= OnNumericUpDownValueChanged;
+                    numericUpDown.ValueChangedInternal -= OnNumericUpDownValueChanged;
                 }
             }
             else if (d is TimePickerBase timePicker)
@@ -955,9 +958,9 @@ namespace MahApps.Metro.Controls
             SetTextLength(sender as HotKeyBox, hotKeyBox => hotKeyBox.Text?.Length ?? (hotKeyBox.HotKey is not null ? 1 : 0));
         }
 
-        private static void OnNumericUpDownValueChanged(object sender, RoutedEventArgs e)
+        private static void OnNumericUpDownValueChanged(object? sender, EventArgs e)
         {
-            SetTextLength(sender as NumericUpDown, numericUpDown => numericUpDown.Value.HasValue ? 1 : 0);
+            SetTextLength(sender as NumericUpDownBase, numericUpDown => numericUpDown.HasValue ? 1 : 0);
         }
 
         private static void PasswordChanged(object sender, RoutedEventArgs e)

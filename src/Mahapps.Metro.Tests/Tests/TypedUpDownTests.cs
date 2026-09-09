@@ -249,6 +249,61 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window.TheInteger.Value, Is.EqualTo(10));
         }
 
+        [Test]
+        [Description("The clear button empties the control it sits in, whichever type that one holds.")]
+        public void TheClearButtonEmptiesEveryControl()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheDouble.SetCurrentValue(NumericUpDown.ValueProperty, 12d);
+            this.window.TheDecimal.SetCurrentValue(DecimalUpDown.ValueProperty, 12m);
+            this.window.TheInteger.SetCurrentValue(IntegerUpDown.ValueProperty, 12);
+            this.window.TheLong.SetCurrentValue(LongUpDown.ValueProperty, 12L);
+
+            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong };
+
+            foreach (var control in controls)
+            {
+                TextBoxHelper.SetClearTextButton(control, true);
+                ((RoutedCommand)MahAppsCommands.ClearControlCommand).Execute(null, control);
+            }
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.window.TheDouble.Value, Is.Null, "double");
+                    Assert.That(this.window.TheDecimal.Value, Is.Null, "decimal");
+                    Assert.That(this.window.TheInteger.Value, Is.Null, "int");
+                    Assert.That(this.window.TheLong.Value, Is.Null, "long");
+                });
+        }
+
+        [Test]
+        [Description("A monitored control reports whether it holds anything, which is what the watermark goes by.")]
+        public void AMonitoredControlReportsWhetherItHoldsAValue()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong };
+
+            foreach (var control in controls)
+            {
+                TextBoxHelper.SetIsMonitoring(control, true);
+            }
+
+            this.window.TheDouble.SetCurrentValue(NumericUpDown.ValueProperty, 12d);
+            this.window.TheDecimal.SetCurrentValue(DecimalUpDown.ValueProperty, 12m);
+            this.window.TheInteger.SetCurrentValue(IntegerUpDown.ValueProperty, 12);
+            this.window.TheLong.SetCurrentValue(LongUpDown.ValueProperty, 12L);
+
+            Assert.Multiple(() =>
+                {
+                    foreach (var control in controls)
+                    {
+                        Assert.That(TextBoxHelper.GetHasText(control), Is.True, control.GetType().Name);
+                    }
+                });
+        }
+
         private static void StepUp(NumericUpDownBase control)
         {
             control.FindChild<RepeatButton>("PART_NumericUp")?.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));

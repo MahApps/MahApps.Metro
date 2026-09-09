@@ -125,7 +125,14 @@ namespace MahApps.Metro.Controls
         }
 
         /// <inheritdoc />
-        protected override bool HasValue => this.Value.HasValue;
+        public override bool HasValue => this.Value.HasValue;
+
+        /// <inheritdoc />
+        public override void Clear()
+        {
+            this.SetCurrentValue(ValueProperty, this.DefaultValue);
+            this.GetBindingExpression(ValueProperty)?.UpdateSource();
+        }
 
         /// <inheritdoc />
         protected override void TruncateValue()
@@ -408,6 +415,7 @@ namespace MahApps.Metro.Controls
                     }
 
                     this.EnableDisableUpDown();
+                    this.RaiseValueChangedInternal();
 
                     if (!Nullable.Equals(oldValue, newValue))
                     {
@@ -467,6 +475,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.EnableDisableUpDown();
+            this.RaiseValueChangedInternal();
 
             if (!Nullable.Equals(oldValue, newValue))
             {

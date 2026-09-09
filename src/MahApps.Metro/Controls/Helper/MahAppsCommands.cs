@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
             CommandManager.RegisterClassCommandBinding(typeof(TimePickerBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
             CommandManager.RegisterClassCommandBinding(typeof(TextBoxBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
             CommandManager.RegisterClassCommandBinding(typeof(HotKeyBox), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
-            CommandManager.RegisterClassCommandBinding(typeof(NumericUpDown), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(NumericUpDownBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
             CommandManager.RegisterClassCommandBinding(typeof(PasswordBox), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
             CommandManager.RegisterClassCommandBinding(typeof(ColorPickerBase), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
             CommandManager.RegisterClassCommandBinding(typeof(ComboBox), new CommandBinding(ClearControlCommand, (_, args) => ClearControl(args), (_, args) => CanClearControl(args)));
@@ -83,9 +83,8 @@ namespace MahApps.Metro.Controls
                     hotKeyBox.SetCurrentValue(HotKeyBox.HotKeyProperty, null);
                     hotKeyBox.GetBindingExpression(HotKeyBox.HotKeyProperty)?.UpdateSource();
                     break;
-                case NumericUpDown numericUpDown:
-                    numericUpDown.SetCurrentValue(NumericUpDown.ValueProperty, numericUpDown.DefaultValue);
-                    numericUpDown.GetBindingExpression(NumericUpDown.ValueProperty)?.UpdateSource();
+                case NumericUpDownBase numericUpDown:
+                    numericUpDown.Clear();
                     break;
                 case TextBox textBox:
                     textBox.Clear();

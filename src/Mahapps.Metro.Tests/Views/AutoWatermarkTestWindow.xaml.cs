@@ -29,6 +29,15 @@ namespace MahApps.Metro.Tests.Views
         public double? NumericUpDownValue { get; set; }
 
         [Display(Prompt = "AutoWatermark")]
+        public decimal? DecimalUpDownValue { get; set; }
+
+        [Display(Prompt = "AutoWatermark")]
+        public int? IntegerUpDownValue { get; set; }
+
+        [Display(Prompt = "AutoWatermark")]
+        public long? LongUpDownValue { get; set; }
+
+        [Display(Prompt = "AutoWatermark")]
         public DateTime? DatePickerDate { get; set; }
 
         [Display(Prompt = "AutoWatermark")]
