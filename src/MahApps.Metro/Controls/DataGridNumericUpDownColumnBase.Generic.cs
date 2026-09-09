@@ -2,8 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using MahApps.Metro.Converters;
 
 namespace MahApps.Metro.Controls
 {
@@ -72,6 +75,18 @@ namespace MahApps.Metro.Controls
             get => (T)this.GetValue(IntervalProperty);
             set => this.SetValue(IntervalProperty, value);
         }
+
+        /// <summary>
+        /// The one control this column keeps for itself, never shown and never in a tree, purely to be
+        /// asked how a value would look. Making one is cheap; what costs is the template, and that is
+        /// only applied to a control that is put on screen.
+        /// </summary>
+        private readonly TControl formatter = new TControl();
+
+        private IMultiValueConverter? textConverter;
+
+        /// <inheritdoc />
+        protected override IMultiValueConverter TextConverter => this.textConverter ??= new NumericValueToTextConverter<T>(this.formatter);
 
         /// <inheritdoc />
         protected override NumericUpDownBase TakeOrMakeControl(DataGridCell? cell)
