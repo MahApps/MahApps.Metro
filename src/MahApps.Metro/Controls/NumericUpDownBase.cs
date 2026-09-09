@@ -9,7 +9,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
@@ -1089,10 +1088,7 @@ namespace MahApps.Metro.Controls
         /// <param name="textBox">The TextBox which will be used for the correction</param>
         /// <param name="mode">The decimal correction mode.</param>
         /// <param name="culture">The culture with the decimal-point information.</param>
-        /// <remarks>
-        /// Typical "async-void" pattern as "fire-and-forget" behavior.
-        /// </remarks>
-        private static async void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
+        private static void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
         {
             // Select the proper decimal-point string upon the context
             string? replace;
@@ -1122,8 +1118,6 @@ namespace MahApps.Metro.Controls
 
                 TextCompositionManager.StartComposition(tc);
             }
-
-            await Task.FromResult(true);
         }
 
         private void OnTextBoxLostFocus(object? sender, RoutedEventArgs e)
