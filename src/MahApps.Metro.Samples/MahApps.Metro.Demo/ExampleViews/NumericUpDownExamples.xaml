@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:MetroDemo"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:valueConverter="clr-namespace:MetroDemo.ValueConverter"
              d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="800"
              d:DesignWidth="1000"
@@ -14,6 +15,8 @@
 
     <UserControl.Resources>
         <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+
+        <valueConverter:ToTargetTypeConverter x:Key="ToTargetTypeConverter" />
 
         <ObjectDataProvider x:Key="NumericInputValues"
                             MethodName="GetValues"
@@ -357,10 +360,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Non-Nullable">
-                        <mah:NumericUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:NumericUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                            Style="{StaticResource DemoUpDownSettings}"
                                            Value="{Binding NumericUpDownValue}" />
                     </mah:MetroHeader>
@@ -368,10 +371,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Nullable, Fluent style">
-                        <mah:NumericUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:NumericUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                            Style="{StaticResource DemoUpDownSettings.Fluent}"
                                            Value="{Binding NullableNumericUpDownValue}" />
                     </mah:MetroHeader>
@@ -397,10 +400,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Non-Nullable">
-                        <mah:DecimalUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:DecimalUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                            Style="{StaticResource DemoUpDownSettings}"
                                            Value="{Binding DecimalUpDownValue}" />
                     </mah:MetroHeader>
@@ -408,10 +411,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Nullable, Fluent style">
-                        <mah:DecimalUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:DecimalUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                            Style="{StaticResource DemoUpDownSettings.Fluent}"
                                            Value="{Binding NullableDecimalUpDownValue}" />
                     </mah:MetroHeader>
@@ -437,10 +440,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Non-Nullable">
-                        <mah:IntegerUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:IntegerUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                            Style="{StaticResource DemoUpDownSettings}"
                                            Value="{Binding IntegerUpDownValue}" />
                     </mah:MetroHeader>
@@ -448,10 +451,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Nullable, Fluent style">
-                        <mah:IntegerUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:IntegerUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                           Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                            Style="{StaticResource DemoUpDownSettings.Fluent}"
                                            Value="{Binding NullableIntegerUpDownValue}" />
                     </mah:MetroHeader>
@@ -477,10 +480,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Non-Nullable">
-                        <mah:LongUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                        Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                        Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                        Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:LongUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                        Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                        Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                        Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                         Style="{StaticResource DemoUpDownSettings}"
                                         Value="{Binding LongUpDownValue}" />
                     </mah:MetroHeader>
@@ -488,10 +491,10 @@
                     <mah:MetroHeader mah:HeaderedControlHelper.HeaderFontWeight="Bold"
                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.Accent}"
                                      Header="Nullable, Fluent style">
-                        <mah:LongUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay}"
-                                        Interval="{Binding UpDownSettings.Interval, Mode=OneWay}"
-                                        Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay}"
-                                        Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay}"
+                        <mah:LongUpDown DefaultValue="{Binding UpDownSettings.DefaultValue, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                        Interval="{Binding UpDownSettings.Interval, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                        Maximum="{Binding UpDownSettings.EffectiveMaximum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
+                                        Minimum="{Binding UpDownSettings.EffectiveMinimum, Mode=OneWay, Converter={StaticResource ToTargetTypeConverter}}"
                                         Style="{StaticResource DemoUpDownSettings.Fluent}"
                                         Value="{Binding NullableLongUpDownValue}" />
                     </mah:MetroHeader>
