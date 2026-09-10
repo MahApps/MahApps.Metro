@@ -1,0 +1,21 @@
+﻿<tests:TestWindow x:Class="MahApps.Metro.Tests.Views.HwndHostWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  d:DesignHeight="300"
+                  d:DesignWidth="300"
+                  mc:Ignorable="d">
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="TheFlyout"
+                        Width="200"
+                        AreAnimationsEnabled="False"
+                        Header="Flyout"
+                        Position="Right" />
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+    <Grid x:Name="TheContent" />
+</tests:TestWindow>

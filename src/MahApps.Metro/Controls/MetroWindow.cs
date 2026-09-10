@@ -86,6 +86,118 @@ namespace MahApps.Metro.Controls
         private EventHandler? onOverlayFadeInStoryboardCompleted = null;
         private EventHandler? onOverlayFadeOutStoryboardCompleted = null;
 
+        /// <summary>Identifies the <see cref="CollapseHwndHosts"/> dependency property.</summary>
+        public static readonly DependencyProperty CollapseHwndHostsProperty
+            = DependencyProperty.Register(nameof(CollapseHwndHosts),
+                                          typeof(bool),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnCollapseHwndHostsChanged));
+
+        private static void OnCollapseHwndHostsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as MetroWindow)?.RefreshHwndHosts();
+        }
+
+        /// <summary>
+        /// Gets or sets whether every <see cref="HwndHost"/> in this window, a WindowsFormsHost or a
+        /// WebBrowser for instance, is collapsed for as long as a dialog or a <see cref="Flyout"/> is open.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// A hosted window handle is a window of its own sitting on top of this one. It paints over the WPF
+        /// content around it whatever the z order says, so a dialog or a Flyout drawn over it is cut in
+        /// half. There is nothing to arrange here: the only way to show them whole is for the handle to be
+        /// gone while they are up. The price is that whatever the handle hosts disappears and comes back,
+        /// which is why this is off by default.
+        /// </para>
+        /// <para>
+        /// The way out of this was pointed at by @batzen in GH-3849: Fluent.Ribbon has the same trouble with
+        /// its Backstage, which is drawn in an adorner, and collapses every HwndHost in the window while the
+        /// Backstage is open. See Fluent.Ribbon, Controls/Backstage.cs, CollapseWindowsFormsHosts.
+        /// </para>
+        /// </remarks>
+        public bool CollapseHwndHosts
+        {
+            get => (bool)this.GetValue(CollapseHwndHostsProperty);
+            set => this.SetValue(CollapseHwndHostsProperty, BooleanBoxes.Box(value));
+        }
+
+        private readonly Dictionary<FrameworkElement, Visibility> hostsOutOfSight = new();
+        private bool hwndHostsAreOutOfSight;
+
+        /// <summary>
+        /// Takes the hosted window handles out of sight while a dialog or a <see cref="Flyout"/> is open, and
+        /// gives them back once nothing is left covering them.
+        /// </summary>
+        internal void RefreshHwndHosts()
+        {
+            var somethingIsOverThem = this.IsAnyDialogOpen
+                                      || this.Flyouts?.GetFlyouts().Any(flyout => flyout.IsOpen) == true;
+
+            if (this.CollapseHwndHosts && somethingIsOverThem)
+            {
+                this.HideHwndHosts();
+            }
+            else
+            {
+                this.ShowHwndHosts();
+            }
+        }
+
+        private void HideHwndHosts()
+        {
+            if (this.hwndHostsAreOutOfSight)
+            {
+                return;
+            }
+
+            this.hwndHostsAreOutOfSight = true;
+
+            CollectHwndHosts(this, this.hostsOutOfSight);
+
+            foreach (var host in this.hostsOutOfSight.Keys)
+            {
+                host.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ShowHwndHosts()
+        {
+            if (!this.hwndHostsAreOutOfSight)
+            {
+                return;
+            }
+
+            this.hwndHostsAreOutOfSight = false;
+
+            foreach (var host in this.hostsOutOfSight)
+            {
+                host.Key.Visibility = host.Value;
+            }
+
+            this.hostsOutOfSight.Clear();
+        }
+
+        private static void CollectHwndHosts(DependencyObject parent, IDictionary<FrameworkElement, Visibility> found)
+        {
+            if (parent is HwndHost host)
+            {
+                if (host.Visibility != Visibility.Collapsed)
+                {
+                    found[host] = host.Visibility;
+                }
+
+                // What a hosted handle draws is not ours, so there is nothing below it to walk into.
+                return;
+            }
+
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < count; i++)
+            {
+                CollectHwndHosts(VisualTreeHelper.GetChild(parent, i), found);
+            }
+        }
+
         /// <summary>Identifies the <see cref="ShowIconOnTitleBar"/> dependency property.</summary>
         public static readonly DependencyProperty ShowIconOnTitleBarProperty
             = DependencyProperty.Register(nameof(ShowIconOnTitleBar),
@@ -1168,6 +1280,10 @@ namespace MahApps.Metro.Controls
 
             this.DataContextChanged += this.MetroWindow_DataContextChanged;
             this.Loaded += this.MetroWindow_Loaded;
+
+            // A Flyout closes over a quarter of a second. Giving the handles back the moment it is told to
+            // close would let them pop up in front of it while it is still on its way out.
+            this.AddHandler(Flyout.ClosingFinishedEvent, new RoutedEventHandler((_, _) => this.RefreshHwndHosts()));
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -1706,6 +1822,11 @@ namespace MahApps.Metro.Controls
             if (this.flyoutModal != null)
             {
                 this.flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
+            }
+
+            if (visibleFlyouts.Count > 0)
+            {
+                this.RefreshHwndHosts();
             }
 
             this.RaiseEvent(new FlyoutStatusChangedRoutedEventArgs(FlyoutsStatusChangedEvent, this) { ChangedFlyout = flyout });

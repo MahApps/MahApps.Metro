@@ -459,6 +459,8 @@ namespace MahApps.Metro.Controls.Dialogs
             window.metroActiveDialogContainer.Children.Add(dialog); //add the dialog to the container}
 
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.TrueBox);
+
+            window.RefreshHwndHosts();
         }
 
         private static void RemoveDialog(this MetroWindow window, BaseMetroDialog dialog)
@@ -491,6 +493,8 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(window.metroActiveDialogContainer.Children.Count > 0));
+
+            window.RefreshHwndHosts();
 
             dialog.ResetOwningWindow();
         }
