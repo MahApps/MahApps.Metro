@@ -755,36 +755,75 @@ namespace MahApps.Metro.Controls
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDownBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDownBase), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
 
-            EventManager.RegisterClassHandler(typeof(NumericUpDownBase), GotFocusEvent, new RoutedEventHandler(OnGotFocus));
         }
 
         /// <summary>
-        ///     Called when this element or any below gets focus.
+        /// What <see cref="Control.IsTabStop"/> was before the text box took the focus, kept so it can be
+        /// given back exactly as the consumer left it.
         /// </summary>
-        private static void OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            // When NumericUpDownBase gets logical focus, select the text inside us.
-            // If we're an editable NumericUpDownBase, forward focus to the TextBox element
-            if (!e.Handled)
-            {
-                NumericUpDownBase numericUpDown = (NumericUpDownBase)sender;
-                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown.Focusable && e.OriginalSource == numericUpDown)
-                {
-                    // MoveFocus takes a TraversalRequest as its argument.
-                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
-                    // Gets the element with keyboard focus.
-                    // And change the keyboard focus.
-                    if (Keyboard.FocusedElement is UIElement elementWithFocus)
-                    {
-                        elementWithFocus.MoveFocus(request);
-                    }
-                    else
-                    {
-                        numericUpDown.Focus();
-                    }
+        private bool? tabStopWhileTheTextBoxHadTheFocus;
 
-                    e.Handled = true;
+        /// <summary>
+        /// Sends the keyboard focus on to the text box, since that is the only part of this control
+        /// anything can be typed into, and takes the control out of the tab order for as long as the
+        /// text box holds it.
+        /// </summary>
+        /// <remarks>
+        /// This is answered on the way in rather than after the fact. Handling GotFocus only catches
+        /// the focus entering from outside, and the focus manager putting it back on the control when
+        /// a window is activated is not that: it never left. It also used to move on from whatever
+        /// held the focus at the time, which is not necessarily this control, so the focus could land
+        /// anywhere at all.
+        /// </remarks>
+        protected override void OnPreviewGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
+            base.OnPreviewGotKeyboardFocus(e);
+
+            if (!e.Handled
+                && ReferenceEquals(e.NewFocus, this)
+                && this.valueTextBox is not null
+                && (this.InterceptManualEnter || this.IsReadOnly)
+                )
+            {
+                e.Handled = true;
+                Keyboard.Focus(this.valueTextBox);
+                return;
+            }
+
+            this.StandInTheTabOrder(!ReferenceEquals(e.NewFocus, this.valueTextBox));
+        }
+
+        /// <inheritdoc />
+        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsKeyboardFocusWithinChanged(e);
+
+            if (!(bool)e.NewValue)
+            {
+                this.StandInTheTabOrder(true);
+            }
+        }
+
+        /// <summary>
+        /// Whether tab navigation may stop on the control itself. It may not while the text box has the
+        /// focus, or tab and shift tab would carry the focus out of the text box, up to the control, and
+        /// straight back into the text box by the line above. Out of the tab order, the control is
+        /// passed over and the focus reaches the neighbour, which is where it was going.
+        /// </summary>
+        private void StandInTheTabOrder(bool stand)
+        {
+            if (stand)
+            {
+                if (this.tabStopWhileTheTextBoxHadTheFocus is { } asItWas)
+                {
+                    this.tabStopWhileTheTextBoxHadTheFocus = null;
+                    this.SetCurrentValue(IsTabStopProperty, BooleanBoxes.Box(asItWas));
                 }
+            }
+            else if (this.tabStopWhileTheTextBoxHadTheFocus is null)
+            {
+                this.tabStopWhileTheTextBoxHadTheFocus = this.IsTabStop;
+                this.SetCurrentValue(IsTabStopProperty, BooleanBoxes.FalseBox);
             }
         }
 
