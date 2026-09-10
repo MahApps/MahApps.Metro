@@ -52,6 +52,15 @@ namespace MahApps.Metro.Controls
             };
         }
 
+        /// <summary>
+        /// Whether this is the box a DataGrid put into a cell to edit in. Such a box hands its text over
+        /// when the grid says so, after CellEditEnding, and writing it through here would get there first.
+        /// </summary>
+        private static bool IsEditingADataGridCell(DependencyObject element)
+        {
+            return element.TryFindParent<DataGridCell>() is { IsEditing: true };
+        }
+
         private static void ClearControl(RoutedEventArgs args)
         {
             if (args.Handled)
@@ -88,7 +97,11 @@ namespace MahApps.Metro.Controls
                     break;
                 case TextBox textBox:
                     textBox.Clear();
-                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    if (!IsEditingADataGridCell(textBox))
+                    {
+                        textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    }
+
                     break;
                 case PasswordBox passwordBox:
                     passwordBox.Clear();
