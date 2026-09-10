@@ -312,6 +312,7 @@
                             <TextBox x:Name="PART_EditableTextBox"
                                      Grid.Row="1"
                                      Grid.Column="0"
+                                     AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
                                      Margin="0"
                                      Padding="{TemplateBinding Padding}"
                                      HorizontalAlignment="Stretch"
