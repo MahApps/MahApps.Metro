@@ -366,7 +366,7 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (this.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Theme:
-                    ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, theme);
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
@@ -379,13 +379,13 @@ namespace MahApps.Metro.Controls.Dialogs
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
                     }
 
-                    ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, theme);
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground"));
                     break;
 
                 case MetroDialogColorScheme.Accented:
-                    ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, theme);
                     this.SetCurrentValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Background.Accent"));
                     this.SetCurrentValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Dialog.Foreground.Accent"));
                     break;
