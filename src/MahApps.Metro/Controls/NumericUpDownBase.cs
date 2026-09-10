@@ -256,9 +256,55 @@ namespace MahApps.Metro.Controls
 
                 if (e.NewValue is string format && !string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
                 {
-                    numericUpDown.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
-                    numericUpDown.SetCurrentValue(NumericInputModeProperty, numericUpDown.NumericInputMode | NumericInput.Decimal);
+                    numericUpDown.ReadHexadecimal();
                 }
+                else
+                {
+                    numericUpDown.StopReadingHexadecimal();
+                }
+            }
+        }
+
+        /// <summary>
+        /// What the parsing style and the input mode were before a hexadecimal string format took them
+        /// over, kept so they can be given back when the format stops being hexadecimal.
+        /// </summary>
+        private (NumberStyles ParsingNumberStyle, NumericInput NumericInputMode)? beforeTheFormatReadHexadecimal;
+
+        /// <summary>
+        /// A hexadecimal format only shows what a hexadecimal parse reads back, so the parsing follows the
+        /// format. What it replaces is written down first.
+        /// </summary>
+        private void ReadHexadecimal()
+        {
+            this.beforeTheFormatReadHexadecimal ??= (this.ParsingNumberStyle, this.NumericInputMode);
+
+            this.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
+            this.SetCurrentValue(NumericInputModeProperty, this.NumericInputMode | NumericInput.Decimal);
+        }
+
+        /// <summary>
+        /// Gives back what the hexadecimal format took over, so that a format changed back to a plain one
+        /// reads plain numbers again. Only what the format itself set is given back: anything changed
+        /// since then is the consumer's own and is left alone.
+        /// </summary>
+        private void StopReadingHexadecimal()
+        {
+            if (this.beforeTheFormatReadHexadecimal is not { } asItWas)
+            {
+                return;
+            }
+
+            this.beforeTheFormatReadHexadecimal = null;
+
+            if (this.ParsingNumberStyle == NumberStyles.HexNumber)
+            {
+                this.SetCurrentValue(ParsingNumberStyleProperty, asItWas.ParsingNumberStyle);
+            }
+
+            if (this.NumericInputMode == (asItWas.NumericInputMode | NumericInput.Decimal))
+            {
+                this.SetCurrentValue(NumericInputModeProperty, asItWas.NumericInputMode);
             }
         }
 

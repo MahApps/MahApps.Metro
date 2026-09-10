@@ -417,6 +417,68 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(textBox.Text, Is.EqualTo(expectedText));
         }
 
+        /// <summary>
+        /// GH-4499: a string format that stops being hexadecimal hands the parsing back to plain numbers.
+        /// </summary>
+        [Test]
+        public void ShouldParseDecimalTextInputAgainWhenTheStringFormatLeavesHexadecimal()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheNUD.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheNUD.NumericInputMode = NumericInput.Numbers;
+            this.window.TheNUD.ParsingNumberStyle = NumberStyles.Any;
+
+            this.window.TheNUD.StringFormat = "{}0x{0:X}";
+            Assert.That(this.window.TheNUD.ParsingNumberStyle, Is.EqualTo(NumberStyles.HexNumber), "a hexadecimal format reads hexadecimal");
+
+            this.window.TheNUD.StringFormat = string.Empty;
+
+            Assert.That(this.window.TheNUD.ParsingNumberStyle, Is.EqualTo(NumberStyles.Any), "the style it had before the format should be back");
+            Assert.That(this.window.TheNUD.NumericInputMode, Is.EqualTo(NumericInput.Numbers), "and so should the input mode");
+
+            SetText(textBox, "10");
+
+            Assert.That(this.window.TheNUD.Value, Is.EqualTo(10d), "ten is ten again, not sixteen");
+        }
+
+        /// <summary>
+        /// GH-4499: a parsing style set while the format was hexadecimal belongs to the consumer and stays.
+        /// </summary>
+        [Test]
+        public void ShouldKeepAParsingNumberStyleSetWhileTheStringFormatWasHexadecimal()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheNUD.ParsingNumberStyle = NumberStyles.Any;
+            this.window.TheNUD.StringFormat = "{}0x{0:X}";
+
+            this.window.TheNUD.ParsingNumberStyle = NumberStyles.Integer;
+
+            this.window.TheNUD.StringFormat = string.Empty;
+
+            Assert.That(this.window.TheNUD.ParsingNumberStyle, Is.EqualTo(NumberStyles.Integer), "what was set last should be left alone");
+        }
+
+        /// <summary>
+        /// GH-4499: one hexadecimal format after another still remembers what came before the first.
+        /// </summary>
+        [Test]
+        public void ShouldRememberTheParsingNumberStyleFromBeforeTheFirstHexadecimalStringFormat()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheNUD.ParsingNumberStyle = NumberStyles.Float;
+
+            this.window.TheNUD.StringFormat = "{}0x{0:X}";
+            this.window.TheNUD.StringFormat = "X8";
+            this.window.TheNUD.StringFormat = "N2";
+
+            Assert.That(this.window.TheNUD.ParsingNumberStyle, Is.EqualTo(NumberStyles.Float));
+        }
+
         private static void SetText(TextBox theTextBox, string theText)
         {
             TypeText(theTextBox, theText);
