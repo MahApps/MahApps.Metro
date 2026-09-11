@@ -33,6 +33,24 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Runs the action on the thread the dispatcher object belongs to.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// A dispatcher that is on its way out takes nothing on any more, and asking it to would throw a
+        /// cancelled task at whoever asked. That happens to a window on a thread of its own whose
+        /// dispatcher is shut down while the window is still standing: it is still on the events it
+        /// subscribed to, and the next one raised would bring the application down. There is nobody left
+        /// to run the action for such a window, so it is not run.
+        /// </para>
+        /// <para>
+        /// Both halves of the shutdown are asked about, the way CommandManager does it before it queues
+        /// its requery. A dispatcher torn down through WM_DESTROY goes straight to the end of the
+        /// shutdown without ever passing the start, so it finishes with HasShutdownFinished set and
+        /// HasShutdownStarted still clear.
+        /// </para>
+        /// </remarks>
         public static void Invoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction)
         {
             if (dispatcherObject is null)
@@ -49,7 +67,7 @@ namespace MahApps.Metro.Controls
             {
                 invokeAction();
             }
-            else
+            else if (!dispatcherObject.Dispatcher.HasShutdownStarted && !dispatcherObject.Dispatcher.HasShutdownFinished)
             {
                 dispatcherObject.Dispatcher.Invoke(invokeAction);
             }
