@@ -15,7 +15,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="MetroHeader_SharedSizeGroup_Header" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_Header"
