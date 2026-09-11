@@ -337,6 +337,29 @@
                     <TextBlock Margin="4" Text="The whole header answers the mouse, and the glyph sits inside it." />
                 </Expander>
 
+                <Grid MinHeight="150" Margin="0 0 0 16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Expander Grid.Column="0"
+                              Margin="0 0 8 0"
+                              ExpandDirection="Right"
+                              Header="Expander"
+                              IsExpanded="True"
+                              Style="{StaticResource DemoExpander}">
+                        <TextBlock Margin="4" Text="The whole header answers the mouse, and the glyph sits inside it." />
+                    </Expander>
+                    <Expander Grid.Column="1"
+                              Margin="8 0 0 0"
+                              ExpandDirection="Left"
+                              Header="Expander"
+                              IsExpanded="True"
+                              Style="{StaticResource DemoExpander}">
+                        <TextBlock Margin="4" Text="The whole header answers the mouse, and the glyph sits inside it." />
+                    </Expander>
+                </Grid>
+
                 <mah:MetroHeader Margin="0 0 0 16"
                                  Header="MetroHeader"
                                  Style="{StaticResource DemoMetroHeader}">

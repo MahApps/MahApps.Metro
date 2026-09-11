@@ -45,7 +45,7 @@
                             <Grid x:Name="Glyph"
                                   Margin="0 0 0 4"
                                   RenderTransformOrigin="0.5 0.5"
-                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -80,7 +80,17 @@
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <mah:ContentControlEx.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="-90" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </mah:ContentControlEx.LayoutTransform>
+                            </mah:ContentControlEx>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -126,7 +136,7 @@
                             <Grid x:Name="Glyph"
                                   Margin="0 0 4 0"
                                   RenderTransformOrigin="0.5 0.5"
-                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -206,7 +216,7 @@
                             <Grid x:Name="Glyph"
                                   Margin="0 0 0 4"
                                   RenderTransformOrigin="0.5 0.5"
-                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -241,7 +251,17 @@
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <mah:ContentControlEx.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="90" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </mah:ContentControlEx.LayoutTransform>
+                            </mah:ContentControlEx>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -285,7 +305,7 @@
                             <Grid x:Name="Glyph"
                                   Margin="0 0 4 0"
                                   RenderTransformOrigin="0.5 0.5"
-                                  Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Ellipse x:Name="Circle"
                                          Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
                                          Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
@@ -400,6 +420,7 @@
                                                   HorizontalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  mah:ExpanderHelper.ShowToggleButton="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton)}"
                                                   Content="{TemplateBinding Header}"
                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
