@@ -1028,6 +1028,21 @@ namespace MahApps.Metro.Controls
             this.valueTextBox?.SelectAll();
         }
 
+        /// <summary>
+        /// Puts the given text in place of what the control holds and leaves the caret behind it, the way
+        /// a text box does when typing is what started the editing.
+        /// </summary>
+        internal void TakeTypedText(string text)
+        {
+            if (this.valueTextBox is null)
+            {
+                return;
+            }
+
+            this.valueTextBox.Text = text;
+            this.valueTextBox.Select(text.Length, 0);
+        }
+
         private void RaiseChangeDelay()
         {
             this.RaiseEvent(new RoutedEventArgs(DelayChangedEvent));
