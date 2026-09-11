@@ -5,10 +5,12 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -114,7 +116,44 @@ namespace MahApps.Metro.Controls
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
+            // A cell hands what is typed on it to its column through DataGridColumn.OnInput, which is
+            // where DataGridTextColumn starts editing. That one is internal to WPF and cannot be
+            // overridden from here, so the cell is asked directly instead.
+            cell.PreviewTextInput -= OnCellTextInput;
+            cell.PreviewTextInput += OnCellTextInput;
+
             return this.GenerateTextBlock(cell);
+        }
+
+        /// <summary>
+        /// Typing on a cell that is only showing its value starts editing it, the same way a text column
+        /// behaves.
+        /// </summary>
+        private static void OnCellTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Handled
+                || sender is not DataGridCell cell
+                || cell.IsEditing
+                || !HasSomethingToType(e.Text))
+            {
+                return;
+            }
+
+            if (cell.TryFindParent<DataGrid>()?.BeginEdit(e) == true)
+            {
+                // The character has been dealt with by the editor that just opened. Letting it travel on
+                // would put it in a second time.
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Whether there is anything in the text worth starting an edit for. Escape reaches here as text
+        /// when nothing else took it, and opening an editor on escape would puzzle anyone.
+        /// </summary>
+        private static bool HasSomethingToType(string? text)
+        {
+            return !string.IsNullOrEmpty(text) && text!.Any(character => character != '');
         }
 
         /// <summary>Says what a value looks like in this column, for the cell that only shows it.</summary>
@@ -237,8 +276,20 @@ namespace MahApps.Metro.Controls
             if (editingElement is NumericUpDownBase numericUpDown)
             {
                 numericUpDown.Focus();
-                numericUpDown.SelectAll();
-                return this.ValueOf(numericUpDown);
+
+                var unedited = this.ValueOf(numericUpDown);
+
+                if (editingEventArgs is TextCompositionEventArgs typed && HasSomethingToType(typed.Text))
+                {
+                    // Typing is what started this, so what was typed is what the control shows.
+                    numericUpDown.TakeTypedText(typed.Text);
+                }
+                else
+                {
+                    numericUpDown.SelectAll();
+                }
+
+                return unedited;
             }
 
             return null;

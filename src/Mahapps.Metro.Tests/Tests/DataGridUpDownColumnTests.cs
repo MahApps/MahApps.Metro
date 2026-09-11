@@ -2,9 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
@@ -273,6 +276,109 @@ namespace MahApps.Metro.Tests.Tests
                         Assert.That(content.Style.TargetType.IsInstanceOfType(content), Is.True, content.GetType().Name);
                     }
                 });
+        }
+
+        /// <summary>The cell of a column in the first row, whether it is being edited or not.</summary>
+        private DataGridCell Cell(int column)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var grid = this.window.TheGrid;
+            grid.CancelEdit(DataGridEditingUnit.Cell);
+            grid.CancelEdit(DataGridEditingUnit.Row);
+            grid.CurrentCell = new DataGridCellInfo(grid.Items[0], grid.Columns[column]);
+            grid.UpdateLayout();
+
+            var cell = Descendants(grid).OfType<DataGridCell>().FirstOrDefault(c => ReferenceEquals(c.Column, grid.Columns[column]));
+            Assert.That(cell, Is.Not.Null, "column " + column + " should have a cell in the first row");
+            return cell!;
+        }
+
+        /// <summary>Types the text at the cell the way a keyboard would.</summary>
+        private static void Type(DataGridCell cell, string text)
+        {
+            cell.RaiseEvent(new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, cell, text))
+                            {
+                                RoutedEvent = UIElement.PreviewTextInputEvent
+                            });
+        }
+
+        private static TextBox? TextBoxIn(DependencyObject? root)
+        {
+            return root is null ? null : Descendants(root).OfType<TextBox>().FirstOrDefault();
+        }
+
+        private static System.Collections.Generic.IEnumerable<DependencyObject> Descendants(DependencyObject root)
+        {
+            var count = VisualTreeHelper.GetChildrenCount(root);
+            for (var i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(root, i);
+                yield return child;
+
+                foreach (var deeper in Descendants(child))
+                {
+                    yield return deeper;
+                }
+            }
+        }
+
+        /// <summary>
+        /// GH-4432: a text column is edited by typing on it, without pressing F2 first, and a column of
+        /// ours should be no different.
+        /// </summary>
+        [TestCase(0, TestName = "typing on a double column")]
+        [TestCase(1, TestName = "typing on a decimal column")]
+        [TestCase(2, TestName = "typing on an integer column")]
+        [TestCase(3, TestName = "typing on a long column")]
+        public void TypingOnACellStartsEditingAndKeepsWhatWasTyped(int column)
+        {
+            var cell = this.Cell(column);
+            Assume.That(cell.IsEditing, Is.False, "the cell should not be edited yet");
+
+            Type(cell, "7");
+            this.window!.TheGrid.UpdateLayout();
+
+            Assert.That(cell.IsEditing, Is.True, "typing is what starts the editing");
+
+            var control = this.EditingContentOfTheCurrentCell(column);
+            Assert.That(control, Is.Not.Null, "the cell should hold the control to edit in");
+
+            var box = TextBoxIn(control);
+            Assert.That(box, Is.Not.Null, "and that control should have a box to type into");
+            Assert.That(box!.Text, Is.EqualTo("7"), "what was typed is what stands there");
+            Assert.That(box.CaretIndex, Is.EqualTo(1), "and the caret is behind it, not in front");
+        }
+
+        [Test]
+        [Description("GH-4432: escape reaches a cell as text when nothing else took it, and it starts nothing.")]
+        public void EscapeOnACellStartsNothing()
+        {
+            var cell = this.Cell(0);
+
+            Type(cell, "");
+            this.window!.TheGrid.UpdateLayout();
+
+            Assert.That(cell.IsEditing, Is.False);
+        }
+
+        [Test]
+        [Description("GH-4432: a cell that is edited without typing still offers its value for replacing.")]
+        public void EditingWithoutTypingSelectsTheValue()
+        {
+            var content = this.EditingContent(0);
+            var box = TextBoxIn(content);
+
+            Assert.That(box, Is.Not.Null);
+            Assert.That(box!.SelectedText, Is.EqualTo(box.Text), "all of it, so the next key replaces it");
+        }
+
+        private FrameworkElement? EditingContentOfTheCurrentCell(int column)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var grid = this.window.TheGrid;
+            return grid.Columns[column].GetCellContent(grid.Items[0]);
         }
 
         [Test]
