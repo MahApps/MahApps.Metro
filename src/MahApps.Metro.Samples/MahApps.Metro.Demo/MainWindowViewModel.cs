@@ -385,6 +385,8 @@ namespace MetroDemo
 
         public NumericUpDownSettings UpDownSettings { get; } = new NumericUpDownSettings();
 
+        public HeaderSettings HeaderSettings { get; } = new HeaderSettings();
+
         public ICommand EndOfScrollReachedCmdWithParameter { get; }
 
         public int? IntegerGreater10Property

@@ -410,6 +410,10 @@
                 </ScrollViewer>
             </TabItem>
 
+            <TabItem Header="header">
+                <exampleViews:HeaderExamples DataContext="{Binding}" />
+            </TabItem>
+
             <TabItem Header="others">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
