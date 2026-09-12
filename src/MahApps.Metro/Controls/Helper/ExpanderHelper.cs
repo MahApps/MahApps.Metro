@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using MahApps.Metro.ValueBoxes;
 
@@ -47,6 +48,96 @@ namespace MahApps.Metro.Controls
         public static void SetShowToggleButton(DependencyObject element, bool value)
         {
             element.SetValue(ShowToggleButtonProperty, BooleanBoxes.Box(value));
+        }
+
+        public static readonly DependencyProperty ToggleButtonForegroundProperty
+            = DependencyProperty.RegisterAttached("ToggleButtonForeground",
+                                                  typeof(Brush),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="ToggleButtonForegroundProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ToggleButtonForegroundProperty"/> from.</param>
+        /// <remarks>Gets the brush the circle and the arrow of the toggle button are drawn with at rest. Left unset, they take the foreground of the header, which is the colour that reads on whatever the header is painted with.</remarks>
+        /// <returns>ToggleButtonForeground property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static Brush? GetToggleButtonForeground(DependencyObject element)
+        {
+            return (Brush?)element.GetValue(ToggleButtonForegroundProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ToggleButtonForegroundProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ToggleButtonForegroundProperty"/> on.</param>
+        /// <param name="value">ToggleButtonForeground property value.</param>
+        /// <remarks>Sets the brush the circle and the arrow of the toggle button are drawn with at rest. Left unset, they take the foreground of the header, which is the colour that reads on whatever the header is painted with.</remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetToggleButtonForeground(DependencyObject element, Brush? value)
+        {
+            element.SetValue(ToggleButtonForegroundProperty, value);
+        }
+
+        public static readonly DependencyProperty ToggleButtonForegroundMouseOverProperty
+            = DependencyProperty.RegisterAttached("ToggleButtonForegroundMouseOver",
+                                                  typeof(Brush),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="ToggleButtonForegroundMouseOverProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ToggleButtonForegroundMouseOverProperty"/> from.</param>
+        /// <remarks>Gets the brush the circle and the arrow of the toggle button are drawn with while the mouse is over the header. Left unset, they keep the colour they have at rest.</remarks>
+        /// <returns>ToggleButtonForegroundMouseOver property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static Brush? GetToggleButtonForegroundMouseOver(DependencyObject element)
+        {
+            return (Brush?)element.GetValue(ToggleButtonForegroundMouseOverProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ToggleButtonForegroundMouseOverProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ToggleButtonForegroundMouseOverProperty"/> on.</param>
+        /// <param name="value">ToggleButtonForegroundMouseOver property value.</param>
+        /// <remarks>Sets the brush the circle and the arrow of the toggle button are drawn with while the mouse is over the header. Left unset, they keep the colour they have at rest.</remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetToggleButtonForegroundMouseOver(DependencyObject element, Brush? value)
+        {
+            element.SetValue(ToggleButtonForegroundMouseOverProperty, value);
+        }
+
+        public static readonly DependencyProperty ToggleButtonForegroundPressedProperty
+            = DependencyProperty.RegisterAttached("ToggleButtonForegroundPressed",
+                                                  typeof(Brush),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="ToggleButtonForegroundPressedProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ToggleButtonForegroundPressedProperty"/> from.</param>
+        /// <remarks>Gets the brush the circle and the arrow of the toggle button are drawn with while the expander is open. Left unset, they keep the colour they have at rest.</remarks>
+        /// <returns>ToggleButtonForegroundPressed property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static Brush? GetToggleButtonForegroundPressed(DependencyObject element)
+        {
+            return (Brush?)element.GetValue(ToggleButtonForegroundPressedProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ToggleButtonForegroundPressedProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ToggleButtonForegroundPressedProperty"/> on.</param>
+        /// <param name="value">ToggleButtonForegroundPressed property value.</param>
+        /// <remarks>Sets the brush the circle and the arrow of the toggle button are drawn with while the expander is open. Left unset, they keep the colour they have at rest.</remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetToggleButtonForegroundPressed(DependencyObject element, Brush? value)
+        {
+            element.SetValue(ToggleButtonForegroundPressedProperty, value);
         }
 
         public static readonly DependencyProperty HeaderUpStyleProperty

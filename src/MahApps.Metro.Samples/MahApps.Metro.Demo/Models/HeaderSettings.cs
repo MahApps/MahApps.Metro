@@ -70,6 +70,13 @@ namespace MetroDemo.Models
 
             this.headerBackgroundChoice = this.BackgroundChoices[0];
             this.headerForegroundChoice = this.ForegroundChoices[0];
+            this.headerBackgroundMouseOverChoice = this.BackgroundChoices[0];
+            this.headerBackgroundPressedChoice = this.BackgroundChoices[0];
+            this.headerForegroundMouseOverChoice = this.ForegroundChoices[0];
+            this.headerForegroundPressedChoice = this.ForegroundChoices[0];
+            this.toggleButtonForegroundChoice = this.ForegroundChoices[0];
+            this.toggleButtonForegroundMouseOverChoice = this.ForegroundChoices[0];
+            this.toggleButtonForegroundPressedChoice = this.ForegroundChoices[0];
         }
 
         /// <summary>
@@ -111,6 +118,69 @@ namespace MetroDemo.Models
         {
             get => this.headerForegroundChoice;
             set => this.Set(ref this.headerForegroundChoice, value);
+        }
+
+        private BrushChoice? headerBackgroundMouseOverChoice;
+
+        /// <summary>The brush while the mouse is over the header. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? HeaderBackgroundMouseOverChoice
+        {
+            get => this.headerBackgroundMouseOverChoice;
+            set => this.Set(ref this.headerBackgroundMouseOverChoice, value);
+        }
+
+        private BrushChoice? headerBackgroundPressedChoice;
+
+        /// <summary>The brush while the header is held down. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? HeaderBackgroundPressedChoice
+        {
+            get => this.headerBackgroundPressedChoice;
+            set => this.Set(ref this.headerBackgroundPressedChoice, value);
+        }
+
+        private BrushChoice? headerForegroundMouseOverChoice;
+
+        /// <summary>The brush for the text while the mouse is over the header. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? HeaderForegroundMouseOverChoice
+        {
+            get => this.headerForegroundMouseOverChoice;
+            set => this.Set(ref this.headerForegroundMouseOverChoice, value);
+        }
+
+        private BrushChoice? headerForegroundPressedChoice;
+
+        /// <summary>The brush for the text while the header is held down. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? HeaderForegroundPressedChoice
+        {
+            get => this.headerForegroundPressedChoice;
+            set => this.Set(ref this.headerForegroundPressedChoice, value);
+        }
+
+        private BrushChoice? toggleButtonForegroundChoice;
+
+        /// <summary>The brush for the glyph of an expander. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? ToggleButtonForegroundChoice
+        {
+            get => this.toggleButtonForegroundChoice;
+            set => this.Set(ref this.toggleButtonForegroundChoice, value);
+        }
+
+        private BrushChoice? toggleButtonForegroundMouseOverChoice;
+
+        /// <summary>The brush for the glyph while the mouse is over the header. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? ToggleButtonForegroundMouseOverChoice
+        {
+            get => this.toggleButtonForegroundMouseOverChoice;
+            set => this.Set(ref this.toggleButtonForegroundMouseOverChoice, value);
+        }
+
+        private BrushChoice? toggleButtonForegroundPressedChoice;
+
+        /// <summary>The brush for the glyph while the header is held down. The first entry hands nothing over, and the header stays as it is.</summary>
+        public BrushChoice? ToggleButtonForegroundPressedChoice
+        {
+            get => this.toggleButtonForegroundPressedChoice;
+            set => this.Set(ref this.toggleButtonForegroundPressedChoice, value);
         }
 
         private FontFamily? headerFontFamily = new("Segoe UI");

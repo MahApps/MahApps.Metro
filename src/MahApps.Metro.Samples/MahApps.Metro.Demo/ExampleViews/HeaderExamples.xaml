@@ -70,10 +70,14 @@
                TargetType="{x:Type GroupBox}">
             <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{Binding HeaderSettings.ContentCharacterCasing, Mode=OneWay}" />
             <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding HeaderSettings.CornerRadius, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundMouseOver" Value="{Binding HeaderSettings.HeaderBackgroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundPressed" Value="{Binding HeaderSettings.HeaderBackgroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding HeaderSettings.HeaderFontFamily, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding HeaderSettings.HeaderFontSize, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontStretch" Value="{Binding HeaderSettings.HeaderFontStretch, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding HeaderSettings.HeaderFontWeight, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{Binding HeaderSettings.HeaderForegroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundPressed" Value="{Binding HeaderSettings.HeaderForegroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="{Binding HeaderSettings.HeaderHorizontalContentAlignment, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding HeaderSettings.HeaderMargin, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding HeaderSettings.HeaderVerticalContentAlignment, Mode=OneWay}" />
@@ -94,10 +98,17 @@
             <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{Binding HeaderSettings.ContentCharacterCasing, Mode=OneWay}" />
             <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding HeaderSettings.CornerRadius, Mode=OneWay}" />
             <Setter Property="mah:ExpanderHelper.ShowToggleButton" Value="{Binding HeaderSettings.ShowToggleButton, Mode=OneWay}" />
+            <Setter Property="mah:ExpanderHelper.ToggleButtonForeground" Value="{Binding HeaderSettings.ToggleButtonForegroundChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:ExpanderHelper.ToggleButtonForegroundMouseOver" Value="{Binding HeaderSettings.ToggleButtonForegroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:ExpanderHelper.ToggleButtonForegroundPressed" Value="{Binding HeaderSettings.ToggleButtonForegroundPressedChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundMouseOver" Value="{Binding HeaderSettings.HeaderBackgroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundPressed" Value="{Binding HeaderSettings.HeaderBackgroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding HeaderSettings.HeaderFontFamily, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding HeaderSettings.HeaderFontSize, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontStretch" Value="{Binding HeaderSettings.HeaderFontStretch, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding HeaderSettings.HeaderFontWeight, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{Binding HeaderSettings.HeaderForegroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundPressed" Value="{Binding HeaderSettings.HeaderForegroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="{Binding HeaderSettings.HeaderHorizontalContentAlignment, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding HeaderSettings.HeaderMargin, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding HeaderSettings.HeaderVerticalContentAlignment, Mode=OneWay}" />
@@ -116,10 +127,14 @@
                BasedOn="{StaticResource MahApps.Styles.MetroHeader}"
                TargetType="{x:Type mah:MetroHeader}">
             <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{Binding HeaderSettings.ContentCharacterCasing, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundMouseOver" Value="{Binding HeaderSettings.HeaderBackgroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundPressed" Value="{Binding HeaderSettings.HeaderBackgroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding HeaderSettings.HeaderFontFamily, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding HeaderSettings.HeaderFontSize, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontStretch" Value="{Binding HeaderSettings.HeaderFontStretch, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding HeaderSettings.HeaderFontWeight, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{Binding HeaderSettings.HeaderForegroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundPressed" Value="{Binding HeaderSettings.HeaderForegroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="{Binding HeaderSettings.HeaderHorizontalContentAlignment, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding HeaderSettings.HeaderMargin, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding HeaderSettings.HeaderVerticalContentAlignment, Mode=OneWay}" />
@@ -156,10 +171,14 @@
         <Style x:Key="DemoTabControl"
                BasedOn="{StaticResource MahApps.Styles.TabControl}"
                TargetType="{x:Type TabControl}">
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundMouseOver" Value="{Binding HeaderSettings.HeaderBackgroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundPressed" Value="{Binding HeaderSettings.HeaderBackgroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{Binding HeaderSettings.HeaderFontFamily, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{Binding HeaderSettings.HeaderFontSize, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontStretch" Value="{Binding HeaderSettings.HeaderFontStretch, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding HeaderSettings.HeaderFontWeight, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{Binding HeaderSettings.HeaderForegroundMouseOverChoice.Brush, Mode=OneWay}" />
+            <Setter Property="mah:HeaderedControlHelper.HeaderForegroundPressed" Value="{Binding HeaderSettings.HeaderForegroundPressedChoice.Brush, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="{Binding HeaderSettings.HeaderHorizontalContentAlignment, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding HeaderSettings.HeaderMargin, Mode=OneWay}" />
             <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding HeaderSettings.HeaderVerticalContentAlignment, Mode=OneWay}" />
@@ -234,7 +253,64 @@
                                       SelectedItem="{Binding HeaderSettings.HeaderForegroundChoice}" />
                         </mah:MetroHeader>
 
+                        <mah:MetroHeader Header="Background, touched" ToolTip="HeaderedControlHelper.HeaderBackgroundMouseOver">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.BackgroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.HeaderBackgroundMouseOverChoice}" />
+                        </mah:MetroHeader>
+
+                        <mah:MetroHeader Header="Background, held down" ToolTip="HeaderedControlHelper.HeaderBackgroundPressed">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.BackgroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.HeaderBackgroundPressedChoice}" />
+                        </mah:MetroHeader>
+
+                        <mah:MetroHeader Header="Foreground, touched" ToolTip="HeaderedControlHelper.HeaderForegroundMouseOver">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.ForegroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.HeaderForegroundMouseOverChoice}" />
+                        </mah:MetroHeader>
+
+                        <mah:MetroHeader Header="Foreground, held down" ToolTip="HeaderedControlHelper.HeaderForegroundPressed">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.ForegroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.HeaderForegroundPressedChoice}" />
+                        </mah:MetroHeader>
+
                         <TextBlock Style="{StaticResource Note}" Text="Left as it is, each control keeps the header colours its own style gives it, and an automatic foreground works out black or white from what is behind it." />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="The glyph of an expander">
+                    <StackPanel>
+                        <mah:MetroHeader Header="At rest" ToolTip="ExpanderHelper.ToggleButtonForeground">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.ForegroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.ToggleButtonForegroundChoice}" />
+                        </mah:MetroHeader>
+
+                        <mah:MetroHeader Header="Touched" ToolTip="ExpanderHelper.ToggleButtonForegroundMouseOver">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.ForegroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.ToggleButtonForegroundMouseOverChoice}" />
+                        </mah:MetroHeader>
+
+                        <mah:MetroHeader Header="Held down" ToolTip="ExpanderHelper.ToggleButtonForegroundPressed">
+                            <ComboBox Margin="{StaticResource ControlMargin}"
+                                      ItemTemplate="{StaticResource BrushEntry}"
+                                      ItemsSource="{Binding HeaderSettings.ForegroundChoices, Mode=OneTime}"
+                                      SelectedItem="{Binding HeaderSettings.ToggleButtonForegroundPressedChoice}" />
+                        </mah:MetroHeader>
+
+                        <TextBlock Margin="0"
+                                   Style="{StaticResource Note}"
+                                   Text="These three paint the circle and the arrow alone, and they come from ExpanderHelper rather than from the header. Left as they are, the glyph follows the foreground of the header." />
                     </StackPanel>
                 </GroupBox>
 

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <Style x:Key="MahApps.Styles.MetroHeader" TargetType="{x:Type mah:MetroHeader}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -54,6 +55,21 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!--  The header takes a colour of its own while the mouse is over it, if somebody set one.  -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=PART_Header, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_Header" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=PART_Header, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="HeaderContent" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
                         <Trigger Property="Orientation" Value="Horizontal">
                             <Setter TargetName="PART_Content" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_Content" Property="Grid.ColumnSpan" Value="1" />
