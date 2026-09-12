@@ -43,46 +43,8 @@
             <Style x:Key="MahApps.Styles.MetroHeader.Horizontal"
                    BasedOn="{StaticResource MahApps.Styles.MetroHeader}"
                    TargetType="mah:MetroHeader">
+                <Setter Property="Orientation" Value="Horizontal" />
                 <Setter Property="Padding" Value="0 2" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="mah:MetroHeader">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="HeaderGroup" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0" Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}">
-                                    <mah:ContentControlEx x:Name="PART_Header"
-                                                          Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
-                                                          HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
-                                                          VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
-                                                          Content="{TemplateBinding Header}"
-                                                          ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
-                                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
-                                                          FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
-                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
-                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
-                                                          IsTabStop="False"
-                                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </Grid>
-                                <Grid Grid.Column="1" Background="{TemplateBinding Background}">
-                                    <ContentPresenter x:Name="PART_Content"
-                                                      Margin="{TemplateBinding Padding}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      ContentSource="Content"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </Grid>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
                 <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 4 0" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
             </Style>

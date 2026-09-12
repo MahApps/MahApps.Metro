@@ -10,6 +10,12 @@
 
     <Thickness x:Key="ExpanderHeaderThemePadding">3</Thickness>
     <system:Double x:Key="ExpanderToggleButtonEllipseThemeSize">18</system:Double>
+    <system:Double x:Key="ExpanderToggleButtonEllipseThemeStrokeThickness">1</system:Double>
+    <system:Double x:Key="ExpanderToggleButtonEllipseThemeStrokeThicknessMouseOver">2</system:Double>
+    <system:Double x:Key="ExpanderToggleButtonEllipseThemeStrokeThicknessPressed">2</system:Double>
+    <system:Double x:Key="ExpanderToggleButtonArrowThemeStrokeThickness">2</system:Double>
+    <system:Double x:Key="ExpanderToggleButtonArrowThemeStrokeThicknessMouseOver">2</system:Double>
+    <system:Double x:Key="ExpanderToggleButtonArrowThemeStrokeThicknessPressed">2</system:Double>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Base" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
@@ -28,10 +34,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid Margin="{TemplateBinding Padding}"
                               Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -39,7 +42,12 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Grid Margin="0 0 0 4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid x:Name="Glyph"
+                                  Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Margin="0 0 0 4"
+                                  RenderTransformOrigin="0.5 0.5"
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -50,18 +58,17 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="Circle"
-                                         Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="{TemplateBinding Foreground}" />
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThickness}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThickness}" />
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
                                                   Margin="0"
@@ -73,22 +80,58 @@
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <mah:ContentControlEx.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="-90" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </mah:ContentControlEx.LayoutTransform>
+                            </mah:ContentControlEx>
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
+                        <!--  GH-4386: the glyph keeps the foreground in every state, the ring and the size are what answer a touch  -->
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessMouseOver}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessMouseOver}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Glyph" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.85" ScaleY="0.85" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
+                        <!--  A colour of its own for the glyph, if somebody set one. Left unset, it keeps the foreground of the header.  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -103,9 +146,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid Margin="{TemplateBinding Padding}"
                               Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -113,7 +154,12 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid Margin="0 0 4 0" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid x:Name="Glyph"
+                                  Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Margin="0 0 4 0"
+                                  RenderTransformOrigin="0.5 0.5"
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -124,18 +170,17 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="Circle"
-                                         Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="{TemplateBinding Foreground}" />
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThickness}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThickness}" />
                             </Grid>
                             <mah:ContentControlEx Grid.Column="1"
                                                   Margin="0"
@@ -149,20 +194,46 @@
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
+                        <!--  GH-4386: the glyph keeps the foreground in every state, the ring and the size are what answer a touch  -->
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessMouseOver}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessMouseOver}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Glyph" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.85" ScaleY="0.85" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
+                        <!--  A colour of its own for the glyph, if somebody set one. Left unset, it keeps the foreground of the header.  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -176,9 +247,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid Margin="{TemplateBinding Padding}"
                               Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -186,7 +255,12 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Grid Margin="0 0 0 4" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid x:Name="Glyph"
+                                  Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Margin="0 0 0 4"
+                                  RenderTransformOrigin="0.5 0.5"
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
@@ -197,18 +271,17 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="Circle"
-                                         Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="{TemplateBinding Foreground}" />
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThickness}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThickness}" />
                             </Grid>
                             <mah:ContentControlEx Grid.Row="1"
                                                   Margin="0"
@@ -220,22 +293,58 @@
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <mah:ContentControlEx.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="90" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </mah:ContentControlEx.LayoutTransform>
+                            </mah:ContentControlEx>
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
+                        <!--  GH-4386: the glyph keeps the foreground in every state, the ring and the size are what answer a touch  -->
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessMouseOver}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessMouseOver}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Glyph" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.85" ScaleY="0.85" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
+                        <!--  A colour of its own for the glyph, if somebody set one. Left unset, it keeps the foreground of the header.  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -248,9 +357,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid Margin="{TemplateBinding Padding}"
                               Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -258,20 +365,24 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid Margin="0 0 4 0" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid x:Name="Glyph"
+                                  Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
+                                  Margin="0 0 4 0"
+                                  RenderTransformOrigin="0.5 0.5"
+                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Ellipse x:Name="Circle"
-                                         Width="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         Height="{DynamicResource ExpanderToggleButtonEllipseThemeSize}"
-                                         HorizontalAlignment="Center"
-                                         VerticalAlignment="Center"
-                                         Stroke="{TemplateBinding Foreground}" />
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThickness}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThickness}" />
                             </Grid>
                             <mah:ContentControlEx Grid.Column="1"
                                                   Margin="0"
@@ -285,20 +396,46 @@
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
+                        <!--  GH-4386: the glyph keeps the foreground in every state, the ring and the size are what answer a touch  -->
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessMouseOver}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessMouseOver}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
+                            <Setter TargetName="Arrow" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonArrowThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="{DynamicResource ExpanderToggleButtonEllipseThemeStrokeThicknessPressed}" />
+                            <Setter TargetName="Glyph" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.85" ScaleY="0.85" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
+                        <!--  A colour of its own for the glyph, if somebody set one. Left unset, it keeps the foreground of the header.  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -351,33 +488,49 @@
                                     DockPanel.Dock="Top"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     UseLayoutRounding="True">
-                                <ToggleButton x:Name="ToggleSite"
-                                              Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
-                                              HorizontalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
-                                              VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
-                                              mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
-                                              Content="{TemplateBinding Header}"
-                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                              FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
-                                              FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
-                                              FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
-                                              FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderDownStyle)}"
-                                              UseLayoutRounding="False">
-                                    <ToggleButton.Foreground>
-                                        <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
-                                            <Binding Mode="OneWay"
-                                                     Path="(mah:HeaderedControlHelper.HeaderBackground)"
-                                                     RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Mode="OneWay"
-                                                     Path="(mah:HeaderedControlHelper.HeaderForeground)"
-                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                <Grid x:Name="ContentGrid">
+                                    <Grid.Clip>
+                                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                            <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                            <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                            <Binding ElementName="HeaderSite" Path="CornerRadius" />
+                                            <Binding ElementName="HeaderSite" Path="BorderThickness" />
+                                            <Binding ElementName="HeaderSite" Path="Padding" />
                                         </MultiBinding>
-                                    </ToggleButton.Foreground>
-                                </ToggleButton>
+                                    </Grid.Clip>
+                                    <ToggleButton x:Name="ToggleSite"
+                                                  Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                                  HorizontalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                                  mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  mah:ExpanderHelper.ShowToggleButton="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton)}"
+                                                  mah:ExpanderHelper.ToggleButtonForeground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground)}"
+                                                  mah:ExpanderHelper.ToggleButtonForegroundMouseOver="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver)}"
+                                                  mah:ExpanderHelper.ToggleButtonForegroundPressed="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed)}"
+                                                  Content="{TemplateBinding Header}"
+                                                  ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                  FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
+                                                  FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
+                                                  FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
+                                                  FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                                  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderDownStyle)}"
+                                                  UseLayoutRounding="False">
+                                        <ToggleButton.Foreground>
+                                            <MultiBinding Converter="{x:Static mahConverters:BackgroundToForegroundConverter.Instance}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:HeaderedControlHelper.HeaderBackground)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:HeaderedControlHelper.HeaderForeground)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </ToggleButton.Foreground>
+                                    </ToggleButton>
+                                </Grid>
                             </Border>
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -432,6 +585,36 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="ExpandSite" Property="Opacity" Value="0" />
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Collapsed" />
+                        </MultiDataTrigger>
+
+                        <!--  The header takes a colour of its own while the mouse is over it or while it is held down, if somebody set one.  -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=ToggleSite, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=ToggleSite, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ToggleSite" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=ToggleSite, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderBackgroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderBackgroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=ToggleSite, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ToggleSite" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundPressed), Mode=OneWay}" />
                         </MultiDataTrigger>
 
                         <Trigger Property="ExpandDirection" Value="Right">

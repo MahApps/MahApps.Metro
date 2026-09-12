@@ -74,6 +74,134 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderBackgroundProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderBackgroundMouseOverProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderBackgroundMouseOver",
+                typeof(Brush),
+                typeof(HeaderedControlHelper),
+                new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the value of the background the header is painted with while the mouse is over it. Left unset, the header keeps
+        /// the one it has at rest.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush? GetHeaderBackgroundMouseOver(UIElement element)
+        {
+            return (Brush?)element.GetValue(HeaderBackgroundMouseOverProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the background the header is painted with while the mouse is over it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static void SetHeaderBackgroundMouseOver(UIElement element, Brush? value)
+        {
+            element.SetValue(HeaderBackgroundMouseOverProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderBackgroundPressedProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderBackgroundPressed",
+                typeof(Brush),
+                typeof(HeaderedControlHelper),
+                new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the value of the background the header is painted with while it is the one selected. Left unset, the header keeps
+        /// the one it has at rest.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush? GetHeaderBackgroundPressed(UIElement element)
+        {
+            return (Brush?)element.GetValue(HeaderBackgroundPressedProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the background the header is painted with while it is the one selected.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static void SetHeaderBackgroundPressed(UIElement element, Brush? value)
+        {
+            element.SetValue(HeaderBackgroundPressedProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderForegroundMouseOverProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderForegroundMouseOver",
+                typeof(Brush),
+                typeof(HeaderedControlHelper),
+                new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the value of the foreground the header is painted with while the mouse is over it. Left unset, the header keeps
+        /// the one it has at rest.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush? GetHeaderForegroundMouseOver(UIElement element)
+        {
+            return (Brush?)element.GetValue(HeaderForegroundMouseOverProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the foreground the header is painted with while the mouse is over it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static void SetHeaderForegroundMouseOver(UIElement element, Brush? value)
+        {
+            element.SetValue(HeaderForegroundMouseOverProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderForegroundPressedProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderForegroundPressed",
+                typeof(Brush),
+                typeof(HeaderedControlHelper),
+                new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the value of the foreground the header is painted with while it is the one selected. Left unset, the header keeps
+        /// the one it has at rest.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush? GetHeaderForegroundPressed(UIElement element)
+        {
+            return (Brush?)element.GetValue(HeaderForegroundPressedProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the foreground the header is painted with while it is the one selected.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static void SetHeaderForegroundPressed(UIElement element, Brush? value)
+        {
+            element.SetValue(HeaderForegroundPressedProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderFontFamilyProperty
             = DependencyProperty.RegisterAttached(
                 "HeaderFontFamily",

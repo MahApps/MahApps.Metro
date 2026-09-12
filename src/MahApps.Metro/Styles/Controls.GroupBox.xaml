@@ -72,6 +72,23 @@
                                               UseLayoutRounding="False" />
                         </Border>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--  The header takes a colour of its own while the mouse is over it, if somebody set one.  -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=HeaderSite, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=HeaderSite, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="HeaderContent" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
