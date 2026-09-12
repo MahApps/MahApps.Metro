@@ -1,0 +1,34 @@
+﻿<Application x:Class="MahApps.Metro.Demo_v2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:local="clr-namespace:MahApps.Metro.Demo_v2"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+
+                <!--  DemoView  -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Demo_v2;component/Themes/DemoView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style BasedOn="{StaticResource {x:Type avalon:TextArea}}" TargetType="{x:Type avalon:TextArea}">
+                <Setter Property="SelectionBorder">
+                    <Setter.Value>
+                        <Pen Brush="{DynamicResource MahApps.Brushes.Highlight}" Thickness="1" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="SelectionBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity="0.7" Color="{DynamicResource MahApps.Colors.Highlight}" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="SelectionForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
