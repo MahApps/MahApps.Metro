@@ -183,7 +183,7 @@ namespace MetroDemo.Models
             set => this.Set(ref this.toggleButtonForegroundPressedChoice, value);
         }
 
-        private FontFamily? headerFontFamily = new("Segoe UI");
+        private FontFamily? headerFontFamily = new FontFamily("Segoe UI");
 
         public FontFamily? HeaderFontFamily
         {
