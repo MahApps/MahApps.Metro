@@ -332,8 +332,8 @@ namespace MahApps.Metro.Controls
         /// Defaults to 0, which lets them meet.
         /// </summary>
         /// <remarks>
-        /// This is about the values. For the smallest width the selected range may be drawn with,
-        /// see <see cref="MinRangeWidth"/>.
+        /// This is about the values, and about them alone: where it holds the two apart, the range
+        /// between them is drawn the width that distance is worth on the track.
         /// </remarks>
         [Bindable(true)]
         [Category("Common")]
@@ -345,20 +345,16 @@ namespace MahApps.Metro.Controls
 
         private static void MinRangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var value = (double)e.NewValue;
-            if (value < 0)
-            {
-                value = 0;
-            }
-
             var slider = (RangeSlider)dependencyObject;
-            dependencyObject.CoerceValue(MinRangeProperty);
-            slider._internalUpdate = true;
-            slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + value);
-            slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
-            slider._internalUpdate = false;
 
+            // Pushing the upper value out by hand used to write a local value, which beats whatever a
+            // style has to say for the rest of the control's life. Written in XAML before the style,
+            // as a formatter that sorts attributes by name will do, MinRange therefore swallowed the
+            // range the style was about to hand over. Coercing says the same thing without taking the
+            // property away from its owner: CoerceUpperValue keeps it MinRange above the lower one.
+            slider.CoerceValue(MinRangeProperty);
             slider.CoerceValue(UpperValueProperty);
+            slider.CoerceValue(LowerValueProperty);
 
             RaiseValueChangedEvents(dependencyObject);
 
@@ -383,59 +379,33 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="MinRangeWidth"/> dependency property.</summary>
+        [Obsolete(MinRangeWidthIsGone)]
         public static readonly DependencyProperty MinRangeWidthProperty
             = DependencyProperty.Register(nameof(MinRangeWidth),
                                           typeof(double),
                                           typeof(RangeSlider),
-                                          new FrameworkPropertyMetadata(30d, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
+                                          new FrameworkPropertyMetadata(30d));
 
         /// <summary>
-        /// Get/sets the smallest width, in device-independent pixels, that the middle thumb between
-        /// the two other thumbs may be drawn with. It is coerced to at most half of the track.
-        /// Defaults to 30, so even an empty range stays visible and can be grabbed.
+        /// Does nothing. It used to be the smallest width the range between the two thumbs could be
+        /// drawn with, and it was taken off the track before the values were laid out on it, which
+        /// moved both thumbs off the tick their value belongs to. A range of nothing is drawn as
+        /// nothing now, and the two thumbs meet; either of them opens the range again when it is
+        /// pulled the way it can go. Setting this changes neither the values nor the drawing.
         /// </summary>
-        /// <remarks>
-        /// This is about the drawing, not about the values: <see cref="LowerValue"/> and
-        /// <see cref="UpperValue"/> can still be equal while the thumbs stay this far apart, and the
-        /// width is taken off the track before the values are mapped onto it. For the smallest
-        /// distance between the values, see <see cref="MinRange"/>.
-        /// </remarks>
         [Bindable(true)]
         [Category("Common")]
+        [Obsolete(MinRangeWidthIsGone)]
         public double MinRangeWidth
         {
+#pragma warning disable CS0618
             get => (double)this.GetValue(MinRangeWidthProperty);
             set => this.SetValue(MinRangeWidthProperty, value);
+#pragma warning restore CS0618
         }
 
-        private static void MinRangeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            (sender as RangeSlider)?.ReCalculateSize();
-        }
-
-        [MustUseReturnValue]
-        private static object CoerceMinRangeWidth(DependencyObject d, object? baseValue)
-        {
-            if (d is RangeSlider rangeSlider && baseValue is double value)
-            {
-                if (rangeSlider._leftThumb != null && rangeSlider._rightThumb != null)
-                {
-                    double width;
-                    if (rangeSlider.Orientation == Orientation.Horizontal)
-                    {
-                        width = rangeSlider.ActualWidth - rangeSlider._leftThumb.ActualWidth - rangeSlider._rightThumb.ActualWidth;
-                    }
-                    else
-                    {
-                        width = rangeSlider.ActualHeight - rangeSlider._leftThumb.ActualHeight - rangeSlider._rightThumb.ActualHeight;
-                    }
-
-                    return value > width / 2 ? width / 2 : value;
-                }
-            }
-
-            return baseValue ?? 0D;
-        }
+        private const string MinRangeWidthIsGone
+            = "MinRangeWidth no longer does anything and will be removed. An empty range is drawn as nothing, the two thumbs meet, and either of them opens the range again. Remove it; there is nothing to put in its place.";
 
         private static bool IsValidMinRange(object? value)
         {
@@ -828,7 +798,14 @@ namespace MahApps.Metro.Controls
             return baseValue ?? 0D;
         }
 
-        protected double MovableRange => this.Maximum - this.Minimum - this.MinRange;
+        /// <summary>
+        /// The values the track is shared out over, which is all of them. <see cref="MinRange"/> used to
+        /// be taken off here, and that gave the two thumbs a scale of their own: the lower one reached
+        /// the end of the track at Maximum minus MinRange, so a range of exactly MinRange was drawn as
+        /// a sliver wherever it stood. MinRange says how close the two values may get and nothing about
+        /// where either of them is drawn.
+        /// </summary>
+        protected double MovableRange => this.Maximum - this.Minimum;
 
         #endregion
 
@@ -845,6 +822,7 @@ namespace MahApps.Metro.Controls
         private StackPanel _visualElementsContainer = null!;
         private FrameworkElement _container = null!;
         private double _movableWidth;
+
         private readonly DispatcherTimer _timer;
         private uint _tickCount;
         private double _currentpoint;
@@ -907,6 +885,7 @@ namespace MahApps.Metro.Controls
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
             this.CoerceValue(SelectionStartProperty);
+            this.CoerceTheRangeAgainstTheNewEnds();
             this.ReCalculateSize();
         }
 
@@ -918,7 +897,41 @@ namespace MahApps.Metro.Controls
         {
             this.CoerceValue(SelectionStartProperty);
             this.CoerceValue(SelectionEndProperty);
+            this.CoerceTheRangeAgainstTheNewEnds();
             this.ReCalculateSize();
+        }
+
+        /// <summary>
+        /// Asks the three properties that are measured against the ends of the range what they make of
+        /// them now. Until Minimum and Maximum are known, they are the 0 and 1 that RangeBase hands
+        /// out, and anything set before that was cut down to fit into it.
+        /// </summary>
+        private void CoerceTheRangeAgainstTheNewEnds()
+        {
+            this.CoerceValue(MinRangeProperty);
+            this.CoerceValue(LowerValueProperty);
+            this.CoerceValue(UpperValueProperty);
+        }
+
+        /// <summary>
+        /// What a thumb takes out of the track. It hangs over the ends by half its width so that its
+        /// middle is the point its value stands for, and a negative margin is what does that, so the
+        /// room it really occupies is the two put together.
+        /// </summary>
+        private static double RoomTakenBy(FrameworkElement thumb, Orientation orientation)
+        {
+            return orientation == Orientation.Horizontal
+                ? Math.Max(thumb.ActualWidth + thumb.Margin.Left + thumb.Margin.Right, 0)
+                : Math.Max(thumb.ActualHeight + thumb.Margin.Top + thumb.Margin.Bottom, 0);
+        }
+
+        /// <summary>
+        /// How far the middle of a thumb lies from the end of the track it belongs to. With the overhang
+        /// of the templates this is nothing, so the point under the mouse is the value it stands for.
+        /// </summary>
+        private static double HalfOfTheRoomTakenBy(FrameworkElement thumb, Orientation orientation)
+        {
+            return RoomTakenBy(thumb, orientation) / 2;
         }
 
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double change, Orientation orientation)
@@ -933,17 +946,29 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void MoveThumb(FrameworkElement x, FrameworkElement y, double change, Orientation orientation, out Direction direction)
+        /// <summary>
+        /// Which way a drag moves the value. Standing upright a value grows towards the top, so the
+        /// same movement of the mouse means the opposite of what it means lying down.
+        /// </summary>
+        private static Direction DirectionOf(double change, Orientation orientation)
         {
-            direction = Direction.Increase;
             if (orientation == Orientation.Horizontal)
             {
-                direction = change < 0 ? Direction.Decrease : Direction.Increase;
+                return change < 0 ? Direction.Decrease : Direction.Increase;
+            }
+
+            return change < 0 ? Direction.Increase : Direction.Decrease;
+        }
+
+        private static void MoveThumb(FrameworkElement x, FrameworkElement y, double change, Orientation orientation, out Direction direction)
+        {
+            direction = DirectionOf(change, orientation);
+            if (orientation == Orientation.Horizontal)
+            {
                 MoveThumbHorizontal(x, y, change);
             }
             else if (orientation == Orientation.Vertical)
             {
-                direction = change < 0 ? Direction.Increase : Direction.Decrease;
                 MoveThumbVertical(x, y, change);
             }
         }
@@ -1073,7 +1098,7 @@ namespace MahApps.Metro.Controls
             {
                 if (this.Orientation == Orientation.Horizontal)
                 {
-                    this._movableWidth = Math.Max(this.ActualWidth - this._rightThumb.ActualWidth - this._leftThumb.ActualWidth - this.MinRangeWidth, 1);
+                    this._movableWidth = Math.Max(this.ActualWidth - RoomTakenBy(this._rightThumb, Orientation.Horizontal) - RoomTakenBy(this._leftThumb, Orientation.Horizontal), 1);
                     if (this.MovableRange <= 0)
                     {
                         this._leftButton.Width = double.NaN;
@@ -1085,18 +1110,19 @@ namespace MahApps.Metro.Controls
                         this._rightButton.Width = Math.Max(this._movableWidth * (this.Maximum - this.UpperValue) / this.MovableRange, 0);
                     }
 
+                    var acrossHorizontal = RoomTakenBy(this._rightThumb, Orientation.Horizontal) + RoomTakenBy(this._leftThumb, Orientation.Horizontal);
                     if (IsValidDouble(this._rightButton.Width) && IsValidDouble(this._leftButton.Width))
                     {
-                        this._centerThumb.Width = Math.Max(this.ActualWidth - (this._leftButton.Width + this._rightButton.Width + this._rightThumb.ActualWidth + this._leftThumb.ActualWidth), 0);
+                        this._centerThumb.Width = Math.Max(this.ActualWidth - (this._leftButton.Width + this._rightButton.Width + acrossHorizontal), 0);
                     }
                     else
                     {
-                        this._centerThumb.Width = Math.Max(this.ActualWidth - (this._rightThumb.ActualWidth + this._leftThumb.ActualWidth), 0);
+                        this._centerThumb.Width = Math.Max(this.ActualWidth - acrossHorizontal, 0);
                     }
                 }
                 else if (this.Orientation == Orientation.Vertical)
                 {
-                    this._movableWidth = Math.Max(this.ActualHeight - this._rightThumb.ActualHeight - this._leftThumb.ActualHeight - this.MinRangeWidth, 1);
+                    this._movableWidth = Math.Max(this.ActualHeight - RoomTakenBy(this._rightThumb, Orientation.Vertical) - RoomTakenBy(this._leftThumb, Orientation.Vertical), 1);
                     if (this.MovableRange <= 0)
                     {
                         this._leftButton.Height = double.NaN;
@@ -1108,13 +1134,14 @@ namespace MahApps.Metro.Controls
                         this._rightButton.Height = Math.Max(this._movableWidth * (this.Maximum - this.UpperValue) / this.MovableRange, 0);
                     }
 
+                    var acrossVertical = RoomTakenBy(this._rightThumb, Orientation.Vertical) + RoomTakenBy(this._leftThumb, Orientation.Vertical);
                     if (IsValidDouble(this._rightButton.Height) && IsValidDouble(this._leftButton.Height))
                     {
-                        this._centerThumb.Height = Math.Max(this.ActualHeight - (this._leftButton.Height + this._rightButton.Height + this._rightThumb.ActualHeight + this._leftThumb.ActualHeight), 0);
+                        this._centerThumb.Height = Math.Max(this.ActualHeight - (this._leftButton.Height + this._rightButton.Height + acrossVertical), 0);
                     }
                     else
                     {
-                        this._centerThumb.Height = Math.Max(this.ActualHeight - (this._rightThumb.ActualHeight + this._leftThumb.ActualHeight), 0);
+                        this._centerThumb.Height = Math.Max(this.ActualHeight - acrossVertical, 0);
                     }
                 }
 
@@ -1391,8 +1418,8 @@ namespace MahApps.Metro.Controls
                 {
                     this.RightButtonMouseDown();
                 }
-                else if (position.X > (this._leftButton.ActualWidth + this._leftThumb.ActualWidth) &&
-                         position.X < (this.ActualWidth - (this._rightButton.ActualWidth + this._rightThumb.ActualWidth)))
+                else if (position.X > (this._leftButton.ActualWidth + RoomTakenBy(this._leftThumb, Orientation.Horizontal)) &&
+                         position.X < (this.ActualWidth - (this._rightButton.ActualWidth + RoomTakenBy(this._rightThumb, Orientation.Horizontal))))
                 {
                     this.CentralThumbMouseDown();
                 }
@@ -1407,8 +1434,8 @@ namespace MahApps.Metro.Controls
                 {
                     this.RightButtonMouseDown();
                 }
-                else if (position.Y > (this._rightButton.ActualHeight + this._rightButton.ActualHeight) &&
-                         position.Y < (this.ActualHeight - (this._leftButton.ActualHeight + this._leftThumb.ActualHeight)))
+                else if (position.Y > (this._rightButton.ActualHeight + RoomTakenBy(this._rightThumb, Orientation.Vertical)) &&
+                         position.Y < (this.ActualHeight - (this._leftButton.ActualHeight + RoomTakenBy(this._leftThumb, Orientation.Vertical))))
                 {
                     this.CentralThumbMouseDown();
                 }
@@ -1444,8 +1471,8 @@ namespace MahApps.Metro.Controls
             {
                 var p = Mouse.GetPosition(this._visualElementsContainer);
                 var change = this.Orientation == Orientation.Horizontal
-                    ? this._leftButton.ActualWidth - p.X + (this._leftThumb.ActualWidth / 2)
-                    : -(this._leftButton.ActualHeight - (this.ActualHeight - (p.Y + (this._leftThumb.ActualHeight / 2))));
+                    ? this._leftButton.ActualWidth - p.X + HalfOfTheRoomTakenBy(this._leftThumb, Orientation.Horizontal)
+                    : -(this._leftButton.ActualHeight - (this.ActualHeight - (p.Y + HalfOfTheRoomTakenBy(this._leftThumb, Orientation.Vertical))));
                 if (!this.IsSnapToTickEnabled)
                 {
                     if (this.IsMoveToPointEnabled && !this.MoveWholeRange)
@@ -1492,8 +1519,8 @@ namespace MahApps.Metro.Controls
             {
                 var p = Mouse.GetPosition(this._visualElementsContainer);
                 var change = this.Orientation == Orientation.Horizontal
-                    ? this._rightButton.ActualWidth - (this.ActualWidth - (p.X + (this._rightThumb.ActualWidth / 2)))
-                    : -(this._rightButton.ActualHeight - (p.Y - (this._rightThumb.ActualHeight / 2)));
+                    ? this._rightButton.ActualWidth - (this.ActualWidth - (p.X + HalfOfTheRoomTakenBy(this._rightThumb, Orientation.Horizontal)))
+                    : -(this._rightButton.ActualHeight - (p.Y - HalfOfTheRoomTakenBy(this._rightThumb, Orientation.Vertical)));
                 if (!this.IsSnapToTickEnabled)
                 {
                     if (this.IsMoveToPointEnabled && !this.MoveWholeRange)
@@ -1543,8 +1570,8 @@ namespace MahApps.Metro.Controls
                     this._centerThumbBlocked = true;
                     var p = Mouse.GetPosition(this._visualElementsContainer);
                     var change = this.Orientation == Orientation.Horizontal
-                        ? (p.X + (this._leftThumb.ActualWidth / 2) - (this._leftButton.ActualWidth + this._leftThumb.ActualWidth))
-                        : -(this.ActualHeight - ((p.Y + (this._leftThumb.ActualHeight / 2)) + this._leftButton.ActualHeight));
+                        ? (p.X + HalfOfTheRoomTakenBy(this._leftThumb, Orientation.Horizontal) - (this._leftButton.ActualWidth + RoomTakenBy(this._leftThumb, Orientation.Horizontal)))
+                        : -(this.ActualHeight - ((p.Y + HalfOfTheRoomTakenBy(this._leftThumb, Orientation.Vertical)) + this._leftButton.ActualHeight));
                     if (!this.IsSnapToTickEnabled)
                     {
                         if (this.IsMoveToPointEnabled && !this.MoveWholeRange)
@@ -1588,8 +1615,8 @@ namespace MahApps.Metro.Controls
                     this._centerThumbBlocked = true;
                     var p = Mouse.GetPosition(this._visualElementsContainer);
                     var change = this.Orientation == Orientation.Horizontal
-                        ? this.ActualWidth - (p.X + (this._rightThumb.ActualWidth / 2) + this._rightButton.ActualWidth)
-                        : -(p.Y + (this._rightThumb.ActualHeight / 2) - (this._rightButton.ActualHeight + this._rightThumb.ActualHeight));
+                        ? this.ActualWidth - (p.X + HalfOfTheRoomTakenBy(this._rightThumb, Orientation.Horizontal) + this._rightButton.ActualWidth)
+                        : -(p.Y + HalfOfTheRoomTakenBy(this._rightThumb, Orientation.Vertical) - (this._rightButton.ActualHeight + RoomTakenBy(this._rightThumb, Orientation.Vertical)));
                     if (!this.IsSnapToTickEnabled)
                     {
                         if (this.IsMoveToPointEnabled && !this.MoveWholeRange)
@@ -1656,6 +1683,16 @@ namespace MahApps.Metro.Controls
         private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             var change = this.Orientation == Orientation.Horizontal ? e.HorizontalChange : e.VerticalChange;
+
+            // Both values the same puts the two thumbs on top of each other, and only one of them can be
+            // grabbed. Pulled the way it cannot go, it hands the drag to the other one, so a range can be
+            // opened again from a point in either direction. Pushed together rather than set to the same
+            // number, the two are equal only down to the last bits of a double, hence the loose compare.
+            if (DirectionOf(change, this.Orientation) == Direction.Increase && DoubleUtil.GreaterThanOrClose(this.LowerValue, this.UpperValue))
+            {
+                this.RightThumbDragDelta(sender, e);
+                return;
+            }
             if (!this.IsSnapToTickEnabled)
             {
                 MoveThumb(this._leftButton, this._centerThumb, change, this.Orientation, out this._direction);
@@ -1668,7 +1705,7 @@ namespace MahApps.Metro.Controls
                 var currentPoint = Mouse.GetPosition(this._container);
                 if (this.Orientation == Orientation.Horizontal)
                 {
-                    if (currentPoint.X >= 0 && currentPoint.X < this._container.ActualWidth - (this._rightButton.ActualWidth + this._rightThumb.ActualWidth + this._centerThumb.MinWidth))
+                    if (currentPoint.X >= 0 && currentPoint.X < this._container.ActualWidth - (this._rightButton.ActualWidth + RoomTakenBy(this._rightThumb, Orientation.Horizontal) + this._centerThumb.MinWidth))
                     {
                         localDirection = currentPoint.X > this._basePoint.X ? Direction.Increase : Direction.Decrease;
                         this.JumpToNextTick(localDirection, ButtonType.BottomLeft, change, this.LowerValue, false);
@@ -1676,7 +1713,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    if (currentPoint.Y <= this._container.ActualHeight && currentPoint.Y > this._rightButton.ActualHeight + this._rightThumb.ActualHeight + this._centerThumb.MinHeight)
+                    if (currentPoint.Y <= this._container.ActualHeight && currentPoint.Y > this._rightButton.ActualHeight + RoomTakenBy(this._rightThumb, Orientation.Vertical) + this._centerThumb.MinHeight)
                     {
                         localDirection = currentPoint.Y < this._basePoint.Y ? Direction.Increase : Direction.Decrease;
                         this.JumpToNextTick(localDirection, ButtonType.BottomLeft, -change, this.LowerValue, false);
@@ -1729,6 +1766,13 @@ namespace MahApps.Metro.Controls
         private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             var change = this.Orientation == Orientation.Horizontal ? e.HorizontalChange : e.VerticalChange;
+
+            // The other way round, see LeftThumbDragDelta.
+            if (DirectionOf(change, this.Orientation) == Direction.Decrease && DoubleUtil.LessThanOrClose(this.UpperValue, this.LowerValue))
+            {
+                this.LeftThumbDragDelta(sender, e);
+                return;
+            }
             if (!this.IsSnapToTickEnabled)
             {
                 MoveThumb(this._centerThumb, this._rightButton, change, this.Orientation, out this._direction);
@@ -1741,7 +1785,7 @@ namespace MahApps.Metro.Controls
                 var currentPoint = Mouse.GetPosition(this._container);
                 if (this.Orientation == Orientation.Horizontal)
                 {
-                    if (currentPoint.X < this._container.ActualWidth && currentPoint.X > this._leftButton.ActualWidth + this._leftThumb.ActualWidth + this._centerThumb.MinWidth)
+                    if (currentPoint.X < this._container.ActualWidth && currentPoint.X > this._leftButton.ActualWidth + RoomTakenBy(this._leftThumb, Orientation.Horizontal) + this._centerThumb.MinWidth)
                     {
                         localDirection = currentPoint.X > this._basePoint.X ? Direction.Increase : Direction.Decrease;
                         this.JumpToNextTick(localDirection, ButtonType.TopRight, change, this.UpperValue, false);
@@ -1749,7 +1793,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    if (currentPoint.Y >= 0 && currentPoint.Y < this._container.ActualHeight - (this._leftButton.ActualHeight + this._leftThumb.ActualHeight + this._centerThumb.MinHeight))
+                    if (currentPoint.Y >= 0 && currentPoint.Y < this._container.ActualHeight - (this._leftButton.ActualHeight + RoomTakenBy(this._leftThumb, Orientation.Vertical) + this._centerThumb.MinHeight))
                     {
                         localDirection = currentPoint.Y < this._basePoint.Y ? Direction.Increase : Direction.Decrease;
                         this.JumpToNextTick(localDirection, ButtonType.TopRight, -change, this.UpperValue, false);
@@ -1894,7 +1938,7 @@ namespace MahApps.Metro.Controls
             {
                 if (type == ButtonType.BottomLeft || (type == ButtonType.Both && this._isInsideRange))
                 {
-                    d = this.Orientation == Orientation.Horizontal ? this._leftButton.ActualWidth + this._leftThumb.ActualWidth : this.ActualHeight - (this._leftButton.ActualHeight + this._leftThumb.ActualHeight);
+                    d = this.Orientation == Orientation.Horizontal ? this._leftButton.ActualWidth + RoomTakenBy(this._leftThumb, Orientation.Horizontal) : this.ActualHeight - (this._leftButton.ActualHeight + RoomTakenBy(this._leftThumb, Orientation.Vertical));
                 }
                 else if (type == ButtonType.TopRight || (type == ButtonType.Both && !this._isInsideRange))
                 {
@@ -1909,7 +1953,7 @@ namespace MahApps.Metro.Controls
                 }
                 else if (type == ButtonType.TopRight || (type == ButtonType.Both && this._isInsideRange))
                 {
-                    d = this.Orientation == Orientation.Horizontal ? this.ActualWidth - this._rightButton.ActualWidth - this._rightThumb.ActualWidth : this._rightButton.ActualHeight + this._rightThumb.ActualHeight;
+                    d = this.Orientation == Orientation.Horizontal ? this.ActualWidth - this._rightButton.ActualWidth - RoomTakenBy(this._rightThumb, Orientation.Horizontal) : this._rightButton.ActualHeight + RoomTakenBy(this._rightThumb, Orientation.Vertical);
                 }
             }
 

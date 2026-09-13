@@ -351,8 +351,9 @@
                 <exampleViews:SelectionExamples DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="sliders">
+                <!--  The samples are laid out in rows that wrap, so the page follows the width of the window instead of scrolling sideways.  -->
                 <ScrollViewer Margin="2"
-                              HorizontalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto">
                     <exampleViews:Sliders DataContext="{Binding}" />
                 </ScrollViewer>

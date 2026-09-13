@@ -8,6 +8,12 @@
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width">16</system:Double>
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height">10</system:Double>
 
+    <!--  A range slider hangs its thumbs over the track by half their width, so the middle of a thumb is the point its value stands for.  -->
+    <Thickness x:Key="MahApps.Margins.Slider.HorizontalThumb.Overhang">-5 0</Thickness>
+    <Thickness x:Key="MahApps.Margins.Slider.VerticalThumb.Overhang">0 -5</Thickness>
+    <Thickness x:Key="MahApps.Margins.Slider.HorizontalThumb.Overhang.Win10">-4 0</Thickness>
+    <Thickness x:Key="MahApps.Margins.Slider.VerticalThumb.Overhang.Win10">0 -4</Thickness>
+
     <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height.Win10">24</system:Double>
     <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width.Win10">8</system:Double>
     <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width.Win10">24</system:Double>
