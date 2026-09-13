@@ -21,7 +21,6 @@
                          LowerValue="50"
                          Maximum="100"
                          MinRange="10"
-                         MinRangeWidth="0"
                          Minimum="0"
                          UpperValue="50" />
     </StackPanel>

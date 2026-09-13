@@ -3,7 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Markup;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
@@ -12,9 +15,8 @@ using NUnit.Framework;
 namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
-    /// MinRange and MinRangeWidth sound like the same thing and are not: one is a distance between
-    /// the values, the other a width in pixels. These tests hold both of them to what the
-    /// documentation of the two properties says.
+    /// MinRange is the smallest distance there may be between the two values. These tests hold it to
+    /// what its documentation says, including the order it may be set in.
     /// </summary>
     [TestFixture]
     public class RangeSliderTests
@@ -34,6 +36,15 @@ namespace MahApps.Metro.Tests.Tests
             this.window = null;
         }
 
+        /// <summary>
+        /// What a thumb takes out of the track. The templates let it hang over the end by half its width
+        /// through a negative margin, so what it occupies is the width and the margin put together.
+        /// </summary>
+        private static double RoomTakenBy(Thumb thumb)
+        {
+            return thumb.ActualWidth + thumb.Margin.Left + thumb.Margin.Right;
+        }
+
         private static Thumb GetMiddleThumb(RangeSlider slider)
         {
             var thumb = slider.FindChild<Thumb>("PART_MiddleThumb");
@@ -43,57 +54,88 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        public void MinRangeWidthShouldBeTheMinimumWidthOfTheMiddleThumb()
+        [Description("MinRangeWidth is obsolete and does nothing at all: it may neither move a value nor change what is drawn, so that the attribute can be left in place until it is removed.")]
+        public void MinRangeWidthShouldNoLongerDoAnything()
         {
             Assert.That(this.window, Is.Not.Null);
 
             var slider = this.window.TheRangeSlider;
-            slider.UpdateLayout();
-
-            Assert.That(slider.MinRangeWidth, Is.EqualTo(30d), "the default should be 30");
-            Assert.That(GetMiddleThumb(slider).MinWidth, Is.EqualTo(slider.MinRangeWidth), "the template binds MinRangeWidth to the minimum width of the middle thumb");
-        }
-
-        [Test]
-        public void MinRangeWidthShouldKeepTheThumbsApartWithoutMovingTheValues()
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            var slider = this.window.TheRangeSlider;
-            slider.UpdateLayout();
-
-            Assert.That(slider.MinRange, Is.EqualTo(0d), "nothing should keep the values apart here");
-            Assert.That(slider.LowerValue, Is.EqualTo(50d));
-            Assert.That(slider.UpperValue, Is.EqualTo(50d), "MinRangeWidth is a width, so it must not move the values");
-            Assert.That(GetMiddleThumb(slider).ActualWidth, Is.EqualTo(slider.MinRangeWidth).Within(0.5), "two equal values still draw a range as wide as MinRangeWidth");
-        }
-
-        [Test]
-        public void MinRangeWidthShouldBeCoercedToHalfOfTheTrack()
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            var slider = this.window.TheRangeSlider;
-            slider.UpdateLayout();
-
-            var leftThumb = slider.FindChild<Thumb>("PART_LeftThumb");
-            var rightThumb = slider.FindChild<Thumb>("PART_RightThumb");
-            Assert.That(leftThumb, Is.Not.Null);
-            Assert.That(rightThumb, Is.Not.Null);
-
-            var track = slider.ActualWidth - leftThumb!.ActualWidth - rightThumb!.ActualWidth;
-            Assert.That(track, Is.GreaterThan(0), "the slider should be laid out, otherwise this test proves nothing");
+            var band = GetMiddleThumb(slider);
 
             try
             {
-                slider.SetCurrentValue(RangeSlider.MinRangeWidthProperty, 10000d);
+                // a range with something to it, otherwise there is nothing to watch for a change
+                slider.SetCurrentValue(RangeSlider.LowerValueProperty, 30d);
+                slider.SetCurrentValue(RangeSlider.UpperValueProperty, 70d);
+                slider.UpdateLayout();
 
-                Assert.That(slider.MinRangeWidth, Is.EqualTo(track / 2).Within(0.5), "a value wider than the track should be cut down to half of it");
+                var drawn = band.ActualWidth;
+                Assume.That(drawn, Is.GreaterThan(60), "the band has to be wider than what the test is about to ask for");
+
+#pragma warning disable CS0618
+                slider.SetCurrentValue(RangeSlider.MinRangeWidthProperty, 200d);
+#pragma warning restore CS0618
+                slider.UpdateLayout();
+
+                Assert.That(slider.LowerValue, Is.EqualTo(30d), "the lower value should be where it was");
+                Assert.That(slider.UpperValue, Is.EqualTo(70d), "and so should the upper one");
+                Assert.That(band.ActualWidth, Is.EqualTo(drawn).Within(0.01), "and the range should be drawn the way it was");
             }
             finally
             {
+#pragma warning disable CS0618
                 slider.ClearValue(RangeSlider.MinRangeWidthProperty);
+#pragma warning restore CS0618
+                slider.SetCurrentValue(RangeSlider.LowerValueProperty, 50d);
+                slider.SetCurrentValue(RangeSlider.UpperValueProperty, 50d);
+                slider.UpdateLayout();
             }
+        }
+
+        [Test]
+        [Description("XAML sets a property as it reads it, and the formatter sorts MinRange in front of Style, so MinRange is set while Maximum is still the 1 that RangeBase hands out. What the style brings afterwards has to count all the same.")]
+        public void MinRangeSetBeforeTheStyleShouldNotSwallowItsValues()
+        {
+            var slider = TheSliderOf(@"<mah:RangeSlider MinRange='20' Style='{StaticResource TheRange}' />");
+
+            Assert.That(slider.MinRange, Is.EqualTo(20d), "the distance asked for");
+            Assert.That(slider.LowerValue, Is.EqualTo(30d), "the lower value asked for");
+            Assert.That(slider.UpperValue, Is.EqualTo(70d), "the upper value asked for");
+        }
+
+        [Test]
+        [Description("And the other way round, with MinRange written after the style, which has always worked.")]
+        public void MinRangeSetAfterTheStyleShouldKeepItsValues()
+        {
+            var slider = TheSliderOf(@"<mah:RangeSlider Style='{StaticResource TheRange}' MinRange='20' />");
+
+            Assert.That(slider.MinRange, Is.EqualTo(20d));
+            Assert.That(slider.LowerValue, Is.EqualTo(30d));
+            Assert.That(slider.UpperValue, Is.EqualTo(70d));
+        }
+
+        /// <summary>
+        /// A slider built from markup the way the demo builds one, with its range in a style, so that
+        /// the properties are set in the order the markup names them.
+        /// </summary>
+        private static RangeSlider TheSliderOf(string markup)
+        {
+            var panel = (StackPanel)XamlReader.Parse(
+                @"<StackPanel xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+                              xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+                              xmlns:mah='http://metro.mahapps.com/winfx/xaml/controls'>
+                    <StackPanel.Resources>
+                      <Style x:Key='TheRange' TargetType='mah:RangeSlider'>
+                        <Setter Property='Maximum' Value='100' />
+                        <Setter Property='Minimum' Value='0' />
+                        <Setter Property='LowerValue' Value='30' />
+                        <Setter Property='UpperValue' Value='70' />
+                      </Style>
+                    </StackPanel.Resources>
+                    " + markup + @"
+                  </StackPanel>");
+
+            return (RangeSlider)panel.Children[0];
         }
 
         [Test]
@@ -104,7 +146,6 @@ namespace MahApps.Metro.Tests.Tests
             var slider = this.window.TheMinRangeSlider;
             slider.UpdateLayout();
 
-            Assert.That(slider.MinRangeWidth, Is.EqualTo(0d), "nothing should keep the thumbs apart here");
             Assert.That(slider.MinRange, Is.EqualTo(10d));
             Assert.That(slider.UpperValue - slider.LowerValue, Is.GreaterThanOrEqualTo(slider.MinRange), "two equal values should be pushed apart by MinRange");
         }

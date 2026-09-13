@@ -39,5 +39,27 @@ namespace MahApps.Metro.Controls
 
             return -eps < delta && eps > delta;
         }
+
+        /// <summary>
+        /// Gets whether the first double is smaller than the second one or close enough to count as
+        /// equal to it.
+        /// </summary>
+        /// <param name="value1">The first double to compare.</param>
+        /// <param name="value2">The second double to compare.</param>
+        public static bool LessThanOrClose(double value1, double value2)
+        {
+            return value1 < value2 || AreClose(value1, value2);
+        }
+
+        /// <summary>
+        /// Gets whether the first double is larger than the second one or close enough to count as
+        /// equal to it.
+        /// </summary>
+        /// <param name="value1">The first double to compare.</param>
+        /// <param name="value2">The second double to compare.</param>
+        public static bool GreaterThanOrClose(double value1, double value2)
+        {
+            return value1 > value2 || AreClose(value1, value2);
+        }
     }
 }
