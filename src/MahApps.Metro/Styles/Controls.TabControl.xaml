@@ -173,8 +173,7 @@
                                                   FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
                                                   Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
                                                   RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                  UseLayoutRounding="False" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <mah:Underline x:Name="Underline"
                                            Grid.Row="1"
                                            Grid.Column="0"
