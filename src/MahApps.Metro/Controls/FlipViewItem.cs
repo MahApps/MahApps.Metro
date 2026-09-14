@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
                                           typeof(FlipViewItem),
                                           new FrameworkPropertyMetadata("Banner",
                                                                         FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                        (d, e) => ((FlipViewItem)d).ExecuteWhenLoaded(() => ((FlipViewItem)d).Owner?.SetCurrentValue(FlipView.BannerTextProperty, e.NewValue))));
+                                                                        (d, e) => ((FlipViewItem)d).ExecuteWhenLoaded(() => ((FlipViewItem)d).TellTheOwnerAboutTheBanner(e.NewValue))));
 
         /// <summary>
         /// Gets or sets the banner text.
@@ -43,6 +43,28 @@ namespace MahApps.Metro.Controls
             protected set => this.SetValue(OwnerPropertyKey, value);
         }
 
+        /// <summary>
+        /// Hands the banner to the control, but only while this item is the one on show. The control
+        /// shows its selected item in a presenter, and in the middle of a flip that presenter holds
+        /// the item on its way out as well. That one loses its data context as it goes, its banner
+        /// falls back to the text it started with, and letting it speak would wipe out the banner of
+        /// the item that has just arrived.
+        /// </summary>
+        private void TellTheOwnerAboutTheBanner(object? banner)
+        {
+            var owner = this.Owner;
+            if (owner is null)
+            {
+                return;
+            }
+
+            // written out one by one an item is the selected item itself, out of a source it carries it
+            if (ReferenceEquals(this, owner.SelectedItem) || ReferenceEquals(this.DataContext, owner.SelectedItem))
+            {
+                owner.SetCurrentValue(FlipView.BannerTextProperty, banner);
+            }
+        }
+
         static FlipViewItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipViewItem), new FrameworkPropertyMetadata(typeof(FlipViewItem)));
@@ -53,7 +75,12 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            var flipView = ItemsControl.ItemsControlFromItemContainer(this) as FlipView;
+            // Written out one by one, an item is its own container and the control it belongs to is
+            // right there. Put into an item template instead, it is content rather than a container,
+            // and since the control shows its selected item in a presenter and wraps nothing in a
+            // container of its own, that is the only place an item out of a source can name a
+            // banner. Looking up the tree is what finds the control in that case.
+            var flipView = ItemsControl.ItemsControlFromItemContainer(this) as FlipView ?? this.TryFindParent<FlipView>();
             this.SetValue(OwnerPropertyKey, flipView);
         }
     }
