@@ -358,6 +358,13 @@
                     <exampleViews:Sliders DataContext="{Binding}" />
                 </ScrollViewer>
             </TabItem>
+            <TabItem Header="badges">
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:Badges DataContext="{Binding}" />
+                </ScrollViewer>
+            </TabItem>
             <TabItem Header="progress">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
