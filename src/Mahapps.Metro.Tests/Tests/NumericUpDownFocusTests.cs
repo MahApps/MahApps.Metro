@@ -140,8 +140,8 @@ namespace MahApps.Metro.Tests.Tests
             this.TextBoxInside().MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
             ClipAssert.Pump();
 
-            Assert.That(this.numericUpDown.IsKeyboardFocusWithin, Is.False, "the focus should have left the control");
-            Assert.That(this.neighbour!.IsKeyboardFocused, Is.True, "and landed on what lies before it");
+            Assert.That(this.TextBoxInside().IsFocused, Is.False, "the focus should have left the control");
+            Assert.That(this.neighbour!.IsFocused, Is.True, "and landed on what lies before it");
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace MahApps.Metro.Tests.Tests
             this.TextBoxInside().MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             ClipAssert.Pump();
 
-            Assert.That(this.after!.IsKeyboardFocused, Is.True, "the one below it should have the focus");
+            Assert.That(this.after!.IsFocused, Is.True, "the one below it should have the focus");
         }
 
         [Test]
