@@ -103,6 +103,14 @@ namespace MetroDemo
                                       new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
                                   };
 
+            this.Gallery = new[]
+                           {
+                               new Photo("BigFourSummerHeat.png", "Big Four", "Summer heat sitting on the ridge"),
+                               new Photo("BisonBadlandsChillin.png", "Badlands", "A bison taking the afternoon off"),
+                               new Photo("GiantSlabInOregon.png", "Oregon", "A slab of rock the size of a house"),
+                               new Photo("LakeAnnMushroom.png", "Lake Ann", "A mushroom with the better view")
+                           };
+
             this.ThemeResources = new ObservableCollection<ThemeResource>();
             var view = CollectionViewSource.GetDefaultView(this.ThemeResources);
             view.SortDescriptions.Add(new SortDescription(nameof(ThemeResource.Key), ListSortDirection.Ascending));
@@ -579,6 +587,9 @@ namespace MetroDemo
         }
 
         public Uri[] FlipViewImages { get; set; }
+
+        /// <summary>The pictures the FlipView sample flips through, each with a title for the banner.</summary>
+        public Photo[] Gallery { get; }
 
         public class RandomDataTemplateSelector : DataTemplateSelector
         {

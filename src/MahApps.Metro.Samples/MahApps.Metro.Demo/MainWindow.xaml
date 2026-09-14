@@ -417,7 +417,7 @@
 
             <TabItem Header="others">
                 <ScrollViewer Margin="2"
-                              HorizontalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto">
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </ScrollViewer>
