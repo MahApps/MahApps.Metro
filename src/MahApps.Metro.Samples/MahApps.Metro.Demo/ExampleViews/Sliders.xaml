@@ -52,6 +52,9 @@
                 that the numbers of a row line up whether a caption needs them or not.
             -->
             <Style x:Key="SliderCard" TargetType="{x:Type HeaderedContentControl}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="Margin" Value="0 0 12 12" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -435,7 +438,7 @@
 
         <mah:MetroHeader Header="RangeSlider, what only it has">
             <StackPanel>
-                <TextBlock Style="{StaticResource GroupCaption}" Text="MinRange keeps the two values apart. MoveWholeRange makes a click outside the band carry the whole of it, ExtendedMode gives the two ends to Ctrl and a left or right click inside it, and IsMoveToPointEnabled sends the nearer thumb to where the track was clicked." />
+                <TextBlock Style="{StaticResource GroupCaption}" Text="MinRange keeps the two values apart. MoveWholeRange makes a click outside the band carry the whole of it, ExtendedMode gives the two ends to Ctrl and a left or right click inside it, and IsMoveToPointEnabled sends the nearer thumb to where the track was clicked. Click a thumb and the arrow keys move that one, by SmallChange, or by LargeChange on page up and page down." />
                 <WrapPanel>
                     <HeaderedContentControl Header="MinRange 20" Style="{StaticResource RangeSliderCard}">
                         <mah:RangeSlider MinRange="20"
