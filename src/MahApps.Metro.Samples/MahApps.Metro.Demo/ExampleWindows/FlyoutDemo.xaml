@@ -229,6 +229,30 @@
                 </Grid>
             </mah:Flyout>
 
+            <mah:Flyout x:Name="ShadowFlyout"
+                        Header="Shadow"
+                        Position="Left">
+                <!--
+                    The effect goes on a pane of its own behind the content, so the text in here is
+                    drawn the way it always was rather than through a bitmap.
+                -->
+                <mah:Flyout.ShadowEffect>
+                    <DropShadowEffect BlurRadius="24"
+                                      Direction="0"
+                                      Opacity="0.45"
+                                      RenderingBias="Performance"
+                                      ShadowDepth="8"
+                                      Color="Black" />
+                </mah:Flyout.ShadowEffect>
+                <StackPanel Width="220" Margin="10">
+                    <TextBlock Text="This flyout throws a shadow onto the page behind it." TextWrapping="Wrap" />
+                    <TextBlock Margin="0 10 0 0"
+                               Text="ShadowEffect takes any effect at all. Nothing is thrown by default."
+                               TextWrapping="Wrap" />
+                    <CheckBox Margin="0 14 0 0" Content="a simple checkbox" />
+                </StackPanel>
+            </mah:Flyout>
+
             <mah:Flyout x:Name="LeftFlyout"
                         Header="Left"
                         Position="Left">
@@ -526,6 +550,10 @@
                     Command="{Binding OpenFlyoutCommand}"
                     CommandParameter="{x:Reference LeftFlyout}"
                     Content="Show Left" />
+            <Button Margin="2"
+                    Command="{Binding OpenFlyoutCommand}"
+                    CommandParameter="{x:Reference ShadowFlyout}"
+                    Content="Show Shadow" />
             <Button Margin="2"
                     Command="{Binding OpenFlyoutCommand}"
                     CommandParameter="{x:Reference CustomTopFlyout}"
