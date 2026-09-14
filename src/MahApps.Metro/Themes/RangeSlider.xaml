@@ -5,7 +5,7 @@
     <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.Horizontal.Middle" TargetType="{x:Type mah:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -308,7 +308,7 @@
     <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.Horizontal.Middle.Win10" TargetType="{x:Type mah:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>

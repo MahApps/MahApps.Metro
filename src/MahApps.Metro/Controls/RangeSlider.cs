@@ -874,6 +874,10 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
+
+            // the thumbs are what tab stops at, since they are what a key can move; stopping at the
+            // control itself first would only be a halt where no key does anything
+            IsTabStopProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(false));
             MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
             MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(100d, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
         }
@@ -1362,6 +1366,14 @@ namespace MahApps.Metro.Controls
             this._leftThumb = this.GetTemplateChild("PART_LeftThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_LeftThumb");
             this._rightThumb = this.GetTemplateChild("PART_RightThumb") as Thumb ?? throw new MissingRequiredTemplatePartException(this, "PART_RightThumb");
 
+            // a WPF thumb does not take the focus by itself, and without it there is nothing for a key
+            // to talk to, so the two that carry a value are made to take it whatever a template says.
+            // They are the tab stops as well, which leaves tab and shift tab walking in and out again.
+            this._leftThumb.Focusable = true;
+            this._leftThumb.IsTabStop = true;
+            this._rightThumb.Focusable = true;
+            this._rightThumb.IsTabStop = true;
+
             this.InitializeVisualElementsContainer();
             this.ReCalculateSize();
         }
@@ -1407,6 +1419,16 @@ namespace MahApps.Metro.Controls
         //Handler for preview mouse button down for the whole StackPanel container
         private void VisualElementsContainerPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            // A click that lands on one of the two thumbs is somebody taking hold of it, not asking
+            // for a jump. This only asks where the click was, and a thumb hangs over the end of its
+            // part of the track by half its width, so half of it sits where the edge beside it begins:
+            // grabbing a thumb there moved the value by the few pixels between the click and its
+            // middle before the thumb had even been dragged.
+            if (this._leftThumb.IsMouseOver || this._rightThumb.IsMouseOver)
+            {
+                return;
+            }
+
             var position = Mouse.GetPosition(this._visualElementsContainer);
             if (this.Orientation == Orientation.Horizontal)
             {
@@ -1660,10 +1682,127 @@ namespace MahApps.Metro.Controls
 
         #endregion
 
+        #region Keyboard
+
+        /// <summary>
+        /// A range slider has two values, so a key has to be told which one it means. The thumb that
+        /// was last touched is the one that holds the keyboard, and that is the value a key moves.
+        /// </summary>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Handled)
+            {
+                return;
+            }
+
+            var upper = this._rightThumb is not null && this._rightThumb.IsKeyboardFocusWithin;
+            if (!upper && !(this._leftThumb is not null && this._leftThumb.IsKeyboardFocusWithin))
+            {
+                return;
+            }
+
+            var value = upper ? this.UpperValue : this.LowerValue;
+            var moved = value;
+
+            switch (e.Key)
+            {
+                case Key.Left when this.Orientation == Orientation.Horizontal:
+                case Key.Down when this.Orientation == Orientation.Vertical:
+                    moved = value - this.SmallChange;
+                    break;
+                case Key.Right when this.Orientation == Orientation.Horizontal:
+                case Key.Up when this.Orientation == Orientation.Vertical:
+                    moved = value + this.SmallChange;
+                    break;
+                case Key.PageDown:
+                    moved = value - this.LargeChange;
+                    break;
+                case Key.PageUp:
+                    moved = value + this.LargeChange;
+                    break;
+                case Key.Home:
+                    moved = this.Minimum;
+                    break;
+                case Key.End:
+                    moved = this.Maximum;
+                    break;
+                default:
+                    return;
+            }
+
+            // how far it really gets is up to the coercion, which knows about MinRange and the other
+            // value. It is set rather than handed over as a current value, because a later coercion
+            // would otherwise read the property again from whatever the control was given, and a key
+            // press would fall back to that.
+            if (upper)
+            {
+                this.UpperValue = moved;
+            }
+            else
+            {
+                this.LowerValue = moved;
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Somebody focusing the control itself leaves nothing for a key to move, so the lower thumb
+        /// takes it from there. A focus arriving from one of the thumbs is tab walking out of the
+        /// control and is left alone, otherwise it could never leave.
+        /// </summary>
+        protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
+            base.OnGotKeyboardFocus(e);
+
+            if (ReferenceEquals(e.NewFocus, this)
+                && !ReferenceEquals(e.OldFocus, this._leftThumb)
+                && !ReferenceEquals(e.OldFocus, this._rightThumb)
+                && this._leftThumb is not null)
+            {
+                this._leftThumb.Focus();
+            }
+        }
+
+        /// <summary>
+        /// A click anywhere on the control hands the keyboard to the thumb nearest to it, so that the
+        /// arrow keys have something to move afterwards. Without this they would be left to the focus
+        /// navigation, which walks off to the next control instead.
+        /// </summary>
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonDown(e);
+
+            if (this._leftThumb is null || this._rightThumb is null || this.IsKeyboardFocusWithin)
+            {
+                return;
+            }
+
+            var at = e.GetPosition(this);
+            var lower = this.MiddleOf(this._leftThumb);
+            var upper = this.MiddleOf(this._rightThumb);
+            var along = this.Orientation == Orientation.Horizontal ? at.X : at.Y;
+
+            (Math.Abs(along - lower) <= Math.Abs(along - upper) ? this._leftThumb : this._rightThumb).Focus();
+        }
+
+        /// <summary>Where the middle of a thumb sits, measured along the track.</summary>
+        private double MiddleOf(FrameworkElement thumb)
+        {
+            var origin = thumb.TranslatePoint(new Point(thumb.ActualWidth / 2, thumb.ActualHeight / 2), this);
+
+            return this.Orientation == Orientation.Horizontal ? origin.X : origin.Y;
+        }
+
+        #endregion
+
         #region Thumb Drag event handlers
 
         private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
         {
+            this._leftThumb?.Focus();
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
@@ -1747,6 +1886,7 @@ namespace MahApps.Metro.Controls
 
         private void RightThumbDragStart(object sender, DragStartedEventArgs e)
         {
+            this._rightThumb?.Focus();
             this._isMoved = true;
             if (this.AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
