@@ -2345,21 +2345,32 @@ namespace MahApps.Metro.Controls
         //Move thumb to next calculated Tick and update corresponding value
         private void JumpToNextTick(Direction direction, ButtonType type, double distance, double checkingValue, bool jumpDirectlyToTick)
         {
-            //find the difference between current value and next value
-            var difference = this.CalculateNextTick(direction, checkingValue, distance, false);
-            var p = Mouse.GetPosition(this._visualElementsContainer);
-            var pos = this.Orientation == Orientation.Horizontal ? p.X : p.Y;
-            var widthHeight = this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
-            var tickIntervalInPixels = direction == Direction.Increase
-                ? this.TickFrequency * this._density
-                : -this.TickFrequency * this._density;
-
             if (jumpDirectlyToTick)
             {
-                this.SnapToTickHandle(type, direction, difference);
+                // A click named a place on the track, and the tick nearest to that place is the one it
+                // meant. Taking the next tick beyond it, the way this used to, answered a click just
+                // short of a tick with the tick before it, a whole interval away from what was pointed
+                // at. Standing upright a value grows towards the top while the pixels the click is
+                // measured in grow downwards, so the two run against each other there.
+                var from = checkingValue - this.Minimum;
+                var asked = from + ((this.Orientation == Orientation.Horizontal ? distance : -distance) / this._density);
+                var nearest = Math.Round(asked / this.TickFrequency, MidpointRounding.AwayFromZero) * this.TickFrequency;
+
+                this.SnapToTickHandle(type,
+                                      nearest > from ? Direction.Increase : Direction.Decrease,
+                                      Math.Abs(nearest - from));
             }
             else
             {
+                //find the difference between current value and next value
+                var difference = this.CalculateNextTick(direction, checkingValue, distance, false);
+                var p = Mouse.GetPosition(this._visualElementsContainer);
+                var pos = this.Orientation == Orientation.Horizontal ? p.X : p.Y;
+                var widthHeight = this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
+                var tickIntervalInPixels = direction == Direction.Increase
+                    ? this.TickFrequency * this._density
+                    : -this.TickFrequency * this._density;
+
                 if (direction == Direction.Increase)
                 {
                     if (!this.IsDoubleCloseToInt(checkingValue / this.TickFrequency))
