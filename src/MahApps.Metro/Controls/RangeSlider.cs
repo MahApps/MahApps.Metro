@@ -1704,7 +1704,7 @@ namespace MahApps.Metro.Controls
             }
 
             var value = upper ? this.UpperValue : this.LowerValue;
-            var moved = value;
+            double moved;
 
             switch (e.Key)
             {
