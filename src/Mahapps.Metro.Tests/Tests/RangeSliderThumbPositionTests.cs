@@ -87,10 +87,10 @@ namespace MahApps.Metro.Tests.Tests
                         $"the thumb sits at {middle:0.0} while the tick for {value} is at {expected:0.0}");
         }
 
-        [TestCase(-40, 104.5, 130, TestName = "PullingAPointApartToTheLeftMovesTheLowerValue")]
-        [TestCase(40, 130, 155.5, TestName = "PullingAPointApartToTheRightMovesTheUpperValue")]
-        [Description("With both values the same the thumbs sit on top of each other, and whichever one is grabbed has to open the range the way it is pulled.")]
-        public void APointCanBePulledApartInEitherDirection(double by, double lower, double upper)
+        [TestCase(40, 130, 155.5, TestName = "APointOpensTowardsTheEndThatIsPulledTowards")]
+        [TestCase(-40, 130, 130, TestName = "APointStaysShutWhenPulledTheWayItCannotGo")]
+        [Description("With both values the same the thumbs sit on top of each other, and the upper one is the one on top, so that is what a drag takes hold of. Pulled towards its own end it opens the range, pulled the other way it has nowhere to go.")]
+        public void APointOpensOnlyTowardsTheEndThatIsPulledTowards(double by, double lower, double upper)
         {
             var slider = this.Show();
 
@@ -101,7 +101,6 @@ namespace MahApps.Metro.Tests.Tests
 
             Assume.That(slider.LowerValue, Is.EqualTo(slider.UpperValue), "the two thumbs should be in the same place");
 
-            // the upper thumb is the one on top, so that is the one a click lands on
             Drag(PartOf(slider, "PART_RightThumb"), by);
             this.Settle();
 
@@ -109,10 +108,10 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(slider.UpperValue, Is.EqualTo(upper).Within(1));
         }
 
-        [TestCase(-40, 130, 155.5, TestName = "PullingAPointApartUpwardsMovesTheUpperValue")]
-        [TestCase(40, 104.5, 130, TestName = "PullingAPointApartDownwardsMovesTheLowerValue")]
-        [Description("Standing upright a value grows towards the top, so a drag downwards is the one that opens the range at the lower end.")]
-        public void AnUprightPointCanBePulledApartInEitherDirection(double by, double lower, double upper)
+        [TestCase(-40, 130, 155.5, TestName = "AnUprightPointOpensUpwards")]
+        [TestCase(40, 130, 130, TestName = "AnUprightPointStaysShutWhenPulledDownwards")]
+        [Description("Standing upright a value grows towards the top, so the upper thumb opens the range on a drag upwards and has nowhere to go on one downwards.")]
+        public void AnUprightPointOpensOnlyUpwards(double by, double lower, double upper)
         {
             var slider = this.Show(Orientation.Vertical);
 
@@ -198,10 +197,10 @@ namespace MahApps.Metro.Tests.Tests
                         $"the upper thumb sits at {right:0.0} while the tick for {upper} is at {WhereTheTickIs(upper):0.0}");
         }
 
-        [TestCase(Orientation.Horizontal, -200, TestName = "AThumbPushedAgainstTheOtherOneTakesItAlong")]
-        [TestCase(Orientation.Vertical, 200, TestName = "AnUprightThumbPushedAgainstTheOtherOneTakesItAlong")]
-        [Description("Pushed onto the other thumb rather than set to its value, a thumb must still take it along instead of stopping there. The two values are then equal only down to the last bits of a double.")]
-        public void AThumbPushedOntoTheOtherOneTakesItAlong(Orientation orientation, double by)
+        [TestCase(Orientation.Horizontal, -200, TestName = "TheUpperThumbStopsOnTheLowerOne")]
+        [TestCase(Orientation.Vertical, 200, TestName = "AnUprightUpperThumbStopsOnTheLowerOne")]
+        [Description("A thumb dragged against the other one comes to rest there. The mouse carries on but the other value stays where somebody put it, since nobody is dragging that one.")]
+        public void TheUpperThumbDraggedAgainstTheLowerOneStopsThere(Orientation orientation, double by)
         {
             var slider = this.Show(orientation);
 
@@ -210,15 +209,32 @@ namespace MahApps.Metro.Tests.Tests
             slider.UpperValue = 150;
             this.Settle();
 
-            var thumb = PartOf(slider, "PART_RightThumb");
-
             // a mouse reports a drag in steps, and it takes one of them to push the thumb onto the
             // lower one and another to ask for more than it can give
-            DragBy(thumb, orientation, by / 2, by);
+            DragBy(PartOf(slider, "PART_RightThumb"), orientation, by / 2, by);
             this.Settle();
 
-            Assert.That(slider.UpperValue, Is.EqualTo(100).Within(0.01), "the upper thumb comes to rest on the lower one and stays there");
-            Assert.That(slider.LowerValue, Is.LessThan(100), $"and the drag carries on with the lower one, but it stayed at {slider.LowerValue:0.00}");
+            Assert.That(slider.UpperValue, Is.EqualTo(100).Within(0.01), "the upper value comes to rest on the lower one");
+            Assert.That(slider.LowerValue, Is.EqualTo(100).Within(0.01), "and the lower one stays where it was put");
+        }
+
+        [TestCase(Orientation.Horizontal, 200, TestName = "TheLowerThumbStopsOnTheUpperOne")]
+        [TestCase(Orientation.Vertical, -200, TestName = "AnUprightLowerThumbStopsOnTheUpperOne")]
+        [Description("And the same the other way round, with the lower thumb driven against the upper one.")]
+        public void TheLowerThumbDraggedAgainstTheUpperOneStopsThere(Orientation orientation, double by)
+        {
+            var slider = this.Show(orientation);
+
+            slider.IsSnapToTickEnabled = false;
+            slider.LowerValue = 100;
+            slider.UpperValue = 150;
+            this.Settle();
+
+            DragBy(PartOf(slider, "PART_LeftThumb"), orientation, by / 2, by);
+            this.Settle();
+
+            Assert.That(slider.LowerValue, Is.EqualTo(150).Within(0.01), "the lower value comes to rest on the upper one");
+            Assert.That(slider.UpperValue, Is.EqualTo(150).Within(0.01), "and the upper one stays where it was put");
         }
 
         private static void DragBy(Thumb thumb, Orientation orientation, params double[] steps)

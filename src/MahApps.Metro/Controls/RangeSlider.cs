@@ -1823,15 +1823,6 @@ namespace MahApps.Metro.Controls
         {
             var change = this.Orientation == Orientation.Horizontal ? e.HorizontalChange : e.VerticalChange;
 
-            // Both values the same puts the two thumbs on top of each other, and only one of them can be
-            // grabbed. Pulled the way it cannot go, it hands the drag to the other one, so a range can be
-            // opened again from a point in either direction. Pushed together rather than set to the same
-            // number, the two are equal only down to the last bits of a double, hence the loose compare.
-            if (DirectionOf(change, this.Orientation) == Direction.Increase && DoubleUtil.GreaterThanOrClose(this.LowerValue, this.UpperValue))
-            {
-                this.RightThumbDragDelta(sender, e);
-                return;
-            }
             if (!this.IsSnapToTickEnabled)
             {
                 MoveThumb(this._leftButton, this._centerThumb, change, this.Orientation, out this._direction);
@@ -1907,12 +1898,6 @@ namespace MahApps.Metro.Controls
         {
             var change = this.Orientation == Orientation.Horizontal ? e.HorizontalChange : e.VerticalChange;
 
-            // The other way round, see LeftThumbDragDelta.
-            if (DirectionOf(change, this.Orientation) == Direction.Decrease && DoubleUtil.LessThanOrClose(this.UpperValue, this.LowerValue))
-            {
-                this.LeftThumbDragDelta(sender, e);
-                return;
-            }
             if (!this.IsSnapToTickEnabled)
             {
                 MoveThumb(this._centerThumb, this._rightButton, change, this.Orientation, out this._direction);
