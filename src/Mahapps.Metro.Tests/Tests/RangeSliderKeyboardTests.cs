@@ -60,7 +60,7 @@ namespace MahApps.Metro.Tests.Tests
             upper.RaiseEvent(new DragStartedEventArgs(0, 0) { RoutedEvent = Thumb.DragStartedEvent, Source = upper });
             this.Settle();
 
-            Assert.That(upper.IsKeyboardFocusWithin, Is.True, "the thumb that was grabbed should hold the keyboard");
+            Assert.That(upper.IsFocused, Is.True, Where(slider, "the thumb that was grabbed should hold the focus"));
         }
 
         [Test]
@@ -88,7 +88,9 @@ namespace MahApps.Metro.Tests.Tests
                               });
             this.Settle();
 
-            Assert.That(slider.IsKeyboardFocusWithin, Is.True, "the click should have handed the keyboard to one of the thumbs");
+            Assert.That(PartOf(slider, "PART_LeftThumb").IsFocused || PartOf(slider, "PART_RightThumb").IsFocused,
+                        Is.True,
+                        Where(slider, "the click should have handed the focus to one of the thumbs"));
         }
 
         [Test]
@@ -97,10 +99,12 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
+            // without the keyboard as well, which is the state a window that is not in front is in
+            Keyboard.ClearFocus();
             slider.Focus();
             this.Settle();
 
-            Assert.That(PartOf(slider, "PART_LeftThumb").IsKeyboardFocused, Is.True);
+            Assert.That(PartOf(slider, "PART_LeftThumb").IsFocused, Is.True, Where(slider, "the lower thumb should have taken over"));
         }
 
         [Test]
@@ -134,8 +138,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, key);
             this.Settle();
@@ -151,8 +154,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_RightThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_RightThumb");
 
             Press(slider, key);
             this.Settle();
@@ -168,8 +170,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, key);
             this.Settle();
@@ -183,8 +184,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.Home);
             this.Settle();
@@ -198,8 +198,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.End);
             this.Settle();
@@ -213,8 +212,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.Home);
             this.Settle();
@@ -234,8 +232,7 @@ namespace MahApps.Metro.Tests.Tests
             slider.LowerValue = 69;
             this.Settle();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.Right);
             Press(slider, Key.Right);
@@ -255,8 +252,7 @@ namespace MahApps.Metro.Tests.Tests
             slider.LowerValue = 60;
             this.Settle();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             for (var press = 0; press < 10; press++)
             {
@@ -275,8 +271,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show(Orientation.Vertical);
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, key);
             this.Settle();
@@ -290,14 +285,61 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            PartOf(slider, "PART_LeftThumb").Focus();
-            this.Settle();
+            this.FocusOn(slider, "PART_LeftThumb");
 
             var arguments = Press(slider, Key.A);
             this.Settle();
 
             Assert.That(arguments.Handled, Is.False, "the slider should not swallow a key it does nothing with");
             Assert.That(slider.LowerValue, Is.EqualTo(50d));
+        }
+
+        [Test]
+        [Description("A window that is not the one the keyboard is pointed at still holds a focus of its own, and that is the one the key belongs to. Anything else makes the control depend on which window the desktop happens to be showing, which is how the same press does nothing on a build agent and works on a desk.")]
+        public void AKeyStillMovesTheValueWithoutTheKeyboardFocus()
+        {
+            var slider = this.Show();
+            var lower = this.FocusOn(slider, "PART_LeftThumb");
+
+            // what losing the window to another one leaves behind: the focus stays, the keyboard goes
+            Keyboard.ClearFocus();
+            this.Settle();
+
+            Assume.That(lower.IsKeyboardFocused, Is.False, "the keyboard should be gone for this test to prove anything");
+            Assume.That(lower.IsFocused, Is.True, "and the focus should still be on the thumb");
+
+            Press(slider, Key.Right);
+            this.Settle();
+
+            Assert.That(slider.LowerValue, Is.EqualTo(51d).Within(0.01), Where(slider, "the key should still have moved the value"));
+        }
+
+        /// <summary>
+        /// Puts the focus on one of the thumbs and makes sure it arrived, so that a key press which
+        /// does nothing afterwards is not read as the value having been left alone on purpose.
+        /// </summary>
+        private Thumb FocusOn(RangeSlider slider, string part)
+        {
+            var thumb = PartOf(slider, part);
+
+            thumb.Focus();
+            this.Settle();
+
+            Assert.That(thumb.IsFocused, Is.True, Where(slider, $"{part} should hold the focus before a key is pressed"));
+
+            return thumb;
+        }
+
+        /// <summary>Everything about the focus that would explain a key press going nowhere.</summary>
+        private string Where(RangeSlider slider, string what)
+        {
+            var lower = PartOf(slider, "PART_LeftThumb");
+            var upper = PartOf(slider, "PART_RightThumb");
+
+            return $"{what}. The window is {(this.window!.IsActive ? "active" : "not active")}, "
+                   + $"the lower thumb has focus {lower.IsFocused} and keyboard {lower.IsKeyboardFocused}, "
+                   + $"the upper one has focus {upper.IsFocused} and keyboard {upper.IsKeyboardFocused}, "
+                   + $"and the keyboard is on {Keyboard.FocusedElement?.GetType().Name ?? "nothing"}";
         }
 
         private static KeyEventArgs Press(UIElement target, Key key)

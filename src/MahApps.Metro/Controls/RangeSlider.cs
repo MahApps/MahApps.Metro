@@ -1697,8 +1697,11 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var upper = this._rightThumb is not null && this._rightThumb.IsKeyboardFocusWithin;
-            if (!upper && !(this._leftThumb is not null && this._leftThumb.IsKeyboardFocusWithin))
+            // which thumb holds the focus, not which one holds the keyboard: a key only arrives here
+            // while this window has the keyboard anyway, and the focus a thumb was given survives the
+            // window losing it, so asking for the focus answers in either case
+            var upper = this._rightThumb is not null && this._rightThumb.IsFocused;
+            if (!upper && !(this._leftThumb is not null && this._leftThumb.IsFocused))
             {
                 return;
             }
