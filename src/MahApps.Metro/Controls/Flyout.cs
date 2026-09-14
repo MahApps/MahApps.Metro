@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Threading;
 using ControlzEx;
 using ControlzEx.Theming;
@@ -69,6 +70,24 @@ namespace MahApps.Metro.Controls
         {
             add => this.AddHandler(ClosingFinishedEvent, value);
             remove => this.RemoveHandler(ClosingFinishedEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="ShadowEffect"/> dependency property.</summary>
+        public static readonly DependencyProperty ShadowEffectProperty
+            = DependencyProperty.Register(nameof(ShadowEffect),
+                                          typeof(Effect),
+                                          typeof(Flyout),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the shadow the flyout casts onto what lies behind it. Nothing is cast by
+        /// default. The effect is given to a pane of its own behind the content rather than to the
+        /// flyout, so that what is inside is drawn as it always was.
+        /// </summary>
+        public Effect? ShadowEffect
+        {
+            get => (Effect?)this.GetValue(ShadowEffectProperty);
+            set => this.SetValue(ShadowEffectProperty, value);
         }
 
         public static readonly DependencyProperty PositionProperty =

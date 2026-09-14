@@ -77,39 +77,50 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="MahApps.Templates.Flyout" TargetType="{x:Type mah:Flyout}">
-        <Border x:Name="PART_Root"
-                Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}">
+        <Border x:Name="PART_Root">
             <Border.RenderTransform>
                 <TranslateTransform />
             </Border.RenderTransform>
-            <AdornerDecorator>
-                <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
-                    <mah:MetroThumbContentControl x:Name="PART_Header"
-                                                  Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
-                                                  HorizontalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
-                                                  Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
-                                                  Content="{TemplateBinding Header}"
-                                                  ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
-                                                  ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                  DockPanel.Dock="Top"
-                                                  FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
-                                                  FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
-                                                  FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
-                                                  FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                                  Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
-                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                  Template="{StaticResource MahApps.Templates.Flyout.Header}" />
-                    <ContentPresenter x:Name="PART_Content"
-                                      ContentSource="Content"
-                                      DockPanel.Dock="Bottom" />
-                </DockPanel>
-            </AdornerDecorator>
+            <Grid>
+                <!--
+                    A pane of its own behind everything else, there to cast the shadow and nothing
+                    more. The effect could as well go on the flyout, but then every letter inside it
+                    would go through a bitmap on its way to the screen and lose its sharpness.
+                -->
+                <Border x:Name="PART_Shadow"
+                        Background="{TemplateBinding Background}"
+                        Effect="{TemplateBinding ShadowEffect}" />
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <AdornerDecorator>
+                        <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
+                            <mah:MetroThumbContentControl x:Name="PART_Header"
+                                                          Padding="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                                          HorizontalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                          VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                                          Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
+                                                          Content="{TemplateBinding Header}"
+                                                          ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
+                                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                          DockPanel.Dock="Top"
+                                                          FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
+                                                          FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
+                                                          FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
+                                                          FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                                          Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
+                                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          Template="{StaticResource MahApps.Templates.Flyout.Header}" />
+                            <ContentPresenter x:Name="PART_Content"
+                                              ContentSource="Content"
+                                              DockPanel.Dock="Bottom" />
+                        </DockPanel>
+                    </AdornerDecorator>
+                </Border>
+            </Grid>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup>
                     <VisualState x:Name="Default" />
