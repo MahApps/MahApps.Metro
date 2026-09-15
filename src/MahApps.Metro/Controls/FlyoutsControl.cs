@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using ControlzEx;
+using MahApps.Metro.Automation.Peers;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -54,6 +56,12 @@ namespace MahApps.Metro.Controls
         static FlyoutsControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlyoutsControl), new FrameworkPropertyMetadata(typeof(FlyoutsControl)));
+        }
+
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new FlyoutsControlAutomationPeer(this);
         }
 
         protected override DependencyObject GetContainerForItemOverride()
