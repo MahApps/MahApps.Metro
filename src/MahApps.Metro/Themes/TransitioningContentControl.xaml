@@ -31,10 +31,15 @@
                                     </TransformGroup>
                                 </ContentPresenter.RenderTransform>
                             </ContentPresenter>
+                            <!--
+                                Neither presenter is bound to the content. The control hands it to
+                                whichever of the two is free, so that the one on its way out keeps the
+                                view it already has instead of raising it from its template again.
+                            -->
                             <ContentPresenter x:Name="CurrentContentPresentationSite"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Content="{TemplateBinding Content}"
+                                              Content="{x:Null}"
                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
