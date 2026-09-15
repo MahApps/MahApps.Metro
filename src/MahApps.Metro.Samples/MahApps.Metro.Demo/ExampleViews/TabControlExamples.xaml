@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:MetroDemo"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -110,10 +111,119 @@
                 </StackPanel>
             </Grid>
         </ControlTemplate>
+        <Style x:Key="TabHeaderGlyph" TargetType="{x:Type iconPacks:PackIconMaterial}">
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Margin" Value="0 0 6 0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="16" />
+        </Style>
+        <Style x:Key="TabPaneTitle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0 0 0 4" />
+        </Style>
+        <Style x:Key="TabPaneText" TargetType="{x:Type TextBlock}">
+            <Setter Property="Opacity" Value="0.8" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style x:Key="BrushPickerCaption" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0 8 0 2" />
+        </Style>
     </UserControl.Resources>
 
     <StackPanel Margin="5 10 5 0">
         <Expander Margin="0"
+                  Header="_Colours of a tab strip"
+                  IsExpanded="True">
+            <StackPanel Margin="15 5 15 5">
+                <Label Content="A brush per state" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <TextBlock Margin="0 0 0 8"
+                           Style="{StaticResource TabPaneText}"
+                           Text="Three brushes, one for the tabs at rest, one for the tab that is showing and one for the tab under the mouse. Clear a picker and that state goes back to what it has always been, the theme text for a tab at rest and the accent for the one showing." />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <mah:MetroTabControl x:Name="ColouredTabControl"
+                                         Height="190"
+                                         mah:HeaderedControlHelper.HeaderFontSize="15"
+                                         mah:HeaderedControlHelper.HeaderForeground="{Binding ElementName=AtRestBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:HeaderedControlHelper.HeaderForegroundMouseOver="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:HeaderedControlHelper.HeaderForegroundSelected="{Binding ElementName=SelectedBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineMouseOverBrush="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineSelectedBrush="{Binding ElementName=SelectedBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.Underlined="SelectedTabItem">
+                        <mah:MetroTabItem Header="Overview">
+                            <mah:MetroTabItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="ViewDashboardOutline" Style="{StaticResource TabHeaderGlyph}" />
+                                        <TextBlock Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </mah:MetroTabItem.HeaderTemplate>
+                            <StackPanel Margin="10">
+                                <TextBlock Style="{StaticResource TabPaneTitle}" Text="Everything at a glance" />
+                                <TextBlock Style="{StaticResource TabPaneText}" Text="The glyph takes the same brush as the caption, because both of them are built in a HeaderTemplate. A header put together as an object of its own hangs off the tab instead and keeps the foreground of that." />
+                            </StackPanel>
+                        </mah:MetroTabItem>
+                        <mah:MetroTabItem Header="Activity">
+                            <mah:MetroTabItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="History" Style="{StaticResource TabHeaderGlyph}" />
+                                        <TextBlock Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </mah:MetroTabItem.HeaderTemplate>
+                            <StackPanel Margin="10">
+                                <TextBlock Style="{StaticResource TabPaneTitle}" Text="What happened lately" />
+                                <TextBlock Style="{StaticResource TabPaneText}" Text="Run the mouse along the strip without pressing anything. Every tab follows the brush for the mouse, the one showing along with the rest." />
+                            </StackPanel>
+                        </mah:MetroTabItem>
+                        <mah:MetroTabItem Header="Settings">
+                            <mah:MetroTabItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <iconPacks:PackIconMaterial Kind="CogOutline" Style="{StaticResource TabHeaderGlyph}" />
+                                        <TextBlock Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </mah:MetroTabItem.HeaderTemplate>
+                            <StackPanel Margin="10">
+                                <TextBlock Style="{StaticResource TabPaneTitle}" Text="The knobs" />
+                                <TextBlock Style="{StaticResource TabPaneText}" Text="A brush handed to the control reaches every tab in it, and one handed to a single tab beats that." />
+                            </StackPanel>
+                        </mah:MetroTabItem>
+                    </mah:MetroTabControl>
+
+                    <StackPanel Grid.Column="1"
+                                Width="220"
+                                Margin="15 0 0 0">
+                        <TextBlock Style="{StaticResource BrushPickerCaption}" Text="HeaderForeground" />
+                        <mah:ColorPicker x:Name="AtRestBrush"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="the theme text"
+                                         SelectedColor="#FF6E7B8B" />
+                        <TextBlock Style="{StaticResource BrushPickerCaption}" Text="HeaderForegroundSelected" />
+                        <mah:ColorPicker x:Name="SelectedBrush"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="the accent"
+                                         SelectedColor="#FFD81B60" />
+                        <TextBlock Style="{StaticResource BrushPickerCaption}" Text="HeaderForegroundMouseOver" />
+                        <mah:ColorPicker x:Name="MouseOverBrush"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="a shade of grey"
+                                         SelectedColor="#FF00897B" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Expander>
+
+        <Expander Margin="0 10 0 0"
                   Header="_Default TabControl"
                   IsExpanded="True">
             <StackPanel Margin="15 5 15 5">
@@ -124,22 +234,22 @@
                             mah:HeaderedControlHelper.HeaderFontFamily="Segoe Script"
                             mah:HeaderedControlHelper.HeaderFontSize="18">
                     <TabItem Header="Item _1">
-                        <TextBlock FontSize="30" Text="Content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="A tab holds whatever a panel holds. This one was given a line of text." />
                     </TabItem>
                     <TabItem Header="Item _2">
-                        <TextBlock FontSize="30" Text="More content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The tab beside it holds another." />
                     </TabItem>
                     <TabItem Header="Item _3">
-                        <TextBlock FontSize="30" Text="More more content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="And so does this one." />
                     </TabItem>
                     <TabItem Header="Item _4">
-                        <TextBlock FontSize="30" Text="So much content!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="Six of them fit on the strip before it wraps." />
                     </TabItem>
                     <TabItem Header="Item _5">
-                        <TextBlock FontSize="30" Text="Content!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The header of each one carries its own access key, so Alt and the digit reach it." />
                     </TabItem>
                     <TabItem Header="Item _6">
-                        <TextBlock FontSize="30" Text="This is not content (it is)" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The last of them." />
                     </TabItem>
                 </TabControl>
 
@@ -152,13 +262,13 @@
                                 Height="150"
                                 Style="{DynamicResource MahApps.Styles.TabControl.Animated}">
                         <TabItem Header="this tabcontrol">
-                            <TextBlock FontSize="30" Text="Cool transition" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="The content slides in when the tab changes." />
                         </TabItem>
                         <mah:MetroTabItem Header="animates its content">
-                            <TextBlock FontSize="30" Text="More cool transition" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="Every tab of this control is animated the same way." />
                         </mah:MetroTabItem>
                         <mah:MetroTabItem Header="with a transition">
-                            <TextBlock FontSize="30" Text="Animate everything!" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="The transition is a property of the control, not of the tab." />
                         </mah:MetroTabItem>
                     </TabControl>
                 </Grid>
@@ -172,16 +282,16 @@
                                 Height="150"
                                 Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}">
                         <TabItem Header="these tabs">
-                            <TextBlock FontSize="30" Text="first content" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="The strip stays on one line." />
                         </TabItem>
                         <mah:MetroTabItem Header="appear only on a single line">
-                            <TextBlock FontSize="30" Text="second one" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="What does not fit is reached with the two buttons at the end of it." />
                         </mah:MetroTabItem>
                         <mah:MetroTabItem Header="if they are overflowing">
-                            <TextBlock FontSize="30" Text="3" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="Instead of wrapping onto a second row." />
                         </mah:MetroTabItem>
                         <TabItem Header="instead of wrapping them">
-                            <TextBlock FontSize="30" Text="last of them" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="Which keeps the height of the strip the same however many tabs there are." />
                         </TabItem>
                     </TabControl>
                 </Grid>
@@ -197,13 +307,13 @@
                 <ContentControl DataContext="{Binding ElementName=MetroAnimatedTabControl}" Template="{StaticResource TabControlConfigDataTemplate}" />
                 <mah:MetroAnimatedTabControl x:Name="MetroAnimatedTabControl" Height="150">
                     <TabItem Header="this tabcontrol">
-                        <TextBlock FontSize="30" Text="Cool transition" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The content slides in when the tab changes." />
                     </TabItem>
                     <mah:MetroTabItem Header="animates its content">
-                        <TextBlock FontSize="30" Text="More cool transition" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="Every tab of this control is animated the same way." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem Header="with a transition">
-                        <TextBlock FontSize="30" Text="Animate everything!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The transition is a property of the control, not of the tab." />
                     </mah:MetroTabItem>
                 </mah:MetroAnimatedTabControl>
 
@@ -213,16 +323,16 @@
                 <ContentControl DataContext="{Binding ElementName=MetroAnimatedSingleRowTabControl}" Template="{StaticResource TabControlConfigDataTemplate}" />
                 <mah:MetroAnimatedSingleRowTabControl x:Name="MetroAnimatedSingleRowTabControl" Height="150">
                     <TabItem Header="these tabs">
-                        <TextBlock FontSize="30" Text="first content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The strip stays on one line." />
                     </TabItem>
                     <mah:MetroTabItem Header="appear only on a single line">
-                        <TextBlock FontSize="30" Text="second one" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="What does not fit is reached with the two buttons at the end of it." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem Header="if they are overflowing">
-                        <TextBlock FontSize="30" Text="3" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="Instead of wrapping onto a second row." />
                     </mah:MetroTabItem>
                     <TabItem Header="instead of wrapping them">
-                        <TextBlock FontSize="30" Text="last of them" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="Which keeps the height of the strip the same however many tabs there are." />
                     </TabItem>
                 </mah:MetroAnimatedSingleRowTabControl>
 
@@ -248,13 +358,13 @@
                             </Style>
                         </TabControl.Resources>
                         <TabItem Header="Test1">
-                            <TextBlock FontSize="12" Text="TabStripPlacement Left Test 1" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="The strip stands on the left." />
                         </TabItem>
                         <TabItem Header="Test2">
-                            <TextBlock FontSize="12" Text="TabStripPlacement Left Test 2" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="A layout transform turns each caption." />
                         </TabItem>
                         <TabItem Header="Test3">
-                            <TextBlock FontSize="12" Text="TabStripPlacement Left Test 3" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="So it reads from the bottom up." />
                         </TabItem>
                     </mah:MetroAnimatedSingleRowTabControl>
                     <mah:MetroAnimatedSingleRowTabControl Grid.Column="1"
@@ -276,13 +386,13 @@
                             </Style>
                         </TabControl.Resources>
                         <TabItem Header="Test1">
-                            <TextBlock FontSize="12" Text="TabStripPlacement Right Test 1" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="The same strip on the right." />
                         </TabItem>
                         <TabItem Header="Test2">
-                            <TextBlock FontSize="12" Text="TabStripPlacement Right Test 2" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="Turned the other way round." />
                         </TabItem>
                         <TabItem Header="Test3">
-                            <TextBlock FontSize="12" Text="TabStripPlacement Right Test 3" />
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="So it reads from the top down." />
                         </TabItem>
                     </mah:MetroAnimatedSingleRowTabControl>
                 </Grid>
@@ -297,39 +407,39 @@
                                       CloseTabCommand="{Binding SingleCloseTabCommand}"
                                       CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
                                       Header="headers">
-                        <TextBlock FontSize="30" Text="you can bind to a command" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The close button can be bound to a command of your own." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="22"
                                       CloseButtonEnabled="True"
                                       CloseTabCommand="{Binding NeverCloseTabCommand}"
                                       CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
                                       Header="can">
-                        <TextBlock FontSize="30" Text="and ensure the command never closes" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="A command that refuses keeps the tab where it is." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="24"
                                       CloseButtonEnabled="True"
                                       Header="have">
-                        <TextBlock FontSize="30" Text="More more content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="And so does this one." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="26"
                                       CloseButtonEnabled="True"
                                       Header="different">
-                        <TextBlock FontSize="30" Text="So much content!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="Six of them fit on the strip before it wraps." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="28"
                                       CloseButtonEnabled="True"
                                       Header="font">
-                        <TextBlock FontSize="30" Text="Content!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The header of each one carries its own access key, so Alt and the digit reach it." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="30"
                                       CloseButtonEnabled="True"
                                       Header="sizes">
-                        <TextBlock FontSize="30" Text="This is not content (it is). This one won't close." />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="This one refuses to close." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="36"
                                       CloseButtonEnabled="True"
                                       Header="close button">
-                        <TextBlock FontSize="24" Text="The size of close button will be changed proportionately considering its header size." />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The close button is sized from the header, so a larger caption is given a larger button." />
                     </mah:MetroTabItem>
                 </mah:MetroTabControl>
 
@@ -342,28 +452,28 @@
                                      KeepVisualTreeInMemoryWhenChangingTabs="True">
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="18" Header="item _1">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="30" Text="Load-Count: " />
-                            <TextBlock FontSize="30"
-                                       Loaded="TextBlock_OnLoaded"
+                            <TextBlock Style="{StaticResource TabPaneText}" Text="Times this tab was built: " />
+                            <TextBlock Loaded="TextBlock_OnLoaded"
+                                       Style="{StaticResource TabPaneText}"
                                        Text="0" />
                         </StackPanel>
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="18" Header="item _2 more">
-                        <TextBlock FontSize="30" Text="More content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The tab beside it holds another." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="18" Header="item _3 header here">
-                        <TextBlock FontSize="30" Text="More more content" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="And so does this one." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="18" Header="item _4 ">
-                        <TextBlock FontSize="30" Text="So much content!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="Six of them fit on the strip before it wraps." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="18"
                                       CloseButtonEnabled="True"
                                       Header="item _5">
-                        <TextBlock FontSize="30" Text="Content!" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The header of each one carries its own access key, so Alt and the digit reach it." />
                     </mah:MetroTabItem>
                     <mah:MetroTabItem mah:HeaderedControlHelper.HeaderFontSize="18" Header="item _6">
-                        <TextBlock FontSize="30" Text="This is not content (it is)" />
+                        <TextBlock Style="{StaticResource TabPaneText}" Text="The last of them." />
                     </mah:MetroTabItem>
                 </mah:MetroTabControl>
             </StackPanel>
