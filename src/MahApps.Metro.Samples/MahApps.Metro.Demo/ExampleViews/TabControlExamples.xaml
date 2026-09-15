@@ -126,10 +126,6 @@
             <Setter Property="Opacity" Value="0.8" />
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
-        <Style x:Key="BrushPickerCaption" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Margin" Value="0 8 0 2" />
-        </Style>
     </UserControl.Resources>
 
     <StackPanel Margin="5 10 5 0">
@@ -140,23 +136,24 @@
                 <Label Content="A brush per state" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBlock Margin="0 0 0 8"
                            Style="{StaticResource TabPaneText}"
-                           Text="Three brushes, one for the tabs at rest, one for the tab that is showing and one for the tab under the mouse. Clear a picker and that state goes back to what it has always been, the theme text for a tab at rest and the accent for the one showing." />
+                           Text="The caption and the line under it are painted apart, one brush per state each. Clear a picker and that state goes back to the nearest one that was given a brush, which for a strip nobody says anything to is the theme text and the accent." />
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
                     <mah:MetroTabControl x:Name="ColouredTabControl"
-                                         Height="190"
+                                         Grid.Row="0"
+                                         Height="150"
                                          mah:HeaderedControlHelper.HeaderFontSize="15"
-                                         mah:HeaderedControlHelper.HeaderForeground="{Binding ElementName=AtRestBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                                         mah:HeaderedControlHelper.HeaderForegroundMouseOver="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                                         mah:HeaderedControlHelper.HeaderForegroundSelected="{Binding ElementName=SelectedBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                                         mah:TabControlHelper.UnderlineBrush="{Binding ElementName=AtRestBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                                         mah:TabControlHelper.UnderlineMouseOverBrush="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                                         mah:TabControlHelper.UnderlineMouseOverSelectedBrush="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
-                                         mah:TabControlHelper.UnderlineSelectedBrush="{Binding ElementName=SelectedBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:HeaderedControlHelper.HeaderForeground="{Binding ElementName=TextAtRest, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:HeaderedControlHelper.HeaderForegroundMouseOver="{Binding ElementName=TextMouseOver, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:HeaderedControlHelper.HeaderForegroundSelected="{Binding ElementName=TextSelected, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineBrush="{Binding ElementName=LineAtRest, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineMouseOverBrush="{Binding ElementName=LineMouseOver, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineMouseOverSelectedBrush="{Binding ElementName=LineMouseOverSelected, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineSelectedBrush="{Binding ElementName=LineSelected, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
                                          mah:TabControlHelper.Underlined="SelectedTabItem">
                         <mah:MetroTabItem Header="Overview">
                             <mah:MetroTabItem.HeaderTemplate>
@@ -202,25 +199,106 @@
                         </mah:MetroTabItem>
                     </mah:MetroTabControl>
 
-                    <StackPanel Grid.Column="1"
-                                Width="220"
-                                Margin="15 0 0 0">
-                        <TextBlock Style="{StaticResource BrushPickerCaption}" Text="HeaderForeground" />
-                        <mah:ColorPicker x:Name="AtRestBrush"
+                    <Grid Grid.Row="1" Margin="0 10 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   Margin="4 0 4 4"
+                                   FontWeight="SemiBold"
+                                   Text="The caption" />
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="2"
+                                   Margin="4 0 4 4"
+                                   FontWeight="SemiBold"
+                                   Text="The line under it" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   Margin="0 4 10 4"
+                                   VerticalAlignment="Center"
+                                   Text="At rest" />
+                        <mah:ColorPicker x:Name="TextAtRest"
+                                         Grid.Row="1"
+                                         Grid.Column="1"
+                                         Margin="4"
                                          mah:TextBoxHelper.ClearTextButton="True"
                                          mah:TextBoxHelper.Watermark="the theme text"
                                          SelectedColor="#FF6E7B8B" />
-                        <TextBlock Style="{StaticResource BrushPickerCaption}" Text="HeaderForegroundSelected" />
-                        <mah:ColorPicker x:Name="SelectedBrush"
+                        <mah:ColorPicker x:Name="LineAtRest"
+                                         Grid.Row="1"
+                                         Grid.Column="2"
+                                         Margin="4"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="a shade of grey"
+                                         SelectedColor="#FFBEBEBE" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Margin="0 4 10 4"
+                                   VerticalAlignment="Center"
+                                   Text="The tab that is showing" />
+                        <mah:ColorPicker x:Name="TextSelected"
+                                         Grid.Row="2"
+                                         Grid.Column="1"
+                                         Margin="4"
                                          mah:TextBoxHelper.ClearTextButton="True"
                                          mah:TextBoxHelper.Watermark="the accent"
                                          SelectedColor="#FFD81B60" />
-                        <TextBlock Style="{StaticResource BrushPickerCaption}" Text="HeaderForegroundMouseOver" />
-                        <mah:ColorPicker x:Name="MouseOverBrush"
+                        <mah:ColorPicker x:Name="LineSelected"
+                                         Grid.Row="2"
+                                         Grid.Column="2"
+                                         Margin="4"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="the accent"
+                                         SelectedColor="#FFD81B60" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   Margin="0 4 10 4"
+                                   VerticalAlignment="Center"
+                                   Text="Under the mouse" />
+                        <mah:ColorPicker x:Name="TextMouseOver"
+                                         Grid.Row="3"
+                                         Grid.Column="1"
+                                         Margin="4"
                                          mah:TextBoxHelper.ClearTextButton="True"
                                          mah:TextBoxHelper.Watermark="a shade of grey"
                                          SelectedColor="#FF00897B" />
-                    </StackPanel>
+                        <mah:ColorPicker x:Name="LineMouseOver"
+                                         Grid.Row="3"
+                                         Grid.Column="2"
+                                         Margin="4"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="a shade of grey"
+                                         SelectedColor="#FF00897B" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="0"
+                                   Margin="0 4 10 4"
+                                   VerticalAlignment="Center"
+                                   Text="Showing, under the mouse" />
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="1"
+                                   Margin="4"
+                                   VerticalAlignment="Center"
+                                   Opacity="0.7"
+                                   Text="follows the row above" />
+                        <mah:ColorPicker x:Name="LineMouseOverSelected"
+                                         Grid.Row="4"
+                                         Grid.Column="2"
+                                         Margin="4"
+                                         mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="the highlight"
+                                         SelectedColor="#FF00897B" />
+                    </Grid>
                 </Grid>
             </StackPanel>
         </Expander>
