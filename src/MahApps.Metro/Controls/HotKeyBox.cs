@@ -3,17 +3,26 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using Windows.Win32;
 using MahApps.Metro.ValueBoxes;
 
+using MahApps.Metro.Automation.Peers;
+
 namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
     public class HotKeyBox : Control
     {
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new HotKeyBoxAutomationPeer(this);
+        }
+
         private const string PART_TextBox = "PART_TextBox";
 
         /// <summary>Identifies the <see cref="HotKey"/> dependency property.</summary>

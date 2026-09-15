@@ -25,6 +25,20 @@
         <mah:DateTimePicker x:Name="TheDateTimePicker" />
         <mah:TimePicker x:Name="TheTimePicker" />
         <DatePicker x:Name="TheDatePicker" />
+        <mah:HotKeyBox x:Name="TheHotKeyBox" Width="200" />
+        <mah:DropDownButton x:Name="TheDropDownButton"
+                            Width="200"
+                            Content="Actions" />
+        <mah:FlipView x:Name="TheFlipView"
+                      Width="200"
+                      Height="80" />
+        <mah:RevealImage x:Name="TheRevealImage"
+                         Width="200"
+                         Height="70"
+                         Text="a caption" />
+        <mah:ColorCanvas x:Name="TheColorCanvas"
+                         Width="260"
+                         Height="220" />
         <ScrollViewer x:Name="TheScrollViewer"
                       Height="60"
                       HorizontalScrollBarVisibility="Visible"
