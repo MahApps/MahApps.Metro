@@ -77,7 +77,27 @@ namespace MahApps.Metro.Tests.TestHelpers
         /// <summary>
         /// Lets the dispatcher work, which the templates need before anything has a size.
         /// </summary>
-        public static void Pump(int milliseconds = 300)
+        /// <remarks>
+        /// This waits for the queue rather than for a clock. Measure, arrange, render and the Loaded
+        /// handlers all sit above <see cref="DispatcherPriority.ContextIdle" />, so a call posted at
+        /// that priority comes back once every one of them has run.
+        /// </remarks>
+        public static void Pump()
+        {
+            var dispatcher = Dispatcher.CurrentDispatcher;
+
+            // three turns, because a handler running in one of them can queue work for the next
+            for (var turn = 0; turn < 3; turn++)
+            {
+                dispatcher.Invoke(() => { }, DispatcherPriority.ContextIdle);
+            }
+        }
+
+        /// <summary>
+        /// Lets the dispatcher work for a given time, for the few things that need a clock rather
+        /// than an empty queue, such as a storyboard running to its end.
+        /// </summary>
+        public static void Pump(int milliseconds)
         {
             var frame = new DispatcherFrame();
             var timer = new DispatcherTimer(TimeSpan.FromMilliseconds(milliseconds), DispatcherPriority.Background, (_, _) => frame.Continue = false, Dispatcher.CurrentDispatcher);
