@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -598,7 +598,31 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected CultureInfo SpecificCultureInfo => this.Culture ?? this.Language.GetSpecificCulture();
+        /// <summary>
+        /// The culture the picker reads and writes its dates and times in. <see cref="Culture"/> has
+        /// the first word, then a language somebody set or passed down the tree, and failing both the
+        /// culture of the thread.
+        /// </summary>
+        /// <remarks>
+        /// That last step is there because <see cref="FrameworkElement.Language"/> starts out at en-US
+        /// whatever the thread is set to, while the date controls WPF brings along go by the thread.
+        /// Going by the language alone left a picker showing an American date next to a DatePicker
+        /// showing a German one, in the same window and with nothing to tell them apart.
+        /// </remarks>
+        protected CultureInfo SpecificCultureInfo
+        {
+            get
+            {
+                if (this.Culture is not null)
+                {
+                    return this.Culture;
+                }
+
+                return DependencyPropertyHelper.GetValueSource(this, LanguageProperty).BaseValueSource == BaseValueSource.Default
+                    ? CultureInfo.CurrentCulture
+                    : this.Language.GetSpecificCulture();
+            }
+        }
 
         /// <summary>
         ///     When overridden in a derived class, is invoked whenever application code or internal processes call
