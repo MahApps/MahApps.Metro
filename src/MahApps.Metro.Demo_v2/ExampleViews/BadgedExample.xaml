@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="MahApps.Demo.ExampleViews.BadgedExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctrls="clr-namespace:MahApps.Demo.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MahApps.Demo.ExampleViews"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <ctrls:DemoView x:Name="demoView"
+                    xml:space="preserve"
+                    HyperlinkOnlineDocs="https://mahapps.com/docs/controls/badgedcontrol">
+        <ctrls:DemoView.ExampleXaml><![CDATA[<mah:Badged Badge="[Badge]">
+    <Button Margin="5"
+            HorizontalAlignment="[HorizontalAlignment]"
+            VerticalAlignment="[VerticalAlignment]"
+            Click="Button_Click"
+            Content="[Content]"
+            IsEnabled="True" />
+</mah:Badged> ]]> 
+        </ctrls:DemoView.ExampleXaml>
+        <mah:Badged x:Name="badge"
+                    Margin="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Badge="1">
+            <Button Margin="5"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    xml:space="preserve"
+                    Click="Button_Click"
+                    IsEnabled="True"
+                    MouseRightButtonUp="Button_MouseRightButtonUp">Click to increase
+Rightclick to clear</Button>
+        </mah:Badged>
+    </ctrls:DemoView>
+</UserControl>
