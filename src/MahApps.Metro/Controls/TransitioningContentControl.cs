@@ -327,10 +327,14 @@ namespace MahApps.Metro.Controls
 
             this.AddMirroredStates();
 
-            // whatever the roles were under the old template, they start over with this one
-            this.showingInThePreviousSite = false;
-            this.currentContentPresentationSite?.SetCurrentValue(ContentPresenter.ContentProperty, this.Content);
-            this.previousContentPresentationSite?.SetCurrentValue(ContentPresenter.ContentProperty, null);
+            // a new template brings two empty presenters, so the content goes to whichever of them is
+            // showing and the other is left with nothing. Handing it to both would have the next change
+            // find its content already standing there and reuse it, which is not what a fade wants.
+            if (this.currentContentPresentationSite is not null && this.previousContentPresentationSite is not null)
+            {
+                this.ShowingSite.SetCurrentValue(ContentPresenter.ContentProperty, this.Content);
+                this.ArrivingSite.SetCurrentValue(ContentPresenter.ContentProperty, null);
+            }
 
             // hookup currenttransition
             // The states are known now, so let the coercion decide whether the current transition survives the new template.
@@ -356,6 +360,14 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (this.currentContentPresentationSite != null && this.previousContentPresentationSite != null)
             {
+                // applying the template puts the content where it belongs, and a binding settling in
+                // afterwards asks for the very same thing. Fading it onto itself would build the view
+                // a second time for nothing.
+                if (ReferenceEquals(this.ShowingSite.Content, newContent))
+                {
+                    return;
+                }
+
                 // the one arriving goes to whichever presenter is free, and the one leaving stays put
                 this.ArrivingSite.SetCurrentValue(ContentPresenter.ContentProperty, newContent);
                 this.showingInThePreviousSite = !this.showingInThePreviousSite;
