@@ -4,6 +4,7 @@
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
                     xmlns:controlzex="urn:controlzex"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
@@ -113,7 +114,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                    AutomationProperties.Name="Clear"
+                                    AutomationProperties.Name="{x:Static lang:Automation.Clear}"
                                     Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                     CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
                                     CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
@@ -132,7 +133,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="2"
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                    AutomationProperties.Name="Show the drop down"
+                                    AutomationProperties.Name="{x:Static lang:Automation.ShowCalendar}"
                                     Content="{TemplateBinding mah:DatePickerHelper.DropDownButtonContent}"
                                     ContentTemplate="{TemplateBinding mah:DatePickerHelper.DropDownButtonContentTemplate}"
                                     Focusable="False"

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                    xmlns:lang="clr-namespace:MahApps.Metro.Lang">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -15,7 +16,7 @@
 
             <ContentPresenter x:Name="PART_Top"
                               Grid.Row="0"
-                              AutomationProperties.Name="Dialog top"
+                              AutomationProperties.Name="{x:Static lang:Automation.DialogTop}"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
@@ -34,7 +35,7 @@
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 HorizontalAlignment="Center"
-                                AutomationProperties.Name="Dialog icon"
+                                AutomationProperties.Name="{x:Static lang:Automation.DialogIcon}"
                                 Content="{TemplateBinding Icon}"
                                 ContentTemplate="{TemplateBinding IconTemplate}"
                                 Focusable="False"
@@ -43,7 +44,7 @@
                 <TextBlock x:Name="PART_Title"
                            Grid.Row="0"
                            Grid.Column="1"
-                           AutomationProperties.Name="Dialog title"
+                           AutomationProperties.Name="{x:Static lang:Automation.DialogTitle}"
                            FontSize="{TemplateBinding DialogTitleFontSize}"
                            Foreground="{TemplateBinding Foreground}"
                            Text="{TemplateBinding Title}"
@@ -55,7 +56,7 @@
                       Margin="0 10 0 0"
                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                      AutomationProperties.Name="Dialog content"
+                      AutomationProperties.Name="{x:Static lang:Automation.DialogContent}"
                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -107,7 +108,7 @@
 
             <ContentPresenter x:Name="PART_Bottom"
                               Grid.Row="2"
-                              AutomationProperties.Name="Dialog bottom"
+                              AutomationProperties.Name="{x:Static lang:Automation.DialogBottom}"
                               Content="{TemplateBinding DialogBottom}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>

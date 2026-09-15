@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio" TargetType="{x:Type RepeatButton}">
@@ -85,13 +86,13 @@
                 <ColumnDefinition Width="18" />
             </Grid.ColumnDefinitions>
             <RepeatButton Grid.Column="0"
-                          AutomationProperties.Name="Scroll left"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
                           Command="ScrollBar.LineLeftCommand"
                           Content="M 0 4 L 4 8 L 4 0 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />
             <Track Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton AutomationProperties.Name="Scroll left"
+                    <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
                                   Command="ScrollBar.PageLeftCommand"
                                   Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.DecreaseRepeatButton>
@@ -99,13 +100,13 @@
                     <mah:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton AutomationProperties.Name="Scroll right"
+                    <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
                                   Command="ScrollBar.PageRightCommand"
                                   Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Column="2"
-                          AutomationProperties.Name="Scroll right"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
                           Command="ScrollBar.LineRightCommand"
                           Content="M 0 0 L 0 8 L 4 4 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />
@@ -120,7 +121,7 @@
                 <RowDefinition Height="18" />
             </Grid.RowDefinitions>
             <RepeatButton Grid.Row="0"
-                          AutomationProperties.Name="Scroll up"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
                           Command="ScrollBar.LineUpCommand"
                           Content="M 0 4 L 8 4 L 4 0 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />
@@ -128,7 +129,7 @@
                    Grid.Row="1"
                    IsDirectionReversed="true">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton AutomationProperties.Name="Scroll up"
+                    <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
                                   Command="ScrollBar.PageUpCommand"
                                   Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.DecreaseRepeatButton>
@@ -136,13 +137,13 @@
                     <mah:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton AutomationProperties.Name="Scroll down"
+                    <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
                                   Command="ScrollBar.PageDownCommand"
                                   Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Row="2"
-                          AutomationProperties.Name="Scroll down"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
                           Command="ScrollBar.LineDownCommand"
                           Content="M 0 0 L 4 4 L 8 0 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />

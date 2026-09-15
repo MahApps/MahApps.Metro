@@ -75,12 +75,12 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("The button that opens a picker says what it opens.")]
+        [Description("The button that opens a picker says what it opens, in the words WPF uses for its own.")]
         public void TheButtonOfAPickerSaysWhatItOpens()
         {
-            Assert.That(NameOf(this.window!.TheDateTimePicker, "PART_Button"), Is.EqualTo("Show the drop down"));
-            Assert.That(NameOf(this.window.TheTimePicker, "PART_Button"), Is.EqualTo("Show the drop down"));
-            Assert.That(NameOf(this.window.TheDatePicker, "PART_Button"), Is.EqualTo("Show the drop down"));
+            Assert.That(NameOf(this.window!.TheDateTimePicker, "PART_Button"), Is.EqualTo("Show Calendar"), "the picker that carries a calendar");
+            Assert.That(NameOf(this.window.TheDatePicker, "PART_Button"), Is.EqualTo("Show Calendar"), "and the plain date picker, in the words WPF uses for its own");
+            Assert.That(NameOf(this.window.TheTimePicker, "PART_Button"), Is.EqualTo("Show Clock"), "a time picker has no calendar to show");
         }
 
         [Test]
