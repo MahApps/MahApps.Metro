@@ -153,7 +153,9 @@
                                          mah:HeaderedControlHelper.HeaderForeground="{Binding ElementName=AtRestBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
                                          mah:HeaderedControlHelper.HeaderForegroundMouseOver="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
                                          mah:HeaderedControlHelper.HeaderForegroundSelected="{Binding ElementName=SelectedBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineBrush="{Binding ElementName=AtRestBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
                                          mah:TabControlHelper.UnderlineMouseOverBrush="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
+                                         mah:TabControlHelper.UnderlineMouseOverSelectedBrush="{Binding ElementName=MouseOverBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
                                          mah:TabControlHelper.UnderlineSelectedBrush="{Binding ElementName=SelectedBrush, Path=SelectedColor, Converter={x:Static mah:ColorToSolidColorBrushConverter.DefaultInstance}}"
                                          mah:TabControlHelper.Underlined="SelectedTabItem">
                         <mah:MetroTabItem Header="Overview">
