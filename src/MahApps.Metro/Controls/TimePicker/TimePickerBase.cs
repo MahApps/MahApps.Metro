@@ -30,6 +30,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondHand, Type = typeof(UIElement))]
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
+    [TemplatePart(Name = ElementNowButton, Type = typeof(Button))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
     [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
     [TemplatePart(Name = ElementPopup, Type = typeof(Popup))]
@@ -42,6 +43,7 @@ namespace MahApps.Metro.Controls
         private const string ElementHourPicker = "PART_HourPicker";
         private const string ElementMinuteHand = "PART_MinuteHand";
         private const string ElementMinutePicker = "PART_MinutePicker";
+        private const string ElementNowButton = "PART_NowButton";
         private const string ElementPopup = "PART_Popup";
         private const string ElementSecondHand = "PART_SecondHand";
         private const string ElementSecondPicker = "PART_SecondPicker";
@@ -49,6 +51,7 @@ namespace MahApps.Metro.Controls
 
         private Selector? ampmSwitcher;
         private Button? dropDownButton;
+        private Button? nowButton;
         private bool deactivateRangeBaseEvent;
         private bool deactivateTextChangedEvent;
         private bool textInputChanged;
@@ -351,6 +354,39 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
+        /// <summary>Identifies the <see cref="IsNowButtonVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsNowButtonVisibleProperty
+            = DependencyProperty.Register(nameof(IsNowButtonVisible),
+                                          typeof(bool),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets or sets whether the drop-down carries a button that puts the picker on the here and
+        /// now, the time of day along with the date.
+        /// </summary>
+        public bool IsNowButtonVisible
+        {
+            get => (bool)this.GetValue(IsNowButtonVisibleProperty);
+            set => this.SetValue(IsNowButtonVisibleProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="NowButtonContent"/> dependency property.</summary>
+        public static readonly DependencyProperty NowButtonContentProperty
+            = DependencyProperty.Register(nameof(NowButtonContent),
+                                          typeof(object),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata("Now"));
+
+        /// <summary>
+        /// Gets or sets what that button reads, which is a word worth translating.
+        /// </summary>
+        public object? NowButtonContent
+        {
+            get => this.GetValue(NowButtonContentProperty);
+            set => this.SetValue(NowButtonContentProperty, value);
+        }
+
         public static readonly DependencyProperty CultureProperty
             = DependencyProperty.Register(nameof(Culture),
                                           typeof(CultureInfo),
@@ -637,6 +673,7 @@ namespace MahApps.Metro.Controls
             this.popUp = this.GetTemplateChild(ElementPopup) as Popup;
 
             this.dropDownButton = this.GetTemplateChild(ElementButton) as Button;
+            this.nowButton = this.GetTemplateChild(ElementNowButton) as Button;
             this.hourInput = this.GetTemplateChild(ElementHourPicker) as Selector;
             this.minuteInput = this.GetTemplateChild(ElementMinutePicker) as Selector;
             this.secondInput = this.GetTemplateChild(ElementSecondPicker) as Selector;
@@ -740,6 +777,15 @@ namespace MahApps.Metro.Controls
             SetDefaultTimeOfDayValue(this.ampmSwitcher, 0);
         }
 
+        /// <summary>
+        /// Puts the picker on the here and now, the time of day along with the date, which is what
+        /// somebody reaching for that button is after.
+        /// </summary>
+        private void OnNowButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.SetCurrentValue(SelectedDateTimeProperty, DateTime.Now);
+        }
+
         private void SubscribeEvents()
         {
             if (this.popUp != null)
@@ -755,6 +801,12 @@ namespace MahApps.Metro.Controls
             }
 
             this.SubscribeTimePickerEvents(this.hourInput, this.minuteInput, this.secondInput, this.ampmSwitcher);
+
+            if (this.nowButton != null)
+            {
+                this.nowButton.Click += this.OnNowButtonClicked;
+                this.nowButton.PreviewKeyDown += this.NowButtonPreviewKeyDown;
+            }
 
             if (this.dropDownButton != null)
             {
@@ -780,6 +832,12 @@ namespace MahApps.Metro.Controls
             }
 
             this.UnsubscribeTimePickerEvents(this.hourInput, this.minuteInput, this.secondInput, this.ampmSwitcher);
+
+            if (this.nowButton != null)
+            {
+                this.nowButton.Click -= this.OnNowButtonClicked;
+                this.nowButton.PreviewKeyDown -= this.NowButtonPreviewKeyDown;
+            }
 
             if (this.dropDownButton != null)
             {
@@ -882,13 +940,42 @@ namespace MahApps.Metro.Controls
             Debug.Assert(selector != null);
             Debug.Assert(keyEventArgs != null);
 
-            if (keyEventArgs is not null && (keyEventArgs.Key == Key.Escape || keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space))
+            if (keyEventArgs is not null)
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
-                if (keyEventArgs.Key == Key.Escape)
-                {
-                    this.SetCurrentValue(SelectedDateTimeProperty, this.originalSelectedDateTime);
-                }
+                this.CloseOnKey(keyEventArgs.Key);
+            }
+        }
+
+        /// <summary>
+        /// Escape, enter and space shut the drop-down from anywhere inside it, escape putting back
+        /// what was there before it was opened.
+        /// </summary>
+        private void CloseOnKey(Key key)
+        {
+            if (key != Key.Escape && key != Key.Enter && key != Key.Space)
+            {
+                return;
+            }
+
+            this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
+
+            if (key == Key.Escape)
+            {
+                this.SetCurrentValue(SelectedDateTimeProperty, this.originalSelectedDateTime);
+            }
+        }
+
+        /// <summary>
+        /// The same for the now button, which is no Selector and would otherwise swallow the key and
+        /// leave the drop-down standing open.
+        /// </summary>
+        private void NowButtonPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // space and enter are how a button is pressed, so only escape has anything to do here
+            if (e.Key == Key.Escape)
+            {
+                this.CloseOnKey(e.Key);
+                e.Handled = true;
             }
         }
 
