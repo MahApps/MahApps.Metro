@@ -1,8 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -68,8 +69,24 @@ namespace MahApps.Metro.Controls
         internal const string PreviousContentPresentationSitePartName = "PreviousContentPresentationSite";
         internal const string CurrentContentPresentationSitePartName = "CurrentContentPresentationSite";
 
+        /// <summary>The suffix on the mirrored twin of a state, the one that fades the other way.</summary>
+        private const string MirroredSuffix = ".Mirrored";
+
+        /// <summary>
+        /// The two presenters the control fades between, under the names the template gives them. The
+        /// names say nothing about which of the two is holding what the viewer sees: that is what
+        /// <see cref="showingInThePreviousSite"/> is for, and it turns over on every change of content.
+        /// </summary>
         private ContentPresenter? currentContentPresentationSite;
+
         private ContentPresenter? previousContentPresentationSite;
+
+        /// <summary>
+        /// Which of the two presenters is holding what the viewer sees. The content on its way out
+        /// stays where it is rather than being handed over, which would have the presenter taking it
+        /// on raise the whole view from its template again only to fade it away.
+        /// </summary>
+        private bool showingInThePreviousSite;
         private bool allowIsTransitioningPropertyWrite;
         private Storyboard? currentTransition;
 
@@ -308,6 +325,17 @@ namespace MahApps.Metro.Controls
             this.previousContentPresentationSite = this.GetTemplateChild(PreviousContentPresentationSitePartName) as ContentPresenter;
             this.currentContentPresentationSite = this.GetTemplateChild(CurrentContentPresentationSitePartName) as ContentPresenter;
 
+            this.AddMirroredStates();
+
+            // a new template brings two empty presenters, so the content goes to whichever of them is
+            // showing and the other is left with nothing. Handing it to both would have the next change
+            // find its content already standing there and reuse it, which is not what a fade wants.
+            if (this.currentContentPresentationSite is not null && this.previousContentPresentationSite is not null)
+            {
+                this.ShowingSite.SetCurrentValue(ContentPresenter.ContentProperty, this.Content);
+                this.ArrivingSite.SetCurrentValue(ContentPresenter.ContentProperty, null);
+            }
+
             // hookup currenttransition
             // The states are known now, so let the coercion decide whether the current transition survives the new template.
             this.CoerceValue(TransitionProperty);
@@ -332,27 +360,23 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (this.currentContentPresentationSite != null && this.previousContentPresentationSite != null)
             {
-                if (this.RestartTransitionOnContentChange
-                    && this.CurrentTransition is not null)
+                // applying the template puts the content where it belongs, and a binding settling in
+                // afterwards asks for the very same thing. Fading it onto itself would build the view
+                // a second time for nothing.
+                if (ReferenceEquals(this.ShowingSite.Content, newContent))
                 {
-                    this.CurrentTransition.Completed -= this.OnTransitionCompleted;
+                    return;
                 }
 
-                this.currentContentPresentationSite.SetCurrentValue(ContentPresenter.ContentProperty, newContent);
-                this.previousContentPresentationSite.SetCurrentValue(ContentPresenter.ContentProperty, oldContent);
+                // the one arriving goes to whichever presenter is free, and the one leaving stays put
+                this.ArrivingSite.SetCurrentValue(ContentPresenter.ContentProperty, newContent);
+                this.showingInThePreviousSite = !this.showingInThePreviousSite;
 
                 // and start a new transition
                 if (!this.IsTransitioning || this.RestartTransitionOnContentChange)
                 {
-                    if (this.RestartTransitionOnContentChange
-                        && this.CurrentTransition is not null)
-                    {
-                        this.CurrentTransition.Completed += this.OnTransitionCompleted;
-                    }
-
                     this.IsTransitioning = true;
-                    VisualStateManager.GoToState(this, HiddenState, false);
-                    VisualStateManager.GoToState(this, this.GetTransitionName(this.Transition), true);
+                    this.GoToTransitionState();
                 }
             }
         }
@@ -365,25 +389,36 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (this.currentContentPresentationSite != null && this.previousContentPresentationSite != null)
             {
-                if (this.RestartTransitionOnContentChange
-                    && this.CurrentTransition is not null)
-                {
-                    this.CurrentTransition.Completed -= this.OnTransitionCompleted;
-                }
-
                 if (!this.IsTransitioning || this.RestartTransitionOnContentChange)
                 {
-                    if (this.RestartTransitionOnContentChange
-                        && this.CurrentTransition is not null)
-                    {
-                        this.CurrentTransition.Completed += this.OnTransitionCompleted;
-                    }
-
                     this.IsTransitioning = true;
-                    VisualStateManager.GoToState(this, HiddenState, false);
-                    VisualStateManager.GoToState(this, this.GetTransitionName(this.Transition), true);
+                    this.GoToTransitionState();
                 }
             }
+        }
+
+        /// <summary>The presenter holding what the viewer sees.</summary>
+        private ContentPresenter ShowingSite => this.showingInThePreviousSite ? this.previousContentPresentationSite! : this.currentContentPresentationSite!;
+
+        /// <summary>The other one, free to take what arrives next.</summary>
+        private ContentPresenter ArrivingSite => this.showingInThePreviousSite ? this.currentContentPresentationSite! : this.previousContentPresentationSite!;
+
+        /// <summary>
+        /// Runs the transition, taking the mirrored twin of the state whenever the two presenters have
+        /// swapped over, since the states in the template name one presenter as the one arriving.
+        /// </summary>
+        private void GoToTransitionState()
+        {
+            // the twin that runs is the one to wait on, or the control would never hear it finish
+            this.CurrentTransition = this.GetStoryboard(this.Transition);
+
+            VisualStateManager.GoToState(this, this.NameOfState(HiddenState), false);
+            VisualStateManager.GoToState(this, this.NameOfState(this.GetTransitionName(this.Transition)), true);
+        }
+
+        private string NameOfState(string state)
+        {
+            return this.showingInThePreviousSite ? state + MirroredSuffix : state;
         }
 
         private void OnTransitionCompleted(object? sender, EventArgs e)
@@ -399,9 +434,86 @@ namespace MahApps.Metro.Controls
         public void AbortTransition()
         {
             // go to normal state and release our hold on the old content.
-            VisualStateManager.GoToState(this, HiddenState, false);
+            VisualStateManager.GoToState(this, this.NameOfState(HiddenState), false);
             this.IsTransitioning = false;
-            this.previousContentPresentationSite?.SetCurrentValue(ContentPresenter.ContentProperty, null);
+
+            if (this.currentContentPresentationSite is not null && this.previousContentPresentationSite is not null)
+            {
+                this.ArrivingSite.SetCurrentValue(ContentPresenter.ContentProperty, null);
+            }
+        }
+
+        /// <summary>
+        /// Gives every state a twin that fades the other way round. The states in the template name
+        /// one presenter as the one arriving and the other as the one leaving, which only holds while
+        /// the two are in the roles they started in. A twin is the same state with those two names
+        /// swapped, and the control takes it whenever they have changed places.
+        /// </summary>
+        private void AddMirroredStates()
+        {
+            var presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
+            if (presentationGroup is null)
+            {
+                return;
+            }
+
+            var states = presentationGroup.States.OfType<VisualState>().ToList();
+            if (states.Any(state => state.Name?.EndsWith(MirroredSuffix, StringComparison.Ordinal) == true))
+            {
+                return;
+            }
+
+            foreach (var state in states)
+            {
+                presentationGroup.States.Add(new VisualState
+                                             {
+                                                 Name = state.Name + MirroredSuffix,
+                                                 Storyboard = Mirrored(state.Storyboard)
+                                             });
+            }
+        }
+
+        /// <summary>The same storyboard with the two presenters swapped over.</summary>
+        private static Storyboard? Mirrored(Storyboard? storyboard)
+        {
+            if (storyboard is null)
+            {
+                return null;
+            }
+
+            var mirrored = storyboard.Clone();
+
+            foreach (var timeline in Everything(mirrored))
+            {
+                var target = Storyboard.GetTargetName(timeline);
+                if (target == CurrentContentPresentationSitePartName)
+                {
+                    Storyboard.SetTargetName(timeline, PreviousContentPresentationSitePartName);
+                }
+                else if (target == PreviousContentPresentationSitePartName)
+                {
+                    Storyboard.SetTargetName(timeline, CurrentContentPresentationSitePartName);
+                }
+            }
+
+            return mirrored;
+        }
+
+        /// <summary>Every timeline in a storyboard, however deep it is nested.</summary>
+        private static IEnumerable<Timeline> Everything(TimelineGroup group)
+        {
+            foreach (var timeline in group.Children)
+            {
+                yield return timeline;
+
+                if (timeline is TimelineGroup inside)
+                {
+                    foreach (var deeper in Everything(inside))
+                    {
+                        yield return deeper;
+                    }
+                }
+            }
         }
 
         private Storyboard? GetStoryboard(TransitionType newTransition)
@@ -409,7 +521,7 @@ namespace MahApps.Metro.Controls
             var presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
             if (presentationGroup != null)
             {
-                var transitionName = this.GetTransitionName(newTransition);
+                var transitionName = this.NameOfState(this.GetTransitionName(newTransition));
                 return presentationGroup.States
                                         .OfType<VisualState>()
                                         .Where(state => state.Name == transitionName)

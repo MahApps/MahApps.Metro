@@ -50,6 +50,38 @@ namespace MetroDemo.ExampleViews
             private set => this.SetValue(PlaygroundContentProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CountedContent"/> dependency property.</summary>
+        public static readonly DependencyProperty CountedContentProperty
+            = DependencyProperty.Register(nameof(CountedContent),
+                                          typeof(object),
+                                          typeof(TransitionExamples),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the content of the sample that counts how many views a change of content costs.
+        /// </summary>
+        public object? CountedContent
+        {
+            get => this.GetValue(CountedContentProperty);
+            private set => this.SetValue(CountedContentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ViewsBuilt"/> dependency property.</summary>
+        public static readonly DependencyProperty ViewsBuiltProperty
+            = DependencyProperty.Register(nameof(ViewsBuilt),
+                                          typeof(int),
+                                          typeof(TransitionExamples),
+                                          new PropertyMetadata(0));
+
+        /// <summary>
+        /// Gets how many views have been built for that sample, one per change of content.
+        /// </summary>
+        public int ViewsBuilt
+        {
+            get => (int)this.GetValue(ViewsBuiltProperty);
+            private set => this.SetValue(ViewsBuiltProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="CompletedCount"/> dependency property.</summary>
         public static readonly DependencyProperty CompletedCountProperty
             = DependencyProperty.Register(nameof(CompletedCount),
@@ -72,7 +104,11 @@ namespace MetroDemo.ExampleViews
 
             this.TickContent = this.NextContent();
             this.PlaygroundContent = this.NextContent();
+            this.CountedContent = new CountedPage("the first screen");
 
+            // a static event, so the page lets go of it again when it is done with
+            CountedView.Built += this.OnViewBuilt;
+            this.Unloaded += (_, _) => CountedView.Built -= this.OnViewBuilt;
 
             this.timer = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, this.OnTick, this.Dispatcher);
             this.timer.Stop();
@@ -115,6 +151,18 @@ namespace MetroDemo.ExampleViews
         private void OnAbortTransitionClick(object sender, RoutedEventArgs e)
         {
             this.PlaygroundTransition.AbortTransition();
+        }
+
+        private void OnViewBuilt(object? sender, EventArgs e)
+        {
+            this.ViewsBuilt++;
+        }
+
+        private void OnChangeCountedContentClick(object sender, RoutedEventArgs e)
+        {
+            this.CountedContent = this.CountedContent is OtherCountedPage
+                ? new CountedPage("the first screen")
+                : new OtherCountedPage("the second screen");
         }
 
         private void OnPlaygroundTransitionCompleted(object sender, RoutedEventArgs e)

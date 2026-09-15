@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:MetroDemo.Models"
@@ -32,6 +33,33 @@
                         <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
                     </DataTrigger>
                 </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <!--
+                Two templates, one per type, which is how a view model first application is put
+                together. The view inside says so every time one of it is built, and that is what the
+                counting sample below goes by.
+            -->
+            <DataTemplate DataType="{x:Type exampleViews:CountedPage}">
+                <exampleViews:CountedView>
+                    <Border Background="{DynamicResource MahApps.Brushes.Accent}">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
+                                   Text="{Binding Caption, Mode=OneWay}" />
+                    </Border>
+                </exampleViews:CountedView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type exampleViews:OtherCountedPage}">
+                <exampleViews:CountedView>
+                    <Border Background="{DynamicResource MahApps.Brushes.Accent3}">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
+                                   Text="{Binding Caption, Mode=OneWay}" />
+                    </Border>
+                </exampleViews:CountedView>
             </DataTemplate>
 
         </ResourceDictionary>
@@ -204,6 +232,34 @@
                     </VisualState>
                 </mah:TransitioningContentControl.CustomVisualStates>
             </mah:TransitioningContentControl>
+
+            <Separator Margin="0 12" />
+
+            <Label Content="What a change of content costs" Style="{DynamicResource DescriptionHeaderStyle}" />
+
+            <TextBlock MaxWidth="340"
+                       Margin="0 4 0 0"
+                       HorizontalAlignment="Left"
+                       Text="Two screens, each with a data template of its own, the way a view model first application is put together. A change of content builds the view that is arriving, and that one only: the view on its way out is already standing and stays where it is until it has faded, rather than being raised from its template a second time just to be thrown away. The count below goes up by one per change."
+                       TextWrapping="Wrap" />
+
+            <mah:TransitioningContentControl x:Name="CountingTransition"
+                                             Width="340"
+                                             Height="50"
+                                             Margin="0 8 0 0"
+                                             HorizontalAlignment="Left"
+                                             Content="{Binding CountedContent, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=OneWay}" />
+
+            <StackPanel Margin="0 8 0 0" Orientation="Horizontal">
+                <Button Width="120"
+                        Margin="0 0 8 0"
+                        Click="OnChangeCountedContentClick"
+                        Content="Change content" />
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="views built:" />
+                    <Run FontWeight="Bold" Text="{Binding ViewsBuilt, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Mode=OneWay}" />
+                </TextBlock>
+            </StackPanel>
 
             <Separator Margin="0 12" />
 
