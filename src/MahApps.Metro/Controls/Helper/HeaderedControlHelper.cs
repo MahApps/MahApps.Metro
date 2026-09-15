@@ -170,6 +170,38 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderForegroundMouseOverProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderForegroundSelectedProperty
+            = DependencyProperty.RegisterAttached(
+                "HeaderForegroundSelected",
+                typeof(Brush),
+                typeof(HeaderedControlHelper),
+                new UIPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the value of the foreground the header is painted with while it is the one showing. Left unset, the header is
+        /// painted with the accent brush.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush? GetHeaderForegroundSelected(UIElement element)
+        {
+            return (Brush?)element.GetValue(HeaderForegroundSelectedProperty);
+        }
+
+        /// <summary>
+        /// Sets the value of the foreground the header is painted with while it is the one showing.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPalette))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static void SetHeaderForegroundSelected(UIElement element, Brush? value)
+        {
+            element.SetValue(HeaderForegroundSelectedProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderForegroundPressedProperty
             = DependencyProperty.RegisterAttached(
                 "HeaderForegroundPressed",

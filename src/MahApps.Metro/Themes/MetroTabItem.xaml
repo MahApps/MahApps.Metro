@@ -171,9 +171,15 @@
                         </MultiTrigger>
 
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="mah:TabControlHelper.UnderlineSelectedBrush" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay}" />
+                        </MultiTrigger>
 
                         <!--  Selected  -->
                         <MultiDataTrigger>
@@ -192,9 +198,15 @@
                         </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
+                                <Condition Property="mah:TabControlHelper.UnderlineMouseOverBrush" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineBrush), Mode=OneWay}" />
+                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
@@ -226,11 +238,18 @@
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition SourceName="ContentSite" Property="IsMouseOver" Value="True" />
+                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="mah:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
                         <MultiDataTrigger>
@@ -457,6 +476,42 @@
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
                             <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
+                        <!--
+                            Every brush the header is painted with, in the order the states beat each other:
+                            the tab that is showing, then the mouse over any of them. The strip is asked
+                            through SourceName, because an item counts the content below it as its own. A
+                            condition like that cannot be mixed with one on a binding, so each trigger is
+                            followed by the one that puts the old colour back when nothing was handed over.
+                        -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundSelected), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="mah:HeaderedControlHelper.HeaderForegroundSelected" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </MultiTrigger>
+                        <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                                <Condition Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

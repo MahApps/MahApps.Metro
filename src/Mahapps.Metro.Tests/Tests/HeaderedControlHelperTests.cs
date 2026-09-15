@@ -41,6 +41,7 @@ namespace MahApps.Metro.Tests.Tests
             this.PreparePropertiesForTest([
                 HeaderedControlHelper.HeaderBackgroundProperty.Name,
                 HeaderedControlHelper.HeaderForegroundProperty.Name,
+                HeaderedControlHelper.HeaderForegroundSelectedProperty.Name,
                 HeaderedControlHelper.HeaderMarginProperty.Name,
                 HeaderedControlHelper.HeaderFontFamilyProperty.Name,
                 HeaderedControlHelper.HeaderFontSizeProperty.Name,
@@ -989,6 +990,123 @@ namespace MahApps.Metro.Tests.Tests
 
             window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderFontWeightProperty, fontWeight);
             Assert.That(window.TestMetroTabItem.FindChild<ContentControlEx>("ContentSite")?.FontWeight, Is.EqualTo(fontWeight));
+        }
+
+        [Test]
+        [Description("GH-4307: the tab that is showing keeps the accent nobody asked to change.")]
+        public void ASelectedTabKeepsTheAccentWhenNobodyHandsOverABrush()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var accent = this.window!.TryFindResource("MahApps.Brushes.Accent") as Brush;
+            Assert.That(accent, Is.Not.Null, "the theme should carry the accent brush");
+
+            Assert.That(ShownForeground(window.TestTabItem), Is.EqualTo(accent));
+            Assert.That(ShownForeground(window.TestMetroTabItem), Is.EqualTo(accent));
+        }
+
+        [Test]
+        [Description("GH-4307: a brush for the tab that is showing, which the accent stood in for until now.")]
+        public void TabItemShouldUseHeaderForegroundSelectedProperty()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var selected = Brushes.HotPink;
+            var atRest = Brushes.Beige;
+
+            window!.TestTabControl.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, atRest);
+            window.TestTabControl.SetCurrentValue(HeaderedControlHelper.HeaderForegroundSelectedProperty, selected);
+
+            Assert.That(ShownForeground(window.TestTabItem), Is.EqualTo(selected), "the tab that is showing takes the brush it was given");
+            Assert.That(ShownForeground(window.TestTabItemUnselected), Is.EqualTo(atRest), "and the others keep the one for the rest of them");
+        }
+
+        [Test]
+        [Description("GH-4307: the same for the Metro tab item, which carries a template of its own.")]
+        public void MetroTabItemShouldUseHeaderForegroundSelectedProperty()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var selected = Brushes.HotPink;
+            var atRest = Brushes.Beige;
+
+            window!.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderForegroundProperty, atRest);
+            window.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderForegroundSelectedProperty, selected);
+
+            Assert.That(ShownForeground(window.TestMetroTabItem), Is.EqualTo(selected));
+            Assert.That(ShownForeground(window.TestMetroTabItemUnselected), Is.EqualTo(atRest));
+        }
+
+        [Test]
+        [Description("GH-4307: the brush set on one tab beats the one the control hands down.")]
+        public void ATabOfItsOwnBeatsTheOneTheControlHandsDown()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            window!.TestMetroTabControl.SetCurrentValue(HeaderedControlHelper.HeaderForegroundSelectedProperty, Brushes.Beige);
+            window.TestMetroTabItem.SetCurrentValue(HeaderedControlHelper.HeaderForegroundSelectedProperty, Brushes.HotPink);
+
+            Assert.That(ShownForeground(window.TestMetroTabItem), Is.EqualTo(Brushes.HotPink));
+        }
+
+        [Test]
+        [Description("GH-4307: the Metro tab item reads the mouse over brush the plain one has read all along.")]
+        public void MetroTabItemShouldReadTheHeaderForegroundMouseOverProperty()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            Assert.That(PaintedBy(window!.TestMetroTabItem, HeaderedControlHelper.HeaderForegroundMouseOverProperty),
+                        Is.True,
+                        "a trigger of the template should paint the header with it");
+        }
+
+        /// <summary>
+        /// What the header is painted with, which a trigger can take over from the template binding.
+        /// </summary>
+        private static Brush? ShownForeground(TabItem item)
+        {
+            var site = item.FindChild<ContentControlEx>("ContentSite");
+
+            return site is null ? null : TextElement.GetForeground(site);
+        }
+
+        /// <summary>
+        /// Whether any trigger of the item's template paints the header with the given property. The
+        /// states those triggers stand for are the mouse and the keyboard, neither of which a test can
+        /// hand to a window that is not on screen, so the template is asked instead.
+        /// </summary>
+        private static bool PaintedBy(TabItem item, DependencyProperty property)
+        {
+            foreach (var trigger in item.Template.Triggers)
+            {
+                var setters = trigger switch
+                {
+                    Trigger plain => plain.Setters,
+                    MultiTrigger many => many.Setters,
+                    DataTrigger data => data.Setters,
+                    MultiDataTrigger manyData => manyData.Setters,
+                    _ => null
+                };
+
+                if (setters is null)
+                {
+                    continue;
+                }
+
+                foreach (var setter in setters)
+                {
+                    if (setter is Setter { TargetName: "ContentSite" } painting
+                        && painting.Property == TextElement.ForegroundProperty
+                        && painting.Value is System.Windows.Data.Binding { Path: not null } binding
+                        && binding.Path.PathParameters.Contains(property))
+                    {
+                        // an attached property reaches the binding as a parameter, not as a name
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         [Test]
