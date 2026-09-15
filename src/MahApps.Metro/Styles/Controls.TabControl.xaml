@@ -235,7 +235,6 @@
                         </DataTrigger>
 
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
                         </Trigger>
 
@@ -256,7 +255,6 @@
                         </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
                         </Trigger>
 
@@ -283,7 +281,6 @@
                                 <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
@@ -512,11 +509,22 @@
                             <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <!--
-                            A colour of its own for the tab while the mouse is over it, if somebody set one.
-                            The strip is asked through SourceName, because an item counts the content below
-                            it as its own. A condition like that cannot be mixed with one on a binding, so
-                            the triggers below are what put the colours back when nothing was handed over.
+                            Every brush the header is painted with, in the order the states beat each other:
+                            the tab that is showing, then the mouse over any of them. The strip is asked
+                            through SourceName, because an item counts the content below it as its own. A
+                            condition like that cannot be mixed with one on a binding, so each trigger is
+                            followed by the one that puts the old colour back when nothing was handed over.
                         -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundSelected), Mode=OneWay}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="mah:HeaderedControlHelper.HeaderForegroundSelected" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </MultiTrigger>
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderBackgroundMouseOver), Mode=OneWay}" />
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Mode=OneWay}" />
@@ -531,9 +539,18 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
                                 <Condition Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{x:Null}" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -548,6 +565,7 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderFontWeight), Mode=OneWay, FallbackValue={x:Static SystemFonts.MessageFontWeight}}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderForeground), Mode=OneWay, FallbackValue={x:Static SystemColors.ControlTextBrush}}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderForegroundMouseOver), Mode=OneWay}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForegroundSelected" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderForegroundSelected), Mode=OneWay}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderHorizontalContentAlignment), Mode=OneWay, FallbackValue={x:Static HorizontalAlignment.Stretch}}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderMargin), Mode=OneWay, FallbackValue='6 2'}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:HeaderedControlHelper.HeaderVerticalContentAlignment), Mode=OneWay, FallbackValue={x:Static VerticalAlignment.Center}}" />
