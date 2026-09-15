@@ -23,11 +23,24 @@ namespace MahApps.Metro.Tests.Tests
         /// <summary>A view that says so every time one of it is built.</summary>
         public sealed class CountedView : ContentControl
         {
-            public static readonly List<string> Built = new List<string>();
+            private static readonly List<string> BuiltSoFar = new List<string>();
 
             public CountedView()
             {
-                Built.Add(this.GetType().Name);
+                BuiltSoFar.Add(this.GetType().Name);
+            }
+
+            /// <summary>What has been built, in the order it was built in.</summary>
+            public static IReadOnlyList<string> Built => BuiltSoFar;
+
+            public static void Note(string name)
+            {
+                BuiltSoFar.Add(name);
+            }
+
+            public static void Forget()
+            {
+                BuiltSoFar.Clear();
             }
         }
 
@@ -35,7 +48,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             public OtherCountedView()
             {
-                CountedView.Built.Add(this.GetType().Name);
+                CountedView.Note(this.GetType().Name);
             }
         }
 
@@ -65,7 +78,7 @@ namespace MahApps.Metro.Tests.Tests
         [SetUp]
         public void SetUp()
         {
-            CountedView.Built.Clear();
+            CountedView.Forget();
         }
 
         [Test]
@@ -78,7 +91,7 @@ namespace MahApps.Metro.Tests.Tests
             this.Settle();
 
             Assume.That(CountedView.Built, Is.EqualTo(new[] { nameof(CountedView) }), "the first view should have been built to start with");
-            CountedView.Built.Clear();
+            CountedView.Forget();
 
             control.SetCurrentValue(ContentControl.ContentProperty, second);
             this.Settle();
@@ -94,7 +107,7 @@ namespace MahApps.Metro.Tests.Tests
 
             control.SetCurrentValue(ContentControl.ContentProperty, first);
             this.Settle();
-            CountedView.Built.Clear();
+            CountedView.Forget();
 
             control.SetCurrentValue(ContentControl.ContentProperty, new First());
             this.Settle();
