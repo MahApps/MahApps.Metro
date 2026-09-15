@@ -1,0 +1,54 @@
+﻿<tests:TestWindow x:Class="MahApps.Metro.Tests.Views.SliderWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  Width="500"
+                  d:DesignHeight="400"
+                  d:DesignWidth="500"
+                  mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel>
+            <Slider x:Name="TheSlider"
+                    Width="300"
+                    Maximum="100"
+                    Minimum="0"
+                    Style="{StaticResource MahApps.Styles.Slider}"
+                    Value="50" />
+            <Slider x:Name="TheWin10Slider"
+                    Width="300"
+                    Maximum="100"
+                    Minimum="0"
+                    Style="{StaticResource MahApps.Styles.Slider.Win10}"
+                    Value="50" />
+            <Slider x:Name="TheFlatSlider"
+                    Width="300"
+                    Maximum="100"
+                    Minimum="0"
+                    Style="{StaticResource MahApps.Styles.Slider.Flat}"
+                    Value="50" />
+        </StackPanel>
+        <Slider x:Name="TheUprightSlider"
+                Height="120"
+                Maximum="100"
+                Minimum="0"
+                Orientation="Vertical"
+                Style="{StaticResource MahApps.Styles.Slider}"
+                Value="50" />
+        <Slider x:Name="TheUprightWin10Slider"
+                Height="120"
+                Maximum="100"
+                Minimum="0"
+                Orientation="Vertical"
+                Style="{StaticResource MahApps.Styles.Slider.Win10}"
+                Value="50" />
+        <Slider x:Name="TheUprightFlatSlider"
+                Height="120"
+                Maximum="100"
+                Minimum="0"
+                Orientation="Vertical"
+                Style="{StaticResource MahApps.Styles.Slider.Flat}"
+                Value="50" />
+    </StackPanel>
+</tests:TestWindow>

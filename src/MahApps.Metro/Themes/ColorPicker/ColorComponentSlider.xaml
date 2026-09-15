@@ -24,12 +24,13 @@
                         </Border>
                         <Track x:Name="PART_Track" Margin="{TemplateBinding BorderThickness}">
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
+                                <RepeatButton x:Name="DecreaseLarge"
+                                              Command="{x:Static Slider.DecreaseLarge}"
                                               Foreground="Transparent"
                                               Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
                             </Track.DecreaseRepeatButton>
                             <Track.IncreaseRepeatButton>
-                                <RepeatButton x:Name="VerticalTrackIncrease"
+                                <RepeatButton x:Name="IncreaseLarge"
                                               Command="{x:Static Slider.IncreaseLarge}"
                                               Foreground="Transparent"
                                               Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
