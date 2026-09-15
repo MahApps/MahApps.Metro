@@ -1,15 +1,23 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {
     public class Tile : Button
     {
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new TileAutomationPeer(this);
+        }
+
         /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty
             = DependencyProperty.Register(nameof(Title),
