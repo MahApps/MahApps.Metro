@@ -160,6 +160,10 @@
                                   Margin="{StaticResource ControlMargin}"
                                   Content="IsClockVisible"
                                   IsChecked="True" />
+                        <CheckBox x:Name="DateTimePickerIsNowButtonVisible"
+                                  Margin="{StaticResource ControlMargin}"
+                                  Content="IsNowButtonVisible"
+                                  IsChecked="True" />
 
                         <Grid Margin="0 4 0 0">
                             <Grid.RowDefinitions>
@@ -310,6 +314,7 @@
                                             HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                             IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                             IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                            IsNowButtonVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsNowButtonVisible, Mode=TwoWay}"
                                             IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                             Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                             PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
@@ -322,6 +327,7 @@
                                         Culture="{Binding CurrentCulture, Mode=OneWay}"
                                         HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                         IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                        IsNowButtonVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsNowButtonVisible, Mode=TwoWay}"
                                         IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                         PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                         SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=PlaygroundDateTimePicker}"
