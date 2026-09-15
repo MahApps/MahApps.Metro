@@ -84,21 +84,23 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("Opening it through a client opens it for real.")]
+        [Description("Asking it to open through a client sets the state it stands for.")]
         public void ADropDownButtonOpensWhenAClientAsks()
         {
-            var button = this.window!.TheDropDownButton;
+            // a button of its own rather than the one in the window: the menu of a button that is up
+            // shuts itself the moment its window is not the one in front, and takes the state with it
+            var button = new DropDownButton();
             var expand = (IExpandCollapseProvider)UIElementAutomationPeer.CreatePeerForElement(button)!.GetPattern(PatternInterface.ExpandCollapse)!;
 
             expand.Expand();
-            ClipAssert.Pump();
 
             Assert.That(button.IsExpanded, Is.True);
+            Assert.That(expand.ExpandCollapseState, Is.EqualTo(ExpandCollapseState.Expanded));
 
             expand.Collapse();
-            ClipAssert.Pump();
 
             Assert.That(button.IsExpanded, Is.False);
+            Assert.That(expand.ExpandCollapseState, Is.EqualTo(ExpandCollapseState.Collapsed));
         }
 
         [Test]
