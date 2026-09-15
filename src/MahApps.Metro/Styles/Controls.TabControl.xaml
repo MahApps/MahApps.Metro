@@ -646,11 +646,13 @@
             </Grid.ColumnDefinitions>
             <RepeatButton Grid.Column="0"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
+                          AutomationProperties.Name="Scroll left"
                           Command="ScrollBar.PageLeftCommand"
                           Content="M6 2L0 8l6 6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />
             <RepeatButton Grid.Column="2"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
+                          AutomationProperties.Name="Scroll right"
                           Command="ScrollBar.PageRightCommand"
                           Content="M0 14l6-6-6-6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />
@@ -666,11 +668,13 @@
             </Grid.RowDefinitions>
             <RepeatButton Grid.Row="0"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
+                          AutomationProperties.Name="Scroll up"
                           Command="ScrollBar.PageUpCommand"
                           Content="M12 11L6 5l-6 6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />
             <RepeatButton Grid.Row="2"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
+                          AutomationProperties.Name="Scroll down"
                           Command="ScrollBar.PageDownCommand"
                           Content="M0 5l6 6 6-6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />

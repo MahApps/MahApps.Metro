@@ -158,6 +158,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                    AutomationProperties.Name="Clear"
                                     Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                     CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
                                     CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"

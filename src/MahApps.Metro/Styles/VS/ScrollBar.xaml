@@ -85,21 +85,27 @@
                 <ColumnDefinition Width="18" />
             </Grid.ColumnDefinitions>
             <RepeatButton Grid.Column="0"
+                          AutomationProperties.Name="Scroll left"
                           Command="ScrollBar.LineLeftCommand"
                           Content="M 0 4 L 4 8 L 4 0 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />
             <Track Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
+                    <RepeatButton AutomationProperties.Name="Scroll left"
+                                  Command="ScrollBar.PageLeftCommand"
+                                  Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <mah:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
+                    <RepeatButton AutomationProperties.Name="Scroll right"
+                                  Command="ScrollBar.PageRightCommand"
+                                  Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Column="2"
+                          AutomationProperties.Name="Scroll right"
                           Command="ScrollBar.LineRightCommand"
                           Content="M 0 0 L 0 8 L 4 4 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />
@@ -114,6 +120,7 @@
                 <RowDefinition Height="18" />
             </Grid.RowDefinitions>
             <RepeatButton Grid.Row="0"
+                          AutomationProperties.Name="Scroll up"
                           Command="ScrollBar.LineUpCommand"
                           Content="M 0 4 L 8 4 L 4 0 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />
@@ -121,16 +128,21 @@
                    Grid.Row="1"
                    IsDirectionReversed="true">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
+                    <RepeatButton AutomationProperties.Name="Scroll up"
+                                  Command="ScrollBar.PageUpCommand"
+                                  Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <mah:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.ScrollBar.VisualStudio}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
+                    <RepeatButton AutomationProperties.Name="Scroll down"
+                                  Command="ScrollBar.PageDownCommand"
+                                  Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarPage.VisualStudio}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Row="2"
+                          AutomationProperties.Name="Scroll down"
                           Command="ScrollBar.LineDownCommand"
                           Content="M 0 0 L 4 4 L 8 0 Z"
                           Style="{StaticResource MahApps.Styles.RepeatButton.ScrollBarLine.VisualStudio}" />

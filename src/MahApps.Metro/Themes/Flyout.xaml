@@ -15,6 +15,7 @@
                         Margin="2 4 2 2"
                         Padding="2 0 0 0"
                         VerticalAlignment="Center"
+                        AutomationProperties.Name="Back"
                         Content="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
                         DockPanel.Dock="Left"
                         Foreground="{TemplateBinding Foreground}"

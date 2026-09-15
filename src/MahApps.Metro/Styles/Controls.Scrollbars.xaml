@@ -140,6 +140,7 @@
             </Grid.ColumnDefinitions>
             <RepeatButton x:Name="HorizontalSmallDecrease"
                           Grid.Column="0"
+                          AutomationProperties.Name="Scroll left"
                           Command="ScrollBar.LineLeftCommand"
                           Content="M54,14.9765625L54,74.9765625 24,44.9765625 54,14.9765625z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
@@ -148,6 +149,7 @@
                    IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeDecrease"
+                                  AutomationProperties.Name="Scroll left"
                                   Command="ScrollBar.PageLeftCommand"
                                   Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.DecreaseRepeatButton>
@@ -156,12 +158,14 @@
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeIncrease"
+                                  AutomationProperties.Name="Scroll right"
                                   Command="ScrollBar.PageRightCommand"
                                   Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="HorizontalSmallIncrease"
                           Grid.Column="2"
+                          AutomationProperties.Name="Scroll right"
                           Command="ScrollBar.LineRightCommand"
                           Content="M192,79.875L352,239.875 192,399.875 192,79.875z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
@@ -182,6 +186,7 @@
             </Grid.RowDefinitions>
             <RepeatButton x:Name="VerticalSmallDecrease"
                           Grid.Row="0"
+                          AutomationProperties.Name="Scroll up"
                           Command="ScrollBar.LineUpCommand"
                           Content="M240.125,160L400.125,320 80.125,320 240.125,160z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
@@ -193,6 +198,7 @@
                 </Track.Resources>
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeDecrease"
+                                  AutomationProperties.Name="Scroll up"
                                   Command="ScrollBar.PageUpCommand"
                                   Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.DecreaseRepeatButton>
@@ -201,12 +207,14 @@
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeIncrease"
+                                  AutomationProperties.Name="Scroll down"
                                   Command="ScrollBar.PageDownCommand"
                                   Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="VerticalSmallIncrease"
                           Grid.Row="2"
+                          AutomationProperties.Name="Scroll down"
                           Command="ScrollBar.LineDownCommand"
                           Content="M80.125,192L400.125,192 240.125,352 80.125,192z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
