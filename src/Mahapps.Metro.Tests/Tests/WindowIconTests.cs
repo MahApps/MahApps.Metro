@@ -3,12 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
@@ -24,16 +22,9 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class WindowIconTests
     {
-        private const int WM_ENTERMENULOOP = 0x0211;
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool EndMenu();
-
         private IconTemplateWindow window = null!;
         private Grid iconContent = null!;
         private ContextMenu iconMenu = null!;
-        private int systemMenuOpenings;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
@@ -45,21 +36,6 @@ namespace MahApps.Metro.Tests.Tests
 
             this.iconMenu = this.iconContent.ContextMenu!;
             Assert.That(this.iconMenu, Is.Not.Null, "and it should carry a context menu");
-
-            // The system menu holds the message loop until somebody picks something, which nobody is
-            // here to do, so it is sent away as soon as it shows up, and that it showed up is the
-            // thing these tests read.
-            ((HwndSource)PresentationSource.FromVisual(this.window)!)
-                .AddHook((IntPtr _, int msg, IntPtr _, IntPtr _, ref bool _) =>
-                         {
-                             if (msg == WM_ENTERMENULOOP)
-                             {
-                                 this.systemMenuOpenings++;
-                                 EndMenu();
-                             }
-
-                             return IntPtr.Zero;
-                         });
         }
 
         [OneTimeTearDown]
@@ -71,7 +47,7 @@ namespace MahApps.Metro.Tests.Tests
         [SetUp]
         public void SetUp()
         {
-            this.systemMenuOpenings = 0;
+            this.window.SystemMenuRequests = 0;
             this.iconContent.SetCurrentValue(FrameworkElement.ContextMenuProperty, this.iconMenu);
         }
 
@@ -95,7 +71,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.ClickTheIcon(MouseButton.Left, UIElement.MouseDownEvent, UIElement.MouseLeftButtonDownEvent);
 
-            Assert.That(this.systemMenuOpenings, Is.EqualTo(1));
+            Assert.That(this.window.SystemMenuRequests, Is.EqualTo(1));
         }
 
         [Test]
@@ -108,7 +84,7 @@ namespace MahApps.Metro.Tests.Tests
 
             this.ClickTheIcon(MouseButton.Left, UIElement.MouseDownEvent, UIElement.MouseLeftButtonDownEvent);
 
-            Assert.That(this.systemMenuOpenings, Is.EqualTo(1));
+            Assert.That(this.window.SystemMenuRequests, Is.EqualTo(1));
         }
 
         [Test]
@@ -117,7 +93,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.ClickTheIcon(MouseButton.Right, UIElement.MouseDownEvent, UIElement.MouseRightButtonDownEvent);
 
-            Assert.That(this.systemMenuOpenings, Is.Zero);
+            Assert.That(this.window.SystemMenuRequests, Is.Zero);
         }
 
         [Test]
@@ -126,7 +102,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.ClickTheIcon(MouseButton.Right, UIElement.MouseUpEvent, UIElement.MouseRightButtonUpEvent);
 
-            Assert.That(this.systemMenuOpenings, Is.Zero);
+            Assert.That(this.window.SystemMenuRequests, Is.Zero);
         }
 
         [Test]
@@ -137,7 +113,7 @@ namespace MahApps.Metro.Tests.Tests
 
             this.ClickTheIcon(MouseButton.Right, UIElement.MouseUpEvent, UIElement.MouseRightButtonUpEvent);
 
-            Assert.That(this.systemMenuOpenings, Is.EqualTo(1));
+            Assert.That(this.window.SystemMenuRequests, Is.EqualTo(1));
         }
 
         [Test]
@@ -151,7 +127,7 @@ namespace MahApps.Metro.Tests.Tests
             {
                 this.ClickTheIcon(MouseButton.Right, UIElement.MouseUpEvent, UIElement.MouseRightButtonUpEvent);
 
-                Assert.That(this.systemMenuOpenings, Is.Zero);
+                Assert.That(this.window.SystemMenuRequests, Is.Zero);
             }
             finally
             {
