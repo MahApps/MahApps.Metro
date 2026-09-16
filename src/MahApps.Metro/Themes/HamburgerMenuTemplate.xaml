@@ -512,7 +512,8 @@
                                                   SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
                                                   SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
                                                   SelectionMode="Single"
-                                                  TabIndex="2" />
+                                                  TabIndex="2"
+                                                  Visibility="{TemplateBinding OptionsVisibility}" />
                     </Grid>
                 </mah:SplitView.Pane>
                 <mah:TransitioningContentControl x:Name="ContentPart"
