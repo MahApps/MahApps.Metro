@@ -49,7 +49,17 @@ namespace MahApps.Metro.Tests.Tests
             // The system menu holds the message loop until somebody picks something, which nobody is
             // here to do, so it is sent away as soon as it shows up, and that it showed up is the
             // thing these tests read.
-            ((HwndSource)PresentationSource.FromVisual(this.window)!).AddHook(this.OnMessage);
+            ((HwndSource)PresentationSource.FromVisual(this.window)!)
+                .AddHook((IntPtr _, int msg, IntPtr _, IntPtr _, ref bool _) =>
+                         {
+                             if (msg == WM_ENTERMENULOOP)
+                             {
+                                 this.systemMenuOpenings++;
+                                 EndMenu();
+                             }
+
+                             return IntPtr.Zero;
+                         });
         }
 
         [OneTimeTearDown]
@@ -63,17 +73,6 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.systemMenuOpenings = 0;
             this.iconContent.SetCurrentValue(FrameworkElement.ContextMenuProperty, this.iconMenu);
-        }
-
-        private IntPtr OnMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == WM_ENTERMENULOOP)
-            {
-                this.systemMenuOpenings++;
-                EndMenu();
-            }
-
-            return IntPtr.Zero;
         }
 
         private void ClickTheIcon(MouseButton button, params RoutedEvent[] routedEvents)
