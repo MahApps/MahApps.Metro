@@ -1602,6 +1602,7 @@ namespace MahApps.Metro.Controls
             if (this.icon != null)
             {
                 this.icon.MouseLeftButtonDown -= this.OnIconMouseLeftButtonDown;
+                this.icon.MouseRightButtonUp -= this.OnIconMouseRightButtonUp;
             }
 
             this.SizeChanged -= this.MetroWindow_SizeChanged;
@@ -1615,7 +1616,8 @@ namespace MahApps.Metro.Controls
             // set mouse down/up for icon
             if (this.icon != null && this.icon.Visibility == Visibility.Visible)
             {
-                this.icon.MouseDown += this.OnIconMouseLeftButtonDown;
+                this.icon.MouseLeftButtonDown += this.OnIconMouseLeftButtonDown;
+                this.icon.MouseRightButtonUp += this.OnIconMouseRightButtonUp;
             }
 
             if (this.windowTitleThumb != null)
@@ -1661,6 +1663,53 @@ namespace MahApps.Metro.Controls
                 ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
 #pragma warning restore 618
             }
+        }
+
+        private void OnIconMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ShowSystemMenuOnRightClick == false)
+            {
+                return;
+            }
+
+            // An icon template is free to bring a context menu of its own, and where it does, that
+            // menu is the one somebody is after, not the system menu.
+            if (HasContextMenu(e.OriginalSource as DependencyObject, this.icon))
+            {
+                return;
+            }
+
+#pragma warning disable 618
+            ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(e.GetPosition(this)));
+#pragma warning restore 618
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Whether anything from the element that was clicked up to and including <paramref name="root"/>
+        /// carries a context menu.
+        /// </summary>
+        private static bool HasContextMenu(DependencyObject? element, DependencyObject? root)
+        {
+            while (element is not null)
+            {
+                if (ContextMenuService.GetContextMenu(element) is not null)
+                {
+                    return true;
+                }
+
+                if (ReferenceEquals(element, root))
+                {
+                    return false;
+                }
+
+                element = element is Visual
+                    ? VisualTreeHelper.GetParent(element) ?? LogicalTreeHelper.GetParent(element)
+                    : LogicalTreeHelper.GetParent(element);
+            }
+
+            return false;
         }
 
         private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
