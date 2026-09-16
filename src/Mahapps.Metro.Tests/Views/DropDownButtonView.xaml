@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="MahApps.Metro.Tests.Views.DropDownButtonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="100"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <StackPanel>
+        <!--  the menu holds the item, so the menu is in reach  -->
+        <mah:DropDownButton x:Name="ByTheMenu"
+                            Content="Add"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Entries, Mode=OneWay}">
+            <mah:DropDownButton.ItemContainerStyle>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Command" Value="{Binding Path=DataContext.AddCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" />
+                    <Setter Property="CommandParameter" Value="{Binding Path=Name}" />
+                </Style>
+            </mah:DropDownButton.ItemContainerStyle>
+        </mah:DropDownButton>
+
+        <!--  and so is what the menu is placed on  -->
+        <mah:DropDownButton x:Name="ByThePlacementTarget"
+                            Content="Add"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Entries, Mode=OneWay}">
+            <mah:DropDownButton.ItemContainerStyle>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Command" Value="{Binding Path=PlacementTarget.DataContext.AddCommand, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}" />
+                    <Setter Property="CommandParameter" Value="{Binding Path=Name}" />
+                </Style>
+            </mah:DropDownButton.ItemContainerStyle>
+        </mah:DropDownButton>
+
+        <!--  anything above the menu is not, which is what GH-4494 is about  -->
+        <mah:DropDownButton x:Name="ByAnAncestorAboveTheMenu"
+                            Content="Add"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Entries, Mode=OneWay}">
+            <mah:DropDownButton.ItemContainerStyle>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Command" Value="{Binding Path=DataContext.AddCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                    <Setter Property="CommandParameter" Value="{Binding Path=Name}" />
+                </Style>
+            </mah:DropDownButton.ItemContainerStyle>
+        </mah:DropDownButton>
+    </StackPanel>
+</UserControl>
