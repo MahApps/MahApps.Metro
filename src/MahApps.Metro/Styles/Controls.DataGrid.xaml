@@ -520,9 +520,7 @@
             </MultiTrigger>
 
             <!--  IsMouseOver  -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
-            </Trigger>
+            <!--  Only the cell the mouse is on has IsMouseOver, so where a whole row gets selected this belongs to the row: a cell answering for itself would leave the row in two colours.  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="mah:DataGridHelper.SelectionUnit" Value="Cell" />
@@ -530,6 +528,7 @@
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background.MouseOver}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.BorderBrush.MouseOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -538,6 +537,7 @@
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background.MouseOver}" />
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.BorderBrush.MouseOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
             </MultiTrigger>
 
             <!--  IsEnabled  -->
