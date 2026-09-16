@@ -15,6 +15,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/MahApps/MahApps.Metro</PackageProjectUrl>
         <PackageIcon>mahapps.metro.logo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
         <PackageReleaseNotes>https://github.com/MahApps/MahApps.Metro/releases</PackageReleaseNotes>
         <RepositoryUrl>https://github.com/MahApps/MahApps.Metro.git</RepositoryUrl>
@@ -45,6 +46,10 @@
     <!-- Items include -->
     <ItemGroup>
         <None Include="..\..\mahapps.metro.logo.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+        <None Include="README.md">
             <Pack>True</Pack>
             <PackagePath></PackagePath>
         </None>
