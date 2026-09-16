@@ -204,6 +204,7 @@
                 <Separator />
                 <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                 <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
+                <MenuItem Click="ShowInputDialogWithACheck" Header="Show InputDialog (with a check on the input)" />
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
                 <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
                 <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />

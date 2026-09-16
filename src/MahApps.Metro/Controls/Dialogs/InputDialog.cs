@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +16,7 @@ namespace MahApps.Metro.Controls.Dialogs
     [TemplatePart(Name = nameof(PART_AffirmativeButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_NegativeButton), Type = typeof(Button))]
     [TemplatePart(Name = nameof(PART_TextBox), Type = typeof(TextBox))]
-    public class InputDialog : BaseMetroDialog
+    public class InputDialog : BaseMetroDialog, INotifyDataErrorInfo
     {
         private readonly TaskCompletionSource<string?> tcs = new();
         private CancellationTokenRegistration? cancellationTokenRegistration;
@@ -92,7 +94,13 @@ namespace MahApps.Metro.Controls.Dialogs
             = DependencyProperty.Register(nameof(Input),
                                           typeof(string),
                                           typeof(InputDialog),
-                                          new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                                          new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnInputChanged));
+
+        private static void OnInputChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            // what was said about a line is about that line, so it goes as soon as it is typed over
+            (dependencyObject as InputDialog)?.Complain(null);
+        }
 
         public string? Input
         {
@@ -173,17 +181,20 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
             {
-                this.CleanUpHandlers();
-
-                this.tcs.TrySetResult(null!);
+                this.Finish(null);
 
                 e.Handled = true;
             }
             else if (e.Key == Key.Enter)
             {
-                this.CleanUpHandlers();
-
-                this.tcs.TrySetResult(!ReferenceEquals(sender, this.PART_NegativeButton) ? this.Input! : null!);
+                if (ReferenceEquals(sender, this.PART_NegativeButton))
+                {
+                    this.Finish(null);
+                }
+                else
+                {
+                    this.FinishWithTheInput();
+                }
 
                 e.Handled = true;
             }
@@ -191,12 +202,82 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            this.CleanUpHandlers();
-
-            this.tcs.TrySetResult(ReferenceEquals(sender, this.PART_AffirmativeButton) ? this.Input! : null!);
+            if (ReferenceEquals(sender, this.PART_AffirmativeButton))
+            {
+                this.FinishWithTheInput();
+            }
+            else
+            {
+                this.Finish(null);
+            }
 
             e.Handled = true;
         }
+
+        /// <summary>
+        /// Leaves the dialog with what was typed, unless the settings carry a check and the check has
+        /// something to say about it. What it says goes on the field and the dialog stays where it is.
+        /// </summary>
+        private void FinishWithTheInput()
+        {
+            var whatIsWrong = (this.DialogSettings as InputDialogSettings)?.ValidateInput?.Invoke(this.Input);
+
+            if (string.IsNullOrEmpty(whatIsWrong))
+            {
+                this.Finish(this.Input);
+                return;
+            }
+
+            this.Complain(whatIsWrong);
+
+            // the theme shows what is wrong with a field while the caret is in it, and the caret is
+            // on the button that was just pressed
+            this.PART_TextBox?.Focus();
+        }
+
+        private void Finish(string? result)
+        {
+            this.Complain(null);
+            this.CleanUpHandlers();
+
+            this.tcs.TrySetResult(result!);
+        }
+
+        #region What the check had to say
+
+        private string? complaint;
+
+        /// <summary>
+        /// Puts what the check said on <see cref="Input"/>, or takes it off again with
+        /// <see langword="null"/>. The field reads it from here, the way it reads any other error a
+        /// binding source reports.
+        /// </summary>
+        private void Complain(string? about)
+        {
+            if (this.complaint == about)
+            {
+                return;
+            }
+
+            this.complaint = about;
+            this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(nameof(this.Input)));
+        }
+
+        /// <inheritdoc />
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        /// <inheritdoc />
+        public bool HasErrors => this.complaint is not null;
+
+        /// <inheritdoc />
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            return this.complaint is not null && propertyName == nameof(this.Input)
+                ? new[] { this.complaint }
+                : Array.Empty<string>();
+        }
+
+        #endregion What the check had to say
 
         private void SetUpHandlers()
         {
