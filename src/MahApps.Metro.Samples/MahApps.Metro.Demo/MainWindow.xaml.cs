@@ -392,6 +392,25 @@ namespace MetroDemo
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
 
+        private async void ShowInputDialogWithACheck(object sender, RoutedEventArgs e)
+        {
+            var settings = new InputDialogSettings(this.MetroDialogOptions)
+                           {
+                               ValidateInput = input => int.TryParse(input, out var answer) && answer == 42
+                                                            ? null
+                                                            : "that is not the answer"
+                           };
+
+            var result = await this.ShowInputAsync("Deep Thought", "What is the answer to life, the universe and everything?", settings);
+
+            if (result is null) //user pressed cancel
+            {
+                return;
+            }
+
+            await this.ShowMessageAsync("Deep Thought", "It took seven and a half million years, and the answer is " + result + ".");
+        }
+
         private async void ShowInputDialogCustomButtonSizes(object sender, RoutedEventArgs e)
         {
             var settings = new MetroDialogSettings(this.MetroDialogOptions)
