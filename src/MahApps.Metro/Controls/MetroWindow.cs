@@ -1602,6 +1602,7 @@ namespace MahApps.Metro.Controls
             if (this.icon != null)
             {
                 this.icon.MouseLeftButtonDown -= this.OnIconMouseLeftButtonDown;
+                this.icon.MouseRightButtonUp -= this.OnIconMouseRightButtonUp;
             }
 
             this.SizeChanged -= this.MetroWindow_SizeChanged;
@@ -1615,7 +1616,8 @@ namespace MahApps.Metro.Controls
             // set mouse down/up for icon
             if (this.icon != null && this.icon.Visibility == Visibility.Visible)
             {
-                this.icon.MouseDown += this.OnIconMouseLeftButtonDown;
+                this.icon.MouseLeftButtonDown += this.OnIconMouseLeftButtonDown;
+                this.icon.MouseRightButtonUp += this.OnIconMouseRightButtonUp;
             }
 
             if (this.windowTitleThumb != null)
@@ -1657,10 +1659,67 @@ namespace MahApps.Metro.Controls
             }
             else if (this.ShowSystemMenu)
             {
-#pragma warning disable 618
-                ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
-#pragma warning restore 618
+                this.ShowSystemMenuCore(this.PointToScreen(new Point(this.BorderThickness.Left, this.TitleBarHeight + this.BorderThickness.Top)));
             }
+        }
+
+        private void OnIconMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ShowSystemMenuOnRightClick == false)
+            {
+                return;
+            }
+
+            // An icon template is free to bring a context menu of its own, and where it does, that
+            // menu is the one somebody is after, not the system menu.
+            if (HasContextMenu(e.OriginalSource as DependencyObject, this.icon))
+            {
+                return;
+            }
+
+            this.ShowSystemMenuCore(this.PointToScreen(e.GetPosition(this)));
+
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Shows the system menu of this window at the given point, in physical screen coordinates.
+        /// </summary>
+        /// <remarks>
+        /// This is where the icon and the title bar go to show the menu, so a window that wants
+        /// something else there can override it and leave the base implementation out.
+        /// </remarks>
+        protected virtual void ShowSystemMenuCore(Point physicalScreenLocation)
+        {
+#pragma warning disable 618
+            ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, physicalScreenLocation);
+#pragma warning restore 618
+        }
+
+        /// <summary>
+        /// Whether anything from the element that was clicked up to and including <paramref name="root"/>
+        /// carries a context menu.
+        /// </summary>
+        private static bool HasContextMenu(DependencyObject? element, DependencyObject? root)
+        {
+            while (element is not null)
+            {
+                if (ContextMenuService.GetContextMenu(element) is not null)
+                {
+                    return true;
+                }
+
+                if (ReferenceEquals(element, root))
+                {
+                    return false;
+                }
+
+                element = element is Visual
+                    ? VisualTreeHelper.GetParent(element) ?? LogicalTreeHelper.GetParent(element)
+                    : LogicalTreeHelper.GetParent(element);
+            }
+
+            return false;
         }
 
         private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1786,9 +1845,7 @@ namespace MahApps.Metro.Controls
                 var mousePos = e.GetPosition(window);
                 if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.WindowStyle == WindowStyle.None && window.TitleBarHeight <= 0))
                 {
-#pragma warning disable 618
-                    ControlzEx.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
-#pragma warning restore 618
+                    window.ShowSystemMenuCore(window.PointToScreen(mousePos));
                 }
             }
         }
