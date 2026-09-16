@@ -18,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <mah:MultiSelectionComboBox x:Name="MultiSelectionComboBox"
@@ -44,5 +45,21 @@
                  mah:MultiSelectorHelper.SelectedItems="{Binding ElementName=Window, Path=SelectedItems}"
                  ItemsSource="{Binding ElementName=Window, Path=SecondItems}"
                  SelectionMode="Extended" />
+
+        <!--  GH-4461: a list inside a list, where the inner one lets its selection bubble up to the outer  -->
+        <ListView x:Name="OuterListView"
+                  Grid.Row="2"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Margin="4"
+                  mah:MultiSelectorHelper.SelectedItems="{Binding ElementName=Window, Path=SelectedItems}"
+                  ItemsSource="{Binding ElementName=Window, Path=Items}"
+                  SelectionMode="Extended">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListBox x:Name="InnerListBox" ItemsSource="{Binding ElementName=Window, Path=Numbers}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </tests:TestWindow>
