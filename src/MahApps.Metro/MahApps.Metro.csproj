@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -66,9 +66,18 @@
           <AutoGen>True</AutoGen>
           <DependentUpon>MultiSelectionComboBox.resx</DependentUpon>
         </Compile>
+        <Compile Update="Lang\Automation.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Automation.resx</DependentUpon>
+        </Compile>
         <EmbeddedResource Update="Lang\ColorNames.resx">
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>ColorNames.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Lang\Automation.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>Automation.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Lang\MultiSelectionComboBox.resx">
           <Generator>PublicResXFileCodeGenerator</Generator>

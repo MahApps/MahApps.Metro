@@ -67,6 +67,7 @@
                                    FontFamily="{TemplateBinding FontFamily}"
                                    Foreground="{TemplateBinding Foreground}"
                                    Opacity="0"
+                                   Text="{TemplateBinding Text}"
                                    TextWrapping="Wrap" />
                     </Grid>
 

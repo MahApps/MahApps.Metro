@@ -6,12 +6,14 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ControlzEx;
+using MahApps.Metro.Automation.Peers;
 using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
 
@@ -30,6 +32,12 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton))]
     public class RangeSlider : RangeBase
     {
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new RangeSliderAutomationPeer(this);
+        }
+
         #region Routed UI commands
 
         public static readonly RoutedUICommand MoveBack

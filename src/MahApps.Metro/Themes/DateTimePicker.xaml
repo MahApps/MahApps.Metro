@@ -3,6 +3,7 @@
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
                     xmlns:controlzex="urn:controlzex"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -223,6 +224,7 @@
                                         Grid.RowSpan="2"
                                         Grid.Column="1"
                                         Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                        AutomationProperties.Name="{x:Static lang:Automation.Clear}"
                                         Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
                                         CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
                                         CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
@@ -241,6 +243,7 @@
                                         Grid.RowSpan="2"
                                         Grid.Column="2"
                                         Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                        AutomationProperties.Name="{x:Static lang:Automation.ShowCalendar}"
                                         Content="{TemplateBinding mah:DatePickerHelper.DropDownButtonContent}"
                                         ContentTemplate="{TemplateBinding mah:DatePickerHelper.DropDownButtonContentTemplate}"
                                         Focusable="False"
@@ -504,6 +507,10 @@
                         </Trigger>
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <!--  the same drop down carries a clock alone on a TimePicker, and the button has to say so  -->
+                        <Trigger Property="IsDatePickerVisible" Value="False">
+                            <Setter TargetName="PART_Button" Property="AutomationProperties.Name" Value="{x:Static lang:Automation.ShowClock}" />
                         </Trigger>
 
                         <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">

@@ -7,11 +7,14 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using MahApps.Metro.ValueBoxes;
+
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {
@@ -23,6 +26,12 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(MenuStyle), StyleTargetType = typeof(ContextMenu))]
     public class DropDownButton : ItemsControl, ICommandSource
     {
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new DropDownButtonAutomationPeer(this);
+        }
+
         public static readonly RoutedEvent ClickEvent
             = EventManager.RegisterRoutedEvent(nameof(Click),
                                                RoutingStrategy.Bubble,

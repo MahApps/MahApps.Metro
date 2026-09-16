@@ -227,12 +227,14 @@
                                                           Content="{TemplateBinding LabelRedChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelRedChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.R}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
                                         <mah:NumericUpDown Grid.Row="0"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelRedChannel}"
                                                            Maximum="255"
                                                            Minimum="0"
                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
@@ -244,12 +246,14 @@
                                                           Content="{TemplateBinding LabelGreenChannel}" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelGreenChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.G}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
                                         <mah:NumericUpDown Grid.Row="1"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelGreenChannel}"
                                                            Maximum="255"
                                                            Minimum="0"
                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
@@ -261,12 +265,14 @@
                                                           Content="{TemplateBinding LabelBlueChannel}" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelBlueChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.B}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
                                         <mah:NumericUpDown Grid.Row="2"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelBlueChannel}"
                                                            Maximum="255"
                                                            Minimum="0"
                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
@@ -294,11 +300,13 @@
                                                           Content="{TemplateBinding LabelHueChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelHueChannel}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.Hue}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue, UpdateSourceTrigger=PropertyChanged}" />
                                         <mah:NumericUpDown Grid.Row="0"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelHueChannel}"
                                                            Maximum="360"
                                                            Minimum="0"
                                                            StringFormat="0.# °"
@@ -311,12 +319,14 @@
                                                           Content="{TemplateBinding LabelSaturationChannel}" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelSaturationChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static mahConverters:HSVColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:HSVColorChannelType.S}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
                                         <mah:NumericUpDown Grid.Row="1"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelSaturationChannel}"
                                                            Interval="0.01"
                                                            Maximum="1"
                                                            Minimum="0"
@@ -330,12 +340,14 @@
                                                           Content="{TemplateBinding LabelValueChannel}" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelValueChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static mahConverters:HSVColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:HSVColorChannelType.V}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
                                         <mah:NumericUpDown Grid.Row="2"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelValueChannel}"
                                                            Interval="0.01"
                                                            Maximum="1"
                                                            Minimum="0"
@@ -359,12 +371,14 @@
                                                           Content="{TemplateBinding LabelAlphaChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelAlphaChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.A}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
                                         <mah:NumericUpDown Grid.Row="0"
                                                            Grid.Column="2"
                                                            Margin="2"
+                                                           AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelAlphaChannel}"
                                                            Maximum="255"
                                                            Minimum="0"
                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />

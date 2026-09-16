@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
+                    xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -646,11 +647,13 @@
             </Grid.ColumnDefinitions>
             <RepeatButton Grid.Column="0"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
                           Command="ScrollBar.PageLeftCommand"
                           Content="M6 2L0 8l6 6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />
             <RepeatButton Grid.Column="2"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
                           Command="ScrollBar.PageRightCommand"
                           Content="M0 14l6-6-6-6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />
@@ -666,11 +669,13 @@
             </Grid.RowDefinitions>
             <RepeatButton Grid.Row="0"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
                           Command="ScrollBar.PageUpCommand"
                           Content="M12 11L6 5l-6 6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />
             <RepeatButton Grid.Row="2"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
+                          AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
                           Command="ScrollBar.PageDownCommand"
                           Content="M0 5l6 6 6-6z"
                           Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.AnimatedSingleRow}" />

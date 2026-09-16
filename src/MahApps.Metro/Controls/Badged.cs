@@ -4,9 +4,11 @@
 
 using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using ControlzEx;
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {
@@ -29,6 +31,12 @@ namespace MahApps.Metro.Controls
         static Badged()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Badged), new FrameworkPropertyMetadata(typeof(Badged)));
+        }
+
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new BadgedAutomationPeer(this);
         }
 
         /// <summary>

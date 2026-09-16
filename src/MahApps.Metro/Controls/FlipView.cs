@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -14,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;
+
+using MahApps.Metro.Automation.Peers;
 
 namespace MahApps.Metro.Controls
 {
@@ -32,6 +35,12 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = nameof(IndexItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
     public class FlipView : Selector
     {
+        /// <inheritdoc />
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new FlipViewAutomationPeer(this);
+        }
+
         /// <summary>Identifies the <see cref="MouseHoverBorderBrush"/> dependency property.</summary>
         public static readonly DependencyProperty MouseHoverBorderBrushProperty
             = DependencyProperty.Register(nameof(MouseHoverBorderBrush),

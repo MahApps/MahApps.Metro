@@ -1,0 +1,51 @@
+﻿<tests:TestWindow x:Class="MahApps.Metro.Tests.Views.AutomationNameWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  Width="500"
+                  Height="400"
+                  d:DesignHeight="400"
+                  d:DesignWidth="500"
+                  mc:Ignorable="d">
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="TheFlyout"
+                        Width="200"
+                        Header="A flyout"
+                        Position="Right" />
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+    <StackPanel>
+        <TextBox x:Name="TheTextBox"
+                 mah:TextBoxHelper.ClearTextButton="True"
+                 Text="something to clear" />
+        <mah:DateTimePicker x:Name="TheDateTimePicker" />
+        <mah:TimePicker x:Name="TheTimePicker" />
+        <DatePicker x:Name="TheDatePicker" />
+        <mah:HotKeyBox x:Name="TheHotKeyBox" Width="200" />
+        <mah:DropDownButton x:Name="TheDropDownButton"
+                            Width="200"
+                            Content="Actions" />
+        <mah:FlipView x:Name="TheFlipView"
+                      Width="200"
+                      Height="80" />
+        <mah:RevealImage x:Name="TheRevealImage"
+                         Width="200"
+                         Height="70"
+                         Text="a caption" />
+        <mah:ColorCanvas x:Name="TheColorCanvas"
+                         Width="260"
+                         Height="220" />
+        <ScrollViewer x:Name="TheScrollViewer"
+                      Height="60"
+                      HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible">
+            <Rectangle Width="900"
+                       Height="400"
+                       Fill="Transparent" />
+        </ScrollViewer>
+    </StackPanel>
+</tests:TestWindow>
