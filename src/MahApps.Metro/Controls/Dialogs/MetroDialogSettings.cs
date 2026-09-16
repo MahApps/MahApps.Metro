@@ -96,7 +96,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets or sets which button should be focused by default
         /// </summary>
-        public MessageDialogResult DefaultButtonFocus { get; set; } = MessageDialogResult.Negative;
+        public MessageDialogResult? DefaultButtonFocus { get; set; }
 
         /// <summary>
         /// Gets or sets the default text for <see cref="InputDialog"/>.

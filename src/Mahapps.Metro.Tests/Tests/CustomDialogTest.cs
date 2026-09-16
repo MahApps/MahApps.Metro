@@ -30,6 +30,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(await window.GetCurrentDialogAsync<MessageDialog>(), Is.Null);
 
             dialog.DataContext = vm;
+            ClipAssert.Pump(); // the bindings have to run before there is anything to read
             var bodyTextBlock = dialog.FindChild<TextBlock>("TheDialogBody");
             Assert.That(bodyTextBlock, Is.Not.Null);
             Assert.That(bodyTextBlock.Text, Is.EqualTo(vm.Text));
@@ -59,6 +60,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(await window.GetCurrentDialogAsync<MessageDialog>(), Is.Null);
 
             dialog.DataContext = vm;
+            ClipAssert.Pump(); // the bindings have to run before there is anything to read
 
             var titleContainer = dialog.FindChild<DockPanel>("TheDialogTitle");
 

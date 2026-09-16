@@ -187,7 +187,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void ApplyDefaultButtonFocus()
         {
-            var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus;
+            // told nothing, it is the one that says no, unless that is the only button there is
+            var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus ?? MessageDialogResult.Negative;
 
             //Ensure it's a valid option
             if (!this.IsApplicable(defaultButtonFocus))

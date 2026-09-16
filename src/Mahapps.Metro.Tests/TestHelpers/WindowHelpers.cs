@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,16 @@ namespace MahApps.Metro.Tests.TestHelpers
 {
     public static class WindowHelpers
     {
-        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? onLoadedAction = null)
+        /// <summary>
+        /// A window for a test to work on, off screen unless somebody is watching through a debugger.
+        /// </summary>
+        /// <param name="onLoadedAction">What to do once it is up.</param>
+        /// <param name="withAnimations">
+        /// Whether the window fades its overlay in and out and animates the dialogs it shows. A test
+        /// that is not about the animations waits through them for nothing, which is most of what a
+        /// run of this suite used to spend its time on, so they are off unless a test asks for them.
+        /// </param>
+        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? onLoadedAction = null, bool withAnimations = false)
             where T : Window, new()
         {
             var completionSource = new TaskCompletionSource<T>();
@@ -27,6 +36,18 @@ namespace MahApps.Metro.Tests.TestHelpers
                              Height = 600,
                              ShowInTaskbar = false
                          };
+
+            if (withAnimations == false && window is MetroWindow metroWindow)
+            {
+                metroWindow.SetCurrentValue(MetroWindow.OverlayFadeInProperty, null);
+                metroWindow.SetCurrentValue(MetroWindow.OverlayFadeOutProperty, null);
+                metroWindow.SetCurrentValue(MetroWindow.MetroDialogOptionsProperty,
+                                            new MahApps.Metro.Controls.Dialogs.MetroDialogSettings
+                                            {
+                                                AnimateShow = false,
+                                                AnimateHide = false
+                                            });
+            }
 
             if (Debugger.IsAttached == false)
             {

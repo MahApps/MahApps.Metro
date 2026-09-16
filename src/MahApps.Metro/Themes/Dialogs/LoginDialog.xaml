@@ -131,6 +131,14 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="DefaultButtonFocus" Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Negative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Trigger>
             <Trigger Property="EnablePasswordPreview" Value="True">
                 <Setter TargetName="PART_PasswordBox" Property="Style" Value="{DynamicResource MahApps.Styles.PasswordBox.Win8}" />
             </Trigger>

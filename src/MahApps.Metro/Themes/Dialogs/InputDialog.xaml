@@ -109,6 +109,14 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="DefaultButtonFocus" Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Negative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Trigger>
             <Trigger Property="ColorScheme" Value="Accented">
                 <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
                 <Setter TargetName="PART_TextBox" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
