@@ -15,7 +15,17 @@ namespace MahApps.Metro.Tests.Views
     /// </summary>
     public class OwningWindowProbeDialog : CustomDialog
     {
+        /// <summary>
+        /// A dialog nobody handed a window, which is the case these tests are about.
+        /// </summary>
+        /// <remarks>
+        /// The animations are off, and they have to be said here: a dialog built without settings
+        /// keeps a set of its own, and showing it on a window does not hand it the ones of that
+        /// window. Left on, hiding it waits for a closing storyboard to run to its end, and on a
+        /// build agent that clock does not always tick.
+        /// </remarks>
         public OwningWindowProbeDialog()
+            : base(null, new MetroDialogSettings { AnimateShow = false, AnimateHide = false })
         {
         }
 
