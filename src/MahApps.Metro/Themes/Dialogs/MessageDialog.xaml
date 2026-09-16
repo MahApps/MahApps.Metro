@@ -71,7 +71,7 @@
                         <TextBlock x:Name="PART_MessageTextBlock"
                                    Margin="0 5 0 0"
                                    FontSize="{TemplateBinding DialogMessageFontSize}"
-                                   Foreground="{TemplateBinding Foreground}"
+                                   Foreground="{TemplateBinding MessageForeground}"
                                    Text="{TemplateBinding Message}"
                                    TextWrapping="Wrap" />
                     </ScrollViewer>
@@ -113,6 +113,10 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the dialog  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </Trigger>
             <Trigger Property="ButtonStyle" Value="Affirmative">
                 <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_FirstAuxiliaryButton" Property="Visibility" Value="Collapsed" />

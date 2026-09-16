@@ -211,6 +211,7 @@
                 <MenuItem Click="ShowLoginDialogWithRememberCheckBox" Header="Show LoginDialog (With Remember CheckBox)" />
                 <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
                 <MenuItem Click="ShowLimitedMessageDialog" Header="Show MessageDialog (Limited Size)" />
+                <MenuItem Click="ShowMessageDialogInWarningColours" Header="Show MessageDialog (with a coloured message)" />
                 <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                 <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
                 <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />

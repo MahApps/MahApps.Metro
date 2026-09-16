@@ -235,6 +235,26 @@ namespace MetroDemo
             await this.ShowMessageAsync("Result", $"You said ({result}): {(result == MessageDialogResult.Affirmative ? settings.AffirmativeButtonText : result == MessageDialogResult.FirstAuxiliary ? settings.FirstAuxiliaryButtonText : settings.NegativeButtonText)}");
         }
 
+        private async void ShowMessageDialogInWarningColours(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings(this.MetroDialogOptions)
+                           {
+                               AffirmativeButtonText = "Go on",
+                               NegativeButtonText = "Leave it",
+                               MessageForeground = Brushes.Red
+                           };
+
+            var result = await this.ShowMessageAsync("Deep Thought",
+                                                     "Computing the answer takes seven and a half million years. There is no way to stop it once it has begun.",
+                                                     MessageDialogStyle.AffirmativeAndNegative,
+                                                     settings);
+
+            if (result == MessageDialogResult.Affirmative)
+            {
+                await this.ShowMessageAsync("Deep Thought", "Come back in seven and a half million years.");
+            }
+        }
+
         private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
         {
             var settings = new MetroDialogSettings(this.MetroDialogOptions)
