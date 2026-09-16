@@ -11,6 +11,23 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// The buttons that minimise, maximise, restore and close a window.
+    /// </summary>
+    /// <remarks>
+    /// They report themselves to Windows as the window's own caption buttons. That is what a snap
+    /// layout hangs off, along with the rest of the behaviour Windows 11 gives a window: the layout
+    /// menu on the maximise button, the hover colours Windows draws itself, and a tooltip of its own
+    /// on each button, in the language the system runs in.
+    /// <para>
+    /// Where Windows draws that tooltip, the text set through <see cref="Minimize" />,
+    /// <see cref="Maximize" />, <see cref="Restore" /> and <see cref="Close" /> is not the one on
+    /// screen. Those properties are still here and still fill the ToolTip of the buttons, which is
+    /// what a template of your own sees. There is no way to have both: a template that leaves
+    /// <c>NonClientControlProperties.HitTestResult</c> unset gets its tooltips back and gives up the
+    /// snap layout along with them.
+    /// </para>
+    /// </remarks>
     [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Max", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Close", Type = typeof(Button))]
@@ -148,6 +165,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the minimize button tooltip.
         /// </summary>
+        /// <remarks>
+        /// Windows draws a tooltip of its own on the caption buttons of a window, and where it does,
+        /// this text is not the one shown. See <see cref="WindowButtonCommands" />.
+        /// </remarks>
         public string? Minimize
         {
             get => (string?)this.GetValue(MinimizeProperty);
@@ -164,6 +185,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the maximize button tooltip.
         /// </summary>
+        /// <remarks>
+        /// Windows draws a tooltip of its own on the caption buttons of a window, and where it does,
+        /// this text is not the one shown. See <see cref="WindowButtonCommands" />.
+        /// </remarks>
         public string? Maximize
         {
             get => (string?)this.GetValue(MaximizeProperty);
@@ -180,6 +205,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the close button tooltip.
         /// </summary>
+        /// <remarks>
+        /// Windows draws a tooltip of its own on the caption buttons of a window, and where it does,
+        /// this text is not the one shown. See <see cref="WindowButtonCommands" />.
+        /// </remarks>
         public string? Close
         {
             get => (string?)this.GetValue(CloseProperty);
@@ -196,6 +225,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the restore button tooltip.
         /// </summary>
+        /// <remarks>
+        /// Windows draws a tooltip of its own on the caption buttons of a window, and where it does,
+        /// this text is not the one shown. See <see cref="WindowButtonCommands" />.
+        /// </remarks>
         public string? Restore
         {
             get => (string?)this.GetValue(RestoreProperty);
