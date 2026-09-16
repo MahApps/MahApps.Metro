@@ -42,6 +42,40 @@ namespace MahApps.Metro.Controls.Dialogs
 
         #region DependencyProperties
 
+        /// <summary>Identifies the <see cref="DefaultButtonFocus"/> dependency property.</summary>
+        public static readonly DependencyProperty DefaultButtonFocusProperty
+            = DependencyProperty.Register(nameof(DefaultButtonFocus),
+                                          typeof(MessageDialogResult),
+                                          typeof(LoginDialog),
+                                          new PropertyMetadata(MessageDialogResult.Affirmative));
+
+        /// <summary>
+        /// Gets or sets which button is the one a press of return stands for, and which is marked as
+        /// such. The caret waits in the field either way, since that is what there is to fill in.
+        /// </summary>
+        public MessageDialogResult DefaultButtonFocus
+        {
+            get => (MessageDialogResult)this.GetValue(DefaultButtonFocusProperty);
+            set => this.SetValue(DefaultButtonFocusProperty, value);
+        }
+
+        /// <summary>
+        /// Takes the button out of the settings, falling back to the one that carries on where the
+        /// settings name a button this dialog does not have.
+        /// </summary>
+        private void ApplyDefaultButtonFocus()
+        {
+            // told nothing, it is the one that carries on, which is what this dialog has always marked
+            var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus ?? MessageDialogResult.Affirmative;
+
+            if (defaultButtonFocus != MessageDialogResult.Affirmative && defaultButtonFocus != MessageDialogResult.Negative)
+            {
+                defaultButtonFocus = MessageDialogResult.Affirmative;
+            }
+
+            this.SetCurrentValue(DefaultButtonFocusProperty, defaultButtonFocus);
+        }
+
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty
             = DependencyProperty.Register(nameof(Message),
@@ -256,6 +290,8 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             this.SetCurrentValue(AffirmativeButtonTextProperty, this.DialogSettings.AffirmativeButtonText);
             this.SetCurrentValue(NegativeButtonTextProperty, this.DialogSettings.NegativeButtonText);
+
+            this.ApplyDefaultButtonFocus();
 
             if (this.DialogSettings is LoginDialogSettings loginDialogSettings)
             {
