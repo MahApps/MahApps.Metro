@@ -41,3 +41,17 @@ jobs:
           SignPath_ApiToken: ${{ secrets.SIGNPATH_APITOKEN }}
           SignPath_OrganizationId: ${{ secrets.SIGNPATH_ORGANIZATIONID }}
           SignPath_SigningPolicySlug: ${{ secrets.SIGNPATH_SIGNINGPOLICYSLUG }}
+
+      # A test run that was cut off for hanging leaves behind the name of the test that stopped
+      # moving, which is of no use on an agent that is about to be thrown away. The dump next to it
+      # stays there: it is a picture of the test host memory, artifacts of a public repository are
+      # public, and the signing secrets are in the environment the test host inherited.
+      - name: Keep what a cut off test run left behind
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            TestResults/*.trx
+            TestResults/**/Sequence_*.xml
+          if-no-files-found: ignore

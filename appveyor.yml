@@ -48,8 +48,18 @@ build_script:
   # - ps: gitversion /version
   - ps: .\build.ps1 --target=ci --verbosity=diagnostic
 
-after_build:
-  - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
+# A red build skips after_build, and a red build is exactly the one whose test results are worth
+# reading, so the upload happens at the end either way. The sequence file the blame collector
+# writes when a test stops moving comes along, because it names that test. The dump next to it
+# stays on the agent: it is a picture of the test host memory, artifacts of a public project are
+# public, and the signing secrets are in the environment the test host inherited.
+on_finish:
+  - ps: |
+      if (Test-Path .\TestResults)
+      {
+        gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
+        gci -Path .\TestResults\ -Recurse -Include Sequence_*.xml | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+      }
 
 artifacts:
   - path: \Publish\*.*

@@ -497,7 +497,8 @@
                                 ItemsSource="{Binding Source={x:Static models:SampleData.Genres}}">
                 <mah:DropDownButton.ItemContainerStyle>
                     <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
-                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:DropDownButton}}, Path=DataContext.GenreDropDownMenuItemCommand}" />
+                        <!--  the menu is a popup of its own, so a command is reached through the menu, not past it  -->
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.DataContext.GenreDropDownMenuItemCommand}" />
                         <Setter Property="CommandParameter" Value="{Binding Name}" />
                     </Style>
                 </mah:DropDownButton.ItemContainerStyle>
