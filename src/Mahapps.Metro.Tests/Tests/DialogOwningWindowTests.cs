@@ -24,11 +24,11 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                await window.ShowMetroDialogAsync(dialog);
+                await window.ShowMetroDialogAsync(dialog).Within("the dialog to show");
 
                 Assert.That(dialog.Owner, Is.SameAs(window), "showing a dialog should tell it which window it is on");
 
-                await window.HideMetroDialogAsync(dialog);
+                await window.HideMetroDialogAsync(dialog).Within("the dialog to hide");
             }
             finally
             {
@@ -45,14 +45,14 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                await first.ShowMetroDialogAsync(dialog);
-                await first.HideMetroDialogAsync(dialog);
+                await first.ShowMetroDialogAsync(dialog).Within("the dialog to show on the first window");
+                await first.HideMetroDialogAsync(dialog).Within("the dialog to hide on the first window");
 
-                await second.ShowMetroDialogAsync(dialog);
+                await second.ShowMetroDialogAsync(dialog).Within("the dialog to show on the second window");
 
                 Assert.That(dialog.Owner, Is.SameAs(second), "the window that shows the dialog now is the one it belongs to");
 
-                await second.HideMetroDialogAsync(dialog);
+                await second.HideMetroDialogAsync(dialog).Within("the dialog to hide on the second window");
             }
             finally
             {
@@ -71,11 +71,11 @@ namespace MahApps.Metro.Tests.Tests
             {
                 Assert.That(dialog.Owner, Is.SameAs(window), "a dialog built with its window knows it before it is shown");
 
-                await window.ShowMetroDialogAsync(dialog);
+                await window.ShowMetroDialogAsync(dialog).Within("the dialog to show");
 
                 Assert.That(dialog.Owner, Is.SameAs(window));
 
-                await window.HideMetroDialogAsync(dialog);
+                await window.HideMetroDialogAsync(dialog).Within("the dialog to hide");
             }
             finally
             {
@@ -91,8 +91,8 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                await window.ShowMetroDialogAsync(dialog);
-                await window.HideMetroDialogAsync(dialog);
+                await window.ShowMetroDialogAsync(dialog).Within("the dialog to show");
+                await window.HideMetroDialogAsync(dialog).Within("the dialog to hide");
 
                 Assert.That(dialog.Owner, Is.Null, "a dialog that is not shown any more should not hold on to the window");
             }
@@ -110,8 +110,8 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                await window.ShowMetroDialogAsync(dialog);
-                await window.HideMetroDialogAsync(dialog);
+                await window.ShowMetroDialogAsync(dialog).Within("the dialog to show");
+                await window.HideMetroDialogAsync(dialog).Within("the dialog to hide");
 
                 Assert.That(dialog.Owner, Is.SameAs(window), "what the caller handed to the constructor is not ours to drop");
             }
@@ -131,11 +131,11 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                await window.ShowMetroDialogAsync(dialog);
+                await window.ShowMetroDialogAsync(dialog).Within("the dialog to show");
 
                 Assert.That(dialog.Owner, Is.SameAs(window), "a dialog written in XAML should reach its window like any other");
 
-                await dialog.CloseItselfAsync();
+                await dialog.CloseItselfAsync().Within("the dialog to close itself");
 
                 Assert.That(await window.GetCurrentDialogAsync<OwningWindowProbeDialog>(), Is.Null);
             }
@@ -153,9 +153,9 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                await window.ShowMetroDialogAsync(dialog);
+                await window.ShowMetroDialogAsync(dialog).Within("the dialog to show");
 
-                await dialog.CloseItselfAsync();
+                await dialog.CloseItselfAsync().Within("the dialog to close itself");
 
                 Assert.That(await window.GetCurrentDialogAsync<OwningWindowProbeDialog>(), Is.Null, "a dialog should be able to close itself through its own window");
             }

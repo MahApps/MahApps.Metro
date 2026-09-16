@@ -320,7 +320,6 @@ Task("Zip")
 });
 
 Task("Tests")
-    .ContinueOnError()
     .Does<BuildData>(data =>
 {
     CleanDirectory(testResultsDir);
@@ -332,7 +331,18 @@ Task("Tests")
             NoRestore = true,
             Loggers = new[] { "trx" },
             ResultsDirectory = testResultsDir,
-            Verbosity = data.DotNetVerbosity
+            Verbosity = data.DotNetVerbosity,
+            // These are UI tests, and one that waits on an event nobody raises waits forever. The
+            // run is cut off after five minutes without a finished test, and what lands next to the
+            // results says which test was running when it stopped moving. The dump type has to stay
+            // spelled out: left alone it is full, and a full dump of the test host carries the
+            // signing secrets it inherited through its environment.
+            ArgumentCustomization = args => args
+                .Append("--blame-hang")
+                .Append("--blame-hang-timeout")
+                .Append("5m")
+                .Append("--blame-hang-dump-type")
+                .Append("mini")
         };
 
     DotNetTest("./src/Mahapps.Metro.Tests/Mahapps.Metro.Tests.csproj", settings);

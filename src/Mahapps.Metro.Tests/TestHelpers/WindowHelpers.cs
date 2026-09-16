@@ -17,6 +17,13 @@ namespace MahApps.Metro.Tests.TestHelpers
     public static class WindowHelpers
     {
         /// <summary>
+        /// How long a window gets to become the active one before the test gives up on it. A run of
+        /// the whole suite needs a second or two per window, so this is room to spare on a loaded
+        /// build agent and still well inside the five minutes the blame collector allows.
+        /// </summary>
+        private static readonly TimeSpan ActivationTimeout = TimeSpan.FromSeconds(30);
+
+        /// <summary>
         /// A window for a test to work on, off screen unless somebody is watching through a debugger.
         /// </summary>
         /// <param name="onLoadedAction">What to do once it is up.</param>
@@ -25,7 +32,7 @@ namespace MahApps.Metro.Tests.TestHelpers
         /// that is not about the animations waits through them for nothing, which is most of what a
         /// run of this suite used to spend its time on, so they are off unless a test asks for them.
         /// </param>
-        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T>? onLoadedAction = null, bool withAnimations = false)
+        public static async Task<T> CreateInvisibleWindowAsync<T>(Action<T>? onLoadedAction = null, bool withAnimations = false)
             where T : Window, new()
         {
             var completionSource = new TaskCompletionSource<T>();
@@ -68,14 +75,28 @@ namespace MahApps.Metro.Tests.TestHelpers
             void OnActivated(object sender, EventArgs args)
             {
                 window.Activated -= OnActivated;
-                completionSource.SetResult(window);
+                completionSource.TrySetResult(window);
             }
 
             window.Activated += OnActivated;
 
             window.Show();
 
-            return completionSource.Task;
+            // Only one window on a desktop can be the active one, and the one that comes up second
+            // does not always get there on a build agent. Waiting for that with nothing behind it
+            // holds the test host until somebody kills it, and the run says nothing about why, so
+            // the wait gives up and names what it was waiting for.
+            var finished = await Task.WhenAny(completionSource.Task, Task.Delay(ActivationTimeout)).ConfigureAwait(true);
+
+            if (finished != completionSource.Task)
+            {
+                window.Activated -= OnActivated;
+                window.Close();
+
+                Assert.Fail($"the {typeof(T).Name} was not activated within {ActivationTimeout.TotalSeconds:0} seconds");
+            }
+
+            return await completionSource.Task.ConfigureAwait(true);
         }
 
         public static void AssertWindowCommandsColor(this MetroWindow window, Color color)

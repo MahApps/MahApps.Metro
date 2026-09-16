@@ -14,13 +14,22 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class LoginDialogTests
     {
+        /// <summary>
+        /// What the window hands to its dialogs. These replace the options
+        /// <see cref="WindowHelpers.CreateInvisibleWindowAsync{T}"/> puts on the window, so the
+        /// animations have to be switched off here the same way it does. Left on, the closing
+        /// storyboard has to run before <c>HideMetroDialogAsync</c> comes back, and on a build
+        /// agent that clock does not always tick.
+        /// </summary>
         private static MetroDialogSettings WindowOptions()
         {
             return new MetroDialogSettings
                    {
                        ColorScheme = MetroDialogColorScheme.Accented,
                        NegativeButtonText = "No",
-                       DialogTitleFontSize = 42d
+                       DialogTitleFontSize = 42d,
+                       AnimateShow = false,
+                       AnimateHide = false
                    };
         }
 
