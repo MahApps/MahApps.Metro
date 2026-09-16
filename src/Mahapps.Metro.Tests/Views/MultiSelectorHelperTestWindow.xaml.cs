@@ -38,6 +38,22 @@ namespace MahApps.Metro.Tests.Views
             set => this.SetValue(SecondItemsProperty, value);
         }
 
+        public static readonly DependencyProperty NumbersProperty
+            = DependencyProperty.Register(
+                nameof(Numbers),
+                typeof(ObservableCollection<int>),
+                typeof(MultiSelectorHelperTestWindow),
+                new PropertyMetadata(default(ObservableCollection<int>)));
+
+        /// <summary>
+        /// What the list inside the list shows, of a different type to what the outer one holds.
+        /// </summary>
+        public ObservableCollection<int> Numbers
+        {
+            get => (ObservableCollection<int>)this.GetValue(NumbersProperty);
+            set => this.SetValue(NumbersProperty, value);
+        }
+
         public static readonly DependencyProperty SelectedItemsProperty
             = DependencyProperty.Register(
                 nameof(SelectedItems),
@@ -58,6 +74,7 @@ namespace MahApps.Metro.Tests.Views
             this.Items = new ObservableCollection<string>(new[] { "Item1", "Item2", "Item3", "Item4", "Item5" });
             this.SecondItems = new ObservableCollection<string>(this.Items);
             this.SelectedItems = new ObservableCollection<string>();
+            this.Numbers = new ObservableCollection<int>(new[] { 1, 2, 3 });
         }
     }
 }

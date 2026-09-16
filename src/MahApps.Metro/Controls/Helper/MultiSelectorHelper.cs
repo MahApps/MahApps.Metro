@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,6 +18,35 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class MultiSelectorHelper
     {
+        static MultiSelectorHelper()
+        {
+            // A handler on the class runs before any an application hooked up itself, which is what it
+            // takes for the collection to be in step by the time anybody else hears about the change.
+            EventManager.RegisterClassHandler(typeof(Selector),
+                                              Selector.SelectionChangedEvent,
+                                              new SelectionChangedEventHandler(OnSelectorSelectionChanged));
+        }
+
+        /// <summary>
+        /// Hands a change to the binding of the selector it came from, if that selector has one.
+        /// </summary>
+        private static void OnSelectorSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is not DependencyObject element)
+            {
+                return;
+            }
+
+            // the event is a routed one, so a list inside this one sends its selection up through here,
+            // and what that list holds has nothing to do with this collection
+            if (ReferenceEquals(e.OriginalSource, sender) == false)
+            {
+                return;
+            }
+
+            GetSelectedItemBinding(element)?.OnSelectionChanged(e);
+        }
+
         public static readonly DependencyProperty SelectedItemsProperty
             = DependencyProperty.RegisterAttached(
                 "SelectedItems",
@@ -97,6 +126,12 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private class MultiSelectorBinding
         {
+            /// <summary>
+            /// While the selector is being brought in line with the collection, what it reports back is
+            /// this binding's own doing and has no business going round again.
+            /// </summary>
+            private bool isUpdatingTheSelector;
+
             private readonly Selector selector;
             private readonly IList collection;
 
@@ -129,7 +164,6 @@ namespace MahApps.Metro.Controls
                 // prevent multiple event registration
                 this.UnBind();
 
-                this.selector.SelectionChanged += this.OnSelectionChanged;
                 if (this.collection is INotifyCollectionChanged notifyCollection)
                 {
                     notifyCollection.CollectionChanged += this.OnCollectionChanged;
@@ -141,7 +175,6 @@ namespace MahApps.Metro.Controls
             /// </summary>
             public void UnBind()
             {
-                this.selector.SelectionChanged -= this.OnSelectionChanged;
                 if (this.collection is INotifyCollectionChanged notifyCollection)
                 {
                     notifyCollection.CollectionChanged -= this.OnCollectionChanged;
@@ -151,8 +184,13 @@ namespace MahApps.Metro.Controls
             /// <summary>
             /// Updates the collection with changes made in the selector
             /// </summary>
-            private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+            internal void OnSelectionChanged(SelectionChangedEventArgs e)
             {
+                if (this.isUpdatingTheSelector)
+                {
+                    return;
+                }
+
                 var notifyCollection = this.collection as INotifyCollectionChanged;
                 if (notifyCollection is not null)
                 {
@@ -197,7 +235,7 @@ namespace MahApps.Metro.Controls
             private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 #endif
             {
-                this.selector.SelectionChanged -= this.OnSelectionChanged;
+                this.isUpdatingTheSelector = true;
 
                 try
                 {
@@ -241,7 +279,7 @@ namespace MahApps.Metro.Controls
                 }
                 finally
                 {
-                    this.selector.SelectionChanged += this.OnSelectionChanged;
+                    this.isUpdatingTheSelector = false;
                 }
             }
 
