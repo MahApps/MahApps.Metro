@@ -64,10 +64,11 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0"
+                    <TextBlock x:Name="PART_MessageTextBlock"
+                               Grid.Row="0"
                                Margin="0 5 0 0"
                                FontSize="{TemplateBinding DialogMessageFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
+                               Foreground="{TemplateBinding MessageForeground}"
                                Text="{TemplateBinding Message}"
                                TextWrapping="Wrap" />
 
@@ -102,6 +103,10 @@
             </ContentPresenter>
         </Grid>
         <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the dialog  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </Trigger>
             <Trigger Property="IsCancelable" Value="True">
                 <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible" />
             </Trigger>

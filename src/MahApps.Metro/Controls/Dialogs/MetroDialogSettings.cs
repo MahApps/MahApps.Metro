@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -36,6 +37,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.SecondAuxiliaryButtonText = source.SecondAuxiliaryButtonText;
 
             this.ColorScheme = source.ColorScheme;
+            this.MessageForeground = source.MessageForeground;
             this.CustomResourceDictionary = source.CustomResourceDictionary;
 
             this.AnimateShow = source.AnimateShow;
@@ -87,6 +89,19 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets or sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; } = MetroDialogColorScheme.Theme;
+
+        /// <summary>
+        /// Gets or sets what the message of the dialog is written in. Left unset, it is written in
+        /// the same colour as the rest of the dialog, which is what it has always been.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// await this.ShowMessageAsync("Careful", "This cannot be undone.",
+        ///                             MessageDialogStyle.AffirmativeAndNegative,
+        ///                             new MetroDialogSettings { MessageForeground = Brushes.Red });
+        /// </code>
+        /// </example>
+        public Brush? MessageForeground { get; set; }
 
         /// <summary>
         /// Gets or sets a custom resource dictionary which can contains custom styles, brushes or something else.

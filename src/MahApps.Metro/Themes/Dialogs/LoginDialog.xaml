@@ -69,10 +69,11 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0"
+                    <TextBlock x:Name="PART_MessageTextBlock"
+                               Grid.Row="0"
                                Margin="0 5 0 0"
                                FontSize="{TemplateBinding DialogMessageFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
+                               Foreground="{TemplateBinding MessageForeground}"
                                Text="{TemplateBinding Message}"
                                TextWrapping="Wrap" />
 
@@ -131,6 +132,10 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the dialog  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            </Trigger>
             <Trigger Property="DefaultButtonFocus" Value="Affirmative">
                 <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
                 <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Dialogs}" />
