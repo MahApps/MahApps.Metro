@@ -43,6 +43,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorCanvas.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPalette.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorPicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/AutoSuggestBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MultiSelectionComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/MessageDialog.xaml" />
@@ -85,6 +86,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette}" TargetType="{x:Type mah:ColorPalette}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type mah:ColorPicker}" />
     <!--#endregion-->
+    <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox}" TargetType="{x:Type mah:AutoSuggestBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
