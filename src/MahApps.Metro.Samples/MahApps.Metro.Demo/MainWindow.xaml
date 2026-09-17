@@ -412,6 +412,10 @@
                 <exampleViews:MultiSelectionComboBoxExample />
             </TabItem>
 
+            <TabItem Header="AutoSuggestBox">
+                <exampleViews:AutoSuggestBoxExample DataContext="{Binding}" />
+            </TabItem>
+
             <TabItem Header="transitions">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"
