@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controlzex="urn:controlzex"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
@@ -411,13 +412,19 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
 
-                        <!--  AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme  -->
-                        <Popup x:Name="PART_Popup"
-                               AllowsTransparency="True"
-                               Focusable="False"
-                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                               Placement="Bottom"
-                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                        <!--
+                            AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme.
+                            A popup works out where it belongs when it opens and stays there, while the control above it can still
+                            change height, a floating watermark or a validation message for instance. A PopupEx keeps an eye on the
+                            element it is told to hang under, so the list follows instead of ending up over the control.
+                        -->
+                        <controlzex:PopupEx x:Name="PART_Popup"
+                                            AllowsTransparency="True"
+                                            Focusable="False"
+                                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Placement="Bottom"
+                                            PlacementTarget="{Binding ElementName=PART_DropDownToggle}"
+                                            PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                             <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Border x:Name="PopupBorder"
                                         Height="Auto"
@@ -444,7 +451,7 @@
                                     </Grid>
                                 </Border>
                             </Grid>
-                        </Popup>
+                        </controlzex:PopupEx>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused" />
