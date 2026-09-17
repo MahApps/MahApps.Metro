@@ -123,6 +123,14 @@ namespace MahApps.Metro.Behaviors
             var textBox = this.AssociatedObject.FindChild<TextBox>("RevealedPassword");
             if (textBox != null)
             {
+                // The box that shows the revealed password keeps a caret while it is hidden, and a
+                // caret asks to be scrolled into view whenever what stands under it changes. Nobody
+                // is typing in this one until the password is revealed, so a page carrying such a box
+                // jumped to it as soon as the password arrived. It asks for itself again as soon as
+                // somebody is standing in it.
+                textBox.RequestBringIntoView -= RevealedPasswordRequestBringIntoView;
+                textBox.RequestBringIntoView += RevealedPasswordRequestBringIntoView;
+
                 var selection = GetSelection(this.AssociatedObject);
                 if (selection is null)
                 {
@@ -137,6 +145,14 @@ namespace MahApps.Metro.Behaviors
                         selection.Changed += this.PasswordBoxSelectionChanged;
                     }
                 }
+            }
+        }
+
+        private static void RevealedPasswordRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            if (sender is TextBox textBox && !textBox.IsKeyboardFocusWithin)
+            {
+                e.Handled = true;
             }
         }
 
@@ -156,6 +172,12 @@ namespace MahApps.Metro.Behaviors
             // it seems, it was already detached, or never attached
             if (this.AssociatedObject != null)
             {
+                var textBox = GetRevealedPasswordTextBox(this.AssociatedObject);
+                if (textBox != null)
+                {
+                    textBox.RequestBringIntoView -= RevealedPasswordRequestBringIntoView;
+                }
+
                 var selection = GetSelection(this.AssociatedObject);
                 if (selection != null)
                 {
