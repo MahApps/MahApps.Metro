@@ -7,106 +7,366 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
-             d:DesignHeight="600"
-             d:DesignWidth="800"
+             d:DesignHeight="800"
+             d:DesignWidth="1200"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+
+        <!--  the line above a sample that says what the sample is about  -->
+        <Style x:Key="Caption"
+               BasedOn="{StaticResource MahApps.Styles.TextBlock}"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.SystemControlDescriptionTextForeground}" />
+            <Setter Property="Margin" Value="0 10 0 3" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <!--  and the same for the first one in a card, which needs no room above it  -->
+        <Style x:Key="FirstCaption"
+               BasedOn="{StaticResource Caption}"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 0 0 3" />
+        </Style>
+
+        <Style x:Key="Card"
+               BasedOn="{StaticResource MahApps.Styles.GroupBox}"
+               TargetType="{x:Type GroupBox}">
+            <Setter Property="Margin" Value="0 0 12 12" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="390" />
+        </Style>
+
+        <Style x:Key="RowLabel"
+               BasedOn="{StaticResource MahApps.Styles.TextBlock}"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 0 10 8" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="ColumnLabel"
+               BasedOn="{StaticResource Caption}"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="0 0 8 4" />
+        </Style>
+
+        <DataTemplate x:Key="MagnifyTemplate">
+            <iconPacks:PackIconMaterial Width="12"
+                                        Height="12"
+                                        Kind="Magnify" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="SendTemplate">
+            <iconPacks:PackIconMaterial Width="12"
+                                        Height="12"
+                                        Kind="Send" />
+        </DataTemplate>
 
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="250" />
-            <ColumnDefinition Width="*" MinWidth="200" />
-            <ColumnDefinition Width="*" MinWidth="250" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel Margin="10">
 
-        <GroupBox Grid.Row="0"
-                  Grid.Column="0"
-                  Margin="4 2"
-                  Header="TextBox"
-                  UseLayoutRounding="True">
-            <AdornerDecorator>
-                <StackPanel>
-                    <TextBox Margin="{StaticResource ControlMargin}"
+        <TextBlock Margin="0 0 0 12"
+                   Style="{DynamicResource MahApps.Styles.TextBlock}"
+                   Text="Every style the library has for a text control, and what the attached properties of TextBoxHelper, PasswordBoxHelper and ControlsHelper do to one. Hover over a box and put the caret in it: the border answers to both."
+                   TextWrapping="Wrap" />
+
+        <WrapPanel Orientation="Horizontal">
+
+            <!--  the four TextBox styles, side by side  -->
+            <GroupBox Width="620"
+                      Header="TextBox styles"
+                      Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Style="{StaticResource ColumnLabel}"
+                               Text="empty, with a watermark" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               Style="{StaticResource ColumnLabel}"
+                               Text="with text" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="3"
+                               Style="{StaticResource ColumnLabel}"
+                               Text="disabled" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Style="{StaticResource RowLabel}"
+                               Text="TextBox"
+                               ToolTip="MahApps.Styles.TextBox" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Margin="0 0 8 8"
                              mah:TextBoxHelper.ClearTextButton="True"
-                             Text="Clear with Escape">
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Escape" Command="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
-                        </TextBox.InputBindings>
-                    </TextBox>
-                    <mah:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
+                             mah:TextBoxHelper.Watermark="Type a name"
+                             Style="{DynamicResource MahApps.Styles.TextBox}" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="2"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Style="{DynamicResource MahApps.Styles.TextBox}"
+                             Text="Ada Lovelace" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="3"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             IsEnabled="False"
+                             Style="{DynamicResource MahApps.Styles.TextBox}"
+                             Text="Ada Lovelace" />
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               Style="{StaticResource RowLabel}"
+                               Text=".Search"
+                               ToolTip="MahApps.Styles.TextBox.Search" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="1"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.Watermark="Search a name"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="2"
+                             Margin="0 0 8 8"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Search}"
+                             Text="Alan Turing" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="3"
+                             Margin="0 0 8 8"
+                             IsEnabled="False"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Search}"
+                             Text="Alan Turing" />
+
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
+                               Style="{StaticResource RowLabel}"
+                               Text=".Win10"
+                               ToolTip="MahApps.Styles.TextBox.Win10" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="1"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.Watermark="Type a name"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Win10}" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="2"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                             Text="Grace Hopper" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="3"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             IsEnabled="False"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                             Text="Grace Hopper" />
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               Style="{StaticResource RowLabel}"
+                               Text=".Fluent"
+                               ToolTip="MahApps.Styles.TextBox.Fluent" />
+                    <TextBox Grid.Row="4"
+                             Grid.Column="1"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.Watermark="Type a name"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Fluent}" />
+                    <TextBox Grid.Row="4"
+                             Grid.Column="2"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Fluent}"
+                             Text="Konrad Zuse" />
+                    <TextBox Grid.Row="4"
+                             Grid.Column="3"
+                             Margin="0 0 8 8"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             IsEnabled="False"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Fluent}"
+                             Text="Konrad Zuse" />
+
+                    <TextBlock Grid.Row="5"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="4"
+                               Style="{StaticResource Caption}"
+                               Text="The Win10 and the Fluent style keep their delete button for as long as the caret is in the box, the way the UWP box does, and the box turns white while it has it. Win10 marks the focus with a frame in the accent colour, Fluent with a line along the bottom edge and rounded corners." />
+                </Grid>
+            </GroupBox>
+
+            <!--  everything that lifts its watermark, in one row  -->
+            <GroupBox Width="760"
+                      Header="Floating watermark"
+                      Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="115"
+                                 Margin="0 0 8 0"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.UseFloatingWatermark="True"
+                                 mah:TextBoxHelper.Watermark="TextBox"
+                                 Text="Ada" />
+                        <TextBox Width="115"
+                                 Margin="0 0 8 0"
+                                 mah:TextBoxHelper.UseFloatingWatermark="True"
+                                 mah:TextBoxHelper.Watermark=".Search"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.Search}"
+                                 Text="Alan" />
+                        <TextBox Width="115"
+                                 Margin="0 0 8 0"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.UseFloatingWatermark="True"
+                                 mah:TextBoxHelper.Watermark=".Win10"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                                 Text="Grace" />
+                        <TextBox Width="115"
+                                 Margin="0 0 8 0"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.UseFloatingWatermark="True"
+                                 mah:TextBoxHelper.Watermark=".Fluent"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.Fluent}"
+                                 Text="Konrad" />
+                        <PasswordBox Width="115"
+                                     Margin="0 0 8 0"
+                                     mah:TextBoxHelper.ClearTextButton="True"
+                                     mah:TextBoxHelper.UseFloatingWatermark="True"
+                                     mah:TextBoxHelper.Watermark="PasswordBox"
+                                     Password="Password" />
+                        <RichTextBox Width="115"
+                                     mah:TextBoxHelper.ClearTextButton="True"
+                                     mah:TextBoxHelper.UseFloatingWatermark="True"
+                                     mah:TextBoxHelper.Watermark="RichTextBox"
+                                     IsDocumentEnabled="True">
+                            <FlowDocument PageWidth="NaN">
+                                <Paragraph>Notes</Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </StackPanel>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="The watermark leaves the box as soon as there is something in it and takes a line of height with it, which the box grows into over a fifth of a second. That growth moves whatever stands under the box, so these have a row to themselves: empty one with its button and the row breathes instead of the page." />
+                </StackPanel>
+            </GroupBox>
+
+            <!--  watermarks  -->
+            <GroupBox Header="Watermark" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FirstCaption}" Text="Watermark" />
+                    <TextBox mah:TextBoxHelper.Watermark="Waiting for a word" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="WatermarkAlignment" />
+                    <TextBox HorizontalContentAlignment="Stretch"
+                             mah:TextBoxHelper.Watermark="Right"
+                             mah:TextBoxHelper.WatermarkAlignment="Right" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="WatermarkTrimming, for a watermark with more to say than the box has room for" />
+                    <TextBox mah:TextBoxHelper.Watermark="A watermark long enough to run out of box before it runs out of words" mah:TextBoxHelper.WatermarkTrimming="CharacterEllipsis" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="WatermarkWrapping, which gives it the second line instead" />
+                    <TextBox Height="56"
+                             VerticalContentAlignment="Top"
+                             mah:TextBoxHelper.Watermark="A watermark long enough to run out of box before it runs out of words"
+                             mah:TextBoxHelper.WatermarkWrapping="Wrap"
+                             AcceptsReturn="True" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="AutoWatermark, which takes the watermark from the Display attribute of the property it is bound to" />
+                    <TextBox mah:TextBoxHelper.AutoWatermark="True" Text="{Binding AutoWatermarkText, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="MetroHeader, for a line above the box that belongs to it" />
+                    <mah:MetroHeader Header="Header">
                         <mah:MetroHeader.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="TextBox" />
-                                    <TextBlock Margin="2 0 0 0"
+                                    <TextBlock Margin="4 0 0 0"
                                                VerticalAlignment="Center"
                                                Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </mah:MetroHeader.HeaderTemplate>
-                        <TextBox SpellCheck.IsEnabled="True" Text="Enabled">
-                            <TextBox.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="This is only a Test-Item" />
-                                </ContextMenu>
-                            </TextBox.ContextMenu>
-                        </TextBox>
+                        <TextBox SpellCheck.IsEnabled="True" Text="Spell check is on in here" />
                     </mah:MetroHeader>
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             HorizontalContentAlignment="Stretch"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Watermark..."
-                             mah:TextBoxHelper.WatermarkAlignment="Right"
-                             SpellCheck.IsEnabled="True"
-                             ToolTip="WatermarkAlignment Right">
-                        <TextBox.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Custom Item" />
-                                <Separator />
-                                <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem}" />
-                                <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem}" />
-                                <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem}" />
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
-                    </TextBox>
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             ContextMenu="{x:Null}"
-                             Text="No ContextMenu...">
-                        <TextBox.Style>
-                            <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
-                                <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
-                                <Style.Triggers>
-                                    <Trigger Property="mah:TextBoxHelper.HasText" Value="False">
-                                        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
-                                        <Setter Property="mah:TextBoxHelper.Watermark" Value="Now enter some text..." />
-                                    </Trigger>
-                                    <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
-                                        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Search...">
+                </StackPanel>
+            </GroupBox>
+
+            <!--  the button in the box  -->
+            <GroupBox Header="The button in the box" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FirstCaption}" Text="ClearTextButton, which empties the box" />
+                    <TextBox mah:TextBoxHelper.ClearTextButton="True" Text="Clear me" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ClearControlCommand, the same thing on the escape key" />
+                    <TextBox mah:TextBoxHelper.ClearTextButton="True" Text="Clear with escape">
                         <TextBox.InputBindings>
-                            <KeyBinding Key="Return"
-                                        Command="{Binding ControlButtonCommand, Mode=OneWay}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
+                            <KeyBinding Key="Escape" Command="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
                         </TextBox.InputBindings>
+                    </TextBox>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ButtonCommand with a ButtonContent and a ButtonFontFamily of its own" />
+                    <TextBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonContent="&#xE713;"
+                             mah:TextBoxHelper.ButtonFontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                             mah:TextBoxHelper.Watermark="Press the button" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ButtonContentTemplate, for a button that carries an icon instead of a glyph, and ButtonCommandParameter to send the text along" />
+                    <TextBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommandWithParameter, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                             mah:TextBoxHelper.ButtonContentTemplate="{StaticResource SendTemplate}"
+                             mah:TextBoxHelper.Watermark="Send"
+                             Text="42" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ButtonsAlignment, for the button on the other side" />
+                    <TextBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonContentTemplate="{StaticResource MagnifyTemplate}"
+                             mah:TextBoxHelper.ButtonsAlignment="Left"
+                             mah:TextBoxHelper.Watermark="Button on the left" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ButtonWidth and ButtonFontSize" />
+                    <TextBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                             mah:TextBoxHelper.ButtonContent="&#xE10B;"
+                             mah:TextBoxHelper.ButtonFontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                             mah:TextBoxHelper.ButtonFontSize="20"
+                             mah:TextBoxHelper.ButtonWidth="44"
+                             mah:TextBoxHelper.Watermark="A wider button" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="And the same on the Win10 style, where the delete button comes and goes with the caret while a command of your own stays put" />
+                    <TextBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                             mah:TextBoxHelper.Watermark="Press the button"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                             Text="42" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="SearchCommand, which the search style asks its own window about" />
+                    <TextBox mah:TextBoxHelper.Watermark="Find a name" Style="{DynamicResource MahApps.Styles.TextBox.Search}">
+                        <TextBox.CommandBindings>
+                            <CommandBinding CanExecute="TextBoxSearchOnCanExecute"
+                                            Command="{x:Static mah:MahAppsCommands.SearchCommand}"
+                                            Executed="TextBoxSearchOnExecuted" />
+                        </TextBox.CommandBindings>
+                    </TextBox>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="HasText, which a style of your own can ask to swap the button while somebody types" />
+                    <TextBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}">
                         <TextBox.Style>
                             <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
+                                <Setter Property="mah:TextBoxHelper.Watermark" Value="Type, and the glass becomes a cross" />
                                 <Style.Triggers>
                                     <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
                                         <Setter Property="mah:TextBoxHelper.ButtonContent" Value="r" />
@@ -117,209 +377,232 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                    <!--  Entypo MagnifyingGlass  -->
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommandWithParameter, Mode=OneWay}"
-                             mah:TextBoxHelper.ButtonContent="M17.545,15.467l-3.779-3.779c0.57-0.935,0.898-2.035,0.898-3.21c0-3.417-2.961-6.377-6.378-6.377  C4.869,2.1,2.1,4.87,2.1,8.287c0,3.416,2.961,6.377,6.377,6.377c1.137,0,2.2-0.309,3.115-0.844l3.799,3.801  c0.372,0.371,0.975,0.371,1.346,0l0.943-0.943C18.051,16.307,17.916,15.838,17.545,15.467z M4.004,8.287  c0-2.366,1.917-4.283,4.282-4.283c2.366,0,4.474,2.107,4.474,4.474c0,2.365-1.918,4.283-4.283,4.283  C6.111,12.76,4.004,10.652,4.004,8.287z"
-                             mah:TextBoxHelper.Watermark="Search something..."
-                             Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonContent="M17.545,15.467l-3.779-3.779c0.57-0.935,0.898-2.035,0.898-3.21c0-3.417-2.961-6.377-6.378-6.377  C4.869,2.1,2.1,4.87,2.1,8.287c0,3.416,2.961,6.377,6.377,6.377c1.137,0,2.2-0.309,3.115-0.844l3.799,3.801  c0.372,0.371,0.975,0.371,1.346,0l0.943-0.943C18.051,16.307,17.916,15.838,17.545,15.467z M4.004,8.287  c0-2.366,1.917-4.283,4.282-4.283c2.366,0,4.474,2.107,4.474,4.474c0,2.365-1.918,4.283-4.283,4.283  C6.111,12.76,4.004,10.652,4.004,8.287z"
-                             mah:TextBoxHelper.Watermark="Find something..."
-                             Style="{DynamicResource MahApps.Styles.TextBox.Search}">
-                        <TextBox.CommandBindings>
-                            <CommandBinding CanExecute="TextBoxSearchOnCanExecute"
-                                            Command="{x:Static mah:MahAppsCommands.SearchCommand}"
-                                            Executed="TextBoxSearchOnExecuted" />
-                        </TextBox.CommandBindings>
-                    </TextBox>
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
-                             mah:TextBoxHelper.ButtonContent="s"
-                             mah:TextBoxHelper.Watermark="Custom icon style" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Number smaller than 10"
-                             mah:ValidationHelper.AlwaysShowValidationError="True"
-                             Text="{Binding IntegerGreater10Property, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.SelectAllOnFocus="True"
-                             Text="Select all on focus" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
+                </StackPanel>
+            </GroupBox>
+
+            <!--  border, corners and colours  -->
+            <GroupBox Header="Border, corners and colours" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FirstCaption}" Text="ControlsHelper.CornerRadius" />
+                    <TextBox mah:ControlsHelper.CornerRadius="10"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.Watermark="Round on all four corners"
+                             Text="Round on all four corners" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ControlsHelper.MouseOverBorderBrush, so hover over this one" />
+                    <TextBox mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Accent}" mah:TextBoxHelper.Watermark="Accent under the mouse" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ControlsHelper.FocusBorderBrush, so put the caret in this one" />
+                    <TextBox mah:ControlsHelper.FocusBorderBrush="{DynamicResource MahApps.Brushes.Accent}" mah:TextBoxHelper.Watermark="Accent while it has the caret" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="ControlsHelper.DisabledBorderBrush, which is what a box with nothing to say looks like" />
+                    <TextBox mah:ControlsHelper.DisabledBorderBrush="{DynamicResource MahApps.Brushes.Accent4}"
                              IsEnabled="False"
                              Text="Disabled" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Watermark"
-                             IsEnabled="False" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.Watermark="Watermark"
+
+                    <TextBlock Style="{StaticResource Caption}" Text="And the same on the Win10 style, where that brush paints the border alone" />
+                    <TextBox mah:ControlsHelper.DisabledBorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                              IsEnabled="False"
-                             Text="Clear button" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Search style..."
-                             IsEnabled="False"
-                             Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
-                    <TextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Number smaller than 10"
-                             IsEnabled="False"
-                             Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                             Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                             Text="Disabled" />
                 </StackPanel>
-            </AdornerDecorator>
-        </GroupBox>
+            </GroupBox>
 
-        <GroupBox Grid.Row="0"
-                  Grid.Column="1"
-                  Margin="4 2"
-                  Header="RichTextBox"
-                  UseLayoutRounding="True">
-            <StackPanel>
-                <RichTextBox Margin="{StaticResource ControlMargin}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                    <FlowDocument PageWidth="NaN">
-                        <Paragraph>Hello</Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <RichTextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.Watermark="Type something in..."
-                             IsDocumentEnabled="True"
-                             SpellCheck.IsEnabled="True" />
-                <RichTextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Need some input..."
-                             IsDocumentEnabled="True"
-                             SpellCheck.IsEnabled="True" />
-                <RichTextBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
-                             mah:TextBoxHelper.ButtonContent="s"
-                             mah:TextBoxHelper.Watermark="Type in..."
-                             IsDocumentEnabled="True"
-                             SpellCheck.IsEnabled="True" />
-                <RichTextBox Height="120"
-                             Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.SelectAllOnFocus="True"
-                             IsDocumentEnabled="True"
-                             SpellCheck.IsEnabled="True">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                <Run Text="Normal" />
-                            </Hyperlink>
-                            <LineBreak />
-                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <RichTextBox Height="120"
-                             Margin="{StaticResource ControlMargin}"
-                             IsDocumentEnabled="True"
-                             IsReadOnly="True">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                <Run Text="ReadOnly" />
-                            </Hyperlink>
-                            <LineBreak />
-                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-                <RichTextBox Height="120"
-                             Margin="{StaticResource ControlMargin}"
-                             IsDocumentEnabled="True"
-                             IsEnabled="False">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                <Run Text="Disabled" />
-                            </Hyperlink>
-                            <LineBreak />
-                            <Run>Cupcake ipsum dolor sit amet dessert halvah dessert. Chocolate oat cake carrot cake sweet dragée gummi bears chocolate.</Run>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-            </StackPanel>
-        </GroupBox>
+            <!--  behaviour  -->
+            <GroupBox Header="Behaviour" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FirstCaption}" Text="SelectAllOnFocus" />
+                    <TextBox mah:TextBoxHelper.SelectAllOnFocus="True" Text="All of it, the moment you arrive" />
 
-        <GroupBox Grid.Row="0"
-                  Grid.Column="2"
-                  Margin="4 2"
-                  Header="PasswordBox"
-                  UseLayoutRounding="True">
-            <StackPanel>
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.Watermark="Password..."
-                             Password="Password" />
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Win8..."
-                             Password="Win8"
-                             Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText), Mode=OneWay}"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Revealed..."
-                             Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Password..."
-                             Password="Password" />
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:PasswordBoxHelper.CapsLockIcon="!"
-                             mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
-                             mah:TextBoxHelper.ButtonContent="4"
-                             mah:TextBoxHelper.UseFloatingWatermark="True"
-                             mah:TextBoxHelper.Watermark="Custom icon...">
-                    <mah:PasswordBoxHelper.CapsLockWarningToolTip>
-                        <TextBlock>
-                            <Run Text="This is a custom Warning to show you that" />
-                            <Run Foreground="Red"
-                                 Text="CAPS LOCK"
-                                 TextDecorations="Underline" />
-                            <Run Text=" is on" />
-                        </TextBlock>
-                    </mah:PasswordBoxHelper.CapsLockWarningToolTip>
-                </PasswordBox>
-                <PasswordBox Margin="{StaticResource ControlMargin}"
+                    <TextBlock Style="{StaticResource Caption}" Text="IsSpellCheckContextMenuEnabled, which hands the suggestions to the context menu" />
+                    <TextBox mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                             SpellCheck.IsEnabled="True"
+                             Text="A misspeled word to right click" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="A context menu of your own, with the MahApps menu item style" />
+                    <TextBox Text="Right click me">
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Something of my own" />
+                                <Separator />
+                                <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem}" />
+                                <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem}" />
+                                <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem}" />
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="No context menu at all" />
+                    <TextBox ContextMenu="{x:Null}" Text="Nothing on the right button" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="HasText, asked by a style that swaps the watermark and the button with it" />
+                    <TextBox>
+                        <TextBox.Style>
+                            <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="mah:TextBoxHelper.HasText" Value="False">
+                                        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
+                                        <Setter Property="mah:TextBoxHelper.Watermark" Value="Now type something" />
+                                    </Trigger>
+                                    <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
+                                        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="Read only, and a box that is simply off" />
+                    <TextBox IsReadOnly="True" Text="Read only" />
+                    <TextBox Margin="0 6 0 0"
                              IsEnabled="False"
-                             Password="Password" />
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.ClearTextButton="True"
-                             IsEnabled="False"
-                             Password="Password" />
-                <PasswordBox Margin="{StaticResource ControlMargin}"
-                             mah:TextBoxHelper.SelectAllOnFocus="True"
-                             Password="Password"
-                             ToolTip="Select all on focus" />
-            </StackPanel>
-        </GroupBox>
+                             Text="Disabled" />
+                </StackPanel>
+            </GroupBox>
 
+            <!--  PasswordBox  -->
+            <GroupBox Header="PasswordBox" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FirstCaption}"
+                               Text="PasswordBox"
+                               ToolTip="MahApps.Styles.PasswordBox" />
+                    <PasswordBox mah:TextBoxHelper.Watermark="Password" Password="Password" />
 
-        <GroupBox Grid.Row="1"
-                  Grid.Column="0"
-                  Margin="4 2"
-                  Header="HotKeyBox"
-                  UseLayoutRounding="True">
-            <StackPanel>
-                <CheckBox x:Name="ModifierKeysRequired"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="Require modifier keys" />
-                <TextBlock Margin="{StaticResource ControlMargin}" Text="Try SHIFT+D to demonstrate validation" />
-                <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
-                               mah:TextBoxHelper.ClearTextButton="True"
-                               mah:TextBoxHelper.Watermark="Enter hot key"
-                               AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
-                               HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-                <mah:HotKeyBox Margin="{StaticResource ControlMargin}"
-                               mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
-                               mah:TextBoxHelper.ButtonContent="s"
-                               mah:TextBoxHelper.Watermark="Enter hot key"
-                               AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
-                               HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-            </StackPanel>
-        </GroupBox>
-    </Grid>
+                    <TextBlock Style="{StaticResource Caption}"
+                               Text=".Win8, which shows the password while the eye is held down"
+                               ToolTip="MahApps.Styles.PasswordBox.Win8" />
+                    <PasswordBox mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Password"
+                                 Password="Hold the eye"
+                                 Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
 
+                    <TextBlock Style="{StaticResource Caption}"
+                               Text=".Revealed, which leaves the eye switched on until it is switched off"
+                               ToolTip="MahApps.Styles.PasswordBox.Revealed" />
+                    <PasswordBox mah:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.HasText), Mode=OneWay}"
+                                 mah:TextBoxHelper.Watermark="Password"
+                                 Password="Click the eye"
+                                 Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="PasswordBoxHelper.CapsLockIcon and CapsLockWarningToolTip, so switch the caps lock on" />
+                    <PasswordBox mah:PasswordBoxHelper.CapsLockIcon="!"
+                                 mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                                 mah:TextBoxHelper.ButtonContent="&#xE10B;"
+                                 mah:TextBoxHelper.ButtonFontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                 mah:TextBoxHelper.Watermark="Password">
+                        <mah:PasswordBoxHelper.CapsLockWarningToolTip>
+                            <TextBlock>
+                                <Run Text="A warning of my own to say that" />
+                                <Run Foreground="Red"
+                                     Text="CAPS LOCK"
+                                     TextDecorations="Underline" />
+                                <Run Text="is on" />
+                            </TextBlock>
+                        </mah:PasswordBoxHelper.CapsLockWarningToolTip>
+                    </PasswordBox>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="SelectAllOnFocus, and a box that is off" />
+                    <PasswordBox mah:TextBoxHelper.SelectAllOnFocus="True" Password="All of it on arrival" />
+                    <PasswordBox Margin="0 6 0 0"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 IsEnabled="False"
+                                 Password="Password" />
+                </StackPanel>
+            </GroupBox>
+
+            <!--  RichTextBox  -->
+            <GroupBox Header="RichTextBox" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource FirstCaption}"
+                               Text="RichTextBox"
+                               ToolTip="MahApps.Styles.RichTextBox" />
+                    <RichTextBox ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <FlowDocument PageWidth="NaN">
+                            <Paragraph>A document in a box</Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="Watermark and ClearTextButton work here as well" />
+                    <RichTextBox mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Type something in"
+                                 IsDocumentEnabled="True"
+                                 SpellCheck.IsEnabled="True" />
+
+                    <TextBlock Style="{StaticResource Caption}" Text="A hyperlink inside, read only, and one that is off" />
+                    <RichTextBox Height="70"
+                                 IsDocumentEnabled="True"
+                                 IsReadOnly="True">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                    <Run Text="MahApps.Metro" />
+                                </Hyperlink>
+                                <LineBreak />
+                                <Run Text="Read only, and the link still works." />
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <RichTextBox Height="70"
+                                 Margin="0 6 0 0"
+                                 IsDocumentEnabled="True"
+                                 IsEnabled="False">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="Disabled, and the whole document with it." />
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </StackPanel>
+            </GroupBox>
+
+            <!--  HotKeyBox  -->
+            <GroupBox Header="HotKeyBox" Style="{StaticResource Card}">
+                <AdornerDecorator>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource FirstCaption}" Text="A box that takes a key combination instead of text" />
+                        <mah:HotKeyBox mah:TextBoxHelper.ClearTextButton="True"
+                                       mah:TextBoxHelper.Watermark="Press a combination"
+                                       AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
+                                       HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+                        <CheckBox x:Name="ModifierKeysRequired"
+                                  Margin="0 8 0 0"
+                                  Content="AreModifierKeysRequired" />
+
+                        <TextBlock Style="{StaticResource Caption}" Text="Shift and D together is the one this demo turns down, so that the validation has something to show" />
+                        <mah:HotKeyBox mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"
+                                       mah:TextBoxHelper.ButtonContent="&#xE713;"
+                                       mah:TextBoxHelper.ButtonFontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                       mah:TextBoxHelper.Watermark="Try shift and D"
+                                       AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
+                                       HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+                        <TextBlock Style="{StaticResource Caption}" Text="And one that is off" />
+                        <mah:HotKeyBox HotKey="{Binding HotKey, Mode=OneWay}" IsEnabled="False" />
+                    </StackPanel>
+                </AdornerDecorator>
+            </GroupBox>
+
+            <!--  validation  -->
+            <GroupBox Header="Validation" Style="{StaticResource Card}">
+                <AdornerDecorator>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource FirstCaption}" Text="A number that has to be greater than ten, with the error on the way out" />
+                        <TextBox mah:TextBoxHelper.Watermark="Greater than ten" Text="{Binding IntegerGreater10Property, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+                        <TextBlock Style="{StaticResource Caption}" Text="ValidationHelper.AlwaysShowValidationError, which keeps the error up instead of waiting for the mouse" />
+                        <TextBox mah:TextBoxHelper.Watermark="Greater than ten"
+                                 mah:ValidationHelper.AlwaysShowValidationError="True"
+                                 Text="{Binding IntegerGreater10Property, ValidatesOnExceptions=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+                        <TextBlock Style="{StaticResource Caption}" Text="And what a box with an error in it looks like once it is off" />
+                        <TextBox mah:TextBoxHelper.Watermark="Greater than ten"
+                                 IsEnabled="False"
+                                 Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                    </StackPanel>
+                </AdornerDecorator>
+            </GroupBox>
+
+        </WrapPanel>
+    </StackPanel>
 </UserControl>

@@ -401,7 +401,15 @@
 
     <!--  "Chromeless" style for buttons  -->
     <ControlTemplate x:Key="MahApps.Templates.Button.Chromeless" TargetType="{x:Type ButtonBase}">
-        <Grid Background="{TemplateBinding Background}">
+        <Grid x:Name="ContentGrid" Background="{TemplateBinding Background}">
+            <Grid.Clip>
+                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                    <Binding Path="(mah:ControlsHelper.CornerRadius)" RelativeSource="{RelativeSource TemplatedParent}" />
+                </MultiBinding>
+            </Grid.Clip>
             <ContentPresenter x:Name="PART_ContentPresenter"
                               Margin="{TemplateBinding Padding}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -429,6 +437,20 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--
+        The delete button of the Win10 and the Fluent text box. It brings no chrome of its own, since
+        what it looks like comes from TextBoxHelper.ButtonTemplate, and its glyph takes the colour of
+        the text in the box it stands in: a UWP box paints that glyph black because the box is white,
+        and the box is white while it has the caret. Before that it is the colour of the theme, and so
+        is the glyph. Anywhere but in a text box the colour of the chromeless button is what is left.
+    -->
+    <Style x:Key="MahApps.Styles.Button.TextControl.Delete"
+           BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FontStyle" Value="Normal" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Foreground, Mode=OneWay}" />
     </Style>
 
     <!--  base button style for min, max and close window buttons  -->
