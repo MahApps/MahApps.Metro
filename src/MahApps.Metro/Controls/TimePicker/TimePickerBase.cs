@@ -507,6 +507,40 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(SelectedTimeFormatProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="SelectedDateTimeFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedDateTimeFormatProperty
+            = DependencyProperty.Register(nameof(SelectedDateTimeFormat),
+                                          typeof(string),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata(null, OnSelectedDateTimeFormatChanged));
+
+        private static void OnSelectedDateTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TimePickerBase timePartPickerBase)
+            {
+                timePartPickerBase.WriteValueToTextBox();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the format the field writes its value in and reads it back from, for example
+        /// <c>dd.MM.yyyy HH:mm</c>. Set, it has the first word over <see cref="SelectedTimeFormat"/>
+        /// and, on a <see cref="DateTimePicker"/>, over its <c>SelectedDateFormat</c>; left alone,
+        /// those two go on saying what the field looks like.
+        /// </summary>
+        /// <remarks>
+        /// The drop-down is untouched by it: what the hour, minute and second lists read is
+        /// <see cref="HoursItemStringFormat"/> and the two beside it. Typing stays as forgiving as it
+        /// is without a format, because anything the culture can make sense of is still accepted.
+        /// </remarks>
+        [Category("Appearance")]
+        [DefaultValue(null)]
+        public string? SelectedDateTimeFormat
+        {
+            get => (string?)this.GetValue(SelectedDateTimeFormatProperty);
+            set => this.SetValue(SelectedDateTimeFormatProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="HoursItemStringFormat"/> dependency property.</summary>
         public static readonly DependencyProperty HoursItemStringFormatProperty
             = DependencyProperty.Register(nameof(HoursItemStringFormat),
@@ -739,9 +773,33 @@ namespace MahApps.Metro.Controls
 
         protected virtual string? GetValueForTextBox()
         {
-            var format = this.SelectedTimeFormat == TimePickerFormat.Long ? string.Intern(this.SpecificCultureInfo.DateTimeFormat.LongTimePattern) : string.Intern(this.SpecificCultureInfo.DateTimeFormat.ShortTimePattern);
-            var valueForTextBox = this.SelectedDateTime?.ToString(string.Intern(format), this.SpecificCultureInfo);
+            var format = this.SelectedDateTimeFormat;
+            if (string.IsNullOrEmpty(format))
+            {
+                format = this.SelectedTimeFormat == TimePickerFormat.Long ? string.Intern(this.SpecificCultureInfo.DateTimeFormat.LongTimePattern) : string.Intern(this.SpecificCultureInfo.DateTimeFormat.ShortTimePattern);
+            }
+
+            var valueForTextBox = this.SelectedDateTime?.ToString(format, this.SpecificCultureInfo);
             return valueForTextBox;
+        }
+
+        /// <summary>
+        /// Reads a date and a time out of whatever is in the field. A <see cref="SelectedDateTimeFormat"/>
+        /// is tried first, so a value the field wrote itself always reads back; what the culture makes
+        /// of the text is the fallback, so a format costs nothing in what may be typed.
+        /// </summary>
+        protected bool TryParseValueFromTextBox(DateTimeStyles styles, out DateTime result)
+        {
+            var text = this.textBox?.Text;
+
+            var format = this.SelectedDateTimeFormat;
+            if (!string.IsNullOrEmpty(format)
+                && DateTime.TryParseExact(text, format, this.SpecificCultureInfo, styles, out result))
+            {
+                return true;
+            }
+
+            return DateTime.TryParse(text, this.SpecificCultureInfo, styles, out result);
         }
 
         protected virtual void ClockSelectedTimeChanged()

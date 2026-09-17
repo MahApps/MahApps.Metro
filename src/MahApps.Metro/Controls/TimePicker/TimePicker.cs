@@ -56,7 +56,7 @@ namespace MahApps.Metro.Controls
                                                       | DateTimeStyles.AssumeLocal
                                                       | DateTimeStyles.NoCurrentDateDefault;
 
-            if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, dateTimeParseStyle, out var timeSpan))
+            if (this.TryParseValueFromTextBox(dateTimeParseStyle, out var timeSpan))
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan.TimeOfDay);
             }
