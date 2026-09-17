@@ -3,10 +3,6 @@
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal" TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>

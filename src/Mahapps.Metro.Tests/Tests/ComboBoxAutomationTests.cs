@@ -23,13 +23,11 @@ namespace MahApps.Metro.Tests.Tests
     public class ComboBoxAutomationTests
     {
         private TestWindow? window;
-        private ResourceDictionary? dictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.dictionary = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml", UriKind.Absolute) };
         }
 
         [OneTimeTearDown]
@@ -46,7 +44,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window, Is.Not.Null);
 
             var comboBox = new ComboBox { Width = 200, IsEditable = true };
-            comboBox.SetValue(FrameworkElement.StyleProperty, this.dictionary!["MahApps.Styles.ComboBox"]);
+            comboBox.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.ComboBox"));
             comboBox.Items.Add("Beam me up...");
             AutomationProperties.SetName(comboBox, "where to");
 

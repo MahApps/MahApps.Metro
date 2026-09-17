@@ -416,70 +416,70 @@
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
 
-    <!--  Resources for MahApps.Styles.TextBox.Fluent  -->
-    <Color x:Key="MahApps.Colors.Fluent.ControlFillDefault">{{MahApps.Colors.Fluent.ControlFillDefault}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.ControlFillSecondary">{{MahApps.Colors.Fluent.ControlFillSecondary}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.ControlFillInputActive">{{MahApps.Colors.Fluent.ControlFillInputActive}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.ControlFillDisabled">{{MahApps.Colors.Fluent.ControlFillDisabled}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.ControlStrokeDefault">{{MahApps.Colors.Fluent.ControlStrokeDefault}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.ControlStrokeSecondary">{{MahApps.Colors.Fluent.ControlStrokeSecondary}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.TextPrimary">{{MahApps.Colors.Fluent.TextPrimary}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.TextSecondary">{{MahApps.Colors.Fluent.TextSecondary}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.TextTertiary">{{MahApps.Colors.Fluent.TextTertiary}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.TextDisabled">{{MahApps.Colors.Fluent.TextDisabled}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.SubtleFillSecondary">{{MahApps.Colors.Fluent.SubtleFillSecondary}}</Color>
-    <Color x:Key="MahApps.Colors.Fluent.SubtleFillTertiary">{{MahApps.Colors.Fluent.SubtleFillTertiary}}</Color>
+    <!--  Resources for MahApps.Styles.TextBox.WinUI  -->
+    <Color x:Key="MahApps.Colors.WinUI.ControlFillDefault">{{MahApps.Colors.WinUI.ControlFillDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlFillSecondary">{{MahApps.Colors.WinUI.ControlFillSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlFillInputActive">{{MahApps.Colors.WinUI.ControlFillInputActive}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlFillDisabled">{{MahApps.Colors.WinUI.ControlFillDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrokeDefault">{{MahApps.Colors.WinUI.ControlStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrokeSecondary">{{MahApps.Colors.WinUI.ControlStrokeSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.TextPrimary">{{MahApps.Colors.WinUI.TextPrimary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.TextSecondary">{{MahApps.Colors.WinUI.TextSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.TextTertiary">{{MahApps.Colors.WinUI.TextTertiary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.TextDisabled">{{MahApps.Colors.WinUI.TextDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SubtleFillSecondary">{{MahApps.Colors.WinUI.SubtleFillSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SubtleFillTertiary">{{MahApps.Colors.WinUI.SubtleFillTertiary}}</Color>
 
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.Background" Color="{StaticResource MahApps.Colors.Fluent.ControlFillDefault}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.Foreground" Color="{StaticResource MahApps.Colors.Fluent.TextPrimary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Background" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
 
     <!--
-        The border of a Fluent control is drawn a little stronger along its bottom edge, and one
+        The border of a WinUI control is drawn a little stronger along its bottom edge, and one
         brush paints the whole border of an element, so this one carries both: the stroke colour
         everywhere but the last tenth of the way down.
     -->
-    <LinearGradientBrush x:Key="MahApps.Brushes.TextControl.Fluent.BorderBrush"
+    <LinearGradientBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrush"
                          StartPoint="0,0"
                          EndPoint="0,1"
                          options:Freeze="True">
-        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeSecondary}" />
-        <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeSecondary}" />
+        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
+        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
+        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" />
+        <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" />
     </LinearGradientBrush>
 
     <!--  and with the caret in the box, that edge is the accent  -->
-    <LinearGradientBrush x:Key="MahApps.Brushes.TextControl.Fluent.BorderBrushFocused"
+    <LinearGradientBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushFocused"
                          StartPoint="0,0"
                          EndPoint="0,1"
                          options:Freeze="True">
-        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeDefault}" />
+        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
+        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
         <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.SystemAccent}" />
         <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.SystemAccent}" />
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.BorderBrushDisabled" Color="{StaticResource MahApps.Colors.Fluent.ControlStrokeDefault}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.BackgroundPointerOver" Color="{StaticResource MahApps.Colors.Fluent.ControlFillSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.BackgroundFocused" Color="{StaticResource MahApps.Colors.Fluent.ControlFillInputActive}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.BackgroundDisabled" Color="{StaticResource MahApps.Colors.Fluent.ControlFillDisabled}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ForegroundPointerOver" Color="{StaticResource MahApps.Colors.Fluent.TextPrimary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ForegroundFocused" Color="{StaticResource MahApps.Colors.Fluent.TextPrimary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ForegroundDisabled" Color="{StaticResource MahApps.Colors.Fluent.TextDisabled}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.PlaceholderForeground" Color="{StaticResource MahApps.Colors.Fluent.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.PlaceholderForegroundPointerOver" Color="{StaticResource MahApps.Colors.Fluent.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.PlaceholderForegroundFocused" Color="{StaticResource MahApps.Colors.Fluent.TextTertiary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.PlaceholderForegroundDisabled" Color="{StaticResource MahApps.Colors.Fluent.TextDisabled}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ButtonBackgroundPointerOver" Color="{StaticResource MahApps.Colors.Fluent.SubtleFillSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ButtonBackgroundPressed" Color="{StaticResource MahApps.Colors.Fluent.SubtleFillTertiary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ButtonForeground" Color="{StaticResource MahApps.Colors.Fluent.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ButtonForegroundPointerOver" Color="{StaticResource MahApps.Colors.Fluent.TextPrimary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.Fluent.ButtonForegroundPressed" Color="{StaticResource MahApps.Colors.Fluent.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.ControlFillSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BackgroundFocused" Color="{StaticResource MahApps.Colors.WinUI.ControlFillInputActive}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BackgroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForeground" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForeground" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
 
-    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Fluent.ButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Fluent.ButtonBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Fluent.ButtonBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Fluent.ButtonBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
 
     <!--  Resources for MahApps.Styles.Button.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Button.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />

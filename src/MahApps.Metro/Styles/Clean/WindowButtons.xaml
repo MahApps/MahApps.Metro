@@ -3,7 +3,7 @@
                     xmlns:controlzex="urn:controlzex">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Styles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  light button style for min, max and close window buttons  -->

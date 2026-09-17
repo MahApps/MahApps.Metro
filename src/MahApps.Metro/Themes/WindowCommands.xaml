@@ -145,7 +145,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.WindowCommands.Overflow" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -192,7 +192,7 @@
                           Foreground="{TemplateBinding Foreground}"
                           IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
-                          Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}"
+                          Style="{StaticResource MahApps.Styles.ToggleButton.WindowCommands.Overflow}"
                           Visibility="Collapsed">
                 <Popup x:Name="OverflowPopup"
                        AllowsTransparency="true"

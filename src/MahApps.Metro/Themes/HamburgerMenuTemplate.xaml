@@ -8,14 +8,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="po">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <system:Double x:Key="HamburgerMenuSelectionIndicatorThemeWidth">6</system:Double>
     <system:Double x:Key="HamburgerMenuSelectionIndicatorThemeHeight">24</system:Double>
 

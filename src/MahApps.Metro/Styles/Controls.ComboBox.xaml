@@ -5,10 +5,6 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Thickness x:Key="ComboBoxBorderThemeThickness">1</Thickness>
     <CornerRadius x:Key="ComboBoxPopupBorderThemeCornerRadius">0</CornerRadius>
     <Thickness x:Key="ComboBoxPopupBorderThemeThickness">1</Thickness>

@@ -15,13 +15,13 @@ using NUnit.Framework;
 namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
-    /// The Fluent text box takes its colours from the Fluent set and not from the Win10 one it
+    /// The WinUI text box takes its colours from the WinUI set and not from the Win10 one it
     /// inherits its template from. These tests hold the wiring rather than the palette: what they
     /// compare against are the colour resources themselves, so a value may be corrected in the
     /// generator parameters without a test having to be edited.
     /// </summary>
     [TestFixture]
-    public class TextBoxFluentColourTests
+    public class TextBoxWinUIColourTests
     {
         private TestWindow? window;
 
@@ -39,20 +39,20 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("A box nobody has touched: the Fluent fill, the Fluent text and a border that is drawn a little stronger along its bottom edge.")]
-        public void AnIdleBoxCarriesTheFluentFill()
+        [Description("A box nobody has touched: the WinUI fill, the WinUI text and a border that is drawn a little stronger along its bottom edge.")]
+        public void AnIdleBoxCarriesTheWinUIFill()
         {
             var box = this.Show();
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlFillDefault")), "the background of an idle box");
-                    Assert.That(ColourOf(box.Foreground), Is.EqualTo(Colour("MahApps.Colors.Fluent.TextPrimary")), "the text of an idle box");
-                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.Fluent.TextSecondary")), "the watermark of an idle box");
+                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlFillDefault")), "the background of an idle box");
+                    Assert.That(ColourOf(box.Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextPrimary")), "the text of an idle box");
+                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextSecondary")), "the watermark of an idle box");
 
                     var stops = Stops(box.BorderBrush);
-                    Assert.That(stops.First(), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlStrokeDefault")), "the border above");
-                    Assert.That(stops.Last(), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlStrokeSecondary")), "and along the bottom edge");
+                    Assert.That(stops.First(), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "the border above");
+                    Assert.That(stops.Last(), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeSecondary")), "and along the bottom edge");
                 });
         }
 
@@ -73,9 +73,9 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlFillInputActive")), "the background of a focused box");
+                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlFillInputActive")), "the background of a focused box");
                     Assert.That(Stops(border.BorderBrush).Last(), Is.EqualTo(Colour("MahApps.Colors.SystemAccent")), "the bottom edge of a focused box");
-                    Assert.That(Stops(border.BorderBrush).First(), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlStrokeDefault")), "while the rest of the border stays what it was");
+                    Assert.That(Stops(border.BorderBrush).First(), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "while the rest of the border stays what it was");
                     Assert.That(border.BorderThickness, Is.EqualTo(new Thickness(1, 1, 1, 2)), "and the line along the bottom is the thick one");
                 });
         }
@@ -91,10 +91,10 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlFillDisabled")), "the background of a box that is off");
-                    Assert.That(ColourOf(box.Foreground), Is.EqualTo(Colour("MahApps.Colors.Fluent.TextDisabled")), "the text of a box that is off");
-                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.Fluent.TextDisabled")), "the watermark of a box that is off");
-                    Assert.That(ColourOf(Border(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlStrokeDefault")), "the border of a box that is off");
+                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlFillDisabled")), "the background of a box that is off");
+                    Assert.That(ColourOf(box.Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextDisabled")), "the text of a box that is off");
+                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextDisabled")), "the watermark of a box that is off");
+                    Assert.That(ColourOf(Border(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "the border of a box that is off");
                 });
         }
 
@@ -117,8 +117,8 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlFillDisabled")), "the background of a box that is off");
-                    Assert.That(ColourOf(Border(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.Fluent.ControlStrokeDefault")), "the border of a box that is off");
+                    Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlFillDisabled")), "the background of a box that is off");
+                    Assert.That(ColourOf(Border(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "the border of a box that is off");
                 });
         }
 
@@ -163,7 +163,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var box = new TextBox
                       {
-                          Style = (Style)Application.Current.FindResource("MahApps.Styles.TextBox.Fluent"),
+                          Style = (Style)Application.Current.FindResource("MahApps.Styles.TextBox.WinUI"),
                           Width = 200
                       };
 

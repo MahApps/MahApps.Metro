@@ -1,0 +1,126 @@
+﻿<mah:MetroWindow x:Class="MetroDemo.ExampleWindows.StyleSetsDemo"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="The three style sets"
+                 Width="1000"
+                 Height="720"
+                 Icon="..\mahapps.metro.logo2.ico"
+                 ShowIconOnTitleBar="True"
+                 WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="SetHeader" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.SubHeader}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                <Setter Property="Margin" Value="0 0 0 4" />
+            </Style>
+
+            <Style x:Key="SetCaption" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="0 0 0 16" />
+                <Setter Property="Opacity" Value="0.75" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+            </Style>
+
+            <Style x:Key="Row" TargetType="{x:Type StackPanel}">
+                <Setter Property="Margin" Value="0 0 0 14" />
+            </Style>
+
+            <Style x:Key="RowLabel" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+                <Setter Property="Margin" Value="0 0 0 3" />
+                <Setter Property="Opacity" Value="0.6" />
+            </Style>
+
+            <!--  the same controls in each of the three columns  -->
+            <DataTemplate x:Key="TheSameControls">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="Button" />
+                        <Button Content="Launch" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="TextBox" />
+                        <TextBox mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Type a name"
+                                 Text="Konrad Zuse" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="NumericUpDown" />
+                        <mah:NumericUpDown Value="42" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="CheckBox" />
+                        <CheckBox Content="On" IsChecked="True" />
+                        <CheckBox Content="Off" />
+                        <CheckBox Content="Neither"
+                                  IsChecked="{x:Null}"
+                                  IsThreeState="True" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="RadioButton" />
+                        <RadioButton Content="This one" IsChecked="True" />
+                        <RadioButton Content="Or this one" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="Slider" />
+                        <Slider Maximum="100" Value="42" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ToggleSwitch" />
+                        <mah:ToggleSwitch IsOn="True"
+                                          OffContent="Off"
+                                          OnContent="On" />
+                    </StackPanel>
+                </StackPanel>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  the default set, which is what the window already has  -->
+        <StackPanel Grid.Column="0" Margin="0 0 16 0">
+            <TextBlock Style="{StaticResource SetHeader}" Text="Default" />
+            <TextBlock Style="{StaticResource SetCaption}" Text="Styles/Controls.xaml, the look the library has always drawn." />
+            <ContentControl ContentTemplate="{StaticResource TheSameControls}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="0 0 16 0">
+            <TextBlock Style="{StaticResource SetHeader}" Text="Win10" />
+            <TextBlock Style="{StaticResource SetCaption}" Text="Styles/Win10/Controls.xaml, merged into this column alone." />
+            <ContentControl ContentTemplate="{StaticResource TheSameControls}">
+                <ContentControl.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </ContentControl.Resources>
+            </ContentControl>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2">
+            <TextBlock Style="{StaticResource SetHeader}" Text="WinUI" />
+            <TextBlock Style="{StaticResource SetCaption}" Text="Styles/WinUI/Controls.xaml, which stands on the Win10 one." />
+            <ContentControl ContentTemplate="{StaticResource TheSameControls}">
+                <ContentControl.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </ContentControl.Resources>
+            </ContentControl>
+        </StackPanel>
+
+    </Grid>
+</mah:MetroWindow>

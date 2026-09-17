@@ -24,13 +24,11 @@ namespace MahApps.Metro.Tests.Tests
     public class ComboBoxClipTests
     {
         private TestWindow? window;
-        private ResourceDictionary? dictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.dictionary = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml", UriKind.Absolute) };
         }
 
         [OneTimeTearDown]
@@ -45,7 +43,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window, Is.Not.Null);
 
             var comboBox = new ComboBox { Width = 200, Height = 32 };
-            comboBox.SetValue(FrameworkElement.StyleProperty, this.dictionary!["MahApps.Styles.ComboBox"]);
+            comboBox.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.ComboBox"));
             comboBox.Items.Add("Beam me up...");
             comboBox.Items.Add("Warp nine");
             ControlsHelper.SetCornerRadius(comboBox, new CornerRadius(12));
@@ -66,7 +64,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window, Is.Not.Null);
 
             var item = new ComboBoxItem { Width = 200, Height = 32, Content = "Beam me up..." };
-            item.SetValue(FrameworkElement.StyleProperty, this.dictionary!["MahApps.Styles.ComboBoxItem"]);
+            item.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.ComboBoxItem"));
             ControlsHelper.SetCornerRadius(item, new CornerRadius(8));
 
             this.window!.Content = item;

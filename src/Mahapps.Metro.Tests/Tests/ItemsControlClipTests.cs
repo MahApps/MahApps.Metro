@@ -22,17 +22,11 @@ namespace MahApps.Metro.Tests.Tests
     public class ItemsControlClipTests
     {
         private TestWindow? window;
-        private ResourceDictionary? listBoxDictionary;
-        private ResourceDictionary? listViewDictionary;
-        private ResourceDictionary? treeViewDictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.listBoxDictionary = Load("Controls.ListBox.xaml");
-            this.listViewDictionary = Load("Controls.ListView.xaml");
-            this.treeViewDictionary = Load("Controls.TreeView.xaml");
         }
 
         [OneTimeTearDown]
@@ -40,11 +34,6 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window?.Close();
             this.window = null;
-        }
-
-        private static ResourceDictionary Load(string fileName)
-        {
-            return new ResourceDictionary { Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/{fileName}", UriKind.Absolute) };
         }
 
         private T Show<T>(T element)
@@ -60,12 +49,12 @@ namespace MahApps.Metro.Tests.Tests
             return element;
         }
 
-        private T ShowItem<T>(T item, ResourceDictionary dictionary, string styleKey)
+        private T ShowItem<T>(T item, string styleKey)
             where T : Control
         {
             item.Width = 200;
             item.Height = 32;
-            item.SetValue(FrameworkElement.StyleProperty, dictionary[styleKey]);
+            item.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource(styleKey));
             ControlsHelper.SetCornerRadius(item, new CornerRadius(12));
 
             return this.Show(item);
@@ -90,13 +79,13 @@ namespace MahApps.Metro.Tests.Tests
         /// The list itself rounds its frame, and the items paint an opaque background right up against
         /// it, so without a clip the first and the last item bite the corners out of the arc.
         /// </summary>
-        private T ShowList<T>(T list, ResourceDictionary dictionary, string styleKey)
+        private T ShowList<T>(T list, string styleKey)
             where T : ItemsControl
         {
             list.Width = 190;
             list.Height = 120;
             list.BorderThickness = new Thickness(1);
-            list.SetValue(FrameworkElement.StyleProperty, dictionary[styleKey]);
+            list.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource(styleKey));
             ControlsHelper.SetCornerRadius(list, new CornerRadius(8));
 
             return this.Show(list);
@@ -108,7 +97,7 @@ namespace MahApps.Metro.Tests.Tests
             var listBox = new ListBox();
             listBox.Items.Add(new ListBoxItem { Content = "Ada Lovelace" });
             listBox.Items.Add(new ListBoxItem { Content = "Grace Hopper" });
-            this.ShowList(listBox, this.listBoxDictionary!, "MahApps.Styles.ListBox");
+            this.ShowList(listBox, "MahApps.Styles.ListBox");
 
             var content = RootContent(listBox);
 
@@ -122,7 +111,7 @@ namespace MahApps.Metro.Tests.Tests
             var listView = new ListView();
             listView.Items.Add(new ListViewItem { Content = "Ada Lovelace" });
             listView.Items.Add(new ListViewItem { Content = "Grace Hopper" });
-            this.ShowList(listView, this.listViewDictionary!, "MahApps.Styles.ListView");
+            this.ShowList(listView, "MahApps.Styles.ListView");
 
             var content = RootContent(listView);
 
@@ -136,7 +125,7 @@ namespace MahApps.Metro.Tests.Tests
             var treeView = new TreeView();
             treeView.Items.Add(new TreeViewItem { Header = "Ada Lovelace" });
             treeView.Items.Add(new TreeViewItem { Header = "Grace Hopper" });
-            this.ShowList(treeView, this.treeViewDictionary!, "MahApps.Styles.TreeView");
+            this.ShowList(treeView, "MahApps.Styles.TreeView");
 
             var content = RootContent(treeView);
 
@@ -147,7 +136,7 @@ namespace MahApps.Metro.Tests.Tests
         [Test]
         public void AListBoxItemShouldClipItsContentToItsBorder()
         {
-            var item = this.ShowItem(new ListBoxItem { Content = "Beam me up..." }, this.listBoxDictionary!, "MahApps.Styles.ListBoxItem");
+            var item = this.ShowItem(new ListBoxItem { Content = "Beam me up..." }, "MahApps.Styles.ListBoxItem");
 
             var grid = ClipAssert.ContentGrid(item);
 
@@ -158,7 +147,7 @@ namespace MahApps.Metro.Tests.Tests
         [Test]
         public void AListBoxItemWithoutACornerRadiusShouldKeepTheWholeRectangle()
         {
-            var item = this.ShowItem(new ListBoxItem { Content = "Beam me up..." }, this.listBoxDictionary!, "MahApps.Styles.ListBoxItem");
+            var item = this.ShowItem(new ListBoxItem { Content = "Beam me up..." }, "MahApps.Styles.ListBoxItem");
 
             ControlsHelper.SetCornerRadius(item, new CornerRadius(0));
             item.UpdateLayout();
@@ -169,7 +158,7 @@ namespace MahApps.Metro.Tests.Tests
         [Test]
         public void AListViewItemShouldClipItsContentToItsBorder()
         {
-            var item = this.ShowItem(new ListViewItem { Content = "Beam me up..." }, this.listViewDictionary!, "MahApps.Styles.ListViewItem");
+            var item = this.ShowItem(new ListViewItem { Content = "Beam me up..." }, "MahApps.Styles.ListViewItem");
 
             var grid = ClipAssert.ContentGrid(item);
 
@@ -180,7 +169,7 @@ namespace MahApps.Metro.Tests.Tests
         [Test]
         public void ANonSelectableListViewItemShouldClipItsContentToItsBorder()
         {
-            var item = this.ShowItem(new ListViewItem { Content = "Beam me up..." }, this.listViewDictionary!, "MahApps.Styles.ListViewItem.NonSelectable");
+            var item = this.ShowItem(new ListViewItem { Content = "Beam me up..." }, "MahApps.Styles.ListViewItem.NonSelectable");
 
             var grid = ClipAssert.ContentGrid(item);
 
@@ -191,7 +180,7 @@ namespace MahApps.Metro.Tests.Tests
         [Test]
         public void ATreeViewItemShouldClipItsContentToItsBorder()
         {
-            var item = this.ShowItem(new TreeViewItem { Header = "Beam me up..." }, this.treeViewDictionary!, "MahApps.Styles.TreeViewItem");
+            var item = this.ShowItem(new TreeViewItem { Header = "Beam me up..." }, "MahApps.Styles.TreeViewItem");
 
             var grid = ClipAssert.ContentGrid(item);
 
@@ -207,8 +196,8 @@ namespace MahApps.Metro.Tests.Tests
             parent.Items.Add(child);
 
             var tree = new TreeView { Width = 240, Height = 160 };
-            tree.SetValue(FrameworkElement.StyleProperty, this.treeViewDictionary!["MahApps.Styles.TreeView"]);
-            tree.ItemContainerStyle = (Style)this.treeViewDictionary["MahApps.Styles.TreeViewItem"];
+            tree.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.TreeView"));
+            tree.ItemContainerStyle = (Style)Application.Current.FindResource("MahApps.Styles.TreeViewItem");
             tree.Items.Add(parent);
 
             this.Show(tree);

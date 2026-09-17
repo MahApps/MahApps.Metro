@@ -35,13 +35,11 @@ namespace MahApps.Metro.Tests.Tests
             };
 
         private TestWindow? window;
-        private ResourceDictionary? dictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.dictionary = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml", UriKind.Absolute) };
         }
 
         [OneTimeTearDown]
@@ -59,7 +57,7 @@ namespace MahApps.Metro.Tests.Tests
             button.Width = 200;
             button.Height = 48;
             button.Content = "Beam me up...";
-            button.SetValue(FrameworkElement.StyleProperty, this.dictionary![styleKey]);
+            button.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource(styleKey));
             ControlsHelper.SetCornerRadius(button, new CornerRadius(12));
 
             this.window!.Content = button;
