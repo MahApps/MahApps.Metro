@@ -101,15 +101,23 @@ namespace MahApps.Metro.Tests.Tests
             ClipAssert.Pump();
         }
 
-        private void Type(string text)
+        /// <summary>
+        /// Puts the user in the box and gives up on the test if that did not work. A build agent hands
+        /// the keyboard to one window at a time, and it can take it away again between two steps, so
+        /// every step that only means anything with somebody standing in the box says so here.
+        /// </summary>
+        private void TheUserIsInTheBox()
         {
             this.editableTextBox.Focus();
             Keyboard.Focus(this.editableTextBox);
             ClipAssert.Pump();
 
-            // A build agent does not always hand out the keyboard focus, and a box that does not have
-            // it has nobody typing in it: what follows would be measuring the wrong thing.
             Assume.That(this.box.IsKeyboardFocusWithin, Is.True);
+        }
+
+        private void Type(string text)
+        {
+            this.TheUserIsInTheBox();
 
             this.editableTextBox.Text = text;
             this.editableTextBox.CaretIndex = text.Length;
@@ -122,13 +130,7 @@ namespace MahApps.Metro.Tests.Tests
         /// </summary>
         private void TypeKeys(string text)
         {
-            this.editableTextBox.Focus();
-            Keyboard.Focus(this.editableTextBox);
-            ClipAssert.Pump();
-
-            // A build agent does not always hand out the keyboard focus, and a box that does not have
-            // it has nobody typing in it: what follows would be measuring the wrong thing.
-            Assume.That(this.box.IsKeyboardFocusWithin, Is.True);
+            this.TheUserIsInTheBox();
 
             foreach (var character in text)
             {
@@ -251,6 +253,10 @@ namespace MahApps.Metro.Tests.Tests
             ClipAssert.Pump();
 
             Assert.That(this.box.IsDropDownOpen, Is.False, "nothing to show yet");
+
+            // the answer arrives while the user is still standing in the box, which is the only case
+            // where a list has any business coming up on its own
+            this.TheUserIsInTheBox();
 
             this.suggestions.Add("Mars");
             ClipAssert.Pump();
