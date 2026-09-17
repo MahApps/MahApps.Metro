@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -115,6 +115,19 @@ namespace MahApps.Metro.Tests.Tests
             Assume.That(this.box.IsKeyboardFocusWithin, Is.True);
         }
 
+        /// <summary>
+        /// And still standing in it once the typing is through. A popup holds the mouse capture while
+        /// it is up, so a window that loses the desktop mid-keystroke loses the capture as well and
+        /// the list goes down with it. Measured on a window handed the foreground right after a
+        /// keystroke: the text arrives as the user's, the suggestion is there, the list opens, and the
+        /// next turn of the message loop takes it down again. None of that is about the box.
+        /// </summary>
+        private void TheUserIsStillInTheBox()
+        {
+            Assume.That(this.window.IsActive, Is.True, "the desktop went to another window while the user was typing");
+            Assume.That(this.box.IsKeyboardFocusWithin, Is.True);
+        }
+
         private void Type(string text)
         {
             this.TheUserIsInTheBox();
@@ -122,6 +135,8 @@ namespace MahApps.Metro.Tests.Tests
             this.editableTextBox.Text = text;
             this.editableTextBox.CaretIndex = text.Length;
             ClipAssert.Pump();
+
+            this.TheUserIsStillInTheBox();
         }
 
         /// <summary>
@@ -143,6 +158,8 @@ namespace MahApps.Metro.Tests.Tests
 
                 ClipAssert.Pump();
             }
+
+            this.TheUserIsStillInTheBox();
         }
 
         /// <summary>
