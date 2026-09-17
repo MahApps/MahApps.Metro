@@ -15,9 +15,11 @@ using NUnit.Framework;
 namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
-    /// GH-4392 and GH-4113: a thumb of a range slider did not stand over the tick its value belongs to,
-    /// and the gap grew along the track. A thumb hangs over the ends of the track by half its width now,
-    /// so its middle is the point the value stands for, and the ticks are drawn over the same track.
+    /// GH-4392, GH-4113 and GH-4324: a thumb of a range slider did not stand over the tick its value
+    /// belongs to, and the gap grew along the track. A thumb hangs over the ends of the track by half
+    /// its width now, so its middle is the point the value stands for, and the ticks are drawn over the
+    /// same track. Read the other way round, which is how GH-4324 came in, a place on the track is
+    /// worth one value and it does not matter which of the two thumbs is dragged onto it.
     /// </summary>
     [TestFixture]
     public class RangeSliderThumbPositionTests
@@ -26,7 +28,13 @@ namespace MahApps.Metro.Tests.Tests
         private const double Lowest = 0;
         private const double Highest = 255;
 
+        // what a pixel of the track is worth, twice over, which is as close as layout rounding lets a
+        // value and the place it stands on come
+        private const double APixelOrTwo = 2d * (Highest - Lowest) / SliderWidth;
+
         private TestWindow? window;
+        private double reportedLower;
+        private double reportedUpper;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
@@ -237,6 +245,79 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(slider.UpperValue, Is.EqualTo(150).Within(0.01), "and the upper one stays where it was put");
         }
 
+        [TestCase(0.05)]
+        [TestCase(0.142857)]
+        [TestCase(0.25)]
+        [TestCase(0.5)]
+        [TestCase(0.9)]
+        [Description("A place on the track is worth one value, and dragging either thumb onto it lands on that value. The two used to disagree by a thumb's width, which is a couple of hundred on a long range.")]
+        public void EitherThumbDraggedOntoAPlaceLandsOnTheSameValue(double fraction)
+        {
+            var slider = this.Show(snapToTicks: false);
+            var place = SliderWidth * fraction;
+            var worth = WhatThePlaceIsWorth(place);
+
+            this.DragOnto(slider, "PART_RightThumb", place);
+            var upper = this.reportedUpper;
+
+            this.DragOnto(slider, "PART_LeftThumb", place);
+            var lower = this.reportedLower;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(upper, Is.EqualTo(worth).Within(APixelOrTwo), $"the upper value came to {upper:0.0} where the place it stands on is worth {worth:0.0}");
+                    Assert.That(lower, Is.EqualTo(worth).Within(APixelOrTwo), $"the lower value came to {lower:0.0} where the place it stands on is worth {worth:0.0}");
+                });
+        }
+
+        [Test]
+        [Description("A mouse reports a drag in steps, and the value stays under the mouse over all of them instead of losing a little on every one.")]
+        public void ALongDragStaysUnderTheMouse()
+        {
+            var slider = this.Show(snapToTicks: false);
+
+            slider.LowerValue = Lowest;
+            slider.UpperValue = Highest;
+            this.Settle();
+
+            var thumb = PartOf(slider, "PART_RightThumb");
+
+            thumb.RaiseEvent(new DragStartedEventArgs(0, 0) { RoutedEvent = Thumb.DragStartedEvent, Source = thumb });
+
+            for (var step = 1; step <= 20; step++)
+            {
+                thumb.RaiseEvent(new DragDeltaEventArgs(-15, 0) { RoutedEvent = Thumb.DragDeltaEvent, Source = thumb });
+                this.Settle();
+
+                var worth = WhatThePlaceIsWorth(MiddleOf(thumb, slider));
+
+                Assert.That(this.reportedUpper,
+                            Is.EqualTo(worth).Within(APixelOrTwo),
+                            $"after {step} steps of the mouse the value is {this.reportedUpper:0.0} and the thumb stands on {worth:0.0}");
+            }
+
+            thumb.RaiseEvent(new DragCompletedEventArgs(-300, 0, false) { RoutedEvent = Thumb.DragCompletedEvent, Source = thumb });
+        }
+
+        /// <summary>
+        /// Opens the range all the way and has the mouse carry one thumb onto a place on the track.
+        /// What it landed on is in <see cref="reportedLower"/> and <see cref="reportedUpper"/>, the
+        /// values the range slider hands over in its own event, which is where GH-4324 read them.
+        /// </summary>
+        private void DragOnto(RangeSlider slider, string part, double place)
+        {
+            slider.LowerValue = Lowest;
+            slider.UpperValue = Highest;
+            this.Settle();
+
+            var thumb = PartOf(slider, part);
+
+            Drag(thumb, place - MiddleOf(thumb, slider));
+            this.Settle();
+
+            Assume.That(MiddleOf(thumb, slider), Is.EqualTo(place).Within(1), "the mouse should have taken the thumb where it was going");
+        }
+
         private static void DragBy(Thumb thumb, Orientation orientation, params double[] steps)
         {
             if (orientation == Orientation.Horizontal)
@@ -282,6 +363,14 @@ namespace MahApps.Metro.Tests.Tests
             return SliderWidth * ratio;
         }
 
+        /// <summary>
+        /// And the same the other way round: what the value at a place on the track is.
+        /// </summary>
+        private static double WhatThePlaceIsWorth(double place)
+        {
+            return Lowest + ((Highest - Lowest) * place / SliderWidth);
+        }
+
         private static double MiddleOf(FrameworkElement thumb, FrameworkElement slider)
         {
             var origin = thumb.TransformToAncestor(slider).Transform(new Point(0, 0));
@@ -300,7 +389,7 @@ namespace MahApps.Metro.Tests.Tests
             return thumb;
         }
 
-        private RangeSlider Show(Orientation orientation = Orientation.Horizontal)
+        private RangeSlider Show(Orientation orientation = Orientation.Horizontal, bool snapToTicks = true)
         {
             Assert.That(this.window, Is.Not.Null);
 
@@ -310,8 +399,16 @@ namespace MahApps.Metro.Tests.Tests
                              Minimum = Lowest,
                              Maximum = Highest,
                              TickFrequency = 5,
-                             IsSnapToTickEnabled = true
+                             IsSnapToTickEnabled = snapToTicks
                          };
+
+            this.reportedLower = double.NaN;
+            this.reportedUpper = double.NaN;
+            slider.RangeSelectionChanged += (_, e) =>
+                {
+                    this.reportedLower = e.NewLowerValue;
+                    this.reportedUpper = e.NewUpperValue;
+                };
 
             if (orientation == Orientation.Horizontal)
             {
