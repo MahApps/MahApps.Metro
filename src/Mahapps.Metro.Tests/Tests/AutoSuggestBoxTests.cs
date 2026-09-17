@@ -116,15 +116,17 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
-        /// And still standing in it once the typing is through. A popup holds the mouse capture while
-        /// it is up, so a window that loses the desktop mid-keystroke loses the capture as well and
-        /// the list goes down with it. Measured on a window handed the foreground right after a
-        /// keystroke: the text arrives as the user's, the suggestion is there, the list opens, and the
-        /// next turn of the message loop takes it down again. None of that is about the box.
+        /// And still standing in it, with this window still holding the desktop. A popup holds the
+        /// mouse capture while it is up, so a window that loses the foreground loses the capture as
+        /// well and the list goes down with it. Measured on a window handed the foreground right
+        /// after a keystroke: the text arrives as the user's, the suggestion is there, the list
+        /// opens, and the next turn of the message loop takes it down again. None of that is about
+        /// the box, so a test that finds the desktop gone says nothing instead of saying something
+        /// wrong. Every step that needs an open list asks first.
         /// </summary>
-        private void TheUserIsStillInTheBox()
+        private void TheDesktopIsStillOurs()
         {
-            Assume.That(this.window.IsActive, Is.True, "the desktop went to another window while the user was typing");
+            Assume.That(this.window.IsActive, Is.True, "the desktop went to another window in the middle of the test");
             Assume.That(this.box.IsKeyboardFocusWithin, Is.True);
         }
 
@@ -136,7 +138,7 @@ namespace MahApps.Metro.Tests.Tests
             this.editableTextBox.CaretIndex = text.Length;
             ClipAssert.Pump();
 
-            this.TheUserIsStillInTheBox();
+            this.TheDesktopIsStillOurs();
         }
 
         /// <summary>
@@ -159,7 +161,7 @@ namespace MahApps.Metro.Tests.Tests
                 ClipAssert.Pump();
             }
 
-            this.TheUserIsStillInTheBox();
+            this.TheDesktopIsStillOurs();
         }
 
         /// <summary>
@@ -169,6 +171,8 @@ namespace MahApps.Metro.Tests.Tests
         /// </summary>
         private void Press(Key key)
         {
+            this.TheDesktopIsStillOurs();
+
             var source = PresentationSource.FromVisual(this.box);
 
             var preview = new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = Keyboard.PreviewKeyDownEvent };
@@ -184,6 +188,8 @@ namespace MahApps.Metro.Tests.Tests
 
         private void Click(string suggestion)
         {
+            this.TheDesktopIsStillOurs();
+
             var container = (ComboBoxItem)this.box.ItemContainerGenerator.ContainerFromItem(suggestion);
             Assert.That(container, Is.Not.Null, "the open list should have a container for every suggestion");
 
