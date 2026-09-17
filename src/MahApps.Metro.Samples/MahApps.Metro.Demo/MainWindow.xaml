@@ -149,6 +149,9 @@
             <Button Click="LauchCleanDemo"
                     Content="Clean"
                     ToolTip="Clean window style demo" />
+            <Button Click="LaunchStyleSetsDemo"
+                    Content="Style sets"
+                    ToolTip="The default, Win10 and WinUI sets side by side" />
             <Button Click="InteropDemo"
                     Content="Interop"
                     ToolTip="The interop demo" />

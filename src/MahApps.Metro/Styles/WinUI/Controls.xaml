@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        The WinUI set, the look Windows 11 draws. It stands on the Windows 10 one rather than on the
+        default one, because the two belong to the same family: a control with no WinUI style of its
+        own sits better in the older of the two than in the Metro look. Every WinUI style that gets
+        written takes one of those places.
+    -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
+
+</ResourceDictionary>

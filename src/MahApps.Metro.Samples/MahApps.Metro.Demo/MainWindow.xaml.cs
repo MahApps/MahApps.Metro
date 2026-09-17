@@ -171,6 +171,11 @@ namespace MetroDemo
             new VSDemo().Show();
         }
 
+        private void LaunchStyleSetsDemo(object sender, RoutedEventArgs e)
+        {
+            new StyleSetsDemo { Owner = this }.Show();
+        }
+
         private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
         {
             if (this.flyoutDemo is null)

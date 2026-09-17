@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+
+    <!--
+        The Windows 10 set, the look UWP gave a control. It stands on the default one and puts its
+        own styles in front of the handful it has, so an application merges this one instead of
+        Styles/Controls.xaml rather than next to it.
+        
+        The slider, the range slider and the window buttons wear their Win10 style by default
+        already, so they are not repeated here. MahApps.Styles.CheckBox.DataGrid.Win10 has no
+        implicit style either, because a DataGrid column takes one through ElementStyle and
+        EditingElementStyle rather than by type.
+    -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource MahApps.Styles.Button.Win10}" TargetType="Button" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Button.Win10}" TargetType="RepeatButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Win10}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDownBase}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:DecimalUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:IntegerUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:LongUpDown}" />
+
+</ResourceDictionary>

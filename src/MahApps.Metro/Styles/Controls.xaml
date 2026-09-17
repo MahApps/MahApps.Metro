@@ -3,6 +3,12 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <!--
+        The set an application gets unless it asks for another: the look the library has always
+        drawn. Styles/Win10/Controls.xaml and Styles/WinUI/Controls.xaml are the other two, and each
+        of them stands on this one, so an application merges one of the three and not two.
+    -->
+
+    <!--
         Generic.xaml already holds this dictionary, since WPF loads it for the assembly either way.
         Merging it here as well costs nothing and lets {StaticResource MahApps.Styles.X} below, and
         the same in an application, find what it is looking for.
