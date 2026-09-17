@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
-    /// A box that takes the caret may change how it looks and not how much room it needs. The Fluent
+    /// A box that takes the caret may change how it looks and not how much room it needs. The WinUI
     /// style marks the focus with a thicker line along its bottom edge, and a border that grows takes
     /// the height of the control with it: measured without layout rounding, which is what hides it at
     /// some scalings, the box grew by a pixel and everything under it moved down with it.
@@ -38,7 +38,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.TextBox")]
         [TestCase("MahApps.Styles.TextBox.Search")]
         [TestCase("MahApps.Styles.TextBox.Win10")]
-        [TestCase("MahApps.Styles.TextBox.Fluent")]
+        [TestCase("MahApps.Styles.TextBox.WinUI")]
         [Description("The caret changes what a box looks like, not how tall it is.")]
         public void ABoxTakingTheCaretMovesNothingUnderIt(string key)
         {

@@ -64,7 +64,7 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "MultiSelectionComboBoxItem", "ContentGrid" },
                 new object[] { "TextBox", "PART_InnerGrid" },
                 new object[] { "TextBox Win10", "PART_InnerGrid" },
-                new object[] { "TextBox Fluent", "PART_InnerGrid" },
+                new object[] { "TextBox WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -105,8 +105,8 @@ namespace MahApps.Metro.Tests.Tests
                 case "TextBox Win10":
                     return Styled(new TextBox { Text = "Beam me up..." }, "MahApps.Styles.TextBox.Win10");
 
-                case "TextBox Fluent":
-                    return Styled(new TextBox { Text = "Beam me up..." }, "MahApps.Styles.TextBox.Fluent");
+                case "TextBox WinUI":
+                    return Styled(new TextBox { Text = "Beam me up..." }, "MahApps.Styles.TextBox.WinUI");
 
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");

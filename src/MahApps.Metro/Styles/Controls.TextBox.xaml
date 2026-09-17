@@ -581,7 +581,7 @@
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="34" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.Fluent"
+    <Style x:Key="MahApps.Styles.TextBox.WinUI"
            BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}"
            TargetType="{x:Type TextBox}">
         <Style.Resources>
@@ -589,7 +589,7 @@
                 The line along the bottom edge is two pixels thick whether the box has the caret or
                 not, and only its colour changes, because a border that grows takes the height of the
                 control with it and moves whatever stands under it. It also leaves the text where the
-                padding of a Fluent box puts it: six above and five below, plus one and two of border,
+                padding of a WinUI box puts it: six above and five below, plus one and two of border,
                 is seven either way.
             -->
             <Thickness x:Key="TextControlBorderThemeThickness">1,1,1,2</Thickness>
@@ -599,9 +599,9 @@
 
         </Style.Resources>
 
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.Background}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BorderBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.Foreground}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -653,7 +653,7 @@
                                            Padding="{TemplateBinding Padding}"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Foreground="{DynamicResource MahApps.Brushes.TextControl.Fluent.PlaceholderForeground}"
+                                           Foreground="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForeground}"
                                            Opacity="1"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                            Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
@@ -785,21 +785,21 @@
                         </MultiDataTrigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BackgroundPointerOver}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ForegroundPointerOver}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundPointerOver}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
-                            <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.PlaceholderForegroundPointerOver}" />
+                            <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundPointerOver}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BackgroundFocused}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ForegroundFocused}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundFocused}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundFocused}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
 
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForeground}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
-                            <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.PlaceholderForegroundFocused}" />
+                            <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused}" />
                         </Trigger>
                         <!--
                             A box that is switched off looks switched off, even when the caret was in
@@ -807,25 +807,25 @@
                             wins, and IsFocused stays true on a control that has just been disabled.
                         -->
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BackgroundDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ForegroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundDisabled}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
-                            <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.PlaceholderForegroundDisabled}" />
+                            <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BorderBrushDisabled}" />
-        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BorderBrushFocused}" />
-        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.BorderBrush}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="ButtonLayoutGrid"
-                            Background="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonBackground}"
-                            BorderBrush="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonBorderBrush}"
+                            Background="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackground}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -850,14 +850,14 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonBackgroundPointerOver}" />
-                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonBorderBrushPointerOver}" />
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonForegroundPointerOver}" />
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver}" />
+                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPointerOver}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonBackgroundPressed}" />
-                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonBorderBrushPressed}" />
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Fluent.ButtonForegroundPressed}" />
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed}" />
+                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPressed}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />

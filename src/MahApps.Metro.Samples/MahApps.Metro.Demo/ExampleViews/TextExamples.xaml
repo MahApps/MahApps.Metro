@@ -183,33 +183,33 @@
                     <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                Style="{StaticResource RowLabel}"
-                               Text=".Fluent"
-                               ToolTip="MahApps.Styles.TextBox.Fluent" />
+                               Text=".WinUI"
+                               ToolTip="MahApps.Styles.TextBox.WinUI" />
                     <TextBox Grid.Row="4"
                              Grid.Column="1"
                              Margin="0 0 8 8"
                              mah:TextBoxHelper.ClearTextButton="True"
                              mah:TextBoxHelper.Watermark="Type a name"
-                             Style="{DynamicResource MahApps.Styles.TextBox.Fluent}" />
+                             Style="{DynamicResource MahApps.Styles.TextBox.WinUI}" />
                     <TextBox Grid.Row="4"
                              Grid.Column="2"
                              Margin="0 0 8 8"
                              mah:TextBoxHelper.ClearTextButton="True"
-                             Style="{DynamicResource MahApps.Styles.TextBox.Fluent}"
+                             Style="{DynamicResource MahApps.Styles.TextBox.WinUI}"
                              Text="Konrad Zuse" />
                     <TextBox Grid.Row="4"
                              Grid.Column="3"
                              Margin="0 0 8 8"
                              mah:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
-                             Style="{DynamicResource MahApps.Styles.TextBox.Fluent}"
+                             Style="{DynamicResource MahApps.Styles.TextBox.WinUI}"
                              Text="Konrad Zuse" />
 
                     <TextBlock Grid.Row="5"
                                Grid.Column="0"
                                Grid.ColumnSpan="4"
                                Style="{StaticResource Caption}"
-                               Text="The Win10 and the Fluent style keep their delete button for as long as the caret is in the box, the way the UWP box does, and the box turns white while it has it. Win10 marks the focus with a frame in the accent colour, Fluent with a line along the bottom edge and rounded corners." />
+                               Text="The Win10 and the WinUI style keep their delete button for as long as the caret is in the box, the way the UWP box does, and the box turns white while it has it. Win10 marks the focus with a frame in the accent colour, WinUI with a line along the bottom edge and rounded corners." />
                 </Grid>
             </GroupBox>
 
@@ -242,8 +242,8 @@
                                  Margin="0 0 8 0"
                                  mah:TextBoxHelper.ClearTextButton="True"
                                  mah:TextBoxHelper.UseFloatingWatermark="True"
-                                 mah:TextBoxHelper.Watermark=".Fluent"
-                                 Style="{DynamicResource MahApps.Styles.TextBox.Fluent}"
+                                 mah:TextBoxHelper.Watermark=".WinUI"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.WinUI}"
                                  Text="Konrad" />
                         <PasswordBox Width="115"
                                      Margin="0 0 8 0"

@@ -440,7 +440,7 @@
     </Style>
 
     <!--
-        The delete button of the Win10 and the Fluent text box. It brings no chrome of its own, since
+        The delete button of the Win10 and the WinUI text box. It brings no chrome of its own, since
         what it looks like comes from TextBoxHelper.ButtonTemplate, and its glyph takes the colour of
         the text in the box it stands in: a UWP box paints that glyph black because the box is white,
         and the box is white while it has the caret. Before that it is the colour of the theme, and so

@@ -346,7 +346,7 @@
         <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="Right" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.NumericUpDown.Fluent"
+    <Style x:Key="MahApps.Styles.NumericUpDown.Win10"
            BasedOn="{StaticResource MahApps.Styles.NumericUpDown}"
            TargetType="{x:Type mah:NumericUpDownBase}">
         <Style.Resources>
