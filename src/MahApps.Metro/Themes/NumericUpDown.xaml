@@ -3,11 +3,6 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shared.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Thickness x:Key="NumericUpDownBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="NumericUpDownSelectedBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="NumericUpDownSpinButtonRightBorderThickness">0,0,0,0</Thickness>

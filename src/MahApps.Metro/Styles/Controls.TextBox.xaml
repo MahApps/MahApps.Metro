@@ -4,10 +4,6 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shared.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Thickness x:Key="TextControlBorderThemeThickness">1,1,1,1</Thickness>
     <Thickness x:Key="TextControlThemePadding">4,4,4,4</Thickness>
     <Thickness x:Key="TextControlBorderThemeThicknessFocused">1,1,1,1</Thickness>

@@ -4,10 +4,6 @@
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <system:Double x:Key="MahApps.Sizes.ColorListBox.ItemWidth">18</system:Double>
     <system:Double x:Key="MahApps.Sizes.ColorListBox.ItemHeight">18</system:Double>
 

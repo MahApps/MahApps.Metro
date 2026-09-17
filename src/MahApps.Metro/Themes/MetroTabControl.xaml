@@ -2,10 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <!--  Keep the VisualTree in Memory when changing tabs  -->
     <ControlTemplate x:Key="MahApps.Templates.MetroTabControl.KeepVisualTreeInMemory" TargetType="{x:Type mah:MetroTabControl}">
         <Grid>

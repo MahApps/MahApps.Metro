@@ -22,19 +22,11 @@ namespace MahApps.Metro.Tests.Tests
     public class TemplateClipTests
     {
         private TestWindow? window;
-        private ResourceDictionary? colorEyeDropperDictionary;
-        private ResourceDictionary? numericUpDownDictionary;
-        private ResourceDictionary? multiSelectionComboBoxDictionary;
-        private ResourceDictionary? metroWindowDictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.colorEyeDropperDictionary = Load("Themes/ColorPicker/ColorEyeDropper.xaml");
-            this.numericUpDownDictionary = Load("Themes/NumericUpDown.xaml");
-            this.multiSelectionComboBoxDictionary = Load("Themes/MultiSelectionComboBox.xaml");
-            this.metroWindowDictionary = Load("Themes/MetroWindow.xaml");
         }
 
         [OneTimeTearDown]
@@ -42,11 +34,6 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window?.Close();
             this.window = null;
-        }
-
-        private static ResourceDictionary Load(string path)
-        {
-            return new ResourceDictionary { Source = new Uri($"pack://application:,,,/MahApps.Metro;component/{path}", UriKind.Absolute) };
         }
 
         /// <summary>
@@ -86,17 +73,17 @@ namespace MahApps.Metro.Tests.Tests
 
                 case "ColorEyeDropper":
                     var eyeDropper = new ColorEyeDropper();
-                    eyeDropper.SetValue(FrameworkElement.StyleProperty, this.colorEyeDropperDictionary!["MahApps.Styles.ColorEyeDropper"]);
+                    eyeDropper.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.ColorEyeDropper"));
                     return eyeDropper;
 
                 case "NumericUpDown spin button":
                     var spinButton = new Button { Content = "+" };
-                    spinButton.SetValue(FrameworkElement.StyleProperty, this.numericUpDownDictionary!["MahApps.Styles.Button.NumericUpDown.Spin"]);
+                    spinButton.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.Button.NumericUpDown.Spin"));
                     return spinButton;
 
                 case "MultiSelectionComboBoxItem":
                     var item = new ListBoxItem { Content = "Beam me up..." };
-                    item.SetValue(FrameworkElement.StyleProperty, this.multiSelectionComboBoxDictionary!["MahApps.Styles.MultiSelectionComboBoxItem.CheckBox"]);
+                    item.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.MultiSelectionComboBoxItem.CheckBox"));
                     return item;
 
                 case "TextBox":
@@ -183,7 +170,7 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                metroWindow.SetValue(Control.TemplateProperty, this.metroWindowDictionary![templateKey]);
+                metroWindow.SetValue(Control.TemplateProperty, Application.Current.FindResource(templateKey));
                 ControlsHelper.SetCornerRadius(metroWindow, new CornerRadius(12));
                 metroWindow.UpdateLayout();
                 ClipAssert.Pump();

@@ -22,15 +22,11 @@ namespace MahApps.Metro.Tests.Tests
     public class FocusBorderTests
     {
         private TestWindow? window;
-        private ResourceDictionary? buttonDictionary;
-        private ResourceDictionary? eyeDropperDictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.buttonDictionary = Load("Styles/Controls.Buttons.xaml");
-            this.eyeDropperDictionary = Load("Themes/ColorPicker/ColorEyeDropper.xaml");
         }
 
         [OneTimeTearDown]
@@ -38,11 +34,6 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window?.Close();
             this.window = null;
-        }
-
-        private static ResourceDictionary Load(string path)
-        {
-            return new ResourceDictionary { Source = new Uri($"pack://application:,,,/MahApps.Metro;component/{path}", UriKind.Absolute) };
         }
 
         private Control Show(Control control)
@@ -73,7 +64,7 @@ namespace MahApps.Metro.Tests.Tests
         public void AFocusedButtonShouldKeepTheThicknessOfItsBorder()
         {
             var button = new Button { Content = "Beam me up..." };
-            button.SetValue(FrameworkElement.StyleProperty, this.buttonDictionary!["MahApps.Styles.Button"]);
+            button.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.Button"));
 
             this.Show(button);
 
@@ -95,7 +86,7 @@ namespace MahApps.Metro.Tests.Tests
         public void AFocusedButtonShouldTakeTheFocusBrushForItsBorder()
         {
             var button = new Button { Content = "Beam me up..." };
-            button.SetValue(FrameworkElement.StyleProperty, this.buttonDictionary!["MahApps.Styles.Button"]);
+            button.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.Button"));
             ControlsHelper.SetFocusBorderBrush(button, Brushes.Red);
 
             this.Show(button);
@@ -116,7 +107,7 @@ namespace MahApps.Metro.Tests.Tests
         public void AFocusedEyeDropperShouldKeepTheThicknessOfItsBorder()
         {
             var eyeDropper = new ColorEyeDropper();
-            eyeDropper.SetValue(FrameworkElement.StyleProperty, this.eyeDropperDictionary!["MahApps.Styles.ColorEyeDropper"]);
+            eyeDropper.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.ColorEyeDropper"));
 
             this.Show(eyeDropper);
 

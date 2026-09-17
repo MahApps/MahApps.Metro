@@ -22,17 +22,11 @@ namespace MahApps.Metro.Tests.Tests
     public class MenuClipTests
     {
         private TestWindow? window;
-        private ResourceDictionary? menuDictionary;
-        private ResourceDictionary? contextMenuDictionary;
-        private ResourceDictionary? menuItemDictionary;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-            this.menuDictionary = Load("Controls.Menu.xaml");
-            this.contextMenuDictionary = Load("Controls.ContextMenu.xaml");
-            this.menuItemDictionary = Load("Controls.MenuItem.xaml");
         }
 
         [OneTimeTearDown]
@@ -40,11 +34,6 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window?.Close();
             this.window = null;
-        }
-
-        private static ResourceDictionary Load(string fileName)
-        {
-            return new ResourceDictionary { Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/{fileName}", UriKind.Absolute) };
         }
 
         private T Show<T>(T element)
@@ -89,7 +78,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private MenuItem ShowMenuItemWithTemplate(string templateResourceId)
         {
-            var template = (ControlTemplate)this.menuItemDictionary![new ComponentResourceKey(typeof(MenuItem), templateResourceId)];
+            var template = (ControlTemplate)Application.Current.FindResource(new ComponentResourceKey(typeof(MenuItem), templateResourceId));
 
             var menuItem = new MenuItem { Header = "File", Width = 200, Height = 24 };
             menuItem.Items.Add(new MenuItem { Header = "Open" });
@@ -108,7 +97,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var menu = new Menu { Width = 200, Height = 32 };
             menu.Items.Add(new MenuItem { Header = "File" });
-            menu.SetValue(FrameworkElement.StyleProperty, this.menuDictionary!["MahApps.Styles.Menu"]);
+            menu.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.Menu"));
             ControlsHelper.SetCornerRadius(menu, new CornerRadius(12));
 
             this.Show(menu);
@@ -126,7 +115,7 @@ namespace MahApps.Metro.Tests.Tests
             var contextMenu = new ContextMenu { Width = 200, Height = 80 };
             contextMenu.Items.Add(new MenuItem { Header = "Cut" });
             contextMenu.Items.Add(new MenuItem { Header = "Copy" });
-            contextMenu.SetValue(FrameworkElement.StyleProperty, this.contextMenuDictionary!["MahApps.Styles.ContextMenu"]);
+            contextMenu.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource("MahApps.Styles.ContextMenu"));
             ControlsHelper.SetCornerRadius(contextMenu, new CornerRadius(12));
 
             // A context menu refuses to have a parent of its own, so it has to be opened to get a size.

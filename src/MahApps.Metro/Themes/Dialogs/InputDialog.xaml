@@ -3,10 +3,6 @@
                     xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <ControlTemplate x:Key="MahApps.Templates.InputDialog" TargetType="{x:Type dialogs:InputDialog}">
         <Grid Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>

@@ -28,13 +28,12 @@ namespace MahApps.Metro.Tests.Tests
 
         private static ListBoxItem CreateItem()
         {
-            var dictionary = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml", UriKind.Absolute) };
 
             var item = new ListBoxItem
                        {
                            Width = 200,
                            Height = 48,
-                           Style = (Style)dictionary["MahApps.Styles.ListBoxItem.HamburgerMenuItem"],
+                           Style = (Style)Application.Current.FindResource("MahApps.Styles.ListBoxItem.HamburgerMenuItem"),
                            Content = "Item"
                        };
             ControlsHelper.SetCornerRadius(item, new CornerRadius(12));

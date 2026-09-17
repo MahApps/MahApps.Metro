@@ -2,10 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <ControlTemplate x:Key="MahApps.Templates.MessageDialog" TargetType="{x:Type dialogs:MessageDialog}">
         <Grid Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>

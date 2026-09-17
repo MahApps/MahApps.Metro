@@ -4,10 +4,6 @@
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker/ColorComponentSlider.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <DrawingBrush x:Key="MahApps.Brushes.Tile"

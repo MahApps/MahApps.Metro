@@ -5,10 +5,6 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <!--
         The suggestion box wears the ComboBox outfit, brushes, fonts, validation and all, but not its
         template: there is nothing to drop down by hand here, so the arrow would only offer an empty list.
