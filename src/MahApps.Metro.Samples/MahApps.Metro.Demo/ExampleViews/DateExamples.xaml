@@ -323,6 +323,7 @@
                                             mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
                                             mah:TextBoxHelper.UseFloatingWatermark="True"
                                             Culture="{Binding CurrentCulture, Mode=OneWay}"
+                                            DateTimeValidationError="OnDateTimeValidationError"
                                             HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                             IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                             IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
@@ -338,6 +339,7 @@
                                         mah:ControlsHelper.CornerRadius="{Binding Path=SelectedItem, ElementName=DateTimePickerCornerRadius}"
                                         mah:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
                                         Culture="{Binding CurrentCulture, Mode=OneWay}"
+                                        DateTimeValidationError="OnDateTimeValidationError"
                                         HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                         IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                         IsNowButtonVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsNowButtonVisible, Mode=TwoWay}"
@@ -345,6 +347,11 @@
                                         PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                         SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=PlaygroundDateTimePicker}"
                                         SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
+
+                        <TextBlock x:Name="DateTimePickerValidationError"
+                                   Margin="{StaticResource ControlMargin}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Validation}"
+                                   TextWrapping="Wrap" />
                     </StackPanel>
                 </GroupBox>
 

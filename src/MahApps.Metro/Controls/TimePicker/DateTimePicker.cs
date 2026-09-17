@@ -351,6 +351,9 @@ namespace MahApps.Metro.Controls
             }
             else
             {
+                // before the value goes, so that a handler still sees both what was typed and what it replaced
+                this.RaiseDateTimeValidationErrorEvent(this.textBox.Text);
+
                 this.SetCurrentValue(SelectedDateTimeProperty, null);
                 if (this.SelectedDateTime == null)
                 {

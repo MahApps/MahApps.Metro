@@ -454,6 +454,40 @@ namespace MahApps.Metro.Controls
             remove => this.RemoveHandler(SelectedDateTimeChangedEvent, value);
         }
 
+        /// <summary>Identifies the <see cref="DateTimeValidationError"/> routed event.</summary>
+        public static readonly RoutedEvent DateTimeValidationErrorEvent
+            = EventManager.RegisterRoutedEvent(nameof(DateTimeValidationError),
+                                               RoutingStrategy.Bubble,
+                                               typeof(EventHandler<DateTimeValidationErrorEventArgs>),
+                                               typeof(TimePickerBase));
+
+        /// <summary>
+        ///     Occurs when what was typed into the field cannot be read as a date and a time.
+        /// </summary>
+        /// <remarks>
+        /// Without it there is nothing to tell a form apart: a field somebody emptied and a field
+        /// holding a typo both end up as a <see cref="SelectedDateTime"/> of null.
+        /// </remarks>
+        public event EventHandler<DateTimeValidationErrorEventArgs> DateTimeValidationError
+        {
+            add => this.AddHandler(DateTimeValidationErrorEvent, value);
+            remove => this.RemoveHandler(DateTimeValidationErrorEvent, value);
+        }
+
+        /// <summary>
+        /// Raises <see cref="DateTimeValidationError"/> for text that would not parse. An empty field
+        /// is somebody clearing the value rather than a typo, so it goes through without an event.
+        /// </summary>
+        protected void RaiseDateTimeValidationErrorEvent(string? text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
+
+            this.RaiseEvent(new DateTimeValidationErrorEventArgs(DateTimeValidationErrorEvent, this, text));
+        }
+
         /// <summary>Identifies the <see cref="SelectedDateTime"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedDateTimeProperty
             = DependencyProperty.Register(nameof(SelectedDateTime),
