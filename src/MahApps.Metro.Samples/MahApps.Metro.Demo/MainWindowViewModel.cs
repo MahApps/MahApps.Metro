@@ -403,6 +403,15 @@ namespace MetroDemo
             set => this.Set(ref this._integerGreater10Property, value);
         }
 
+        private string? _autoWatermarkText;
+
+        [Display(Prompt = "Watermark out of the model")]
+        public string? AutoWatermarkText
+        {
+            get => this._autoWatermarkText;
+            set => this.Set(ref this._autoWatermarkText, value);
+        }
+
         private DateTime? _datePickerDate;
 
         [Display(Prompt = "Auto resolved Watermark")]

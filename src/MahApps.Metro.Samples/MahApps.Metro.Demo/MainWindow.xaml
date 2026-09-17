@@ -330,7 +330,7 @@
             </TabItem>
             <TabItem Header="text">
                 <ScrollViewer Margin="2"
-                              HorizontalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto">
                     <exampleViews:TextExamples DataContext="{Binding}" />
                 </ScrollViewer>

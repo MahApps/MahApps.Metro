@@ -61,7 +61,11 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "Underline", "ContentGrid" },
                 new object[] { "ColorEyeDropper", "ContentGrid" },
                 new object[] { "NumericUpDown spin button", "ContentGrid" },
-                new object[] { "MultiSelectionComboBoxItem", "ContentGrid" }
+                new object[] { "MultiSelectionComboBoxItem", "ContentGrid" },
+                new object[] { "TextBox", "PART_InnerGrid" },
+                new object[] { "TextBox Win10", "PART_InnerGrid" },
+                new object[] { "TextBox Fluent", "PART_InnerGrid" },
+                new object[] { "Chromeless button", "ContentGrid" }
             };
 
         private FrameworkElement Build(string what)
@@ -95,9 +99,31 @@ namespace MahApps.Metro.Tests.Tests
                     item.SetValue(FrameworkElement.StyleProperty, this.multiSelectionComboBoxDictionary!["MahApps.Styles.MultiSelectionComboBoxItem.CheckBox"]);
                     return item;
 
+                case "TextBox":
+                    return new TextBox { Text = "Beam me up..." };
+
+                case "TextBox Win10":
+                    return Styled(new TextBox { Text = "Beam me up..." }, "MahApps.Styles.TextBox.Win10");
+
+                case "TextBox Fluent":
+                    return Styled(new TextBox { Text = "Beam me up..." }, "MahApps.Styles.TextBox.Fluent");
+
+                case "Chromeless button":
+                    return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(what), what, "no such template in this fixture");
             }
+        }
+
+        /// <summary>
+        /// One of the styles the library itself merges, rather than a theme dictionary of its own.
+        /// </summary>
+        private static FrameworkElement Styled(FrameworkElement element, string key)
+        {
+            element.SetValue(FrameworkElement.StyleProperty, Application.Current.FindResource(key));
+
+            return element;
         }
 
         private FrameworkElement Show(string what)
