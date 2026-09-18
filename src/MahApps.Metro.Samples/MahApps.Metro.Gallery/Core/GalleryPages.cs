@@ -268,7 +268,31 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    // the page over there covers all three and is called menus
                                                                                    "styles/menus",
                                                                                    "menu bar context item gesture",
-                                                                                   "Styles/Controls.Menu.xaml")
+                                                                                   "Styles/Controls.Menu.xaml"),
+                                                                   new GalleryPage("Page",
+                                                                                   "Styles",
+                                                                                   typeof(PagePage),
+                                                                                   PackIconMaterialKind.FileOutline,
+                                                                                   keywords: "page frame navigation inheritance",
+                                                                                   control: "Styles/Controls.Page.xaml"),
+                                                                   new GalleryPage("PasswordBox",
+                                                                                   "Styles",
+                                                                                   typeof(PasswordBoxPage),
+                                                                                   PackIconMaterialKind.FormTextboxPassword,
+                                                                                   keywords: "password reveal caps lock watermark",
+                                                                                   control: "Styles/Controls.PasswordBox.xaml"),
+                                                                   new GalleryPage("ProgressBar",
+                                                                                   "Styles",
+                                                                                   typeof(ProgressBarPage),
+                                                                                   PackIconMaterialKind.ProgressClock,
+                                                                                   keywords: "progress bar indeterminate value",
+                                                                                   control: "Styles/Controls.ProgressBar.xaml"),
+                                                                   new GalleryPage("RadioButton",
+                                                                                   "Styles",
+                                                                                   typeof(RadioButtonPage),
+                                                                                   PackIconMaterialKind.RadioboxMarked,
+                                                                                   keywords: "radio group choice win10",
+                                                                                   control: "Styles/Controls.RadioButton.xaml")
                                                                };
     }
 }
