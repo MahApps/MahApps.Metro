@@ -4,6 +4,7 @@
 
 using System.Windows;
 using ControlzEx.Theming;
+using ShowMeTheXAML;
 
 namespace MetroDemo
 {
@@ -15,6 +16,10 @@ namespace MetroDemo
         /// <inheritdoc />
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Hands the XamlDisplay controls the markup that the build wrote into this assembly.
+            // Without it every one of them comes up empty.
+            XamlDisplay.Init();
+
             base.OnStartup(e);
 
             ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncAll;
