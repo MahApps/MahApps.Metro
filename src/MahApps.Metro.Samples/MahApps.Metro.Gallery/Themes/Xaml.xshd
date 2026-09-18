@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The XAML shown by the XamlDisplay controls is coloured with this. AvalonEdit brings a definition
+    for XML of its own, but its colours are written into it and sit badly on a dark background, so
+    this one takes them from outside: every $Name$ below is filled in from the palette that goes with
+    the base colour of the current theme. See MetroDemo.Core.XamlSyntaxHighlighting.
+-->
+<SyntaxDefinition name="XAML" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <Color name="Comment" foreground="$Comment$" exampleText="&lt;!--  a comment  --&gt;" />
+    <Color name="CData" foreground="$CData$" exampleText="&lt;![CDATA[data]]&gt;" />
+    <Color name="XmlDeclaration" foreground="$Declaration$" exampleText="&lt;?xml version=&quot;1.0&quot;?&gt;" />
+    <Color name="XmlTag" foreground="$Tag$" exampleText="&lt;Button Content=&quot;42&quot; /&gt;" />
+    <Color name="AttributeName" foreground="$AttributeName$" exampleText="&lt;Button Content=&quot;42&quot; /&gt;" />
+    <Color name="AttributeValue" foreground="$AttributeValue$" exampleText="&lt;Button Content=&quot;42&quot; /&gt;" />
+    <Color name="MarkupExtension" foreground="$MarkupExtension$" exampleText="{Binding Path=Name}" />
+    <Color name="Entity" foreground="$Entity$" exampleText="&amp;amp;" />
+
+    <RuleSet>
+        <Span color="Comment" multiline="true">
+            <Begin>&lt;!--</Begin>
+            <End>--&gt;</End>
+        </Span>
+        <Span color="CData" multiline="true">
+            <Begin>&lt;!\[CDATA\[</Begin>
+            <End>]]&gt;</End>
+        </Span>
+        <Span color="XmlDeclaration" multiline="true">
+            <Begin>&lt;\?</Begin>
+            <End>\?&gt;</End>
+        </Span>
+        <Span color="XmlTag" multiline="true">
+            <Begin>&lt;</Begin>
+            <End>&gt;</End>
+            <RuleSet>
+                <!--  a missing closing quote would otherwise colour the rest of the file  -->
+                <Span color="AttributeValue" multiline="true" ruleSet="AttributeValueSet">
+                    <Begin>"</Begin>
+                    <End>"|(?=&lt;)</End>
+                </Span>
+                <Span color="AttributeValue" multiline="true" ruleSet="AttributeValueSet">
+                    <Begin>'</Begin>
+                    <End>'|(?=&lt;)</End>
+                </Span>
+                <Rule color="AttributeName">[\d\w_\-\.]+(?=(\s*=))</Rule>
+                <Rule color="AttributeValue">=</Rule>
+            </RuleSet>
+        </Span>
+        <Import ruleSet="EntitySet" />
+    </RuleSet>
+
+    <RuleSet name="AttributeValueSet">
+        <!--  the braces and the name of a markup extension, so that a binding stands out from plain text  -->
+        <Rule color="MarkupExtension">\{\s*[\w\.:]*|\}</Rule>
+        <Import ruleSet="EntitySet" />
+    </RuleSet>
+
+    <RuleSet name="EntitySet">
+        <Rule color="Entity">
+            &amp;
+            [\w\d\#]+
+            ;
+        </Rule>
+    </RuleSet>
+</SyntaxDefinition>
