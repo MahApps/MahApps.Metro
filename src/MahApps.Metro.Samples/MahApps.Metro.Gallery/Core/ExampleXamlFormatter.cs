@@ -100,10 +100,10 @@ namespace MahApps.Metro.Gallery.Core
                         attribute.Value = value;
                     }
                 }
-                else if (value is not null && !property.IsAtDefaultValue())
+                else if (value is not null && property.IsSetHere())
                 {
-                    // only what somebody would have written down themselves: a property still
-                    // sitting at its default value says nothing and would only make the sample longer
+                    // only what somebody would have written down themselves, so a value that comes
+                    // out of a style stays out of the sample until the reader turns it
                     element.SetAttributeValue(NameFor(element, property), value);
                 }
             }

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -53,6 +54,14 @@ namespace MahApps.Metro.Gallery.Controls
                                       || type == typeof(decimal))
             {
                 return Prefix + "Number";
+            }
+
+            // anything the reader could not have typed in the first place is shown rather than
+            // offered for editing. The HotKey of a HotKeyBox is the case for it: it says
+            // "Ctrl + S" and there is no way back from that text to the object.
+            if (type != typeof(object) && !TypeDescriptor.GetConverter(type).CanConvertFrom(typeof(string)))
+            {
+                return Prefix + "Readonly";
             }
 
             return Prefix + "Text";

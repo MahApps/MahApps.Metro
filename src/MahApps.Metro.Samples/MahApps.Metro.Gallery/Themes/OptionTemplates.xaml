@@ -34,6 +34,14 @@
         </mah:MetroHeader>
     </DataTemplate>
 
+    <DataTemplate x:Key="MahApps.Gallery.Templates.Option.Readonly">
+        <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <TextBox HorizontalAlignment="Stretch"
+                     IsReadOnly="True"
+                     Text="{Binding Value, Mode=OneWay}" />
+        </mah:MetroHeader>
+    </DataTemplate>
+
     <DataTemplate x:Key="MahApps.Gallery.Templates.Option.Text">
         <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
             <TextBox HorizontalAlignment="Stretch" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

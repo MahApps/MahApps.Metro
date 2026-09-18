@@ -138,6 +138,9 @@ namespace MahApps.Metro.Gallery.Controls
             return this.Value switch
                    {
                        null => null,
+                       // a size nobody has set is NaN, and NaN is not something anybody writes into
+                       // XAML, so the attribute stays away even once the box has been touched
+                       double number when double.IsNaN(number) => null,
                        bool flag => flag ? "True" : "False",
                        Enum value => value.ToString(),
                        IFormattable value => value.ToString(null, CultureInfo.InvariantCulture),
@@ -158,12 +161,16 @@ namespace MahApps.Metro.Gallery.Controls
         }
 
         /// <summary>
-        /// Whether the property still holds what it holds without anybody saying so, which is what
-        /// keeps Height="NaN" and the like out of the shown markup.
+        /// Whether somebody actually said this value, either by writing it into the sample or by
+        /// turning it here. A value that comes from a style or from the default is not written into
+        /// the shown markup, because nobody would have written it themselves: the underline brush
+        /// of a tab control and the corner radius of a button both arrive from their style, and
+        /// Height arrives as NaN from nowhere at all.
         /// </summary>
-        public bool IsAtDefaultValue()
+        public bool IsSetHere()
         {
-            return Equals(this.Value, this.Property.GetMetadata(this.Target).DefaultValue);
+            return DependencyPropertyHelper.GetValueSource(this.Target, this.Property).BaseValueSource
+                   == BaseValueSource.Local;
         }
 
         private static string DefaultGroup(string name)
