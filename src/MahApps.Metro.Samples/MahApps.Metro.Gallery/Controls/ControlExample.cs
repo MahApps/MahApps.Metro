@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,7 +47,7 @@ namespace MahApps.Metro.Gallery.Controls
 
         public ControlExample()
         {
-            this.Properties.CollectionChanged += this.OnPropertiesChanged;
+            this.Properties.CollectionChanged += (_, _) => this.RefreshXaml();
 
             // the grouping has to be built here rather than in the template: a resource is shared
             // and has no templated parent to bind its source to
@@ -102,7 +101,7 @@ namespace MahApps.Metro.Gallery.Controls
         {
             foreach (var property in properties)
             {
-                this.Properties.Add(new ExampleProperty(target, property, group));
+                this.Properties.Add(new ExampleProperty(target, property, group, this.RefreshXaml));
             }
         }
 
@@ -111,32 +110,6 @@ namespace MahApps.Metro.Gallery.Controls
         {
             base.OnContentChanged(oldContent, newContent);
 
-            this.RefreshXaml();
-        }
-
-        private void OnPropertiesChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldItems is not null)
-            {
-                foreach (ExampleProperty property in e.OldItems)
-                {
-                    property.PropertyChanged -= this.OnPropertyValueChanged;
-                }
-            }
-
-            if (e.NewItems is not null)
-            {
-                foreach (ExampleProperty property in e.NewItems)
-                {
-                    property.PropertyChanged += this.OnPropertyValueChanged;
-                }
-            }
-
-            this.RefreshXaml();
-        }
-
-        private void OnPropertyValueChanged(object? sender, PropertyChangedEventArgs e)
-        {
             this.RefreshXaml();
         }
 

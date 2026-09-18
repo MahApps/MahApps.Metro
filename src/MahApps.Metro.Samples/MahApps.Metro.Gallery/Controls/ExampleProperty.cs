@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -16,10 +15,11 @@ namespace MahApps.Metro.Gallery.Controls
     /// <para>
     /// It holds a two way binding to the property on the sample, so whatever the editor writes here
     /// arrives at the control, and whatever the control does to the property arrives back. The
-    /// example also reads it to put the current value into the XAML it shows.
+    /// example also reads it to put the current value into the XAML it shows, which is what the
+    /// card hands a callback in for: it owns its properties and wants to know when one moves.
     /// </para>
     /// </summary>
-    public sealed class ExampleProperty : DependencyObject, INotifyPropertyChanged
+    public sealed class ExampleProperty : DependencyObject
     {
         /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty
@@ -28,8 +28,15 @@ namespace MahApps.Metro.Gallery.Controls
                                           typeof(ExampleProperty),
                                           new PropertyMetadata(null, OnValueChanged));
 
-        public ExampleProperty(DependencyObject target, DependencyProperty property, string? group = null)
+        private readonly Action? valueChanged;
+
+        public ExampleProperty(DependencyObject target,
+                               DependencyProperty property,
+                               string? group = null,
+                               Action? valueChanged = null)
         {
+            this.valueChanged = valueChanged;
+
             this.Target = target ?? throw new ArgumentNullException(nameof(target));
             this.Property = property ?? throw new ArgumentNullException(nameof(property));
 
@@ -58,9 +65,6 @@ namespace MahApps.Metro.Gallery.Controls
                                              Mode = BindingMode.TwoWay
                                          });
         }
-
-        /// <inheritdoc />
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// The sample this property belongs to.
@@ -142,12 +146,7 @@ namespace MahApps.Metro.Gallery.Controls
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as ExampleProperty)?.RaiseValueChanged();
-        }
-
-        private void RaiseValueChanged()
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Value)));
+            (d as ExampleProperty)?.valueChanged?.Invoke();
         }
     }
 }
