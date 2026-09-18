@@ -10,50 +10,62 @@
              d:DesignWidth="900"
              mc:Ignorable="d">
 
+    <!--
+        A flyout belongs to a MetroWindow, so these are declared here and hung into the Flyouts of
+        the window when the page is loaded. They sit in a XamlDisplay all the same, which is how the
+        build writes their markup down, and the cards below take it from the key rather than from
+        their own content.
+    -->
+    <UserControl.Resources>
+        <smtx:XamlDisplay x:Key="SideFlyout" UniqueKey="Flyout.Side">
+            <mah:Flyout Width="280"
+                        Header="Settings"
+                        Position="Right"
+                        Theme="Adapt">
+                <StackPanel Margin="16">
+                    <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
+                               Text="A flyout is the place for what a window can do to itself: settings, a filter, the details of whatever is selected."
+                               TextWrapping="Wrap" />
+                    <mah:ToggleSwitch Margin="0 16 0 0" Header="Something to turn" />
+                    <mah:NumericUpDown Margin="0 12 0 0" Value="42" />
+                </StackPanel>
+            </mah:Flyout>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="TopFlyout" UniqueKey="Flyout.Top">
+            <mah:Flyout Height="180"
+                        Header="A message"
+                        Position="Top"
+                        Theme="Inverse">
+                <TextBlock Margin="16"
+                           FontSize="16"
+                           Text="Over the top, the other way round from the window it sits in, and it takes the whole width with it."
+                           TextWrapping="Wrap" />
+            </mah:Flyout>
+        </smtx:XamlDisplay>
+    </UserControl.Resources>
+
     <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
         <StackPanel>
 
-            <controls:ControlExample x:Name="FlyoutExample"
-                                     Description="A panel that slides in over what is already there. In an application it lives in the Flyouts of a MetroWindow; here it sits in a FlyoutsControl of its own so that it can be shown inside the card."
-                                     Header="A panel that slides in">
-                <!--
-                    The stage around the flyout is left out of the shown markup with
-                    XamlDisplay.Ignore, so that a reader gets the flyout and not the grid it had to
-                    sit in to be shown here at all. A comment belongs out here too, since anything
-                    inside the display is part of what gets shown.
-                -->
-                <smtx:XamlDisplay UniqueKey="Flyout.Side">
-                    <Grid Width="480"
-                          Height="260"
-                          HorizontalAlignment="Left"
-                          smtx:XamlDisplay.Ignore="This">
-                        <Border smtx:XamlDisplay.Ignore="ThisAndChildren"
-                                Background="{DynamicResource MahApps.Brushes.Gray10}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                BorderThickness="1">
-                            <TextBlock Margin="16"
-                                       VerticalAlignment="Top"
-                                       Style="{DynamicResource MahApps.Styles.TextBlock}"
-                                       Text="Whatever the window was showing stays where it is."
-                                       TextWrapping="Wrap" />
-                        </Border>
+            <controls:ControlExample x:Name="SideExample"
+                                     Description="The panel slides in from the side and the window stays where it is. Everything on the right works on the flyout while it is open."
+                                     Header="A panel at the side"
+                                     UniqueKey="Flyout.Side">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowSide"
+                        Content="Show the flyout" />
+            </controls:ControlExample>
 
-                        <mah:FlyoutsControl smtx:XamlDisplay.Ignore="This">
-                            <mah:Flyout x:Name="Side"
-                                        Width="220"
-                                        Header="Settings"
-                                        IsOpen="True"
-                                        Position="Right">
-                                <StackPanel Margin="12">
-                                    <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
-                                               Text="And this slides in over it."
-                                               TextWrapping="Wrap" />
-                                    <Button Margin="0 12 0 0" Content="Close" />
-                                </StackPanel>
-                            </mah:Flyout>
-                        </mah:FlyoutsControl>
-                    </Grid>
-                </smtx:XamlDisplay>
+            <controls:ControlExample x:Name="TopExample"
+                                     Description="The same thing from the top and with the theme turned the other way round, which is what Position and Theme decide. Adapt, Inverse, Dark and Light are the four there are."
+                                     Header="A panel from the top"
+                                     UniqueKey="Flyout.Top">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowTop"
+                        Content="Show the flyout" />
             </controls:ControlExample>
 
         </StackPanel>

@@ -192,13 +192,13 @@
                                       IsExpanded="False">
                                 <Grid>
                                     <avalonEdit:TextEditor MaxHeight="400"
-                                                           Document="{Binding Content.Xaml, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}"
+                                                           Document="{Binding Markup, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}"
                                                            Style="{StaticResource MahApps.Gallery.Styles.TextEditor}" />
                                     <Button Margin="8"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Top"
                                             Command="{x:Static core:GalleryCommands.CopyText}"
-                                            CommandParameter="{Binding Content.Xaml, RelativeSource={RelativeSource TemplatedParent}}"
+                                            CommandParameter="{Binding Markup, RelativeSource={RelativeSource TemplatedParent}}"
                                             Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
                                             ToolTip="Copy the XAML to the clipboard">
                                         <iconPacks:PackIconMaterial Width="14"

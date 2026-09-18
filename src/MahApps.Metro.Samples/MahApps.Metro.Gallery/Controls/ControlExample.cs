@@ -32,6 +32,20 @@ namespace MahApps.Metro.Gallery.Controls
                                           typeof(ControlExample),
                                           new PropertyMetadata(null));
 
+        /// <summary>Identifies the <see cref="UniqueKey"/> dependency property.</summary>
+        public static readonly DependencyProperty UniqueKeyProperty
+            = DependencyProperty.Register(nameof(UniqueKey),
+                                          typeof(string),
+                                          typeof(ControlExample),
+                                          new PropertyMetadata(null, OnUniqueKeyChanged));
+
+        /// <summary>Identifies the <see cref="Markup"/> dependency property.</summary>
+        public static readonly DependencyProperty MarkupProperty
+            = DependencyProperty.Register(nameof(Markup),
+                                          typeof(string),
+                                          typeof(ControlExample),
+                                          new PropertyMetadata(null));
+
         /// <summary>Identifies the <see cref="IsOptionsExpanded"/> dependency property.</summary>
         public static readonly DependencyProperty IsOptionsExpandedProperty
             = DependencyProperty.Register(nameof(IsOptionsExpanded),
@@ -67,11 +81,36 @@ namespace MahApps.Metro.Gallery.Controls
                                                          this.RefreshXaml();
                                                      };
 
+            // A card whose content arrives before the key of its display has nothing to read yet, so
+            // it asks again once it is up. Without this a card with no options to turn, and so
+            // nothing else to trigger a second look, came up with an empty code block.
+            this.Loaded += (_, _) => this.RefreshXaml();
+
             // the grouping has to be built here rather than in the template: a resource is shared
             // and has no templated parent to bind its source to
             var grouped = new CollectionViewSource { Source = this.Properties };
             grouped.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ExampleProperty.Group)));
             this.PropertyGroups = grouped.View;
+        }
+
+        /// <summary>
+        /// The key of the sample to show the markup of, for a card whose sample is not its own
+        /// content. A flyout is the case that asked for it: it belongs in the Flyouts of the window
+        /// and cannot sit in a card, so the card shows a button and takes the markup from the key.
+        /// </summary>
+        public string? UniqueKey
+        {
+            get => (string?)this.GetValue(UniqueKeyProperty);
+            set => this.SetValue(UniqueKeyProperty, value);
+        }
+
+        /// <summary>
+        /// The markup this card shows, laid out and with the current values in it.
+        /// </summary>
+        public string? Markup
+        {
+            get => (string?)this.GetValue(MarkupProperty);
+            private set => this.SetValue(MarkupProperty, value);
         }
 
         /// <summary>
@@ -150,14 +189,30 @@ namespace MahApps.Metro.Gallery.Controls
             this.RefreshXaml();
         }
 
+        private static void OnUniqueKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as ControlExample)?.RefreshXaml();
+        }
+
         private void RefreshXaml()
         {
+            var formatter = new ExampleXamlFormatter(this.Properties);
+
+            if (this.UniqueKey is { } key)
+            {
+                // the sample is somewhere else, so the markup comes straight out of what the build
+                // wrote down under that key
+                this.Markup = formatter.FormatXaml(XamlResolver.Resolve(key));
+                return;
+            }
+
             if (this.Content is XamlDisplay display)
             {
                 // ShowMeTheXAML lays the markup out again when its formatter changes and on nothing
                 // else that can be reached from out here, so a fresh formatter is how the new values
                 // get in
-                display.SetCurrentValue(XamlDisplay.FormatterProperty, new ExampleXamlFormatter(this.Properties));
+                display.SetCurrentValue(XamlDisplay.FormatterProperty, formatter);
+                this.Markup = display.Xaml;
             }
         }
     }

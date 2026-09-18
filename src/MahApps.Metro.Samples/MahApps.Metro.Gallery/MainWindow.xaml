@@ -14,6 +14,11 @@
                  Icon="mahapps.metro.logo2.ico"
                  mc:Ignorable="d">
 
+    <!--  where a page hangs the flyouts it wants to show, since a flyout belongs to the window  -->
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl />
+    </mah:MetroWindow.Flyouts>
+
     <mah:HamburgerMenu x:Name="Menu"
                        CompactPaneLength="48"
                        DisplayMode="CompactInline"
