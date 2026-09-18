@@ -16,7 +16,11 @@ namespace MahApps.Metro.Gallery.Core
     /// </summary>
     public sealed class GalleryPage
     {
-        private const string DocumentationRoot = "https://mahapps.com/docs/";
+        private const string DocumentationRoot = "https://mahapps.github.io/mahapps.com/docs/";
+
+        // the categories that have a place in the documentation, so that a page in one of them gets
+        // its link worked out and the others simply have none
+        private static readonly string[] DocumentedCategories = { "Controls", "Styles", "Helper", "Themes", "Dialogs" };
         private const string SourceRoot = "https://github.com/MahApps/MahApps.Metro/blob/develop/src/MahApps.Metro.Samples/MahApps.Metro.Gallery/Pages/";
 
         private UserControl? view;
@@ -32,7 +36,7 @@ namespace MahApps.Metro.Gallery.Core
             this.Category = category;
             this.PageType = pageType;
             this.Icon = icon;
-            this.Documentation = documentation is null ? null : DocumentationRoot + documentation;
+            this.Documentation = Link(title, category, documentation);
             this.Source = SourceRoot + pageType.Name + ".xaml";
             this.Keywords = keywords;
         }
@@ -65,6 +69,23 @@ namespace MahApps.Metro.Gallery.Core
         /// walking the navigation does not build all of them.
         /// </summary>
         public UserControl View => this.view ??= (UserControl)Activator.CreateInstance(this.PageType)!;
+
+        /// <summary>
+        /// Where the documentation of this page sits. The pages over there are named after the
+        /// control and written in lower case, so a page only says it when it is one of the few that
+        /// are named differently, such as the buttons page or the flyouts one.
+        /// </summary>
+        private static string? Link(string title, string category, string? documentation)
+        {
+            if (documentation is not null)
+            {
+                return DocumentationRoot + documentation;
+            }
+
+            return Array.IndexOf(DocumentedCategories, category) < 0
+                ? null
+                : DocumentationRoot + (category + "/" + title).ToLowerInvariant();
+        }
 
         /// <summary>
         /// Whether this page is what somebody typing <paramref name="text"/> is after.

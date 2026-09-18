@@ -4,6 +4,7 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
                     xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
                     xmlns:smtxAvalonEdit="clr-namespace:ShowMeTheXAML.AvalonEdit;assembly=ShowMeTheXAML.AvalonEdit">
 
@@ -58,6 +59,14 @@
         <Setter Property="Width" Value="30" />
     </Style>
 
+    <Style x:Key="MahApps.Gallery.Styles.ToggleButton.Options"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.Circle}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="30" />
+    </Style>
+
     <Style TargetType="{x:Type controls:ControlExample}">
         <Setter Property="Margin" Value="0 0 0 16" />
         <Setter Property="Template">
@@ -74,30 +83,42 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <!--  what this card shows  -->
-                            <StackPanel Grid.Row="0" Margin="16 12 12 12">
-                                <ContentControl Content="{TemplateBinding Header}"
-                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                Focusable="False"
-                                                FontSize="16"
-                                                FontWeight="SemiBold"
-                                                IsTabStop="False" />
-                                <TextBlock Margin="0 2 0 0"
-                                           Opacity="0.75"
-                                           Text="{TemplateBinding Description}"
-                                           TextWrapping="Wrap">
-                                    <TextBlock.Style>
-                                        <Style BasedOn="{StaticResource MahApps.Styles.TextBlock}" TargetType="{x:Type TextBlock}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Description, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </StackPanel>
+                            <!--  what this card shows, and the switch for the options  -->
+                            <DockPanel Grid.Row="0" Margin="16 10 10 10">
+                                <ToggleButton x:Name="OptionsToggle"
+                                              DockPanel.Dock="Right"
+                                              IsChecked="{Binding IsOptionsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                              Style="{StaticResource MahApps.Gallery.Styles.ToggleButton.Options}"
+                                              ToolTip="Show or hide the options">
+                                    <iconPacks:PackIconMaterial Width="14"
+                                                                Height="14"
+                                                                Kind="Tune" />
+                                </ToggleButton>
+
+                                <StackPanel>
+                                    <ContentControl Content="{TemplateBinding Header}"
+                                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                    Focusable="False"
+                                                    FontSize="16"
+                                                    FontWeight="SemiBold"
+                                                    IsTabStop="False" />
+                                    <TextBlock Margin="0 2 0 0"
+                                               Opacity="0.75"
+                                               Text="{TemplateBinding Description}"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource MahApps.Styles.TextBlock}" TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Description, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DockPanel>
 
                             <!--  the sample on the left, what there is to turn on the right  -->
                             <Grid Grid.Row="1">
@@ -107,8 +128,8 @@
                                 </Grid.ColumnDefinitions>
 
                                 <ContentPresenter Grid.Column="0"
-                                                  MinHeight="80"
-                                                  Margin="16 4 16 16"
+                                                  MinHeight="56"
+                                                  Margin="16 4 16 14"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 
@@ -119,9 +140,14 @@
                                         Padding="16 4 16 16"
                                         BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
                                         BorderThickness="1 0 0 0">
-                                    <!--  a long list of options should not stretch the card  -->
-                                    <StackPanel MaxHeight="320">
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <StackPanel>
+                                        <!--
+                                            The height goes on the scroll viewer itself. On the panel
+                                            around it the list would simply be cut off, because a
+                                            stack panel measures its children with all the room they
+                                            ask for and the viewer then never has anything to scroll.
+                                        -->
+                                        <ScrollViewer MaxHeight="180" VerticalScrollBarVisibility="Auto">
                                             <ItemsControl ItemsSource="{Binding PropertyGroups, RelativeSource={RelativeSource TemplatedParent}}">
                                                 <ItemsControl.ItemTemplateSelector>
                                                     <controls:ExamplePropertyTemplateSelector />
@@ -149,6 +175,8 @@
                             <!--  and the XAML behind all of it  -->
                             <Expander Grid.Row="2"
                                       Margin="0"
+                                      mah:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Gray10}"
+                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                       Header="XAML"
                                       IsExpanded="False">
                                 <Grid>
@@ -172,19 +200,19 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <!--  a card with nothing to turn does not need the pane  -->
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Properties.Count, RelativeSource={RelativeSource Self}}" Value="0" />
-                                <Condition Binding="{Binding Options, RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
-                            </MultiDataTrigger.Conditions>
+                        <Trigger Property="IsOptionsExpanded" Value="False">
                             <Setter TargetName="OptionsPane" Property="Visibility" Value="Collapsed" />
-                        </MultiDataTrigger>
+                        </Trigger>
+                        <!--  a card with nothing to turn needs neither the pane nor the switch  -->
+                        <Trigger Property="HasOptions" Value="False">
+                            <Setter TargetName="OptionsPane" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="OptionsToggle" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
     </Style>
 
 </ResourceDictionary>

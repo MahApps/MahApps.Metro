@@ -5,8 +5,10 @@
 using System;
 using System.Collections;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace MahApps.Metro.Gallery.Controls
 {
@@ -44,6 +46,7 @@ namespace MahApps.Metro.Gallery.Controls
             // with their owner in front of them
             this.IsAttached = !property.OwnerType.IsInstanceOfType(target);
             this.Name = this.IsAttached ? property.OwnerType.Name + "." + property.Name : property.Name;
+            this.XamlNamespace = this.IsAttached ? XamlNamespaceOf(property.OwnerType) : null;
 
             this.TargetName = target is FrameworkElement element && !string.IsNullOrEmpty(element.Name)
                 ? element.Name
@@ -85,6 +88,12 @@ namespace MahApps.Metro.Gallery.Controls
         /// Whether this is an attached property.
         /// </summary>
         public bool IsAttached { get; }
+
+        /// <summary>
+        /// The XAML namespace an attached property has to be written in, so that it can be put into
+        /// the shown markup even when the sample does not carry it.
+        /// </summary>
+        public string? XamlNamespace { get; }
 
         /// <summary>
         /// The x:Name of the sample, which is how the right element is found again in the shown XAML
@@ -130,6 +139,27 @@ namespace MahApps.Metro.Gallery.Controls
                        IFormattable value => value.ToString(null, CultureInfo.InvariantCulture),
                        var value => value.ToString()
                    };
+        }
+
+        /// <summary>
+        /// The XAML namespace the type is exported under, which is what its XmlnsDefinition says.
+        /// </summary>
+        private static string? XamlNamespaceOf(Type type)
+        {
+            return type.Assembly
+                       .GetCustomAttributes(typeof(XmlnsDefinitionAttribute), false)
+                       .OfType<XmlnsDefinitionAttribute>()
+                       .FirstOrDefault(definition => definition.ClrNamespace == type.Namespace)
+                       ?.XmlNamespace;
+        }
+
+        /// <summary>
+        /// Whether the property still holds what it holds without anybody saying so, which is what
+        /// keeps Height="NaN" and the like out of the shown markup.
+        /// </summary>
+        public bool IsAtDefaultValue()
+        {
+            return Equals(this.Value, this.Property.GetMetadata(this.Target).DefaultValue);
         }
 
         private static string DefaultGroup(string name)

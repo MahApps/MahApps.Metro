@@ -32,6 +32,20 @@ namespace MahApps.Metro.Gallery.Controls
                                           typeof(ControlExample),
                                           new PropertyMetadata(null));
 
+        /// <summary>Identifies the <see cref="IsOptionsExpanded"/> dependency property.</summary>
+        public static readonly DependencyProperty IsOptionsExpandedProperty
+            = DependencyProperty.Register(nameof(IsOptionsExpanded),
+                                          typeof(bool),
+                                          typeof(ControlExample),
+                                          new PropertyMetadata(true));
+
+        /// <summary>Identifies the <see cref="HasOptions"/> dependency property.</summary>
+        public static readonly DependencyProperty HasOptionsProperty
+            = DependencyProperty.Register(nameof(HasOptions),
+                                          typeof(bool),
+                                          typeof(ControlExample),
+                                          new PropertyMetadata(false));
+
         /// <summary>Identifies the <see cref="Options"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsProperty
             = DependencyProperty.Register(nameof(Options),
@@ -47,7 +61,11 @@ namespace MahApps.Metro.Gallery.Controls
 
         public ControlExample()
         {
-            this.Properties.CollectionChanged += (_, _) => this.RefreshXaml();
+            this.Properties.CollectionChanged += (_, _) =>
+                                                     {
+                                                         this.SetCurrentValue(HasOptionsProperty, this.Properties.Count > 0 || this.Options is not null);
+                                                         this.RefreshXaml();
+                                                     };
 
             // the grouping has to be built here rather than in the template: a resource is shared
             // and has no templated parent to bind its source to
@@ -63,6 +81,25 @@ namespace MahApps.Metro.Gallery.Controls
         {
             get => (string?)this.GetValue(DescriptionProperty);
             set => this.SetValue(DescriptionProperty, value);
+        }
+
+        /// <summary>
+        /// Whether the options are shown. They can be folded away, which is what a narrow window
+        /// and a card that is mostly about the sample both want.
+        /// </summary>
+        public bool IsOptionsExpanded
+        {
+            get => (bool)this.GetValue(IsOptionsExpandedProperty);
+            set => this.SetValue(IsOptionsExpandedProperty, value);
+        }
+
+        /// <summary>
+        /// Whether there is anything to fold away at all.
+        /// </summary>
+        public bool HasOptions
+        {
+            get => (bool)this.GetValue(HasOptionsProperty);
+            private set => this.SetValue(HasOptionsProperty, value);
         }
 
         /// <summary>

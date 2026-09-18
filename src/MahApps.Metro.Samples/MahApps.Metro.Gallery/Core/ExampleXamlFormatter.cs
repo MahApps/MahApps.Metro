@@ -29,6 +29,16 @@ namespace MahApps.Metro.Gallery.Core
     {
         private static readonly XName NameInXaml = XName.Get("Name", "http://schemas.microsoft.com/winfx/2006/xaml");
 
+        // what the prefixes are called in this repository, for the case where an attached property
+        // has to be written into a sample whose markup never mentioned that namespace. Without a
+        // prefix of its own XLinq would invent p1, which is valid and reads badly.
+        private static readonly Dictionary<string, string> Prefixes = new Dictionary<string, string>
+                                                                      {
+                                                                          { "http://metro.mahapps.com/winfx/xaml/controls", "mah" },
+                                                                          { "http://metro.mahapps.com/winfx/xaml/shared", "mah" },
+                                                                          { "http://metro.mahapps.com/winfx/xaml/iconpacks", "iconPacks" }
+                                                                      };
+
         private readonly IXamlFormatter formatter = new XamlFormatter { NewLineOnAttributes = true };
         private readonly IEnumerable<ExampleProperty> properties;
 
@@ -90,15 +100,43 @@ namespace MahApps.Metro.Gallery.Core
                         attribute.Value = value;
                     }
                 }
-                else if (value is not null && !property.IsAttached)
+                else if (value is not null && !property.IsAtDefaultValue())
                 {
-                    // an attached property the sample does not carry has no prefix here to write it
-                    // with, so only a plain one is added
-                    element.SetAttributeValue(property.Name, value);
+                    // only what somebody would have written down themselves: a property still
+                    // sitting at its default value says nothing and would only make the sample longer
+                    element.SetAttributeValue(NameFor(element, property), value);
                 }
             }
 
             return document.ToString();
+        }
+
+        /// <summary>
+        /// The name to write a property that the sample does not carry yet under. An attached one
+        /// belongs in the namespace of its owner, unless that is the default namespace of the
+        /// document, where an attribute is written without a prefix the way XAML does it.
+        /// </summary>
+        private static XName NameFor(XElement element, ExampleProperty property)
+        {
+            if (!property.IsAttached
+                || property.XamlNamespace is null
+                || property.XamlNamespace == element.GetDefaultNamespace().NamespaceName)
+            {
+                return XName.Get(property.Name);
+            }
+
+            var space = XNamespace.Get(property.XamlNamespace);
+
+            // the declaration goes on the sample rather than on the display around it, because the
+            // formatter that runs after this one throws every attribute of that one away, and a
+            // namespace nobody declared would come out as p3 instead of mah
+            if (element.GetPrefixOfNamespace(space) is null
+                && Prefixes.TryGetValue(property.XamlNamespace, out var prefix))
+            {
+                element.SetAttributeValue(XNamespace.Xmlns + prefix, property.XamlNamespace);
+            }
+
+            return space + property.Name;
         }
 
         private static XElement? FindTarget(XElement root, string? name)
