@@ -37,11 +37,13 @@ namespace MahApps.Metro.Tests.Tests
         private readonly List<AutoSuggestionBoxTextChangeReason> reasons = new();
         private readonly List<string> queries = new();
         private readonly ObservableCollection<string> suggestions = new();
+        private bool desktopWentAway;
 
         [OneTimeSetUp]
         public async Task OneTimeSetUp()
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
+            this.window.Deactivated += (_, _) => this.desktopWentAway = true;
         }
 
         [OneTimeTearDown]
@@ -53,6 +55,7 @@ namespace MahApps.Metro.Tests.Tests
         [SetUp]
         public void SetUp()
         {
+            this.desktopWentAway = false;
             this.reasons.Clear();
             this.queries.Clear();
             this.suggestions.Clear();
@@ -116,17 +119,20 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
-        /// And still standing in it, with this window still holding the desktop. A popup holds the
-        /// mouse capture while it is up, so a window that loses the foreground loses the capture as
-        /// well and the list goes down with it. Measured on a window handed the foreground right
-        /// after a keystroke: the text arrives as the user's, the suggestion is there, the list
-        /// opens, and the next turn of the message loop takes it down again. None of that is about
-        /// the box, so a test that finds the desktop gone says nothing instead of saying something
-        /// wrong. Every step that needs an open list asks first.
+        /// And still standing in it, with this window having held the desktop the whole way. A
+        /// ComboBox keeps the mouse while its list is up, so a window that loses the foreground
+        /// loses the capture as well and the list goes down with it. Measured on a window handed the
+        /// foreground right after a keystroke: the text arrives as the user's, the suggestion is
+        /// there, the list opens, and the next turn of the message loop takes it down again. Once
+        /// the foreground comes back, the window is active again and the box has the keyboard again,
+        /// so asking how things stand afterwards finds nothing wrong and the list on the floor. What
+        /// has to be asked is whether the desktop went away at all, which is why this counts the
+        /// window being deactivated instead of looking at how it sits now. None of it is about the
+        /// box, so a test that lost the desktop says nothing instead of saying something wrong.
         /// </summary>
         private void TheDesktopIsStillOurs()
         {
-            Assume.That(this.window.IsActive, Is.True, "the desktop went to another window in the middle of the test");
+            Assume.That(this.desktopWentAway, Is.False, "the desktop went to another window in the middle of the test");
             Assume.That(this.box.IsKeyboardFocusWithin, Is.True);
         }
 
@@ -171,8 +177,6 @@ namespace MahApps.Metro.Tests.Tests
         /// </summary>
         private void Press(Key key)
         {
-            this.TheDesktopIsStillOurs();
-
             var source = PresentationSource.FromVisual(this.box);
 
             var preview = new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = Keyboard.PreviewKeyDownEvent };
@@ -184,10 +188,13 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             ClipAssert.Pump();
+
+            this.TheDesktopIsStillOurs();
         }
 
         private void Click(string suggestion)
         {
+            // a list on the floor has no rows, so this one asks before as well as after
             this.TheDesktopIsStillOurs();
 
             var container = (ComboBoxItem)this.box.ItemContainerGenerator.ContainerFromItem(suggestion);
@@ -205,6 +212,8 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             ClipAssert.Pump();
+
+            this.TheDesktopIsStillOurs();
         }
 
         /// <summary>
@@ -283,6 +292,8 @@ namespace MahApps.Metro.Tests.Tests
 
             this.suggestions.Add("Mars");
             ClipAssert.Pump();
+
+            this.TheDesktopIsStillOurs();
 
             Assert.That(this.box.IsDropDownOpen, Is.True);
         }
