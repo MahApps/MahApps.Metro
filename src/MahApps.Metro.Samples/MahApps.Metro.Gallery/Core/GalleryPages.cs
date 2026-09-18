@@ -218,7 +218,31 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    typeof(DataGridPage),
                                                                                    PackIconMaterialKind.Table,
                                                                                    keywords: "grid table rows columns azure",
-                                                                                   control: "Styles/Controls.DataGrid.xaml")
+                                                                                   control: "Styles/Controls.DataGrid.xaml"),
+                                                                   new GalleryPage("DatePicker",
+                                                                                   "Styles",
+                                                                                   typeof(DatePickerPage),
+                                                                                   PackIconMaterialKind.CalendarCursor,
+                                                                                   keywords: "date calendar watermark clear",
+                                                                                   control: "Styles/Controls.DatePicker.xaml"),
+                                                                   new GalleryPage("Expander",
+                                                                                   "Styles",
+                                                                                   typeof(ExpanderPage),
+                                                                                   PackIconMaterialKind.ArrowExpandVertical,
+                                                                                   keywords: "expander header collapse fold",
+                                                                                   control: "Styles/Controls.Expander.xaml"),
+                                                                   new GalleryPage("GridSplitter",
+                                                                                   "Styles",
+                                                                                   typeof(GridSplitterPage),
+                                                                                   PackIconMaterialKind.ArrowSplitVertical,
+                                                                                   keywords: "splitter resize panes drag",
+                                                                                   control: "Styles/Controls.GridSplitter.xaml"),
+                                                                   new GalleryPage("GroupBox",
+                                                                                   "Styles",
+                                                                                   typeof(GroupBoxPage),
+                                                                                   PackIconMaterialKind.SelectGroup,
+                                                                                   keywords: "group header band clean visual studio",
+                                                                                   control: "Styles/Controls.GroupBox.xaml")
                                                                };
     }
 }

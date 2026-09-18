@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ExpanderPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="The header band in the accent colour, an arrow that turns, and a quarter second fade on the content. ExpandDirection decides which edge the content unfolds from, and the header turns with it."
+                                     Header="Content behind a header">
+                <smtx:XamlDisplay UniqueKey="Expander.Plain">
+                    <Expander x:Name="Plain"
+                              Width="320"
+                              HorizontalAlignment="Left"
+                              Header="What is in here"
+                              IsExpanded="True">
+                        <TextBlock Margin="8"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                   Text="42 of them, and room for more."
+                                   TextWrapping="Wrap" />
+                    </Expander>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="StudioExample"
+                                     Description="The Visual Studio variant, which is drawn for the dark Visual Studio theme and therefore sits on a dark strip here. Controls.xaml does not merge it, so the two dictionaries it needs come in on the expander itself."
+                                     Header="The Visual Studio look">
+                <smtx:XamlDisplay UniqueKey="Expander.VisualStudio">
+                    <Border Width="360"
+                            Padding="16"
+                            HorizontalAlignment="Left"
+                            Background="#FF2D2D30">
+                        <Expander x:Name="Studio"
+                                  Header="What is in here"
+                                  IsExpanded="True"
+                                  Style="{DynamicResource MahApps.Styles.Expander.VisualStudio}">
+                            <Expander.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.MergedDictionaries>
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                                    </ResourceDictionary.MergedDictionaries>
+                                </ResourceDictionary>
+                            </Expander.Resources>
+                            <TextBlock Margin="8"
+                                       Text="42 of them, and room for more."
+                                       TextWrapping="Wrap" />
+                        </Expander>
+                    </Border>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
