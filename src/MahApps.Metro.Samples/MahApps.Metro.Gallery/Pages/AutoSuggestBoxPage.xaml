@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.AutoSuggestBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="SuggestExample"
+                                     Description="The box does not filter anything itself. It says that the text changed and the code behind answers with what fits, which is what makes it work against a database just as well as against a list."
+                                     Header="A box that suggests while you type">
+                <smtx:XamlDisplay UniqueKey="AutoSuggestBox.Suggest">
+                    <mah:AutoSuggestBox x:Name="Suggest"
+                                        Width="280"
+                                        HorizontalAlignment="Left"
+                                        mah:TextBoxHelper.ClearTextButton="True"
+                                        mah:TextBoxHelper.Watermark="Search a control"
+                                        TextChanged="OnTextChanged" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
