@@ -28,12 +28,13 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <!--  Top, because Stretch made every sample as tall as the card gave it room for  -->
+        <Setter Property="VerticalContentAlignment" Value="Top" />
     </Style>
 
     <Style x:Key="MahApps.Gallery.Styles.TextEditor" TargetType="{x:Type avalonEdit:TextEditor}">
-        <!--  Gray10 sits a shade away from the card, which is what marks the block out as code  -->
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+        <!--  the expander around it paints the Gray10, so that its rounded corners stay round  -->
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontFamily" Value="Consolas, Courier New, monospace" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="IsReadOnly" Value="True" />
@@ -128,7 +129,6 @@
                                 </Grid.ColumnDefinitions>
 
                                 <ContentPresenter Grid.Column="0"
-                                                  MinHeight="56"
                                                   Margin="16 4 16 14"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -173,10 +173,21 @@
                             </Grid>
 
                             <!--  and the XAML behind all of it  -->
+                            <!--
+                                The same border and the same rounded corners as the card, so that the
+                                code block reads as the foot of it rather than as something glued on.
+                                The radius goes in through ControlsHelper, which the template of the
+                                expander splits between its header and the part that opens. Left
+                                alone the border would be the accent colour, which is where the blue
+                                frame came from.
+                            -->
                             <Expander Grid.Row="2"
                                       Margin="0"
+                                      mah:ControlsHelper.CornerRadius="0 0 3 3"
                                       mah:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Gray10}"
                                       mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                      Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                      BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
                                       Header="XAML"
                                       IsExpanded="False">
                                 <Grid>
@@ -212,7 +223,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
 </ResourceDictionary>

@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+
+    <core:NumberConverter x:Key="NumberConverter" />
 
     <!--
         The editors a ControlExample puts in front of the properties it watches. Which one a property
@@ -19,7 +22,7 @@
         <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
             <mah:NumericUpDown HorizontalAlignment="Stretch"
                                Interval="1"
-                               Value="{Binding Value, Mode=TwoWay}" />
+                               Value="{Binding Value, Mode=TwoWay, Converter={StaticResource NumberConverter}}" />
         </mah:MetroHeader>
     </DataTemplate>
 

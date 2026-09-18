@@ -28,7 +28,7 @@ namespace MahApps.Metro.Gallery.Controls
             = DependencyProperty.Register(nameof(Value),
                                           typeof(object),
                                           typeof(ExampleProperty),
-                                          new PropertyMetadata(null, OnValueChanged));
+                                          new PropertyMetadata(null, OnValueChanged, CoerceValue));
 
         private readonly Action? valueChanged;
 
@@ -177,6 +177,35 @@ namespace MahApps.Metro.Gallery.Controls
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             (d as ExampleProperty)?.valueChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Brings the value into the type the watched property holds. The editor for a number only
+        /// ever writes a double, and handing that to a property that wants an int would be dropped
+        /// by the binding with nothing but a line in the debug output.
+        /// </summary>
+        private static object? CoerceValue(DependencyObject d, object? value)
+        {
+            if (d is not ExampleProperty property || value is null)
+            {
+                return value;
+            }
+
+            var wanted = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+            if (value.GetType() == wanted || !typeof(IConvertible).IsAssignableFrom(wanted) || wanted.IsEnum)
+            {
+                return value;
+            }
+
+            try
+            {
+                return System.Convert.ChangeType(value, wanted, CultureInfo.InvariantCulture);
+            }
+            catch (Exception exception) when (exception is InvalidCastException or FormatException or OverflowException)
+            {
+                return value;
+            }
         }
     }
 }

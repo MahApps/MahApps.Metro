@@ -21,7 +21,8 @@ namespace MahApps.Metro.Gallery.Core
         // the categories that have a place in the documentation, so that a page in one of them gets
         // its link worked out and the others simply have none
         private static readonly string[] DocumentedCategories = { "Controls", "Styles", "Helper", "Themes", "Dialogs" };
-        private const string SourceRoot = "https://github.com/MahApps/MahApps.Metro/blob/develop/src/MahApps.Metro.Samples/MahApps.Metro.Gallery/Pages/";
+        private const string PageRoot = "https://github.com/MahApps/MahApps.Metro/blob/develop/src/MahApps.Metro.Samples/MahApps.Metro.Gallery/Pages/";
+        private const string LibraryRoot = "https://github.com/MahApps/MahApps.Metro/blob/develop/src/MahApps.Metro/";
 
         private UserControl? view;
 
@@ -30,14 +31,16 @@ namespace MahApps.Metro.Gallery.Core
                            Type pageType,
                            PackIconMaterialKind icon = PackIconMaterialKind.None,
                            string? documentation = null,
-                           string? keywords = null)
+                           string? keywords = null,
+                           string? control = null)
         {
             this.Title = title;
             this.Category = category;
             this.PageType = pageType;
             this.Icon = icon;
             this.Documentation = Link(title, category, documentation);
-            this.Source = SourceRoot + pageType.Name + ".xaml";
+            this.PageSource = PageRoot + pageType.Name + ".xaml";
+            this.ControlSource = control is null ? null : LibraryRoot + control;
             this.Keywords = keywords;
         }
 
@@ -57,7 +60,13 @@ namespace MahApps.Metro.Gallery.Core
         /// <summary>
         /// The XAML of this page on GitHub, which answers the question the samples cannot.
         /// </summary>
-        public string Source { get; }
+        public string PageSource { get; }
+
+        /// <summary>
+        /// The control itself on GitHub. The files do not follow one shape, some sit in a folder of
+        /// their own, so a page says where its control lives rather than having it guessed.
+        /// </summary>
+        public string? ControlSource { get; }
 
         /// <summary>
         /// What else somebody might type when looking for this page.

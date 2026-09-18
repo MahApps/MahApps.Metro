@@ -100,7 +100,15 @@
                                                             Kind="BookOpenPageVariantOutline" />
                             </Button>
                             <Button Command="{x:Static core:GalleryCommands.OpenLink}"
-                                    CommandParameter="{Binding Source}"
+                                    CommandParameter="{Binding ControlSource}"
+                                    Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
+                                    ToolTip="See the control itself on GitHub">
+                                <iconPacks:PackIconMaterial Width="16"
+                                                            Height="16"
+                                                            Kind="CodeBraces" />
+                            </Button>
+                            <Button Command="{x:Static core:GalleryCommands.OpenLink}"
+                                    CommandParameter="{Binding PageSource}"
                                     Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
                                     ToolTip="See the XAML of this page on GitHub">
                                 <iconPacks:PackIconMaterial Width="16"
