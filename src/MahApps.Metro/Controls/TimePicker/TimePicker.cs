@@ -56,12 +56,15 @@ namespace MahApps.Metro.Controls
                                                       | DateTimeStyles.AssumeLocal
                                                       | DateTimeStyles.NoCurrentDateDefault;
 
-            if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, dateTimeParseStyle, out var timeSpan))
+            if (this.TryParseValueFromTextBox(dateTimeParseStyle, out var timeSpan))
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan.TimeOfDay);
             }
             else
             {
+                // before the value goes, so that a handler still sees both what was typed and what it replaced
+                this.RaiseDateTimeValidationErrorEvent(this.textBox.Text);
+
                 this.SetCurrentValue(SelectedDateTimeProperty, null);
                 if (this.SelectedDateTime == null)
                 {

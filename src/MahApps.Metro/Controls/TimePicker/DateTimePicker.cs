@@ -321,11 +321,15 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc />
         protected override string? GetValueForTextBox()
         {
-            var formatInfo = this.SpecificCultureInfo.DateTimeFormat;
-            var timeFormat = this.SelectedTimeFormat == TimePickerFormat.Long ? formatInfo.LongTimePattern : formatInfo.ShortTimePattern;
-            var dateFormat = this.SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
+            var dateTimeFormat = this.SelectedDateTimeFormat;
+            if (string.IsNullOrEmpty(dateTimeFormat))
+            {
+                var formatInfo = this.SpecificCultureInfo.DateTimeFormat;
+                var timeFormat = this.SelectedTimeFormat == TimePickerFormat.Long ? formatInfo.LongTimePattern : formatInfo.ShortTimePattern;
+                var dateFormat = this.SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
 
-            var dateTimeFormat = string.Intern($"{dateFormat} {timeFormat}");
+                dateTimeFormat = string.Intern($"{dateFormat} {timeFormat}");
+            }
 
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
             var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
@@ -340,13 +344,16 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (DateTime.TryParse(this.textBox.Text, this.SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out var dateTime))
+            if (this.TryParseValueFromTextBox(System.Globalization.DateTimeStyles.None, out var dateTime))
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, dateTime);
                 this.SetCurrentValue(DisplayDateProperty, dateTime);
             }
             else
             {
+                // before the value goes, so that a handler still sees both what was typed and what it replaced
+                this.RaiseDateTimeValidationErrorEvent(this.textBox.Text);
+
                 this.SetCurrentValue(SelectedDateTimeProperty, null);
                 if (this.SelectedDateTime == null)
                 {
