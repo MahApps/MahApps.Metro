@@ -59,9 +59,15 @@ namespace MahApps.Metro.Gallery.Controls
             this.Name = this.IsAttached ? property.OwnerType.Name + "." + property.Name : property.Name;
             this.XamlNamespace = this.IsAttached ? XamlNamespaceOf(property.OwnerType) : null;
 
-            this.TargetName = target is FrameworkElement element && !string.IsNullOrEmpty(element.Name)
-                ? element.Name
-                : null;
+            // a control carries its name as a FrameworkElement, an inline as a
+            // FrameworkContentElement, and without the second one a watched property of a Hyperlink
+            // was written onto the TextBlock around it
+            this.TargetName = target switch
+                              {
+                                  FrameworkElement element when !string.IsNullOrEmpty(element.Name) => element.Name,
+                                  FrameworkContentElement content when !string.IsNullOrEmpty(content.Name) => content.Name,
+                                  _ => null
+                              };
 
             this.Group = group ?? DefaultGroup(this.Name);
 

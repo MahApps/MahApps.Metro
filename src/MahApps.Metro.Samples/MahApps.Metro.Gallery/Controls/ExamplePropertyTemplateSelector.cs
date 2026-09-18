@@ -57,11 +57,18 @@ namespace MahApps.Metro.Gallery.Controls
             }
 
             // anything the reader could not have typed in the first place is shown rather than
-            // offered for editing. The HotKey of a HotKeyBox is the case for it: it says
-            // "Ctrl + S" and there is no way back from that text to the object.
-            if (type != typeof(object) && !TypeDescriptor.GetConverter(type).CanConvertFrom(typeof(string)))
+            // offered for editing, and that takes both directions: the HotKey of a HotKeyBox says
+            // "Ctrl + S" with no way back from that text to the object, while the TextDecorations
+            // of a Hyperlink can be read from "Underline" but come back out as the name of their
+            // own type.
+            if (type != typeof(object))
             {
-                return Prefix + "Readonly";
+                var converter = TypeDescriptor.GetConverter(type);
+
+                if (!converter.CanConvertFrom(typeof(string)) || !converter.CanConvertTo(typeof(string)))
+                {
+                    return Prefix + "Readonly";
+                }
             }
 
             return Prefix + "Text";

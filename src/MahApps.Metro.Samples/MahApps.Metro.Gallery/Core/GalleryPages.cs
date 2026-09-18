@@ -242,7 +242,33 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    typeof(GroupBoxPage),
                                                                                    PackIconMaterialKind.SelectGroup,
                                                                                    keywords: "group header band clean visual studio",
-                                                                                   control: "Styles/Controls.GroupBox.xaml")
+                                                                                   control: "Styles/Controls.GroupBox.xaml"),
+                                                                   new GalleryPage("Hyperlink",
+                                                                                   "Styles",
+                                                                                   typeof(HyperlinkPage),
+                                                                                   PackIconMaterialKind.LinkVariant,
+                                                                                   keywords: "link inline navigate underline",
+                                                                                   control: "Styles/Controls.Hyperlink.xaml"),
+                                                                   new GalleryPage("ListBox",
+                                                                                   "Styles",
+                                                                                   typeof(ListBoxPage),
+                                                                                   PackIconMaterialKind.FormatListBulleted,
+                                                                                   keywords: "list items selection border",
+                                                                                   control: "Styles/Controls.ListBox.xaml"),
+                                                                   new GalleryPage("ListView",
+                                                                                   "Styles",
+                                                                                   typeof(ListViewPage),
+                                                                                   PackIconMaterialKind.ViewList,
+                                                                                   keywords: "list columns gridview headers",
+                                                                                   control: "Styles/Controls.ListView.xaml"),
+                                                                   new GalleryPage("Menu",
+                                                                                   "Styles",
+                                                                                   typeof(MenuPage),
+                                                                                   PackIconMaterialKind.MenuOpen,
+                                                                                   // the page over there covers all three and is called menus
+                                                                                   "styles/menus",
+                                                                                   "menu bar context item gesture",
+                                                                                   "Styles/Controls.Menu.xaml")
                                                                };
     }
 }
