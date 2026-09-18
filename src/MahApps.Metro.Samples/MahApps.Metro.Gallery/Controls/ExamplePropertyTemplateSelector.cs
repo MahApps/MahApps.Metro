@@ -27,7 +27,7 @@ namespace MahApps.Metro.Gallery.Controls
             // NumericUpDown would end up in a plain text box
             var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
 
-            var key = KeyFor(type);
+            var key = property.IsReadOnly ? "MahApps.Gallery.Templates.Option.Readonly" : KeyFor(type);
 
             return element.TryFindResource(key) as DataTemplate;
         }

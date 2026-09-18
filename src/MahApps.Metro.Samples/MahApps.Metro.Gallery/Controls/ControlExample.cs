@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
+using System.IO;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,13 @@ namespace MahApps.Metro.Gallery.Controls
                                           typeof(string),
                                           typeof(ControlExample),
                                           new PropertyMetadata(null, OnUniqueKeyChanged));
+
+        /// <summary>Identifies the <see cref="MarkupResource"/> dependency property.</summary>
+        public static readonly DependencyProperty MarkupResourceProperty
+            = DependencyProperty.Register(nameof(MarkupResource),
+                                          typeof(string),
+                                          typeof(ControlExample),
+                                          new PropertyMetadata(null, OnMarkupResourceChanged));
 
         /// <summary>Identifies the <see cref="Markup"/> dependency property.</summary>
         public static readonly DependencyProperty MarkupProperty
@@ -102,6 +110,17 @@ namespace MahApps.Metro.Gallery.Controls
         {
             get => (string?)this.GetValue(UniqueKeyProperty);
             set => this.SetValue(UniqueKeyProperty, value);
+        }
+
+        /// <summary>
+        /// The name of an embedded file to show instead of a sample, for the cases where the sample
+        /// is a whole file. A window is one: it has to be the root of its markup, so it can neither
+        /// sit in a card nor in a XamlDisplay, and the file that runs is the honest thing to show.
+        /// </summary>
+        public string? MarkupResource
+        {
+            get => (string?)this.GetValue(MarkupResourceProperty);
+            set => this.SetValue(MarkupResourceProperty, value);
         }
 
         /// <summary>
@@ -194,8 +213,35 @@ namespace MahApps.Metro.Gallery.Controls
             (d as ControlExample)?.RefreshXaml();
         }
 
+        private static void OnMarkupResourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as ControlExample)?.RefreshXaml();
+        }
+
+        /// <summary>
+        /// The text of a file that was built into this assembly next to its compiled form.
+        /// </summary>
+        private static string Read(string resource)
+        {
+            using var stream = typeof(ControlExample).Assembly.GetManifestResourceStream(resource);
+            if (stream is null)
+            {
+                return string.Empty;
+            }
+
+            using var reader = new StreamReader(stream);
+
+            return reader.ReadToEnd();
+        }
+
         private void RefreshXaml()
         {
+            if (this.MarkupResource is { } resource)
+            {
+                this.Markup = Read(resource);
+                return;
+            }
+
             var formatter = new ExampleXamlFormatter(this.Properties);
 
             if (this.UniqueKey is { } key)

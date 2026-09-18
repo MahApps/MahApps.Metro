@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.MultiFrameImagePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="IconExample"
+                                     Description="An icon file holds the same picture at several sizes, and this image picks the one that fits instead of scaling the largest down. At 16 by 16 that is the difference between crisp and mushy, which is why the icon in a title bar is one of these."
+                                     Header="An icon at the size it is drawn">
+                <smtx:XamlDisplay UniqueKey="MultiFrameImage.Icon">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <mah:MultiFrameImage x:Name="Small"
+                                             Width="16"
+                                             Height="16"
+                                             Margin="0 0 24 0"
+                                             MultiFrameImageMode="ScaleDownLargerFrame"
+                                             Source="pack://application:,,,/MahApps.Metro.Gallery;component/mahapps.metro.logo2.ico" />
+                        <mah:MultiFrameImage Width="32"
+                                             Height="32"
+                                             Margin="0 0 24 0"
+                                             MultiFrameImageMode="ScaleDownLargerFrame"
+                                             Source="pack://application:,,,/MahApps.Metro.Gallery;component/mahapps.metro.logo2.ico" />
+                        <mah:MultiFrameImage Width="64"
+                                             Height="64"
+                                             MultiFrameImageMode="ScaleDownLargerFrame"
+                                             Source="pack://application:,,,/MahApps.Metro.Gallery;component/mahapps.metro.logo2.ico" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

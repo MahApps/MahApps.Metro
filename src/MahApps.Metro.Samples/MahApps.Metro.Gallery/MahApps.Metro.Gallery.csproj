@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -23,6 +23,13 @@
         <None Include="app.manifest" />
         <!--  read back by XamlSyntaxHighlighting, which fills in the colours of the current theme  -->
         <EmbeddedResource Include="Themes\Xaml.xshd" LogicalName="MahApps.Metro.Gallery.Themes.Xaml.xshd" />
+        <!--
+            The sample window goes in twice: compiled, so that it can be opened, and as the text it
+            was written as, so that the card can show it. A window has to be the root of its markup
+            and can therefore not sit in a XamlDisplay, and this way the shown markup is the file
+            that runs rather than a copy of it.
+        -->
+        <EmbeddedResource Include="Windows\SampleWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.SampleWindow.xaml" />
     </ItemGroup>
 
     <ItemGroup>

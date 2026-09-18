@@ -48,7 +48,14 @@ namespace MahApps.Metro.Gallery.Controls
             // is written plainly; ControlsHelper.CornerRadius is nowhere on a Button, so it needs
             // the owner. Going by the owner alone had FontSize written twice, once plainly and once
             // as TextElement.FontSize.
-            this.IsAttached = target.GetType().GetProperty(property.Name) is null;
+            var onTarget = target.GetType().GetProperty(property.Name);
+
+            this.IsAttached = onTarget is null;
+
+            // a property that can be read but not written takes a one way binding and is shown
+            // rather than offered for editing. IsDragging on a MetroThumbContentControl is one:
+            // asking for two way there throws rather than simply not working.
+            this.IsReadOnly = onTarget is not null && onTarget.GetSetMethod() is null;
             this.Name = this.IsAttached ? property.OwnerType.Name + "." + property.Name : property.Name;
             this.XamlNamespace = this.IsAttached ? XamlNamespaceOf(property.OwnerType) : null;
 
@@ -69,7 +76,7 @@ namespace MahApps.Metro.Gallery.Controls
                                          {
                                              Path = new PropertyPath(property),
                                              Source = target,
-                                             Mode = BindingMode.TwoWay
+                                             Mode = this.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay
                                          });
         }
 
@@ -92,6 +99,11 @@ namespace MahApps.Metro.Gallery.Controls
         /// Whether this is an attached property.
         /// </summary>
         public bool IsAttached { get; }
+
+        /// <summary>
+        /// Whether the property can only be read, which the sample decides rather than the reader.
+        /// </summary>
+        public bool IsReadOnly { get; }
 
         /// <summary>
         /// The XAML namespace an attached property has to be written in, so that it can be put into
