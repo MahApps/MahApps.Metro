@@ -324,35 +324,35 @@ Task("Tests")
 {
     CleanDirectory(testResultsDir);
 
-    var settings = new DotNetTestSettings
-        {
-            Configuration = data.Configuration,
-            NoBuild = true,
-            NoRestore = true,
-            Loggers = new[] { "trx" },
-            ResultsDirectory = testResultsDir,
-            Verbosity = data.DotNetVerbosity,
-            // These are UI tests, and one that waits on an event nobody raises waits forever. The
-            // run is cut off after five minutes without a finished test, and what lands next to the
-            // results says which test was running when it stopped moving. The dump type has to stay
-            // spelled out: left alone it is full, and a full dump of the test host carries the
-            // signing secrets it inherited through its environment.
-            ArgumentCustomization = args => args
-                // One desktop, one test host. A multi-targeted test project hands its frameworks to
-                // MSBuild, which runs as many of them side by side as it has build nodes to spare,
-                // and these are UI tests: only one window on a desktop holds the foreground, and the
-                // one that loses it loses the keyboard along with the mouse capture that keeps a
-                // popup up. Four hosts taking that from one another is a test failing with nobody
-                // having touched it.
-                .Append("-p:TestTfmsInParallel=false")
-                .Append("--blame-hang")
-                .Append("--blame-hang-timeout")
-                .Append("5m")
-                .Append("--blame-hang-dump-type")
-                .Append("mini")
-        };
+    // One test host per framework, each on a desktop of its own, which is what run-tests.ps1 is
+    // for. These are UI tests and what they need is per desktop rather than per process: the
+    // foreground window, the keyboard focus, the mouse capture that keeps a popup up. Two hosts
+    // sharing a desktop take those from one another and a test fails with nobody having touched
+    // it. A process is handed its desktop when it is created and .NET has no way to pass one on,
+    // so the starting happens over there, along with the arguments for the run.
+    var exitCode = StartProcess("powershell",
+                                new ProcessSettings
+                                    {
+                                        Arguments = new ProcessArgumentBuilder()
+                                            .Append("-NoProfile")
+                                            .Append("-ExecutionPolicy")
+                                            .Append("Bypass")
+                                            .Append("-File")
+                                            .AppendQuoted("./run-tests.ps1")
+                                            .Append("-Project")
+                                            .AppendQuoted("./src/Mahapps.Metro.Tests/Mahapps.Metro.Tests.csproj")
+                                            .Append("-Configuration")
+                                            .Append(data.Configuration)
+                                            .Append("-ResultsDirectory")
+                                            .AppendQuoted(testResultsDir.ToString())
+                                            .Append("-Verbosity")
+                                            .Append(data.DotNetVerbosity.ToString())
+                                    });
 
-    DotNetTest("./src/Mahapps.Metro.Tests/Mahapps.Metro.Tests.csproj", settings);
+    if (exitCode != 0)
+    {
+        throw new Exception($"The tests failed with exit code {exitCode}.");
+    }
 });
 
 Task("StyleXaml")
