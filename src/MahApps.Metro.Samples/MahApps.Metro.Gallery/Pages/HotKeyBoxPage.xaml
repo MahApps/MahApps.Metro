@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.HotKeyBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="HotKeyExample"
+                                     Description="Click into the box and press the keys you want. It takes the combination rather than the letters, which is how an application asks somebody which shortcut they would like."
+                                     Header="A box that takes a shortcut">
+                <smtx:XamlDisplay UniqueKey="HotKeyBox.Shortcut">
+                    <mah:HotKeyBox x:Name="HotKey"
+                                   Width="280"
+                                   HorizontalAlignment="Left"
+                                   mah:TextBoxHelper.ClearTextButton="True"
+                                   mah:TextBoxHelper.Watermark="Press a shortcut"
+                                   AreModifierKeysRequired="True" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
