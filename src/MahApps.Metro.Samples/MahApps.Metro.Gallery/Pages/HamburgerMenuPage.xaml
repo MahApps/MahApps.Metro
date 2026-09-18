@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.HamburgerMenuPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="MenuExample"
+                                     Description="The navigation down the side of this gallery is one of these. It shows its items next to the content, or narrowed down to their icons, or over them, which is what DisplayMode decides."
+                                     Header="A navigation down the side">
+                <smtx:XamlDisplay UniqueKey="HamburgerMenu.Navigation">
+                    <mah:HamburgerMenu x:Name="Menu"
+                                       Width="480"
+                                       Height="260"
+                                       HorizontalAlignment="Left"
+                                       Content="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Tag}"
+                                       DisplayMode="CompactInline"
+                                       IsPaneOpen="True"
+                                       OpenPaneLength="160"
+                                       SelectedIndex="0">
+                        <mah:HamburgerMenu.ItemTemplate>
+                            <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                                <Grid Height="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl Grid.Column="0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Content="{Binding Icon}"
+                                                    Focusable="False"
+                                                    IsTabStop="False" />
+                                    <TextBlock Grid.Column="1"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding Label}" />
+                                </Grid>
+                            </DataTemplate>
+                        </mah:HamburgerMenu.ItemTemplate>
+                        <mah:HamburgerMenu.ItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Home, Width=18, Height=18}"
+                                                           Label="Home"
+                                                           Tag="What the first item shows" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Email, Width=18, Height=18}"
+                                                           Label="Mail"
+                                                           Tag="And the second one" />
+                                <mah:HamburgerMenuSeparatorItem />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}"
+                                                           Label="Settings"
+                                                           Tag="Down at the bottom of the list" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.ItemsSource>
+                    </mah:HamburgerMenu>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

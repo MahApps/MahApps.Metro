@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.FlyoutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <!--
+        A flyout belongs to a MetroWindow, so these are declared here and hung into the Flyouts of
+        the window when the page is loaded. They sit in a XamlDisplay all the same, which is how the
+        build writes their markup down, and the cards below take it from the key rather than from
+        their own content.
+    -->
+    <UserControl.Resources>
+        <smtx:XamlDisplay x:Key="SideFlyout" UniqueKey="Flyout.Side">
+            <mah:Flyout Width="280"
+                        Header="Settings"
+                        Position="Right"
+                        Theme="Adapt">
+                <StackPanel Margin="16">
+                    <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
+                               Text="A flyout is the place for what a window can do to itself: settings, a filter, the details of whatever is selected."
+                               TextWrapping="Wrap" />
+                    <mah:ToggleSwitch Margin="0 16 0 0" Header="Something to turn" />
+                    <mah:NumericUpDown Margin="0 12 0 0" Value="42" />
+                </StackPanel>
+            </mah:Flyout>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="TopFlyout" UniqueKey="Flyout.Top">
+            <mah:Flyout Height="180"
+                        Header="A message"
+                        Position="Top"
+                        Theme="Inverse">
+                <TextBlock Margin="16"
+                           FontSize="16"
+                           Text="Over the top, the other way round from the window it sits in, and it takes the whole width with it."
+                           TextWrapping="Wrap" />
+            </mah:Flyout>
+        </smtx:XamlDisplay>
+    </UserControl.Resources>
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="SideExample"
+                                     Description="The panel slides in from the side and the window stays where it is. Everything on the right works on the flyout while it is open."
+                                     Header="A panel at the side"
+                                     UniqueKey="Flyout.Side">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowSide"
+                        Content="Show the flyout" />
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TopExample"
+                                     Description="The same thing from the top and with the theme turned the other way round, which is what Position and Theme decide. Adapt, Inverse, Dark and Light are the four there are."
+                                     Header="A panel from the top"
+                                     UniqueKey="Flyout.Top">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowTop"
+                        Content="Show the flyout" />
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

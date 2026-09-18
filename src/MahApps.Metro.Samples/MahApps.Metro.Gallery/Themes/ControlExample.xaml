@@ -1,0 +1,229 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+                    xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+                    xmlns:smtxAvalonEdit="clr-namespace:ShowMeTheXAML.AvalonEdit;assembly=ShowMeTheXAML.AvalonEdit">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Gallery;component/Themes/OptionTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <smtxAvalonEdit:TextDocumentValueConverter x:Key="TextDocumentValueConverter" />
+
+    <!--
+        A XamlDisplay here shows nothing but the sample itself. It is in the tree so that the build
+        writes the markup of the sample into the assembly, and the card around it is what puts that
+        markup on screen.
+    -->
+    <Style TargetType="{x:Type smtx:XamlDisplay}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type smtx:XamlDisplay}">
+                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--  Top, because Stretch made every sample as tall as the card gave it room for  -->
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+    </Style>
+
+    <Style x:Key="MahApps.Gallery.Styles.TextEditor" TargetType="{x:Type avalonEdit:TextEditor}">
+        <!--  the expander around it paints the Gray10, so that its rounded corners stay round  -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Consolas, Courier New, monospace" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <!--  a namespace looks like a link, and AvalonEdit would underline every one of them  -->
+        <Setter Property="Options">
+            <Setter.Value>
+                <avalonEdit:TextEditorOptions EnableEmailHyperlinks="False" EnableHyperlinks="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="12 12 44 12" />
+        <!--  the colours follow the theme, which is what this one is for  -->
+        <Setter Property="SyntaxHighlighting" Value="{Binding Definition, Source={x:Static core:XamlSyntaxHighlighting.Current}}" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <!--  wrapping beats a horizontal scroll bar under a sample nobody asked to scroll  -->
+        <Setter Property="WordWrap" Value="True" />
+    </Style>
+
+    <Style x:Key="MahApps.Gallery.Styles.Button.CardLink"
+           BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="30" />
+    </Style>
+
+    <Style x:Key="MahApps.Gallery.Styles.ToggleButton.Options"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.Circle}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="30" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:ControlExample}">
+        <Setter Property="Margin" Value="0 0 0 16" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ControlExample}">
+                    <Border Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  what this card shows, and the switch for the options  -->
+                            <DockPanel Grid.Row="0" Margin="16 10 10 10">
+                                <ToggleButton x:Name="OptionsToggle"
+                                              DockPanel.Dock="Right"
+                                              IsChecked="{Binding IsOptionsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                              Style="{StaticResource MahApps.Gallery.Styles.ToggleButton.Options}"
+                                              ToolTip="Show or hide the options">
+                                    <iconPacks:PackIconMaterial Width="14"
+                                                                Height="14"
+                                                                Kind="Tune" />
+                                </ToggleButton>
+
+                                <StackPanel>
+                                    <ContentControl Content="{TemplateBinding Header}"
+                                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                    Focusable="False"
+                                                    FontSize="16"
+                                                    FontWeight="SemiBold"
+                                                    IsTabStop="False" />
+                                    <TextBlock Margin="0 2 0 0"
+                                               Opacity="0.75"
+                                               Text="{TemplateBinding Description}"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource MahApps.Styles.TextBlock}" TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Description, RelativeSource={RelativeSource TemplatedParent}}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DockPanel>
+
+                            <!--  the sample on the left, what there is to turn on the right  -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter Grid.Column="0"
+                                                  Margin="16 4 16 14"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                                <Border x:Name="OptionsPane"
+                                        Grid.Column="1"
+                                        MinWidth="240"
+                                        MaxWidth="320"
+                                        Padding="16 4 16 16"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                        BorderThickness="1 0 0 0">
+                                    <StackPanel>
+                                        <!--
+                                            The height goes on the scroll viewer itself. On the panel
+                                            around it the list would simply be cut off, because a
+                                            stack panel measures its children with all the room they
+                                            ask for and the viewer then never has anything to scroll.
+                                        -->
+                                        <ScrollViewer MaxHeight="180" VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding PropertyGroups, RelativeSource={RelativeSource TemplatedParent}}">
+                                                <ItemsControl.ItemTemplateSelector>
+                                                    <controls:ExamplePropertyTemplateSelector />
+                                                </ItemsControl.ItemTemplateSelector>
+                                                <ItemsControl.GroupStyle>
+                                                    <GroupStyle>
+                                                        <GroupStyle.HeaderTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Margin="0 8 0 4"
+                                                                           FontWeight="SemiBold"
+                                                                           Opacity="0.75"
+                                                                           Text="{Binding Name}" />
+                                                            </DataTemplate>
+                                                        </GroupStyle.HeaderTemplate>
+                                                    </GroupStyle>
+                                                </ItemsControl.GroupStyle>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+
+                                        <ContentPresenter Content="{TemplateBinding Options}" />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!--  and the XAML behind all of it  -->
+                            <!--
+                                The same border and the same rounded corners as the card, so that the
+                                code block reads as the foot of it rather than as something glued on.
+                                The radius goes in through ControlsHelper, which the template of the
+                                expander splits between its header and the part that opens. Left
+                                alone the border would be the accent colour, which is where the blue
+                                frame came from.
+                            -->
+                            <Expander Grid.Row="2"
+                                      Margin="0"
+                                      mah:ControlsHelper.CornerRadius="0 0 3 3"
+                                      mah:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Gray10}"
+                                      mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                      Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                      BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                      Header="XAML"
+                                      IsExpanded="False">
+                                <Grid>
+                                    <avalonEdit:TextEditor MaxHeight="400"
+                                                           Document="{Binding Markup, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}"
+                                                           Style="{StaticResource MahApps.Gallery.Styles.TextEditor}" />
+                                    <Button Margin="8"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Command="{x:Static core:GalleryCommands.CopyText}"
+                                            CommandParameter="{Binding Markup, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
+                                            ToolTip="Copy the XAML to the clipboard">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="ContentCopy" />
+                                    </Button>
+                                </Grid>
+                            </Expander>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsOptionsExpanded" Value="False">
+                            <Setter TargetName="OptionsPane" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!--  a card with nothing to turn needs neither the pane nor the switch  -->
+                        <Trigger Property="HasOptions" Value="False">
+                            <Setter TargetName="OptionsPane" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="OptionsToggle" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+</ResourceDictionary>

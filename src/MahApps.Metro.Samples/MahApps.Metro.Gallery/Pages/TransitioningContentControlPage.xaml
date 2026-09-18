@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TransitioningContentControlPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TransitionExample"
+                                     Description="Content that does not simply appear but slides in, which is what the navigation of this gallery uses. Transition picks the direction and is an inherited attached property, so one setting further up covers every one of these below it."
+                                     Header="Content that comes in from somewhere">
+                <smtx:XamlDisplay UniqueKey="TransitioningContentControl.Transition">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:TransitioningContentControl x:Name="Transitioning"
+                                                         Width="320"
+                                                         Height="120"
+                                                         HorizontalContentAlignment="Center"
+                                                         VerticalContentAlignment="Center"
+                                                         Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                                         Content="Page 1 of 3"
+                                                         Transition="LeftReplace" />
+                        <Button Width="120"
+                                Margin="0 12 0 0"
+                                HorizontalAlignment="Left"
+                                Click="OnNext"
+                                Content="Next" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

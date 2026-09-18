@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ButtonPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="The button every WPF application starts with, wearing the MahApps style."
+                                     Header="A button">
+                <smtx:XamlDisplay UniqueKey="Button.Plain">
+                    <Button x:Name="Plain"
+                            Width="160"
+                            HorizontalAlignment="Left"
+                            Content="Click me" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="AccentExample"
+                                     Description="The square style with the accent colour behind it, for the one button on a page that matters most."
+                                     Header="A button in the accent colour">
+                <smtx:XamlDisplay UniqueKey="Button.Accent">
+                    <Button x:Name="Accent"
+                            Width="160"
+                            HorizontalAlignment="Left"
+                            Content="Save"
+                            Style="{StaticResource MahApps.Styles.Button.Square.Accent}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CircleExample"
+                                     Description="A round button holding an icon, which is what the circle style is for."
+                                     Header="A button with an icon">
+                <smtx:XamlDisplay UniqueKey="Button.Circle">
+                    <Button x:Name="Circle"
+                            Width="48"
+                            Height="48"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource MahApps.Styles.Button.Circle}">
+                        <iconPacks:PackIconMaterial Width="18"
+                                                    Height="18"
+                                                    Kind="Heart" />
+                    </Button>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

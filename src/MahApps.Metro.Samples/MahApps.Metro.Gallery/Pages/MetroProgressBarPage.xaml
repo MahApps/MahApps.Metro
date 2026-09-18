@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.MetroProgressBarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="ProgressExample"
+                                     Description="A bar for something that knows how far it has got."
+                                     Header="How far along something is">
+                <smtx:XamlDisplay UniqueKey="MetroProgressBar.Value">
+                    <mah:MetroProgressBar x:Name="Bar"
+                                          Width="360"
+                                          HorizontalAlignment="Left"
+                                          Maximum="100"
+                                          Minimum="0"
+                                          Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WaitingExample"
+                                     Description="And the same bar for something that only knows it is not finished, which is what IsIndeterminate says."
+                                     Header="Something is happening">
+                <smtx:XamlDisplay UniqueKey="MetroProgressBar.Waiting">
+                    <mah:MetroProgressBar x:Name="Waiting"
+                                          Width="360"
+                                          HorizontalAlignment="Left"
+                                          IsIndeterminate="True" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

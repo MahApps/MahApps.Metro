@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TimePickerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TimeExample"
+                                     Description="A time of day, with a clock behind the drop down and a list per part. The clock is there to read, the lists are there to pick from, and typing into the box works as well."
+                                     Header="A time of day">
+                <smtx:XamlDisplay UniqueKey="TimePicker.Time">
+                    <mah:TimePicker x:Name="Time"
+                                    Width="280"
+                                    HorizontalAlignment="Left"
+                                    mah:TextBoxHelper.Watermark="At" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="PartsExample"
+                                     Description="Which parts are asked for is up to PickerVisibility, and HandVisibility does the same for the hands of the clock. Here it is hours and minutes, without the seconds nobody wanted."
+                                     Header="Only the parts you need">
+                <smtx:XamlDisplay UniqueKey="TimePicker.Parts">
+                    <mah:TimePicker x:Name="Parts"
+                                    Width="280"
+                                    HorizontalAlignment="Left"
+                                    mah:TextBoxHelper.Watermark="At"
+                                    HandVisibility="HourMinute"
+                                    PickerVisibility="HourMinute"
+                                    SelectedTimeFormat="Short" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

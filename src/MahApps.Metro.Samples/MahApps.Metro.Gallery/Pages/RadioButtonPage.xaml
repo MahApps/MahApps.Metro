@@ -1,0 +1,55 @@
+<UserControl x:Class="MahApps.Metro.Gallery.Pages.RadioButtonPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="GroupExample"
+                                     Description="One out of a few, where a check box would have been one yes or no at a time. What belongs together is said by GroupName, and the size of the ring is a RadioButtonHelper property rather than a template to replace."
+                                     Header="One out of a group">
+                <smtx:XamlDisplay UniqueKey="RadioButton.Group">
+                    <StackPanel HorizontalAlignment="Left">
+                        <RadioButton x:Name="First"
+                                     Content="Every hour"
+                                     GroupName="When"
+                                     IsChecked="True" />
+                        <RadioButton Margin="0 8 0 0"
+                                     Content="Once a day"
+                                     GroupName="When" />
+                        <RadioButton Margin="0 8 0 0"
+                                     Content="Never, I will do it myself"
+                                     GroupName="When" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TenExample"
+                                     Description="The same button in the Windows 10 style, which draws a heavier ring and takes the accent into the ring rather than only into the dot. It differs in more than colour: a slightly larger ring, a thicker stroke, and a minimum width of 120 whatever the label says, which is what spreads these two apart."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="RadioButton.Win10">
+                    <StackPanel HorizontalAlignment="Left">
+                        <RadioButton x:Name="Ten"
+                                     Content="Every hour"
+                                     GroupName="Win10"
+                                     IsChecked="True"
+                                     Style="{StaticResource MahApps.Styles.RadioButton.Win10}" />
+                        <RadioButton Margin="0 8 0 0"
+                                     Content="Once a day"
+                                     GroupName="Win10"
+                                     Style="{StaticResource MahApps.Styles.RadioButton.Win10}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

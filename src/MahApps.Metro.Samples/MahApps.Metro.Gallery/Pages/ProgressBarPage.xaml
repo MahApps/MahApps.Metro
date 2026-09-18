@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ProgressBarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="ValueExample"
+                                     Description="The bar WPF ships with: a flat track and an indicator with a gradient running across it. The gradient belongs to the indicator rather than to the track, so it is run through at every value and the bar always ends in the darker blue."
+                                     Header="How far along it is">
+                <smtx:XamlDisplay UniqueKey="ProgressBar.Value">
+                    <ProgressBar x:Name="Bar"
+                                 Width="320"
+                                 Height="12"
+                                 HorizontalAlignment="Left"
+                                 Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="BusyExample"
+                                     Description="And for a wait that cannot say how long it will be, the indeterminate state: stripes travelling along the track rather than the block WPF slides from one end to the other."
+                                     Header="Something is under way">
+                <smtx:XamlDisplay UniqueKey="ProgressBar.Indeterminate">
+                    <ProgressBar x:Name="Busy"
+                                 Width="320"
+                                 Height="12"
+                                 HorizontalAlignment="Left"
+                                 IsIndeterminate="True" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

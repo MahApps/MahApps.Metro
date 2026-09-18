@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.NumericUpDownPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="NumberExample"
+                                     Description="A text box that takes a number and nothing else, with a pair of buttons to step it."
+                                     Header="A number to step through">
+                <smtx:XamlDisplay UniqueKey="NumericUpDown.Number">
+                    <mah:NumericUpDown x:Name="Number"
+                                       Width="220"
+                                       HorizontalAlignment="Left"
+                                       Interval="1"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="FormattedExample"
+                                     Description="The same box showing a share rather than a count, which is what StringFormat is for."
+                                     Header="A number with a format">
+                <smtx:XamlDisplay UniqueKey="NumericUpDown.Formatted">
+                    <mah:NumericUpDown x:Name="Formatted"
+                                       Width="220"
+                                       HorizontalAlignment="Left"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Interval="0.01"
+                                       Maximum="1"
+                                       Minimum="0"
+                                       StringFormat="P2"
+                                       Value="0.42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

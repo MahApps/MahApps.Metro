@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.SplitViewPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="SplitExample"
+                                     Description="A pane beside the content, which the HamburgerMenu is built on. DisplayMode decides whether the pane pushes the content aside, narrows down to a strip, or lies over it."
+                                     Header="A pane beside the content">
+                <smtx:XamlDisplay UniqueKey="SplitView.Pane">
+                    <mah:SplitView x:Name="Split"
+                                   Width="480"
+                                   Height="240"
+                                   HorizontalAlignment="Left"
+                                   CompactPaneLength="48"
+                                   DisplayMode="CompactInline"
+                                   IsPaneOpen="True"
+                                   OpenPaneLength="160">
+                        <mah:SplitView.Pane>
+                            <StackPanel Margin="12">
+                                <TextBlock Text="In the pane" />
+                                <TextBlock Margin="0 8 0 0" Text="42" />
+                            </StackPanel>
+                        </mah:SplitView.Pane>
+                        <TextBlock Margin="16"
+                                   VerticalAlignment="Top"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                   Text="And the content next to it, which keeps what room is left."
+                                   TextWrapping="Wrap" />
+                    </mah:SplitView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

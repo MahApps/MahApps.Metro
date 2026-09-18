@@ -1,0 +1,55 @@
+﻿<mah:MetroWindow x:Class="MahApps.Metro.Gallery.Windows.TitleBarWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="A title bar with something in it"
+                 Width="640"
+                 Height="420"
+                 Icon="../mahapps.metro.logo2.ico"
+                 ShowIconOnTitleBar="True"
+                 TitleCharacterCasing="Normal"
+                 WindowStartupLocation="CenterOwner"
+                 mc:Ignorable="d">
+
+    <!--  WindowCommands on the left of the title, where a window would put what it came from  -->
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button ToolTip="Back to where this came from">
+                <iconPacks:PackIconMaterial Width="14"
+                                            Height="14"
+                                            Kind="ArrowLeft" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <!--  and on the right, where the separators between the buttons are worth a look  -->
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands ShowLastSeparator="False">
+            <Button Content="42" ToolTip="Something of this window's own" />
+            <Button ToolTip="And the settings behind it">
+                <iconPacks:PackIconMaterial Width="14"
+                                            Height="14"
+                                            Kind="CogOutline" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <!--  the three buttons at the far end, with the tooltips said here rather than taken from Windows  -->
+    <mah:MetroWindow.WindowButtonCommands>
+        <mah:WindowButtonCommands Close="Enough of this window"
+                                  Maximize="As big as it gets"
+                                  Minimize="Out of the way"
+                                  Restore="Back to its size" />
+    </mah:MetroWindow.WindowButtonCommands>
+
+    <Grid Margin="24">
+        <TextBlock VerticalAlignment="Top"
+                   FontSize="16"
+                   Style="{DynamicResource MahApps.Styles.TextBlock}"
+                   Text="Everything above the content of this window is markup rather than the frame Windows would have drawn: the commands beside the title, the three buttons at the end, and the tooltips they carry. Hold the mouse over one of them to read what was written here."
+                   TextWrapping="Wrap" />
+    </Grid>
+</mah:MetroWindow>

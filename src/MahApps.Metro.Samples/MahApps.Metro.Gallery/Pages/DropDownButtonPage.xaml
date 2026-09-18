@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.DropDownButtonPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="DropDownExample"
+                                     Description="A button that opens a menu instead of doing something itself."
+                                     Header="A button with a menu">
+                <smtx:XamlDisplay UniqueKey="DropDownButton.Menu">
+                    <mah:DropDownButton x:Name="DropDown"
+                                        Width="200"
+                                        HorizontalAlignment="Left"
+                                        Content="Export">
+                        <mah:DropDownButton.Items>
+                            <MenuItem Header="As a picture" />
+                            <MenuItem Header="As a table" />
+                            <Separator />
+                            <MenuItem Header="As it is" />
+                        </mah:DropDownButton.Items>
+                    </mah:DropDownButton>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
