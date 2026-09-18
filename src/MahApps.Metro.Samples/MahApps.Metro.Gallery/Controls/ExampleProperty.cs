@@ -142,10 +142,12 @@ namespace MahApps.Metro.Gallery.Controls
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is ExampleProperty property)
-            {
-                property.PropertyChanged?.Invoke(property, new PropertyChangedEventArgs(nameof(Value)));
-            }
+            (d as ExampleProperty)?.RaiseValueChanged();
+        }
+
+        private void RaiseValueChanged()
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Value)));
         }
     }
 }

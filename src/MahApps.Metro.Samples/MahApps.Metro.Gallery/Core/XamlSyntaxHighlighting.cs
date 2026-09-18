@@ -2,9 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -17,7 +15,7 @@ using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 namespace MahApps.Metro.Gallery.Core
 {
     /// <summary>
-    /// The colours for the XAML shown by a XamlDisplay, kept in step with the theme.
+    /// The colours for the XAML shown by a card, kept in step with the theme.
     /// <para>
     /// AvalonEdit can colour XML on its own, but the colours are part of its definition and a dark
     /// theme leaves them barely readable. So Themes/Xaml.xshd is loaded with the palette of the base
@@ -26,8 +24,15 @@ namespace MahApps.Metro.Gallery.Core
     /// all of them in step.
     /// </para>
     /// </summary>
-    public sealed class XamlSyntaxHighlighting : INotifyPropertyChanged
+    public sealed class XamlSyntaxHighlighting : DependencyObject
     {
+        /// <summary>Identifies the <see cref="Definition"/> dependency property.</summary>
+        public static readonly DependencyProperty DefinitionProperty
+            = DependencyProperty.Register(nameof(Definition),
+                                          typeof(IHighlightingDefinition),
+                                          typeof(XamlSyntaxHighlighting),
+                                          new PropertyMetadata(null));
+
         private static readonly Dictionary<string, string> LightPalette = new Dictionary<string, string>
                                                                           {
                                                                               { "Comment", "#008000" },
@@ -52,8 +57,6 @@ namespace MahApps.Metro.Gallery.Core
                                                                              { "Entity", "#D7BA7D" }
                                                                          };
 
-        private IHighlightingDefinition? definition;
-
         private XamlSyntaxHighlighting()
         {
             ThemeManager.Current.ThemeChanged += (_, _) => this.Reload();
@@ -72,21 +75,9 @@ namespace MahApps.Metro.Gallery.Core
         /// </summary>
         public IHighlightingDefinition? Definition
         {
-            get => this.definition;
-            private set
-            {
-                if (ReferenceEquals(this.definition, value))
-                {
-                    return;
-                }
-
-                this.definition = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Definition)));
-            }
+            get => (IHighlightingDefinition?)this.GetValue(DefinitionProperty);
+            private set => this.SetValue(DefinitionProperty, value);
         }
-
-        /// <inheritdoc />
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void Reload()
         {
