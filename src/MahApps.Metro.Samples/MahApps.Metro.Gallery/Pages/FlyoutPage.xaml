@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.FlyoutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="FlyoutExample"
+                                     Description="A panel that slides in over what is already there. In an application it lives in the Flyouts of a MetroWindow; here it sits in a FlyoutsControl of its own so that it can be shown inside the card."
+                                     Header="A panel that slides in">
+                <!--
+                    The stage around the flyout is left out of the shown markup with
+                    XamlDisplay.Ignore, so that a reader gets the flyout and not the grid it had to
+                    sit in to be shown here at all. A comment belongs out here too, since anything
+                    inside the display is part of what gets shown.
+                -->
+                <smtx:XamlDisplay UniqueKey="Flyout.Side">
+                    <Grid Width="480"
+                          Height="260"
+                          HorizontalAlignment="Left"
+                          smtx:XamlDisplay.Ignore="This">
+                        <Border smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                BorderThickness="1">
+                            <TextBlock Margin="16"
+                                       VerticalAlignment="Top"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                       Text="Whatever the window was showing stays where it is."
+                                       TextWrapping="Wrap" />
+                        </Border>
+
+                        <mah:FlyoutsControl smtx:XamlDisplay.Ignore="This">
+                            <mah:Flyout x:Name="Side"
+                                        Width="220"
+                                        Header="Settings"
+                                        IsOpen="True"
+                                        Position="Right">
+                                <StackPanel Margin="12">
+                                    <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                               Text="And this slides in over it."
+                                               TextWrapping="Wrap" />
+                                    <Button Margin="0 12 0 0" Content="Close" />
+                                </StackPanel>
+                            </mah:Flyout>
+                        </mah:FlyoutsControl>
+                    </Grid>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

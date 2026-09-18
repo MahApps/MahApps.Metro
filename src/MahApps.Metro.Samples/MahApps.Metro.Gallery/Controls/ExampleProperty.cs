@@ -42,9 +42,13 @@ namespace MahApps.Metro.Gallery.Controls
             this.Target = target ?? throw new ArgumentNullException(nameof(target));
             this.Property = property ?? throw new ArgumentNullException(nameof(property));
 
-            // a property whose owner the sample is not is an attached one, and those are written
-            // with their owner in front of them
-            this.IsAttached = !property.OwnerType.IsInstanceOfType(target);
+            // What decides whether a property is written with its owner in front of it is not who
+            // registered it but whether the sample has it as a property of its own. FontSize is
+            // registered by TextElement and handed on to Control, so a FontIcon carries it and it
+            // is written plainly; ControlsHelper.CornerRadius is nowhere on a Button, so it needs
+            // the owner. Going by the owner alone had FontSize written twice, once plainly and once
+            // as TextElement.FontSize.
+            this.IsAttached = target.GetType().GetProperty(property.Name) is null;
             this.Name = this.IsAttached ? property.OwnerType.Name + "." + property.Name : property.Name;
             this.XamlNamespace = this.IsAttached ? XamlNamespaceOf(property.OwnerType) : null;
 
