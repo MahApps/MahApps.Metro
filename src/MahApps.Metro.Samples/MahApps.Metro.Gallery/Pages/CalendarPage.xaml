@@ -1,0 +1,35 @@
+<UserControl x:Class="MahApps.Metro.Gallery.Pages.CalendarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="MonthExample"
+                                     Description="The calendar WPF ships with, wearing the MahApps style. Today is marked, the accent colour says what is selected, and the header steps out to the year and the decade above it."
+                                     Header="A month at a time">
+                <smtx:XamlDisplay UniqueKey="Calendar.Month">
+                    <Calendar x:Name="Month" HorizontalAlignment="Left" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="RangeExample"
+                                     Description="More than one day at a time, which is what SelectionMode is for. The weekend after next is struck through: days nobody may pick go into BlackoutDates, which this page fills in from its code behind, since a date written into markup is stale the day after."
+                                     Header="A range of days">
+                <smtx:XamlDisplay UniqueKey="Calendar.Range">
+                    <Calendar x:Name="Range"
+                              HorizontalAlignment="Left"
+                              SelectionMode="MultipleRange" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

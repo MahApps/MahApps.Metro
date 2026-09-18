@@ -194,7 +194,31 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    "styles/buttons",
                                                                                    "square circle flat accent",
                                                                                    // a style rather than a control, so the styles are where to look
-                                                                                   "Styles/Controls.Buttons.xaml")
+                                                                                   "Styles/Controls.Buttons.xaml"),
+                                                                   new GalleryPage("Calendar",
+                                                                                   "Styles",
+                                                                                   typeof(CalendarPage),
+                                                                                   PackIconMaterialKind.CalendarMonthOutline,
+                                                                                   keywords: "calendar month days date",
+                                                                                   control: "Styles/Controls.Calendar.xaml"),
+                                                                   new GalleryPage("CheckBox",
+                                                                                   "Styles",
+                                                                                   typeof(CheckBoxPage),
+                                                                                   PackIconMaterialKind.CheckboxMarkedOutline,
+                                                                                   keywords: "check tick three state win10",
+                                                                                   control: "Styles/Controls.CheckBox.xaml"),
+                                                                   new GalleryPage("ComboBox",
+                                                                                   "Styles",
+                                                                                   typeof(ComboBoxPage),
+                                                                                   PackIconMaterialKind.FormatListBulletedSquare,
+                                                                                   keywords: "combo dropdown list editable",
+                                                                                   control: "Styles/Controls.ComboBox.xaml"),
+                                                                   new GalleryPage("DataGrid",
+                                                                                   "Styles",
+                                                                                   typeof(DataGridPage),
+                                                                                   PackIconMaterialKind.Table,
+                                                                                   keywords: "grid table rows columns azure",
+                                                                                   control: "Styles/Controls.DataGrid.xaml")
                                                                };
     }
 }
