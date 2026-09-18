@@ -99,6 +99,37 @@ namespace MahApps.Metro.Tests.TestHelpers
             return await completionSource.Task.ConfigureAwait(true);
         }
 
+        /// <summary>
+        /// Puts something in the window and lets the layout and the dispatcher catch up, so that a
+        /// test can look at what the templates made of it.
+        /// </summary>
+        public static T Show<T>(this Window? window, T content)
+            where T : FrameworkElement
+        {
+            Assert.That(window, Is.Not.Null);
+
+            window!.Content = content;
+            window.UpdateLayout();
+            content.UpdateLayout();
+            ClipAssert.Pump();
+
+            Assert.That(content.IsLoaded, Is.True, $"the {content.GetType().Name} should be up before a test looks at it");
+
+            return content;
+        }
+
+        /// <summary>
+        /// Lets the layout and the dispatcher catch up again, for a test that goes on poking at what
+        /// the window is already showing.
+        /// </summary>
+        public static void Settle(this Window? window)
+        {
+            Assert.That(window, Is.Not.Null);
+
+            window!.UpdateLayout();
+            ClipAssert.Pump();
+        }
+
         public static void AssertWindowCommandsColor(this MetroWindow window, Color color)
         {
             Assert.That(window.RightWindowCommands, Is.Not.Null);

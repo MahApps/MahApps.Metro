@@ -7,8 +7,6 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -60,27 +58,27 @@ namespace MahApps.Metro.Tests.Tests
         [Description("Told nothing at all, a picker goes by the culture of the thread, the way the DatePicker beside it does.")]
         public void APickerNobodyToldGoesByTheCultureOfTheThread()
         {
-            var picker = this.Show(new DateTimePicker { SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new DateTimePicker { SelectedDateTime = Afternoon });
 
-            Assert.That(Reads(picker), Is.EqualTo("17.03.2026 14:35:00"));
+            Assert.That(picker.Reads(), Is.EqualTo("17.03.2026 14:35:00"));
         }
 
         [Test]
         [Description("A culture named by hand still wins, culture being the property that is there to say so.")]
         public void ACultureNamedByHandWins()
         {
-            var picker = this.Show(new DateTimePicker { SelectedDateTime = Afternoon, Culture = new CultureInfo("en-US") });
+            var picker = this.window.Show(new DateTimePicker { SelectedDateTime = Afternoon, Culture = new CultureInfo("en-US") });
 
-            Assert.That(Reads(picker), Is.EqualTo("3/17/2026 2:35:00 PM"));
+            Assert.That(picker.Reads(), Is.EqualTo("3/17/2026 2:35:00 PM"));
         }
 
         [Test]
         [Description("And so does a language, which is the other way of saying it and the one that is inherited down the tree.")]
         public void ALanguageSetOnThePickerWins()
         {
-            var picker = this.Show(new DateTimePicker { SelectedDateTime = Afternoon, Language = XmlLanguage.GetLanguage("en-US") });
+            var picker = this.window.Show(new DateTimePicker { SelectedDateTime = Afternoon, Language = XmlLanguage.GetLanguage("en-US") });
 
-            Assert.That(Reads(picker), Is.EqualTo("3/17/2026 2:35:00 PM"));
+            Assert.That(picker.Reads(), Is.EqualTo("3/17/2026 2:35:00 PM"));
         }
 
         [Test]
@@ -93,8 +91,8 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                var inherited = Reads(this.Show(new DateTimePicker { SelectedDateTime = Afternoon }));
-                var named = Reads(this.Show(new DateTimePicker { SelectedDateTime = Afternoon, Culture = new CultureInfo("fr-FR") }));
+                var inherited = this.window.Show(new DateTimePicker { SelectedDateTime = Afternoon }).Reads();
+                var named = this.window.Show(new DateTimePicker { SelectedDateTime = Afternoon, Culture = new CultureInfo("fr-FR") }).Reads();
 
                 Assert.That(inherited, Is.EqualTo(named), "a language passed down should read the same as the culture named outright");
                 Assert.That(inherited, Is.Not.EqualTo("17.03.2026 14:35:00"), "and not fall back to the thread");
@@ -109,32 +107,9 @@ namespace MahApps.Metro.Tests.Tests
         [Description("The plain time picker goes the same way, since the two share what decides it.")]
         public void ATimePickerGoesByTheCultureOfTheThreadToo()
         {
-            var picker = this.Show(new TimePicker { SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new TimePicker { SelectedDateTime = Afternoon });
 
-            Assert.That(Reads(picker), Is.EqualTo("14:35:00"));
-        }
-
-        private static string Reads(TimePickerBase picker)
-        {
-            var box = picker.FindChild<DatePickerTextBox>("PART_TextBox");
-
-            Assert.That(box, Is.Not.Null, "the template should carry its text box");
-
-            return box!.Text;
-        }
-
-        private T Show<T>(T picker)
-            where T : TimePickerBase
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            this.window!.Content = picker;
-            this.window.UpdateLayout();
-            ClipAssert.Pump();
-
-            Assert.That(picker.IsLoaded, Is.True, "the picker should be up before a test looks at it");
-
-            return picker;
+            Assert.That(picker.Reads(), Is.EqualTo("14:35:00"));
         }
     }
 }

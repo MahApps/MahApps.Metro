@@ -6,9 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -44,10 +42,10 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A day February does not have is not a date, and the picker now says so instead of only emptying itself.")]
         public void TextThatWillNotParseIsReported()
         {
-            var picker = this.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
             var reported = Watch(picker);
 
-            Type(picker, "31.02.2026");
+            picker.Type("31.02.2026");
 
             Assert.Multiple(() =>
                 {
@@ -61,10 +59,10 @@ namespace MahApps.Metro.Tests.Tests
         [Description("The plain time picker reports as well, the event sitting on the base both share.")]
         public void ATimePickerReportsToo()
         {
-            var picker = this.Show(new TimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new TimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
             var reported = Watch(picker);
 
-            Type(picker, "25:61");
+            picker.Type("25:61");
 
             Assert.That(reported, Is.EqualTo(new[] { "25:61" }));
         }
@@ -73,10 +71,10 @@ namespace MahApps.Metro.Tests.Tests
         [Description("An emptied field is somebody clearing the value, so there is nothing to report about it.")]
         public void AnEmptiedFieldIsNotAnError()
         {
-            var picker = this.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
             var reported = Watch(picker);
 
-            Type(picker, string.Empty);
+            picker.Type(string.Empty);
 
             Assert.Multiple(() =>
                 {
@@ -89,10 +87,10 @@ namespace MahApps.Metro.Tests.Tests
         [Description("Nor is whitespace, which is the same thing typed with the space bar.")]
         public void NorIsWhitespace()
         {
-            var picker = this.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
             var reported = Watch(picker);
 
-            Type(picker, "   ");
+            picker.Type("   ");
 
             Assert.That(reported, Is.Empty);
         }
@@ -101,10 +99,10 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A date the picker can read is not an error either, however it was typed.")]
         public void TextThatParsesIsNotReported()
         {
-            var picker = this.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
+            var picker = this.window.Show(new DateTimePicker { Culture = new CultureInfo("de-DE"), SelectedDateTime = Afternoon });
             var reported = Watch(picker);
 
-            Type(picker, "24.12.2026 18:00");
+            picker.Type("24.12.2026 18:00");
 
             Assert.Multiple(() =>
                 {
@@ -121,12 +119,12 @@ namespace MahApps.Metro.Tests.Tests
             var panel = new StackPanel();
             panel.Children.Add(picker);
 
-            this.Show(panel);
+            this.window.Show(panel);
 
             var reported = new List<string?>();
             panel.AddHandler(TimePickerBase.DateTimeValidationErrorEvent, new EventHandler<DateTimeValidationErrorEventArgs>((_, e) => reported.Add(e.Text)));
 
-            Type(picker, "31.02.2026");
+            picker.Type("31.02.2026");
 
             Assert.That(reported, Is.EqualTo(new[] { "31.02.2026" }));
         }
@@ -138,33 +136,6 @@ namespace MahApps.Metro.Tests.Tests
             picker.DateTimeValidationError += (_, e) => reported.Add(e.Text);
 
             return reported;
-        }
-
-        private static void Type(TimePickerBase picker, string text)
-        {
-            var box = picker.FindChild<DatePickerTextBox>("PART_TextBox");
-
-            Assert.That(box, Is.Not.Null, "the template should carry its text box");
-
-            // emptied first, because assigning the text the field already holds raises no TextChanged
-            // and the picker only reads the field back when something was typed into it
-            box!.Clear();
-            box.Text = text;
-            box.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
-        }
-
-        private T Show<T>(T content)
-            where T : FrameworkElement
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            this.window!.Content = content;
-            this.window.UpdateLayout();
-            ClipAssert.Pump();
-
-            Assert.That(content.IsLoaded, Is.True, "the picker should be up before a test looks at it");
-
-            return content;
         }
     }
 }
