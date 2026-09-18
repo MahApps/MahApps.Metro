@@ -23,6 +23,12 @@
     <PackageVersion Include="MaterialDesignThemes" Version="4.9.0" Condition="'$(IsBuildingForLegacyFramework)' == 'false'" />
     <PackageVersion Include="MaterialDesignColors" Version="2.1.4" Condition="'$(IsBuildingForLegacyFramework)' == 'false'" />
     <PackageVersion Include="NHotkey.Wpf" Version="4.0.0" />
+    <!-- The only build of ShowMeTheXAML that carries a net6.0 assembly is 2.0.0, everything since
+         ships net472 and net8.0-windows. The MSBuild part is netstandard2.0 either way, so only the
+         runtime assemblies have to follow the framework. -->
+    <PackageVersion Include="ShowMeTheXAML.MSBuild" Version="2.1.1" />
+    <PackageVersion Include="ShowMeTheXAML.AvalonEdit" Version="2.0.0" Condition="$(TargetFramework.StartsWith('net6.0')) == 'true'" />
+    <PackageVersion Include="ShowMeTheXAML.AvalonEdit" Version="2.1.1" Condition="$(TargetFramework.StartsWith('net6.0')) != 'true'" />
     <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.4129.50" />
     <PackageVersion Include="System.ComponentModel.Composition" Version="10.0.11" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" Condition="'$(IsBuildingForLegacyDotNet)' == 'true'" />
