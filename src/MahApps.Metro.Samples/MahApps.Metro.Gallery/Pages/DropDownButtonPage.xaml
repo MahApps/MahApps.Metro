@@ -32,24 +32,6 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
-            <controls:ControlExample x:Name="SplitExample"
-                                     Description="One half does the usual thing and the other half offers the rest, which is what a SplitButton is for."
-                                     Header="A button split in two">
-                <smtx:XamlDisplay UniqueKey="DropDownButton.Split">
-                    <mah:SplitButton x:Name="Split"
-                                     Width="200"
-                                     HorizontalAlignment="Left"
-                                     DisplayMemberPath="Header"
-                                     SelectedIndex="0">
-                        <mah:SplitButton.Items>
-                            <MenuItem Header="Save" />
-                            <MenuItem Header="Save as" />
-                            <MenuItem Header="Save a copy" />
-                        </mah:SplitButton.Items>
-                    </mah:SplitButton>
-                </smtx:XamlDisplay>
-            </controls:ControlExample>
-
         </StackPanel>
     </ScrollViewer>
 </UserControl>

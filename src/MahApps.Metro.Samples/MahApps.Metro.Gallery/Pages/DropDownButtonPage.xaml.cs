@@ -22,8 +22,6 @@ namespace MahApps.Metro.Gallery.Pages
                                        IsEnabledProperty);
             this.DropDownExample.Watch("Layout", this.DropDown, WidthProperty);
 
-            this.SplitExample.Watch(this.Split, SplitButton.SelectedIndexProperty, IsEnabledProperty);
-            this.SplitExample.Watch("Layout", this.Split, WidthProperty);
         }
     }
 }
