@@ -24,17 +24,6 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
-            <controls:ControlExample x:Name="TimeExample"
-                                     Description="The clock on its own, for the times when the day is already known."
-                                     Header="A time of day">
-                <smtx:XamlDisplay UniqueKey="DateTimePicker.Time">
-                    <mah:TimePicker x:Name="Time"
-                                    Width="280"
-                                    HorizontalAlignment="Left"
-                                    mah:TextBoxHelper.Watermark="At" />
-                </smtx:XamlDisplay>
-            </controls:ControlExample>
-
         </StackPanel>
     </ScrollViewer>
 </UserControl>

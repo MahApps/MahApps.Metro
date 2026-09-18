@@ -25,12 +25,6 @@ namespace MahApps.Metro.Gallery.Pages
                                    DateTimePicker.HandVisibilityProperty,
                                    DateTimePicker.IsReadOnlyProperty);
             this.BothExample.Watch("Layout", this.Both, WidthProperty);
-
-            this.TimeExample.Watch(this.Time,
-                                   TimePicker.SelectedDateTimeProperty,
-                                   TimePicker.SelectedTimeFormatProperty,
-                                   TimePicker.HandVisibilityProperty,
-                                   TimePicker.IsReadOnlyProperty);
         }
     }
 }
