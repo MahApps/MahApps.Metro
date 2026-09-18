@@ -30,6 +30,7 @@
             that runs rather than a copy of it.
         -->
         <EmbeddedResource Include="Windows\SampleWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.SampleWindow.xaml" />
+        <EmbeddedResource Include="Windows\TitleBarWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.TitleBarWindow.xaml" />
     </ItemGroup>
 
     <ItemGroup>
