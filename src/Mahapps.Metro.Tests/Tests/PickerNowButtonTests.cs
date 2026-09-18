@@ -5,7 +5,6 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -44,20 +43,20 @@ namespace MahApps.Metro.Tests.Tests
         [Description("The button is there to be seen without anybody asking for it.")]
         public void ThePickerShowsTheButtonWithoutBeingAsked()
         {
-            var picker = this.Show(new DateTimePicker());
+            var picker = this.window.Show(new DateTimePicker());
 
             Assert.That(picker.IsNowButtonVisible, Is.True, "the picker should say it shows one");
-            Assert.That(Button(picker).Visibility, Is.EqualTo(Visibility.Visible), "and the button should be visible");
+            Assert.That(picker.NowButton().Visibility, Is.EqualTo(Visibility.Visible), "and the button should be visible");
         }
 
         [Test]
         [Description("Pressing it puts the picker on the here and now, the time of day along with the date.")]
         public void PressingTheButtonSetsBothTheDateAndTheTime()
         {
-            var picker = this.Show(new DateTimePicker { SelectedDateTime = LongAgo });
+            var picker = this.window.Show(new DateTimePicker { SelectedDateTime = LongAgo });
 
             var before = DateTime.Now;
-            Button(picker).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            picker.NowButton().RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             var after = DateTime.Now;
 
             Assert.That(picker.SelectedDateTime, Is.Not.Null);
@@ -68,28 +67,28 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A picker told to do without it does without it, so a form that has no use for one is not given one.")]
         public void APickerToldToDoWithoutTheButtonHidesIt()
         {
-            var picker = this.Show(new DateTimePicker { IsNowButtonVisible = false });
+            var picker = this.window.Show(new DateTimePicker { IsNowButtonVisible = false });
 
-            Assert.That(Button(picker).Visibility, Is.Not.EqualTo(Visibility.Visible));
+            Assert.That(picker.NowButton().Visibility, Is.Not.EqualTo(Visibility.Visible));
         }
 
         [Test]
         [Description("The caption is the picker's to hand out, since Now is a word that wants translating.")]
         public void TheCaptionIsThePickersToHandOut()
         {
-            var picker = this.Show(new DateTimePicker { NowButtonContent = "Jetzt" });
+            var picker = this.window.Show(new DateTimePicker { NowButtonContent = "Jetzt" });
 
-            Assert.That(Button(picker).Content, Is.EqualTo("Jetzt"));
+            Assert.That(picker.NowButton().Content, Is.EqualTo("Jetzt"));
         }
 
         [Test]
         [Description("The plain time picker carries one as well, and pressing it lands on the time of day.")]
         public void TheTimePickerCarriesOneToo()
         {
-            var picker = this.Show(new TimePicker { SelectedDateTime = LongAgo });
+            var picker = this.window.Show(new TimePicker { SelectedDateTime = LongAgo });
 
             var before = DateTime.Now;
-            Button(picker).RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            picker.NowButton().RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             var after = DateTime.Now;
 
             Assert.That(picker.SelectedDateTime, Is.InRange(before, after));
@@ -99,52 +98,23 @@ namespace MahApps.Metro.Tests.Tests
         [Description("Escape closes the drop-down and puts back what was there before, whether the keyboard is on one of the lists or on this button.")]
         public void EscapeOnTheButtonClosesTheDropDownAndPutsBackWhatWasThere()
         {
-            var picker = this.Show(new DateTimePicker { SelectedDateTime = LongAgo });
+            var picker = this.window.Show(new DateTimePicker { SelectedDateTime = LongAgo });
 
             picker.SetCurrentValue(TimePickerBase.IsDropDownOpenProperty, true);
-            this.Settle();
+            this.window.Settle();
 
-            var button = Button(picker);
+            var button = picker.NowButton();
             button.Focus();
-            this.Settle();
+            this.window.Settle();
 
             button.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, new HwndSource(0, 0, 0, 0, 0, string.Empty, IntPtr.Zero), 0, Key.Escape)
                               {
                                   RoutedEvent = Keyboard.PreviewKeyDownEvent
                               });
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(picker.IsDropDownOpen, Is.False, "the drop-down should be shut");
             Assert.That(picker.SelectedDateTime, Is.EqualTo(LongAgo), "and the value should be the one it had before");
-        }
-
-        private static Button Button(TimePickerBase picker)
-        {
-            // it lives in the drop-down, so the visual tree has nothing until that is opened
-            var button = picker.Template?.FindName("PART_NowButton", picker) as Button;
-
-            Assert.That(button, Is.Not.Null, "the template should carry the button");
-
-            return button!;
-        }
-
-        private T Show<T>(T picker)
-            where T : TimePickerBase
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            this.window!.Content = picker;
-            this.Settle();
-
-            Assert.That(picker.IsLoaded, Is.True, "the picker should be up before a test looks at it");
-
-            return picker;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

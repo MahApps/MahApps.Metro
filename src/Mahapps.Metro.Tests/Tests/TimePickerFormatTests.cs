@@ -5,9 +5,7 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -45,21 +43,21 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A format is what the field reads, whatever the culture would have made of the value.")]
         public void AFormatIsWhatTheFieldReads()
         {
-            var picker = this.Show(new DateTimePicker
+            var picker = this.window.Show(new DateTimePicker
                                    {
                                        Culture = new CultureInfo("en-US"),
                                        SelectedDateTime = Afternoon,
                                        SelectedDateTimeFormat = DayFirst
                                    });
 
-            Assert.That(Reads(picker), Is.EqualTo("17.03.2026 14:35"));
+            Assert.That(picker.Reads(), Is.EqualTo("17.03.2026 14:35"));
         }
 
         [Test]
         [Description("It has the first word over the two enums, which is the point of having it: long and long is what en-US would say here.")]
         public void AFormatWinsOverTheTwoEnums()
         {
-            var picker = this.Show(new DateTimePicker
+            var picker = this.window.Show(new DateTimePicker
                                    {
                                        Culture = new CultureInfo("en-US"),
                                        SelectedDateTime = Afternoon,
@@ -68,28 +66,28 @@ namespace MahApps.Metro.Tests.Tests
                                        SelectedDateTimeFormat = DayFirst
                                    });
 
-            Assert.That(Reads(picker), Is.EqualTo("17.03.2026 14:35"));
+            Assert.That(picker.Reads(), Is.EqualTo("17.03.2026 14:35"));
         }
 
         [Test]
         [Description("The plain time picker takes one too, since the property sits on the base both share.")]
         public void ATimePickerTakesAFormatAsWell()
         {
-            var picker = this.Show(new TimePicker
+            var picker = this.window.Show(new TimePicker
                                    {
                                        Culture = new CultureInfo("en-US"),
                                        SelectedDateTime = Afternoon,
                                        SelectedDateTimeFormat = "HH:mm"
                                    });
 
-            Assert.That(Reads(picker), Is.EqualTo("14:35"));
+            Assert.That(picker.Reads(), Is.EqualTo("14:35"));
         }
 
         [Test]
         [Description("Nothing about the old behaviour moves: taken away again, the culture says what the field reads.")]
         public void WithTheFormatGoneTheCultureSaysItAgain()
         {
-            var picker = this.Show(new DateTimePicker
+            var picker = this.window.Show(new DateTimePicker
                                    {
                                        Culture = new CultureInfo("en-US"),
                                        SelectedDateTime = Afternoon,
@@ -98,7 +96,7 @@ namespace MahApps.Metro.Tests.Tests
 
             picker.SetCurrentValue(TimePickerBase.SelectedDateTimeFormatProperty, null);
 
-            Assert.That(Reads(picker), Is.EqualTo("3/17/2026 2:35:00 PM"));
+            Assert.That(picker.Reads(), Is.EqualTo("3/17/2026 2:35:00 PM"));
         }
 
         [Test]
@@ -107,23 +105,23 @@ namespace MahApps.Metro.Tests.Tests
         {
             var couldSwap = new DateTime(2026, 4, 3, 14, 35, 0);
 
-            var picker = this.Show(new DateTimePicker
+            var picker = this.window.Show(new DateTimePicker
                                    {
                                        Culture = new CultureInfo("en-US"),
                                        SelectedDateTime = couldSwap,
                                        SelectedDateTimeFormat = DayFirst
                                    });
 
-            var wasWritten = Reads(picker);
+            var wasWritten = picker.Reads();
 
             Assert.That(wasWritten, Is.EqualTo("03.04.2026 14:35"));
 
-            Type(picker, wasWritten);
+            picker.Type(wasWritten);
 
             Assert.Multiple(() =>
                 {
                     Assert.That(picker.SelectedDateTime, Is.EqualTo(couldSwap), "the value should have survived being typed back in");
-                    Assert.That(Reads(picker), Is.EqualTo(wasWritten));
+                    Assert.That(picker.Reads(), Is.EqualTo(wasWritten));
                 });
         }
 
@@ -131,7 +129,7 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A format costs nothing in what may be typed: anything the culture can still make sense of is taken.")]
         public void TypingStaysAsForgivingAsItWas()
         {
-            var picker = this.Show(new DateTimePicker
+            var picker = this.window.Show(new DateTimePicker
                                    {
                                        Culture = new CultureInfo("de-DE"),
                                        SelectedDateTime = Afternoon,
@@ -139,48 +137,9 @@ namespace MahApps.Metro.Tests.Tests
                                    });
 
             // a date on its own, which the format does not describe and the culture reads without trouble
-            Type(picker, "24.12.2026");
+            picker.Type("24.12.2026");
 
             Assert.That(picker.SelectedDateTime, Is.EqualTo(new DateTime(2026, 12, 24)));
-        }
-
-        private static string Reads(TimePickerBase picker)
-        {
-            return Box(picker).Text;
-        }
-
-        private static void Type(TimePickerBase picker, string text)
-        {
-            var box = Box(picker);
-
-            // emptied first, because assigning the text the field already holds raises no TextChanged
-            // and the picker only reads the field back when something was typed into it
-            box.Clear();
-            box.Text = text;
-            box.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
-        }
-
-        private static DatePickerTextBox Box(TimePickerBase picker)
-        {
-            var box = picker.FindChild<DatePickerTextBox>("PART_TextBox");
-
-            Assert.That(box, Is.Not.Null, "the template should carry its text box");
-
-            return box!;
-        }
-
-        private T Show<T>(T picker)
-            where T : TimePickerBase
-        {
-            Assert.That(this.window, Is.Not.Null);
-
-            this.window!.Content = picker;
-            this.window.UpdateLayout();
-            ClipAssert.Pump();
-
-            Assert.That(picker.IsLoaded, Is.True, "the picker should be up before a test looks at it");
-
-            return picker;
         }
     }
 }
