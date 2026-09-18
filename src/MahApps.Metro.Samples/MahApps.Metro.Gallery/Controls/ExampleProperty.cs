@@ -186,9 +186,19 @@ namespace MahApps.Metro.Gallery.Controls
         /// </summary>
         private static object? CoerceValue(DependencyObject d, object? value)
         {
-            if (d is not ExampleProperty property || value is null)
+            if (d is not ExampleProperty property)
             {
                 return value;
+            }
+
+            if (value is null)
+            {
+                // an emptied editor means the property goes back to holding what it holds without
+                // anybody saying so, and for Height that is NaN rather than nothing at all, which a
+                // double could not take anyway
+                return Nullable.GetUnderlyingType(property.PropertyType) is null && property.PropertyType.IsValueType
+                    ? property.Property.GetMetadata(property.Target).DefaultValue
+                    : null;
             }
 
             var wanted = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
