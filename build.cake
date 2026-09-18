@@ -338,6 +338,13 @@ Task("Tests")
             // spelled out: left alone it is full, and a full dump of the test host carries the
             // signing secrets it inherited through its environment.
             ArgumentCustomization = args => args
+                // One desktop, one test host. A multi-targeted test project hands its frameworks to
+                // MSBuild, which runs as many of them side by side as it has build nodes to spare,
+                // and these are UI tests: only one window on a desktop holds the foreground, and the
+                // one that loses it loses the keyboard along with the mouse capture that keeps a
+                // popup up. Four hosts taking that from one another is a test failing with nobody
+                // having touched it.
+                .Append("-p:TestTfmsInParallel=false")
                 .Append("--blame-hang")
                 .Append("--blame-hang-timeout")
                 .Append("5m")
