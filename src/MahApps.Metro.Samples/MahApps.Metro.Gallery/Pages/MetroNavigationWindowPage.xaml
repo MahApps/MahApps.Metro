@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.MetroNavigationWindowPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample Description="WPF's NavigationWindow rebuilt on a MetroWindow: a bar with a back and a forward button, the title of the page that is showing, and a frame under it for the pages. The bar belongs to the window rather than being something to add, and the two round buttons switch themselves on from CanGoBack and CanGoForward. Everything a MetroWindow can do it can do too, because it is one, but it is the one control in the library that is compiled markup rather than a template, which has two consequences: the bar cannot be restyled or rearranged, and the window cannot be the root of a XAML file of its own. This one is therefore built in the code behind, and the pages are what is written in markup. The first of them is below. Two more things worth knowing: navigate to a Page rather than to anything else, since the window reads the Title off what arrives, and the content property of the window is OverlayContent, so anything written inside its tags lands on top of every page rather than in the frame. The second button on the page shows that."
+                                     Header="A window that keeps a journal"
+                                     MarkupResource="MahApps.Metro.Gallery.Windows.NavigationSampleFirstPage.xaml">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnOpenWindow"
+                        Content="Open the window" />
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

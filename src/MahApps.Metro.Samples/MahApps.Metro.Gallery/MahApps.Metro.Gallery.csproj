@@ -24,13 +24,14 @@
         <!--  read back by XamlSyntaxHighlighting, which fills in the colours of the current theme  -->
         <EmbeddedResource Include="Themes\Xaml.xshd" LogicalName="MahApps.Metro.Gallery.Themes.Xaml.xshd" />
         <!--
-            The sample window goes in twice: compiled, so that it can be opened, and as the text it
-            was written as, so that the card can show it. A window has to be the root of its markup
-            and can therefore not sit in a XamlDisplay, and this way the shown markup is the file
-            that runs rather than a copy of it.
+            The sample windows go in twice, and the navigated page with them: compiled, so that
+            they can be opened, and as the text they were written as, so that the card can show it.
+            A window has to be the root of its markup and can therefore not sit in a XamlDisplay,
+            and this way the shown markup is the file that runs rather than a copy of it.
         -->
         <EmbeddedResource Include="Windows\SampleWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.SampleWindow.xaml" />
         <EmbeddedResource Include="Windows\TitleBarWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.TitleBarWindow.xaml" />
+        <EmbeddedResource Include="Windows\NavigationSampleFirstPage.xaml" LogicalName="MahApps.Metro.Gallery.Windows.NavigationSampleFirstPage.xaml" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,8 @@ namespace MahApps.Metro.Gallery.Core
                                                                       {
                                                                           { "http://metro.mahapps.com/winfx/xaml/controls", "mah" },
                                                                           { "http://metro.mahapps.com/winfx/xaml/shared", "mah" },
-                                                                          { "http://metro.mahapps.com/winfx/xaml/iconpacks", "iconPacks" }
+                                                                          { "http://metro.mahapps.com/winfx/xaml/iconpacks", "iconPacks" },
+                                                                          { "urn:controlzex", "controlzex" }
                                                                       };
 
         private readonly IXamlFormatter formatter = new XamlFormatter { NewLineOnAttributes = true };
@@ -80,6 +81,14 @@ namespace MahApps.Metro.Gallery.Core
 
             foreach (var property in this.properties)
             {
+                // a property the sample only reports is shown beside it and never written into it,
+                // since nobody could have written it themselves: IsTransitioning came out of the
+                // markup as an attribute that does not compile
+                if (property.IsReadOnly)
+                {
+                    continue;
+                }
+
                 var element = FindTarget(root, property.TargetName);
                 if (element is null)
                 {

@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.CustomValidationPopupPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="InPlaceExample"
+                                     Description="Nobody places one of these: the message beside a control whose binding was turned down is a CustomValidationPopup, and MahApps.Templates.ValidationError puts it there, which the Validation page under Styles has. What the control is for is everything a plain popup will not do, and a plain popup is a window of its own that knows nothing about the window it belongs to. This one moves with its window when that is moved, resized or maximised, follows the control it points at when that changes size, is topmost only while its window is active so that it does not float over other applications, and closes itself when the control scrolls out of sight. Scroll this page slowly and watch the message go when the box does. The box below carries AlwaysShowValidationError so that there is something to watch."
+                                     Header="The one you already have">
+                <smtx:XamlDisplay UniqueKey="CustomValidationPopup.InPlace">
+                    <AdornerDecorator HorizontalAlignment="Left">
+                        <TextBox x:Name="Age"
+                                 Width="280"
+                                 mah:TextBoxHelper.Watermark="Between 1 and 99"
+                                 mah:ValidationHelper.AlwaysShowValidationError="True"
+                                 Text="{Binding Age, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                    </AdornerDecorator>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="MovingExample"
+                                     Description="What CanShow is for. While an ancestor is animating, a flyout sliding in or the MetroContentControl below playing its transition, the message would be pinned to where the box is going to be rather than to where it is, so the popup reports that this is not the moment and the template's trigger waits for it. Press the button: the message goes for as long as the content moves and comes back when it has arrived. CanShow is read-only and belongs to the popup inside the template, so what can be turned here is the transition around it."
+                                     Header="While something else is moving">
+                <smtx:XamlDisplay UniqueKey="CustomValidationPopup.Moving">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:MetroContentControl x:Name="Moving">
+                            <AdornerDecorator>
+                                <TextBox x:Name="Email"
+                                         Width="280"
+                                         mah:TextBoxHelper.Watermark="name@example.com"
+                                         mah:ValidationHelper.AlwaysShowValidationError="True"
+                                         Text="{Binding Email, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                            </AdornerDecorator>
+                        </mah:MetroContentControl>
+                        <Button Width="160"
+                                Margin="0 12 0 0"
+                                HorizontalAlignment="Left"
+                                Click="OnReload"
+                                Content="Play the transition" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
