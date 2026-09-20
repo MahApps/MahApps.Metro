@@ -26,11 +26,9 @@
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
     <!--
-        if using DialogParticipation on Windows which open/close frequently you will get a
-        memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
-        event, as so:
-        
-        DialogParticipation.SetRegister(this, null);
+        A window that opens and closes over and over used to leave its registration behind, so it had
+        to clear the property itself on Closing or Unloaded. That is no longer needed: a registration
+        now goes when the context it was made for does. See GH-4573.
     -->
 
     <Window.Resources>
