@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.MultiSelectionComboBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PickExample"
+                                     Description="A combo box that keeps more than one answer. What is picked is shown in front as a row of nuggets rather than as one line of text, the drop down marks what is already in, and SelectionMode decides how much can be. OrderSelectedItemsBy says whether the nuggets stand in the order they were picked or in the order the list has them. The names come from the code behind. The control itself is new, 2.4.11 does not have it at all, and it arrives with the next release."
+                                     Header="More than one at a time">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.Pick">
+                    <mah:MultiSelectionComboBox x:Name="Picked"
+                                                Width="320"
+                                                HorizontalAlignment="Left"
+                                                ItemsSource="{Binding Names}"
+                                                SelectionMode="Multiple" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="StyleExample"
+                                     Description="Two styles for the control itself, and the difference is what happens when the nuggets outgrow the line. The upper one is the default and wraps them, so the control grows downwards. The lower one is MahApps.Styles.MultiSelectionComboBox.Horizontal and keeps them in one line with a scroll bar under them, so the control keeps its height and the row scrolls."
+                                     Header="Wrapped or in one line">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.Styles">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:MultiSelectionComboBox x:Name="Wrapping"
+                                                    Width="320"
+                                                    ItemsSource="{Binding Names}"
+                                                    SelectionMode="Multiple" />
+                        <mah:MultiSelectionComboBox x:Name="OneLine"
+                                                    Width="320"
+                                                    Margin="0 12 0 0"
+                                                    ItemsSource="{Binding Names}"
+                                                    SelectionMode="Multiple"
+                                                    Style="{StaticResource MahApps.Styles.MultiSelectionComboBox.Horizontal}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TickExample"
+                                     Description="The items in the drop down take a style of their own. The default one looks like the items of an ordinary combo box and marks what is selected with the accent; MahApps.Styles.MultiSelectionComboBoxItem.CheckBox puts a tick box in front of each one instead, which says more plainly that this is a list one picks several from. Open the drop down with the option below to see it."
+                                     Header="Tick boxes in the list">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.Ticks">
+                    <mah:MultiSelectionComboBox x:Name="Ticks"
+                                                Width="320"
+                                                HorizontalAlignment="Left"
+                                                ItemContainerStyle="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.CheckBox}"
+                                                ItemsSource="{Binding Names}"
+                                                SelectionMode="Multiple" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="RemoveExample"
+                                     Description="And the nuggets in front take one too. MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable puts a cross on each of them, so a pick can be taken back without opening the drop down again. Both of these only apply while the control is not editable, because an editable one shows text rather than nuggets."
+                                     Header="A cross on every pick">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.Remove">
+                    <mah:MultiSelectionComboBox x:Name="Removable"
+                                                Width="320"
+                                                HorizontalAlignment="Left"
+                                                ItemsSource="{Binding Names}"
+                                                SelectedItemContainerStyle="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable}"
+                                                SelectionMode="Multiple" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TypeExample"
+                                     Description="An editable one shows the picks as one string with the separator between them, and it reads that string back: the comparer decides which item a fragment means, and the delay says how long to wait before looking. Type a name that is in the list and it is picked, type something that is not and the text counts as the reader's own, HasCustomText goes true and the drop down covers itself with an overlay rather than losing what was typed. The button on the overlay puts the text back to what the picks say."
+                                     Header="Typing instead of picking">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.Type">
+                    <mah:MultiSelectionComboBox x:Name="Typed"
+                                                Width="320"
+                                                HorizontalAlignment="Left"
+                                                EditableTextStringComparision="CurrentCultureIgnoreCase"
+                                                IsEditable="True"
+                                                ItemsSource="{Binding Names}"
+                                                ObjectToStringComparer="{mah:DefaultObjectToStringComparer}"
+                                                SelectItemsFromTextInputDelay="500"
+                                                SelectionMode="Multiple"
+                                                Separator=", " />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
