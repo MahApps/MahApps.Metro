@@ -4,13 +4,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
     public static class DialogParticipation
     {
-        private static readonly IDictionary<object, DependencyObject> ContextRegistrationIndex = new Dictionary<object, DependencyObject>();
+        /// <summary>
+        /// Where a registration lives until the context it was made for is gone.
+        /// <para/>
+        /// A plain dictionary would be the end of both of them, since closing a window does not change
+        /// the attached property and nothing else takes the entry out. A weak reference on the key is
+        /// not enough either: the element that is registered is usually the window, and its DataContext
+        /// is the very context under which it is filed, so the entry would keep itself alive. A
+        /// <see cref="ConditionalWeakTable{TKey,TValue}"/> is the one that copes with that circle, since
+        /// its entry only lives as long as somebody else still holds the key.
+        /// </summary>
+        private static readonly ConditionalWeakTable<object, DependencyObject> ContextRegistrationIndex = new ConditionalWeakTable<object, DependencyObject>();
 
         public static readonly DependencyProperty RegisterProperty
             = DependencyProperty.RegisterAttached("Register",
@@ -27,7 +38,14 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (dependencyPropertyChangedEventArgs.NewValue != null)
             {
-                ContextRegistrationIndex[dependencyPropertyChangedEventArgs.NewValue] = dependencyObject;
+#if NETCOREAPP || NET472_OR_GREATER
+                ContextRegistrationIndex.AddOrUpdate(dependencyPropertyChangedEventArgs.NewValue, dependencyObject);
+#else
+                // AddOrUpdate arrived in net472 and is not on the legacy target, so there the old entry
+                // goes first and the new one after it.
+                ContextRegistrationIndex.Remove(dependencyPropertyChangedEventArgs.NewValue);
+                ContextRegistrationIndex.Add(dependencyPropertyChangedEventArgs.NewValue, dependencyObject);
+#endif
             }
         }
 
@@ -48,7 +66,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 throw new ArgumentNullException(nameof(context));
             }
 
-            return ContextRegistrationIndex.ContainsKey(context);
+            return ContextRegistrationIndex.TryGetValue(context, out _);
         }
 
         internal static DependencyObject GetAssociation(object context)
@@ -58,7 +76,12 @@ namespace MahApps.Metro.Controls.Dialogs
                 throw new ArgumentNullException(nameof(context));
             }
 
-            return ContextRegistrationIndex[context];
+            if (ContextRegistrationIndex.TryGetValue(context, out var element) == false)
+            {
+                throw new KeyNotFoundException($"The context `{context}` is not registered.");
+            }
+
+            return element;
         }
     }
 }

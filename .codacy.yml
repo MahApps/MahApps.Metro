@@ -1,5 +1,9 @@
 ---
-# The generated .g.i.cs half of a WPF code behind file is not part of the analysis, so the
-# partial modifier that the compiler requires there is reported as gratuitous (SonarC# S2333).
 exclude_paths:
+  # The generated .g.i.cs half of a WPF code behind file is not part of the analysis, so the
+  # partial modifier that the compiler requires there is reported as gratuitous (SonarC# S2333).
   - "**/*.xaml.cs"
+  # A test about lifetimes has to force a collection to ask whether anything still holds what it
+  # dropped, which is the one place where the advice not to call GC.Collect does not apply
+  # (SonarC# S1215).
+  - "src/Mahapps.Metro.Tests/Tests/DialogParticipationTests.cs"
