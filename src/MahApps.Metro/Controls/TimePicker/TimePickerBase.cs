@@ -34,6 +34,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
     [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
     [TemplatePart(Name = ElementPopup, Type = typeof(Popup))]
+    [StyleTypedProperty(Property = nameof(ClockStyle), StyleTargetType = typeof(AnalogClock))]
+    [StyleTypedProperty(Property = nameof(PopupStyle), StyleTargetType = typeof(Popup))]
     [DefaultEvent("SelectedDateTimeChanged")]
     public abstract class TimePickerBase : Control
     {
@@ -351,6 +353,68 @@ namespace MahApps.Metro.Controls
         {
             get => (TimePartVisibility)this.GetValue(HandVisibilityProperty);
             set => this.SetValue(HandVisibilityProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ClockSize"/> dependency property.</summary>
+        public static readonly DependencyProperty ClockSizeProperty
+            = DependencyProperty.Register(nameof(ClockSize),
+                                          typeof(double),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata(120d));
+
+        /// <summary>
+        /// Gets or sets how large the clock in the drop-down is drawn. The face scales with it, so
+        /// one number is the whole of it.
+        /// </summary>
+        /// <remarks>
+        /// The size lives here and not as a <see cref="FrameworkElement.Width"/> in
+        /// <see cref="ClockStyle"/>, because the template hands it to the clock and what a template
+        /// sets on one of its own elements beats what a style sets on it.
+        /// </remarks>
+        [Category("Appearance")]
+        [DefaultValue(120d)]
+        public double ClockSize
+        {
+            get => (double)this.GetValue(ClockSizeProperty);
+            set => this.SetValue(ClockSizeProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ClockStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty ClockStyleProperty
+            = DependencyProperty.Register(nameof(ClockStyle),
+                                          typeof(Style),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the style of the clock in the drop-down. Left alone, the clock wears the one
+        /// the theme gives it. The size is <see cref="ClockSize"/> either way.
+        /// </summary>
+        public Style? ClockStyle
+        {
+            get => (Style?)this.GetValue(ClockStyleProperty);
+            set => this.SetValue(ClockStyleProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="PopupStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty PopupStyleProperty
+            = DependencyProperty.Register(nameof(PopupStyle),
+                                          typeof(Style),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the style of the drop-down, which is where its placement, its offsets and
+        /// the room it is allowed to take come from.
+        /// </summary>
+        /// <remarks>
+        /// A style of your own stands on <c>MahApps.Styles.Popup.TimePickerBase</c>, since that one
+        /// carries what a drop-down needs to behave like one.
+        /// </remarks>
+        public Style? PopupStyle
+        {
+            get => (Style?)this.GetValue(PopupStyleProperty);
+            set => this.SetValue(PopupStyleProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
@@ -745,6 +809,8 @@ namespace MahApps.Metro.Controls
             this.hourInput = this.GetTemplateChild(ElementHourPicker) as Selector;
             this.minuteInput = this.GetTemplateChild(ElementMinutePicker) as Selector;
             this.secondInput = this.GetTemplateChild(ElementSecondPicker) as Selector;
+            // The clock draws its own hands and hides them itself. These three are looked up for
+            // a template written before it was a control of its own, which still has them.
             this.hourHand = this.GetTemplateChild(ElementHourHand) as FrameworkElement;
             this.ampmSwitcher = this.GetTemplateChild(ElementAmPmSwitcher) as Selector;
             this.minuteHand = this.GetTemplateChild(ElementMinuteHand) as FrameworkElement;

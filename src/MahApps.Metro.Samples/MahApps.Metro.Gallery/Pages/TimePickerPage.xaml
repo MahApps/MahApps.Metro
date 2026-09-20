@@ -38,6 +38,19 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="ClockExample"
+                                     Description="The clock behind the drop down is a control of its own, so it can be turned without a copy of the picker around it. ClockSize says how large the face is drawn and the drop down grows with it; ClockStyle takes its look and PopupStyle the placement of the drop down."
+                                     Header="A clock the size you want it">
+                <smtx:XamlDisplay UniqueKey="TimePicker.Clock">
+                    <mah:TimePicker x:Name="BigClock"
+                                    Width="280"
+                                    HorizontalAlignment="Left"
+                                    mah:TextBoxHelper.Watermark="At"
+                                    ClockSize="200"
+                                    HandVisibility="All" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

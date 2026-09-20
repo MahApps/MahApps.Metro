@@ -48,7 +48,13 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(TextBox), "MahApps.Styles.TextBox.Win10")]
         [TestCase(Win10, typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.Win10")]
         [TestCase(Win10, typeof(IntegerUpDown), "MahApps.Styles.NumericUpDown.Win10")]
+        [TestCase(Win10, typeof(TimePicker), "MahApps.Styles.TimePicker.Win10")]
+        [TestCase(Win10, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.Win10")]
+        [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
         [TestCase(WinUI, typeof(TextBox), "MahApps.Styles.TextBox.WinUI")]
+        [TestCase(WinUI, typeof(TimePicker), "MahApps.Styles.TimePicker.WinUI")]
+        [TestCase(WinUI, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.WinUI")]
+        [TestCase(WinUI, typeof(AnalogClock), "MahApps.Styles.AnalogClock.WinUI")]
         [Description("A set puts its own style in front of the one the default set declares for that type.")]
         public void ASetPutsItsOwnStyleInFront(string set, Type target, string expected)
         {
@@ -77,6 +83,9 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(typeof(Button), "MahApps.Styles.Button")]
         [TestCase(typeof(TextBox), "MahApps.Styles.TextBox")]
         [TestCase(typeof(CheckBox), "MahApps.Styles.CheckBox")]
+        [TestCase(typeof(TimePicker), "MahApps.Styles.TimePicker")]
+        [TestCase(typeof(DateTimePicker), "MahApps.Styles.DateTimePicker")]
+        [TestCase(typeof(AnalogClock), "MahApps.Styles.AnalogClock")]
         [Description("Merging the default set changes nothing about what it has always drawn, whatever the other two do.")]
         public void TheDefaultSetIsStillTheDefaultSet(Type target, string expected)
         {
