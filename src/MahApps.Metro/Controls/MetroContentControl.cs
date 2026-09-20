@@ -200,16 +200,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (this.ReverseTransition)
-            {
-                VisualStateManager.GoToState(this, "BeforeLoaded", true);
-                VisualStateManager.GoToState(this, "AfterUnLoadedReverse", true);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, "BeforeLoaded", true);
-                VisualStateManager.GoToState(this, "AfterLoaded", true);
-            }
+            VisualStateManager.GoToState(this, "BeforeLoaded", true);
+            VisualStateManager.GoToState(this, this.ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
         }
 
         /// <inheritdoc />
