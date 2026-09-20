@@ -521,6 +521,40 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(VerticalScrollBarOnLeftSideProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="VerticalScrollBarVisibility"/> dependency property.</summary>
+        public static readonly DependencyProperty VerticalScrollBarVisibilityProperty
+            = DependencyProperty.Register(nameof(VerticalScrollBarVisibility),
+                                          typeof(ScrollBarVisibility),
+                                          typeof(HamburgerMenu),
+                                          new PropertyMetadata(ScrollBarVisibility.Auto));
+
+        /// <summary>
+        /// Gets or sets the visibility of the vertical ScrollBar for the menu items.
+        /// <see cref="ScrollBarVisibility.Auto"/> shows it while the pointer is over the pane,
+        /// <see cref="ScrollBarVisibility.Visible"/> keeps it there as long as the pane is open.
+        /// </summary>
+        public ScrollBarVisibility VerticalScrollBarVisibility
+        {
+            get => (ScrollBarVisibility)this.GetValue(VerticalScrollBarVisibilityProperty);
+            set => this.SetValue(VerticalScrollBarVisibilityProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OptionsVerticalScrollBarVisibility"/> dependency property.</summary>
+        public static readonly DependencyProperty OptionsVerticalScrollBarVisibilityProperty
+            = DependencyProperty.Register(nameof(OptionsVerticalScrollBarVisibility),
+                                          typeof(ScrollBarVisibility),
+                                          typeof(HamburgerMenu),
+                                          new PropertyMetadata(ScrollBarVisibility.Disabled));
+
+        /// <summary>
+        /// Gets or sets the visibility of the vertical ScrollBar for the option items.
+        /// </summary>
+        public ScrollBarVisibility OptionsVerticalScrollBarVisibility
+        {
+            get => (ScrollBarVisibility)this.GetValue(OptionsVerticalScrollBarVisibilityProperty);
+            set => this.SetValue(OptionsVerticalScrollBarVisibilityProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="ShowSelectionIndicator"/> dependency property.</summary>
         public static readonly DependencyProperty ShowSelectionIndicatorProperty
             = DependencyProperty.Register(nameof(ShowSelectionIndicator),
