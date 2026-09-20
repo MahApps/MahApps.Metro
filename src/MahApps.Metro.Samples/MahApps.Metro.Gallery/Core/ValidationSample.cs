@@ -151,8 +151,10 @@ namespace MahApps.Metro.Gallery.Core
 
                     break;
 
+                // a property nobody wrote a rule for has nothing to report, and neither has the
+                // null that stands for the object as a whole
                 default:
-                    break;
+                    yield break;
             }
         }
 
