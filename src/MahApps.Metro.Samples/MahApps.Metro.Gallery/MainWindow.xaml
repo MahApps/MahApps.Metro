@@ -1,0 +1,210 @@
+﻿<mah:MetroWindow x:Class="MahApps.Metro.Gallery.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="MahApps.Metro Gallery"
+                 Width="1200"
+                 Height="800"
+                 MinWidth="800"
+                 MinHeight="500"
+                 Icon="mahapps.metro.logo2.ico"
+                 ResizeMode="CanResizeWithGrip"
+                 WindowStartupLocation="CenterScreen"
+                 mc:Ignorable="d">
+
+    <!--  where a page hangs the flyouts it wants to show, since a flyout belongs to the window  -->
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl />
+    </mah:MetroWindow.Flyouts>
+
+    <DockPanel>
+
+        <!--
+            The strip at the bottom says where the reader is. It is the library's own StatusBar, which
+            reaches up to the window for its background and comes out in the title colour, so the
+            gallery shows that control off by wearing it rather than by talking about it.
+        -->
+        <StatusBar DataContext="{Binding ElementName=Menu, Path=Content}" DockPanel.Dock="Bottom">
+            <StatusBar.Resources>
+                <core:PagePositionConverter x:Key="PagePosition" />
+
+                <!--  a status bar hands every separator a reference to this key, which beats an implicit style, so the style has to sit under it  -->
+                <Style x:Key="{x:Static StatusBar.SeparatorStyleKey}"
+                       BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar}"
+                       TargetType="{x:Type Separator}" />
+            </StatusBar.Resources>
+
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--  a status bar lays its items out in a DockPanel and lets the last of them have whatever is left, so the one docked to the right would stretch across the bar rather than sit at its end  -->
+                    <DockPanel LastChildFill="False" />
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Width="14"
+                                                Height="14"
+                                                VerticalAlignment="Center"
+                                                Kind="{Binding Icon}" />
+                    <TextBlock Margin="10 0 0 0"
+                               VerticalAlignment="Center"
+                               Opacity="0.75"
+                               Text="{Binding Category}" />
+                    <iconPacks:PackIconMaterial Width="9"
+                                                Height="9"
+                                                Margin="8 1 8 0"
+                                                VerticalAlignment="Center"
+                                                Kind="ChevronRight"
+                                                Opacity="0.6" />
+                    <TextBlock VerticalAlignment="Center"
+                               FontWeight="SemiBold"
+                               Text="{Binding Title}" />
+                </StackPanel>
+            </StatusBarItem>
+
+            <Separator>
+                <Separator.Style>
+                    <!--  the settings page carries no keywords, and a separator in front of nothing is a line in the middle of the bar  -->
+                    <Style BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar}" TargetType="{x:Type Separator}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Keywords}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Separator.Style>
+            </Separator>
+
+            <StatusBarItem>
+                <TextBlock Style="{StaticResource MahApps.Styles.TextBlock.AutoCollapsing}" Text="{Binding Keywords}" />
+            </StatusBarItem>
+
+            <StatusBarItem Margin="0 0 18 0" DockPanel.Dock="Right">
+                <TextBlock Style="{StaticResource MahApps.Styles.TextBlock.AutoCollapsing}" Text="{Binding Converter={StaticResource PagePosition}}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <mah:HamburgerMenu x:Name="Menu"
+                           CompactPaneLength="48"
+                           DisplayMode="CompactInline"
+                           IsPaneOpen="True"
+                           ItemInvoked="OnItemInvoked"
+                           OpenPaneLength="260"
+                           ShowSelectionIndicator="True">
+
+            <!--  the search, which is a job for the control this gallery is showing off two pages later  -->
+            <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+                <DataTemplate>
+                    <mah:AutoSuggestBox x:Name="Search"
+                                        Margin="12 8 12 12"
+                                        mah:TextBoxHelper.ClearTextButton="True"
+                                        mah:TextBoxHelper.Watermark="Search"
+                                        DisplayMemberPath="Title"
+                                        QuerySubmitted="OnSearchQuerySubmitted"
+                                        TextChanged="OnSearchTextChanged" />
+                </DataTemplate>
+            </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+
+            <mah:HamburgerMenu.ItemTemplate>
+                <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                    <Grid Height="44">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding Icon}"
+                                        Focusable="False"
+                                        IsTabStop="False" />
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Text="{Binding Label}" />
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.ItemTemplate>
+
+            <mah:HamburgerMenu.OptionsItemTemplate>
+                <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                    <Grid Height="44">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Content="{Binding Icon}"
+                                        Focusable="False"
+                                        IsTabStop="False" />
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Text="{Binding Label}" />
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.OptionsItemTemplate>
+
+            <!--
+                The page itself, with the heading and the two links above it. They sit here rather than on
+                every card, because they belong to the control and not to one sample of it.
+            -->
+            <mah:HamburgerMenu.ContentTemplate>
+                <DataTemplate DataType="{x:Type core:GalleryPage}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <DockPanel Grid.Row="0" Margin="24 20 20 4">
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <Button Command="{x:Static core:GalleryCommands.OpenLink}"
+                                        CommandParameter="{Binding Documentation}"
+                                        Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
+                                        ToolTip="Read the documentation on mahapps.com">
+                                    <iconPacks:PackIconMaterial Width="16"
+                                                                Height="16"
+                                                                Kind="BookOpenPageVariantOutline" />
+                                </Button>
+                                <Button Command="{x:Static core:GalleryCommands.OpenLink}"
+                                        CommandParameter="{Binding ControlSource}"
+                                        Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
+                                        ToolTip="See the control itself on GitHub">
+                                    <iconPacks:PackIconMaterial Width="16"
+                                                                Height="16"
+                                                                Kind="CodeBraces" />
+                                </Button>
+                                <Button Command="{x:Static core:GalleryCommands.OpenLink}"
+                                        CommandParameter="{Binding PageSource}"
+                                        Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
+                                        ToolTip="See the XAML of this page on GitHub">
+                                    <iconPacks:PackIconMaterial Width="16"
+                                                                Height="16"
+                                                                Kind="CodeTags" />
+                                </Button>
+                            </StackPanel>
+
+                            <TextBlock VerticalAlignment="Center"
+                                       FontSize="26"
+                                       Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                       Text="{Binding Title}" />
+                        </DockPanel>
+
+                        <ContentControl Grid.Row="1"
+                                        Content="{Binding View}"
+                                        Focusable="False"
+                                        IsTabStop="False" />
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.ContentTemplate>
+        </mah:HamburgerMenu>
+    </DockPanel>
+</mah:MetroWindow>

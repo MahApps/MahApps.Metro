@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel MaxWidth="520" HorizontalAlignment="Left">
+
+            <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
+                       Text="The gallery follows Windows until you pick something here, which is also how a MahApps application behaves out of the box."
+                       TextWrapping="Wrap" />
+
+            <mah:ToggleSwitch x:Name="FollowWindows"
+                              Margin="0 16 0 0"
+                              Header="Follow Windows"
+                              Toggled="OnFollowWindowsToggled" />
+
+            <mah:MetroHeader Margin="0 16 0 0" Header="Base colour">
+                <ComboBox x:Name="BaseColors"
+                          HorizontalAlignment="Stretch"
+                          SelectionChanged="OnBaseColorChanged" />
+            </mah:MetroHeader>
+
+            <mah:MetroHeader Margin="0 12 0 0" Header="Accent">
+                <ComboBox x:Name="ColorSchemes"
+                          HorizontalAlignment="Stretch"
+                          SelectionChanged="OnColorSchemeChanged" />
+            </mah:MetroHeader>
+
+            <TextBlock x:Name="Version"
+                       Margin="0 24 0 0"
+                       Opacity="0.75"
+                       Style="{DynamicResource MahApps.Styles.TextBlock}" />
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

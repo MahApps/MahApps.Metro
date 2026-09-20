@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.DateTimePickerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="BothExample"
+                                     Description="A date and a time in one box, with a calendar and a clock behind the drop down."
+                                     Header="A date with a time">
+                <smtx:XamlDisplay UniqueKey="DateTimePicker.Both">
+                    <mah:DateTimePicker x:Name="Both"
+                                        Width="280"
+                                        HorizontalAlignment="Left"
+                                        mah:TextBoxHelper.Watermark="When" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

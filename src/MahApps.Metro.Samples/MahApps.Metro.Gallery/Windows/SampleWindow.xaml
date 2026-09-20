@@ -1,0 +1,42 @@
+﻿<mah:MetroWindow x:Class="MahApps.Metro.Gallery.Windows.SampleWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="A window of its own"
+                 Width="640"
+                 Height="420"
+                 Icon="../mahapps.metro.logo2.ico"
+                 ShowIconOnTitleBar="True"
+                 TitleAlignment="Center"
+                 TitleCharacterCasing="Normal"
+                 WindowStartupLocation="CenterOwner"
+                 mc:Ignorable="d">
+
+    <!--  what a window can put into its own title bar, on either side of the title  -->
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button ToolTip="Back to where this came from">
+                <iconPacks:PackIconMaterial Width="14"
+                                            Height="14"
+                                            Kind="ArrowLeft" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Content="42" ToolTip="Something of this window's own" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <Grid Margin="24">
+        <TextBlock VerticalAlignment="Top"
+                   FontSize="16"
+                   Style="{DynamicResource MahApps.Styles.TextBlock}"
+                   Text="A MetroWindow is a window with its title bar drawn rather than borrowed, which is what lets the buttons, the title and the commands sit where this one puts them. Drag it, size it, and the border keeps up."
+                   TextWrapping="Wrap" />
+    </Grid>
+</mah:MetroWindow>

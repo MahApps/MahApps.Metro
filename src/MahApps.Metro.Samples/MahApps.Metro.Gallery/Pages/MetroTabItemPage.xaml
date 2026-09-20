@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.MetroTabItemPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="CloseExample"
+                                     Description="A tab with a button to close it. The tab does not close itself, it asks: CloseTabCommand is where an application decides what closing means, which is usually asking first and then removing the item."
+                                     Header="A tab that can be closed">
+                <smtx:XamlDisplay UniqueKey="MetroTabItem.Closeable">
+                    <mah:MetroTabControl x:Name="Tabs"
+                                         Width="480"
+                                         Height="180"
+                                         HorizontalAlignment="Left">
+                        <mah:MetroTabItem x:Name="First"
+                                          CloseButtonEnabled="True"
+                                          Header="first">
+                            <TextBlock Margin="12" Text="Close this one and the next takes over" />
+                        </mah:MetroTabItem>
+                        <mah:MetroTabItem CloseButtonEnabled="True" Header="second">
+                            <TextBlock Margin="12" Text="And this one is here as well" />
+                        </mah:MetroTabItem>
+                        <mah:MetroTabItem CloseButtonEnabled="True" Header="third">
+                            <TextBlock Margin="12" Text="42" />
+                        </mah:MetroTabItem>
+                    </mah:MetroTabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

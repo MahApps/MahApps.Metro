@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.GroupBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="A header band in the accent colour over a bordered body. The header is not part of a template you have to replace: it is reachable through the HeaderedControlHelper properties, the same ones the Expander and the tab items use."
+                                     Header="A box around a group">
+                <smtx:XamlDisplay UniqueKey="GroupBox.Plain">
+                    <GroupBox x:Name="Plain"
+                              Width="320"
+                              HorizontalAlignment="Left"
+                              Header="What belongs together">
+                        <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                   Text="42 of them, and room for more."
+                                   TextWrapping="Wrap" />
+                    </GroupBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CleanExample"
+                                     Description="The clean variant drops the band and leaves the header as plain text, with a hairline down either side of the body rather than a frame around the whole of it. Controls.xaml does not merge it, so the dictionary it lives in comes in on the box itself."
+                                     Header="The clean look">
+                <smtx:XamlDisplay UniqueKey="GroupBox.Clean">
+                    <GroupBox x:Name="Clean"
+                              Width="320"
+                              HorizontalAlignment="Left"
+                              Header="What belongs together"
+                              Style="{DynamicResource MahApps.Styles.GroupBox.Clean}">
+                        <GroupBox.Resources>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Controls.xaml" />
+                        </GroupBox.Resources>
+                        <TextBlock Text="42 of them, and room for more." TextWrapping="Wrap" />
+                    </GroupBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="StudioExample"
+                                     Description="And the Visual Studio variant, the tool window look. It is drawn for the dark Visual Studio theme, which is why it sits on a dark strip here, and it needs the colours of that theme alongside the styles."
+                                     Header="The Visual Studio look">
+                <smtx:XamlDisplay UniqueKey="GroupBox.VisualStudio">
+                    <Border Width="360"
+                            Padding="16"
+                            HorizontalAlignment="Left"
+                            Background="#FF2D2D30">
+                        <GroupBox x:Name="Studio"
+                                  Header="What belongs together"
+                                  Style="{DynamicResource MahApps.Styles.GroupBox.VisualStudio}">
+                            <GroupBox.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.MergedDictionaries>
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                                    </ResourceDictionary.MergedDictionaries>
+                                </ResourceDictionary>
+                            </GroupBox.Resources>
+                            <TextBlock Text="42 of them, and room for more." TextWrapping="Wrap" />
+                        </GroupBox>
+                    </Border>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

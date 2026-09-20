@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.RangeSliderPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="RangeExample"
+                                     Description="A slider with two thumbs, for a from and a to rather than a single number. Pull the middle and the whole range moves, which is what MoveWholeRange is for."
+                                     Header="A range instead of a value">
+                <smtx:XamlDisplay UniqueKey="RangeSlider.Range">
+                    <mah:RangeSlider x:Name="Range"
+                                     Width="420"
+                                     HorizontalAlignment="Left"
+                                     LowerValue="20"
+                                     Maximum="100"
+                                     MinRange="5"
+                                     Minimum="0"
+                                     UpperValue="60" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TicksExample"
+                                     Description="The same slider snapping to whole steps, with the marks under it and the numbers shown while dragging."
+                                     Header="A range in steps">
+                <smtx:XamlDisplay UniqueKey="RangeSlider.Ticks">
+                    <mah:RangeSlider x:Name="Ticks"
+                                     Width="420"
+                                     HorizontalAlignment="Left"
+                                     AutoToolTipPlacement="TopLeft"
+                                     IsSnapToTickEnabled="True"
+                                     LowerValue="4"
+                                     Maximum="12"
+                                     Minimum="0"
+                                     TickFrequency="1"
+                                     TickPlacement="BottomRight"
+                                     UpperValue="8" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

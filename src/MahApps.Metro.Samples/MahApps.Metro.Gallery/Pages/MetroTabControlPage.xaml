@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.MetroTabControlPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TabsExample"
+                                     Description="The tab control every WPF application knows, with the MahApps look and a line under the row of headers."
+                                     Header="Tabs">
+                <smtx:XamlDisplay UniqueKey="MetroTabControl.Tabs">
+                    <TabControl x:Name="Tabs"
+                                Width="480"
+                                Height="180"
+                                HorizontalAlignment="Left"
+                                mah:TabControlHelper.Underlined="TabPanel">
+                        <TabItem Header="first">
+                            <TextBlock Margin="12" Text="What the first tab holds" />
+                        </TabItem>
+                        <TabItem Header="second">
+                            <TextBlock Margin="12" Text="And the second" />
+                        </TabItem>
+                        <TabItem Header="third">
+                            <TextBlock Margin="12" Text="42" />
+                        </TabItem>
+                    </TabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="AnimatedExample"
+                                     Description="The same tabs with the content sliding in as it changes. There are two of these: this one keeps the headers in a single row, its sibling MetroAnimatedTabControl lets them wrap."
+                                     Header="Tabs that slide">
+                <smtx:XamlDisplay UniqueKey="MetroTabControl.Animated">
+                    <mah:MetroAnimatedSingleRowTabControl x:Name="Animated"
+                                                          Width="480"
+                                                          Height="180"
+                                                          HorizontalAlignment="Left">
+                        <TabItem Header="first">
+                            <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                        </TabItem>
+                        <TabItem Header="second">
+                            <TextBlock Margin="12" Text="Here it is" />
+                        </TabItem>
+                        <TabItem Header="third">
+                            <TextBlock Margin="12" Text="42" />
+                        </TabItem>
+                    </mah:MetroAnimatedSingleRowTabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

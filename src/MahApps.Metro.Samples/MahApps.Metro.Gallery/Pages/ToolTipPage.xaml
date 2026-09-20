@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ToolTipPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TipExample"
+                                     Description="Rest the pointer on the button to see it. One implicit style turns WPF's tooltip into a flat card in the theme colours, and everything it sets sits on a border the template draws, so all of it can be changed on the tooltip itself. Two of the options below are new: the border takes ControlsHelper.CornerRadius, and HasDropShadow puts a shadow under it. The presenter is a ContentControlEx, which is what makes the casing work."
+                                     Header="A tooltip on a control">
+                <smtx:XamlDisplay UniqueKey="ToolTip.Tip">
+                    <Button Content="Save">
+                        <Button.ToolTip>
+                            <ToolTip x:Name="Tip" Content="Writes the document to disk" />
+                        </Button.ToolTip>
+                    </Button>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ContentExample"
+                                     Description="A tooltip is a content control, so a string is only the short way of filling it. Anything that is laid out normally can go in, and the one thing to remember is that a tooltip does not size itself: give a wrapping block a MaxWidth or a long sentence comes out as one very long line."
+                                     Header="More than a line of text">
+                <smtx:XamlDisplay UniqueKey="ToolTip.Content">
+                    <Button Content="Save">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <StackPanel x:Name="Panel" MaxWidth="220">
+                                    <TextBlock FontWeight="SemiBold" Text="Save" />
+                                    <TextBlock x:Name="Detail"
+                                               Margin="0 2 0 0"
+                                               Text="Writes the current document to disk. Ctrl+S does the same, and there are 42 of them waiting."
+                                               TextWrapping="Wrap" />
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TimingExample"
+                                     Description="When a tooltip appears and where is none of the style's doing. That stays with WPF's ToolTipService, the library sets no defaults for it, and the properties go on the control that owns the tooltip rather than on the tooltip. The number in ShowDuration is not a slip: WPF registers it as Int32.MaxValue, so the tooltip stays for as long as the pointer rests on the control rather than for the five seconds that is usually quoted. ShowOnDisabled is the one worth remembering: a control that is switched off with no reason given is exactly where a tooltip earns its keep, and by default it shows none. The right-hand button has it on."
+                                     Header="When it shows and for how long">
+                <smtx:XamlDisplay UniqueKey="ToolTip.Timing">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="Ready"
+                                Content="Save"
+                                ToolTip="Writes the document to disk" />
+                        <Button x:Name="Blocked"
+                                Margin="8 0 0 0"
+                                Content="Save"
+                                IsEnabled="False"
+                                ToolTip="Nothing has changed since the last save"
+                                ToolTipService.ShowOnDisabled="True" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

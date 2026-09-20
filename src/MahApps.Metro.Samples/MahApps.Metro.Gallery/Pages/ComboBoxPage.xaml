@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ComboBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PickExample"
+                                     Description="The combo box WPF ships with, wearing the MahApps style. The pages of this gallery are what it offers, so it has something to say without carrying data of its own. The prefix for that list is declared on the box itself, so what is shown below can be read on its own."
+                                     Header="One out of a list">
+                <smtx:XamlDisplay UniqueKey="ComboBox.Pick">
+                    <ComboBox xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+                              x:Name="Pick"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              DisplayMemberPath="Title"
+                              ItemsSource="{x:Static core:GalleryPages.All}"
+                              SelectedIndex="0" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TypeExample"
+                                     Description="An editable one, where what the reader types counts as well. The watermark, the floating one and the button that clears the text again all come from TextBoxHelper, the same as on a plain text box."
+                                     Header="A box you can type into">
+                <smtx:XamlDisplay UniqueKey="ComboBox.Type">
+                    <ComboBox xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+                              x:Name="Typed"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              mah:TextBoxHelper.ClearTextButton="True"
+                              mah:TextBoxHelper.UseFloatingWatermark="True"
+                              mah:TextBoxHelper.Watermark="Which control"
+                              DisplayMemberPath="Title"
+                              IsEditable="True"
+                              IsTextSearchEnabled="True"
+                              ItemsSource="{x:Static core:GalleryPages.All}"
+                              TextSearch.TextPath="Title" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="LongExample"
+                                     Description="A box with a few thousand entries behind it, which is where the keyed style earns its keep. The drop down virtualises either way, so only what is visible in it exists, but without this style every line scrolled past leaves its container behind and the next one is built new. VirtualizationMode Recycling hands the container on instead, and IsVirtualizingWhenGrouping keeps that up once the list is grouped. Open it and scroll: the same handful of rows carries the whole list. The entries come from the code behind, 4200 of them."
+                                     Header="A list too long to build in one go">
+                <smtx:XamlDisplay UniqueKey="ComboBox.Virtualized">
+                    <ComboBox x:Name="LongList"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              SelectedIndex="0"
+                              Style="{StaticResource MahApps.Styles.ComboBox.Virtualized}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

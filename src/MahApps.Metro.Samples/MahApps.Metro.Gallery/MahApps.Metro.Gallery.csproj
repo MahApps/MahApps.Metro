@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <!-- Project properties -->
+    <PropertyGroup>
+        <!-- ShowMeTheXAML needs net472 at the least, and this is a sample rather than the library -->
+        <TargetFrameworks>net9.0-windows;net8.0-windows;net6.0-windows;net472</TargetFrameworks>
+        <AssemblyName>MahApps.Metro.Gallery</AssemblyName>
+        <RootNamespace>MahApps.Metro.Gallery</RootNamespace>
+        <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
+        <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
+        <OutputType>WinExe</OutputType>
+        <!-- CS8002: ShowMeTheXAML carries no strong name, and nothing links against a sample anyway -->
+        <NoWarn>SA1652;WPF0041;CS8002</NoWarn>
+        <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="app.manifest" />
+        <!--  read back by XamlSyntaxHighlighting, which fills in the colours of the current theme  -->
+        <EmbeddedResource Include="Themes\Xaml.xshd" LogicalName="MahApps.Metro.Gallery.Themes.Xaml.xshd" />
+        <!--
+            The sample windows go in twice, and the navigated page with them: compiled, so that
+            they can be opened, and as the text they were written as, so that the card can show it.
+            A window has to be the root of its markup and can therefore not sit in a XamlDisplay,
+            and this way the shown markup is the file that runs rather than a copy of it.
+        -->
+        <EmbeddedResource Include="Windows\SampleWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.SampleWindow.xaml" />
+        <EmbeddedResource Include="Windows\TitleBarWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.TitleBarWindow.xaml" />
+        <EmbeddedResource Include="Windows\NavigationSampleFirstPage.xaml" LogicalName="MahApps.Metro.Gallery.Windows.NavigationSampleFirstPage.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" />
+        <PackageReference Include="ShowMeTheXAML.MSBuild">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>build</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="ShowMeTheXAML.AvalonEdit" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
+    </ItemGroup>
+</Project>

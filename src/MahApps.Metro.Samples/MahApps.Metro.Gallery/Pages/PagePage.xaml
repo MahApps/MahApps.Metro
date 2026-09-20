@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.PagePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PageExample"
+                                     Description="The one style that is not applied for you. A page is hosted by a frame, and a frame is where property value inheritance stops, so the background, the foreground and the font size a window hands down never reach the page inside it. Both frames here sit on the same dark strip: the left page has no style and keeps what WPF gives it, the right one has the style and takes the theme."
+                                     Header="A page in a frame">
+                <smtx:XamlDisplay UniqueKey="Page.Styled">
+                    <Border Padding="16"
+                            HorizontalAlignment="Left"
+                            Background="#FF2D2D30">
+                        <StackPanel Orientation="Horizontal">
+                            <Frame Width="220"
+                                   Height="120"
+                                   NavigationUIVisibility="Hidden">
+                                <Frame.Content>
+                                    <Page>
+                                        <TextBlock Margin="12"
+                                                   Text="No style, so the page keeps WPF's own colours."
+                                                   TextWrapping="Wrap" />
+                                    </Page>
+                                </Frame.Content>
+                            </Frame>
+                            <Frame Width="220"
+                                   Height="120"
+                                   Margin="16 0 0 0"
+                                   NavigationUIVisibility="Hidden">
+                                <Frame.Content>
+                                    <Page x:Name="Styled" Style="{DynamicResource MahApps.Styles.Page}">
+                                        <TextBlock Margin="12"
+                                                   Text="With the style, and therefore with the theme it sits in."
+                                                   TextWrapping="Wrap" />
+                                    </Page>
+                                </Frame.Content>
+                            </Frame>
+                        </StackPanel>
+                    </Border>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

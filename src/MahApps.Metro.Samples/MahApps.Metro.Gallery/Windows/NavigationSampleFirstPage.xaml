@@ -1,0 +1,22 @@
+﻿<Page x:Class="MahApps.Metro.Gallery.Windows.NavigationSampleFirstPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="Where this starts"
+      d:DesignHeight="300"
+      d:DesignWidth="600"
+      mc:Ignorable="d">
+
+    <StackPanel Margin="24">
+        <TextBlock Style="{DynamicResource MahApps.Styles.TextBlock}"
+                   Text="The bar above belongs to the window rather than to this page. The title beside the buttons is this page's own Title, and the two round buttons switch themselves on from CanGoBack and CanGoForward, which is why neither of them is live yet."
+                   TextWrapping="Wrap" />
+        <StackPanel Margin="0 16 0 0" Orientation="Horizontal">
+            <Button Click="OnNext" Content="On to the second page" />
+            <Button Margin="8 0 0 0"
+                    Click="OnOverlay"
+                    Content="Show the overlay" />
+        </StackPanel>
+    </StackPanel>
+</Page>

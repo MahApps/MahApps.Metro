@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ToggleSwitchPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="SwitchExample"
+                                     Description="A switch for something that takes effect at once, rather than a check box waiting for an OK. Header says what is being switched and IsOn says which way it stands."
+                                     Header="On or off">
+                <smtx:XamlDisplay UniqueKey="ToggleSwitch.IsOn">
+                    <mah:ToggleSwitch x:Name="Switch"
+                                      HorizontalAlignment="Left"
+                                      Header="Show the ribbon"
+                                      IsOn="True" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ContentExample"
+                                     Description="OnContent and OffContent are what the switch reads beside the knob, so it can say what each side means in its own words. ContentDirection puts the knob on the other end."
+                                     Header="A switch that says which side it is on">
+                <smtx:XamlDisplay UniqueKey="ToggleSwitch.Content">
+                    <mah:ToggleSwitch x:Name="Sides"
+                                      HorizontalAlignment="Left"
+                                      Header="Notifications"
+                                      OffContent="Silent"
+                                      OnContent="Audible" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

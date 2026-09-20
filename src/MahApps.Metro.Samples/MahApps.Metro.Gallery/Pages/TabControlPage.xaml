@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TabControlPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TabsExample"
+                                     Description="A plain WPF tab control with the MahApps look: no frame around the content, since the style sets the border brush to null, and headers well above body text, which is the Metro part of it and the first thing anyone wants to change. The size comes from HeaderedControlHelper and it is inherited, so the 16 here is set once on the control and every header takes it."
+                                     Header="Tabs">
+                <smtx:XamlDisplay UniqueKey="TabControl.Tabs">
+                    <TabControl x:Name="Tabs"
+                                Width="480"
+                                Height="180"
+                                HorizontalAlignment="Left"
+                                mah:HeaderedControlHelper.HeaderFontSize="16"
+                                SelectedIndex="1">
+                        <TabItem x:Name="General" Header="General">
+                            <TextBlock Margin="12" Text="What the first tab holds" />
+                        </TabItem>
+                        <TabItem Header="Display">
+                            <TextBlock Margin="12" Text="And the second" />
+                        </TabItem>
+                        <TabItem Header="Advanced">
+                            <TextBlock Margin="12" Text="42" />
+                        </TabItem>
+                    </TabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="UnderlineExample"
+                                     Description="The marker under the selected tab is off until TabControlHelper asks for it, and it has four values: none, the selected item, the whole panel, or both. The element that draws it is part of the control template as well as the item one, which is why the property on the tab control reaches everything."
+                                     Header="The underline">
+                <smtx:XamlDisplay UniqueKey="TabControl.Underline">
+                    <TabControl x:Name="Underlined"
+                                Width="480"
+                                Height="180"
+                                HorizontalAlignment="Left"
+                                mah:HeaderedControlHelper.HeaderFontSize="16"
+                                mah:TabControlHelper.Underlined="TabPanel">
+                        <TabItem Header="General">
+                            <TextBlock Margin="12" Text="A hairline under the strip and the accent under the tab" />
+                        </TabItem>
+                        <TabItem Header="Display">
+                            <TextBlock Margin="12" Text="And the second" />
+                        </TabItem>
+                        <TabItem Header="Advanced">
+                            <TextBlock Margin="12" Text="42" />
+                        </TabItem>
+                    </TabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="AnimatedExample"
+                                     Description="The animated variant wraps the content in a MetroContentControl, so a new page slides in instead of appearing. Which way it comes from is the transition, which TabControlHelper carries along with the underline."
+                                     Header="Tabs that slide">
+                <smtx:XamlDisplay UniqueKey="TabControl.Animated">
+                    <TabControl x:Name="Animated"
+                                Width="480"
+                                Height="180"
+                                HorizontalAlignment="Left"
+                                mah:HeaderedControlHelper.HeaderFontSize="16"
+                                Style="{DynamicResource MahApps.Styles.TabControl.Animated}">
+                        <TabItem Header="General">
+                            <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                        </TabItem>
+                        <TabItem Header="Display">
+                            <TextBlock Margin="12" Text="Here it is" />
+                        </TabItem>
+                        <TabItem Header="Advanced">
+                            <TextBlock Margin="12" Text="42" />
+                        </TabItem>
+                    </TabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="SingleRowExample"
+                                     Description="More tabs than fit are the reason for the second variant. The default panel wraps them onto another row and pushes the content down; this one keeps the strip on one line and puts the overflow in a scroll viewer with a button at each end."
+                                     Header="More tabs than fit">
+                <smtx:XamlDisplay UniqueKey="TabControl.SingleRow">
+                    <TabControl x:Name="SingleRow"
+                                Width="420"
+                                Height="180"
+                                HorizontalAlignment="Left"
+                                mah:HeaderedControlHelper.HeaderFontSize="16"
+                                Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}">
+                        <TabItem Header="General">
+                            <TextBlock Margin="12" Text="Seven of them, and the strip stays one line" />
+                        </TabItem>
+                        <TabItem Header="Display">
+                            <TextBlock Margin="12" Text="And the second" />
+                        </TabItem>
+                        <TabItem Header="Advanced">
+                            <TextBlock Margin="12" Text="42" />
+                        </TabItem>
+                        <TabItem Header="Network">
+                            <TextBlock Margin="12" Text="The fourth" />
+                        </TabItem>
+                        <TabItem Header="Updates">
+                            <TextBlock Margin="12" Text="The fifth" />
+                        </TabItem>
+                        <TabItem Header="Privacy">
+                            <TextBlock Margin="12" Text="The sixth" />
+                        </TabItem>
+                        <TabItem Header="About">
+                            <TextBlock Margin="12" Text="And the last" />
+                        </TabItem>
+                    </TabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="StudioExample"
+                                     Description="And the Visual Studio variant, the document well of the shell: small headers, a three-unit line under the strip and the selected tab filled with the accent colour. It is the only one of these that turns the close button on by itself, and it hides it again on every tab but the selected one. The item style is keyed as well as the control one, so both have to be asked for, and it is drawn for the dark shell."
+                                     Header="The Visual Studio look">
+                <smtx:XamlDisplay UniqueKey="TabControl.VisualStudio">
+                    <Border Width="480"
+                            Padding="16"
+                            HorizontalAlignment="Left"
+                            Background="#FF2D2D30">
+                        <TabControl x:Name="Studio"
+                                    Height="160"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.VisualStudio}">
+                            <TabControl.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.MergedDictionaries>
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Controls.xaml" />
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                                    </ResourceDictionary.MergedDictionaries>
+                                    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.VisualStudio}" TargetType="{x:Type TabItem}" />
+                                </ResourceDictionary>
+                            </TabControl.Resources>
+                            <TabItem x:Name="Document" Header="General">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                    </Border>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

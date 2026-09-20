@@ -317,6 +317,7 @@ Task("Zip")
 
     Zip("./src/MahApps.Metro.Samples/MahApps.Metro.Demo/bin/" + data.Configuration, publishDir + "/MahApps.Metro.Demo-v" + data.GitVersion.NuGetVersion + ".zip");
     Zip("./src/MahApps.Metro.Samples/MahApps.Metro.Caliburn.Demo/bin/" + data.Configuration, publishDir + "/MahApps.Metro.Caliburn.Demo-v" + data.GitVersion.NuGetVersion + ".zip");
+    Zip("./src/MahApps.Metro.Samples/MahApps.Metro.Gallery/bin/" + data.Configuration, publishDir + "/MahApps.Metro.Gallery-v" + data.GitVersion.NuGetVersion + ".zip");
 });
 
 Task("Tests")

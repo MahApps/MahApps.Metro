@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.FontIconPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="GlyphExample"
+                                     Description="One character out of an icon font, which is the cheapest icon there is on Windows. The glyph is the code point, and the font decides what it looks like."
+                                     Header="An icon from a font">
+                <smtx:XamlDisplay UniqueKey="FontIcon.Glyph">
+                    <mah:FontIcon x:Name="Glyph"
+                                  HorizontalAlignment="Left"
+                                  FontFamily="Segoe MDL2 Assets"
+                                  FontSize="42"
+                                  Glyph="&#xE734;" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ButtonExample"
+                                     Description="The same icon inside a button, where an icon usually ends up."
+                                     Header="An icon on a button">
+                <smtx:XamlDisplay UniqueKey="FontIcon.OnAButton">
+                    <Button Width="48"
+                            Height="48"
+                            HorizontalAlignment="Left"
+                            Style="{StaticResource MahApps.Styles.Button.Circle}">
+                        <mah:FontIcon FontFamily="Segoe MDL2 Assets"
+                                      FontSize="18"
+                                      Glyph="&#xE713;" />
+                    </Button>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TextBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="Every text box is styled without any markup on your side, and everything beyond that comes from TextBoxHelper: the watermark that stands in the empty box, the floating one that moves above the text and stays there, and the button. The button is there when the clear button is switched on or when a command of your own is set, and it is 22 units wide unless told otherwise."
+                                     Header="The box you get">
+                <smtx:XamlDisplay UniqueKey="TextBox.Plain">
+                    <TextBox x:Name="Plain"
+                             Width="260"
+                             HorizontalAlignment="Left"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.Watermark="What are you looking for" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="SearchExample"
+                                     Description="The search variant is the base style with a magnifier in the button and the library's own search command behind it. The command carries the box as its parameter, so a handler of your own gets the control without anything being passed to it."
+                                     Header="The search box">
+                <smtx:XamlDisplay UniqueKey="TextBox.Search">
+                    <TextBox x:Name="Search"
+                             Width="260"
+                             HorizontalAlignment="Left"
+                             mah:TextBoxHelper.Watermark="Search"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The Windows 10 box: a fill darker than the page, a two-unit frame all the way round, and the box turning white with the accent around it once the caret is in. The thicknesses and the padding are resources rather than part of the template, so a style of your own can answer them differently. The clear button of this one and of the WinUI box below behaves the way the UWP box does, there only while the caret is in and something is written, rather than standing there all the time."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="TextBox.Win10">
+                    <TextBox x:Name="Win10"
+                             Width="260"
+                             HorizontalAlignment="Left"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.Watermark="What are you looking for"
+                             Style="{DynamicResource MahApps.Styles.TextBox.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one, which is nearly the opposite: a light translucent fill, a border you have to look for that is a touch stronger along its bottom edge, and with the caret a solid fill, a line of accent underneath and rounded corners. That bottom edge is two units thick either way on purpose, since a border that grows with the caret would move everything standing under it."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="TextBox.WinUI">
+                    <TextBox x:Name="WinUI"
+                             Width="260"
+                             HorizontalAlignment="Left"
+                             mah:TextBoxHelper.ClearTextButton="True"
+                             mah:TextBoxHelper.Watermark="What are you looking for"
+                             Style="{DynamicResource MahApps.Styles.TextBox.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="RichExample"
+                                     Description="A RichTextBox is styled to match, watermark and button and all. It used to be the odd one out, with a button that was always there and never cleared anything; since the clearing moved to the library&apos;s own command it works here the way it works on a text box, and the command parameter is the control itself."
+                                     Header="The rich one">
+                <smtx:XamlDisplay UniqueKey="TextBox.Rich">
+                    <RichTextBox x:Name="Rich"
+                                 Width="260"
+                                 Height="80"
+                                 HorizontalAlignment="Left"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Write something here">
+                        <FlowDocument>
+                            <Paragraph>42 ways to say the same thing, and this is one of them.</Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

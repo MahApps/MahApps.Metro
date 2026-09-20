@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TilePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TileExample"
+                                     Description="A button the size of a start screen tile, with a title in one corner and whatever you put in it in the middle. Since it is a Button, it has a Command and a Click like any other."
+                                     Header="A tile with a title">
+                <smtx:XamlDisplay UniqueKey="Tile.Title">
+                    <mah:Tile x:Name="Simple"
+                              Title="Downloads"
+                              HorizontalAlignment="Left">
+                        <iconPacks:PackIconMaterial Width="42"
+                                                    Height="42"
+                                                    Kind="DownloadOutline" />
+                    </mah:Tile>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CountExample"
+                                     Description="Count is the second line, meant for the number that says why the tile is worth a look. It has a font size of its own, so it can be the loud part."
+                                     Header="A tile with a count">
+                <smtx:XamlDisplay UniqueKey="Tile.Count">
+                    <mah:Tile x:Name="Counted"
+                              Title="Unread"
+                              HorizontalAlignment="Left"
+                              Count="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

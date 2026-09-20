@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.CheckBoxPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="The check box WPF ships with, wearing the MahApps style. IsThreeState adds the middle state for the answer that is neither yes nor no, and IsChecked is null while it stands there."
+                                     Header="A check box">
+                <smtx:XamlDisplay UniqueKey="CheckBox.Plain">
+                    <CheckBox x:Name="Plain"
+                              HorizontalAlignment="Left"
+                              Content="Remember this window's size"
+                              IsChecked="True" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TenExample"
+                                     Description="The same box in the Windows 10 style, which draws the tick thinner and puts the box itself in the accent colour. It is a style rather than a setting, so it is asked for by key."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="CheckBox.Win10">
+                    <CheckBox x:Name="Ten"
+                              HorizontalAlignment="Left"
+                              Content="Remember this window's place"
+                              IsChecked="True"
+                              Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ContentControlExPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:controlzex="urn:controlzex"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="CasingExample"
+                                     Description="The presenter inside most of the MahApps templates, and the reason a button reads SAVE when you wrote Save. Three template triggers do the work, each handing the presenter the same content through a converter, so what changes is the string rather than the way it is drawn."
+                                     Header="Content with its case changed">
+                <smtx:XamlDisplay UniqueKey="ContentControlEx.Casing">
+                    <mah:ContentControlEx x:Name="Cased"
+                                          HorizontalAlignment="Left"
+                                          Content="Save the document"
+                                          ContentCharacterCasing="Upper" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="InheritExample"
+                                     Description="ContentCharacterCasing is registered with Inherits, so what one of these holds picks the value up without being told, which is the first line. It only reaches as far as the tree carries it: the property sits on ContentControlEx rather than being attached, so an element in between that does not have it ends the inheritance there, which is what the panel in the second line does. The converter hands anything that is not a string back as it is, so the block of text keeps what was written into it, and that is the way out when a template forces Upper on you. On a control that is not one of these, what the templates read is the attached ControlsHelper.ContentCharacterCasing."
+                                     Header="It reaches down, but not through everything">
+                <smtx:XamlDisplay UniqueKey="ContentControlEx.Inherit">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:ContentControlEx x:Name="Outer" ContentCharacterCasing="Upper">
+                            <mah:ContentControlEx x:Name="Inner" Content="the content of one of these inherits it" />
+                        </mah:ContentControlEx>
+                        <mah:ContentControlEx x:Name="Blocked"
+                                              Margin="0 8 0 0"
+                                              ContentCharacterCasing="Upper">
+                            <StackPanel>
+                                <mah:ContentControlEx Content="a panel in between ends it" />
+                                <TextBlock Text="and a block of text is no string anyway" />
+                            </StackPanel>
+                        </mah:ContentControlEx>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="AccessExample"
+                                     Description="RecognizesAccessKey goes straight through to the inner presenter. Off, which is what it is here unless somebody says otherwise, an underscore is an underscore. On, it marks the character behind it, Windows underlines it while Alt is held and sends the shortcut to the control. A button template has it the other way round, so a template that wants access keys has to ask for them."
+                                     Header="An underscore that means something">
+                <smtx:XamlDisplay UniqueKey="ContentControlEx.AccessKey">
+                    <mah:ContentControlEx x:Name="Access"
+                                          HorizontalAlignment="Left"
+                                          Content="_Save the document" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ChromeExample"
+                                     Description="The part with no property of its own. When the content is something that takes input, the control binds that content's WindowChrome.IsHitTestVisibleInChrome to its own and clears the binding again when the content is replaced. A title bar is window chrome as far as Windows is concerned, and chrome swallows the mouse unless an element says it wants it, so this one binding is what lets a button in the title bar of a MetroWindow be pressed at all. The line under the button reads the value off the button itself, and it follows what the option does to the control around it."
+                                     Header="Why a button in the title bar answers">
+                <smtx:XamlDisplay UniqueKey="ContentControlEx.Chrome">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:ContentControlEx x:Name="Chrome" controlzex:WindowChrome.IsHitTestVisibleInChrome="True">
+                            <Button x:Name="Pressed" Content="A button that wants the mouse" />
+                        </mah:ContentControlEx>
+                        <TextBlock Margin="0 8 0 0" Text="{Binding ElementName=Pressed, Path=(controlzex:WindowChrome.IsHitTestVisibleInChrome), StringFormat=the button itself now carries {0}}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
