@@ -22,15 +22,19 @@ namespace MahApps.Metro.Gallery.Core
     /// property, and a ValidationRule in the binding stops at the first rule that turns the value
     /// down.
     /// </para>
+    /// <para>
+    /// There is no INotifyPropertyChanged here and nothing missing either: every property belongs
+    /// to one control, nothing changes a value behind that control's back, and so the only thing
+    /// this has to tell anybody about is the errors.
+    /// </para>
     /// </summary>
-    public sealed class ValidationSample : INotifyPropertyChanged, INotifyDataErrorInfo
+    public sealed class ValidationSample : INotifyDataErrorInfo
     {
         private string age = "142";
+        private string email = "42";
         private string secret = "42";
         private double amount = 142d;
-
-        /// <inheritdoc />
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private double budget = 142d;
 
         /// <inheritdoc />
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
@@ -45,6 +49,15 @@ namespace MahApps.Metro.Gallery.Core
         }
 
         /// <summary>
+        /// An address, for the card about when the message is shown.
+        /// </summary>
+        public string Email
+        {
+            get => this.email;
+            set => this.Set(ref this.email, value);
+        }
+
+        /// <summary>
         /// A word that has two rules to answer to and answers to neither.
         /// </summary>
         public string Secret
@@ -54,7 +67,7 @@ namespace MahApps.Metro.Gallery.Core
         }
 
         /// <summary>
-        /// A number for the controls that carry no error template of their own.
+        /// A number for the control that carries no error template of its own.
         /// </summary>
         public double Amount
         {
@@ -62,10 +75,21 @@ namespace MahApps.Metro.Gallery.Core
             set => this.Set(ref this.amount, value);
         }
 
+        /// <summary>
+        /// And one for the control next to it that was given the MahApps template by hand.
+        /// </summary>
+        public double Budget
+        {
+            get => this.budget;
+            set => this.Set(ref this.budget, value);
+        }
+
         /// <inheritdoc />
         public bool HasErrors => this.ErrorsOf(nameof(this.Age)).Any()
+                                 || this.ErrorsOf(nameof(this.Email)).Any()
                                  || this.ErrorsOf(nameof(this.Secret)).Any()
-                                 || this.ErrorsOf(nameof(this.Amount)).Any();
+                                 || this.ErrorsOf(nameof(this.Amount)).Any()
+                                 || this.ErrorsOf(nameof(this.Budget)).Any();
 
         /// <inheritdoc />
         public IEnumerable GetErrors(string? propertyName)
@@ -85,6 +109,14 @@ namespace MahApps.Metro.Gallery.Core
                     else if (years < 1 || years > 99)
                     {
                         yield return "Between 1 and 99.";
+                    }
+
+                    break;
+
+                case nameof(this.Email):
+                    if (this.email.IndexOf('@') < 0)
+                    {
+                        yield return "An address needs an @ in it.";
                     }
 
                     break;
@@ -110,6 +142,17 @@ namespace MahApps.Metro.Gallery.Core
                     }
 
                     break;
+
+                case nameof(this.Budget):
+                    if (this.budget > 100d)
+                    {
+                        yield return "At most 100.";
+                    }
+
+                    break;
+
+                default:
+                    break;
             }
         }
 
@@ -122,7 +165,6 @@ namespace MahApps.Metro.Gallery.Core
 
             field = value;
 
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
     }

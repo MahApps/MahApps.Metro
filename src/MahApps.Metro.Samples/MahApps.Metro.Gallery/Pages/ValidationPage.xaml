@@ -33,9 +33,9 @@
                     <AdornerDecorator HorizontalAlignment="Left">
                         <TextBox x:Name="Shown"
                                  Width="280"
-                                 mah:TextBoxHelper.Watermark="Between 1 and 99"
+                                 mah:TextBoxHelper.Watermark="name@example.com"
                                  mah:ValidationHelper.ShowValidationErrorOnMouseOver="True"
-                                 Text="{Binding Age, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                                 Text="{Binding Email, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
                     </AdornerDecorator>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
@@ -55,7 +55,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="ElsewhereExample"
-                                     Description="TextBox, RichTextBox, PasswordBox, ComboBox, DatePicker, DateTimePicker, TimePicker, NumericUpDown, HotKeyBox, ToggleSwitch and the ColorPicker are the controls whose styles set the template. Anything else keeps what WPF draws, which is the plain red rectangle on the upper slider. Setting the key by hand, as the lower one does, is what adds the triangle in the corner and the message behind it. The DataGrid is the one deliberate exception: its style sets the template to x:Null, because a grid marks the row itself and an adornment per cell on top of that is noise. Drag either slider under 100 and both errors go."
+                                     Description="TextBox, RichTextBox, PasswordBox, ComboBox, DatePicker, DateTimePicker, TimePicker, NumericUpDown, HotKeyBox, ToggleSwitch and the ColorPicker are the controls whose styles set the template. Anything else keeps what WPF draws, which is the plain red rectangle on the upper slider. Setting the key by hand, as the lower one does, is what adds the triangle in the corner and the message behind it. The DataGrid is the one deliberate exception: its style sets the template to x:Null, because a grid marks the row itself and an adornment per cell on top of that is noise. Drag a slider under 100 and its own error goes."
                                      Header="Everything else">
                 <smtx:XamlDisplay UniqueKey="Validation.Elsewhere">
                     <AdornerDecorator HorizontalAlignment="Left">
@@ -67,7 +67,7 @@
                                     Margin="0 24 0 0"
                                     Maximum="200"
                                     Validation.ErrorTemplate="{DynamicResource MahApps.Templates.ValidationError}"
-                                    Value="{Binding Amount, ValidatesOnNotifyDataErrors=True}" />
+                                    Value="{Binding Budget, ValidatesOnNotifyDataErrors=True}" />
                         </StackPanel>
                     </AdornerDecorator>
                 </smtx:XamlDisplay>
