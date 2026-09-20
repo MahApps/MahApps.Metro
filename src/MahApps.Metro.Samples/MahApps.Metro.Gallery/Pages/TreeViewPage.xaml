@@ -110,6 +110,12 @@
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Value}">
                                 <TextBlock Text="{Binding Key}" />
+                                <!--  a hierarchical template hands itself down to the children as well, and a file has neither a Key nor a Value, so the level below says how it is drawn  -->
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
