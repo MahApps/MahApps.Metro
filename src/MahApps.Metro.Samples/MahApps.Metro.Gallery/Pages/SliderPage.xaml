@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.SliderPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The slider a Slider gets: a two-unit track with the accent colour up to the thumb and a tall rounded thumb on it. This one also sets IsMoveToPointEnabled, which the other two leave alone, so clicking the track jumps the thumb to where you clicked instead of paging along by LargeChange."
+                                     Header="The one you get">
+                <smtx:XamlDisplay UniqueKey="Slider.Win10">
+                    <Slider x:Name="Win10"
+                            Width="260"
+                            HorizontalAlignment="Left"
+                            Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="And the one named after the control, which is not the one applied to it. MahApps.Styles.Slider has the thicker track and the small grey thumb, and it has to be asked for by name, so a style based on it changes the look along with whatever else it was meant to change."
+                                     Header="The one called Slider">
+                <smtx:XamlDisplay UniqueKey="Slider.Plain">
+                    <Slider x:Name="Plain"
+                            Width="260"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource MahApps.Styles.Slider}"
+                            Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ColourExample"
+                                     Description="The colours of both come from SliderHelper, three brushes per part and one per state. The styles fill in all twelve, so a slider given only the resting three goes back to the theme colour the moment the pointer is over it: the hover and pressed brushes are what keep it."
+                                     Header="Other colours">
+                <smtx:XamlDisplay UniqueKey="Slider.Colours">
+                    <Slider x:Name="Colours"
+                            Width="260"
+                            HorizontalAlignment="Left"
+                            mah:SliderHelper.ThumbFillBrush="#FF1B5E20"
+                            mah:SliderHelper.ThumbFillHoverBrush="#FF2E7D32"
+                            mah:SliderHelper.ThumbFillPressedBrush="#FF43A047"
+                            mah:SliderHelper.TrackFillBrush="#FFC8E6C9"
+                            mah:SliderHelper.TrackValueFillBrush="#FF43A047"
+                            Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TicksExample"
+                                     Description="Ticks are off until TickPlacement says where they go, and they need a TickFrequency to be worth switching on. The tick bars are part of the template, above and below the track, so turning them on makes the control taller rather than crowding the groove."
+                                     Header="Ticks">
+                <smtx:XamlDisplay UniqueKey="Slider.Ticks">
+                    <Slider x:Name="Ticks"
+                            Width="260"
+                            HorizontalAlignment="Left"
+                            IsSnapToTickEnabled="True"
+                            TickFrequency="10"
+                            TickPlacement="Both"
+                            Value="40" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="FlatExample"
+                                     Description="The flat style is a block with a rectangular thumb cut into it, and it is built differently: it overrides the default style and ignores SliderHelper, taking its three parts from three ordinary properties instead. Foreground is the filled part, Background the rest of the bar, and BorderBrush the thumb."
+                                     Header="The flat one">
+                <smtx:XamlDisplay UniqueKey="Slider.Flat">
+                    <Slider x:Name="Flat"
+                            Width="260"
+                            HorizontalAlignment="Left"
+                            Background="#FFC8E6C9"
+                            BorderBrush="#FF1B5E20"
+                            Foreground="#FF66BB6A"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
+                            Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

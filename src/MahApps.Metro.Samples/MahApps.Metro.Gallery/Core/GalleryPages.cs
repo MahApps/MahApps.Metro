@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -292,7 +292,33 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    typeof(RadioButtonPage),
                                                                                    PackIconMaterialKind.RadioboxMarked,
                                                                                    keywords: "radio group choice win10",
-                                                                                   control: "Styles/Controls.RadioButton.xaml")
+                                                                                   control: "Styles/Controls.RadioButton.xaml"),
+                                                                   new GalleryPage("ScrollBar",
+                                                                                   "Styles",
+                                                                                   typeof(ScrollBarPage),
+                                                                                   PackIconMaterialKind.ArrowUpDown,
+                                                                                   // the page over there covers the bar and the viewer and is called scrollbars
+                                                                                   "styles/scrollbars",
+                                                                                   "scroll bar viewer thumb track",
+                                                                                   "Styles/Controls.Scrollbars.xaml"),
+                                                                   new GalleryPage("Slider",
+                                                                                   "Styles",
+                                                                                   typeof(SliderPage),
+                                                                                   PackIconMaterialKind.Tune,
+                                                                                   keywords: "slider track thumb ticks flat win10",
+                                                                                   control: "Styles/Controls.Slider.xaml"),
+                                                                   new GalleryPage("StatusBar",
+                                                                                   "Styles",
+                                                                                   typeof(StatusBarPage),
+                                                                                   PackIconMaterialKind.DockBottom,
+                                                                                   keywords: "status bar items separator clean",
+                                                                                   control: "Styles/Controls.StatusBar.xaml"),
+                                                                   new GalleryPage("TabControl",
+                                                                                   "Styles",
+                                                                                   typeof(TabControlPage),
+                                                                                   PackIconMaterialKind.Tab,
+                                                                                   keywords: "tabs items underline animated single row",
+                                                                                   control: "Styles/Controls.TabControl.xaml")
                                                                };
     }
 }

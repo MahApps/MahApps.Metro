@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.StatusBarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="BarExample"
+                                     Description="A MahApps status bar is not a grey strip at the bottom of the window, it is a second title bar: two triggers reach up to the MetroWindow and take its title brush, so the bar carries the accent colour and greys out with the window. Outside a MetroWindow those triggers find nothing, the background stays unset, and all that is left is light text on the page."
+                                     Header="The strip at the bottom">
+                <smtx:XamlDisplay UniqueKey="StatusBar.Bar">
+                    <StatusBar x:Name="Bar"
+                               Width="420"
+                               HorizontalAlignment="Left">
+                        <StatusBarItem Content="Ready" />
+                        <Separator />
+                        <StatusBarItem Content="Ln 42, Col 7" />
+                        <Separator />
+                        <StatusBarItem Content="UTF-8" />
+                    </StatusBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="SeparatorExample"
+                                     Description="The separators above are the ones WPF supplies, because the key a StatusBar looks its separators up under is one MahApps does not define. The style for them exists and has to be asked for, and an implicit style will not do it: a StatusBar hands every separator a resource reference to SeparatorStyleKey and that beats one. Either name the style on every separator, or put it under that key in the resources of the bar, as here."
+                                     Header="The separators between them">
+                <smtx:XamlDisplay UniqueKey="StatusBar.Separator">
+                    <StatusBar x:Name="Separated"
+                               Width="420"
+                               HorizontalAlignment="Left">
+                        <StatusBar.Resources>
+                            <Style x:Key="{x:Static StatusBar.SeparatorStyleKey}"
+                                   BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar}"
+                                   TargetType="{x:Type Separator}" />
+                        </StatusBar.Resources>
+                        <StatusBarItem Content="Ready" />
+                        <Separator />
+                        <StatusBarItem Content="Ln 42, Col 7" />
+                        <Separator />
+                        <StatusBarItem Content="UTF-8" />
+                    </StatusBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="JobExample"
+                                     Description="An item is a content control, so a bar is not limited to text. A progress bar for whatever is running in the background is the usual second inhabitant of one."
+                                     Header="What else goes in it">
+                <smtx:XamlDisplay UniqueKey="StatusBar.Job">
+                    <StatusBar x:Name="Working"
+                               Width="420"
+                               HorizontalAlignment="Left">
+                        <StatusBarItem Content="Counting" />
+                        <StatusBarItem x:Name="Job">
+                            <ProgressBar Width="140"
+                                         Height="10"
+                                         Maximum="100"
+                                         Value="42" />
+                        </StatusBarItem>
+                        <StatusBarItem Content="42 of 100" />
+                    </StatusBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CleanExample"
+                                     Description="The clean variant is the same style with the text and the separators moved from the ideal foreground to the theme one, so the writing is dark rather than light. It leaves the background alone, window triggers included, which is why it belongs on a light title brush and why this card sets one itself."
+                                     Header="The clean look">
+                <smtx:XamlDisplay UniqueKey="StatusBar.Clean">
+                    <StatusBar x:Name="Clean"
+                               Width="420"
+                               HorizontalAlignment="Left"
+                               Background="{DynamicResource MahApps.Brushes.Gray9}"
+                               Style="{DynamicResource MahApps.Styles.StatusBar.Clean}">
+                        <StatusBar.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.MergedDictionaries>
+                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/StatusBar.xaml" />
+                                </ResourceDictionary.MergedDictionaries>
+                                <Style x:Key="{x:Static StatusBar.SeparatorStyleKey}"
+                                       BasedOn="{StaticResource MahApps.Styles.Separator.Clean}"
+                                       TargetType="{x:Type Separator}" />
+                            </ResourceDictionary>
+                        </StatusBar.Resources>
+                        <StatusBarItem Content="Ready" />
+                        <Separator />
+                        <StatusBarItem Content="Ln 42, Col 7" />
+                        <Separator />
+                        <StatusBarItem Content="UTF-8" />
+                    </StatusBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
