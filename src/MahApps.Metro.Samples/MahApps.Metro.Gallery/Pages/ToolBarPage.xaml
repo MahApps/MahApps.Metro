@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ToolBarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TrayExample"
+                                     Description="A toolbar belongs in a tray, and the colour behind it is the tray's: the template of the bar hardcodes a transparent background rather than binding it, so setting Background on the bar itself does nothing. The dotted grip on the left is what the user drags a bar along a row with, and locking the tray collapses it."
+                                     Header="A bar in a tray">
+                <smtx:XamlDisplay UniqueKey="ToolBar.Tray">
+                    <ToolBarTray x:Name="Tray"
+                                 Width="420"
+                                 HorizontalAlignment="Left">
+                        <ToolBar x:Name="Bar">
+                            <Button Content="New" />
+                            <Button Content="Open" />
+                            <Separator />
+                            <ToggleButton Content="Bold" IsChecked="True" />
+                            <ToggleButton Content="Italic" />
+                        </ToolBar>
+                    </ToolBarTray>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ItemsExample"
+                                     Description="A toolbar restyles what goes into it, through the style keys WPF looks up by name, and MahApps fills in six of the eight. Two of them are worth knowing about: a CheckBox and a RadioButton in a toolbar are handed the toggle button style and lose their box and their dot. All four below are different control types and three of them look the same. That is WPF's doing rather than a MahApps decision, and it is what a toolbar wants, a row of latching buttons; a tick that has to stay visible belongs next to the bar rather than in it."
+                                     Header="What a bar does to its items">
+                <smtx:XamlDisplay UniqueKey="ToolBar.Items">
+                    <ToolBarTray Width="420" HorizontalAlignment="Left">
+                        <ToolBar>
+                            <Button Content="Button" />
+                            <ToggleButton Content="Toggle" />
+                            <CheckBox x:Name="Tick"
+                                      Content="Check"
+                                      IsChecked="True" />
+                            <RadioButton Content="Radio" IsChecked="True" />
+                        </ToolBar>
+                    </ToolBarTray>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="OverflowExample"
+                                     Description="What does not fit moves behind the chevron at the right-hand end, and the button for it stays disabled until there is something to show. An item can be sent there whatever the width says, which is where the rarely used ones belong."
+                                     Header="More than the bar holds">
+                <smtx:XamlDisplay UniqueKey="ToolBar.Overflow">
+                    <ToolBarTray x:Name="Narrow"
+                                 Width="260"
+                                 HorizontalAlignment="Left">
+                        <ToolBar>
+                            <Button Content="New" />
+                            <Button Content="Open" />
+                            <Button Content="Save" />
+                            <Button Content="Print" />
+                            <Button Content="42" />
+                            <Button Content="Rarely used" ToolBar.OverflowMode="Always" />
+                        </ToolBar>
+                    </ToolBarTray>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

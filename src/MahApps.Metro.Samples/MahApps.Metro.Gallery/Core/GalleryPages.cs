@@ -318,7 +318,31 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    typeof(TabControlPage),
                                                                                    PackIconMaterialKind.Tab,
                                                                                    keywords: "tabs items underline animated single row",
-                                                                                   control: "Styles/Controls.TabControl.xaml")
+                                                                                   control: "Styles/Controls.TabControl.xaml"),
+                                                                   new GalleryPage("Text",
+                                                                                   "Styles",
+                                                                                   typeof(TextPage),
+                                                                                   PackIconMaterialKind.FormatText,
+                                                                                   keywords: "textblock label caption watermark access key",
+                                                                                   control: "Styles/Controls.TextBlock.xaml"),
+                                                                   new GalleryPage("TextBox",
+                                                                                   "Styles",
+                                                                                   typeof(TextBoxPage),
+                                                                                   PackIconMaterialKind.FormTextbox,
+                                                                                   keywords: "text input watermark clear search win10 winui",
+                                                                                   control: "Styles/Controls.TextBox.xaml"),
+                                                                   new GalleryPage("ToggleButton",
+                                                                                   "Styles",
+                                                                                   typeof(ToggleButtonPage),
+                                                                                   PackIconMaterialKind.ToggleSwitchOffOutline,
+                                                                                   keywords: "toggle latch circle flat checked",
+                                                                                   control: "Styles/Controls.Buttons.xaml"),
+                                                                   new GalleryPage("ToolBar",
+                                                                                   "Styles",
+                                                                                   typeof(ToolBarPage),
+                                                                                   PackIconMaterialKind.Toolbox,
+                                                                                   keywords: "toolbar tray overflow grip items",
+                                                                                   control: "Styles/Controls.Toolbar.xaml")
                                                                };
     }
 }

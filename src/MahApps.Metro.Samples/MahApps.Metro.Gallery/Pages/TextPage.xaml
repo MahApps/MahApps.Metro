@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TextPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="CaptionExample"
+                                     Description="A Label is the caption of another control, and the one thing it does that a TextBlock cannot is carry the access key: the underscore in the content underlines the letter behind it while Alt is held, and the combination moves the focus to whatever Target points at. Where the text is data rather than a caption, turn that off and the underscore stays an underscore."
+                                     Header="A caption for something else">
+                <smtx:XamlDisplay UniqueKey="Text.Caption">
+                    <StackPanel Orientation="Horizontal">
+                        <Label x:Name="Caption"
+                               VerticalAlignment="Center"
+                               Content="_Name"
+                               Target="{Binding ElementName=Named}" />
+                        <TextBox x:Name="Named"
+                                 Width="180"
+                                 VerticalAlignment="Center"
+                                 Text="42 Ways" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ChipExample"
+                                     Description="The template of a Label draws a border, and the corner radius from ControlsHelper rounds it. With a background and a little padding that is a chip or a badge without a control of its own."
+                                     Header="A label as a chip">
+                <smtx:XamlDisplay UniqueKey="Text.Chip">
+                    <Label x:Name="Chip"
+                           Padding="10 3"
+                           HorizontalAlignment="Left"
+                           mah:ControlsHelper.CornerRadius="8"
+                           Background="{DynamicResource MahApps.Brushes.Accent}"
+                           Content="Draft"
+                           Foreground="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="BlockExample"
+                                     Description="A TextBlock gets no style at all, on purpose. MahApps.Styles.TextBlock has not a single setter, and there is no implicit style, because a TextBlock sits inside nearly every control template there is and an implicit style would reach all of them with no way back out. Plain text still looks right because the MetroWindow style hands down the foreground and the font size, and a window that is not a MetroWindow hands down neither."
+                                     Header="The text block gets nothing">
+                <smtx:XamlDisplay UniqueKey="Text.Block">
+                    <TextBlock x:Name="Block"
+                               Width="320"
+                               HorizontalAlignment="Left"
+                               Text="42 ways to say the same thing, and this is one of them."
+                               TextWrapping="Wrap" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WatermarkExample"
+                                     Description="The two keyed block styles are the ones the text box watermarks are drawn with. The watermark one is dimmed and invisible to the mouse, so it can sit behind what it labels; the collapsing one is dimmed, smaller, and gone entirely when its text is empty, which closes the gap instead of leaving one. Empty the text below and watch the line under it move up."
+                                     Header="The two block styles">
+                <smtx:XamlDisplay UniqueKey="Text.Watermark">
+                    <StackPanel Width="320" HorizontalAlignment="Left">
+                        <TextBlock x:Name="Watermark"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
+                                   Text="Behind whatever it labels" />
+                        <TextBlock x:Name="Collapsing"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
+                                   Text="Gone when there is nothing to say" />
+                        <TextBlock Text="And a plain one underneath" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
