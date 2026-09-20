@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
 using System.Windows.Controls;
 
 namespace MahApps.Metro.Gallery.Pages
@@ -15,6 +16,8 @@ namespace MahApps.Metro.Gallery.Pages
         {
             this.InitializeComponent();
 
+            this.Long.ItemsSource = Enumerable.Range(1, 4200).Select(item => $"Item {item}").ToList();
+
             this.ListExample.Watch(this.List,
                                    ListBox.SelectionModeProperty,
                                    IsEnabledProperty);
@@ -24,6 +27,9 @@ namespace MahApps.Metro.Gallery.Pages
                                      Control.BorderThicknessProperty,
                                      ListBox.SelectionModeProperty);
             this.BorderExample.Watch("Layout", this.Bordered, WidthProperty, HeightProperty);
+
+            this.LongExample.Watch(this.Long, ListBox.SelectionModeProperty);
+            this.LongExample.Watch("Layout", this.Long, WidthProperty, HeightProperty);
         }
     }
 }

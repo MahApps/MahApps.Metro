@@ -46,6 +46,18 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="LongExample"
+                                     Description="A box with a few thousand entries behind it, which is where the keyed style earns its keep. The drop down virtualises either way, so only what is visible in it exists, but without this style every line scrolled past leaves its container behind and the next one is built new. VirtualizationMode Recycling hands the container on instead, and IsVirtualizingWhenGrouping keeps that up once the list is grouped. Open it and scroll: the same handful of rows carries the whole list. The entries come from the code behind, 4200 of them."
+                                     Header="A list too long to build in one go">
+                <smtx:XamlDisplay UniqueKey="ComboBox.Virtualized">
+                    <ComboBox x:Name="LongList"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              SelectedIndex="0"
+                              Style="{StaticResource MahApps.Styles.ComboBox.Virtualized}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

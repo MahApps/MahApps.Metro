@@ -46,6 +46,18 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="LongExample"
+                                     Description="A list virtualises without being asked to: only the rows that are on screen exist as controls. What this style changes is what becomes of a row that scrolls out of view. VirtualizationMode goes from Standard to Recycling, so its container is handed to the line coming in rather than thrown away and built again, and IsVirtualizingWhenGrouping keeps that going once the list is grouped. The base style already builds a VirtualizingStackPanel carrying those settings, which is not enough on its own: WPF reads them from the list rather than from the panel, and the keyed style is what puts them on the list. The items come from the code behind, 4200 of them."
+                                     Header="A list with more in it than fits">
+                <smtx:XamlDisplay UniqueKey="ListBox.Virtualized">
+                    <ListBox x:Name="Long"
+                             Width="280"
+                             Height="180"
+                             HorizontalAlignment="Left"
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

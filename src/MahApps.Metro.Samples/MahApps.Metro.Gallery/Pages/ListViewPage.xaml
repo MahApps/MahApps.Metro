@@ -55,6 +55,29 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="LongExample"
+                                     Description="Columns over a list long enough for virtualisation to matter. A list view virtualises anyway, so what this style brings is the recycling: VirtualizationMode goes from Standard to Recycling and a row that leaves the view is handed to the one arriving instead of being built from scratch, and IsVirtualizingWhenGrouping holds that once the rows are grouped. Unlike the list box, the base style of a list view sets none of this anywhere, so the key is the only way to it. The rows come from the code behind, 4200 files with a size each."
+                                     Header="Columns over more rows than fit">
+                <smtx:XamlDisplay UniqueKey="ListView.Virtualized">
+                    <ListView x:Name="LongView"
+                              Width="320"
+                              Height="200"
+                              HorizontalAlignment="Left"
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="180"
+                                                DisplayMemberBinding="{Binding Key}"
+                                                Header="File" />
+                                <GridViewColumn Width="100"
+                                                DisplayMemberBinding="{Binding Value}"
+                                                Header="Size" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
