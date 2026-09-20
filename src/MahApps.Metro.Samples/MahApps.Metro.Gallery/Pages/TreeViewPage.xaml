@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TreeViewPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="TreeExample"
+                                     Description="Two implicit styles, one for the tree and one for its nodes. The highlight behind a selected node runs the full width of the tree, indent and all, because the node template wraps the whole row in the border that carries the background. As with a list box the tree has no frame of its own, and its BorderBrush is the theme foreground, so switching the thickness on without also setting the brush gives a black box. A node with no children hides its triangle rather than drawing a disabled one, which is why Music has none."
+                                     Header="A tree of nodes">
+                <smtx:XamlDisplay UniqueKey="TreeView.Tree">
+                    <TreeView x:Name="Tree"
+                              Width="280"
+                              Height="200"
+                              HorizontalAlignment="Left">
+                        <TreeViewItem Header="Documents" IsExpanded="True">
+                            <TreeViewItem x:Name="Invoices"
+                                          Header="Invoices"
+                                          IsSelected="True" />
+                            <TreeViewItem Header="Contracts" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Pictures">
+                            <TreeViewItem Header="Holiday" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Music" />
+                    </TreeView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ColoursExample"
+                                     Description="The colours of a node are the same ItemHelper brushes a list box uses, and they are read from the node rather than from the tree. Here they sit on one node so that the options reach it; in an application they belong in an ItemContainerStyle based on MahApps.Styles.TreeViewItem, where they reach every node at once. Two of them look alike until the tree loses the focus: the active pair is what a selected node wears while the keyboard is in the tree, the plain pair what it falls back to once the focus has gone elsewhere."
+                                     Header="The colours of a node">
+                <smtx:XamlDisplay UniqueKey="TreeView.Colours">
+                    <TreeView Width="280" HorizontalAlignment="Left">
+                        <TreeViewItem Header="Reports" IsExpanded="True">
+                            <TreeViewItem x:Name="Coloured"
+                                          mah:ItemHelper.ActiveSelectionBackgroundBrush="#FF43A047"
+                                          mah:ItemHelper.ActiveSelectionForegroundBrush="#FFFFFFFF"
+                                          mah:ItemHelper.HoverBackgroundBrush="#FFE8F5E9"
+                                          mah:ItemHelper.HoverForegroundBrush="#FF1B5E20"
+                                          mah:ItemHelper.SelectedBackgroundBrush="#FFC8E6C9"
+                                          mah:ItemHelper.SelectedForegroundBrush="#FF1B5E20"
+                                          Header="42 open"
+                                          IsSelected="True" />
+                            <TreeViewItem Header="6 overdue" />
+                        </TreeViewItem>
+                    </TreeView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ExpanderExample"
+                                     Description="The little triangle is a ToggleButton bound both ways to IsExpanded, and the style it wears comes from an attached property, so it can be replaced without touching the node template. This one swaps the triangle for a plus and a minus. Background=&quot;Transparent&quot; on the border is what makes the whole button answer a click rather than only the character drawn on it, and the style it replaces does the same thing: a 16 unit grid with a transparent background around an arrow of 6."
+                                     Header="The button that opens a node">
+                <smtx:XamlDisplay UniqueKey="TreeView.Expander">
+                    <TreeView Width="280" HorizontalAlignment="Left">
+                        <TreeView.Resources>
+                            <Style x:Key="PlusMinus" TargetType="{x:Type ToggleButton}">
+                                <Setter Property="Focusable" Value="False" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                            <Border Background="Transparent">
+                                                <TextBlock x:Name="Sign"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="14"
+                                                           FontWeight="Bold"
+                                                           Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                                           Text="+" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="Sign" Property="Text" Value="-" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Width" Value="20" />
+                            </Style>
+                        </TreeView.Resources>
+                        <TreeViewItem x:Name="Branch"
+                                      mah:TreeViewItemHelper.ToggleButtonStyle="{StaticResource PlusMinus}"
+                                      Header="Documents"
+                                      IsExpanded="True">
+                            <TreeViewItem Header="Invoices" />
+                            <TreeViewItem Header="Contracts" />
+                        </TreeViewItem>
+                    </TreeView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="BigExample"
+                                     Description="A tree is where virtualisation matters most, because every branch that opens adds nodes. The variant sets IsVirtualizing and the recycling mode, and the base style watches the first of those and swaps its panel for a VirtualizingStackPanel. The node style carries the same trigger for its own children, because a tree has to virtualise at every level rather than only at the root. The items for this one come from the code behind, 400 folders with 42 files each."
+                                     Header="A tree with more in it than fits">
+                <smtx:XamlDisplay UniqueKey="TreeView.Virtualized">
+                    <TreeView x:Name="Big"
+                              Width="280"
+                              Height="220"
+                              HorizontalAlignment="Left"
+                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Value}">
+                                <TextBlock Text="{Binding Key}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

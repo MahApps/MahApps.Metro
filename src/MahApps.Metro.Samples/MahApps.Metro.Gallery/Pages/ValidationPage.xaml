@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ValidationPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="ErrorExample"
+                                     Description="A binding whose source turns the value down is marked by an adorner, and which adorner that is comes from Validation.ErrorTemplate. MahApps sets its own on the input controls it styles, so there is nothing to switch on: the box below is bound to a number that has to be between 1 and 99 and is not. The template draws a frame in MahApps.Brushes.Control.Validation and a small red triangle in the top right corner, and it reads ControlsHelper.CornerRadius off the box so that a rounded one keeps its shape when it goes red. The AdornerDecorator around the sample is what keeps the frame with the box while the page scrolls; without one the adornment goes to the layer of the window and stays where it was drawn."
+                                     Header="An error on a control">
+                <smtx:XamlDisplay UniqueKey="Validation.Error">
+                    <AdornerDecorator HorizontalAlignment="Left">
+                        <TextBox x:Name="Age"
+                                 Width="280"
+                                 mah:TextBoxHelper.Watermark="Between 1 and 99"
+                                 Text="{Binding Age, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                    </AdornerDecorator>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ShowExample"
+                                     Description="The message is not printed next to the box, it is a CustomValidationPopup to the right of it, and three things open it, none of them without an error to show. The keyboard being in the control is the one that is on by default, and it wants both the switch on the control and the one on the popup. The pointer resting on the red triangle is the second, and there either of the two switches is enough on its own. AlwaysShowValidationError is the third and overrides both. The fourth option below closes the popup again on a click, and two of the four are new and are not in 2.4.11: the one for the keyboard and the one that always shows."
+                                     Header="When the message shows">
+                <smtx:XamlDisplay UniqueKey="Validation.Show">
+                    <AdornerDecorator HorizontalAlignment="Left">
+                        <TextBox x:Name="Shown"
+                                 Width="280"
+                                 mah:TextBoxHelper.Watermark="Between 1 and 99"
+                                 mah:ValidationHelper.ShowValidationErrorOnMouseOver="True"
+                                 Text="{Binding Age, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                    </AdornerDecorator>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ManyExample"
+                                     Description="The popup holds an ItemsControl over the whole Validation.Errors collection with a template for one error, so every message gets a line of its own rather than only the first. Whether there is more than one is up to the source: a ValidationRule stops at the first rule that turns the value down and IDataErrorInfo has one string per property, while INotifyDataErrorInfo can hand back a list, which is what the box below is bound to. Its two rules are eight characters and a letter, and 42 answers neither. The popup fades to 15 percent while the pointer is on it, because it sits over the thing you were about to read."
+                                     Header="Every error, not just the first">
+                <smtx:XamlDisplay UniqueKey="Validation.Many">
+                    <AdornerDecorator HorizontalAlignment="Left">
+                        <TextBox x:Name="Secret"
+                                 Width="280"
+                                 mah:TextBoxHelper.Watermark="Eight characters and a letter"
+                                 mah:ValidationHelper.AlwaysShowValidationError="True"
+                                 Text="{Binding Secret, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                    </AdornerDecorator>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ElsewhereExample"
+                                     Description="TextBox, RichTextBox, PasswordBox, ComboBox, DatePicker, DateTimePicker, TimePicker, NumericUpDown, HotKeyBox, ToggleSwitch and the ColorPicker are the controls whose styles set the template. Anything else keeps what WPF draws, which is the plain red rectangle on the upper slider. Setting the key by hand, as the lower one does, is what adds the triangle in the corner and the message behind it. The DataGrid is the one deliberate exception: its style sets the template to x:Null, because a grid marks the row itself and an adornment per cell on top of that is noise. Drag either slider under 100 and both errors go."
+                                     Header="Everything else">
+                <smtx:XamlDisplay UniqueKey="Validation.Elsewhere">
+                    <AdornerDecorator HorizontalAlignment="Left">
+                        <StackPanel Width="280">
+                            <Slider x:Name="Plain"
+                                    Maximum="200"
+                                    Value="{Binding Amount, ValidatesOnNotifyDataErrors=True}" />
+                            <Slider x:Name="Marked"
+                                    Margin="0 24 0 0"
+                                    Maximum="200"
+                                    Validation.ErrorTemplate="{DynamicResource MahApps.Templates.ValidationError}"
+                                    Value="{Binding Amount, ValidatesOnNotifyDataErrors=True}" />
+                        </StackPanel>
+                    </AdornerDecorator>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

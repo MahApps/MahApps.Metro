@@ -342,7 +342,25 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    typeof(ToolBarPage),
                                                                                    PackIconMaterialKind.Toolbox,
                                                                                    keywords: "toolbar tray overflow grip items",
-                                                                                   control: "Styles/Controls.Toolbar.xaml")
+                                                                                   control: "Styles/Controls.Toolbar.xaml"),
+                                                                   new GalleryPage("ToolTip",
+                                                                                   "Styles",
+                                                                                   typeof(ToolTipPage),
+                                                                                   PackIconMaterialKind.TooltipTextOutline,
+                                                                                   keywords: "tooltip hint delay placement shadow",
+                                                                                   control: "Styles/Controls.Tooltip.xaml"),
+                                                                   new GalleryPage("TreeView",
+                                                                                   "Styles",
+                                                                                   typeof(TreeViewPage),
+                                                                                   PackIconMaterialKind.FileTree,
+                                                                                   keywords: "tree nodes expander indent virtualized",
+                                                                                   control: "Styles/Controls.TreeView.xaml"),
+                                                                   new GalleryPage("Validation",
+                                                                                   "Styles",
+                                                                                   typeof(ValidationPage),
+                                                                                   PackIconMaterialKind.AlertCircleOutline,
+                                                                                   keywords: "validation error adorner popup binding",
+                                                                                   control: "Styles/Controls.ValidationError.xaml")
                                                                };
     }
 }
