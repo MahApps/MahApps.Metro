@@ -15,7 +15,7 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="MenuExample"
-                                     Description="The navigation down the side of this gallery is one of these. It shows its items next to the content, or narrowed down to their icons, or over them, which is what DisplayMode decides."
+                                     Description="The navigation down the side of this gallery is one of these. It shows its items next to the content, or narrowed down to their icons, or over them, which is what DisplayMode decides. There are more items in this one than fit, so its scroll bar has something to do: on Auto it waits for the pointer, on Visible it stays."
                                      Header="A navigation down the side">
                 <smtx:XamlDisplay UniqueKey="HamburgerMenu.Navigation">
                     <mah:HamburgerMenu x:Name="Menu"
@@ -54,6 +54,15 @@
                                 <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Email, Width=18, Height=18}"
                                                            Label="Mail"
                                                            Tag="And the second one" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CalendarMonthOutline, Width=18, Height=18}"
+                                                           Label="Calendar"
+                                                           Tag="The third one" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountOutline, Width=18, Height=18}"
+                                                           Label="People"
+                                                           Tag="And the fourth" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FileOutline, Width=18, Height=18}"
+                                                           Label="Files"
+                                                           Tag="There are more items here than room for them, which is what the scroll bar is about" />
                                 <mah:HamburgerMenuSeparatorItem />
                                 <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}"
                                                            Label="Settings"
