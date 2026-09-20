@@ -119,10 +119,19 @@
                             <Setter TargetName="leftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="rightColumn" Property="Width" Value="*" />
                         </Trigger>
+                        <!--  a ScrollBar told to be Visible stays where the reader can see it, rather than waiting for the pointer  -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=VerticalScrollBarVisibility}" Value="Visible" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=IsPaneOpen}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_VerticalScrollBar" Property="Opacity" Value="1" />
+                        </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=VerticalScrollBarVisibility}" Value="Auto" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ComputedVerticalScrollBarVisibility}" Value="Visible" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=IsPaneOpen}" Value="True" />
                             </MultiDataTrigger.Conditions>
@@ -147,12 +156,14 @@
                                     <Storyboard>
                                         <DoubleAnimation BeginTime="0:0:1"
                                                          EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         FillBehavior="Stop"
                                                          Storyboard.TargetName="PART_VerticalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="0"
                                                          Duration="0:0:0.5" />
                                         <DoubleAnimation BeginTime="0:0:1"
                                                          EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         FillBehavior="Stop"
                                                          Storyboard.TargetName="PART_HorizontalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="0"
@@ -483,7 +494,7 @@
                                                   ItemTemplate="{TemplateBinding ItemTemplate}"
                                                   ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                   ItemsSource="{TemplateBinding ItemsSource}"
-                                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                  ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
                                                   SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
                                                   SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
                                                   SelectionMode="Single"
@@ -500,7 +511,7 @@
                                                   ItemTemplate="{TemplateBinding OptionsItemTemplate}"
                                                   ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
                                                   ItemsSource="{TemplateBinding OptionsItemsSource}"
-                                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                  ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding OptionsVerticalScrollBarVisibility}"
                                                   SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
                                                   SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
                                                   SelectionMode="Single"
