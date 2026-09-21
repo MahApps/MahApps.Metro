@@ -25,7 +25,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="Win10Example"
-                                     Description="The Windows 10 look. The field takes the chrome of a UWP text box and the time half of the drop down becomes three columns with no clock behind them. The calendar beside it stays the accent-banded one the library draws; the square Windows 10 calendar is a dictionary of its own on mahapps.com, pointed at through CalendarStyle."
+                                     Description="The Windows 10 look. The field takes the chrome of a UWP text box, the time half of the drop down becomes three columns with no clock behind them, and the calendar beside it is the square Windows 10 one, which the style hands over through CalendarStyle."
                                      Header="The Windows 10 look">
                 <smtx:XamlDisplay UniqueKey="DateTimePicker.Win10">
                     <mah:DateTimePicker x:Name="Win10"
@@ -37,7 +37,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="WinUIExample"
-                                     Description="And the WinUI one, which stands on it: rounded corners that the drop down follows, a border a touch stronger along its bottom edge, and the selected row of an open column drawn as a rounded pill."
+                                     Description="And the WinUI one, which stands on it: rounded corners that the drop down follows, a border a touch stronger along its bottom edge, the selected row of an open column drawn as a rounded pill, and the rounded calendar with its round day cells."
                                      Header="The WinUI look">
                 <smtx:XamlDisplay UniqueKey="DateTimePicker.WinUI">
                     <mah:DateTimePicker x:Name="WinUI"

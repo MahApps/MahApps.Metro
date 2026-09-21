@@ -1,4 +1,4 @@
-<UserControl x:Class="MahApps.Metro.Gallery.Pages.CalendarPage"
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.CalendarPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
@@ -27,6 +27,26 @@
                     <Calendar x:Name="Range"
                               HorizontalAlignment="Left"
                               SelectionMode="MultipleRange" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The Windows 10 calendar. No accent bar across the top, the month button and the two chevrons sit on the calendar itself, today is a filled square and the day you picked a ring around one. Hover and pressed are plain greys, so the accent on this one only ever says today or selected."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="Calendar.Win10">
+                    <Calendar x:Name="Win10"
+                              HorizontalAlignment="Left"
+                              Style="{DynamicResource MahApps.Styles.Calendar.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="The WinUI one is the same calendar rounded: round day cells on a grid of forty, rounded corners on the frame and on the months in the year view. That is the whole difference between the two, since Windows 10 was square throughout and the rounding came with Fluent 2. Step into the year with DisplayMode to see it."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="Calendar.WinUI">
+                    <Calendar x:Name="WinUI"
+                              HorizontalAlignment="Left"
+                              Style="{DynamicResource MahApps.Styles.Calendar.WinUI}" />
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

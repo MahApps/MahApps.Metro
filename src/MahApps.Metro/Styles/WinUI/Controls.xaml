@@ -13,6 +13,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Calendar.WinUI}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.WinUI}" TargetType="{x:Type mah:AnalogClock}" />
     <Style BasedOn="{StaticResource MahApps.Styles.DateTimePicker.WinUI}" TargetType="{x:Type mah:DateTimePicker}" />
     <Style BasedOn="{StaticResource MahApps.Styles.TimePicker.WinUI}" TargetType="{x:Type mah:TimePicker}" />
