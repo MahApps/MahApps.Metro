@@ -987,4 +987,47 @@
         <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.Win10}" />
     </Style>
 
+    <!--
+        The same two as they sit in the drop-down of a DateTimePicker. The popup already draws a
+        frame around everything and rounds it, so a calendar with a frame of its own puts a second
+        box inside the first. What is left of it is the one edge that divides the calendar from the
+        clock: the right one while the two stand side by side, the bottom one when they are stacked,
+        which is the pair below. Which of the two a picker hands over is a trigger on its own
+        Orientation, since a binding that has to find the picker from inside the popup is not there
+        yet when the calendar asks.
+    -->
+
+    <Style x:Key="MahApps.Styles.CalendarItem.DateTimePicker.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.CalendarItem.WinUI}"
+           TargetType="{x:Type CalendarItem}">
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Calendar.DateTimePicker.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Calendar.WinUI}"
+           TargetType="{x:Type Calendar}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
+        <Setter Property="BorderThickness" Value="0 0 1 0" />
+        <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.DateTimePicker.WinUI}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Calendar.DateTimePicker.Stacked.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Calendar.DateTimePicker.WinUI}"
+           TargetType="{x:Type Calendar}">
+        <Setter Property="BorderThickness" Value="0 0 0 1" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Calendar.DateTimePicker.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Calendar.Win10}"
+           TargetType="{x:Type Calendar}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
+        <Setter Property="BorderThickness" Value="0 0 1 0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Calendar.DateTimePicker.Stacked.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Calendar.DateTimePicker.Win10}"
+           TargetType="{x:Type Calendar}">
+        <Setter Property="BorderThickness" Value="0 0 0 1" />
+    </Style>
+
 </ResourceDictionary>

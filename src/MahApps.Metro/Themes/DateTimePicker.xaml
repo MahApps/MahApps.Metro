@@ -542,9 +542,15 @@
     <Style x:Key="MahApps.Styles.DateTimePicker.Win10"
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
            TargetType="{x:Type mah:DateTimePicker}">
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Win10}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker.Win10}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
+        <Style.Triggers>
+            <!--  stacked, so the line that divides the two halves is the one along the bottom  -->
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker.Stacked.Win10}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MahApps.Styles.TimePicker.Win10"
@@ -579,9 +585,15 @@
     <Style x:Key="MahApps.Styles.DateTimePicker.WinUI"
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.WinUI}"
            TargetType="{x:Type mah:DateTimePicker}">
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.WinUI}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker.WinUI}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
+        <Style.Triggers>
+            <!--  stacked, so the line that divides the two halves is the one along the bottom  -->
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker.Stacked.WinUI}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MahApps.Styles.TimePicker.WinUI"
