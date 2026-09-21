@@ -13,7 +13,7 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="ViewerExample"
-                                     Description="Anything larger than the space it sits in gets a bar, and the MahApps one is two arrows and a thumb over whatever is behind them. Nothing paints a groove, which is also why setting Background on a ScrollBar does nothing: the track is the two repeat buttons either side of the thumb, and they are transparent."
+                                     Description="Anything larger than the space it sits in gets a bar, and the MahApps one is two arrows and a thumb over whatever is behind them. Nothing paints a groove, which is also why setting Background on a ScrollBar does nothing: the track is the two repeat buttons either side of the thumb, and they are transparent. The gallery wears the WinUI bar everywhere, so this example pins the default style and the one below it to show what a plain Controls.xaml draws."
                                      Header="More than fits">
                 <smtx:XamlDisplay UniqueKey="ScrollBar.Viewer">
                     <ScrollViewer x:Name="Viewer"
@@ -21,7 +21,11 @@
                                   Height="140"
                                   HorizontalAlignment="Left"
                                   HorizontalScrollBarVisibility="Auto"
+                                  Style="{DynamicResource MahApps.Styles.ScrollViewer}"
                                   VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar}" TargetType="{x:Type ScrollBar}" />
+                        </ScrollViewer.Resources>
                         <Border Width="460"
                                 Height="240"
                                 Background="{DynamicResource MahApps.Brushes.Gray9}">
@@ -44,13 +48,14 @@
                                Maximum="100"
                                Minimum="0"
                                Orientation="Horizontal"
+                               Style="{DynamicResource MahApps.Styles.ScrollBar}"
                                ViewportSize="20"
                                Value="42" />
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="SizeExample"
-                                     Description="Four resources decide how thick a bar is, two for the bar itself and two for the arrow buttons, and a change needs all four. Override the first pair alone and the bar gets wider while the arrows stay small in the middle of it."
+                                     Description="Four resources decide how thick a bar is, twelve units by default, two for the bar itself and two for the arrow buttons, and a change needs all four. Override the first pair alone and the bar gets wider while the arrows stay small in the middle of it."
                                      Header="How thick it is">
                 <smtx:XamlDisplay UniqueKey="ScrollBar.Size">
                     <ScrollViewer xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -59,8 +64,10 @@
                                   Height="140"
                                   HorizontalAlignment="Left"
                                   HorizontalScrollBarVisibility="Auto"
+                                  Style="{DynamicResource MahApps.Styles.ScrollViewer}"
                                   VerticalScrollBarVisibility="Auto">
                         <ScrollViewer.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar}" TargetType="{x:Type ScrollBar}" />
                             <system:Double x:Key="MahApps.Sizes.ScrollBar.Width">22</system:Double>
                             <system:Double x:Key="MahApps.Sizes.ScrollBar.Height">22</system:Double>
                             <system:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">22</system:Double>
@@ -78,8 +85,60 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The Windows 10 bar is the one a UWP app draws, and it has two states like the WinUI one below. While the pointer is elsewhere it is a two unit line with two units of air at the edge. Once the pointer arrives it waits four tenths of a second and then opens in a tenth into sixteen units: a filled track, a square thumb across the whole width and a chevron at either end. Leaving it snaps back. The numbers and the timings are the ones in the system XAML of the Windows SDK, and the two chevrons keep their place the whole time, so the track never changes length."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ScrollBar.Win10">
+                    <ScrollViewer x:Name="Win10"
+                                  Width="300"
+                                  Height="140"
+                                  HorizontalAlignment="Left"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  Style="{DynamicResource MahApps.Styles.ScrollViewer.Win10}"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="{x:Type ScrollBar}" />
+                        </ScrollViewer.Resources>
+                        <Border Width="460"
+                                Height="240"
+                                Background="{DynamicResource MahApps.Brushes.Gray9}">
+                            <TextBlock Margin="8"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Text="460 by 240 under the Windows 10 bar" />
+                        </Border>
+                    </ScrollViewer>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="The WinUI bar is two things rather than one state. With the pointer elsewhere it is a two unit line at the edge of the content, and under the pointer it grows inwards into a six unit thumb on a rounded panel with a chevron at each end. MahApps.Styles.ScrollViewer.WinUI lays it over the content instead of beside it, which is what the guidance asks for and the reason the bar costs no room while nobody is pointing at it. This is the bar the rest of the gallery uses."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="ScrollBar.WinUI">
+                    <ScrollViewer x:Name="WinUI"
+                                  Width="300"
+                                  Height="140"
+                                  HorizontalAlignment="Left"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  Style="{DynamicResource MahApps.Styles.ScrollViewer.WinUI}"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.WinUI}" TargetType="{x:Type ScrollBar}" />
+                        </ScrollViewer.Resources>
+                        <Border Width="460"
+                                Height="240"
+                                Background="{DynamicResource MahApps.Brushes.Gray9}">
+                            <TextBlock Margin="8"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Text="460 by 240 under the WinUI bar" />
+                        </Border>
+                    </ScrollViewer>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="StudioExample"
-                                     Description="The Visual Studio bar is 18 units instead of 14, and unlike the default it does draw a track and puts its arrows in boxes. It is drawn for the dark shell, which is why it sits on a dark strip here, and it needs the colours of that theme alongside the style."
+                                     Description="The Visual Studio bar is 18 units instead of twelve, and unlike the default it does draw a track and puts its arrows in boxes. It is drawn for the dark shell, which is why it sits on a dark strip here, and it needs the colours of that theme alongside the style."
                                      Header="The Visual Studio look">
                 <smtx:XamlDisplay UniqueKey="ScrollBar.VisualStudio">
                     <Border Width="360"

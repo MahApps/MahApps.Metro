@@ -7,10 +7,10 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="po">
 
-    <system:Double x:Key="MahApps.Sizes.ScrollBar.Height">14</system:Double>
-    <system:Double x:Key="MahApps.Sizes.ScrollBar.Width">14</system:Double>
-    <system:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</system:Double>
-    <system:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Height">12</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Width">12</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">12</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">12</system:Double>
 
     <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbMouseOver" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -367,5 +367,897 @@
         <Setter Property="mah:ScrollViewerHelper.ScrollContentPresenterMargin" Value="-2 0" />
     </Style>
 
+
+
+    <!--
+        The Windows 10 bar, the one a UWP app draws and not the desktop one: a two unit line while
+        the pointer is elsewhere, and a sixteen unit bar with a filled track, a square thumb and a
+        chevron button at either end once the pointer arrives. The numbers and the timings are the
+        ones in the system XAML that ships with the Windows SDK. ScrollBarSize is 16 and
+        SmallScrollThumbScale 0.125 of it, which is where the two units come from;
+        SmallScrollThumbOffset -2 is the air left between the line and the outer edge;
+        ScrollBarExpandBeginTime waits 0.4 seconds before anything happens and
+        ScrollBarExpandDuration takes 0.1 to open. Leaving it snaps back rather than animating,
+        because the Collapsed state carries no storyboard over there either.
+        
+        The two chevrons keep their rows the whole time and are only faded out, so the track never
+        changes length and the line never jumps. That is UWP's arrangement as well, and it is the
+        one place where this bar and the WinUI one below differ in structure rather than in shape.
+        
+        Like the WinUI one it wants to lie over the content rather than beside it:
+        MahApps.Styles.ScrollViewer.Win10 further down.
+    -->
+
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Win10">16</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Win10.Indicator">2</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.Win10.Thumb.MinLength">24</system:Double>
+
+    <!--
+        WinUI's ScrollBarOpacityChangeDuration for the fades and its ScrollBarExpandDuration for the
+        growing, both taken from ScrollBar_themeresources.xaml.
+    -->
+    <Duration x:Key="MahApps.Duration.ScrollBar.Win10">0:0:0.083</Duration>
+    <Duration x:Key="MahApps.Duration.ScrollBar.Win10.Expand">0:0:0.167</Duration>
+
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.Win10.Up">M 0,4 L 4,0 L 8,4</Geometry>
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.Win10.Down">M 0,0 L 4,4 L 8,0</Geometry>
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.Win10.Left">M 4,0 L 0,4 L 4,8</Geometry>
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.Win10.Right">M 0,0 L 4,4 L 0,8</Geometry>
+
+    <!--  The chevron buttons at either end.  -->
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBar.Win10.Line" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Interval" Value="50" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border x:Name="Visual"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="True">
+                        <Path x:Name="Glyph"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Data="{TemplateBinding Content}"
+                              SnapsToDevicePixels="True"
+                              Stroke="{TemplateBinding Foreground}"
+                              StrokeEndLineCap="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeThickness="1" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Glyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray1}" />
+                            <Setter TargetName="Visual" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Glyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                            <Setter TargetName="Visual" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Glyph" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  The page area either side of the thumb: a hit target, and where the track shows.  -->
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBar.Win10.Page" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Interval" Value="50" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        A square thumb with no inset of its own: the whole of it is the fill, the way UWP's
+        VerticalThumbTemplate is a bare Rectangle. What makes the line out of it is the width the
+        template animates, not a margin around the visual.
+    -->
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.Win10" TargetType="{x:Type Thumb}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="Visual"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Visual" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="Visual" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray1}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Visual" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        Two of them, because the line grows on Width for a vertical bar and on Height for a
+        horizontal one, and an animation has to name the property it drives.
+    -->
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.Win10.Vertical"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.Win10}"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0 0 2 0" />
+        <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.ScrollBar.Win10.Thumb.MinLength}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.Win10.Indicator}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.Win10.Horizontal"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.Win10}"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.Win10.Indicator}" />
+        <Setter Property="Margin" Value="0 0 0 2" />
+        <Setter Property="MinWidth" Value="{DynamicResource MahApps.Sizes.ScrollBar.Win10.Thumb.MinLength}" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+    </Style>
+
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Win10.Vertical" TargetType="{x:Type ScrollBar}">
+        <Grid x:Name="Root" Background="{TemplateBinding Background}">
+            <!--  behind everything, including the two chevrons, as UWP's track rectangle is  -->
+            <Rectangle x:Name="Track"
+                       Fill="{DynamicResource MahApps.Brushes.Gray10}"
+                       Opacity="0" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <RepeatButton x:Name="LineUp"
+                              Grid.Row="0"
+                              Height="{DynamicResource MahApps.Sizes.ScrollBar.Win10}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
+                              Command="ScrollBar.LineUpCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.Win10.Up}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Line}" />
+                <Track x:Name="PART_Track"
+                       Grid.Row="1"
+                       IsDirectionReversed="True">
+                    <Track.Resources>
+                        <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">24</system:Double>
+                    </Track.Resources>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
+                                      Command="ScrollBar.PageUpCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Page}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <mah:MetroThumb x:Name="Thumb" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.Win10.Vertical}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
+                                      Command="ScrollBar.PageDownCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Page}" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton x:Name="LineDown"
+                              Grid.Row="2"
+                              Height="{DynamicResource MahApps.Sizes.ScrollBar.Win10}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
+                              Command="ScrollBar.LineDownCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.Win10.Down}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Line}" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--
+                    The stronger grey of the expanded bar, UWP's ScrollBarThumbBackgroundColor. It is
+                    a setter and not part of the storyboard below, because a storyboard in the
+                    actions of a template trigger has to be freezable and a DynamicResource in it is
+                    not. The colour therefore arrives when the pointer does and the shape follows
+                    after the delay.
+                -->
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <!--
+                            UWP and WinUI both wait ScrollBarExpandBeginTime, four tenths of a
+                            second, but over there the wait starts when the pointer enters the
+                            scrolling region, so the bar stands open by the time the pointer arrives.
+                            A WPF trigger only knows about the bar itself, and waiting four tenths
+                            once the pointer is already on it reads as a bar that will not open. A
+                            tenth keeps the guard against a pointer sweeping past and feels like the
+                            thing it is copying.
+                        -->
+                        <Storyboard BeginTime="0:0:0.1">
+                            <DoubleAnimation Storyboard.TargetName="Track"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0.9"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.Win10}" />
+                            <DoubleAnimation Storyboard.TargetName="LineUp"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.Win10}" />
+                            <DoubleAnimation Storyboard.TargetName="LineDown"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.Win10}" />
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Width">
+                                <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                                      KeyTime="0:0:0.167"
+                                                      Value="16" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeySpline="0,0,0,1"
+                                                         KeyTime="0:0:0.167"
+                                                         Value="0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <!--  Collapsed has no storyboard in the system XAML either, so this snaps  -->
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="Track"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="LineUp"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="LineDown"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="Thumb"
+                                             Storyboard.TargetProperty="Width"
+                                             To="2"
+                                             Duration="0" />
+                            <ThicknessAnimation Storyboard.TargetName="Thumb"
+                                                Storyboard.TargetProperty="Margin"
+                                                To="0 0 2 0"
+                                                Duration="0" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Root" Property="Opacity" Value="0.5" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Win10.Horizontal" TargetType="{x:Type ScrollBar}">
+        <Grid x:Name="Root" Background="{TemplateBinding Background}">
+            <Rectangle x:Name="Track"
+                       Fill="{DynamicResource MahApps.Brushes.Gray10}"
+                       Opacity="0" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <RepeatButton x:Name="LineLeft"
+                              Grid.Column="0"
+                              Width="{DynamicResource MahApps.Sizes.ScrollBar.Win10}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
+                              Command="ScrollBar.LineLeftCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.Win10.Left}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Line}" />
+                <Track x:Name="PART_Track"
+                       Grid.Column="1"
+                       IsDirectionReversed="False">
+                    <Track.Resources>
+                        <system:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}">24</system:Double>
+                    </Track.Resources>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
+                                      Command="ScrollBar.PageLeftCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Page}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <mah:MetroThumb x:Name="Thumb" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.Win10.Horizontal}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
+                                      Command="ScrollBar.PageRightCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Page}" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton x:Name="LineRight"
+                              Grid.Column="2"
+                              Width="{DynamicResource MahApps.Sizes.ScrollBar.Win10}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
+                              Command="ScrollBar.LineRightCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.Win10.Right}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.Win10.Line}" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:0.1">
+                            <DoubleAnimation Storyboard.TargetName="Track"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0.9"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.Win10}" />
+                            <DoubleAnimation Storyboard.TargetName="LineLeft"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.Win10}" />
+                            <DoubleAnimation Storyboard.TargetName="LineRight"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.Win10}" />
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Height">
+                                <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                                      KeyTime="0:0:0.167"
+                                                      Value="16" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeySpline="0,0,0,1"
+                                                         KeyTime="0:0:0.167"
+                                                         Value="0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="Track"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="LineLeft"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="LineRight"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="0" />
+                            <DoubleAnimation Storyboard.TargetName="Thumb"
+                                             Storyboard.TargetProperty="Height"
+                                             To="2"
+                                             Duration="0" />
+                            <ThicknessAnimation Storyboard.TargetName="Thumb"
+                                                Storyboard.TargetProperty="Margin"
+                                                To="0 0 0 2"
+                                                Duration="0" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Root" Property="Opacity" Value="0.5" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ScrollBar.Win10" TargetType="{x:Type ScrollBar}">
+        <!--  Transparent, not unset: all sixteen units have to answer hit tests or the pointer never reaches the bar.  -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.Win10}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Win10.Horizontal}" />
+                <Setter Property="Width" Value="Auto" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Win10.Vertical}" />
+                <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.Win10}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The WinUI bar, which follows the two visualisations Microsoft describes in "Scroll viewer
+        controls": the panning indicator, a two unit line at the edge of the content and all there
+        is until the pointer arrives, and the scrollbar proper, a six unit thumb with a chevron
+        button at each end on a rounded panel, which the indicator morphs into on hover.
+        
+        The outer edge is the anchor. The indicator sits flush against it and everything that grows
+        on hover grows inwards: leftwards for a vertical bar, upwards for a horizontal one.
+        
+        The bar is meant to lie over the content rather than beside it, which is what
+        MahApps.Styles.ScrollViewer.WinUI further down does. Without it sixteen units stand empty
+        around a two unit line whenever the pointer is elsewhere.
+    -->
+
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI">16</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Indicator">2</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Thumb">6</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength">24</system:Double>
+
+    <CornerRadius x:Key="MahApps.CornerRadius.ScrollBar.WinUI">8</CornerRadius>
+    <CornerRadius x:Key="MahApps.CornerRadius.ScrollBar.WinUI.Thumb">3</CornerRadius>
+
+    <!--  the same two WinUI carries, ScrollBarOpacityChangeDuration and ScrollBarExpandDuration  -->
+    <Duration x:Key="MahApps.Duration.ScrollBar.WinUI">0:0:0.083</Duration>
+    <Duration x:Key="MahApps.Duration.ScrollBar.WinUI.Expand">0:0:0.167</Duration>
+
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.WinUI.Up">M 0,3 L 3,0 L 6,3</Geometry>
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.WinUI.Down">M 0,0 L 3,3 L 6,0</Geometry>
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.WinUI.Left">M 3,0 L 0,3 L 3,6</Geometry>
+    <Geometry x:Key="MahApps.Geometry.ScrollBar.WinUI.Right">M 0,0 L 3,3 L 0,6</Geometry>
+
+    <!--  The chevrons, which exist only while the bar is expanded.  -->
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Interval" Value="50" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="{TemplateBinding Background}">
+                        <Path x:Name="Glyph"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Data="{TemplateBinding Content}"
+                              SnapsToDevicePixels="True"
+                              Stroke="{TemplateBinding Foreground}"
+                              StrokeEndLineCap="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeThickness="1" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Glyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray1}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Glyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Glyph" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  The page area either side of the thumb: a hit target, nothing more.  -->
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBar.WinUI.Page" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Interval" Value="50" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.WinUI" TargetType="{x:Type Thumb}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="Visual"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{DynamicResource MahApps.CornerRadius.ScrollBar.WinUI.Thumb}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Visual" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="Visual" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray1}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Visual" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        Two thumb styles rather than one: the indicator grows on Width for a vertical bar and on
+        Height for a horizontal one, and an animation has to name the property it drives.
+    -->
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.WinUI.Vertical"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI}"
+           TargetType="{x:Type Thumb}">
+        <!--
+            Flush against the edge of the content. The template animates the margin out to 5 as the
+            bar expands, which is what leaves the six unit thumb in the middle of the sixteen unit
+            panel.
+        -->
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Indicator}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.WinUI.Horizontal"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI}"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Indicator}" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinWidth" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength}" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+    </Style>
+
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.WinUI.Vertical" TargetType="{x:Type ScrollBar}">
+        <Grid x:Name="Root" Background="{TemplateBinding Background}">
+            <Border x:Name="Panel"
+                    Width="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Thumb}"
+                    HorizontalAlignment="Right"
+                    Background="{DynamicResource MahApps.Brushes.Gray10}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource MahApps.CornerRadius.ScrollBar.WinUI}"
+                    Opacity="0" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <RepeatButton x:Name="LineUp"
+                              Grid.Row="0"
+                              Height="{DynamicResource MahApps.Sizes.ScrollBar.WinUI}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
+                              Command="ScrollBar.LineUpCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Up}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
+                              Visibility="Collapsed" />
+                <Track x:Name="PART_Track"
+                       Grid.Row="1"
+                       IsDirectionReversed="True">
+                    <Track.Resources>
+                        <system:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">24</system:Double>
+                    </Track.Resources>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollUp}"
+                                      Command="ScrollBar.PageUpCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Page}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <mah:MetroThumb x:Name="Thumb" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.WinUI.Vertical}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
+                                      Command="ScrollBar.PageDownCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Page}" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton x:Name="LineDown"
+                              Grid.Row="2"
+                              Height="{DynamicResource MahApps.Sizes.ScrollBar.WinUI}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollDown}"
+                              Command="ScrollBar.LineDownCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Down}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
+                              Visibility="Collapsed" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <!--
+                    The chevrons take their rows the moment they become visible, so the track
+                    shortens and the thumb shifts a little. That is what the two visualisations do
+                    in WinUI as well: the panning indicator runs the full height, the expanded bar
+                    does not.
+                -->
+                <Setter TargetName="LineDown" Property="Visibility" Value="Visible" />
+                <Setter TargetName="LineUp" Property="Visibility" Value="Visible" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <!--  the delay of the Windows 10 bar above, for the same reason  -->
+                        <Storyboard BeginTime="0:0:0.1">
+                            <DoubleAnimation Storyboard.TargetName="Panel"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineUp"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineDown"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Panel" Storyboard.TargetProperty="Width">
+                                <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                                      KeyTime="0:0:0.167"
+                                                      Value="16" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Width">
+                                <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                                      KeyTime="0:0:0.167"
+                                                      Value="6" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeySpline="0,0,0,1"
+                                                         KeyTime="0:0:0.167"
+                                                         Value="0 0 5 0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="Panel"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineUp"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineDown"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="Panel"
+                                             Storyboard.TargetProperty="Width"
+                                             To="6"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="Thumb"
+                                             Storyboard.TargetProperty="Width"
+                                             To="2"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <ThicknessAnimation Storyboard.TargetName="Thumb"
+                                                Storyboard.TargetProperty="Margin"
+                                                To="0"
+                                                Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Root" Property="Opacity" Value="0.5" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.WinUI.Horizontal" TargetType="{x:Type ScrollBar}">
+        <Grid x:Name="Root" Background="{TemplateBinding Background}">
+            <Border x:Name="Panel"
+                    Height="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Thumb}"
+                    VerticalAlignment="Bottom"
+                    Background="{DynamicResource MahApps.Brushes.Gray10}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource MahApps.CornerRadius.ScrollBar.WinUI}"
+                    Opacity="0" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <RepeatButton x:Name="LineLeft"
+                              Grid.Column="0"
+                              Width="{DynamicResource MahApps.Sizes.ScrollBar.WinUI}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
+                              Command="ScrollBar.LineLeftCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Left}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
+                              Visibility="Collapsed" />
+                <Track x:Name="PART_Track"
+                       Grid.Column="1"
+                       IsDirectionReversed="False">
+                    <Track.Resources>
+                        <system:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}">24</system:Double>
+                    </Track.Resources>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollLeft}"
+                                      Command="ScrollBar.PageLeftCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Page}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <mah:MetroThumb x:Name="Thumb" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.WinUI.Horizontal}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
+                                      Command="ScrollBar.PageRightCommand"
+                                      Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Page}" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton x:Name="LineRight"
+                              Grid.Column="2"
+                              Width="{DynamicResource MahApps.Sizes.ScrollBar.WinUI}"
+                              AutomationProperties.Name="{x:Static lang:Automation.ScrollRight}"
+                              Command="ScrollBar.LineRightCommand"
+                              Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Right}"
+                              Opacity="0"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
+                              Visibility="Collapsed" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="LineLeft" Property="Visibility" Value="Visible" />
+                <Setter TargetName="LineRight" Property="Visibility" Value="Visible" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <!--  the delay of the Windows 10 bar above, for the same reason  -->
+                        <Storyboard BeginTime="0:0:0.1">
+                            <DoubleAnimation Storyboard.TargetName="Panel"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineLeft"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineRight"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Panel" Storyboard.TargetProperty="Height">
+                                <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                                      KeyTime="0:0:0.167"
+                                                      Value="16" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Height">
+                                <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                                      KeyTime="0:0:0.167"
+                                                      Value="6" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeySpline="0,0,0,1"
+                                                         KeyTime="0:0:0.167"
+                                                         Value="0 0 0 5" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="Panel"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineLeft"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="LineRight"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="Panel"
+                                             Storyboard.TargetProperty="Height"
+                                             To="6"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <DoubleAnimation Storyboard.TargetName="Thumb"
+                                             Storyboard.TargetProperty="Height"
+                                             To="2"
+                                             Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                            <ThicknessAnimation Storyboard.TargetName="Thumb"
+                                                Storyboard.TargetProperty="Margin"
+                                                To="0"
+                                                Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Root" Property="Opacity" Value="0.5" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ScrollBar.WinUI" TargetType="{x:Type ScrollBar}">
+        <!--  Transparent, not unset: all sixteen units have to answer hit tests or the pointer never reaches the bar.  -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.WinUI.Horizontal}" />
+                <Setter Property="Width" Value="Auto" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.WinUI.Vertical}" />
+                <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The bars lie on top of the content instead of beside it, which is what both of the newer
+        looks ask for: the WinUI guidance says "overlaid as 16px on top of the content inside your
+        ScrollViewer", and a UWP scroll viewer does the same with the Windows 10 bar. Leave sixteen
+        units of padding at the edge of anything interactive, or an expanded bar will cover it.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.ScrollViewer.Overlay" TargetType="{x:Type ScrollViewer}">
+        <Grid Background="{TemplateBinding Background}">
+            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                    Margin="{TemplateBinding Padding}"
+                                    CanContentScroll="{TemplateBinding CanContentScroll}"
+                                    CanHorizontallyScroll="False"
+                                    CanVerticallyScroll="False"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+            <ScrollBar x:Name="PART_VerticalScrollBar"
+                       HorizontalAlignment="Right"
+                       AutomationProperties.AutomationId="VerticalScrollBar"
+                       Cursor="Arrow"
+                       Maximum="{TemplateBinding ScrollableHeight}"
+                       Minimum="0"
+                       ViewportSize="{TemplateBinding ViewportHeight}"
+                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                       Value="{TemplateBinding VerticalOffset}" />
+            <ScrollBar x:Name="PART_HorizontalScrollBar"
+                       VerticalAlignment="Bottom"
+                       AutomationProperties.AutomationId="HorizontalScrollBar"
+                       Cursor="Arrow"
+                       Maximum="{TemplateBinding ScrollableWidth}"
+                       Minimum="0"
+                       Orientation="Horizontal"
+                       ViewportSize="{TemplateBinding ViewportWidth}"
+                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                       Value="{TemplateBinding HorizontalOffset}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
+                <Setter TargetName="PART_VerticalScrollBar" Property="HorizontalAlignment" Value="Left" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ScrollViewer.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ScrollViewer}"
+           TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollViewer.Overlay}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ScrollViewer.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ScrollViewer}"
+           TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollViewer.Overlay}" />
+    </Style>
 
 </ResourceDictionary>

@@ -17,6 +17,15 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+        <!--
+            Without this WPF paints the caret itself, by inverting the RGB channels of whatever the
+            Background is, and where that is not a solid brush it inverts SystemColors.WindowColor
+            instead, which is white whatever Windows is set to. That is how the caret ends up black
+            on a dark theme in every control whose template hands its inner text box a null
+            background: the editable ComboBox, the MultiSelectionComboBox, the AutoSuggestBox and
+            the four up-downs all take this style or one based on it.
+        -->
+        <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
@@ -30,7 +39,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <!--
+                        Layout rounding here and not on the box itself: it rounds the frame, the inner
+                        grid and the buttons onto whole device pixels, which is what keeps a filled
+                        glyph button from ending in part of a pixel against the frame it stands in, and
+                        it leaves the size the box reports to its own parent alone. The property does
+                        not inherit, so a container carrying it would do nothing for this.
+                    -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -291,6 +307,8 @@
 
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrush}" />
+        <!--  The caret only ever shows on the focused box, and that one is white under both base themes, so it takes the focused text colour rather than the theme foreground.  -->
+        <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundFocused}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Foreground}" />
@@ -302,7 +320,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <!--
+                        Layout rounding here and not on the box itself: it rounds the frame, the inner
+                        grid and the buttons onto whole device pixels, which is what keeps a filled
+                        glyph button from ending in part of a pixel against the frame it stands in, and
+                        it leaves the size the box reports to its own parent alone. The property does
+                        not inherit, so a container carrying it would do nothing for this.
+                    -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -597,12 +622,20 @@
 
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundFocused}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <!--
+                        Layout rounding here and not on the box itself: it rounds the frame, the inner
+                        grid and the buttons onto whole device pixels, which is what keeps a filled
+                        glyph button from ending in part of a pixel against the frame it stands in, and
+                        it leaves the size the box reports to its own parent alone. The property does
+                        not inherit, so a container carrying it would do nothing for this.
+                    -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
