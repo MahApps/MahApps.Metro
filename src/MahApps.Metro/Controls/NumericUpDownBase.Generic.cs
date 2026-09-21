@@ -9,7 +9,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using JetBrains.Annotations;
 using MahApps.Metro.ValueBoxes;

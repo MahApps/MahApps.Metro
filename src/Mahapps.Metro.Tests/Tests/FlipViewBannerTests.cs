@@ -4,7 +4,6 @@
 
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Markup;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
