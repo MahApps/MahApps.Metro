@@ -944,11 +944,24 @@ namespace MahApps.Metro.Controls
             this.SetCurrentValue(SelectedDateTimeProperty, DateTime.Now);
         }
 
+        /// <summary>
+        /// The wheel stops at the drop-down. A routed event leaves a popup along the tree it hangs
+        /// in, so one that nobody inside the drop-down wanted travels on to whatever the picker
+        /// itself stands in, and a page scrolls out from under a drop-down that stays where it is.
+        /// Anything in there that wants the wheel, a list of hours among them, has already had it by
+        /// the time this runs.
+        /// </summary>
+        private static void PopUp_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         private void SubscribeEvents()
         {
             if (this.popUp != null)
             {
                 this.popUp.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(this.PopUp_PreviewMouseLeftButtonDown));
+                this.popUp.AddHandler(MouseWheelEvent, new MouseWheelEventHandler(PopUp_MouseWheel));
                 this.popUp.Opened += this.PopUp_Opened;
                 this.popUp.Closed += this.PopUp_Closed;
 
@@ -985,6 +998,7 @@ namespace MahApps.Metro.Controls
             if (this.popUp != null)
             {
                 this.popUp.RemoveHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(this.PopUp_PreviewMouseLeftButtonDown));
+                this.popUp.RemoveHandler(MouseWheelEvent, new MouseWheelEventHandler(PopUp_MouseWheel));
                 this.popUp.Opened -= this.PopUp_Opened;
                 this.popUp.Closed -= this.PopUp_Closed;
             }
