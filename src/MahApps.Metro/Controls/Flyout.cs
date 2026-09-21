@@ -677,7 +677,8 @@ namespace MahApps.Metro.Controls
             }
 
             // second try, look for main window and then for current application
-            if (Application.Current != null)
+            // a window can live on a thread of its own, and then the application belongs to somebody else
+            if (Application.Current != null && Application.Current.CheckAccess())
             {
                 theme = Application.Current.MainWindow is null
                     ? ThemeManager.Current.DetectTheme(Application.Current)
