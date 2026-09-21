@@ -35,6 +35,18 @@ namespace MahApps.Metro.Gallery.Pages
                                     TimePicker.ClockSizeProperty,
                                     TimePicker.HandVisibilityProperty,
                                     TimePicker.IsClockVisibleProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    TimePicker.SelectedDateTimeProperty,
+                                    TimePicker.IsClockVisibleProperty,
+                                    TimePicker.PickerVisibilityProperty,
+                                    IsEnabledProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    TimePicker.SelectedDateTimeProperty,
+                                    TimePicker.IsClockVisibleProperty,
+                                    TimePicker.PickerVisibilityProperty,
+                                    IsEnabledProperty);
         }
     }
 }

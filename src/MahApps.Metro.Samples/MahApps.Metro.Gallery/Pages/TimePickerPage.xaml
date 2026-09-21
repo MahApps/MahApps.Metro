@@ -51,6 +51,30 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The Windows 10 look. The field wears the chrome of a UWP text box, two units of frame all the way round and the accent once the caret is in, and the drop down is three columns with no clock behind them, because Windows 10 has no clock face either. Open it to see them. Turning IsClockVisible back on brings the face along with the columns."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="TimePicker.Win10">
+                    <mah:TimePicker x:Name="Win10"
+                                    Width="280"
+                                    HorizontalAlignment="Left"
+                                    mah:TextBoxHelper.Watermark="At"
+                                    Style="{DynamicResource MahApps.Styles.TimePicker.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one, which stands on it: rounded corners that the drop down follows, a border a touch stronger along its bottom edge, and the selected row of an open column drawn as a rounded pill instead of a square band."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="TimePicker.WinUI">
+                    <mah:TimePicker x:Name="WinUI"
+                                    Width="280"
+                                    HorizontalAlignment="Left"
+                                    mah:TextBoxHelper.Watermark="At"
+                                    Style="{DynamicResource MahApps.Styles.TimePicker.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
