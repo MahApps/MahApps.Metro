@@ -25,7 +25,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
-                    <Grid x:Name="PART_Root">
+                    <!--  whole device pixels for everything inside the frame, the way Controls.TextBox.xaml does it  -->
+                    <Grid x:Name="PART_Root" UseLayoutRounding="True">
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"

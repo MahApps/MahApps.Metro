@@ -19,7 +19,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid Background="{TemplateBinding Background}">
+                    <!--  whole device pixels for everything inside the frame, the way Controls.TextBox.xaml does it  -->
+                    <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True">
                         <Grid x:Name="PART_InnerGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="TextColumn" Width="*" />
@@ -156,7 +157,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid x:Name="ToggleButtonRootGrid" Background="{TemplateBinding Background}">
+                    <!--  whole device pixels for everything inside the frame, the way Controls.TextBox.xaml does it  -->
+                    <Grid x:Name="ToggleButtonRootGrid"
+                          Background="{TemplateBinding Background}"
+                          UseLayoutRounding="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="TextColumn" Width="*" />
                             <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
@@ -250,7 +254,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid>
+                    <!--  whole device pixels for everything inside the frame, the way Controls.TextBox.xaml does it  -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
