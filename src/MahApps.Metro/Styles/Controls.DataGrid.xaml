@@ -829,6 +829,18 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Styles.DataGrid.Virtualized"
+           BasedOn="{StaticResource MahApps.Styles.DataGrid}"
+           TargetType="{x:Type DataGrid}">
+        <Setter Property="EnableColumnVirtualization" Value="True" />
+        <Setter Property="EnableRowVirtualization" Value="True" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="True" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.GroupItem"
            BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
            TargetType="{x:Type ToggleButton}">
