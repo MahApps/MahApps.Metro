@@ -39,7 +39,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <!--
+                        Layout rounding here and not on the box itself: it rounds the frame, the inner
+                        grid and the buttons onto whole device pixels, which is what keeps a filled
+                        glyph button from ending in part of a pixel against the frame it stands in, and
+                        it leaves the size the box reports to its own parent alone. The property does
+                        not inherit, so a container carrying it would do nothing for this.
+                    -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -313,7 +320,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <!--
+                        Layout rounding here and not on the box itself: it rounds the frame, the inner
+                        grid and the buttons onto whole device pixels, which is what keeps a filled
+                        glyph button from ending in part of a pixel against the frame it stands in, and
+                        it leaves the size the box reports to its own parent alone. The property does
+                        not inherit, so a container carrying it would do nothing for this.
+                    -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -614,7 +628,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
+                    <!--
+                        Layout rounding here and not on the box itself: it rounds the frame, the inner
+                        grid and the buttons onto whole device pixels, which is what keeps a filled
+                        glyph button from ending in part of a pixel against the frame it stands in, and
+                        it leaves the size the box reports to its own parent alone. The property does
+                        not inherit, so a container carrying it would do nothing for this.
+                    -->
+                    <Grid UseLayoutRounding="True">
                         <Border x:Name="BorderElement"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
