@@ -91,17 +91,23 @@
     </ItemGroup>
 
     <!--
-        Every dictionary named here is combined into one, Themes\Styles.xaml, and dropped from the
-        pages of the assembly, so the library carries one compiled dictionary instead of eighty odd
-        and a resource is found in one step instead of by walking a tree of merged ones. XAMLTools
-        works the order out itself from what each dictionary takes from the others, so the list
-        below is a set and not a sequence. Styles\Fonts.xaml stays out of it, because an
-        application merges that one by name.
+        Every dictionary named here is combined into one, Themes\Styles.xaml, so the library carries
+        one compiled dictionary instead of eighty odd and a resource is found in one step instead of
+        by walking a tree of merged ones. XAMLTools works the order out itself from what each
+        dictionary takes from the others, so the list below is a set and not a sequence.
+        Styles\Fonts.xaml stays out of it, because an application merges that one by name.
     -->
     <PropertyGroup>
         <FilesForXamlCombine>Styles\Controls.*.xaml;Themes\*.xaml;Themes\ColorPicker\*.xaml;Themes\Dialogs\*.xaml</FilesForXamlCombine>
-        <!--  the same in Debug as in Release, so nothing passes here and falls over on the build server  -->
-        <RemoveXAMLCombineItemsFromPages>true</RemoveXAMLCombineItemsFromPages>
+        <!--
+            In Release the dictionaries that went into the combined one are dropped from the pages of
+            the assembly, which is the point of combining them. In Debug they stay, so that the
+            designer still has something to show and the files can be worked on one at a time. What
+            the application merges is Themes\Styles.xaml either way, so the pages that stay are
+            carried along unused.
+        -->
+        <RemoveXAMLCombineItemsFromPages Condition="'$(Configuration)' != 'Debug'">true</RemoveXAMLCombineItemsFromPages>
+        <RemoveXAMLCombineItemsFromPages Condition="'$(Configuration)' == 'Debug'">false</RemoveXAMLCombineItemsFromPages>
     </PropertyGroup>
 
     <ItemGroup>

@@ -35,6 +35,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
     [TemplatePart(Name = ElementPopup, Type = typeof(Popup))]
     [StyleTypedProperty(Property = nameof(ClockStyle), StyleTargetType = typeof(AnalogClock))]
+    [StyleTypedProperty(Property = nameof(NowButtonStyle), StyleTargetType = typeof(Button))]
     [StyleTypedProperty(Property = nameof(PopupStyle), StyleTargetType = typeof(Popup))]
     [DefaultEvent("SelectedDateTimeChanged")]
     public abstract class TimePickerBase : Control
@@ -394,6 +395,23 @@ namespace MahApps.Metro.Controls
         {
             get => (Style?)this.GetValue(ClockStyleProperty);
             set => this.SetValue(ClockStyleProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="NowButtonStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty NowButtonStyleProperty
+            = DependencyProperty.Register(nameof(NowButtonStyle),
+                                          typeof(Style),
+                                          typeof(TimePickerBase),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the style of the button in the drop-down that puts the picker on the here
+        /// and now.
+        /// </summary>
+        public Style? NowButtonStyle
+        {
+            get => (Style?)this.GetValue(NowButtonStyleProperty);
+            set => this.SetValue(NowButtonStyleProperty, value);
         }
 
         /// <summary>Identifies the <see cref="PopupStyle"/> dependency property.</summary>

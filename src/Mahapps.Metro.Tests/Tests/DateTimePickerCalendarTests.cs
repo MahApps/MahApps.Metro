@@ -84,6 +84,23 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(thickness.Left + thickness.Top + thickness.Right + thickness.Bottom, Is.EqualTo(1d), "one edge and no more");
         }
 
+        [TestCase(Win10Set, "MahApps.Styles.DateTimePicker.Win10")]
+        [TestCase(WinUISet, "MahApps.Styles.DateTimePicker.WinUI")]
+        [Description("One stroke in a drop-down: the line that divides the two halves is the one the frame around them is drawn in, and neither is the light grey every control shares.")]
+        public void TheDividerAndTheFrameAreTheSameStroke(string set, string key)
+        {
+            var picker = this.window.Show(Picker(set, key));
+
+            var frame = picker.Template?.FindName("PART_PopupBorder", picker) as Border;
+            Assert.That(frame, Is.Not.Null, "the template should carry the frame around the drop-down");
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(Calendar(picker).BorderBrush, Is.SameAs(frame!.BorderBrush), "the divider and the frame");
+                    Assert.That(frame!.BorderBrush, Is.Not.SameAs(Application.Current.TryFindResource("MahApps.Brushes.Control.Border")), "and not the one every control shares");
+                });
+        }
+
         private static DateTimePicker Picker(string set, string key)
         {
             var dictionary = new ResourceDictionary { Source = new Uri(set, UriKind.Absolute) };
