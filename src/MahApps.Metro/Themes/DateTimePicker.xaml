@@ -542,7 +542,7 @@
     <Style x:Key="MahApps.Styles.DateTimePicker.Win10"
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
            TargetType="{x:Type mah:DateTimePicker}">
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Win10}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
     </Style>
@@ -579,7 +579,7 @@
     <Style x:Key="MahApps.Styles.DateTimePicker.WinUI"
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.WinUI}"
            TargetType="{x:Type mah:DateTimePicker}">
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.WinUI}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
     </Style>
