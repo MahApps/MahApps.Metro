@@ -86,7 +86,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="Win10Example"
-                                     Description="The Windows 10 bar is sixteen units, square, and everything the default leaves out is there: a filled track, a thumb that grows when the pointer is on it and a chevron button at either end. It sits beside the content the way the desktop bar does, so the column it needs is reserved whether or not anything is scrollable."
+                                     Description="The Windows 10 bar is the one a UWP app draws, and it has two states like the WinUI one below. While the pointer is elsewhere it is a two unit line with two units of air at the edge. Once the pointer arrives it waits four tenths of a second and then opens in a tenth into sixteen units: a filled track, a square thumb across the whole width and a chevron at either end. Leaving it snaps back. The numbers and the timings are the ones in the system XAML of the Windows SDK, and the two chevrons keep their place the whole time, so the track never changes length."
                                      Header="The Windows 10 look">
                 <smtx:XamlDisplay UniqueKey="ScrollBar.Win10">
                     <ScrollViewer x:Name="Win10"
@@ -94,7 +94,7 @@
                                   Height="140"
                                   HorizontalAlignment="Left"
                                   HorizontalScrollBarVisibility="Auto"
-                                  Style="{DynamicResource MahApps.Styles.ScrollViewer}"
+                                  Style="{DynamicResource MahApps.Styles.ScrollViewer.Win10}"
                                   VerticalScrollBarVisibility="Auto">
                         <ScrollViewer.Resources>
                             <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="{x:Type ScrollBar}" />
@@ -105,7 +105,7 @@
                             <TextBlock Margin="8"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
-                                       Text="460 by 240 behind the Windows 10 bar" />
+                                       Text="460 by 240 under the Windows 10 bar" />
                         </Border>
                     </ScrollViewer>
                 </smtx:XamlDisplay>
