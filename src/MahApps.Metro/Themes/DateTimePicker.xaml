@@ -5,112 +5,28 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <mahConverters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
-    <mahConverters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
-
-    <DataTemplate x:Key="MahApps.Templates.DateTimePicker.FiveMinuteIndicator">
-        <StackPanel Height="57"
-                    Orientation="Horizontal"
-                    RenderTransformOrigin=".5,1">
-            <StackPanel.RenderTransform>
-                <RotateTransform Angle="{Binding Converter={StaticResource ClockDegreeConverter}, Mode=OneTime}" />
-            </StackPanel.RenderTransform>
-            <Rectangle Width="2"
-                       Height="10"
-                       Margin="0 -49 0 0"
-                       Fill="{DynamicResource MahApps.Brushes.Accent3}" />
-        </StackPanel>
-    </DataTemplate>
-
-    <DataTemplate x:Key="MahApps.Templates.DateTimePicker.MinuteIndicator">
-        <StackPanel Height="57"
-                    Orientation="Horizontal"
-                    RenderTransformOrigin=".5,1">
-            <StackPanel.RenderTransform>
-                <RotateTransform Angle="{Binding Converter={StaticResource ClockDegreeConverter}, Mode=OneTime}" />
-            </StackPanel.RenderTransform>
-            <Rectangle Width="1"
-                       Height="5"
-                       Margin="0 -49.75 0 0"
-                       Fill="{DynamicResource MahApps.Brushes.Accent4}" />
-        </StackPanel>
-    </DataTemplate>
-
-    <x:Array x:Key="FiveMinuteKeys" Type="system:Int32">
-        <system:Int32>0</system:Int32>
-        <system:Int32>5</system:Int32>
-        <system:Int32>10</system:Int32>
-        <system:Int32>15</system:Int32>
-        <system:Int32>20</system:Int32>
-        <system:Int32>25</system:Int32>
-        <system:Int32>30</system:Int32>
-        <system:Int32>35</system:Int32>
-        <system:Int32>40</system:Int32>
-        <system:Int32>45</system:Int32>
-        <system:Int32>50</system:Int32>
-        <system:Int32>55</system:Int32>
-    </x:Array>
-
-    <x:Array x:Key="MinuteKeys" Type="system:Int32">
-        <system:Int32>1</system:Int32>
-        <system:Int32>2</system:Int32>
-        <system:Int32>3</system:Int32>
-        <system:Int32>4</system:Int32>
-        <system:Int32>6</system:Int32>
-        <system:Int32>7</system:Int32>
-        <system:Int32>8</system:Int32>
-        <system:Int32>9</system:Int32>
-        <system:Int32>11</system:Int32>
-        <system:Int32>12</system:Int32>
-        <system:Int32>13</system:Int32>
-        <system:Int32>14</system:Int32>
-        <system:Int32>16</system:Int32>
-        <system:Int32>17</system:Int32>
-        <system:Int32>18</system:Int32>
-        <system:Int32>19</system:Int32>
-        <system:Int32>21</system:Int32>
-        <system:Int32>22</system:Int32>
-        <system:Int32>23</system:Int32>
-        <system:Int32>24</system:Int32>
-        <system:Int32>26</system:Int32>
-        <system:Int32>27</system:Int32>
-        <system:Int32>28</system:Int32>
-        <system:Int32>29</system:Int32>
-        <system:Int32>31</system:Int32>
-        <system:Int32>32</system:Int32>
-        <system:Int32>33</system:Int32>
-        <system:Int32>34</system:Int32>
-        <system:Int32>36</system:Int32>
-        <system:Int32>37</system:Int32>
-        <system:Int32>38</system:Int32>
-        <system:Int32>39</system:Int32>
-        <system:Int32>41</system:Int32>
-        <system:Int32>42</system:Int32>
-        <system:Int32>43</system:Int32>
-        <system:Int32>44</system:Int32>
-        <system:Int32>46</system:Int32>
-        <system:Int32>47</system:Int32>
-        <system:Int32>48</system:Int32>
-        <system:Int32>49</system:Int32>
-        <system:Int32>51</system:Int32>
-        <system:Int32>52</system:Int32>
-        <system:Int32>53</system:Int32>
-        <system:Int32>54</system:Int32>
-        <system:Int32>56</system:Int32>
-        <system:Int32>57</system:Int32>
-        <system:Int32>58</system:Int32>
-        <system:Int32>59</system:Int32>
-    </x:Array>
+    <!--
+        What a drop-down needs to behave like one. It sits in a style and not on the popup in the
+        template, because what a template sets on one of its own elements a style cannot take back,
+        and PopupStyle is there to be replaced.
+    -->
+    <Style x:Key="MahApps.Styles.Popup.TimePickerBase" TargetType="{x:Type Popup}">
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Placement" Value="Bottom" />
+        <Setter Property="PopupAnimation" Value="Fade" />
+        <Setter Property="StaysOpen" Value="False" />
+    </Style>
 
     <Style x:Key="MahApps.Styles.TimePickerBase" TargetType="{x:Type mah:TimePickerBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ClockStyle" Value="{DynamicResource MahApps.Styles.AnalogClock}" />
         <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
@@ -119,6 +35,7 @@
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="PickerVisibility" Value="HourMinute" />
+        <Setter Property="PopupStyle" Value="{DynamicResource MahApps.Styles.Popup.TimePickerBase}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -252,12 +169,8 @@
                                                     Grid.Row="1"
                                                     Grid.Column="0"
                                                     Grid.ColumnSpan="2"
-                                                    AllowsTransparency="True"
-                                                    Focusable="False"
-                                                    Placement="Bottom"
                                                     PlacementTarget="{Binding ElementName=PART_Root}"
-                                                    PopupAnimation="Fade"
-                                                    StaysOpen="False">
+                                                    Style="{TemplateBinding PopupStyle}">
                                     <Border x:Name="PART_PopupBorder"
                                             Background="{DynamicResource MahApps.Brushes.Control.Background}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
@@ -286,79 +199,15 @@
                                                             <RowDefinition Height="Auto" />
                                                             <RowDefinition Height="*" />
                                                         </Grid.RowDefinitions>
-                                                        <Border x:Name="PART_Clock"
-                                                                Grid.Row="0"
-                                                                Width="120"
-                                                                Height="120"
-                                                                Margin="0 5 5 0"
-                                                                HorizontalAlignment="Center"
-                                                                BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                                                                BorderThickness="2"
-                                                                CornerRadius="75">
-                                                            <Canvas HorizontalAlignment="Center">
-                                                                <ItemsControl Focusable="False"
-                                                                              IsTabStop="False"
-                                                                              ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.FiveMinuteIndicator}"
-                                                                              ItemsSource="{StaticResource FiveMinuteKeys}">
-                                                                    <ItemsControl.ItemsPanel>
-                                                                        <ItemsPanelTemplate>
-                                                                            <Canvas IsItemsHost="True" />
-                                                                        </ItemsPanelTemplate>
-                                                                    </ItemsControl.ItemsPanel>
-                                                                </ItemsControl>
-                                                                <ItemsControl Focusable="False"
-                                                                              IsTabStop="False"
-                                                                              ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.MinuteIndicator}"
-                                                                              ItemsSource="{StaticResource MinuteKeys}">
-                                                                    <ItemsControl.ItemsPanel>
-                                                                        <ItemsPanelTemplate>
-                                                                            <Canvas IsItemsHost="True" />
-                                                                        </ItemsPanelTemplate>
-                                                                    </ItemsControl.ItemsPanel>
-                                                                </ItemsControl>
-                                                                <Rectangle x:Name="PART_MinuteHand"
-                                                                           Canvas.Top="6"
-                                                                           Width="2"
-                                                                           Height="51"
-                                                                           HorizontalAlignment="Center"
-                                                                           Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                                                           RenderTransformOrigin=".5,1">
-                                                                    <Rectangle.RenderTransform>
-                                                                        <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
-                                                                    </Rectangle.RenderTransform>
-                                                                </Rectangle>
-                                                                <Rectangle x:Name="PART_HourHand"
-                                                                           Canvas.Top="27"
-                                                                           Width="2"
-                                                                           Height="30"
-                                                                           HorizontalAlignment="Center"
-                                                                           Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                                                           RenderTransformOrigin=".5,1">
-                                                                    <Rectangle.RenderTransform>
-                                                                        <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, ConverterParameter='h', Mode=OneWay}" />
-                                                                    </Rectangle.RenderTransform>
-                                                                </Rectangle>
-                                                                <Ellipse Canvas.Left="-2"
-                                                                         Canvas.Top="54"
-                                                                         Width="6"
-                                                                         Height="6"
-                                                                         Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                                                                <Rectangle x:Name="PART_SecondHand"
-                                                                           Canvas.Left="0.75"
-                                                                           Canvas.Top="6"
-                                                                           Width="1"
-                                                                           Height="61"
-                                                                           Margin="0 5 0 0"
-                                                                           HorizontalAlignment="Center"
-                                                                           Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                                                           Opacity=".25"
-                                                                           RenderTransformOrigin=".5,.75">
-                                                                    <Rectangle.RenderTransform>
-                                                                        <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='s', Mode=OneWay}" />
-                                                                    </Rectangle.RenderTransform>
-                                                                </Rectangle>
-                                                            </Canvas>
-                                                        </Border>
+                                                        <mah:AnalogClock x:Name="PART_Clock"
+                                                                         Grid.Row="0"
+                                                                         Width="{TemplateBinding ClockSize}"
+                                                                         Height="{TemplateBinding ClockSize}"
+                                                                         Margin="0 5 5 0"
+                                                                         HorizontalAlignment="Center"
+                                                                         HandVisibility="{TemplateBinding HandVisibility}"
+                                                                         Style="{TemplateBinding ClockStyle}"
+                                                                         Time="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                                                         <Grid x:Name="PART_ClockPartSelectorsHolder"
                                                               Grid.Row="1"
                                                               Margin="5"
@@ -563,14 +412,183 @@
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
     </Style>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase}" TargetType="{x:Type mah:DateTimePicker}">
+    <Style x:Key="MahApps.Styles.DateTimePicker"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase}"
+           TargetType="{x:Type mah:DateTimePicker}">
         <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
     </Style>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase}" TargetType="{x:Type mah:TimePicker}">
+    <Style BasedOn="{StaticResource MahApps.Styles.DateTimePicker}" TargetType="{x:Type mah:DateTimePicker}" />
+
+    <Style x:Key="MahApps.Styles.TimePicker"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase}"
+           TargetType="{x:Type mah:TimePicker}">
         <Setter Property="mah:DatePickerHelper.DropDownButtonContent" Value="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a time" />
     </Style>
+
+    <Style BasedOn="{StaticResource MahApps.Styles.TimePicker}" TargetType="{x:Type mah:TimePicker}" />
+
+    <!--
+        The Windows 10 and the WinUI set. Neither of them draws a clock face, because neither
+        Windows 10 nor Fluent has one: the columns are the whole time selection there. The field
+        takes the chrome its text boxes wear, from Styles/Controls.TextBox.xaml, and the columns in
+        the drop-down are plain ComboBoxes with no style of their own, so an implicit style reaches
+        them. That style sits in Style.Resources of the picker rather than in the application, which
+        is what keeps it off every other ComboBox: a lookup from inside a template walks up to the
+        Style.Resources of the templated parent, so the drop-down sees it and nothing else does.
+    -->
+
+    <Style x:Key="MahApps.Styles.ComboBoxItem.TimePickerBase.Win10" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="12 6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Border"
+                            Margin="{TemplateBinding Margin}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="Center"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  The selected row of a WinUI list is a rounded pill, which is the whole of the difference.  -->
+    <Style x:Key="MahApps.Styles.ComboBoxItem.TimePickerBase.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.Win10}"
+           TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Margin" Value="2 1" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ComboBox.TimePickerBase.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox}"
+           TargetType="{x:Type ComboBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.Win10}" />
+        <Setter Property="MaxDropDownHeight" Value="240" />
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="MinWidth" Value="48" />
+        <Setter Property="Padding" Value="8 4" />
+        <!--  No chevron: the whole column is the toggle, and it reads better without one.  -->
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ComboBox.TimePickerBase.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.Win10}"
+           TargetType="{x:Type ComboBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.WinUI}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+    </Style>
+
+    <!--  The colon between two columns. Kept, but quiet.  -->
+    <Style x:Key="MahApps.Styles.Label.TimePickerBase.Win10" TargetType="{x:Type Label}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="Opacity" Value=".4" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TimePickerBase.Win10"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase}"
+           TargetType="{x:Type mah:TimePickerBase}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.Win10}" TargetType="{x:Type ComboBox}" />
+            <Style BasedOn="{StaticResource MahApps.Styles.Label.TimePickerBase.Win10}" TargetType="{x:Type Label}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="ClockStyle" Value="{DynamicResource MahApps.Styles.AnalogClock.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Foreground}" />
+        <Setter Property="IsClockVisible" Value="False" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="8 4" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushPointerOver}" />
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="34" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DateTimePicker.Win10"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
+           TargetType="{x:Type mah:DateTimePicker}">
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker}" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
+        <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TimePicker.Win10"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
+           TargetType="{x:Type mah:TimePicker}">
+        <Setter Property="mah:DatePickerHelper.DropDownButtonContent" Value="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
+        <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a time" />
+    </Style>
+
+    <!--
+        WinUI on top of it, the way the text box has it: the line along the bottom edge is the thick
+        one and the corners are rounded. The drop-down follows them, since the border around it
+        reads the same corner radius.
+    -->
+    <Style x:Key="MahApps.Styles.TimePickerBase.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
+           TargetType="{x:Type mah:TimePickerBase}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.WinUI}" TargetType="{x:Type ComboBox}" />
+            <Style BasedOn="{StaticResource MahApps.Styles.Label.TimePickerBase.Win10}" TargetType="{x:Type Label}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1 1 1 2" />
+        <Setter Property="ClockStyle" Value="{DynamicResource MahApps.Styles.AnalogClock.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DateTimePicker.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase.WinUI}"
+           TargetType="{x:Type mah:DateTimePicker}">
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker}" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
+        <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TimePicker.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TimePickerBase.WinUI}"
+           TargetType="{x:Type mah:TimePicker}">
+        <Setter Property="mah:DatePickerHelper.DropDownButtonContent" Value="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
+        <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a time" />
+    </Style>
+
 </ResourceDictionary>

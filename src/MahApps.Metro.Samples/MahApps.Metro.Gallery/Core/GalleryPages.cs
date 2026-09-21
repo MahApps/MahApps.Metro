@@ -16,6 +16,12 @@ namespace MahApps.Metro.Gallery.Core
     {
         public static IReadOnlyList<GalleryPage> All { get; } = new[]
                                                                {
+                                                                   new GalleryPage("AnalogClock",
+                                                                                   "Controls",
+                                                                                   typeof(AnalogClockPage),
+                                                                                   PackIconMaterialKind.ClockOutline,
+                                                                                   keywords: "clock face hands time dial",
+                                                                                   control: "Controls/TimePicker/AnalogClock.cs"),
                                                                    new GalleryPage("AutoSuggestBox",
                                                                                    "Controls",
                                                                                    typeof(AutoSuggestBoxPage),

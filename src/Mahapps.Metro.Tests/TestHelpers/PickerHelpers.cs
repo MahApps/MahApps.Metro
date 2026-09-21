@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -52,6 +52,31 @@ namespace MahApps.Metro.Tests.TestHelpers
             field.Clear();
             field.Text = text;
             field.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+        }
+
+        /// <summary>
+        /// The clock in the drop-down of a picker.
+        /// </summary>
+        public static AnalogClock Clock(this TimePickerBase picker)
+        {
+            // it lives in the drop-down, so the visual tree has nothing until that is opened
+            var clock = picker.Template?.FindName("PART_Clock", picker) as AnalogClock;
+
+            Assert.That(clock, Is.Not.Null, "the template should carry its clock");
+
+            return clock!;
+        }
+
+        /// <summary>
+        /// The drop-down of a picker.
+        /// </summary>
+        public static Popup DropDown(this TimePickerBase picker)
+        {
+            var popup = picker.Template?.FindName("PART_Popup", picker) as Popup;
+
+            Assert.That(popup, Is.Not.Null, "the template should carry its popup");
+
+            return popup!;
         }
 
         /// <summary>

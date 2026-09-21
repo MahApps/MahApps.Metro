@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,6 +30,23 @@ namespace MahApps.Metro.Gallery.Pages
                                     TimePicker.HandVisibilityProperty,
                                     TimePicker.SelectedTimeFormatProperty,
                                     TimePicker.SelectedDateTimeProperty);
+
+            this.ClockExample.Watch(this.BigClock,
+                                    TimePicker.ClockSizeProperty,
+                                    TimePicker.HandVisibilityProperty,
+                                    TimePicker.IsClockVisibleProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    TimePicker.SelectedDateTimeProperty,
+                                    TimePicker.IsClockVisibleProperty,
+                                    TimePicker.PickerVisibilityProperty,
+                                    IsEnabledProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    TimePicker.SelectedDateTimeProperty,
+                                    TimePicker.IsClockVisibleProperty,
+                                    TimePicker.PickerVisibilityProperty,
+                                    IsEnabledProperty);
         }
     }
 }
