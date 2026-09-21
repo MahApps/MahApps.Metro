@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.AnalogClockPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="FaceExample"
+                                     Description="The face behind the drop down of a TimePicker, on its own. It shows the time it is given and nothing else: a clock on the wall is a binding to something that moves. HandVisibility says which of the three hands are drawn, the same flags the pickers use."
+                                     Header="A clock face">
+                <smtx:XamlDisplay UniqueKey="AnalogClock.Face">
+                    <mah:AnalogClock x:Name="Face" HorizontalAlignment="Left" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="SizeExample"
+                                     Description="The face is drawn at its natural 120 and scaled to whatever size the clock is given, so the ring, the dots around it and the hands keep their proportions and there is one number to set. The ring grows with the rest of it: two units of border on a clock at twice its size are four on the screen."
+                                     Header="Any size you like">
+                <smtx:XamlDisplay UniqueKey="AnalogClock.Size">
+                    <mah:AnalogClock x:Name="Large"
+                                     Width="220"
+                                     Height="220"
+                                     HorizontalAlignment="Left" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="LookExample"
+                                     Description="Nothing about the face is baked in. BorderBrush and BorderThickness are the ring, Foreground the hands and the dot in the middle, Background the face behind them, and the whole thing is a template if that is not enough. The Windows 10 and the WinUI sets carry a style of their own, and a picker hands one down through ClockStyle."
+                                     Header="A look of your own">
+                <smtx:XamlDisplay UniqueKey="AnalogClock.Look">
+                    <mah:AnalogClock x:Name="Look"
+                                     Width="160"
+                                     Height="160"
+                                     HorizontalAlignment="Left"
+                                     Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                     BorderBrush="{DynamicResource MahApps.Brushes.Gray5}"
+                                     BorderThickness="1"
+                                     Foreground="{DynamicResource MahApps.Brushes.Accent}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
