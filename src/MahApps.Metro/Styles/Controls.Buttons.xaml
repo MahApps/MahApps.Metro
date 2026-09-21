@@ -401,22 +401,35 @@
 
     <!--  "Chromeless" style for buttons  -->
     <ControlTemplate x:Key="MahApps.Templates.Button.Chromeless" TargetType="{x:Type ButtonBase}">
-        <Grid x:Name="ContentGrid" Background="{TemplateBinding Background}">
-            <Grid.Clip>
-                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
-                    <Binding Path="(mah:ControlsHelper.CornerRadius)" RelativeSource="{RelativeSource TemplatedParent}" />
-                </MultiBinding>
-            </Grid.Clip>
-            <ContentPresenter x:Name="PART_ContentPresenter"
-                              Margin="{TemplateBinding Padding}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-        </Grid>
+        <!--
+            The fill is a Border and not the background of the grid inside it. A Border snaps the edges
+            of what it paints to whole device pixels, a grid background does not, and the clip below is
+            never snapped at all, so a filled chromeless button used to end in half a pixel of its own
+            colour along the right and the bottom edge. On a scaled display that reads as a grey seam
+            between the button and whatever frame it stands in, which is how the clear button of a text
+            box came to look a pixel out of place.
+        -->
+        <Border x:Name="Chrome"
+                Background="{TemplateBinding Background}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="Chrome" Path="CornerRadius" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
