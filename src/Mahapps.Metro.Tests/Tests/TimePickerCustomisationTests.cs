@@ -160,6 +160,21 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        [Test]
+        [Description("The frame around the drop-down is a brush the picker carries, so a style can match it to the field rather than leaving it on the one every control shares.")]
+        public void TheFrameAroundTheDropDownIsThePickersOwn()
+        {
+            var picker = this.window.Show(new TimePicker());
+
+            DatePickerHelper.SetDropDownBorderBrush(picker, Brushes.Red);
+            this.window.Settle();
+
+            var frame = picker.Template?.FindName("PART_PopupBorder", picker) as Border;
+
+            Assert.That(frame, Is.Not.Null, "the template should carry the frame around the drop-down");
+            Assert.That(frame!.BorderBrush, Is.SameAs(Brushes.Red));
+        }
+
         private static UIElement Hand(AnalogClock clock, string part)
         {
             var hand = clock.Template?.FindName(part, clock) as UIElement;

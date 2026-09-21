@@ -40,6 +40,38 @@ namespace MahApps.Metro.Controls
             obj.SetValue(DropDownButtonContentProperty, value);
         }
 
+        public static readonly DependencyProperty DropDownBorderBrushProperty
+            = DependencyProperty.RegisterAttached(
+                "DropDownBorderBrush",
+                typeof(Brush),
+                typeof(DatePickerHelper),
+                new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the brush of the frame around the drop-down.
+        /// </summary>
+        /// <remarks>
+        /// A drop-down hangs over whatever is behind it, so it is drawn with a frame, and that frame
+        /// belongs to the picker rather than to controls in general: a set that gives its text boxes
+        /// a border of their own wants the same one here.
+        /// </remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        public static Brush? GetDropDownBorderBrush(DependencyObject d)
+        {
+            return (Brush?)d.GetValue(DropDownBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush of the frame around the drop-down.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        public static void SetDropDownBorderBrush(DependencyObject obj, Brush? value)
+        {
+            obj.SetValue(DropDownBorderBrushProperty, value);
+        }
+
         public static readonly DependencyProperty DropDownButtonContentTemplateProperty
             = DependencyProperty.RegisterAttached(
                 "DropDownButtonContentTemplate",
