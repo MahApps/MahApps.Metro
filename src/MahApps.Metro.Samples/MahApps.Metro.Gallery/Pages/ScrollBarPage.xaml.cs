@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,6 +41,18 @@ namespace MahApps.Metro.Gallery.Pages
                                    ScrollViewer.HorizontalScrollBarVisibilityProperty,
                                    ScrollViewer.VerticalScrollBarVisibilityProperty);
             this.SizeExample.Watch("Layout", this.Thick, WidthProperty, HeightProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    ScrollViewer.HorizontalScrollBarVisibilityProperty,
+                                    ScrollViewer.VerticalScrollBarVisibilityProperty);
+            this.Win10Example.Watch("Layout", this.Win10, WidthProperty, HeightProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    ScrollViewer.HorizontalScrollBarVisibilityProperty,
+                                    ScrollViewer.VerticalScrollBarVisibilityProperty,
+                                    Control.PaddingProperty);
+            this.WinUIExample.Watch("Attached", this.WinUI, ScrollViewerHelper.VerticalScrollBarOnLeftSideProperty);
+            this.WinUIExample.Watch("Layout", this.WinUI, WidthProperty, HeightProperty);
 
             this.StudioExample.Watch(this.Studio,
                                      ScrollBar.OrientationProperty,

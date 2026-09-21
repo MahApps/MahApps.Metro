@@ -11,6 +11,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Gallery;component/Themes/ControlExample.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!--
+                The gallery keeps the default Metro look and takes the WinUI scrollbar everywhere,
+                because it is the nicer of the three to live with: a thin line at the edge of the
+                content that grows into a bar under the pointer, laid over the content rather than
+                beside it. The pages that show a bar off pin the style they mean.
+            -->
+            <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.WinUI}" TargetType="{x:Type ScrollBar}" />
+            <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.WinUI}" TargetType="{x:Type ScrollViewer}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
