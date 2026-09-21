@@ -14,6 +14,47 @@
         template, because what a template sets on one of its own elements a style cannot take back,
         and PopupStyle is there to be replaced.
     -->
+    <!--
+        The button along the bottom of the drop-down. It is a command in a flyout and not what the
+        flyout is for, so it brings no fill of its own and takes one under the pointer, the same two
+        greys the days of a calendar take, rather than lying across the drop-down as a slab.
+    -->
+    <Style x:Key="MahApps.Styles.Button.TimePickerBase.Now" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="8 6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="Fill"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fill" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Fill" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MahApps.Styles.Popup.TimePickerBase" TargetType="{x:Type Popup}">
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="Focusable" Value="False" />
@@ -33,6 +74,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HandVisibility" Value="HourMinute" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="NowButtonStyle" Value="{DynamicResource MahApps.Styles.Button.TimePickerBase.Now}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="PickerVisibility" Value="HourMinute" />
         <Setter Property="PopupStyle" Value="{DynamicResource MahApps.Styles.Popup.TimePickerBase}" />
@@ -262,7 +304,7 @@
                                                         Content="{TemplateBinding NowButtonContent}"
                                                         FontFamily="{TemplateBinding FontFamily}"
                                                         FontSize="{TemplateBinding FontSize}"
-                                                        Style="{DynamicResource MahApps.Styles.Button.Flat}"
+                                                        Style="{TemplateBinding NowButtonStyle}"
                                                         Visibility="{TemplateBinding IsNowButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                             </StackPanel>
                                         </Grid>
