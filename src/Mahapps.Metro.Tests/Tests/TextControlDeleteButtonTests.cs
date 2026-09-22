@@ -5,6 +5,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -14,7 +15,7 @@ namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
     /// The delete button of the Win10 and the WinUI box wears MahApps.Styles.Button.TextControl.Delete,
-    /// text box and password box alike, and a key that reads like one of the library's own has to be
+    /// text box, password box and rich text box alike, and a key that reads like one of the library's own has to be
     /// one: the style used to sit in the resources of the template itself, where the lookup found it
     /// first and an application had no way of saying anything about that button.
     /// </summary>
@@ -46,6 +47,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.TextBox.WinUI")]
         [TestCase("MahApps.Styles.PasswordBox.Win10")]
         [TestCase("MahApps.Styles.PasswordBox.WinUI")]
+        [TestCase("MahApps.Styles.RichTextBox.Win10")]
+        [TestCase("MahApps.Styles.RichTextBox.WinUI")]
         [Description("The glyph takes the colour of the text in the box, which is what makes it visible on a box that has not turned white yet.")]
         public void TheGlyphFollowsTheTextOfTheBox(string key)
         {
@@ -63,6 +66,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.TextBox.WinUI")]
         [TestCase("MahApps.Styles.PasswordBox.Win10")]
         [TestCase("MahApps.Styles.PasswordBox.WinUI")]
+        [TestCase("MahApps.Styles.RichTextBox.Win10")]
+        [TestCase("MahApps.Styles.RichTextBox.WinUI")]
         [Description("And an application can say something about that button, which a style inside the template would not let it.")]
         public void AStyleFromOutsideReachesTheButton(string key)
         {
@@ -83,6 +88,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.TextBox.WinUI")]
         [TestCase("MahApps.Styles.PasswordBox.Win10")]
         [TestCase("MahApps.Styles.PasswordBox.WinUI")]
+        [TestCase("MahApps.Styles.RichTextBox.Win10")]
+        [TestCase("MahApps.Styles.RichTextBox.WinUI")]
         [Description("The style is built on the chromeless button, which carries a template of its own, and the one the box hands over is the one that has to win.")]
         public void TheButtonKeepsTheTemplateTheBoxHandsIt(string key)
         {
@@ -102,16 +109,19 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
-        /// The password box of those two sets carries the same button, so the key says which of the
-        /// two controls the style belongs to.
+        /// The password box and the rich text box of those two sets carry the same button, so the key
+        /// says which of the three controls the style belongs to.
         /// </summary>
         private Control Show(string key)
         {
             Assert.That(this.window, Is.Not.Null);
 
-            Control box = key.Contains("PasswordBox")
-                ? new PasswordBox { Password = "Konrad" }
-                : new TextBox { Text = "Konrad" };
+            Control box = key switch
+            {
+                _ when key.Contains("PasswordBox") => new PasswordBox { Password = "Konrad" },
+                _ when key.Contains("RichTextBox") => Document("Konrad"),
+                _ => new TextBox { Text = "Konrad" }
+            };
 
             box.Style = (Style)Application.Current.FindResource(key);
             box.Width = 200;
@@ -120,6 +130,18 @@ namespace MahApps.Metro.Tests.Tests
 
             this.window!.Content = box;
             this.Settle();
+
+            return box;
+        }
+
+        /// <summary>
+        /// A rich text box takes its text as a document rather than as a string.
+        /// </summary>
+        private static RichTextBox Document(string text)
+        {
+            var box = new RichTextBox();
+            box.Document.Blocks.Clear();
+            box.Document.Blocks.Add(new Paragraph(new Run(text)));
 
             return box;
         }

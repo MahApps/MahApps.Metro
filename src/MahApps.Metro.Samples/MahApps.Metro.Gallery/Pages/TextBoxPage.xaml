@@ -80,6 +80,42 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="RichWin10Example"
+                                     Description="The rich box in the Windows 10 look, which is the text box of that set with room for as many lines as you give it. UWP draws no button on its rich box at all, so the one here is the clear button of the library, and it follows the rule the Windows 10 text box follows."
+                                     Header="The rich one in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="TextBox.Rich.Win10">
+                    <RichTextBox x:Name="RichWin10"
+                                 Width="260"
+                                 Height="80"
+                                 HorizontalAlignment="Left"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Write something here"
+                                 Style="{DynamicResource MahApps.Styles.RichTextBox.Win10}">
+                        <FlowDocument>
+                            <Paragraph>42 ways to say the same thing, and this is one of them.</Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="RichWinUIExample"
+                                     Description="And the same box in the WinUI look: the translucent fill, the stronger line along the bottom edge and the rounded corners, with the text clipped to those corners rather than running over them."
+                                     Header="The rich one in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="TextBox.Rich.WinUI">
+                    <RichTextBox x:Name="RichWinUI"
+                                 Width="260"
+                                 Height="80"
+                                 HorizontalAlignment="Left"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Write something here"
+                                 Style="{DynamicResource MahApps.Styles.RichTextBox.WinUI}">
+                        <FlowDocument>
+                            <Paragraph>42 ways to say the same thing, and this is one of them.</Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
