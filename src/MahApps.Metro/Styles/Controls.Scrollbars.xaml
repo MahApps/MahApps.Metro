@@ -245,6 +245,50 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        The panning indicator, the resting half of the two visualisations Microsoft describes in
+        "Scroll viewer controls": a two unit line at the edge of the content, as long and as far
+        down as the thumb of the bar it belongs to. It says that there is more below without taking
+        the room a bar takes, and the bar takes over once the pointer arrives.
+        
+        A Track rather than a ScrollBar, since it is there to be read and not to be dragged. Six
+        units of room for a two unit line, because the looks below differ in what they leave between
+        the line and the edge of the content, and a Track is only as wide as it is told: a thumb
+        that does not fit with its margin is pushed out of the Track and drawn nowhere.
+        
+        The thumb is a style per look, like the bars themselves, so the line a set draws at rest is
+        the same line its bar draws at rest. The ends go the same way: a bar keeps the rows of its
+        two chevrons at all times, so its thumb never runs to the very end of the track, and the
+        line has to keep those rows free as well or it stands somewhere the thumb never does. The
+        Windows 10 and WinUI sets hand their own thumb and their own ends to these two keys; an
+        application that only pins their bars rather than merging the set should pin the two along
+        with them.
+    -->
+
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.PanningIndicator">6</system:Double>
+    <!--  the rows of the two chevrons of the default bar: twelve units and the unit of margin they carry on each side  -->
+    <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 14 0 14</Thickness>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.PanningIndicator.Line">2</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.PanningIndicator.MinLength">24</system:Double>
+
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator" TargetType="{x:Type Thumb}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Margin" Value="0 0 2 0" />
+        <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.ScrollBar.PanningIndicator.MinLength}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.PanningIndicator.Line}" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.ScrollViewer" TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
             <Setter.Value>
@@ -781,24 +825,35 @@
 
     <!--
         The WinUI bar, which follows the two visualisations Microsoft describes in "Scroll viewer
-        controls": the panning indicator, a two unit line at the edge of the content and all there
-        is until the pointer arrives, and the scrollbar proper, a six unit thumb with a chevron
-        button at each end on a rounded panel, which the indicator morphs into on hover.
+        controls": the panning indicator, a two unit line and all there is until the pointer
+        arrives, and the scrollbar proper, a six unit thumb with a chevron button at each end on a
+        rounded panel, which the indicator grows into on hover.
         
-        The outer edge is the anchor. The indicator sits flush against it and everything that grows
-        on hover grows inwards: leftwards for a vertical bar, upwards for a horizontal one.
+        The numbers are WinUI's own, out of ScrollBar_themeresources.xaml: a bar of twelve
+        (ScrollBarSize), a thumb of thirty at its shortest (ScrollBarVerticalThumbMinHeight) and a
+        line that keeps three units from the outer edge. Over there those three fall out of a thumb
+        of eight drawn with a stroke of six and pushed out by ScrollBarThumbOffset; here they are a
+        margin, and the thumb grows from two to six inside it.
+        
+        The right edge is the anchor, as it is in WinUI: the thumb grows leftwards for a vertical
+        bar and upwards for a horizontal one, and the margin never moves.
+        
+        The two chevrons keep their rows the whole time and are only faded, the way the Windows 10
+        bar above does it and the way WinUI does it as well, where the two RepeatButtons are a
+        row of ScrollBarSize with an Opacity of nothing. The track therefore never changes length
+        and the line stays where the thumb will be.
         
         The bar is meant to lie over the content rather than beside it, which is what
-        MahApps.Styles.ScrollViewer.WinUI further down does. Without it sixteen units stand empty
+        MahApps.Styles.ScrollViewer.WinUI further down does. Without it twelve units stand empty
         around a two unit line whenever the pointer is elsewhere.
     -->
 
-    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI">16</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI">12</system:Double>
     <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Indicator">2</system:Double>
     <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Thumb">6</system:Double>
-    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength">24</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength">30</system:Double>
 
-    <CornerRadius x:Key="MahApps.CornerRadius.ScrollBar.WinUI">8</CornerRadius>
+    <CornerRadius x:Key="MahApps.CornerRadius.ScrollBar.WinUI">6</CornerRadius>
     <CornerRadius x:Key="MahApps.CornerRadius.ScrollBar.WinUI.Thumb">3</CornerRadius>
 
     <!--  the same two WinUI carries, ScrollBarOpacityChangeDuration and ScrollBarExpandDuration  -->
@@ -810,7 +865,7 @@
     <Geometry x:Key="MahApps.Geometry.ScrollBar.WinUI.Left">M 3,0 L 0,3 L 3,6</Geometry>
     <Geometry x:Key="MahApps.Geometry.ScrollBar.WinUI.Right">M 0,0 L 3,3 L 0,6</Geometry>
 
-    <!--  The chevrons, which exist only while the bar is expanded.  -->
+    <!--  The chevrons, which keep their rows the whole time and are only faded.  -->
     <Style x:Key="MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
@@ -899,13 +954,9 @@
     <Style x:Key="MahApps.Styles.Thumb.ScrollBar.WinUI.Vertical"
            BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI}"
            TargetType="{x:Type Thumb}">
-        <!--
-            Flush against the edge of the content. The template animates the margin out to 5 as the
-            bar expands, which is what leaves the six unit thumb in the middle of the sixteen unit
-            panel.
-        -->
+        <!--  three units from the edge of the content, which is where WinUI holds the line and the thumb alike  -->
         <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Margin" Value="0" />
+        <Setter Property="Margin" Value="0 0 3 0" />
         <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength}" />
         <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Indicator}" />
     </Style>
@@ -914,7 +965,7 @@
            BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI}"
            TargetType="{x:Type Thumb}">
         <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Indicator}" />
-        <Setter Property="Margin" Value="0" />
+        <Setter Property="Margin" Value="0 0 0 3" />
         <Setter Property="MinWidth" Value="{DynamicResource MahApps.Sizes.ScrollBar.WinUI.Thumb.MinLength}" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
@@ -942,8 +993,7 @@
                               Command="ScrollBar.LineUpCommand"
                               Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Up}"
                               Opacity="0"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
-                              Visibility="Collapsed" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}" />
                 <Track x:Name="PART_Track"
                        Grid.Row="1"
                        IsDirectionReversed="True">
@@ -971,20 +1021,11 @@
                               Command="ScrollBar.LineDownCommand"
                               Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Down}"
                               Opacity="0"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
-                              Visibility="Collapsed" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <!--
-                    The chevrons take their rows the moment they become visible, so the track
-                    shortens and the thumb shifts a little. That is what the two visualisations do
-                    in WinUI as well: the panning indicator runs the full height, the expanded bar
-                    does not.
-                -->
-                <Setter TargetName="LineDown" Property="Visibility" Value="Visible" />
-                <Setter TargetName="LineUp" Property="Visibility" Value="Visible" />
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <!--  the delay of the Windows 10 bar above, for the same reason  -->
@@ -1004,18 +1045,13 @@
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Panel" Storyboard.TargetProperty="Width">
                                 <SplineDoubleKeyFrame KeySpline="0,0,0,1"
                                                       KeyTime="0:0:0.167"
-                                                      Value="16" />
+                                                      Value="12" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Width">
                                 <SplineDoubleKeyFrame KeySpline="0,0,0,1"
                                                       KeyTime="0:0:0.167"
                                                       Value="6" />
                             </DoubleAnimationUsingKeyFrames>
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Margin">
-                                <SplineThicknessKeyFrame KeySpline="0,0,0,1"
-                                                         KeyTime="0:0:0.167"
-                                                         Value="0 0 5 0" />
-                            </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -1042,10 +1078,6 @@
                                              Storyboard.TargetProperty="Width"
                                              To="2"
                                              Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
-                            <ThicknessAnimation Storyboard.TargetName="Thumb"
-                                                Storyboard.TargetProperty="Margin"
-                                                To="0"
-                                                Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -1079,8 +1111,7 @@
                               Command="ScrollBar.LineLeftCommand"
                               Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Left}"
                               Opacity="0"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
-                              Visibility="Collapsed" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}" />
                 <Track x:Name="PART_Track"
                        Grid.Column="1"
                        IsDirectionReversed="False">
@@ -1108,14 +1139,11 @@
                               Command="ScrollBar.LineRightCommand"
                               Content="{StaticResource MahApps.Geometry.ScrollBar.WinUI.Right}"
                               Opacity="0"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}"
-                              Visibility="Collapsed" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar.WinUI.Line}" />
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="LineLeft" Property="Visibility" Value="Visible" />
-                <Setter TargetName="LineRight" Property="Visibility" Value="Visible" />
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <!--  the delay of the Windows 10 bar above, for the same reason  -->
@@ -1135,18 +1163,13 @@
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Panel" Storyboard.TargetProperty="Height">
                                 <SplineDoubleKeyFrame KeySpline="0,0,0,1"
                                                       KeyTime="0:0:0.167"
-                                                      Value="16" />
+                                                      Value="12" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Height">
                                 <SplineDoubleKeyFrame KeySpline="0,0,0,1"
                                                       KeyTime="0:0:0.167"
                                                       Value="6" />
                             </DoubleAnimationUsingKeyFrames>
-                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="Thumb" Storyboard.TargetProperty="Margin">
-                                <SplineThicknessKeyFrame KeySpline="0,0,0,1"
-                                                         KeyTime="0:0:0.167"
-                                                         Value="0 0 0 5" />
-                            </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -1173,10 +1196,6 @@
                                              Storyboard.TargetProperty="Height"
                                              To="2"
                                              Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
-                            <ThicknessAnimation Storyboard.TargetName="Thumb"
-                                                Storyboard.TargetProperty="Margin"
-                                                To="0"
-                                                Duration="{StaticResource MahApps.Duration.ScrollBar.WinUI}" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -1188,7 +1207,7 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.ScrollBar.WinUI" TargetType="{x:Type ScrollBar}">
-        <!--  Transparent, not unset: all sixteen units have to answer hit tests or the pointer never reaches the bar.  -->
+        <!--  Transparent, not unset: all twelve units have to answer hit tests or the pointer never reaches the bar.  -->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

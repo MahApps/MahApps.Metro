@@ -83,6 +83,41 @@
                                                 CanVerticallyScroll="False"
                                                 Content="{TemplateBinding Content}"
                                                 ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        <!--
+                            What the menu says while nobody points at it: two units at the edge of
+                            the items, as long and as far down as the thumb of the bar would be.
+                            They fit a closed pane as well, where the bar itself would lie on the
+                            icons.
+                            
+                            A Track hides itself while there is nothing to scroll, which is the
+                            moment the indicator has nothing to say, so it is left to do that
+                            rather than given a Visibility of its own.
+                            
+                            The Grid around it is what a closed pane leaves of the menu. The pane
+                            keeps its open length and is clipped to the compact strip, so a line at
+                            the edge of the items would be cut away along with them. The trigger
+                            below gives the Grid the width of the strip instead.
+                        -->
+                        <Grid x:Name="IndicatorArea"
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              IsHitTestVisible="False">
+                            <Track x:Name="PanningIndicator"
+                                   Width="{DynamicResource MahApps.Sizes.ScrollBar.PanningIndicator}"
+                                   Margin="{DynamicResource MahApps.Thickness.ScrollBar.PanningIndicator}"
+                                   HorizontalAlignment="Right"
+                                   IsDirectionReversed="True"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   Minimum="0"
+                                   Orientation="Vertical"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Track.Thumb>
+                                    <Thumb Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.PanningIndicator}" />
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                    Grid.Row="0"
                                    Grid.Column="0"
@@ -116,28 +151,40 @@
                             <Setter TargetName="PART_HorizontalScrollBar" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_ScrollContentPresenter" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_VerticalScrollBar" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="PanningIndicator" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="leftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="rightColumn" Property="Width" Value="*" />
                         </Trigger>
-                        <!--  a ScrollBar told to be Visible stays where the reader can see it, rather than waiting for the pointer  -->
+                        <!--  a closed pane is a strip of icons as wide as the compact length, and the indicator belongs at the edge of that rather than at the edge of the items behind it  -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=VerticalScrollBarVisibility}" Value="Visible" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=IsPaneOpen}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=IsPaneOpen}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=PanePlacement}" Value="Left" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_VerticalScrollBar" Property="Opacity" Value="1" />
+                            <Setter TargetName="IndicatorArea" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="IndicatorArea" Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=CompactPaneLength}" />
                         </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=VerticalScrollBarVisibility}" Value="Auto" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ComputedVerticalScrollBarVisibility}" Value="Visible" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=IsPaneOpen}" Value="True" />
-                            </MultiDataTrigger.Conditions>
+                        <!--  a ScrollBar told to be Visible stays where the reader can see it, rather than waiting for the pointer, and there is nothing left for the indicator to say  -->
+                        <Trigger Property="VerticalScrollBarVisibility" Value="Visible">
+                            <Setter TargetName="PART_VerticalScrollBar" Property="Opacity" Value="1" />
+                            <Setter TargetName="PanningIndicator" Property="Opacity" Value="0" />
+                        </Trigger>
+                        <!--  the pointer arrives and the indicator gives way to the bar it stands for  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsVisible" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="VerticalScrollBarVisibility" Value="Auto" />
+                                <Condition Property="ComputedVerticalScrollBarVisibility" Value="Visible" />
+                            </MultiTrigger.Conditions>
                             <TriggerBase.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
+                                        <DoubleAnimation EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         Storyboard.TargetName="PanningIndicator"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.2" />
                                         <DoubleAnimation EasingFunction="{StaticResource ScrollBarEaseInOut}"
                                                          Storyboard.TargetName="PART_VerticalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
@@ -157,6 +204,13 @@
                                         <DoubleAnimation BeginTime="0:0:1"
                                                          EasingFunction="{StaticResource ScrollBarEaseInOut}"
                                                          FillBehavior="Stop"
+                                                         Storyboard.TargetName="PanningIndicator"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.5" />
+                                        <DoubleAnimation BeginTime="0:0:1"
+                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         FillBehavior="Stop"
                                                          Storyboard.TargetName="PART_VerticalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="0"
@@ -171,7 +225,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </TriggerBase.ExitActions>
-                        </MultiDataTrigger>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

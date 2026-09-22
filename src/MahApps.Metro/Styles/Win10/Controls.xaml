@@ -21,6 +21,11 @@
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Win10}" TargetType="RadioButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="ScrollBar" />
+    <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.Win10.Vertical}"
+           TargetType="{x:Type Thumb}" />
+    <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 16 0 16</Thickness>
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.Win10}" TargetType="ScrollViewer" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDownBase}" />

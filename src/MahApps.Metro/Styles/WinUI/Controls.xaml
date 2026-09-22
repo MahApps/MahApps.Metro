@@ -14,6 +14,11 @@
 
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.WinUI}" TargetType="ScrollBar" />
+    <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI.Vertical}"
+           TargetType="{x:Type Thumb}" />
+    <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 12 0 12</Thickness>
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.WinUI}" TargetType="ScrollViewer" />
     <Style BasedOn="{StaticResource MahApps.Styles.Calendar.WinUI}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.WinUI}" TargetType="{x:Type mah:AnalogClock}" />

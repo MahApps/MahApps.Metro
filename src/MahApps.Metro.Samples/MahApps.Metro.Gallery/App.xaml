@@ -17,8 +17,16 @@
                 because it is the nicer of the three to live with: a thin line at the edge of the
                 content that grows into a bar under the pointer, laid over the content rather than
                 beside it. The pages that show a bar off pin the style they mean.
+                
+                The thumb of the panning indicator comes along with it, since the hamburger menu
+                draws that line itself while the pointer is elsewhere and it should be the line of
+                this set rather than the one of the default bar.
             -->
             <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.WinUI}" TargetType="{x:Type ScrollBar}" />
+            <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"
+                   BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI.Vertical}"
+                   TargetType="{x:Type Thumb}" />
+            <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 12 0 12</Thickness>
             <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.WinUI}" TargetType="{x:Type ScrollViewer}" />
         </ResourceDictionary>
     </Application.Resources>

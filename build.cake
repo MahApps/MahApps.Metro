@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 // TOOLS / ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -321,6 +321,10 @@ Task("Zip")
 });
 
 Task("Tests")
+    // Without this, a run of this target alone tests whatever happens to be in bin: run-tests.ps1
+    // passes --no-build --no-restore, since building four frameworks four times over is what the
+    // Build target is already for.
+    .IsDependentOn("Build")
     .Does<BuildData>(data =>
 {
     CleanDirectory(testResultsDir);
