@@ -112,7 +112,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="WinUIExample"
-                                     Description="The WinUI bar is two things rather than one state. With the pointer elsewhere it is a two unit line at the edge of the content, and under the pointer it grows inwards into a six unit thumb on a rounded panel with a chevron at each end. MahApps.Styles.ScrollViewer.WinUI lays it over the content instead of beside it, which is what the guidance asks for and the reason the bar costs no room while nobody is pointing at it. This is the bar the rest of the gallery uses."
+                                     Description="The WinUI bar is two things rather than one state. With the pointer elsewhere it is a two unit line that keeps three units from the edge of the content, and under the pointer it grows inwards into a six unit thumb on a rounded panel of twelve with a chevron at each end. The numbers are the ones in WinUI&apos;s own theme resources. MahApps.Styles.ScrollViewer.WinUI lays it over the content instead of beside it, which is what the guidance asks for and the reason the bar costs no room while nobody is pointing at it. This is the bar the rest of the gallery uses."
                                      Header="The WinUI look">
                 <smtx:XamlDisplay UniqueKey="ScrollBar.WinUI">
                     <ScrollViewer x:Name="WinUI"
