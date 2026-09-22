@@ -34,6 +34,22 @@ namespace MahApps.Metro.Gallery.Pages
                                      this.Reveal,
                                      TextBoxHelper.WatermarkProperty,
                                      PasswordBoxHelper.RevealButtonContentProperty);
+
+            this.Win10Example.Watch(this.Win10, PasswordBox.PasswordCharProperty, IsEnabledProperty);
+            this.Win10Example.Watch("Attached",
+                                    this.Win10,
+                                    TextBoxHelper.WatermarkProperty,
+                                    TextBoxHelper.ClearTextButtonProperty,
+                                    TextBoxHelper.UseFloatingWatermarkProperty,
+                                    ControlsHelper.CornerRadiusProperty);
+
+            this.WinUIExample.Watch(this.WinUI, PasswordBox.PasswordCharProperty, IsEnabledProperty);
+            this.WinUIExample.Watch("Attached",
+                                    this.WinUI,
+                                    TextBoxHelper.WatermarkProperty,
+                                    TextBoxHelper.ClearTextButtonProperty,
+                                    TextBoxHelper.UseFloatingWatermarkProperty,
+                                    ControlsHelper.CornerRadiusProperty);
         }
     }
 }

@@ -39,16 +39,19 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.TextBox.Search")]
         [TestCase("MahApps.Styles.TextBox.Win10")]
         [TestCase("MahApps.Styles.TextBox.WinUI")]
+        [TestCase("MahApps.Styles.PasswordBox")]
+        [TestCase("MahApps.Styles.PasswordBox.Win10")]
+        [TestCase("MahApps.Styles.PasswordBox.WinUI")]
         [Description("The caret changes what a box looks like, not how tall it is.")]
         public void ABoxTakingTheCaretMovesNothingUnderIt(string key)
         {
-            var box = new TextBox
-                      {
-                          Style = (Style)Application.Current.FindResource(key),
-                          Width = 200,
-                          VerticalAlignment = VerticalAlignment.Top,
-                          Text = "Konrad"
-                      };
+            Control box = key.Contains("PasswordBox")
+                ? new PasswordBox { Password = "Konrad" }
+                : new TextBox { Text = "Konrad" };
+
+            box.Style = (Style)Application.Current.FindResource(key);
+            box.Width = 200;
+            box.VerticalAlignment = VerticalAlignment.Top;
 
             var below = new Border { Height = 20 };
 

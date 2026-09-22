@@ -28,6 +28,7 @@
     <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 16 0 16</Thickness>
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.Win10}" TargetType="ScrollViewer" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.Win10}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDownBase}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:DecimalUpDown}" />

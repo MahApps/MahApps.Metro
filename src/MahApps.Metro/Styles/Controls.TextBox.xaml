@@ -553,53 +553,8 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:TextBoxHelper.ButtonTemplate">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonLayoutGrid"
-                            Background="{DynamicResource MahApps.Brushes.TextControl.ButtonBackground}"
-                            BorderBrush="{DynamicResource MahApps.Brushes.TextControl.ButtonBorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid x:Name="ContentGrid">
-                            <Grid.Clip>
-                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
-                                    <Binding ElementName="ButtonLayoutGrid" Path="CornerRadius" />
-                                    <Binding ElementName="ButtonLayoutGrid" Path="BorderThickness" />
-                                    <Binding ElementName="ButtonLayoutGrid" Path="Padding" />
-                                </MultiBinding>
-                            </Grid.Clip>
-                            <ContentPresenter x:Name="PART_ContentPresenter"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBackgroundPointerOver}" />
-                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBorderBrushPointerOver}" />
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonForegroundPointerOver}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBackgroundPressed}" />
-                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBorderBrushPressed}" />
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonForegroundPressed}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="34" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.Win10}" />
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="30" />
     </Style>
 
     <Style x:Key="MahApps.Styles.TextBox.WinUI"
@@ -849,52 +804,7 @@
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
-        <Setter Property="mah:TextBoxHelper.ButtonTemplate">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonLayoutGrid"
-                            Background="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackground}"
-                            BorderBrush="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid x:Name="ContentGrid">
-                            <Grid.Clip>
-                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
-                                    <Binding ElementName="ButtonLayoutGrid" Path="CornerRadius" />
-                                    <Binding ElementName="ButtonLayoutGrid" Path="BorderThickness" />
-                                    <Binding ElementName="ButtonLayoutGrid" Path="Padding" />
-                                </MultiBinding>
-                            </Grid.Clip>
-                            <ContentPresenter x:Name="PART_ContentPresenter"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver}" />
-                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPointerOver}" />
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed}" />
-                            <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPressed}" />
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
     </Style>
 
 </ResourceDictionary>

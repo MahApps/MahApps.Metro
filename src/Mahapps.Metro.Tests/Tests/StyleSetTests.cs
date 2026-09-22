@@ -46,6 +46,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(CheckBox), "MahApps.Styles.CheckBox.Win10")]
         [TestCase(Win10, typeof(RadioButton), "MahApps.Styles.RadioButton.Win10")]
         [TestCase(Win10, typeof(TextBox), "MahApps.Styles.TextBox.Win10")]
+        [TestCase(Win10, typeof(PasswordBox), "MahApps.Styles.PasswordBox.Win10")]
         [TestCase(Win10, typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.Win10")]
         [TestCase(Win10, typeof(IntegerUpDown), "MahApps.Styles.NumericUpDown.Win10")]
         [TestCase(Win10, typeof(Calendar), "MahApps.Styles.Calendar.Win10")]
@@ -53,6 +54,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.Win10")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
         [TestCase(WinUI, typeof(TextBox), "MahApps.Styles.TextBox.WinUI")]
+        [TestCase(WinUI, typeof(PasswordBox), "MahApps.Styles.PasswordBox.WinUI")]
         [TestCase(WinUI, typeof(Calendar), "MahApps.Styles.Calendar.WinUI")]
         [TestCase(WinUI, typeof(TimePicker), "MahApps.Styles.TimePicker.WinUI")]
         [TestCase(WinUI, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.WinUI")]
@@ -84,6 +86,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [TestCase(typeof(Button), "MahApps.Styles.Button")]
         [TestCase(typeof(TextBox), "MahApps.Styles.TextBox")]
+        [TestCase(typeof(PasswordBox), "MahApps.Styles.PasswordBox")]
         [TestCase(typeof(CheckBox), "MahApps.Styles.CheckBox")]
         [TestCase(typeof(Calendar), "MahApps.Styles.Calendar")]
         [TestCase(typeof(TimePicker), "MahApps.Styles.TimePicker")]

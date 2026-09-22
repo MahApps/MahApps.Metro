@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -52,6 +52,10 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "TextBox", "PART_InnerGrid" },
                 new object[] { "TextBox Win10", "PART_InnerGrid" },
                 new object[] { "TextBox WinUI", "PART_InnerGrid" },
+                new object[] { "PasswordBox", "PART_InnerGrid" },
+                new object[] { "PasswordBox revealed", "PART_InnerGrid" },
+                new object[] { "PasswordBox Win10", "PART_InnerGrid" },
+                new object[] { "PasswordBox WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -94,6 +98,18 @@ namespace MahApps.Metro.Tests.Tests
 
                 case "TextBox WinUI":
                     return Styled(new TextBox { Text = "Beam me up..." }, "MahApps.Styles.TextBox.WinUI");
+
+                case "PasswordBox":
+                    return new PasswordBox { Password = "Beam me up..." };
+
+                case "PasswordBox revealed":
+                    return Styled(new PasswordBox { Password = "Beam me up..." }, "MahApps.Styles.PasswordBox.Revealed");
+
+                case "PasswordBox Win10":
+                    return Styled(new PasswordBox { Password = "Beam me up..." }, "MahApps.Styles.PasswordBox.Win10");
+
+                case "PasswordBox WinUI":
+                    return Styled(new PasswordBox { Password = "Beam me up..." }, "MahApps.Styles.PasswordBox.WinUI");
 
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
