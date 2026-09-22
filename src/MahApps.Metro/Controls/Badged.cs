@@ -50,6 +50,35 @@ namespace MahApps.Metro.Controls
             return null;
         }
 
+        /// <summary>
+        /// Hangs the badge over the corner it is placed at, by half of itself.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="BadgedEx" /> works that out from the container's DesiredSize, and a DesiredSize
+        /// has the margin already taken off it. So half of it is half of what is left of the badge
+        /// rather than half of the badge, the next pass takes half of that, and the two answers keep
+        /// swapping places: a badge that jumps between two spots and a layout pass that never ends.
+        /// It only ever looked right because the margin that leaves nothing of the DesiredSize is
+        /// the correct one, and a badge that is already sitting there stays there.
+        ///
+        /// The arranged size is the badge itself, whatever margin it carries, so half of that is the
+        /// answer at once and it stays the answer.
+        /// </remarks>
+        protected override Size ArrangeOverride(Size arrangeBounds)
+        {
+            var result = base.ArrangeOverride(arrangeBounds);
+
+            if (this._badgeContainer is not null)
+            {
+                var horizontal = 0 - (this._badgeContainer.ActualWidth / 2);
+                var vertical = 0 - (this._badgeContainer.ActualHeight / 2);
+
+                this._badgeContainer.Margin = new Thickness(horizontal, vertical, horizontal, vertical);
+            }
+
+            return result;
+        }
+
         public override void OnApplyTemplate()
         {
             this.BadgeChanged -= this.OnBadgeChanged;

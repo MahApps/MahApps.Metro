@@ -47,7 +47,6 @@
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <Border x:Name="PART_BadgeContainer"
-                                MinWidth="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                                 MinHeight="18"
                                 Padding="2"
                                 HorizontalAlignment="Left"
@@ -61,22 +60,24 @@
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
-                            <ContentControl x:Name="PART_BadgeContent"
-                                            Margin="{TemplateBinding BadgeMargin}"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Content="{TemplateBinding Badge}"
-                                            ContentStringFormat="{TemplateBinding BadgeStringFormat}"
-                                            ContentTemplate="{TemplateBinding BadgeTemplate}"
-                                            ContentTemplateSelector="{TemplateBinding BadgeTemplateSelector}"
-                                            Focusable="False"
-                                            FontFamily="{TemplateBinding BadgeFontFamily}"
-                                            FontSize="{TemplateBinding BadgeFontSize}"
-                                            FontStretch="{TemplateBinding BadgeFontStretch}"
-                                            FontStyle="{TemplateBinding BadgeFontStyle}"
-                                            FontWeight="{TemplateBinding BadgeFontWeight}"
-                                            Foreground="{TemplateBinding BadgeForeground}"
-                                            IsTabStop="False" />
+                            <mah:SquareDecorator>
+                                <ContentControl x:Name="PART_BadgeContent"
+                                                Margin="{TemplateBinding BadgeMargin}"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Content="{TemplateBinding Badge}"
+                                                ContentStringFormat="{TemplateBinding BadgeStringFormat}"
+                                                ContentTemplate="{TemplateBinding BadgeTemplate}"
+                                                ContentTemplateSelector="{TemplateBinding BadgeTemplateSelector}"
+                                                Focusable="False"
+                                                FontFamily="{TemplateBinding BadgeFontFamily}"
+                                                FontSize="{TemplateBinding BadgeFontSize}"
+                                                FontStretch="{TemplateBinding BadgeFontStretch}"
+                                                FontStyle="{TemplateBinding BadgeFontStyle}"
+                                                FontWeight="{TemplateBinding BadgeFontWeight}"
+                                                Foreground="{TemplateBinding BadgeForeground}"
+                                                IsTabStop="False" />
+                            </mah:SquareDecorator>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
