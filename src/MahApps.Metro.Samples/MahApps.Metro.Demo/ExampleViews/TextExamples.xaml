@@ -484,6 +484,22 @@
                                  Password="Click the eye"
                                  Style="{StaticResource MahApps.Styles.PasswordBox.Revealed}" />
 
+                    <TextBlock Style="{StaticResource Caption}"
+                               Text=".Win10, the eye of a UWP box and the frame of the Windows 10 text box"
+                               ToolTip="MahApps.Styles.PasswordBox.Win10" />
+                    <PasswordBox mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Password"
+                                 Password="Hold the eye"
+                                 Style="{StaticResource MahApps.Styles.PasswordBox.Win10}" />
+
+                    <TextBlock Style="{StaticResource Caption}"
+                               Text=".WinUI, the same box in the look Windows 11 draws"
+                               ToolTip="MahApps.Styles.PasswordBox.WinUI" />
+                    <PasswordBox mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Password"
+                                 Password="Hold the eye"
+                                 Style="{StaticResource MahApps.Styles.PasswordBox.WinUI}" />
+
                     <TextBlock Style="{StaticResource Caption}" Text="PasswordBoxHelper.CapsLockIcon and CapsLockWarningToolTip, so switch the caps lock on" />
                     <PasswordBox mah:PasswordBoxHelper.CapsLockIcon="!"
                                  mah:TextBoxHelper.ButtonCommand="{Binding ControlButtonCommand, Mode=OneWay}"

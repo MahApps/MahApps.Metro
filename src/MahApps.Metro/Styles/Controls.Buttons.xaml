@@ -457,14 +457,118 @@
         what it looks like comes from TextBoxHelper.ButtonTemplate, and its glyph takes the colour of
         the text in the box it stands in: a UWP box paints that glyph black because the box is white,
         and the box is white while it has the caret. Before that it is the colour of the theme, and so
-        is the glyph. Anywhere but in a text box the colour of the chromeless button is what is left.
+        is the glyph. The ancestor it asks for that colour is the nearest control above it, which in
+        either of those templates is the box itself: a password box carries the same button and is no
+        TextBoxBase, it stands next to Control the way a button does.
     -->
     <Style x:Key="MahApps.Styles.Button.TextControl.Delete"
            BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
            TargetType="{x:Type Button}">
         <Setter Property="FontStyle" Value="Normal" />
-        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Foreground, Mode=OneWay}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground, Mode=OneWay}" />
     </Style>
+
+    <!--
+        The eye of the Win10 and the WinUI password box. A UWP box has no delete button and this one
+        instead, both drawn as the same button, so this style says the same as the one above and
+        carries its own key: an application that wants a word about the eye should not have to say it
+        about the delete button of every text box as well.
+    -->
+    <Style x:Key="MahApps.Styles.Button.TextControl.Reveal"
+           BasedOn="{StaticResource MahApps.Styles.Button.TextControl.Delete}"
+           TargetType="{x:Type Button}" />
+
+    <!--
+        The chrome behind either of them: a fill and a frame of its own that answer the pointer, with
+        the content clipped to the corners the frame leaves over. The Win10 and the WinUI text box
+        hand it to their delete button through TextBoxHelper.ButtonTemplate and the password box of
+        the same set hands it to both of its buttons, the way UWP draws one button for both jobs.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.Button.TextControl.Win10" TargetType="{x:Type Button}">
+        <Border x:Name="ButtonLayoutGrid"
+                Background="{DynamicResource MahApps.Brushes.TextControl.ButtonBackground}"
+                BorderBrush="{DynamicResource MahApps.Brushes.TextControl.ButtonBorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="ButtonLayoutGrid" Path="CornerRadius" />
+                        <Binding ElementName="ButtonLayoutGrid" Path="BorderThickness" />
+                        <Binding ElementName="ButtonLayoutGrid" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBackgroundPointerOver}" />
+                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBorderBrushPointerOver}" />
+                <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBackgroundPressed}" />
+                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonBorderBrushPressed}" />
+                <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ButtonForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.Button.TextControl.WinUI" TargetType="{x:Type Button}">
+        <Border x:Name="ButtonLayoutGrid"
+                Background="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackground}"
+                BorderBrush="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="ButtonLayoutGrid" Path="CornerRadius" />
+                        <Binding ElementName="ButtonLayoutGrid" Path="BorderThickness" />
+                        <Binding ElementName="ButtonLayoutGrid" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver}" />
+                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPointerOver}" />
+                <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed}" />
+                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPressed}" />
+                <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
     <!--  base button style for min, max and close window buttons  -->
     <Style x:Key="MahApps.Styles.Button.MetroWindow.Base" TargetType="{x:Type Button}">
