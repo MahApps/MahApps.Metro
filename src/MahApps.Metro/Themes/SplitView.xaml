@@ -37,8 +37,6 @@
                           Background="{TemplateBinding Background}"
                           Tag="{TemplateBinding TemplateSettings}">
                         <Grid.Resources>
-                            <FrameworkElement x:Key="ProxyElement" DataContext="{TemplateBinding TemplateSettings}" />
-
                             <Storyboard x:Key="ClosedToOpenOverlayLeftStoryboard">
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PaneRoot" Storyboard.TargetProperty="(UIElement.Visibility)">
                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
@@ -47,13 +45,13 @@
                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneTransform" Storyboard.TargetProperty="X">
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLength}" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLength}" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.35"
                                                           Value="0" />
                                 </DoubleAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneClipRectangleTransform" Storyboard.TargetProperty="X">
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength}" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLength}" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.35"
                                                           Value="0" />
@@ -77,13 +75,13 @@
                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneTransform" Storyboard.TargetProperty="X">
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength}" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLength}" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.35"
                                                           Value="0" />
                                 </DoubleAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneClipRectangleTransform" Storyboard.TargetProperty="X">
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLength}" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLength}" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.35"
                                                           Value="0" />
@@ -97,7 +95,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition1"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.Column)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -111,7 +109,7 @@
                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneClipRectangleTransform" Storyboard.TargetProperty="X">
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLengthMinusCompactLength}" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLengthMinusCompactLength}" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.35"
                                                           Value="0" />
@@ -129,7 +127,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition2"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -148,7 +146,7 @@
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneClipRectangleTransform" Storyboard.TargetProperty="X">
                                     <DiscreteDoubleKeyFrame x:Name="PART_ClosedCompactRightToOpenCompactOverlayRightPaneClipRectangleTransformXAnimation"
                                                             KeyTime="0:0:0"
-                                                            Value="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLengthMinusCompactLength}" />
+                                                            Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLengthMinusCompactLength}" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.35"
                                                           Value="0" />
@@ -168,12 +166,12 @@
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneTransform" Storyboard.TargetProperty="X">
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.12"
-                                                          Value="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLength}" />
+                                                          Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLength}" />
                                 </DoubleAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneClipRectangleTransform" Storyboard.TargetProperty="X">
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.12"
-                                                          Value="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength}" />
+                                                          Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLength}" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
 
@@ -193,12 +191,12 @@
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneTransform" Storyboard.TargetProperty="X">
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.12"
-                                                          Value="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength}" />
+                                                          Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLength}" />
                                 </DoubleAnimationUsingKeyFrames>
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PaneClipRectangleTransform" Storyboard.TargetProperty="X">
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.12"
-                                                          Value="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLength}" />
+                                                          Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLength}" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
 
@@ -206,7 +204,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition1"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.Column)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -223,7 +221,7 @@
                                     <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.12"
-                                                          Value="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLengthMinusCompactLength}" />
+                                                          Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLengthMinusCompactLength}" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
 
@@ -235,7 +233,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition2"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -255,7 +253,7 @@
                                     <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
                                     <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0"
                                                           KeyTime="0:0:0.12"
-                                                          Value="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLengthMinusCompactLength}" />
+                                                          Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLengthMinusCompactLength}" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
 
@@ -263,7 +261,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition1"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.Column)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -275,7 +273,7 @@
                                 </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimation Storyboard.TargetName="PaneClipRectangleTransform"
                                                  Storyboard.TargetProperty="X"
-                                                 To="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLengthMinusCompactLength}"
+                                                 To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.NegativeOpenPaneLengthMinusCompactLength}"
                                                  Duration="0:0:0" />
                             </Storyboard>
 
@@ -287,7 +285,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition2"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -302,7 +300,7 @@
                                 </ObjectAnimationUsingKeyFrames>
                                 <DoubleAnimation Storyboard.TargetName="PaneClipRectangleTransform"
                                                  Storyboard.TargetProperty="X"
-                                                 To="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLengthMinusCompactLength}"
+                                                 To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLengthMinusCompactLength}"
                                                  Duration="0:0:0" />
                             </Storyboard>
 
@@ -362,7 +360,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition2"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -387,7 +385,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition1"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.Column)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -413,7 +411,7 @@
                                 <mah:GridLengthAnimation BeginTime="0:0:0"
                                                          Storyboard.TargetName="ColumnDefinition2"
                                                          Storyboard.TargetProperty="(ColumnDefinition.Width)"
-                                                         To="{Binding ElementName=ProxyElement, Path=DataContext.CompactPaneGridLength}" />
+                                                         To="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.CompactPaneGridLength}" />
                                 <Int32AnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                     <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                 </Int32AnimationUsingKeyFrames>
@@ -437,16 +435,9 @@
                         </Grid.Resources>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="ColumnDefinition1" Width="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneGridLength, FallbackValue=0}" />
+                            <ColumnDefinition x:Name="ColumnDefinition1" Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneGridLength, FallbackValue=0}" />
                             <ColumnDefinition x:Name="ColumnDefinition2" Width="*" />
                         </Grid.ColumnDefinitions>
-
-                        <FrameworkElement x:Name="ProxyElement"
-                                          Width="0"
-                                          Height="0"
-                                          DataContext="{Binding TemplateSettings, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          Focusable="False"
-                                          Visibility="Collapsed" />
 
                         <!--  Content Area  -->
                         <Grid x:Name="ContentRoot"
@@ -466,7 +457,7 @@
                         <Grid x:Name="PaneRoot"
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
-                              Width="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength, Mode=TwoWay}"
+                              Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=TemplateSettings.OpenPaneLength, Mode=TwoWay}"
                               HorizontalAlignment="Left"
                               Background="{TemplateBinding PaneBackground}"
                               Visibility="Collapsed">
