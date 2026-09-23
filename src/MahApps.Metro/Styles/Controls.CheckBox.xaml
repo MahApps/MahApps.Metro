@@ -569,6 +569,7 @@
     </Style>
 
     <system:Double x:Key="CheckBoxWinUIBorderThemeThickness">1</system:Double>
+    <!--  the box of a WinUI check box is rounded the way any other WinUI control is  -->
     <CornerRadius x:Key="MahApps.CornerRadius.CheckBox.WinUI">4</CornerRadius>
 
     <!--

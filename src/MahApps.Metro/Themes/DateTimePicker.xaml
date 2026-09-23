@@ -590,7 +590,7 @@
            BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.Win10}"
            TargetType="{x:Type ComboBoxItem}">
         <Setter Property="Margin" Value="2 1" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ComboBox.TimePickerBase.Win10"
@@ -613,7 +613,7 @@
            BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.Win10}"
            TargetType="{x:Type ComboBox}">
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.WinUI}" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
     <!--  The colon between two columns. Kept, but quiet.  -->
@@ -695,7 +695,7 @@
         <Setter Property="ClockStyle" Value="{DynamicResource MahApps.Styles.AnalogClock.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottom}" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />

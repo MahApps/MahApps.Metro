@@ -584,7 +584,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.Foreground}" />
         <Setter Property="SpinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.NumericUpDown.Spin.WinUI}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottom}" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottomFocused}" />
         <!--  the frame of a WinUI box says nothing about the pointer, which the fill behind it does instead  -->
