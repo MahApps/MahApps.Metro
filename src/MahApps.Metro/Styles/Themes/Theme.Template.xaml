@@ -434,36 +434,23 @@
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
 
     <!--
-        The border of a WinUI control is drawn a little stronger along its bottom edge, and one
-        brush paints the whole border of an element, so this one carries both: the stroke colour
-        everywhere but the last tenth of the way down.
+        The border of a WinUI control is drawn a little stronger along its bottom edge. That edge is
+        an element of its own in the template rather than a gradient over the whole frame: WPF works
+        out where the colours of a gradient measured in units land once and keeps that for the brush
+        instead of for the element, so a brush shared between a box of thirty two and one of eighty
+        draws the edge of the first across the middle of the second.
     -->
-    <LinearGradientBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrush"
-                         StartPoint="0,0"
-                         EndPoint="0,1"
-                         options:Freeze="True">
-        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" />
-        <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" />
-    </LinearGradientBrush>
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrush" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushBottom" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" options:Freeze="True" />
+
+    <!--  and with the caret in the box, that edge is the accent  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
 
     <!--
         The frame of a drop-down belonging to one of these. It is the stronger of the two strokes
-        the border above is made of, since a flyout has to stand away from whatever it hangs over.
+        the border of a box is made of, since a flyout has to stand away from whatever it hangs over.
     -->
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.DropDownBorderBrush" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" options:Freeze="True" />
-
-    <!--  and with the caret in the box, that edge is the accent  -->
-    <LinearGradientBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushFocused"
-                         StartPoint="0,0"
-                         EndPoint="0,1"
-                         options:Freeze="True">
-        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" />
-        <GradientStop Offset="0.9" Color="{StaticResource MahApps.Colors.SystemAccent}" />
-        <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.SystemAccent}" />
-    </LinearGradientBrush>
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.ControlFillSecondary}" options:Freeze="True" />
