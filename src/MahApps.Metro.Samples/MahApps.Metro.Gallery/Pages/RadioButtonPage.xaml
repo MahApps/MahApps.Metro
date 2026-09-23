@@ -50,6 +50,24 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: the same ring of twenty with a hairline round it, filled with the accent and a dot in the middle once it is picked. That dot grows a little under the pointer and shrinks while the button is held down."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="RadioButton.WinUI">
+                    <StackPanel HorizontalAlignment="Left">
+                        <RadioButton x:Name="WinUI"
+                                     Content="Every hour"
+                                     GroupName="WinUI"
+                                     IsChecked="True"
+                                     Style="{StaticResource MahApps.Styles.RadioButton.WinUI}" />
+                        <RadioButton Margin="0 8 0 0"
+                                     Content="Once a day"
+                                     GroupName="WinUI"
+                                     Style="{StaticResource MahApps.Styles.RadioButton.WinUI}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

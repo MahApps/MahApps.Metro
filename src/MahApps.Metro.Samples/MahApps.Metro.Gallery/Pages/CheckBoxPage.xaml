@@ -35,6 +35,18 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one, the Fluent 2 box Windows 11 draws: rounded corners, a hairline round a box that sits a shade off the page, and the accent with a tick in it once it is ticked. The label sits against the top of the row rather than in the middle of it, so one of several lines starts level with the box."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="CheckBox.WinUI">
+                    <CheckBox x:Name="WinUI"
+                              HorizontalAlignment="Left"
+                              Content="Remember this window's place"
+                              IsChecked="True"
+                              Style="{StaticResource MahApps.Styles.CheckBox.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

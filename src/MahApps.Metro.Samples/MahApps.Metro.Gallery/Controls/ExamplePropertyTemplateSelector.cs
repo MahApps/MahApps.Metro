@@ -25,9 +25,17 @@ namespace MahApps.Metro.Gallery.Controls
 
             // a nullable property takes the editor of the type it wraps, or Value on a
             // NumericUpDown would end up in a plain text box
-            var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+            var wrapped = Nullable.GetUnderlyingType(property.PropertyType);
+            var type = wrapped ?? property.PropertyType;
 
-            var key = property.IsReadOnly ? "MahApps.Gallery.Templates.Option.Readonly" : KeyFor(type);
+            // except a nullable bool, where the third state is the point of the property rather than
+            // a detail of it: IsChecked on a three state check box is one, and a switch has no way
+            // to say neither
+            var key = property.IsReadOnly
+                ? "MahApps.Gallery.Templates.Option.Readonly"
+                : wrapped == typeof(bool)
+                    ? "MahApps.Gallery.Templates.Option.ThreeState"
+                    : KeyFor(type);
 
             return element.TryFindResource(key) as DataTemplate;
         }

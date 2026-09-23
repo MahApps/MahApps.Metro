@@ -35,6 +35,15 @@ namespace MahApps.Metro.Gallery.Pages
                                   this.Ten,
                                   RadioButtonHelper.RadioSizeProperty,
                                   RadioButtonHelper.RadioCheckSizeProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    ToggleButton.IsCheckedProperty,
+                                    ContentControl.ContentProperty,
+                                    IsEnabledProperty);
+            this.WinUIExample.Watch("Attached",
+                                    this.WinUI,
+                                    RadioButtonHelper.RadioSizeProperty,
+                                    RadioButtonHelper.RadioCheckSizeProperty);
         }
     }
 }

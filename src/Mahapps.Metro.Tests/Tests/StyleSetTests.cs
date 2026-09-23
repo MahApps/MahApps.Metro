@@ -55,6 +55,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(TimePicker), "MahApps.Styles.TimePicker.Win10")]
         [TestCase(Win10, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.Win10")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
+        [TestCase(WinUI, typeof(CheckBox), "MahApps.Styles.CheckBox.WinUI")]
+        [TestCase(WinUI, typeof(RadioButton), "MahApps.Styles.RadioButton.WinUI")]
         [TestCase(WinUI, typeof(TextBox), "MahApps.Styles.TextBox.WinUI")]
         [TestCase(WinUI, typeof(PasswordBox), "MahApps.Styles.PasswordBox.WinUI")]
         [TestCase(WinUI, typeof(RichTextBox), "MahApps.Styles.RichTextBox.WinUI")]
@@ -75,7 +77,6 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [TestCase(typeof(Button), "MahApps.Styles.Button.Win10")]
-        [TestCase(typeof(CheckBox), "MahApps.Styles.CheckBox.Win10")]
         [TestCase(typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.Win10")]
         [Description("The WinUI set has no style of its own for these yet and hands down the Windows 10 one rather than the default look.")]
         public void WhatTheWinUISetHasNoStyleForKeepsTheWindows10One(Type target, string expected)
@@ -93,6 +94,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(typeof(PasswordBox), "MahApps.Styles.PasswordBox")]
         [TestCase(typeof(RichTextBox), "MahApps.Styles.RichTextBox")]
         [TestCase(typeof(CheckBox), "MahApps.Styles.CheckBox")]
+        [TestCase(typeof(RadioButton), "MahApps.Styles.RadioButton")]
         [TestCase(typeof(Calendar), "MahApps.Styles.Calendar")]
         [TestCase(typeof(DatePicker), "MahApps.Styles.DatePicker")]
         [TestCase(typeof(TimePicker), "MahApps.Styles.TimePicker")]

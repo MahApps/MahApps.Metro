@@ -28,6 +28,12 @@ namespace MahApps.Metro.Gallery.Pages
                                   ToggleButton.IsThreeStateProperty,
                                   ContentControl.ContentProperty,
                                   IsEnabledProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    ToggleButton.IsCheckedProperty,
+                                    ToggleButton.IsThreeStateProperty,
+                                    ContentControl.ContentProperty,
+                                    IsEnabledProperty);
         }
     }
 }
