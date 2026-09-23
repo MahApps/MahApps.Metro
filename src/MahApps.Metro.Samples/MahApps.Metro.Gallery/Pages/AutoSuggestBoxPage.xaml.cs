@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Gallery.Controls;
 using MahApps.Metro.Gallery.Core;
 
 namespace MahApps.Metro.Gallery.Pages
@@ -20,13 +21,20 @@ namespace MahApps.Metro.Gallery.Pages
         {
             this.InitializeComponent();
 
-            this.SuggestExample.Watch(this.Suggest, IsEnabledProperty);
-            this.SuggestExample.Watch("Attached",
-                                      this.Suggest,
-                                      TextBoxHelper.WatermarkProperty,
-                                      TextBoxHelper.ClearTextButtonProperty,
-                                      TextBoxHelper.UseFloatingWatermarkProperty);
-            this.SuggestExample.Watch("Layout", this.Suggest, WidthProperty);
+            Options(this.SuggestExample, this.Suggest);
+            Options(this.Win10Example, this.Win10);
+            Options(this.WinUIExample, this.WinUI);
+        }
+
+        private static void Options(ControlExample example, AutoSuggestBox box)
+        {
+            example.Watch(box, IsEnabledProperty);
+            example.Watch("Attached",
+                          box,
+                          TextBoxHelper.WatermarkProperty,
+                          TextBoxHelper.ClearTextButtonProperty,
+                          TextBoxHelper.UseFloatingWatermarkProperty);
+            example.Watch("Layout", box, WidthProperty);
         }
 
         private void OnTextChanged(object sender, RoutedEventArgs e)
@@ -38,13 +46,15 @@ namespace MahApps.Metro.Gallery.Pages
                 return;
             }
 
+            var box = (AutoSuggestBox)sender;
+
             // the pages of this gallery are the list, so the sample has something to say without
             // carrying data of its own around
-            this.Suggest.ItemsSource = GalleryPages.All
-                                                   .Select(page => page.Title)
-                                                   .Where(title => title.IndexOf(this.Suggest.Text, StringComparison.CurrentCultureIgnoreCase) >= 0)
-                                                   .Take(8)
-                                                   .ToList();
+            box.ItemsSource = GalleryPages.All
+                                          .Select(page => page.Title)
+                                          .Where(title => title.IndexOf(box.Text, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                                          .Take(8)
+                                          .ToList();
         }
     }
 }
