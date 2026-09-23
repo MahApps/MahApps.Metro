@@ -25,6 +25,30 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The picker in the Windows 10 look, which is the text box of that set with a calendar behind the button: the same fill, the same two-unit frame and the accent around it once the caret is in. The drop down is the calendar of that set as well, square cells and all."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="DatePicker.Win10">
+                    <DatePicker x:Name="Win10"
+                                Width="280"
+                                HorizontalAlignment="Left"
+                                mah:TextBoxHelper.ClearTextButton="True"
+                                Style="{DynamicResource MahApps.Styles.DatePicker.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: the translucent fill, rounded corners, a border that is a touch stronger along its bottom edge and turns into the accent there while the caret is in, and round day cells in the drop down. That edge is a border of its own, two units thick either way, so the picker stays as tall as it was and nothing under it moves."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="DatePicker.WinUI">
+                    <DatePicker x:Name="WinUI"
+                                Width="280"
+                                HorizontalAlignment="Left"
+                                mah:TextBoxHelper.ClearTextButton="True"
+                                Style="{DynamicResource MahApps.Styles.DatePicker.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

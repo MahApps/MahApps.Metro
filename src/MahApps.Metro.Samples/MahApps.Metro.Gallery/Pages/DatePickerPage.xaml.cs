@@ -29,6 +29,20 @@ namespace MahApps.Metro.Gallery.Pages
                                    TextBoxHelper.UseFloatingWatermarkProperty,
                                    ControlsHelper.CornerRadiusProperty);
             this.PickExample.Watch("Layout", this.Pick, WidthProperty);
+
+            this.Win10Example.Watch(this.Win10, DatePicker.SelectedDateProperty, IsEnabledProperty);
+            this.Win10Example.Watch("Attached",
+                                    this.Win10,
+                                    TextBoxHelper.WatermarkProperty,
+                                    TextBoxHelper.ClearTextButtonProperty,
+                                    ControlsHelper.CornerRadiusProperty);
+
+            this.WinUIExample.Watch(this.WinUI, DatePicker.SelectedDateProperty, IsEnabledProperty);
+            this.WinUIExample.Watch("Attached",
+                                    this.WinUI,
+                                    TextBoxHelper.WatermarkProperty,
+                                    TextBoxHelper.ClearTextButtonProperty,
+                                    ControlsHelper.CornerRadiusProperty);
         }
     }
 }

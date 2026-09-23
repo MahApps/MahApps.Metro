@@ -465,6 +465,46 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ClearTextButtonProperty, BooleanBoxes.Box(value));
         }
 
+        /// <summary>Identifies the <see cref="GetClearTextButtonFollowsFocus(DependencyObject)"/> attached property.</summary>
+        /// <remarks>
+        /// The delete button of a UWP box is not a button that stands there: it is there while the
+        /// caret is in the box and something is written in it, and gone the rest of the time. The
+        /// Windows 10 and the WinUI text boxes draw that rule in their own templates; a control whose
+        /// template is shared by every set, as the pickers are, asks for it with this instead. A
+        /// button carrying a command of the application's own is not the delete button and is left
+        /// where it is either way.
+        /// </remarks>
+        public static readonly DependencyProperty ClearTextButtonFollowsFocusProperty
+            = DependencyProperty.RegisterAttached(
+                "ClearTextButtonFollowsFocus",
+                typeof(bool),
+                typeof(TextBoxHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets whether the clear text button is shown only while the control has the caret and
+        /// something is written in it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        public static bool GetClearTextButtonFollowsFocus(DependencyObject d)
+        {
+            return (bool)d.GetValue(ClearTextButtonFollowsFocusProperty);
+        }
+
+        /// <summary>
+        /// Sets whether the clear text button is shown only while the control has the caret and
+        /// something is written in it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        public static void SetClearTextButtonFollowsFocus(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ClearTextButtonFollowsFocusProperty, BooleanBoxes.Box(value));
+        }
+
         public static readonly DependencyProperty ButtonsAlignmentProperty
             = DependencyProperty.RegisterAttached(
                 "ButtonsAlignment",

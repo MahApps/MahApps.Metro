@@ -23,6 +23,7 @@
     <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 12 0 12</Thickness>
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.WinUI}" TargetType="ScrollViewer" />
     <Style BasedOn="{StaticResource MahApps.Styles.Calendar.WinUI}" TargetType="Calendar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.WinUI}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.WinUI}" TargetType="{x:Type mah:AnalogClock}" />
     <Style BasedOn="{StaticResource MahApps.Styles.DateTimePicker.WinUI}" TargetType="{x:Type mah:DateTimePicker}" />
     <Style BasedOn="{StaticResource MahApps.Styles.TimePicker.WinUI}" TargetType="{x:Type mah:TimePicker}" />

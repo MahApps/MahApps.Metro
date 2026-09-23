@@ -61,6 +61,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "RichTextBox", "PART_InnerGrid" },
                 new object[] { "RichTextBox Win10", "PART_InnerGrid" },
                 new object[] { "RichTextBox WinUI", "PART_InnerGrid" },
+                new object[] { "DatePicker", "PART_InnerGrid" },
+                new object[] { "DatePicker Win10", "PART_InnerGrid" },
+                new object[] { "DatePicker WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -124,6 +127,15 @@ namespace MahApps.Metro.Tests.Tests
 
                 case "RichTextBox WinUI":
                     return Document((RichTextBox)Styled(new RichTextBox(), "MahApps.Styles.RichTextBox.WinUI"));
+
+                case "DatePicker":
+                    return new DatePicker { SelectedDate = new DateTime(2026, 9, 23) };
+
+                case "DatePicker Win10":
+                    return Styled(new DatePicker { SelectedDate = new DateTime(2026, 9, 23) }, "MahApps.Styles.DatePicker.Win10");
+
+                case "DatePicker WinUI":
+                    return Styled(new DatePicker { SelectedDate = new DateTime(2026, 9, 23) }, "MahApps.Styles.DatePicker.WinUI");
 
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
