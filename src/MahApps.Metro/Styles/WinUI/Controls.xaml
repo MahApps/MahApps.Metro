@@ -13,6 +13,8 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.WinUI}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.WinUI}" TargetType="ComboBoxItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.WinUI}" TargetType="RadioButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.WinUI}" TargetType="PasswordBox" />

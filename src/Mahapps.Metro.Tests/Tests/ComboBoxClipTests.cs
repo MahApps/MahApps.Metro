@@ -104,7 +104,7 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        public void TheBoxShouldRoundItsFrameAndInsetItsContent()
+        public void TheBoxShouldRoundItsFrameAndClipWhatStandsInIt()
         {
             var comboBox = this.ShowComboBox();
 
@@ -112,13 +112,12 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(border, Is.Not.Null, "the template should carry the border");
             Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(12)), "the frame should take the corner radius of the box");
 
-            // The box itself does not clip: its frame is a border of its own and the text and the buttons
-            // sit next to it in a grid inset by the border thickness. Only the drop down and the items
-            // carry a clip.
-            var textBox = comboBox.FindChild<TextBox>("PART_EditableTextBox");
-            var content = (textBox as FrameworkElement) ?? comboBox.FindChild<ContentPresenter>(string.Empty);
-            Assert.That(content, Is.Not.Null, "the box should carry its content");
-            Assert.That(content!.Clip, Is.Null, "the content of the box is inset rather than clipped");
+            // The frame holds the grid rather than standing beside it, so what is in the box is cut to
+            // the corners the frame leaves over instead of being inset by its thickness.
+            var grid = ClipAssert.ContentGrid(comboBox, "PART_InnerGrid");
+
+            ClipAssert.CoversElement(grid, "box");
+            ClipAssert.CutsEveryCorner(grid, "box");
         }
 
         [Test]

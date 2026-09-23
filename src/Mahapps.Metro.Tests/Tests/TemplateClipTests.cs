@@ -64,6 +64,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "DatePicker", "PART_InnerGrid" },
                 new object[] { "DatePicker Win10", "PART_InnerGrid" },
                 new object[] { "DatePicker WinUI", "PART_InnerGrid" },
+                new object[] { "ComboBox", "PART_InnerGrid" },
+                new object[] { "ComboBox Win10", "PART_InnerGrid" },
+                new object[] { "ComboBox WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -137,12 +140,34 @@ namespace MahApps.Metro.Tests.Tests
                 case "DatePicker WinUI":
                     return Styled(new DatePicker { SelectedDate = new DateTime(2026, 9, 23) }, "MahApps.Styles.DatePicker.WinUI");
 
+                case "ComboBox":
+                    return Filled(new ComboBox());
+
+                case "ComboBox Win10":
+                    return Filled((ComboBox)Styled(new ComboBox(), "MahApps.Styles.ComboBox.Win10"));
+
+                case "ComboBox WinUI":
+                    return Filled((ComboBox)Styled(new ComboBox(), "MahApps.Styles.ComboBox.WinUI"));
+
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(what), what, "no such template in this fixture");
             }
+        }
+
+        /// <summary>
+        /// A combo box with something to show, so that the row the clip has to cover is the one a box
+        /// with a selection in it really has.
+        /// </summary>
+        private static ComboBox Filled(ComboBox box)
+        {
+            box.Items.Add("Beam me up...");
+            box.Items.Add("Warp nine");
+            box.SelectedIndex = 0;
+
+            return box;
         }
 
         /// <summary>

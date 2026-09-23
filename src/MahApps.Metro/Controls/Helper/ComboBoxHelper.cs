@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -15,6 +16,93 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class ComboBoxHelper
     {
+        public static readonly DependencyProperty DropDownBackgroundProperty
+            = DependencyProperty.RegisterAttached("DropDownBackground",
+                                                  typeof(Brush),
+                                                  typeof(ComboBoxHelper),
+                                                  new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the brush the drop-down is filled with.
+        /// </summary>
+        /// <remarks>
+        /// The list hangs over whatever is behind it, so it carries a fill and a frame of its own,
+        /// and both belong to the box rather than to controls in general: a set that gives its text
+        /// boxes a chrome of their own wants the same one here.
+        /// </remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static Brush? GetDropDownBackground(DependencyObject d)
+        {
+            return (Brush?)d.GetValue(DropDownBackgroundProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush the drop-down is filled with.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static void SetDropDownBackground(DependencyObject obj, Brush? value)
+        {
+            obj.SetValue(DropDownBackgroundProperty, value);
+        }
+
+        public static readonly DependencyProperty DropDownBorderBrushProperty
+            = DependencyProperty.RegisterAttached("DropDownBorderBrush",
+                                                  typeof(Brush),
+                                                  typeof(ComboBoxHelper),
+                                                  new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the brush of the frame around the drop-down.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static Brush? GetDropDownBorderBrush(DependencyObject d)
+        {
+            return (Brush?)d.GetValue(DropDownBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush of the frame around the drop-down.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static void SetDropDownBorderBrush(DependencyObject obj, Brush? value)
+        {
+            obj.SetValue(DropDownBorderBrushProperty, value);
+        }
+
+        public static readonly DependencyProperty DropDownCornerRadiusProperty
+            = DependencyProperty.RegisterAttached("DropDownCornerRadius",
+                                                  typeof(CornerRadius),
+                                                  typeof(ComboBoxHelper),
+                                                  new FrameworkPropertyMetadata(new CornerRadius()));
+
+        /// <summary>
+        /// Gets the corner radius of the drop-down.
+        /// </summary>
+        /// <remarks>
+        /// A flyout is rounded a little more than the control it hangs under, so this is a knob of
+        /// its own rather than the corner radius of the box.
+        /// </remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static CornerRadius GetDropDownCornerRadius(DependencyObject d)
+        {
+            return (CornerRadius)d.GetValue(DropDownCornerRadiusProperty);
+        }
+
+        /// <summary>
+        /// Sets the corner radius of the drop-down.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static void SetDropDownCornerRadius(DependencyObject obj, CornerRadius value)
+        {
+            obj.SetValue(DropDownCornerRadiusProperty, value);
+        }
+
         public static readonly DependencyProperty MaxLengthProperty
             = DependencyProperty.RegisterAttached("MaxLength",
                                                   typeof(int),

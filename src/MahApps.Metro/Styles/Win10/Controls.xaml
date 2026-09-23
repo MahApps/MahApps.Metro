@@ -19,6 +19,8 @@
     <Style BasedOn="{StaticResource MahApps.Styles.Button.Win10}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Styles.Button.Win10}" TargetType="RepeatButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Win10}" TargetType="ComboBoxItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Win10}" TargetType="RadioButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="ScrollBar" />
     <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
