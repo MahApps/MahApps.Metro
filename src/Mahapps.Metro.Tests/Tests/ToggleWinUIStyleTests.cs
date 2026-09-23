@@ -99,21 +99,26 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
-        [TestCase(true, 14d, Description = "under the pointer the dot grows")]
-        [TestCase(false, 10d, Description = "and held down it shrinks")]
-        public void TheDotAnswersThePointer(bool pointerOver, double expected)
+        [Test]
+        [Description("Held down, the dot shrinks. Under the pointer it stays where it is: WinUI grows it to fourteen there, which leaves three units of ring, and without the animation WinUI plays over it the jump is worse than nothing.")]
+        public void TheDotShrinksWhileTheButtonIsHeldDown()
         {
             var radio = (RadioButton)this.Show(new RadioButton { Content = "Beam me up...", IsChecked = true }, "MahApps.Styles.RadioButton.WinUI");
 
-            // IsMouseOver and IsPressed are read-only, so the states are asked of the style rather
+            // IsPressed and IsMouseOver are read-only, so the states are asked of the style rather
             // than of a pointer no test has
-            var trigger = TriggerFor(radio.Style, pointerOver ? UIElement.IsMouseOverProperty : ButtonBase.IsPressedProperty);
+            var pressed = TriggerFor(radio.Style, ButtonBase.IsPressedProperty);
 
-            Assert.That(trigger, Is.Not.Null, "the style should answer that state");
-            Assert.That(trigger!.Setters, Has.Exactly(1).Matches<SetterBase>(setter =>
-                                                                                setter is Setter { Property: var property, Value: var value }
-                                                                                && property == RadioButtonHelper.RadioCheckSizeProperty
-                                                                                && Equals(value, expected)));
+            Assert.That(pressed, Is.Not.Null, "the style should answer the button being held down");
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(pressed!.Setters, Has.Exactly(1).Matches<SetterBase>(setter =>
+                                                                                        setter is Setter { Property: var property, Value: var value }
+                                                                                        && property == RadioButtonHelper.RadioCheckSizeProperty
+                                                                                        && Equals(value, 10d)));
+                    Assert.That(TriggerFor(radio.Style, UIElement.IsMouseOverProperty), Is.Null, "and the pointer alone should not change the size of anything");
+                });
         }
 
         private static Trigger? TriggerFor(Style style, DependencyProperty property)

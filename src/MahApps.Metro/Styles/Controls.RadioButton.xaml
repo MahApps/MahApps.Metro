@@ -248,9 +248,11 @@
 
     <!--
         And the WinUI radio button beside it: the same ring of twenty with a hairline round it,
-        filled with the accent and a white dot in the middle once it is picked. The dot is twelve at
-        rest, fourteen under the pointer and ten while the button is held down, which is the whole
-        of the animation WinUI plays there and the one part of it a style can say.
+        filled with the accent and a dot in the middle once it is picked. The dot shrinks while the
+        button is held down, which is the part of the animation WinUI plays there that a style can
+        say. It grows under the pointer there as well, to fourteen, and that one is left out: it
+        leaves three units of ring, which WPF draws unevenly, and without the animation WinUI plays
+        over it the jump is a worse trade than the pointer saying itself in the colour alone.
     -->
     <Style x:Key="MahApps.Styles.RadioButton.WinUI"
            BasedOn="{StaticResource MahApps.Styles.RadioButton.Win10}"
@@ -296,9 +298,6 @@
         <Setter Property="mah:RadioButtonHelper.RadioCheckSize" Value="12" />
         <Setter Property="mah:RadioButtonHelper.RadioStrokeThickness" Value="{DynamicResource RadioButtonWinUIBorderThemeThickness}" />
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="mah:RadioButtonHelper.RadioCheckSize" Value="14" />
-            </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="mah:RadioButtonHelper.RadioCheckSize" Value="10" />
             </Trigger>

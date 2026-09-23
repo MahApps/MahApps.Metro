@@ -18,6 +18,20 @@
                           IsOn="{Binding Value, Mode=TwoWay}" />
     </DataTemplate>
 
+    <!--
+        A property that takes yes, no or neither needs an editor that can say the third one. A switch
+        cannot: IsOn is a plain bool, so a three state check box standing at neither handed it a null
+        it had no answer for, and every one of those was a binding error in the output window.
+    -->
+    <DataTemplate x:Key="MahApps.Gallery.Templates.Option.ThreeState">
+        <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <CheckBox HorizontalAlignment="Left"
+                      Content="{Binding Value, Mode=OneWay, TargetNullValue=Neither}"
+                      IsChecked="{Binding Value, Mode=TwoWay}"
+                      IsThreeState="True" />
+        </mah:MetroHeader>
+    </DataTemplate>
+
     <DataTemplate x:Key="MahApps.Gallery.Templates.Option.Number">
         <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
             <mah:NumericUpDown HorizontalAlignment="Stretch"
