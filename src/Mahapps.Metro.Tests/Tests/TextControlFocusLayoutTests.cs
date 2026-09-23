@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,6 +47,9 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.RichTextBox")]
         [TestCase("MahApps.Styles.RichTextBox.Win10")]
         [TestCase("MahApps.Styles.RichTextBox.WinUI")]
+        [TestCase("MahApps.Styles.DatePicker")]
+        [TestCase("MahApps.Styles.DatePicker.Win10")]
+        [TestCase("MahApps.Styles.DatePicker.WinUI")]
         [Description("The caret changes what a box looks like, not how tall it is.")]
         public void ABoxTakingTheCaretMovesNothingUnderIt(string key)
         {
@@ -53,6 +57,7 @@ namespace MahApps.Metro.Tests.Tests
             {
                 _ when key.Contains("PasswordBox") => new PasswordBox { Password = "Konrad" },
                 _ when key.Contains("RichTextBox") => Document("Konrad"),
+                _ when key.Contains("DatePicker") => new DatePicker { SelectedDate = new DateTime(2026, 9, 23) },
                 _ => new TextBox { Text = "Konrad" }
             };
 
@@ -80,8 +85,9 @@ namespace MahApps.Metro.Tests.Tests
             Keyboard.Focus(box);
             this.Settle();
 
-            // a build agent hands the keyboard to one window at a time
-            Assume.That(box.IsFocused, Is.True);
+            // a build agent hands the keyboard to one window at a time, and the caret of a picker
+            // lands in a box inside its template rather than on the picker itself
+            Assume.That(box.IsKeyboardFocusWithin, Is.True);
 
             Assert.Multiple(() =>
                 {

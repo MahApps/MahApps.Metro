@@ -106,6 +106,22 @@
                         </Binding>
                     </mah:TextBoxHelper.ButtonWidth>
                 </DatePicker>
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="The Windows 10 look, with the calendar of that set in the drop down" />
+                <DatePicker Width="200"
+                            Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
+                            mah:TextBoxHelper.ClearTextButton="True"
+                            SelectedDate="{x:Static system:DateTime.Now}"
+                            Style="{DynamicResource MahApps.Styles.DatePicker.Win10}" />
+
+                <TextBlock Style="{StaticResource ExampleCaption}" Text="And the WinUI one, rounded, with the accent along the bottom edge while you are typing" />
+                <DatePicker Width="200"
+                            Margin="{StaticResource ControlMargin}"
+                            HorizontalAlignment="Left"
+                            mah:TextBoxHelper.ClearTextButton="True"
+                            SelectedDate="{x:Static system:DateTime.Now}"
+                            Style="{DynamicResource MahApps.Styles.DatePicker.WinUI}" />
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="{StaticResource ColumnMargin}">

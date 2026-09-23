@@ -160,12 +160,19 @@ namespace MahApps.Metro.Tests.Tests
         /// </summary>
         [TestCase("MahApps.Styles.TimePicker.WinUI", true)]
         [TestCase("MahApps.Styles.TimePicker.Win10", false)]
+        [TestCase("MahApps.Styles.DatePicker.WinUI", true)]
+        [TestCase("MahApps.Styles.DatePicker.Win10", false)]
+        [TestCase("MahApps.Styles.DatePicker", false)]
         [Description("The picker shares its template with the other sets, so the edge is a brush the style hands it and the sets without one draw nothing there.")]
         public void OnlyTheWinUIPickerCarriesAnEdge(string key, bool hasAnEdge)
         {
             Assert.That(this.window, Is.Not.Null);
 
-            var picker = new TimePicker { Width = 200, Style = (Style)Application.Current.FindResource(key) };
+            Control picker = key.Contains("TimePicker")
+                ? new TimePicker()
+                : new DatePicker();
+            picker.Width = 200;
+            picker.Style = (Style)Application.Current.FindResource(key);
 
             this.window!.Content = picker;
             this.Settle();
