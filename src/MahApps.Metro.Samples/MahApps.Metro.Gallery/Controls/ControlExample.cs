@@ -73,7 +73,7 @@ namespace MahApps.Metro.Gallery.Controls
             = DependencyProperty.Register(nameof(Options),
                                           typeof(object),
                                           typeof(ControlExample),
-                                          new PropertyMetadata(null));
+                                          new PropertyMetadata(null, OnOptionsChanged));
 
         static ControlExample()
         {
@@ -85,7 +85,7 @@ namespace MahApps.Metro.Gallery.Controls
         {
             this.Properties.CollectionChanged += (_, _) =>
                                                      {
-                                                         this.SetCurrentValue(HasOptionsProperty, this.Properties.Count > 0 || this.Options is not null);
+                                                         this.UpdateHasOptions();
                                                          this.RefreshXaml();
                                                      };
 
@@ -206,6 +206,21 @@ namespace MahApps.Metro.Gallery.Controls
             base.OnContentChanged(oldContent, newContent);
 
             this.RefreshXaml();
+        }
+
+        private static void OnOptionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as ControlExample)?.UpdateHasOptions();
+        }
+
+        /// <summary>
+        /// Whether the pane beside the sample has anything in it: the properties a card watches, or
+        /// whatever else it puts there. A card that only puts something there would otherwise never
+        /// see the pane, since nothing else asks the question again.
+        /// </summary>
+        private void UpdateHasOptions()
+        {
+            this.SetCurrentValue(HasOptionsProperty, this.Properties.Count > 0 || this.Options is not null);
         }
 
         private static void OnUniqueKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
