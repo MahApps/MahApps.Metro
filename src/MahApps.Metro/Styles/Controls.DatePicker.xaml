@@ -197,6 +197,28 @@
                             <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
+                        <!--
+                            The delete button of a UWP box is there while the caret is in it and
+                            something is written in it, and the two Windows sets ask for that rule
+                            with TextBoxHelper.ClearTextButtonFollowsFocus. A button carrying a
+                            command of the application's own is not that button and stays put.
+                        -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+                                <Condition Property="mah:TextBoxHelper.ClearTextButtonFollowsFocus" Value="True" />
+                                <Condition Property="mah:TextBoxHelper.HasText" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+                                <Condition Property="mah:TextBoxHelper.ClearTextButtonFollowsFocus" Value="True" />
+                                <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_Button" Property="Grid.Column" Value="0" />
@@ -237,6 +259,20 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
+                        <!--
+                            A set that draws no veil over a picker that is switched off says it with
+                            the colours instead, the way the text box of that set does: the frame and
+                            the edge take the disabled stroke, and the style turns the fill and the
+                            text down with them.
+                        -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+                        </MultiTrigger>
                         <Trigger SourceName="PART_Button" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -429,10 +465,20 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="8 4" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushDisabled}" />
+        <!--  no veil over a picker that is off: this set says it with the colours, the way its text box does  -->
+        <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushPointerOver}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="34" />
+        <Setter Property="mah:TextBoxHelper.ClearTextButtonFollowsFocus" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.BackgroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!--
@@ -449,8 +495,15 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottom}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
