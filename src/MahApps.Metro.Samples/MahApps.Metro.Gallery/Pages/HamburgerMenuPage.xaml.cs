@@ -25,8 +25,19 @@ namespace MahApps.Metro.Gallery.Pages
                                    HamburgerMenu.HamburgerVisibilityProperty,
                                    HamburgerMenu.ShowSelectionIndicatorProperty,
                                    HamburgerMenu.CanResizeOpenPaneProperty,
-                                   HamburgerMenu.VerticalScrollBarVisibilityProperty);
+                                   HamburgerMenu.VerticalScrollBarVisibilityProperty,
+                                   HamburgerMenu.OptionsVisibilityProperty);
             this.MenuExample.Watch("Layout", this.Menu, WidthProperty, HeightProperty);
+        }
+
+        /// <summary>
+        /// The items and the options are two lists, and picking in one of them lets go of the other,
+        /// so what is on the right comes from whichever row was invoked rather than from a binding
+        /// to one of the two.
+        /// </summary>
+        private void OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
+        {
+            this.Menu.Content = (e.InvokedItem as HamburgerMenuItemBase)?.Tag;
         }
     }
 }
