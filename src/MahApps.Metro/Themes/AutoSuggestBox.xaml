@@ -8,182 +8,248 @@
     <!--
         The suggestion box wears the ComboBox outfit, brushes, fonts, validation and all, but not its
         template: there is nothing to drop down by hand here, so the arrow would only offer an empty list.
-        What is left is a text box with room for one button and a list that comes up while typing.
+        What is left is a text box with room for one button and a list that comes up while typing. The
+        three styles below hand this one template the outfit of their set.
     -->
+    <ControlTemplate x:Key="MahApps.Templates.AutoSuggestBox" TargetType="{x:Type mah:AutoSuggestBox}">
+        <!--  whole device pixels for everything inside the frame, the way Controls.TextBox.xaml does it  -->
+        <Grid UseLayoutRounding="True">
+            <Border x:Name="Border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <Grid x:Name="PART_InnerGrid">
+                    <Grid.Clip>
+                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="PART_InnerGrid" Path="ActualWidth" />
+                            <Binding ElementName="PART_InnerGrid" Path="ActualHeight" />
+                            <Binding ElementName="Border" Path="CornerRadius" />
+                            <Binding ElementName="Border" Path="BorderThickness" />
+                            <Binding ElementName="Border" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="TextColumn" Width="*" />
+                        <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="PART_EditableTextBox"
+                             Grid.Column="0"
+                             Margin="0"
+                             Padding="{TemplateBinding Padding}"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                             mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                             mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
+                             mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
+                             mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                             mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                             mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                             AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
+                             Background="{x:Null}"
+                             BorderThickness="0"
+                             CharacterCasing="{TemplateBinding mah:ComboBoxHelper.CharacterCasing}"
+                             Focusable="True"
+                             FontFamily="{TemplateBinding FontFamily}"
+                             FontSize="{TemplateBinding FontSize}"
+                             Foreground="{TemplateBinding Foreground}"
+                             IsReadOnly="{TemplateBinding IsReadOnly}"
+                             MaxLength="{TemplateBinding mah:ComboBoxHelper.MaxLength}"
+                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                             Style="{DynamicResource MahApps.Styles.TextBox.ComboBox.Editable}" />
+
+                    <Button x:Name="PART_ClearText"
+                            Grid.Column="1"
+                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                            AutomationProperties.Name="{x:Static lang:Automation.Clear}"
+                            Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                            CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                            CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                            Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                            ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                            Focusable="False"
+                            FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                            FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                            Foreground="{TemplateBinding Foreground}"
+                            IsTabStop="False"
+                            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                            Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}" />
+                </Grid>
+            </Border>
+
+            <!--
+                The edge WinUI draws a little stronger, and the accent while the box has the caret.
+                It is a frame of its own carrying nothing but that edge, so that it follows the
+                corners of the one behind it and is the same two units on a box of any height. A set
+                that leaves the brush unset draws nothing there.
+            -->
+            <Border x:Name="BottomEdge"
+                    BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                    BorderThickness="0 0 0 2"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    IsHitTestVisible="False"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+            <Border x:Name="DisabledVisualElement"
+                    Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    IsHitTestVisible="False"
+                    Opacity="0"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
+
+            <!--
+                AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme.
+                A popup works out where it belongs when it opens and stays there, while the box above it can still
+                change height: a floating watermark grows into place over a fifth of a second, which is the very
+                moment the first keystroke brings the list up. A PopupEx keeps an eye on the element it is told to
+                hang under, so the list follows the box instead of ending up over it.
+            -->
+            <controlzex:PopupEx x:Name="PART_Popup"
+                                AllowsTransparency="True"
+                                Focusable="False"
+                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                Placement="Bottom"
+                                PlacementTarget="{Binding ElementName=Border}"
+                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border x:Name="PopupBorder"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            Background="{TemplateBinding mah:ComboBoxHelper.DropDownBackground}"
+                            BorderBrush="{TemplateBinding mah:ComboBoxHelper.DropDownBorderBrush}"
+                            BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
+                            CornerRadius="{TemplateBinding mah:ComboBoxHelper.DropDownCornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid x:Name="ContentGrid">
+                            <Grid.Clip>
+                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                    <Binding ElementName="PopupBorder" Path="CornerRadius" />
+                                    <Binding ElementName="PopupBorder" Path="BorderThickness" />
+                                    <Binding ElementName="PopupBorder" Path="Padding" />
+                                </MultiBinding>
+                            </Grid.Clip>
+                            <ScrollViewer Padding="{DynamicResource ComboBoxPopupBorderThemePadding}" BorderThickness="0">
+                                <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </controlzex:PopupEx>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ContextMenu, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_EditableTextBox" Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContextMenu}" />
+            </MultiDataTrigger>
+
+            <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
+                <Setter TargetName="PART_ClearText" Property="Command" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
+            </Trigger>
+
+            <!--  Nothing to put in the button spot, so the text takes the room  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
+                    <Condition Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="PART_EditableTextBox" Property="Grid.ColumnSpan" Value="2" />
+            </MultiTrigger>
+
+            <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+            </Trigger>
+            <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
+            </Trigger>
+
+            <!--
+                A set that draws an edge of its own says the focus with that edge, the way WinUI does
+                it, and the frame behind it stays the colour it was. One that leaves the edge unset
+                says it with the frame, which is what the Metro and the Windows 10 box do.
+            -->
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                    <Condition Property="mah:ControlsHelper.BottomBorderBrush" Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{x:Null}" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="True" />
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+            </MultiTrigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
+            </Trigger>
+            <!--
+                A set that draws no veil over a box that is switched off says it with the colours
+                instead, the way the text box of that set does: the frame and the edge take the
+                disabled stroke, and the style turns the fill and the text down with them.
+            -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+                <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style x:Key="MahApps.Styles.AutoSuggestBox"
            BasedOn="{StaticResource MahApps.Styles.ComboBox}"
            TargetType="{x:Type mah:AutoSuggestBox}">
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type mah:AutoSuggestBox}">
-                    <!--  whole device pixels for everything inside the frame, the way Controls.TextBox.xaml does it  -->
-                    <Grid UseLayoutRounding="True">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
+    </Style>
 
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="TextColumn" Width="*" />
-                                <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
-                            </Grid.ColumnDefinitions>
+    <!--
+        The two Windows looks. A suggestion box has no drop-down button to draw, so what is left of
+        the box of either set is the box itself, and that is the ComboBox of that set down to the
+        fill, the frame, the padding, the delete button and the rows of the list that comes up. Each
+        of them hands that outfit to the one template above rather than writing a second one.
+    -->
+    <Style x:Key="MahApps.Styles.AutoSuggestBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}"
+           TargetType="{x:Type mah:AutoSuggestBox}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
+    </Style>
 
-                            <TextBox x:Name="PART_EditableTextBox"
-                                     Grid.Column="0"
-                                     Margin="0"
-                                     Padding="{TemplateBinding Padding}"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
-                                     mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
-                                     mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
-                                     mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
-                                     mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
-                                     mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
-                                     AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
-                                     Background="{x:Null}"
-                                     BorderThickness="0"
-                                     CharacterCasing="{TemplateBinding mah:ComboBoxHelper.CharacterCasing}"
-                                     Focusable="True"
-                                     FontFamily="{TemplateBinding FontFamily}"
-                                     FontSize="{TemplateBinding FontSize}"
-                                     Foreground="{TemplateBinding Foreground}"
-                                     IsReadOnly="{TemplateBinding IsReadOnly}"
-                                     MaxLength="{TemplateBinding mah:ComboBoxHelper.MaxLength}"
-                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     Style="{StaticResource MahApps.Styles.TextBox.ComboBox.Editable}" />
-
-                            <Button x:Name="PART_ClearText"
-                                    Grid.Column="1"
-                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                    AutomationProperties.Name="{x:Static lang:Automation.Clear}"
-                                    Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                    CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                    CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                    Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                    ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                    Focusable="False"
-                                    FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                    FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-                                    Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}" />
-                        </Grid>
-
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
-
-                        <!--
-                            AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme.
-                            A popup works out where it belongs when it opens and stays there, while the box above it can still
-                            change height: a floating watermark grows into place over a fifth of a second, which is the very
-                            moment the first keystroke brings the list up. A PopupEx keeps an eye on the element it is told to
-                            hang under, so the list follows the box instead of ending up over it.
-                        -->
-                        <controlzex:PopupEx x:Name="PART_Popup"
-                                            AllowsTransparency="True"
-                                            Focusable="False"
-                                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                            Placement="Bottom"
-                                            PlacementTarget="{Binding ElementName=Border}"
-                                            PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
-                            <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
-                                <Border x:Name="PopupBorder"
-                                        Height="Auto"
-                                        HorizontalAlignment="Stretch"
-                                        Background="{DynamicResource MahApps.Brushes.ComboBox.PopupBackground}"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
-                                        BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
-                                        CornerRadius="{DynamicResource ComboBoxPopupBorderThemeCornerRadius}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <Grid x:Name="ContentGrid">
-                                        <Grid.Clip>
-                                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
-                                                <Binding ElementName="PopupBorder" Path="CornerRadius" />
-                                                <Binding ElementName="PopupBorder" Path="BorderThickness" />
-                                                <Binding ElementName="PopupBorder" Path="Padding" />
-                                            </MultiBinding>
-                                        </Grid.Clip>
-                                        <ScrollViewer Padding="{DynamicResource ComboBoxPopupBorderThemePadding}" BorderThickness="0">
-                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                        </ScrollViewer>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </controlzex:PopupEx>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=ContextMenu, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_EditableTextBox" Property="ContextMenu" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContextMenu}" />
-                        </MultiDataTrigger>
-
-                        <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Command" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
-                        </Trigger>
-
-                        <!--  Nothing to put in the button spot, so the text takes the room  -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="False" />
-                                <Condition Property="mah:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_EditableTextBox" Property="Grid.ColumnSpan" Value="2" />
-                        </MultiTrigger>
-
-                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-                        </Trigger>
-
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
-                        </Trigger>
-                        <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
-                        </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsGrouping" Value="True" />
-                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
-                        </MultiTrigger>
-
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="MahApps.Styles.AutoSuggestBox.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}"
+           TargetType="{x:Type mah:AutoSuggestBox}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
     </Style>
 
 </ResourceDictionary>

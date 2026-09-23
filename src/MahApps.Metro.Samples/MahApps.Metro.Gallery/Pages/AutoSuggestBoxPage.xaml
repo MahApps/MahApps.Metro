@@ -26,6 +26,34 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The box in the Windows 10 look, which is the combo box of that set with the drop-down button taken off it: the same fill, the same two units of frame, the same padding and the same delete button, and a frame that turns into the accent once the caret is in. The suggestions come up in the list that set draws, with its rows and its colours."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="AutoSuggestBox.Win10">
+                    <mah:AutoSuggestBox x:Name="Win10"
+                                        Width="280"
+                                        HorizontalAlignment="Left"
+                                        mah:TextBoxHelper.ClearTextButton="True"
+                                        mah:TextBoxHelper.Watermark="Search a control"
+                                        Style="{DynamicResource MahApps.Styles.AutoSuggestBox.Win10}"
+                                        TextChanged="OnTextChanged" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: rounded corners and a border a touch stronger along its bottom edge, which turns into the accent there while the caret is in. That edge is a border of its own, two units thick either way, so the box stays as tall as it was and nothing under it moves. The list is rounded a little more than the box, the way a flyout is."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="AutoSuggestBox.WinUI">
+                    <mah:AutoSuggestBox x:Name="WinUI"
+                                        Width="280"
+                                        HorizontalAlignment="Left"
+                                        mah:TextBoxHelper.ClearTextButton="True"
+                                        mah:TextBoxHelper.Watermark="Search a control"
+                                        Style="{DynamicResource MahApps.Styles.AutoSuggestBox.WinUI}"
+                                        TextChanged="OnTextChanged" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -70,6 +70,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "NumericUpDown", "PART_InnerGrid" },
                 new object[] { "NumericUpDown Win10", "PART_InnerGrid" },
                 new object[] { "NumericUpDown WinUI", "PART_InnerGrid" },
+                new object[] { "AutoSuggestBox", "PART_InnerGrid" },
+                new object[] { "AutoSuggestBox Win10", "PART_InnerGrid" },
+                new object[] { "AutoSuggestBox WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -161,6 +164,15 @@ namespace MahApps.Metro.Tests.Tests
                 case "NumericUpDown WinUI":
                     return Styled(new NumericUpDown { Value = 42 }, "MahApps.Styles.NumericUpDown.WinUI");
 
+                case "AutoSuggestBox":
+                    return Suggesting(new AutoSuggestBox());
+
+                case "AutoSuggestBox Win10":
+                    return Suggesting((AutoSuggestBox)Styled(new AutoSuggestBox(), "MahApps.Styles.AutoSuggestBox.Win10"));
+
+                case "AutoSuggestBox WinUI":
+                    return Suggesting((AutoSuggestBox)Styled(new AutoSuggestBox(), "MahApps.Styles.AutoSuggestBox.WinUI"));
+
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
 
@@ -178,6 +190,18 @@ namespace MahApps.Metro.Tests.Tests
             box.Items.Add("Beam me up...");
             box.Items.Add("Warp nine");
             box.SelectedIndex = 0;
+
+            return box;
+        }
+
+        /// <summary>
+        /// A suggestion box with something to suggest and something typed into it, so that the row
+        /// the clip has to cover is the one a box being used really has.
+        /// </summary>
+        private static AutoSuggestBox Suggesting(AutoSuggestBox box)
+        {
+            box.ItemsSource = new[] { "Beam me up...", "Warp nine" };
+            box.Text = "Beam me up...";
 
             return box;
         }
