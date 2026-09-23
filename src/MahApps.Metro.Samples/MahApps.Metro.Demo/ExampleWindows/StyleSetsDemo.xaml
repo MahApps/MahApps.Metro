@@ -57,6 +57,12 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="AutoSuggestBox" />
+                        <mah:AutoSuggestBox mah:TextBoxHelper.ClearTextButton="True"
+                                            mah:TextBoxHelper.Watermark="Search a control"
+                                            Text="Konrad Zuse" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="DatePicker" />
                         <DatePicker mah:TextBoxHelper.ClearTextButton="True" SelectedDate="{x:Static system:DateTime.Now}" />
                     </StackPanel>
