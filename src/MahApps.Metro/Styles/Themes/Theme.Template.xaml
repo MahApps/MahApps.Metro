@@ -429,6 +429,14 @@
     <Color x:Key="MahApps.Colors.WinUI.TextDisabled">{{MahApps.Colors.WinUI.TextDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SubtleFillSecondary">{{MahApps.Colors.WinUI.SubtleFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SubtleFillTertiary">{{MahApps.Colors.WinUI.SubtleFillTertiary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlAltFillSecondary">{{MahApps.Colors.WinUI.ControlAltFillSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlAltFillTertiary">{{MahApps.Colors.WinUI.ControlAltFillTertiary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlAltFillQuarternary">{{MahApps.Colors.WinUI.ControlAltFillQuarternary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlAltFillDisabled">{{MahApps.Colors.WinUI.ControlAltFillDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDefault">{{MahApps.Colors.WinUI.ControlStrongStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDisabled">{{MahApps.Colors.WinUI.ControlStrongStrokeDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.AccentFillDisabled">{{MahApps.Colors.WinUI.AccentFillDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.TextOnAccentDisabled">{{MahApps.Colors.WinUI.TextOnAccentDisabled}}</Color>
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Background" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
@@ -473,6 +481,33 @@
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+
+    <!--
+        The rest of the WinUI palette, the part a check box and a radio button are drawn in.
+        The accent fills are the accent of the theme rather than a colour of their own, and the
+        two quieter ones are that accent turned down, which is how WinUI writes them as well.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextPrimary" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillQuarternary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillQuarternary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillDefault" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillSecondary" Opacity="0.9" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillTertiary" Opacity="0.8" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.AccentFillDisabled}" options:Freeze="True" />
+    <!--
+        WinUI writes what sits on an accent fill as black or white per theme, because its own
+        accent is a light one in the dark theme and a dark one in the light theme. The accent
+        here is the accent of the theme and stays what it is, so the tick and the dot take the
+        ideal foreground for that accent, which the theme works out either way.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentPrimary" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentSecondary" Opacity="0.7" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextOnAccentDisabled}" options:Freeze="True" />
 
     <!--  Resources for MahApps.Styles.Button.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Button.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
@@ -647,5 +682,118 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundBaseLow" />
+
+
+    <!--  Resources for MahApps.Styles.CheckBox.WinUI  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundUnchecked" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedPressed" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundChecked" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundCheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminate" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminateMouseOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminatePressed" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminateDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundUncheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundChecked" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundCheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundCheckedPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminate" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushUnchecked" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushUncheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushChecked" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushCheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushCheckedPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminate" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUnchecked" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUncheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUncheckedPressed" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUncheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeChecked" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeCheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminate" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminateMouseOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminatePressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminateDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUnchecked" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUncheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUncheckedPressed" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillQuarternary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUncheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillChecked" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillCheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminate" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminateMouseOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminatePressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminateDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUnchecked" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUncheckedPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUncheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundChecked" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundCheckedMouseOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminate" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminateMouseOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminatePressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminateDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+
+    <!--  Resources for MahApps.Styles.RadioButton.WinUI  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.ForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseStroke" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseStrokePointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseStrokePressed" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseStrokeDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseFill" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseFillPressed" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillQuarternary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseFillDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedStroke" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedStrokePointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedStrokePressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedStrokeDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedFillPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.OuterEllipseCheckedFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphFill" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphFillPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphFillDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStroke" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStrokePointerOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStrokePressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStrokeDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
 
 </ResourceDictionary>

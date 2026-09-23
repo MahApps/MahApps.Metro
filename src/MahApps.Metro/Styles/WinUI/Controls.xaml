@@ -12,6 +12,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.WinUI}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.WinUI}" TargetType="RadioButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.WinUI}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox.WinUI}" TargetType="RichTextBox" />

@@ -567,4 +567,129 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <system:Double x:Key="CheckBoxWinUIBorderThemeThickness">1</system:Double>
+    <CornerRadius x:Key="MahApps.CornerRadius.CheckBox.WinUI">4</CornerRadius>
+
+    <!--
+        The WinUI box, the Fluent 2 one Windows 11 draws: a rounded box of twenty with a hairline
+        round it and a fill a shade off the page, turning accent with a white tick in it once it is
+        ticked. It stands on the default style rather than on the Windows 10 one, which is the one
+        place the WinUI set parts company with that habit: the Windows 10 box drops the stroke of
+        its box in the states where the fill says the state on its own, and a WinUI box keeps that
+        stroke in every one of them.
+        
+        The text sits against the top of the row rather than in the middle of it, the way WinUI has
+        it, so that a label of several lines starts level with the box instead of being centred
+        beside it as a block.
+    -->
+    <Style x:Key="MahApps.Styles.CheckBox.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.CheckBox}"
+           TargetType="CheckBox">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="Padding" Value="8 5 0 0" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundChecked}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundCheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundCheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundCheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminate}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminateDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminateMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundIndeterminatePressed}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundUnchecked}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundUncheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundUncheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.BackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BackgroundUncheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushChecked}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushCheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushCheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushCheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminate}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminateDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminateMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushIndeterminatePressed}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushUnchecked}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushUncheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushUncheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.BorderBrushUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.BorderBrushUncheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillChecked}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillCheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillCheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillCheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminate}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminateDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminateMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillIndeterminatePressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUnchecked}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUncheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUncheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundFillUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundFillUncheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeChecked}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeCheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeCheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeCheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminate}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminateDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminateMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeIndeterminatePressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUnchecked}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUncheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUncheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckBackgroundStrokeUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckBackgroundStrokeUncheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckCornerRadius" Value="{DynamicResource MahApps.CornerRadius.CheckBox.WinUI}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphCheckedTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="&#xE73E;"
+                                  UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundChecked}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundCheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundCheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundCheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminate}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminateDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminateMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminatePressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUnchecked}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUncheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUncheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundUncheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.CheckGlyphIndeterminateTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="&#xE9AE;"
+                                  UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:CheckBoxHelper.CheckSize" Value="20" />
+        <Setter Property="mah:CheckBoxHelper.CheckStrokeThickness" Value="{DynamicResource CheckBoxWinUIBorderThemeThickness}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundChecked}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundCheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundCheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundCheckedPressed}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminate}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminateDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminateMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundIndeterminatePressed}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUnchecked}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedDisabled}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedMouseOver}" />
+        <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedPressed}" />
+        <Style.Triggers>
+            <Trigger Property="mah:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
+                <Setter Property="Padding" Value="0 5 8 0" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
