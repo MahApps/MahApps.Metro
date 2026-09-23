@@ -4,6 +4,17 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     mc:Ignorable="po">
 
+    <!--
+        The two radii WinUI rounds with. A control is ControlCornerRadius, and whatever hangs over
+        what is behind it is OverlayCornerRadius: a drop-down, a flyout, the calendar under a picker.
+        Every WinUI style here reads one of the two rather than a number of its own, so a box and the
+        up-down beside it are rounded the same whoever wrote them. The handful of WinUI keys that
+        carry a radius of their own carry it because it is not one of these: the day cell of a
+        calendar is a pill at twenty and the scroll bar is drawn to its own width.
+    -->
+    <CornerRadius x:Key="MahApps.CornerRadius.WinUI.Control">4</CornerRadius>
+    <CornerRadius x:Key="MahApps.CornerRadius.WinUI.Overlay">8</CornerRadius>
+
     <ExponentialEase x:Key="MahApps.ExponentialEase.EaseInOut"
                      EasingMode="EaseInOut"
                      Exponent="2" />

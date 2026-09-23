@@ -26,6 +26,11 @@
            TargetType="{x:Type Thumb}" />
     <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 12 0 12</Thickness>
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.WinUI}" TargetType="ScrollViewer" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:NumericUpDownBase}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:NumericUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:DecimalUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:IntegerUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:LongUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Calendar.WinUI}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.WinUI}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.WinUI}" TargetType="{x:Type mah:AnalogClock}" />

@@ -149,7 +149,9 @@
                                             stack panel measures its children with all the room they
                                             ask for and the viewer then never has anything to scroll.
                                         -->
-                                        <ScrollViewer MaxHeight="180" VerticalScrollBarVisibility="Auto" Padding="0 0 8 0">
+                                        <ScrollViewer MaxHeight="180"
+                                                      Padding="0 0 8 0"
+                                                      VerticalScrollBarVisibility="Auto">
                                             <ItemsControl ItemsSource="{Binding PropertyGroups, RelativeSource={RelativeSource TemplatedParent}}">
                                                 <ItemsControl.ItemTemplateSelector>
                                                     <controls:ExamplePropertyTemplateSelector />

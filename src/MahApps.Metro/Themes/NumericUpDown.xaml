@@ -7,6 +7,7 @@
     <Thickness x:Key="NumericUpDownSelectedBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="NumericUpDownSpinButtonRightBorderThickness">0,0,0,0</Thickness>
     <Thickness x:Key="NumericUpDownSpinButtonLeftBorderThickness">0,0,0,0</Thickness>
+    <Thickness x:Key="NumericUpDownBottomEdgeThickness">0,0,0,0</Thickness>
 
     <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
@@ -125,96 +126,126 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid x:Name="PART_InnerGrid">
+                                <Grid.Clip>
+                                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                        <Binding ElementName="PART_InnerGrid" Path="ActualWidth" />
+                                        <Binding ElementName="PART_InnerGrid" Path="ActualHeight" />
+                                        <Binding ElementName="Base" Path="CornerRadius" />
+                                        <Binding ElementName="Base" Path="BorderThickness" />
+                                        <Binding ElementName="Base" Path="Padding" />
+                                    </MultiBinding>
+                                </Grid.Clip>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="PART_LeftColumn" Width="*" />
+                                    <ColumnDefinition x:Name="PART_MiddleColumn" Width="Auto" />
+                                    <ColumnDefinition x:Name="PART_RightColumn" Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="PART_LeftColumn" Width="*" />
-                                <ColumnDefinition x:Name="PART_MiddleColumn" Width="Auto" />
-                                <ColumnDefinition x:Name="PART_RightColumn" Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                                <TextBox x:Name="PART_TextBox"
+                                         Grid.Column="0"
+                                         MinWidth="20"
+                                         MinHeight="0"
+                                         Margin="0"
+                                         Padding="{TemplateBinding Padding}"
+                                         HorizontalAlignment="Stretch"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                                         mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
+                                         mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                         mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                         mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                         mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                         mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                         mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                         mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                         mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                         mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                         mah:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}"
+                                         mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
+                                         mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
+                                         mah:TextBoxHelper.SelectAllOnFocus="{TemplateBinding mah:TextBoxHelper.SelectAllOnFocus}"
+                                         mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
+                                         mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                         mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                         mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                         mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
+                                         Background="{x:Null}"
+                                         BorderThickness="0"
+                                         ContextMenu="{TemplateBinding ContextMenu}"
+                                         FocusVisualStyle="{x:Null}"
+                                         Focusable="{TemplateBinding Focusable}"
+                                         FontFamily="{TemplateBinding FontFamily}"
+                                         FontSize="{TemplateBinding FontSize}"
+                                         Foreground="{TemplateBinding Foreground}"
+                                         HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                         IsReadOnly="{TemplateBinding IsReadOnly}"
+                                         IsTabStop="{TemplateBinding IsTabStop}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         TabIndex="{TemplateBinding TabIndex}"
+                                         VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                    <TextBox.Resources>
+                                        <!--
+                                            The frame belongs to the control around this box, so the caret must not hand
+                                            it one of its own, and neither must the edge a WinUI box draws along its
+                                            bottom: that box ends where the number ends and the buttons begin, so its
+                                            edge would stop there while the one below it runs the whole width.
+                                        -->
+                                        <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
+                                        <Thickness x:Key="TextControlBottomEdgeThemeThickness">0</Thickness>
+                                    </TextBox.Resources>
+                                </TextBox>
 
-                            <TextBox x:Name="PART_TextBox"
-                                     Grid.Column="0"
-                                     MinWidth="20"
-                                     MinHeight="0"
-                                     Margin="0"
-                                     Padding="{TemplateBinding Padding}"
-                                     HorizontalAlignment="Stretch"
-                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                     mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
-                                     mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
-                                     mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                     mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                     mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                     mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                     mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                     mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                     mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                     mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                     mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                     mah:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}"
-                                     mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
-                                     mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
-                                     mah:TextBoxHelper.SelectAllOnFocus="{TemplateBinding mah:TextBoxHelper.SelectAllOnFocus}"
-                                     mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
-                                     mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
-                                     mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
-                                     mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
-                                     mah:TextBoxHelper.WatermarkWrapping="{TemplateBinding mah:TextBoxHelper.WatermarkWrapping}"
-                                     Background="{x:Null}"
-                                     BorderThickness="0"
-                                     ContextMenu="{TemplateBinding ContextMenu}"
-                                     FocusVisualStyle="{x:Null}"
-                                     Focusable="{TemplateBinding Focusable}"
-                                     FontFamily="{TemplateBinding FontFamily}"
-                                     FontSize="{TemplateBinding FontSize}"
-                                     Foreground="{TemplateBinding Foreground}"
-                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                     IsReadOnly="{TemplateBinding IsReadOnly}"
-                                     IsTabStop="{TemplateBinding IsTabStop}"
-                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     TabIndex="{TemplateBinding TabIndex}"
-                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                                <TextBox.Resources>
-                                    <!--  the frame belongs to the control around this box, so the caret must not hand it one of its own  -->
-                                    <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
-                                </TextBox.Resources>
-                            </TextBox>
+                                <RepeatButton x:Name="PART_NumericUp"
+                                              Grid.Column="1"
+                                              Width="{TemplateBinding UpDownButtonsWidth}"
+                                              Margin="0"
+                                              mah:ControlsHelper.CornerRadius="0"
+                                              BorderThickness="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}"
+                                              Content="{TemplateBinding ButtonUpContent}"
+                                              ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
+                                              Delay="{TemplateBinding Delay}"
+                                              Focusable="{TemplateBinding UpDownButtonsFocusable}"
+                                              Style="{TemplateBinding SpinButtonStyle}" />
 
-                            <RepeatButton x:Name="PART_NumericUp"
-                                          Grid.Column="1"
-                                          Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="0"
-                                          mah:ControlsHelper.CornerRadius="0"
-                                          BorderThickness="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}"
-                                          Content="{TemplateBinding ButtonUpContent}"
-                                          ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
-                                          ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
-                                          Delay="{TemplateBinding Delay}"
-                                          Focusable="{TemplateBinding UpDownButtonsFocusable}"
-                                          Style="{TemplateBinding SpinButtonStyle}" />
-
-                            <RepeatButton x:Name="PART_NumericDown"
-                                          Grid.Column="2"
-                                          Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="0"
-                                          mah:ControlsHelper.CornerRadius="0"
-                                          BorderThickness="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}"
-                                          Content="{TemplateBinding ButtonDownContent}"
-                                          ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
-                                          ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
-                                          Delay="{TemplateBinding Delay}"
-                                          Focusable="{TemplateBinding UpDownButtonsFocusable}"
-                                          Style="{TemplateBinding SpinButtonStyle}" />
-                        </Grid>
+                                <RepeatButton x:Name="PART_NumericDown"
+                                              Grid.Column="2"
+                                              Width="{TemplateBinding UpDownButtonsWidth}"
+                                              Margin="0"
+                                              mah:ControlsHelper.CornerRadius="0"
+                                              BorderThickness="{DynamicResource NumericUpDownSpinButtonRightBorderThickness}"
+                                              Content="{TemplateBinding ButtonDownContent}"
+                                              ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
+                                              Delay="{TemplateBinding Delay}"
+                                              Focusable="{TemplateBinding UpDownButtonsFocusable}"
+                                              Style="{TemplateBinding SpinButtonStyle}" />
+                            </Grid>
+                        </Border>
 
                         <Border x:Name="FocusBorder"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 BorderThickness="0"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                        <!--
+                            The edge a WinUI control draws a little stronger, and the accent while
+                            the caret is in it. It is a frame of its own carrying nothing but that
+                            edge, so that it follows the corners of the one behind it and is the
+                            same two units on a box of any height. The sets that draw no such edge
+                            leave its thickness at nought and it is not there at all.
+                        -->
+                        <Border x:Name="BottomEdge"
+                                BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                                BorderThickness="{DynamicResource NumericUpDownBottomEdgeThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                IsHitTestVisible="False"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                         <Border x:Name="DisabledVisualElement"
@@ -320,6 +351,7 @@
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger SourceName="PART_TextBox" Property="IsSelectionActive" Value="true">
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FocusBorder" Property="BorderThickness" Value="{DynamicResource NumericUpDownSelectedBorderThickness}" />
                         </Trigger>
@@ -347,73 +379,232 @@
         <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="Right" />
     </Style>
 
+    <!--
+        The spin buttons of the two Windows sets. They stand apart from the Metro one rather than on
+        it, because that one turns its chevron down to half while nothing is over it and fills itself
+        with the accent while it is held, and neither Windows box does either of those. What answers
+        the pointer here is the cell the chevron stands in, filled the way a row of a list is filled.
+        Neither button needs a clip: the box gives them no corners of their own, and the grid they
+        stand in is already cut to the ones the frame leaves over.
+    -->
+    <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin.Win10" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackground}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <!--  the chevron is the number beside it, and turns with it once the caret has made the box white  -->
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground, Mode=OneWay}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="ButtonLayoutGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackgroundPressed}" />
+                        </Trigger>
+                        <!--
+                            A button that can count no further is grey rather than gone: the value
+                            has reached its minimum or its maximum, and a chevron that disappears
+                            there leaves a gap where the reader expects a pair.
+                        -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.SpinButtonForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--
+        And the WinUI one, which parts company over the chevron: there it is the quieter of the two
+        text colours at rest and the full one under the pointer, the way the delete button of that
+        text box is drawn, rather than the number it steps.
+    -->
+    <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.NumericUpDown.Spin.Win10}"
+           TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="ButtonLayoutGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackgroundPointerOver}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackgroundPressed}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundPressed}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        The Windows 10 box, which is the text box of that set with a pair of buttons standing in it.
+        It is that box down to the detail: the same fill, the same two units of frame, the same
+        padding and the same delete button, a frame that turns into the accent and a fill that turns
+        white once the caret is in. The chevrons are the ones the list of a combo box hangs behind,
+        since the two controls sit next to each other in a form and UWP draws them alike. A box that
+        is switched off says so with its colours rather than with the veil the Metro box draws over
+        itself.
+    -->
     <Style x:Key="MahApps.Styles.NumericUpDown.Win10"
            BasedOn="{StaticResource MahApps.Styles.NumericUpDown}"
            TargetType="{x:Type mah:NumericUpDownBase}">
         <Style.Resources>
             <Thickness x:Key="NumericUpDownSelectedBorderThickness">2,2,2,2</Thickness>
-            <Thickness x:Key="NumericUpDownSpinButtonRightBorderThickness">1,0,0,0</Thickness>
-            <Thickness x:Key="NumericUpDownSpinButtonLeftBorderThickness">0,0,1,0</Thickness>
+            <!--  the box the number is typed into is the one of this set, even where a single control wears the style alone  -->
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="{x:Type TextBox}" />
         </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
         <Setter Property="ButtonDownContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <mah:PathIcon Width="14"
-                                  Height="14"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="M 18.935547 4.560547 L 19.814453 5.439453 L 10 15.253906 L 0.185547 5.439453 L 1.064453 4.560547 L 10 13.496094 Z" />
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="&#xE70D;"
+                                  UseLayoutRounding="False" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="ButtonUpContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <mah:PathIcon Width="14"
-                                  Height="14"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="M 19.091797 14.970703 L 10 5.888672 L 0.908203 14.970703 L 0.029297 14.091797 L 10 4.111328 L 19.970703 14.091797 Z" />
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="&#xE70E;"
+                                  UseLayoutRounding="False" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="10 5" />
-        <Setter Property="SpinButtonStyle">
-            <Setter.Value>
-                <Style BasedOn="{StaticResource MahApps.Styles.Button.NumericUpDown.Spin}" TargetType="{x:Type ButtonBase}">
-                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.Foreground}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="10 6 6 5" />
+        <Setter Property="SpinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.NumericUpDown.Spin.Win10}" />
         <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="UpDownButtonsFocusable" Value="False" />
         <Setter Property="UpDownButtonsWidth" Value="34" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="2" />
-        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BorderBrushDisabled}" />
+        <!--  no veil over a box that is off: this set says it with the colours, the way its text box does  -->
+        <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BorderBrushPointerOver}" />
+        <Setter Property="mah:TextBoxHelper.ButtonContent" Value="&#xE10A;" />
         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <mah:PathIcon Width="12"
-                                  Height="12"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Data="F1 M 11.416016 10 L 20 18.583984 L 18.583984 20 L 10 11.416016 L 1.416016 20 L 0 18.583984 L 8.583984 10 L 0 1.416016 L 1.416016 0 L 10 8.583984 L 18.583984 0 L 20 1.416016 Z" />
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="{Binding}"
+                                  UseLayoutRounding="False" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="34" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.Win10}" />
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="30" />
+        <!--  the number stands on the left here, and what stands in for it while there is none belongs there too  -->
+        <Setter Property="mah:TextBoxHelper.WatermarkAlignment" Value="Left" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BackgroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.ForegroundFocused}" />
+            </Trigger>
+            <!--
+                A box that is switched off looks switched off, even when the caret was in it when it
+                happened: of two triggers that set the same thing, the later one wins, and the focus
+                stays inside a control that has just been disabled.
+            -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.BorderBrushDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
+
+    <!--
+        WinUI on top of it, the way the text box has it: rounded corners and a border a touch stronger
+        along the bottom edge, which turns into the accent while the caret is in. That edge is a frame
+        of its own two units thick either way, so the box stays as tall as it was and nothing under it
+        moves, and the frame the caret used to draw round the whole box is gone with it.
+    -->
+    <Style x:Key="MahApps.Styles.NumericUpDown.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}"
+           TargetType="{x:Type mah:NumericUpDownBase}">
+        <Style.Resources>
+            <Thickness x:Key="NumericUpDownSelectedBorderThickness">0,0,0,0</Thickness>
+            <Thickness x:Key="NumericUpDownBottomEdgeThickness">0,0,0,2</Thickness>
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="{x:Type TextBox}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1 1 1 2" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.Foreground}" />
+        <Setter Property="SpinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.NumericUpDown.Spin.WinUI}" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottom}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushDisabled}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottomFocused}" />
+        <!--  the frame of a WinUI box says nothing about the pointer, which the fill behind it does instead  -->
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrush}" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BackgroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.ForegroundFocused}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.ForegroundDisabled}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

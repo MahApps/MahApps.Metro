@@ -494,7 +494,7 @@
         <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottom}" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />

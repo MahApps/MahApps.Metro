@@ -31,6 +31,22 @@ namespace MahApps.Metro.Gallery.Pages
                                         NumericUpDown.IntervalProperty,
                                         NumericUpDown.SnapToMultipleOfIntervalProperty);
             this.FormattedExample.Watch("Attached", this.Formatted, TextBoxHelper.ClearTextButtonProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    NumericUpDown.ValueProperty,
+                                    NumericUpDown.HideUpDownButtonsProperty,
+                                    NumericUpDown.ButtonsAlignmentProperty,
+                                    NumericUpDown.SwitchUpDownButtonsProperty,
+                                    IsEnabledProperty);
+            this.Win10Example.Watch("Attached", this.Win10, TextBoxHelper.WatermarkProperty, TextBoxHelper.ClearTextButtonProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    NumericUpDown.ValueProperty,
+                                    NumericUpDown.HideUpDownButtonsProperty,
+                                    NumericUpDown.ButtonsAlignmentProperty,
+                                    NumericUpDown.SwitchUpDownButtonsProperty,
+                                    IsEnabledProperty);
+            this.WinUIExample.Watch("Attached", this.WinUI, TextBoxHelper.WatermarkProperty, TextBoxHelper.ClearTextButtonProperty);
         }
     }
 }

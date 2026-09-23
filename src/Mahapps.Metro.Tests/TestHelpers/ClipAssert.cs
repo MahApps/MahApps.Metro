@@ -111,5 +111,23 @@ namespace MahApps.Metro.Tests.TestHelpers
                 timer.Stop();
             }
         }
+
+        /// <summary>
+        /// Lets the dispatcher work until the given thing is true, or until it has waited long
+        /// enough to say it never will be. A storyboard runs on a clock rather than on the queue,
+        /// and how far it has come by a given moment is a question about the machine it runs on
+        /// rather than about the code, so a test waits for the end of it instead of for a while.
+        /// </summary>
+        public static void PumpUntil(Func<bool> settled, int timeoutMilliseconds = 5000)
+        {
+            var until = DateTime.UtcNow.AddMilliseconds(timeoutMilliseconds);
+
+            while (!settled() && DateTime.UtcNow < until)
+            {
+                Pump(20);
+            }
+
+            Pump();
+        }
     }
 }

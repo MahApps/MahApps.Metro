@@ -99,16 +99,17 @@ namespace MahApps.Metro.Tests.Tests
         /// <summary>
         /// A test has no pointer to move, so it writes the state a pointer would leave behind where
         /// WPF keeps it. A trigger reading IsMouseOver cannot tell the difference, and the storyboard
-        /// it starts wants a clock rather than an empty queue.
+        /// it starts wants a clock rather than an empty queue. How far that clock has come after a
+        /// given while is a question about the machine, so this waits for the end of it instead.
         /// </summary>
-        private static void PointAt(ScrollViewer viewer)
+        private static void PointAt(HamburgerMenu menu)
         {
             var key = typeof(UIElement).GetField("IsMouseOverPropertyKey", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as DependencyPropertyKey;
             Assert.That(key, Is.Not.Null, "WPF should keep IsMouseOver behind a read-only property key");
 
-            viewer.SetValue(key!, true);
+            ViewerOf(menu).SetValue(key!, true);
             ClipAssert.Pump();
-            ClipAssert.Pump(400);
+            ClipAssert.PumpUntil(() => BarOf(menu).Opacity >= 1d && IndicatorOf(menu).Opacity <= 0d);
         }
 
         [Test]
@@ -221,7 +222,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var menu = this.ShowMenu();
 
-            PointAt(ViewerOf(menu));
+            PointAt(menu);
 
             Assert.That(BarOf(menu).Opacity, Is.EqualTo(1d).Within(0.01));
             Assert.That(IndicatorOf(menu).Opacity, Is.EqualTo(0d).Within(0.01), "the two say the same thing, and only one of them at a time");
@@ -237,7 +238,7 @@ namespace MahApps.Metro.Tests.Tests
             menu.UpdateLayout();
             ClipAssert.Pump();
 
-            PointAt(ViewerOf(menu));
+            PointAt(menu);
 
             var bar = BarOf(menu);
             Assert.That(bar.Opacity, Is.EqualTo(1d).Within(0.01), "the pointer opens the bar here too");

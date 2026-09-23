@@ -583,6 +583,11 @@
     -->
 
     <system:Double x:Key="MahApps.Sizes.CalendarDayButton.WinUI">40</system:Double>
+    <!--
+        A day cell is a pill rather than a rounded box, so twenty is its own number. The month and
+        year buttons are rounded the way any other WinUI control is, and the calendar around them
+        the way anything that hangs over the page is.
+    -->
     <CornerRadius x:Key="MahApps.CornerRadius.CalendarDayButton.WinUI">20</CornerRadius>
     <CornerRadius x:Key="MahApps.CornerRadius.CalendarButton.WinUI">4</CornerRadius>
     <CornerRadius x:Key="MahApps.CornerRadius.Calendar.WinUI">8</CornerRadius>

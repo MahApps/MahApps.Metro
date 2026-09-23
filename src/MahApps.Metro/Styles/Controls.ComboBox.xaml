@@ -1030,7 +1030,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
         <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForegroundDisabled}" />
@@ -1131,9 +1131,9 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.WinUI}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBorderBrush}" />
-        <Setter Property="mah:ComboBoxHelper.DropDownCornerRadius" Value="8" />
+        <Setter Property="mah:ComboBoxHelper.DropDownCornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushBottom}" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
