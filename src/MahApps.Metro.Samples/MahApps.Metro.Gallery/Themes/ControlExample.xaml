@@ -128,10 +128,12 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
+                                <!--  the card rounds itself to whole pixels, the sample in it does not: it should stand the way it would in any other window  -->
                                 <ContentPresenter Grid.Column="0"
                                                   Margin="16 4 16 14"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  UseLayoutRounding="False" />
 
                                 <Border x:Name="OptionsPane"
                                         Grid.Column="1"
@@ -147,7 +149,7 @@
                                             stack panel measures its children with all the room they
                                             ask for and the viewer then never has anything to scroll.
                                         -->
-                                        <ScrollViewer MaxHeight="180" VerticalScrollBarVisibility="Auto">
+                                        <ScrollViewer MaxHeight="180" VerticalScrollBarVisibility="Auto" Padding="0 0 8 0">
                                             <ItemsControl ItemsSource="{Binding PropertyGroups, RelativeSource={RelativeSource TemplatedParent}}">
                                                 <ItemsControl.ItemTemplateSelector>
                                                     <controls:ExamplePropertyTemplateSelector />
@@ -188,6 +190,7 @@
                                       mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                       Background="{DynamicResource MahApps.Brushes.Gray10}"
                                       BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                      BorderThickness="0 1 0 0"
                                       Header="XAML"
                                       IsExpanded="False">
                                 <Grid>
@@ -223,6 +226,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--  a card that ends on a fraction of a pixel leaves a sliver of itself under the grey of the code block  -->
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 

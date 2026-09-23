@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -85,6 +86,29 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(indicator, Is.Not.Null, "the menu items should be in a ScrollViewer with a panning indicator");
 
             return indicator!;
+        }
+
+        private static ScrollViewer ViewerOf(HamburgerMenu menu)
+        {
+            var viewer = ListOf(menu, "ButtonsListView").FindChild<ScrollViewer>();
+            Assert.That(viewer, Is.Not.Null, "the menu items should be in a ScrollViewer");
+
+            return viewer!;
+        }
+
+        /// <summary>
+        /// A test has no pointer to move, so it writes the state a pointer would leave behind where
+        /// WPF keeps it. A trigger reading IsMouseOver cannot tell the difference, and the storyboard
+        /// it starts wants a clock rather than an empty queue.
+        /// </summary>
+        private static void PointAt(ScrollViewer viewer)
+        {
+            var key = typeof(UIElement).GetField("IsMouseOverPropertyKey", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null) as DependencyPropertyKey;
+            Assert.That(key, Is.Not.Null, "WPF should keep IsMouseOver behind a read-only property key");
+
+            viewer.SetValue(key!, true);
+            ClipAssert.Pump();
+            ClipAssert.Pump(400);
         }
 
         [Test]
@@ -189,6 +213,38 @@ namespace MahApps.Metro.Tests.Tests
 
             var right = IndicatorOf(menu).TransformToAncestor(menu).Transform(new Point(IndicatorOf(menu).ActualWidth, 0)).X;
             Assert.That(right, Is.LessThanOrEqualTo(menu.CompactPaneLength), "and the strip is all there is left of the pane to draw on");
+        }
+
+        [Test]
+        [Description("An open pane has room for the bar, so the line gives way to it once the pointer is there.")]
+        public void AnOpenPaneTradesItsLineForTheBar()
+        {
+            var menu = this.ShowMenu();
+
+            PointAt(ViewerOf(menu));
+
+            Assert.That(BarOf(menu).Opacity, Is.EqualTo(1d).Within(0.01));
+            Assert.That(IndicatorOf(menu).Opacity, Is.EqualTo(0d).Within(0.01), "the two say the same thing, and only one of them at a time");
+        }
+
+        [Test]
+        [Description("A closed pane trades them as well, and the bar it opens stands in the strip rather than at the edge of the items the clip takes away.")]
+        public void AClosedPaneOpensItsBarInTheStrip()
+        {
+            var menu = this.ShowMenu();
+
+            menu.IsPaneOpen = false;
+            menu.UpdateLayout();
+            ClipAssert.Pump();
+
+            PointAt(ViewerOf(menu));
+
+            var bar = BarOf(menu);
+            Assert.That(bar.Opacity, Is.EqualTo(1d).Within(0.01), "the pointer opens the bar here too");
+            Assert.That(IndicatorOf(menu).Opacity, Is.EqualTo(0d).Within(0.01), "and the line it stands for steps aside");
+
+            var right = bar.TransformToAncestor(menu).Transform(new Point(bar.ActualWidth, 0)).X;
+            Assert.That(right, Is.LessThanOrEqualTo(menu.CompactPaneLength), "the strip is all there is left of the pane to draw on");
         }
 
         [Test]

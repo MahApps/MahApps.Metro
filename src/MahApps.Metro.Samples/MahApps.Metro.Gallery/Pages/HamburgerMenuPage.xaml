@@ -15,20 +15,23 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="MenuExample"
-                                     Description="The navigation down the side of this gallery is one of these. It shows its items next to the content, or narrowed down to their icons, or over them, which is what DisplayMode decides. There are more items in this one than fit, so its scroll bar has something to do: on Auto it waits for the pointer, on Visible it stays."
+                                     Description="The navigation down the side of this gallery is one of these. It shows its items next to the content, or narrowed down to their icons, or over them, which is what DisplayMode decides. There are more items in this one than fit, so its scroll bar has something to do: on Auto it waits for the pointer, on Visible it stays. The options at the foot of the pane stay put while the list above them scrolls, and picking one of them lets go of whatever was picked in the list."
                                      Header="A navigation down the side">
                 <smtx:XamlDisplay UniqueKey="HamburgerMenu.Navigation">
                     <mah:HamburgerMenu x:Name="Menu"
                                        Width="480"
-                                       Height="260"
+                                       Height="320"
                                        HorizontalAlignment="Left"
-                                       Content="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Tag}"
                                        DisplayMode="CompactInline"
                                        IsPaneOpen="True"
+                                       ItemInvoked="OnItemInvoked"
+                                       ItemTemplate="{DynamicResource MenuItem}"
                                        OpenPaneLength="160"
+                                       OptionsItemTemplate="{DynamicResource MenuItem}"
                                        SelectedIndex="0">
-                        <mah:HamburgerMenu.ItemTemplate>
-                            <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                        <!--  one template for both lists, since an option is a row of the same kind as an item  -->
+                        <mah:HamburgerMenu.Resources>
+                            <DataTemplate x:Key="MenuItem" DataType="{x:Type mah:HamburgerMenuIconItem}">
                                 <Grid Height="40">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
@@ -45,7 +48,7 @@
                                                Text="{Binding Label}" />
                                 </Grid>
                             </DataTemplate>
-                        </mah:HamburgerMenu.ItemTemplate>
+                        </mah:HamburgerMenu.Resources>
                         <mah:HamburgerMenu.ItemsSource>
                             <mah:HamburgerMenuItemCollection>
                                 <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Home, Width=18, Height=18}"
@@ -64,11 +67,27 @@
                                                            Label="Files"
                                                            Tag="There are more items here than room for them, which is what the scroll bar is about" />
                                 <mah:HamburgerMenuSeparatorItem />
-                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}"
-                                                           Label="Settings"
-                                                           Tag="Down at the bottom of the list" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=ImageOutline, Width=18, Height=18}"
+                                                           Label="Photos"
+                                                           Tag="Number six, and the list keeps going" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=MusicNoteOutline, Width=18, Height=18}"
+                                                           Label="Music"
+                                                           Tag="Number seven" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=DownloadOutline, Width=18, Height=18}"
+                                                           Label="Downloads"
+                                                           Tag="The last of them, and the two options below stayed where they were while you scrolled down here" />
                             </mah:HamburgerMenuItemCollection>
                         </mah:HamburgerMenu.ItemsSource>
+                        <mah:HamburgerMenu.OptionsItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}"
+                                                           Label="Settings"
+                                                           Tag="An option is what belongs to the menu rather than to what it navigates: the settings, the account, the help" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=InformationOutline, Width=18, Height=18}"
+                                                           Label="About"
+                                                           Tag="OptionsVisibility takes both of them away, and OptionsItemsSource is where they come from" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.OptionsItemsSource>
                     </mah:HamburgerMenu>
                 </smtx:XamlDisplay>
             </controls:ControlExample>

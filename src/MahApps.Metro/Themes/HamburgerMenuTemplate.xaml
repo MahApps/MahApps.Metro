@@ -86,28 +86,29 @@
                         <!--
                             What the menu says while nobody points at it: two units at the edge of
                             the items, as long and as far down as the thumb of the bar would be.
-                            They fit a closed pane as well, where the bar itself would lie on the
-                            icons.
+                            They fit a closed pane as well, where the bar the pointer opens lies
+                            over the icons for as long as it is there.
                             
                             A Track hides itself while there is nothing to scroll, which is the
                             moment the indicator has nothing to say, so it is left to do that
                             rather than given a Visibility of its own.
                             
-                            The Grid around it is what a closed pane leaves of the menu. The pane
-                            keeps its open length and is clipped to the compact strip, so a line at
-                            the edge of the items would be cut away along with them. The trigger
-                            below gives the Grid the width of the strip instead.
+                            The Grid around the two is what a closed pane leaves of the menu. The
+                            pane keeps its open length and is clipped to the compact strip, so a
+                            line or a bar at the edge of the items is cut away along with them. The
+                            trigger below gives the Grid the width of the strip instead, and what
+                            the pointer brings in stands where what it takes away stood.
                         -->
-                        <Grid x:Name="IndicatorArea"
+                        <Grid x:Name="ScrollArea"
                               Grid.Row="0"
                               Grid.Column="0"
-                              Grid.ColumnSpan="2"
-                              IsHitTestVisible="False">
+                              Grid.ColumnSpan="2">
                             <Track x:Name="PanningIndicator"
                                    Width="{DynamicResource MahApps.Sizes.ScrollBar.PanningIndicator}"
                                    Margin="{DynamicResource MahApps.Thickness.ScrollBar.PanningIndicator}"
                                    HorizontalAlignment="Right"
                                    IsDirectionReversed="True"
+                                   IsHitTestVisible="False"
                                    Maximum="{TemplateBinding ScrollableHeight}"
                                    Minimum="0"
                                    Orientation="Vertical"
@@ -117,20 +118,17 @@
                                     <Thumb Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.PanningIndicator}" />
                                 </Track.Thumb>
                             </Track>
+                            <ScrollBar x:Name="PART_VerticalScrollBar"
+                                       HorizontalAlignment="Right"
+                                       AutomationProperties.AutomationId="VerticalScrollBar"
+                                       Cursor="Arrow"
+                                       Maximum="{TemplateBinding ScrollableHeight}"
+                                       Minimum="0"
+                                       Opacity="0"
+                                       ViewportSize="{TemplateBinding ViewportHeight}"
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Grid>
-                        <ScrollBar x:Name="PART_VerticalScrollBar"
-                                   Grid.Row="0"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                   HorizontalAlignment="Right"
-                                   AutomationProperties.AutomationId="VerticalScrollBar"
-                                   Cursor="Arrow"
-                                   Maximum="{TemplateBinding ScrollableHeight}"
-                                   Minimum="0"
-                                   Opacity="0"
-                                   ViewportSize="{TemplateBinding ViewportHeight}"
-                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                    Grid.Row="0"
                                    Grid.RowSpan="2"
@@ -155,14 +153,14 @@
                             <Setter TargetName="leftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="rightColumn" Property="Width" Value="*" />
                         </Trigger>
-                        <!--  a closed pane is a strip of icons as wide as the compact length, and the indicator belongs at the edge of that rather than at the edge of the items behind it  -->
+                        <!--  a closed pane is a strip of icons as wide as the compact length, and the line and the bar belong at the edge of that rather than at the edge of the items behind it  -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=IsPaneOpen}" Value="False" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=PanePlacement}" Value="Left" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="IndicatorArea" Property="HorizontalAlignment" Value="Left" />
-                            <Setter TargetName="IndicatorArea" Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=CompactPaneLength}" />
+                            <Setter TargetName="ScrollArea" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="ScrollArea" Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:SplitView}}, Path=CompactPaneLength}" />
                         </MultiDataTrigger>
                         <!--  a ScrollBar told to be Visible stays where the reader can see it, rather than waiting for the pointer, and there is nothing left for the indicator to say  -->
                         <Trigger Property="VerticalScrollBarVisibility" Value="Visible">
