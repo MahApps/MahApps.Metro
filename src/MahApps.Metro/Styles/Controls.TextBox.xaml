@@ -707,6 +707,19 @@
                                         Visibility="Visible" />
                             </Grid>
                         </Border>
+
+                        <!--
+                            The edge WinUI draws a little stronger, and the accent while the box has
+                            the caret. It is a frame of its own carrying nothing but that edge, so
+                            that it follows the corners of the one behind it and is the same two
+                            units on a box of any height.
+                        -->
+                        <Border x:Name="BottomEdge"
+                                BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                                BorderThickness="0 0 0 2"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                IsHitTestVisible="False"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
@@ -777,8 +790,8 @@
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundFocused}" />
                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
 
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ButtonForeground}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextBlock.FloatingMessage}" />
@@ -794,15 +807,17 @@
                             <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundDisabled}" />
                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
                             <Setter TargetName="PART_Message" Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottom}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
-        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
     </Style>

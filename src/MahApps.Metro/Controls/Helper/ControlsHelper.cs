@@ -265,6 +265,46 @@ namespace MahApps.Metro.Controls
             obj.SetValue(DisabledBorderBrushProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="GetBottomBorderBrush(DependencyObject)"/> attached property.</summary>
+        /// <remarks>
+        /// The WinUI look draws the bottom edge of a text control a little stronger than the rest of
+        /// its frame, and the accent while the control has the caret. That edge is a border of its
+        /// own in the template, so the brush for it is a knob of its own as well, and a set that
+        /// draws no such edge leaves it unset.
+        /// </remarks>
+        public static readonly DependencyProperty BottomBorderBrushProperty
+            = DependencyProperty.RegisterAttached(
+                "BottomBorderBrush",
+                typeof(Brush),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets the brush used to draw the bottom edge of the border.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        public static Brush? GetBottomBorderBrush(DependencyObject obj)
+        {
+            return (Brush?)obj.GetValue(BottomBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the bottom edge of the border.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        public static void SetBottomBorderBrush(DependencyObject obj, Brush? value)
+        {
+            obj.SetValue(BottomBorderBrushProperty, value);
+        }
+
         /// <summary>
         /// DependencyProperty for <see cref="CornerRadius" /> property.
         /// </summary>

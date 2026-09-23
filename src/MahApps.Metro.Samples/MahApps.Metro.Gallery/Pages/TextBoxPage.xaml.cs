@@ -57,6 +57,20 @@ namespace MahApps.Metro.Gallery.Pages
                                    TextBoxHelper.ClearTextButtonProperty,
                                    TextBoxHelper.ButtonsAlignmentProperty,
                                    ControlsHelper.CornerRadiusProperty);
+
+            this.RichWin10Example.Watch(this.RichWin10, IsEnabledProperty, PaddingProperty);
+            this.RichWin10Example.Watch("Attached",
+                                        this.RichWin10,
+                                        TextBoxHelper.WatermarkProperty,
+                                        TextBoxHelper.ClearTextButtonProperty,
+                                        ControlsHelper.CornerRadiusProperty);
+
+            this.RichWinUIExample.Watch(this.RichWinUI, IsEnabledProperty, PaddingProperty);
+            this.RichWinUIExample.Watch("Attached",
+                                        this.RichWinUI,
+                                        TextBoxHelper.WatermarkProperty,
+                                        TextBoxHelper.ClearTextButtonProperty,
+                                        ControlsHelper.CornerRadiusProperty);
         }
     }
 }
