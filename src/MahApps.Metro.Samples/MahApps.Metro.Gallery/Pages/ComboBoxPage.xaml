@@ -58,6 +58,36 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The box in the Windows 10 look, which is the text box of that set with a list behind a chevron: the same fill, the same two units of frame, the same padding and the same delete button, a frame that turns into the accent once the caret is in, and rows that say which one is picked with the accent turned right down behind them. Switched off it says so with its colours rather than with a veil over it."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ComboBox.Win10">
+                    <ComboBox xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+                              x:Name="Win10"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              DisplayMemberPath="Title"
+                              ItemsSource="{x:Static core:GalleryPages.All}"
+                              SelectedIndex="0"
+                              Style="{DynamicResource MahApps.Styles.ComboBox.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: rounded corners, a border a touch stronger along its bottom edge that turns into the accent there while the caret is in, and a list of rounded tiles where the row that is picked carries the accent as a short bar along its left edge. That edge is a border of its own, two units thick either way, so the box stays as tall as it was and nothing under it moves."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="ComboBox.WinUI">
+                    <ComboBox xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+                              x:Name="WinUI"
+                              Width="280"
+                              HorizontalAlignment="Left"
+                              DisplayMemberPath="Title"
+                              ItemsSource="{x:Static core:GalleryPages.All}"
+                              SelectedIndex="0"
+                              Style="{DynamicResource MahApps.Styles.ComboBox.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

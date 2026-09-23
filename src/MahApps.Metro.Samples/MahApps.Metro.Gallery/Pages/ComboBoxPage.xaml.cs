@@ -47,6 +47,26 @@ namespace MahApps.Metro.Gallery.Pages
                                    Selector.SelectedIndexProperty,
                                    ComboBox.MaxDropDownHeightProperty);
             this.LongExample.Watch("Layout", this.LongList, WidthProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    Selector.SelectedIndexProperty,
+                                    ComboBox.IsEditableProperty,
+                                    IsEnabledProperty);
+            this.Win10Example.Watch("Attached",
+                                    this.Win10,
+                                    TextBoxHelper.WatermarkProperty,
+                                    TextBoxHelper.ClearTextButtonProperty,
+                                    ControlsHelper.CornerRadiusProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    Selector.SelectedIndexProperty,
+                                    ComboBox.IsEditableProperty,
+                                    IsEnabledProperty);
+            this.WinUIExample.Watch("Attached",
+                                    this.WinUI,
+                                    TextBoxHelper.WatermarkProperty,
+                                    TextBoxHelper.ClearTextButtonProperty,
+                                    ControlsHelper.CornerRadiusProperty);
         }
     }
 }

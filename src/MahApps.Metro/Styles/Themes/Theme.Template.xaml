@@ -489,6 +489,8 @@
     -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextPrimary" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SubtleFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SubtleFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillTertiary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillTertiary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillQuarternary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillQuarternary}" options:Freeze="True" />
@@ -795,5 +797,58 @@
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStrokePointerOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStrokePressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.CheckGlyphStrokeDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+
+    <!--
+        Resources for MahApps.Styles.ComboBox.Win10. The box wears the chrome of the Windows 10 text
+        box, because the two stand next to each other in a form and UWP draws them alike. What
+        belongs to the box alone is the fill it takes while the list is down and the list itself.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.Background" ResourceKey="MahApps.Brushes.TextControl.Background" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.BackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundDisabled" ResourceKey="MahApps.Brushes.TextControl.BackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrush" ResourceKey="MahApps.Brushes.TextControl.BorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.TextControl.BorderBrushPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrushFocused" ResourceKey="MahApps.Brushes.TextControl.BorderBrushFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrushDisabled" ResourceKey="MahApps.Brushes.TextControl.BorderBrushDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.Foreground" ResourceKey="MahApps.Brushes.TextControl.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.ForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.DropDownBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransientBorder" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ItemForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ItemForegroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMedium" />
+
+    <!--
+        Resources for MahApps.Styles.ComboBox.WinUI. The box wears the chrome of the WinUI text
+        box, since the two stand next to each other in a form and Fluent draws them alike. What
+        belongs to the box alone is the list: rows filled a shade off the flyout rather than with
+        the accent, and the accent kept for the short bar that says which row is picked.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.Background" ResourceKey="MahApps.Brushes.TextControl.WinUI.Background" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.BackgroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.BackgroundDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.BackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.BorderBrushBottom" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrushBottom" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.BorderBrushBottomFocused" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.BorderBrushDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.Foreground" ResourceKey="MahApps.Brushes.TextControl.WinUI.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" />
+    <!--
+        WinUI fills a flyout with in-app acrylic. WPF has no such brush, and what WinUI itself falls
+        back on where acrylic is off is a solid neutral a few levels either side of this one, so the
+        list takes the same chrome the Windows 10 one is filled with.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.DropDownBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.DropDownBorderBrush" ResourceKey="MahApps.Brushes.TextControl.WinUI.DropDownBorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
 
 </ResourceDictionary>

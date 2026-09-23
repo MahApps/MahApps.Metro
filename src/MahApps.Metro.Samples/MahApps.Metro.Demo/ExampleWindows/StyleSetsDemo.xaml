@@ -49,6 +49,14 @@
                                  Text="Konrad Zuse" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ComboBox" />
+                        <ComboBox SelectedIndex="1">
+                            <ComboBoxItem Content="Warp 1" />
+                            <ComboBoxItem Content="Warp 6" />
+                            <ComboBoxItem Content="Warp 9.975" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="DatePicker" />
                         <DatePicker mah:TextBoxHelper.ClearTextButton="True" SelectedDate="{x:Static system:DateTime.Now}" />
                     </StackPanel>
