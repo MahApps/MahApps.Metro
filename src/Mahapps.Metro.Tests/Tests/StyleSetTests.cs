@@ -64,6 +64,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(TextBox), "MahApps.Styles.TextBox.WinUI")]
         [TestCase(WinUI, typeof(PasswordBox), "MahApps.Styles.PasswordBox.WinUI")]
         [TestCase(WinUI, typeof(RichTextBox), "MahApps.Styles.RichTextBox.WinUI")]
+        [TestCase(WinUI, typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.WinUI")]
+        [TestCase(WinUI, typeof(IntegerUpDown), "MahApps.Styles.NumericUpDown.WinUI")]
         [TestCase(WinUI, typeof(Calendar), "MahApps.Styles.Calendar.WinUI")]
         [TestCase(WinUI, typeof(DatePicker), "MahApps.Styles.DatePicker.WinUI")]
         [TestCase(WinUI, typeof(TimePicker), "MahApps.Styles.TimePicker.WinUI")]
@@ -81,7 +83,6 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [TestCase(typeof(Button), "MahApps.Styles.Button.Win10")]
-        [TestCase(typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.Win10")]
         [Description("The WinUI set has no style of its own for these yet and hands down the Windows 10 one rather than the default look.")]
         public void WhatTheWinUISetHasNoStyleForKeepsTheWindows10One(Type target, string expected)
         {

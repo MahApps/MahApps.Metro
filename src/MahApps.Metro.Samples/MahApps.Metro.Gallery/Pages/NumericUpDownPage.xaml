@@ -43,6 +43,39 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The box in the Windows 10 look, which is the text box of that set with a pair of buttons standing in it: the same fill, the same two units of frame, the same padding and the same delete button, and a frame that turns into the accent once the caret is in. The buttons carry no fill of their own until the pointer is over one of them. Switched off it says so with its colours rather than with a veil over it."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="NumericUpDown.Win10">
+                    <mah:NumericUpDown x:Name="Win10"
+                                       Width="220"
+                                       HorizontalAlignment="Left"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Interval="1"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Style="{DynamicResource MahApps.Styles.NumericUpDown.Win10}"
+                                       Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: rounded corners and a border a touch stronger along its bottom edge, which turns into the accent there while the caret is in. That edge is a border of its own, two units thick either way, so the box stays as tall as it was and nothing under it moves. Its chevrons stand in the quieter of the two text colours until the pointer reaches them."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="NumericUpDown.WinUI">
+                    <mah:NumericUpDown x:Name="WinUI"
+                                       Width="220"
+                                       HorizontalAlignment="Left"
+                                       mah:TextBoxHelper.ClearTextButton="True"
+                                       Interval="1"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Style="{DynamicResource MahApps.Styles.NumericUpDown.WinUI}"
+                                       Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -67,6 +67,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "ComboBox", "PART_InnerGrid" },
                 new object[] { "ComboBox Win10", "PART_InnerGrid" },
                 new object[] { "ComboBox WinUI", "PART_InnerGrid" },
+                new object[] { "NumericUpDown", "PART_InnerGrid" },
+                new object[] { "NumericUpDown Win10", "PART_InnerGrid" },
+                new object[] { "NumericUpDown WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -148,6 +151,15 @@ namespace MahApps.Metro.Tests.Tests
 
                 case "ComboBox WinUI":
                     return Filled((ComboBox)Styled(new ComboBox(), "MahApps.Styles.ComboBox.WinUI"));
+
+                case "NumericUpDown":
+                    return new NumericUpDown { Value = 42 };
+
+                case "NumericUpDown Win10":
+                    return Styled(new NumericUpDown { Value = 42 }, "MahApps.Styles.NumericUpDown.Win10");
+
+                case "NumericUpDown WinUI":
+                    return Styled(new NumericUpDown { Value = 42 }, "MahApps.Styles.NumericUpDown.WinUI");
 
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");

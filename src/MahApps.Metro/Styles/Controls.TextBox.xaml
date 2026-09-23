@@ -570,6 +570,12 @@
             -->
             <Thickness x:Key="TextControlBorderThemeThickness">1,1,1,2</Thickness>
             <Thickness x:Key="TextControlBorderThemeThicknessFocused">1,1,1,2</Thickness>
+            <!--
+                How thick that edge is, rather than a number written into the template: a box
+                standing inside another control has no edge of its own to draw, because the one
+                below it belongs to the control around it and runs the whole width.
+            -->
+            <Thickness x:Key="TextControlBottomEdgeThemeThickness">0,0,0,2</Thickness>
             <Thickness x:Key="TextControlThemePadding">10,6,6,5</Thickness>
             <Thickness x:Key="TextControlPlaceholderMargin">0,0,0,0</Thickness>
 
@@ -716,7 +722,7 @@
                         -->
                         <Border x:Name="BottomEdge"
                                 BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
-                                BorderThickness="0 0 0 2"
+                                BorderThickness="{DynamicResource TextControlBottomEdgeThemeThickness}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />

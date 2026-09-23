@@ -851,4 +851,50 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
 
+    <!--
+        Resources for MahApps.Styles.NumericUpDown.Win10. The box is the Windows 10 text box with a
+        pair of buttons standing in it, so everything but those buttons is read from there. A spin
+        button carries no fill at rest and lights the cell it stands in under the pointer, the way a
+        row of a list does, and its chevron takes the colour of the number beside it.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.Background" ResourceKey="MahApps.Brushes.TextControl.Background" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BackgroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.BackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BackgroundFocused" ResourceKey="MahApps.Brushes.TextControl.BackgroundFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BackgroundDisabled" ResourceKey="MahApps.Brushes.TextControl.BackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BorderBrush" ResourceKey="MahApps.Brushes.TextControl.BorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.TextControl.BorderBrushPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BorderBrushFocused" ResourceKey="MahApps.Brushes.TextControl.BorderBrushFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.BorderBrushDisabled" ResourceKey="MahApps.Brushes.TextControl.BorderBrushDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.Foreground" ResourceKey="MahApps.Brushes.TextControl.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.ForegroundFocused" ResourceKey="MahApps.Brushes.TextControl.ForegroundFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.ForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.Win10.SpinButtonForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.ForegroundDisabled" />
+
+    <!--
+        Resources for MahApps.Styles.NumericUpDown.WinUI, the same reading of the WinUI text box.
+        Its spin buttons are the quieter of the two text colours at rest and the full one under the
+        pointer, which is what the delete button of that box does as well.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.Background" ResourceKey="MahApps.Brushes.TextControl.WinUI.Background" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BackgroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BackgroundFocused" ResourceKey="MahApps.Brushes.TextControl.WinUI.BackgroundFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BackgroundDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.BackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottom" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrushBottom" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottomFocused" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.BorderBrushDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.Foreground" ResourceKey="MahApps.Brushes.TextControl.WinUI.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.ForegroundFocused" ResourceKey="MahApps.Brushes.TextControl.WinUI.ForegroundFocused" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackground" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackgroundPressed" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForeground" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonForeground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundPressed" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" />
+
 </ResourceDictionary>
