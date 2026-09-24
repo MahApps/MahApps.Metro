@@ -35,109 +35,173 @@
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
            TargetType="ListBoxItem" />
 
+    <!--
+        The row of a list with a check box in front of it, which is the shape all three sets use,
+        so it is a template of its own and each of them hands it their colours.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.MultiSelectionComboBoxItem.CheckBox" TargetType="ListBoxItem">
+        <Grid x:Name="RootGrid"
+              Background="Transparent"
+              RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
+              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Border x:Name="Background"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+            <Border x:Name="Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <Grid x:Name="ContentGrid">
+                    <Grid.Clip>
+                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                            <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                            <Binding ElementName="Border" Path="CornerRadius" />
+                            <Binding ElementName="Border" Path="BorderThickness" />
+                            <Binding ElementName="Border" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
+                    <CheckBox x:Name="ContentPresenter"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                              mah:CheckBoxHelper.ForegroundIndeterminatePressed="{TemplateBinding Foreground}"
+                              mah:CheckBoxHelper.ForegroundUnchecked="{TemplateBinding Foreground}"
+                              mah:CheckBoxHelper.ForegroundUncheckedPressed="{TemplateBinding Foreground}"
+                              Content="{TemplateBinding Content}"
+                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                              IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsSelected, Mode=TwoWay}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              Style="{DynamicResource MahApps.Styles.CheckBox.MultiSelectionComboBoxItem}" />
+                </Grid>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundChecked" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedPressed" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="Selector.IsSelectionActive" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundChecked" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsSelected" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBorderBrush), Mode=OneWay}" />
+                <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedDisabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.CheckBox"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem}"
            TargetType="ListBoxItem">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
-                    <Grid x:Name="RootGrid"
-                          Background="Transparent"
-                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Border x:Name="Background"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxItem.CheckBox}" />
+    </Style>
 
-                        <Border x:Name="Border"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Grid x:Name="ContentGrid">
-                                <Grid.Clip>
-                                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
-                                        <Binding ElementName="Border" Path="CornerRadius" />
-                                        <Binding ElementName="Border" Path="BorderThickness" />
-                                        <Binding ElementName="Border" Path="Padding" />
-                                    </MultiBinding>
-                                </Grid.Clip>
-                                <CheckBox x:Name="ContentPresenter"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          mah:CheckBoxHelper.ForegroundIndeterminatePressed="{TemplateBinding Foreground}"
-                                          mah:CheckBoxHelper.ForegroundUnchecked="{TemplateBinding Foreground}"
-                                          mah:CheckBoxHelper.ForegroundUncheckedPressed="{TemplateBinding Foreground}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                          IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=IsSelected, Mode=TwoWay}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Style="{DynamicResource MahApps.Styles.CheckBox.MultiSelectionComboBoxItem}" />
-                            </Grid>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundChecked" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedPressed" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundChecked" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
-                        </MultiTrigger>
+    <!--
+        A row of the Windows 10 list, which is the row that set's combo box draws: no fill of its
+        own until the pointer or the pick reaches it, and the accent behind the one that is picked.
+    -->
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem}"
+           TargetType="ListBoxItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForeground}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="11 5 11 7" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundSelected}" />
+        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundDisabled}" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundDisabled}" />
+        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemBackgroundPointerOver}" />
+        <Setter Property="mah:ItemHelper.HoverForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemBackgroundSelectedPointerOver}" />
+        <Setter Property="mah:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundSelected}" />
+        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundSelected}" />
+    </Style>
 
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsSelected" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
-                        </MultiTrigger>
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.CheckBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}"
+           TargetType="ListBoxItem">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxItem.CheckBox}" />
+    </Style>
 
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsSelected" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBorderBrush), Mode=OneWay}" />
-                            <Setter TargetName="ContentPresenter" Property="mah:CheckBoxHelper.ForegroundCheckedDisabled" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
-                        </MultiTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <!--
+        And a row of the WinUI list: a rounded tile with air around it, filled a shade off the
+        flyout rather than with the accent, and the text stays the colour it was when it is picked.
+        There is no accent bar along its left edge the way the combo box has one, because what says
+        which rows are picked here is the box in front of them, which is what a WinUI list with
+        several picks does too.
+    -->
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}"
+           TargetType="ListBoxItem">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
+        <Setter Property="Margin" Value="4 2" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForegroundDisabled}" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForegroundDisabled}" />
+        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemBackgroundPointerOver}" />
+        <Setter Property="mah:ItemHelper.HoverForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelectedPointerOver}" />
+        <Setter Property="mah:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.CheckBox.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.WinUI}"
+           TargetType="ListBoxItem">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxItem.CheckBox}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem" TargetType="ListBoxItem">
@@ -270,159 +334,183 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid x:Name="PART_InnerGrid">
+                                <Grid.Clip>
+                                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                        <Binding ElementName="PART_InnerGrid" Path="ActualWidth" />
+                                        <Binding ElementName="PART_InnerGrid" Path="ActualHeight" />
+                                        <Binding ElementName="Border" Path="CornerRadius" />
+                                        <Binding ElementName="Border" Path="BorderThickness" />
+                                        <Binding ElementName="Border" Path="Padding" />
+                                    </MultiBinding>
+                                </Grid.Clip>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                    <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                                    <ColumnDefinition x:Name="ToggleButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition x:Name="ButtonRow" Height="*" />
+                                </Grid.RowDefinitions>
 
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="TextColumn" Width="*" />
-                                <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
-                                <ColumnDefinition x:Name="ToggleButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition x:Name="ButtonRow" Height="*" />
-                            </Grid.RowDefinitions>
+                                <ToggleButton x:Name="PART_DropDownToggle"
+                                              Grid.RowSpan="2"
+                                              Grid.ColumnSpan="3"
+                                              Margin="0"
+                                              VerticalAlignment="Stretch"
+                                              mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                              mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                              mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                              mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                              mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                              mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                              mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                              mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                              mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                              mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                              mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
+                                              Background="Transparent"
+                                              BorderThickness="0"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              KeyboardNavigation.IsTabStop="False"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              Style="{DynamicResource MahApps.Styles.ToggleButton.MultiSelectionComboBox.DropDown}" />
 
-                            <ToggleButton x:Name="PART_DropDownToggle"
-                                          Grid.RowSpan="2"
-                                          Grid.ColumnSpan="3"
-                                          Margin="0"
-                                          VerticalAlignment="Stretch"
-                                          mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                          mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                          mah:TextBoxHelper.ButtonCommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                          mah:TextBoxHelper.ButtonCommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                          mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                          mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                          mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                          mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                          mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                          mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                          mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
-                                          Background="Transparent"
-                                          BorderThickness="0"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                          KeyboardNavigation.IsTabStop="False"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Style="{DynamicResource MahApps.Styles.ToggleButton.MultiSelectionComboBox.DropDown}" />
+                                <Grid x:Name="ContentSite"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Margin="1 0">
+                                    <ListBox Name="PART_SelectedItemsPresenter"
+                                             Padding="{TemplateBinding Padding}"
+                                             mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer), Mode=OneWay}"
+                                             mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled), Mode=OneWay}"
+                                             mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide), Mode=OneWay}"
+                                             Background="Transparent"
+                                             ItemContainerStyle="{TemplateBinding SelectedItemContainerStyle}"
+                                             ItemContainerStyleSelector="{TemplateBinding SelectedItemContainerStyleSelector}"
+                                             ItemStringFormat="{TemplateBinding SelectedItemStringFormat}"
+                                             ItemTemplate="{TemplateBinding SelectedItemTemplate}"
+                                             ItemTemplateSelector="{TemplateBinding SelectedItemTemplateSelector}"
+                                             ItemsPanel="{TemplateBinding SelectedItemsPanelTemplate}"
+                                             ItemsSource="{TemplateBinding DisplaySelectedItems}"
+                                             ScrollViewer.CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                             ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+                                             ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
 
-                            <Grid x:Name="ContentSite"
-                                  Grid.Row="1"
-                                  Grid.Column="0"
-                                  Margin="1 0">
-                                <ListBox Name="PART_SelectedItemsPresenter"
+                                <TextBox x:Name="PART_EditableTextBox"
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         Margin="0"
                                          Padding="{TemplateBinding Padding}"
-                                         mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.BubbleUpScrollEventToParentScrollviewer), Mode=OneWay}"
-                                         mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled), Mode=OneWay}"
-                                         mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide), Mode=OneWay}"
-                                         Background="Transparent"
-                                         ItemContainerStyle="{TemplateBinding SelectedItemContainerStyle}"
-                                         ItemContainerStyleSelector="{TemplateBinding SelectedItemContainerStyleSelector}"
-                                         ItemStringFormat="{TemplateBinding SelectedItemStringFormat}"
-                                         ItemTemplate="{TemplateBinding SelectedItemTemplate}"
-                                         ItemTemplateSelector="{TemplateBinding SelectedItemTemplateSelector}"
-                                         ItemsPanel="{TemplateBinding SelectedItemsPanelTemplate}"
-                                         ItemsSource="{TemplateBinding DisplaySelectedItems}"
-                                         ScrollViewer.CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                                         mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
+                                         mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                         mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                         mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                         mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                         mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                         mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
+                                         mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
+                                         mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                         mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                         mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                         AcceptsReturn="{TemplateBinding AcceptsReturn}"
+                                         AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
+                                         Background="{x:Null}"
+                                         BorderThickness="0"
+                                         CharacterCasing="{TemplateBinding mah:ComboBoxHelper.CharacterCasing}"
+                                         Focusable="True"
+                                         FontFamily="{TemplateBinding FontFamily}"
+                                         FontSize="{TemplateBinding FontSize}"
+                                         Foreground="{TemplateBinding Foreground}"
+                                         IsReadOnly="{TemplateBinding IsReadOnly}"
+                                         MaxLength="{TemplateBinding mah:ComboBoxHelper.MaxLength}"
                                          ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
                                          ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </Grid>
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         Style="{DynamicResource MahApps.Styles.TextBox.MultiSelectionComboBox.Editable}"
+                                         TextWrapping="{TemplateBinding TextWrapping}"
+                                         Visibility="Collapsed" />
+                                <!--  Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text}"  -->
 
-                            <TextBox x:Name="PART_EditableTextBox"
-                                     Grid.Row="1"
-                                     Grid.Column="0"
-                                     Margin="0"
-                                     Padding="{TemplateBinding Padding}"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                     mah:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
-                                     mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
-                                     mah:TextBoxHelper.ButtonContent="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                     mah:TextBoxHelper.ButtonContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                     mah:TextBoxHelper.ButtonFontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                     mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                     mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                     mah:TextBoxHelper.HasText="{TemplateBinding mah:TextBoxHelper.HasText}"
-                                     mah:TextBoxHelper.UseFloatingWatermark="{TemplateBinding mah:TextBoxHelper.UseFloatingWatermark}"
-                                     mah:TextBoxHelper.Watermark="{TemplateBinding mah:TextBoxHelper.Watermark}"
-                                     mah:TextBoxHelper.WatermarkAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
-                                     mah:TextBoxHelper.WatermarkTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
-                                     AcceptsReturn="{TemplateBinding AcceptsReturn}"
-                                     AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}"
-                                     Background="{x:Null}"
-                                     BorderThickness="0"
-                                     CharacterCasing="{TemplateBinding mah:ComboBoxHelper.CharacterCasing}"
-                                     Focusable="True"
-                                     FontFamily="{TemplateBinding FontFamily}"
-                                     FontSize="{TemplateBinding FontSize}"
-                                     Foreground="{TemplateBinding Foreground}"
-                                     IsReadOnly="{TemplateBinding IsReadOnly}"
-                                     MaxLength="{TemplateBinding mah:ComboBoxHelper.MaxLength}"
-                                     ScrollViewer.HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
-                                     ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
-                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     Style="{DynamicResource MahApps.Styles.TextBox.MultiSelectionComboBox.Editable}"
-                                     TextWrapping="{TemplateBinding TextWrapping}"
-                                     Visibility="Collapsed" />
-                            <!--  Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text}"  -->
-
-                            <TextBlock x:Name="PART_Message"
-                                       Grid.Row="1"
-                                       Grid.Column="0"
-                                       Margin="4 0"
-                                       Padding="{TemplateBinding Padding}"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
-                                       Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
-                                       TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
-                                       TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
-                                       Visibility="Collapsed" />
-
-                            <ContentControl x:Name="PART_FloatingMessageContainer"
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            Margin="4 0"
-                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
-                                <ContentControl.Height>
-                                    <MultiBinding Converter="{mahConverters:MathMultiplyConverter}" FallbackValue="0">
-                                        <Binding ElementName="PART_FloatingMessage"
-                                                 Mode="OneWay"
-                                                 Path="ActualHeight" />
-                                        <Binding ElementName="PART_FloatingMessageContainer"
-                                                 Mode="OneWay"
-                                                 Path="Opacity" />
-                                    </MultiBinding>
-                                </ContentControl.Height>
-                                <TextBlock x:Name="PART_FloatingMessage"
+                                <TextBlock x:Name="PART_Message"
+                                           Grid.Row="1"
+                                           Grid.Column="0"
+                                           Margin="4 0"
+                                           Padding="{TemplateBinding Padding}"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                            Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
-                                           TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}">
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform x:Name="FloatingMessageTransform">
-                                            <TranslateTransform.Y>
-                                                <MultiBinding Converter="{mahConverters:MathSubtractConverter}" FallbackValue="0">
-                                                    <Binding ElementName="PART_FloatingMessage"
-                                                             Mode="OneWay"
-                                                             Path="ActualHeight" />
-                                                    <Binding ElementName="PART_FloatingMessageContainer"
-                                                             Mode="OneWay"
-                                                             Path="ActualHeight" />
-                                                </MultiBinding>
-                                            </TranslateTransform.Y>
-                                        </TranslateTransform>
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-                            </ContentControl>
-                        </Grid>
+                                           TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}"
+                                           Visibility="Collapsed" />
+
+                                <ContentControl x:Name="PART_FloatingMessageContainer"
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Margin="4 0"
+                                                Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
+                                    <ContentControl.Height>
+                                        <MultiBinding Converter="{mahConverters:MathMultiplyConverter}" FallbackValue="0">
+                                            <Binding ElementName="PART_FloatingMessage"
+                                                     Mode="OneWay"
+                                                     Path="ActualHeight" />
+                                            <Binding ElementName="PART_FloatingMessageContainer"
+                                                     Mode="OneWay"
+                                                     Path="Opacity" />
+                                        </MultiBinding>
+                                    </ContentControl.Height>
+                                    <TextBlock x:Name="PART_FloatingMessage"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
+                                               Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
+                                               TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
+                                               TextTrimming="{TemplateBinding mah:TextBoxHelper.WatermarkTrimming}">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform x:Name="FloatingMessageTransform">
+                                                <TranslateTransform.Y>
+                                                    <MultiBinding Converter="{mahConverters:MathSubtractConverter}" FallbackValue="0">
+                                                        <Binding ElementName="PART_FloatingMessage"
+                                                                 Mode="OneWay"
+                                                                 Path="ActualHeight" />
+                                                        <Binding ElementName="PART_FloatingMessageContainer"
+                                                                 Mode="OneWay"
+                                                                 Path="ActualHeight" />
+                                                    </MultiBinding>
+                                                </TranslateTransform.Y>
+                                            </TranslateTransform>
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </ContentControl>
+                            </Grid>
+                        </Border>
+
+                        <!--
+                            The edge WinUI draws a little stronger, and the accent while the box has
+                            the caret. It is a frame of its own carrying nothing but that edge, so
+                            that it follows the corners of the one behind it and is the same two
+                            units on a box of any height. A set that leaves the brush unset draws
+                            nothing there.
+                        -->
+                        <Border x:Name="BottomEdge"
+                                BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                                BorderThickness="0 0 0 2"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                IsHitTestVisible="False"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                         <Border x:Name="DisabledVisualElement"
                                 Grid.ColumnSpan="3"
@@ -452,10 +540,10 @@
                                 <Border x:Name="PopupBorder"
                                         Height="Auto"
                                         HorizontalAlignment="Stretch"
-                                        Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
+                                        Background="{TemplateBinding mah:ComboBoxHelper.DropDownBackground}"
+                                        BorderBrush="{TemplateBinding mah:ComboBoxHelper.DropDownBorderBrush}"
                                         BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
-                                        CornerRadius="{DynamicResource ComboBoxPopupBorderThemeCornerRadius}"
+                                        CornerRadius="{TemplateBinding mah:ComboBoxHelper.DropDownCornerRadius}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <Grid x:Name="ContentGrid">
                                         <Grid.Clip>
@@ -483,7 +571,9 @@
 
                                         <ListBox x:Name="PART_PopupListBox"
                                                  Grid.Row="1"
+                                                 Padding="{DynamicResource ComboBoxPopupBorderThemePadding}"
                                                  AlternationCount="{TemplateBinding AlternationCount}"
+                                                 Background="{x:Null}"
                                                  Focusable="False"
                                                  ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                                  ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
@@ -626,17 +716,27 @@
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
 
-                        <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
-                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
+                        <!--
+                            A set that draws an edge of its own says the focus with that edge, the way
+                            WinUI does it, and the frame behind it stays the colour it was. One that
+                            leaves the edge unset says it with the frame, which is what the Metro and
+                            the Windows 10 box have always done.
+                        -->
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                                <Condition Property="mah:ControlsHelper.BottomBorderBrush" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{x:Null}" />
+                        </MultiTrigger>
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -649,6 +749,20 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
+                        <!--
+                            A set that draws no veil over a box that is switched off says it with the
+                            colours instead, the way the text box of that set does: the frame and the
+                            edge take the disabled stroke, and the style turns the fill and the text
+                            down with them.
+                        -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+                            <Setter TargetName="BottomEdge" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledBorderBrush)}" />
+                        </MultiTrigger>
 
                         <Trigger Property="HasCustomText" Value="True">
                             <Setter TargetName="PART_PopupListBox" Property="IsEnabled" Value="False" />
@@ -691,6 +805,116 @@
             </Setter.Value>
         </Setter>
         <Setter Property="mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
+    </Style>
+
+    <!--
+        The Windows 10 box. A box that holds several picks is the combo box of that set with a row
+        of what has been picked where the one pick would stand, so it wears that box: the same fill,
+        the same two units of frame, the same padding, the same chevron and the same rows in the
+        list. Switched off it says so with its colours rather than with a veil over it, the same way.
+    -->
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}"
+           TargetType="{x:Type mah:MultiSelectionComboBox}">
+        <Style.Resources>
+            <Style x:Key="MahApps.Styles.ToggleButton.MultiSelectionComboBox.DropDown"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ComboBoxDropDown.Win10}"
+                   TargetType="{x:Type ToggleButton}" />
+            <Style x:Key="MahApps.Styles.TextBox.MultiSelectionComboBox.Editable"
+                   BasedOn="{StaticResource MahApps.Styles.TextBox.ComboBox.Editable.Win10}"
+                   TargetType="{x:Type TextBox}" />
+            <!--  the watermark of this set stands where the text does rather than four units off it  -->
+            <Thickness x:Key="TextControlPlaceholderMargin">0,0,0,0</Thickness>
+            <!--  the four units above and below the rows are the ones UWP leaves there  -->
+            <Thickness x:Key="ComboBoxPopupBorderThemePadding">0 4</Thickness>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Foreground}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="10 6 6 5" />
+        <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBackground}" />
+        <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushDisabled}" />
+        <!--  no veil over a box that is off: this set says it with the colours, the way its text box does  -->
+        <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushPointerOver}" />
+        <Setter Property="mah:TextBoxHelper.ButtonContent" Value="&#xE10A;" />
+        <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="{Binding}"
+                                  UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.Win10}" />
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="30" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundPointerOver}" />
+            </Trigger>
+            <!--  while the list is down the box stays in the colour it takes under the finger  -->
+            <Trigger Property="IsDropDownOpen" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        WinUI on top of it, the way its combo box has it: the line along the bottom edge is the
+        thick one and turns into the accent while the box has the caret, and the corners are
+        rounded. The list is rounded a little more, which is what a flyout does there.
+    -->
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBox.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox.Win10}"
+           TargetType="{x:Type mah:MultiSelectionComboBox}">
+        <Style.Resources>
+            <Style x:Key="MahApps.Styles.ToggleButton.MultiSelectionComboBox.DropDown"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ComboBoxDropDown.Win10}"
+                   TargetType="{x:Type ToggleButton}" />
+            <Style x:Key="MahApps.Styles.TextBox.MultiSelectionComboBox.Editable"
+                   BasedOn="{StaticResource MahApps.Styles.TextBox.ComboBox.Editable.WinUI}"
+                   TargetType="{x:Type TextBox}" />
+            <Thickness x:Key="TextControlPlaceholderMargin">0,0,0,0</Thickness>
+            <Thickness x:Key="ComboBoxPopupBorderThemePadding">0 4</Thickness>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1 1 1 2" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.WinUI}" />
+        <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBackground}" />
+        <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBorderBrush}" />
+        <Setter Property="mah:ComboBoxHelper.DropDownCornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushBottom}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushDisabled}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushBottomFocused}" />
+        <!--  the frame of a WinUI box says nothing about the pointer, which the fill behind it does instead  -->
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsDropDownOpen" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

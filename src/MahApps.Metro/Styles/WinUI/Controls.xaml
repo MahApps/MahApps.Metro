@@ -33,6 +33,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:LongUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox.WinUI}" TargetType="{x:Type mah:AutoSuggestBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox.WinUI}" TargetType="{x:Type mah:HotKeyBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox.WinUI}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Calendar.WinUI}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.WinUI}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.WinUI}" TargetType="{x:Type mah:AnalogClock}" />
