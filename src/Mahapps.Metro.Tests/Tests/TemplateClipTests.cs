@@ -77,6 +77,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "HotKeyBox", "PART_InnerGrid" },
                 new object[] { "HotKeyBox Win10", "PART_InnerGrid" },
                 new object[] { "HotKeyBox WinUI", "PART_InnerGrid" },
+                new object[] { "MultiSelectionComboBox", "PART_InnerGrid" },
+                new object[] { "MultiSelectionComboBox Win10", "PART_InnerGrid" },
+                new object[] { "MultiSelectionComboBox WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -186,6 +189,15 @@ namespace MahApps.Metro.Tests.Tests
                 case "HotKeyBox WinUI":
                     return Shortcut((HotKeyBox)Styled(new HotKeyBox(), "MahApps.Styles.HotKeyBox.WinUI"));
 
+                case "MultiSelectionComboBox":
+                    return Picking(new MultiSelectionComboBox());
+
+                case "MultiSelectionComboBox Win10":
+                    return Picking((MultiSelectionComboBox)Styled(new MultiSelectionComboBox(), "MahApps.Styles.MultiSelectionComboBox.Win10"));
+
+                case "MultiSelectionComboBox WinUI":
+                    return Picking((MultiSelectionComboBox)Styled(new MultiSelectionComboBox(), "MahApps.Styles.MultiSelectionComboBox.WinUI"));
+
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
 
@@ -227,6 +239,18 @@ namespace MahApps.Metro.Tests.Tests
         {
             box.HotKey = new HotKey(Key.F, ModifierKeys.Control);
             TextBoxHelper.SetClearTextButton(box, true);
+
+            return box;
+        }
+
+        /// <summary>
+        /// A box with something picked in it, so that the row the clip has to cover is the one a
+        /// box being used really has.
+        /// </summary>
+        private static MultiSelectionComboBox Picking(MultiSelectionComboBox box)
+        {
+            box.ItemsSource = new[] { "Beam me up...", "Warp nine" };
+            box.SelectedItem = "Beam me up...";
 
             return box;
         }

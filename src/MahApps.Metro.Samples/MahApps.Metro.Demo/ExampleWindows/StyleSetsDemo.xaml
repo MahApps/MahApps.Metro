@@ -63,6 +63,14 @@
                                             Text="Konrad Zuse" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="MultiSelectionComboBox" />
+                        <mah:MultiSelectionComboBox mah:TextBoxHelper.Watermark="Pick a ship or two" SelectionMode="Multiple">
+                            <system:String>Enterprise</system:String>
+                            <system:String>Voyager</system:String>
+                            <system:String>Defiant</system:String>
+                        </mah:MultiSelectionComboBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="HotKeyBox" />
                         <mah:HotKeyBox mah:TextBoxHelper.ClearTextButton="True"
                                        mah:TextBoxHelper.Watermark="Press a shortcut"

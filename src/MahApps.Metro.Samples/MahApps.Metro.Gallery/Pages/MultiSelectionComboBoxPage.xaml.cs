@@ -20,7 +20,7 @@ namespace MahApps.Metro.Gallery.Pages
             this.DataContext = this;
 
             // three picks are enough to see what the row in front does with them
-            foreach (var box in new[] { this.Picked, this.Ticks, this.Removable, this.Typed })
+            foreach (var box in new[] { this.Picked, this.Ticks, this.Removable, this.Typed, this.Win10, this.WinUI })
             {
                 box.SelectedItems?.Add(this.Names[1]);
                 box.SelectedItems?.Add(this.Names[3]);
@@ -55,6 +55,9 @@ namespace MahApps.Metro.Gallery.Pages
             this.RemoveExample.Watch(this.Removable,
                                      ComboBox.IsEditableProperty,
                                      MultiSelectionComboBox.OrderSelectedItemsByProperty);
+
+            this.Win10Example.Watch(this.Win10, ComboBox.IsDropDownOpenProperty, IsEnabledProperty);
+            this.WinUIExample.Watch(this.WinUI, ComboBox.IsDropDownOpenProperty, IsEnabledProperty);
 
             this.TypeExample.Watch(this.Typed,
                                    ComboBox.IsEditableProperty,

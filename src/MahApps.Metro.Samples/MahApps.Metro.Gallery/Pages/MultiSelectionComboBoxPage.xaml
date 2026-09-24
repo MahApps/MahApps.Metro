@@ -87,6 +87,32 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The box in the Windows 10 look, which is the combo box of that set holding more than one answer: the same fill, the same two units of frame, the same padding and the same chevron, and a frame that turns into the accent once the caret is in. The list comes up with the rows that set draws."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.Win10">
+                    <mah:MultiSelectionComboBox x:Name="Win10"
+                                                Width="320"
+                                                HorizontalAlignment="Left"
+                                                ItemsSource="{Binding Names}"
+                                                SelectionMode="Multiple"
+                                                Style="{DynamicResource MahApps.Styles.MultiSelectionComboBox.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: rounded corners and a border a touch stronger along its bottom edge, which turns into the accent there while the caret is in. That edge is a border of its own, two units thick either way, so the box stays as tall as it was and nothing under it moves. The list is rounded a little more, the way a flyout is."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="MultiSelectionComboBox.WinUI">
+                    <mah:MultiSelectionComboBox x:Name="WinUI"
+                                                Width="320"
+                                                HorizontalAlignment="Left"
+                                                ItemsSource="{Binding Names}"
+                                                SelectionMode="Multiple"
+                                                Style="{DynamicResource MahApps.Styles.MultiSelectionComboBox.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
