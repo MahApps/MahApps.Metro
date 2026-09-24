@@ -852,6 +852,16 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
 
     <!--
+        Resources for the nuggets a MultiSelectionComboBox shows what has been picked in. A nugget
+        has to stand out against the box behind it whatever that box is doing, and the box of either
+        Windows set changes its fill under the pointer and again while the list is down. So the
+        nugget is a layer over the box rather than a colour of its own, which keeps it a step off
+        whatever it is standing on.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.MultiSelectionComboBox.Win10.ItemBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MultiSelectionComboBox.WinUI.ItemBackground" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillQuarternary" />
+
+    <!--
         Resources for MahApps.Styles.NumericUpDown.Win10. The box is the Windows 10 text box with a
         pair of buttons standing in it, so everything but those buttons is read from there. A spin
         button carries no fill at rest and lights the cell it stands in under the pointer, the way a

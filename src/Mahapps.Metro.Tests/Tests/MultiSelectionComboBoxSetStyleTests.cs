@@ -142,6 +142,41 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", "MahApps.Styles.MultiSelectionComboBoxSelectedItem.Win10", "MahApps.Brushes.MultiSelectionComboBox.Win10.ItemBackground")]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", "MahApps.Styles.MultiSelectionComboBoxSelectedItem.WinUI", "MahApps.Brushes.MultiSelectionComboBox.WinUI.ItemBackground")]
+        [Description("A nugget of either Windows set is a layer over the box rather than a fixed grey, because the box changes its fill under the pointer and again while the list is down, and one of those colours is the grey the nugget used to be.")]
+        public void TheNuggetsAreALayerOverTheBox(string key, string nuggetKey, string fill)
+        {
+            var box = this.Show(key);
+            var nugget = (Style)Application.Current.FindResource(nuggetKey);
+
+            Assert.That(box.SelectedItemContainerStyle, Is.SameAs(nugget), "the set should hand the control its own nugget");
+
+            var item = new ListBoxItem { Style = nugget };
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(item.Background, Is.SameAs(Application.Current.FindResource(fill)), "and that nugget is a layer");
+                    Assert.That(item.Background, Is.Not.SameAs(box.Background), "rather than the colour the box is filled with");
+                });
+        }
+
+        [Test]
+        [Description("A row of nuggets that outgrows the line leaves air above and below it, and the panel takes that air back off its own ends, so a box with one row of them is as tall as it was.")]
+        public void TheNuggetsLeaveAirBetweenTheRows()
+        {
+            var nugget = new ListBoxItem { Style = (Style)Application.Current.FindResource("MahApps.Styles.MultiSelectionComboBoxSelectedItem") };
+
+            var box = this.Show("MahApps.Styles.MultiSelectionComboBox");
+            var panel = box.FindChild<WrapPanel>(null);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(nugget.Margin, Is.EqualTo(new Thickness(0, 2, 4, 2)), "the nugget");
+                    Assert.That(panel?.Margin, Is.EqualTo(new Thickness(0, -2, 0, -2)), "and the panel that lays them out");
+                });
+        }
+
         [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", "MahApps.Styles.TextBox.ComboBox.Editable.Win10")]
         [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", "MahApps.Styles.TextBox.ComboBox.Editable.WinUI")]
         [Description("The text is typed into the box of that set, caret and selection and all, and a single control wearing the style brings it along rather than waiting for the set to be merged.")]

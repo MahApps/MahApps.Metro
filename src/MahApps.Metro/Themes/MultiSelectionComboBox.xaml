@@ -207,7 +207,12 @@
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem" TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="Margin" Value="0 0 2 0" />
+        <!--
+            Four to the right and two above and below, so that a row of nuggets that outgrows the
+            line does not sit on the one before it. The panel takes those two back off its own top
+            and bottom, so a box with one row of nuggets is as tall as it always was.
+        -->
+        <Setter Property="Margin" Value="0 2 4 2" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Padding" Value="5 2" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -215,8 +220,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <Grid>
-                        <Border Margin="{TemplateBinding Margin}"
-                                Background="{TemplateBinding Background}"
+                        <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius)}"
@@ -265,36 +269,66 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        The nugget with a cross on it, which is the shape all three sets use, so it is a template of
+        its own and each of them hands it their colours.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.MultiSelectionComboBoxSelectedItem.Removable" TargetType="ListBoxItem">
+        <Grid>
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius)}"
+                    IsHitTestVisible="{TemplateBinding IsHitTestVisible}"
+                    RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <DockPanel LastChildFill="True">
+                <Button x:Name="PART_RemoveButton"
+                        Command="mah:MultiSelectionComboBox.RemoveItemCommand"
+                        CommandParameter="{Binding}"
+                        DockPanel.Dock="Right"
+                        Style="{DynamicResource MahApps.Styles.Button.MultiSelectionComboBoxSelectedItem.RemoveItem}" />
+                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </DockPanel>
+        </Grid>
+    </ControlTemplate>
+
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}"
            TargetType="ListBoxItem">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
-                    <Grid>
-                        <Border Margin="{TemplateBinding Margin}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius)}"
-                                IsHitTestVisible="{TemplateBinding IsHitTestVisible}"
-                                RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <DockPanel Margin="{TemplateBinding Margin}" LastChildFill="True">
-                            <Button x:Name="PART_RemoveButton"
-                                    Command="mah:MultiSelectionComboBox.RemoveItemCommand"
-                                    CommandParameter="{Binding}"
-                                    DockPanel.Dock="Right"
-                                    Style="{DynamicResource MahApps.Styles.Button.MultiSelectionComboBoxSelectedItem.RemoveItem}" />
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </DockPanel>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxSelectedItem.Removable}" />
+    </Style>
+
+    <!--
+        The nugget of either Windows set. The box behind it changes its fill under the pointer and
+        again while the list is down, and a nugget in a fixed grey lands on the same colour as one of
+        those, so it takes a layer over the box instead and stays a step off whatever it stands on.
+    -->
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}"
+           TargetType="ListBoxItem">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MultiSelectionComboBox.Win10.ItemBackground}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Win10}"
+           TargetType="ListBoxItem">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxSelectedItem.Removable}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}"
+           TargetType="ListBoxItem">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MultiSelectionComboBox.WinUI.ItemBackground}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.WinUI}"
+           TargetType="ListBoxItem">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxSelectedItem.Removable}" />
     </Style>
 
     <!--#endregion-->
@@ -319,7 +353,9 @@
         <Setter Property="SelectedItemsPanelTemplate">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <WrapPanel VerticalAlignment="Center" Orientation="Horizontal" />
+                    <WrapPanel Margin="0 -2"
+                               VerticalAlignment="Center"
+                               Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -800,7 +836,7 @@
         <Setter Property="SelectedItemsPanelTemplate">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
+                    <StackPanel Margin="0 -2" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -835,6 +871,7 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="10 6 6 5" />
+        <Setter Property="SelectedItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Win10}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush}" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushDisabled}" />
@@ -893,6 +930,7 @@
         <Setter Property="BorderThickness" Value="1 1 1 2" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.WinUI}" />
+        <Setter Property="SelectedItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.WinUI}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBorderBrush}" />
         <Setter Property="mah:ComboBoxHelper.DropDownCornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
