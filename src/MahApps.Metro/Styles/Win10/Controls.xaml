@@ -38,6 +38,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:IntegerUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:LongUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox.Win10}" TargetType="{x:Type mah:AutoSuggestBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox.Win10}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Calendar.Win10}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.Win10}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.Win10}" TargetType="{x:Type mah:AnalogClock}" />

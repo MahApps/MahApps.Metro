@@ -2,8 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Gallery.Controls;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -16,14 +18,21 @@ namespace MahApps.Metro.Gallery.Pages
         {
             this.InitializeComponent();
 
-            this.HotKeyExample.Watch(this.HotKey,
-                                     HotKeyBox.HotKeyProperty,
-                                     HotKeyBox.AreModifierKeysRequiredProperty,
-                                     IsEnabledProperty);
-            this.HotKeyExample.Watch("Attached",
-                                     this.HotKey,
-                                     TextBoxHelper.WatermarkProperty,
-                                     TextBoxHelper.ClearTextButtonProperty);
+            Options(this.HotKeyExample, this.HotKey);
+            Options(this.Win10Example, this.Win10);
+            Options(this.WinUIExample, this.WinUI);
+        }
+
+        private static void Options(ControlExample example, HotKeyBox box)
+        {
+            example.Watch(box,
+                          HotKeyBox.HotKeyProperty,
+                          HotKeyBox.AreModifierKeysRequiredProperty,
+                          IsEnabledProperty);
+            example.Watch("Attached",
+                          box,
+                          TextBoxHelper.WatermarkProperty,
+                          TextBoxHelper.ClearTextButtonProperty);
         }
     }
 }
