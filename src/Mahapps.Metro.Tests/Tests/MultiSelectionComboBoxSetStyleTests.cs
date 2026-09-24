@@ -58,7 +58,6 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(box.Background, Is.SameAs(reference.Background), "the fill");
                     Assert.That(box.BorderBrush, Is.SameAs(reference.BorderBrush), "the frame");
                     Assert.That(box.BorderThickness, Is.EqualTo(reference.BorderThickness), "how thick that frame is");
-                    Assert.That(box.Padding, Is.EqualTo(reference.Padding), "where the text stands in it");
                     Assert.That(box.MinHeight, Is.EqualTo(reference.MinHeight), "and how tall it is");
                     Assert.That(ControlsHelper.GetCornerRadius(box), Is.EqualTo(ControlsHelper.GetCornerRadius(reference)), "its corners");
                     Assert.That(ControlsHelper.GetFocusBorderBrush(box), Is.SameAs(ControlsHelper.GetFocusBorderBrush(reference)), "the frame with the caret in it");
@@ -67,6 +66,42 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(ControlsHelper.GetDisabledBorderBrush(box), Is.SameAs(ControlsHelper.GetDisabledBorderBrush(reference)), "the frame of a box that is off");
                     Assert.That(TextBoxHelper.GetButtonTemplate(box), Is.SameAs(TextBoxHelper.GetButtonTemplate(reference)), "and the delete button is the one that box draws");
                 });
+        }
+
+        [TestCase("MahApps.Styles.MultiSelectionComboBox", "MahApps.Styles.ComboBox")]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", "MahApps.Styles.ComboBox.Win10")]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", "MahApps.Styles.ComboBox.WinUI")]
+        [Description("A box holding several picks is as tall as the one holding one, because it leaves less above and below itself by exactly what a nugget brings along.")]
+        public void TheBoxIsAsTallAsItsComboBox(string key, string comboBoxKey)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var box = new MultiSelectionComboBox
+                      {
+                          Style = (Style)Application.Current.FindResource(key),
+                          ItemsSource = new[] { "Beam me up...", "Warp nine" },
+                          Width = 280,
+                          VerticalAlignment = VerticalAlignment.Top
+                      };
+            box.SelectedItems!.Add("Beam me up...");
+
+            var reference = new ComboBox
+                            {
+                                Style = (Style)Application.Current.FindResource(comboBoxKey),
+                                ItemsSource = new[] { "Beam me up...", "Warp nine" },
+                                SelectedIndex = 0,
+                                Width = 280,
+                                VerticalAlignment = VerticalAlignment.Top
+                            };
+
+            var page = new StackPanel();
+            page.Children.Add(box);
+            page.Children.Add(reference);
+
+            this.window!.Content = page;
+            this.Settle();
+
+            Assert.That(box.ActualHeight, Is.EqualTo(reference.ActualHeight).Within(0.01));
         }
 
         [TestCase("MahApps.Styles.MultiSelectionComboBox", "MahApps.Styles.ComboBox")]

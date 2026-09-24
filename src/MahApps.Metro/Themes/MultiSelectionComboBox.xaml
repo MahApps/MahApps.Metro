@@ -347,6 +347,12 @@
         <Setter Property="DisabledPopupOverlayContentTemplate" Value="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.DisabledPopupOverlay}" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.MultiSelectionComboBoxItem}" />
+        <!--
+            Less above and below than the combo box leaves round its one pick, because what stands
+            here is a nugget and a nugget brings a padding of its own. The two together come to what
+            that box leaves, so a box holding several picks is as tall as the one holding one.
+        -->
+        <Setter Property="Padding" Value="4 2" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="SelectItemsFromTextInputDelay" Value="-1" />
         <Setter Property="SelectedItemContainerStyle" Value="{DynamicResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}" />
@@ -870,7 +876,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}" />
         <Setter Property="MinHeight" Value="32" />
-        <Setter Property="Padding" Value="10 6 6 5" />
+        <Setter Property="Padding" Value="10 4 6 3" />
         <Setter Property="SelectedItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Win10}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush}" />
