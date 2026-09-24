@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -73,6 +74,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "AutoSuggestBox", "PART_InnerGrid" },
                 new object[] { "AutoSuggestBox Win10", "PART_InnerGrid" },
                 new object[] { "AutoSuggestBox WinUI", "PART_InnerGrid" },
+                new object[] { "HotKeyBox", "PART_InnerGrid" },
+                new object[] { "HotKeyBox Win10", "PART_InnerGrid" },
+                new object[] { "HotKeyBox WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -173,6 +177,15 @@ namespace MahApps.Metro.Tests.Tests
                 case "AutoSuggestBox WinUI":
                     return Suggesting((AutoSuggestBox)Styled(new AutoSuggestBox(), "MahApps.Styles.AutoSuggestBox.WinUI"));
 
+                case "HotKeyBox":
+                    return Shortcut(new HotKeyBox());
+
+                case "HotKeyBox Win10":
+                    return Shortcut((HotKeyBox)Styled(new HotKeyBox(), "MahApps.Styles.HotKeyBox.Win10"));
+
+                case "HotKeyBox WinUI":
+                    return Shortcut((HotKeyBox)Styled(new HotKeyBox(), "MahApps.Styles.HotKeyBox.WinUI"));
+
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
 
@@ -202,6 +215,18 @@ namespace MahApps.Metro.Tests.Tests
         {
             box.ItemsSource = new[] { "Beam me up...", "Warp nine" };
             box.Text = "Beam me up...";
+
+            return box;
+        }
+
+        /// <summary>
+        /// A shortcut box with a shortcut in it and a button to take it away again, so that the row
+        /// the clip has to cover is the one a box being used really has.
+        /// </summary>
+        private static HotKeyBox Shortcut(HotKeyBox box)
+        {
+            box.HotKey = new HotKey(Key.F, ModifierKeys.Control);
+            TextBoxHelper.SetClearTextButton(box, true);
 
             return box;
         }

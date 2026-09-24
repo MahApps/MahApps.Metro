@@ -63,6 +63,13 @@
                                             Text="Konrad Zuse" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="HotKeyBox" />
+                        <mah:HotKeyBox mah:TextBoxHelper.ClearTextButton="True"
+                                       mah:TextBoxHelper.Watermark="Press a shortcut"
+                                       AreModifierKeysRequired="True" />
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="DatePicker" />
                         <DatePicker mah:TextBoxHelper.ClearTextButton="True" SelectedDate="{x:Static system:DateTime.Now}" />
                     </StackPanel>

@@ -48,6 +48,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type mah:ColorPicker}" />
     <!--#endregion-->
     <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox}" TargetType="{x:Type mah:AutoSuggestBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />

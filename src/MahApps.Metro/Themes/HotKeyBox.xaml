@@ -3,7 +3,14 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
-    <Style TargetType="{x:Type mah:HotKeyBox}">
+    <!--
+        The shortcut box is a text box that takes a combination rather than letters, and that is all
+        its template is: one box filling the control, handed everything the control was given. What
+        a set has to say about it is therefore what it says about its text box, which is why the two
+        below put that box into their resources and hand the control the fill, the frame and the
+        padding of it.
+    -->
+    <Style x:Key="MahApps.Styles.HotKeyBox" TargetType="{x:Type mah:HotKeyBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -27,7 +34,10 @@
                              HorizontalAlignment="Stretch"
                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                             mah:ControlsHelper.BottomBorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
                              mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                             mah:ControlsHelper.DisabledBorderBrush="{TemplateBinding mah:ControlsHelper.DisabledBorderBrush}"
+                             mah:ControlsHelper.DisabledVisualElementVisibility="{TemplateBinding mah:ControlsHelper.DisabledVisualElementVisibility}"
                              mah:ControlsHelper.FocusBorderBrush="{TemplateBinding mah:ControlsHelper.FocusBorderBrush}"
                              mah:ControlsHelper.MouseOverBorderBrush="{TemplateBinding mah:ControlsHelper.MouseOverBorderBrush}"
                              mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
@@ -79,6 +89,7 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
 
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.HotKeyBox}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.Focus}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
 
@@ -89,4 +100,103 @@
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="mah:TextBoxHelper.IsMonitoring" Value="True" />
     </Style>
+
+    <!--
+        The Windows 10 look. The box inside is the one of that set, and the control around it hands
+        that box what it binds itself: the fill, the frame, the padding and the delete button. What
+        a box of that set says about the pointer and the caret it says by setting its own fill and
+        its own text colour, and a value coming down from the control around it stands above a
+        trigger of the box, so the three states are repeated here rather than left to it.
+    -->
+    <Style x:Key="MahApps.Styles.HotKeyBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.HotKeyBox}"
+           TargetType="{x:Type mah:HotKeyBox}">
+        <Style.Resources>
+            <!--  the box the shortcut lands in is the one of this set, even where a single control wears the style alone  -->
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="{x:Type TextBox}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Foreground}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="10 6 6 5" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushDisabled}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushFocused}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushPointerOver}" />
+        <Setter Property="mah:TextBoxHelper.ButtonContent" Value="&#xE10A;" />
+        <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                  FontSize="12"
+                                  Glyph="{Binding}"
+                                  UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.Win10}" />
+        <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="30" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundFocused}" />
+            </Trigger>
+            <!--
+                A box that is switched off looks switched off, even when the caret was in it when it
+                happened: of two triggers that set the same thing, the later one wins, and the focus
+                stays inside a control that has just been disabled.
+            -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrushDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        WinUI on top of it, the way the text box has it: rounded corners and a border a touch stronger
+        along the bottom edge, which turns into the accent while the caret is in. The box inside draws
+        that edge itself, since here it is the whole control and the edge runs the whole width of it.
+    -->
+    <Style x:Key="MahApps.Styles.HotKeyBox.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.HotKeyBox.Win10}"
+           TargetType="{x:Type mah:HotKeyBox}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="{x:Type TextBox}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1 1 1 2" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottom}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
+        <!--  the frame of a WinUI box says nothing about the pointer, which the fill behind it does instead  -->
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundFocused}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
