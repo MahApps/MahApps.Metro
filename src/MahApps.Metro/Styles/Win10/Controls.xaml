@@ -40,6 +40,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox.Win10}" TargetType="{x:Type mah:AutoSuggestBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox.Win10}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox.Win10}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.Win10}" TargetType="{x:Type mah:SplitButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker.Win10}" TargetType="{x:Type mah:ColorPicker}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorCanvas.Win10}" TargetType="{x:Type mah:ColorCanvas}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette.Win10}" TargetType="{x:Type mah:ColorPalette}" />
