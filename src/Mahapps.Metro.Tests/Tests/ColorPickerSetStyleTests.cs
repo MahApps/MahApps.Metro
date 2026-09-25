@@ -292,13 +292,13 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(left, Has.Count.EqualTo(1), $"the boxes start at {string.Join(", ", left)}");
         }
 
-        [TestCase("MahApps.Styles.ColorEyeDropper.Win10", "MahApps.Styles.ColorCanvas.Win10", "MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10")]
-        [TestCase("MahApps.Styles.ColorEyeDropper.WinUI", "MahApps.Styles.ColorCanvas.WinUI", "MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI")]
+        [TestCase("MahApps.Styles.ColorEyeDropper.Win10", "MahApps.Styles.ColorCanvas.Win10", "MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10", "MahApps.Styles.Button.Win10")]
+        [TestCase("MahApps.Styles.ColorEyeDropper.WinUI", "MahApps.Styles.ColorCanvas.WinUI", "MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI", "MahApps.Styles.Button.WinUI")]
         [Description("The dropper is the button of its set, and a canvas of that set hands its own dropper to the one standing on it.")]
-        public void TheDropperIsTheButtonOfItsSet(string key, string canvasKey, string onTheCanvasKey)
+        public void TheDropperIsTheButtonOfItsSet(string key, string canvasKey, string onTheCanvasKey, string buttonKey)
         {
             var dropper = new ColorEyeDropper { Style = (Style)Application.Current.FindResource(key) };
-            var reference = new Button { Style = (Style)Application.Current.FindResource("MahApps.Styles.Button.Win10") };
+            var reference = new Button { Style = (Style)Application.Current.FindResource(buttonKey) };
 
             var canvas = (Style)Application.Current.FindResource(canvasKey);
             var onTheCanvas = (Style?)canvas.Resources["MahApps.Styles.ColorEyeDropper.ColorCanvas"];
@@ -313,6 +313,7 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(dropper.Padding.Right, Is.EqualTo(reference.Padding.Right), "on both sides");
                     // the button leaves a unit more under a line of text than over it; a pipette wants the same either way
                     Assert.That(dropper.Padding.Bottom, Is.EqualTo(dropper.Padding.Top), "and the same over it as under it");
+                    Assert.That(ControlsHelper.GetBottomBorderBrush(dropper), Is.SameAs(ControlsHelper.GetBottomBorderBrush(reference)), "the edge along the bottom, if that set draws one");
                     Assert.That(ControlsHelper.GetDisabledVisualElementVisibility(dropper), Is.EqualTo(Visibility.Collapsed), "and no veil over one that is off");
                     Assert.That(onTheCanvas?.BasedOn, Is.SameAs(Application.Current.FindResource(onTheCanvasKey)), "the canvas should hand its dropper the one of its set");
                 });
