@@ -14,6 +14,8 @@ permissions:
   # what SignPath reads to see which workflow run an artifact came out of
   actions: read
   contents: read
+  # the package list of the organisation, which the signed package goes on
+  packages: write
 
 jobs:
   windows-latest:
@@ -78,6 +80,14 @@ jobs:
           name: signed-package
           path: Publish/signed/*.nupkg
           if-no-files-found: error
+
+      # And put it on the package list of the organisation, so that what develop is at can be
+      # tried out without waiting for the next release on nuget.org. Every push leaves a version
+      # there; a rerun of the same commit finds its own version already on the shelf, which is
+      # what --skip-duplicate is for.
+      - name: Put the package on the shelf
+        if: github.event_name == 'push'
+        run: dotnet nuget push "Publish/signed/*.nupkg" --source "https://nuget.pkg.github.com/MahApps/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
 
       # A test run that was cut off for hanging leaves behind the name of the test that stopped
       # moving, which is of no use on an agent that is about to be thrown away. The dump next to it
