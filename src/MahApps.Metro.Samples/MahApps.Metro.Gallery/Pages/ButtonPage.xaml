@@ -106,6 +106,32 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="MahApps.Styles.Button.WinUI is the Windows 10 button in the colours Windows 11 gives it: rounded corners, one unit of frame and a line a shade stronger along the bottom, which is what makes the button look as if it stood a little above the page. Pressed, that line goes and the button reads as lying flat. MahApps.Styles.Button.Accent.WinUI is the same filled with the accent, and the frame around it is a thin white above and a black below rather than the grey of the quiet one. Both are on develop and neither is in 2.4.11."
+                                     Header="The pair in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="Button.WinUI">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="WinUI"
+                                Width="160"
+                                Content="Cancel"
+                                Style="{StaticResource MahApps.Styles.Button.WinUI}" />
+                        <Button x:Name="AccentWinUI"
+                                Width="160"
+                                Margin="8 0 0 0"
+                                Content="Save"
+                                Style="{StaticResource MahApps.Styles.Button.Accent.WinUI}" />
+                        <!--  nothing but an icon in it, so that the smallest height this set carries is on show as well  -->
+                        <Button x:Name="GlyphWinUI"
+                                Margin="8 0 0 0"
+                                Style="{StaticResource MahApps.Styles.Button.WinUI}">
+                            <iconPacks:PackIconMaterial Width="16"
+                                                        Height="16"
+                                                        Kind="Heart" />
+                        </Button>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="FlatAccentExample"
                                      Description="MahApps.Styles.Button.Flat.Accent is built on the accented Windows 10 button and then paints the ordinary button colours back over it, so the accent is not where the name puts it. At rest this is the plain button with a one unit border, hovering moves that border to the accent colour, and the fill arrives only while the button is really held down. It is on develop and not in 2.4.11 either."
                                      Header="The one that keeps its accent for the press">

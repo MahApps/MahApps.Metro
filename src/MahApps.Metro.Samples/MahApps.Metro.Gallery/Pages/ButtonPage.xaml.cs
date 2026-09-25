@@ -40,6 +40,10 @@ namespace MahApps.Metro.Gallery.Pages
             this.Win10Example.Watch("The one on the left", this.Win10, ContentControl.ContentProperty, IsEnabledProperty);
             this.Win10Example.Watch("The one on the right", this.AccentWin10, ContentControl.ContentProperty, IsEnabledProperty);
 
+            this.WinUIExample.Watch("The one on the left", this.WinUI, ContentControl.ContentProperty, IsEnabledProperty);
+            this.WinUIExample.Watch("The one in the middle", this.AccentWinUI, ContentControl.ContentProperty, IsEnabledProperty);
+            this.WinUIExample.Watch("The one on the right", this.GlyphWinUI, IsEnabledProperty);
+
             this.FlatAccentExample.Watch(this.FlatAccent, ContentControl.ContentProperty, IsEnabledProperty);
         }
     }
