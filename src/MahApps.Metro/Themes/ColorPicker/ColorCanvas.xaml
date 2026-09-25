@@ -101,8 +101,21 @@
                                     Margin="5"
                                     Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static mahConverters:HSVColorChannel2BrushConverter.Default}, ConverterParameter={x:Static mahConverters:HSVColorChannelType.SVMax}}"
                                     BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                    BorderThickness="1">
-                                <Grid SnapsToDevicePixels="True" UseLayoutRounding="False">
+                                    BorderThickness="1"
+                                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}">
+                                <Grid x:Name="SaturationValueGrid"
+                                      SnapsToDevicePixels="True"
+                                      UseLayoutRounding="False">
+                                    <Grid.Clip>
+                                        <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                            <Binding ElementName="SaturationValueGrid" Path="ActualWidth" />
+                                            <Binding ElementName="SaturationValueGrid" Path="ActualHeight" />
+                                            <Binding ElementName="PART_SaturationValueBox" Path="CornerRadius" />
+                                            <Binding ElementName="PART_SaturationValueBox" Path="BorderThickness" />
+                                            <Binding ElementName="PART_SaturationValueBox" Path="Padding" />
+                                        </MultiBinding>
+                                    </Grid.Clip>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static mahConverters:PercentageToGridLengthConverter.Default}}" />
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={x:Static mahConverters:PercentageToGridLengthConverter.Default}, ConverterParameter={x:Static system:Boolean.TrueString}}" />
@@ -182,8 +195,9 @@
                                         Margin="5 0 0 0"
                                         Background="{DynamicResource MahApps.Brushes.Tile}"
                                         BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                        BorderThickness="1">
-                                    <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
+                                        BorderThickness="1"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}">
+                                    <Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}" />
                                 </Border>
 
                                 <ContentControl x:Name="PART_NoColorPreview"
@@ -223,6 +237,7 @@
                                                           Content="{TemplateBinding LabelRedChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelRedChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.R}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -242,6 +257,7 @@
                                                           Content="{TemplateBinding LabelGreenChannel}" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelGreenChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.G}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -261,6 +277,7 @@
                                                           Content="{TemplateBinding LabelBlueChannel}" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelBlueChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.B}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -296,6 +313,7 @@
                                                           Content="{TemplateBinding LabelHueChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelHueChannel}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.Hue}"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue, UpdateSourceTrigger=PropertyChanged}" />
@@ -315,6 +333,7 @@
                                                           Content="{TemplateBinding LabelSaturationChannel}" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelSaturationChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static mahConverters:HSVColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:HSVColorChannelType.S}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
@@ -336,6 +355,7 @@
                                                           Content="{TemplateBinding LabelValueChannel}" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelValueChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedHSVColor, Converter={x:Static mahConverters:HSVColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:HSVColorChannelType.V}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.SV}"
@@ -367,6 +387,7 @@
                                                           Content="{TemplateBinding LabelAlphaChannel}" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
+                                                mah:ControlsHelper.CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelAlphaChannel}"
                                                 Background="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={x:Static mahConverters:ColorChannel2GradientBrushConverter.Default}, ConverterParameter={x:Static mahConverters:ColorChannelType.A}}"
                                                 Style="{DynamicResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -454,6 +475,33 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!--
+        The canvas of the two Windows sets. What stands on it is a row of boxes and a bar beside each
+        of them, so a set says here what it says about its text box and its up-down box, and it says
+        it in Style.Resources rather than in the application: a lookup from inside a template walks up
+        to the Style.Resources of the templated parent, so the canvas sees it and nothing else does.
+        That is what lets a picker wear a set on its own, without the application having merged it.
+    -->
+    <Style x:Key="MahApps.Styles.ColorCanvas.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ColorCanvas}"
+           TargetType="{x:Type mah:ColorCanvas}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="{x:Type TextBox}" />
+            <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDown}" />
+        </Style.Resources>
+    </Style>
+
+    <!--  WinUI rounds the square, the preview and the bars, the way it rounds the boxes beside them.  -->
+    <Style x:Key="MahApps.Styles.ColorCanvas.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ColorCanvas}"
+           TargetType="{x:Type mah:ColorCanvas}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="{x:Type TextBox}" />
+            <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:NumericUpDown}" />
+        </Style.Resources>
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
 </ResourceDictionary>

@@ -24,7 +24,8 @@
                 VerticalAlignment="Center"
                 Background="{DynamicResource MahApps.Brushes.Tile.Small}"
                 BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
-                BorderThickness="1">
+                BorderThickness="1"
+                CornerRadius="{Binding Path=(mah:ControlsHelper.CornerRadius), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}}">
             <Border.ToolTip>
                 <MultiBinding Converter="{mahConverters:ColorToNameConverter}">
                     <Binding />
@@ -33,7 +34,7 @@
                     <Binding Path="IsAlphaChannelVisible" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
                 </MultiBinding>
             </Border.ToolTip>
-            <Grid Background="{Binding Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
+            <Border Background="{Binding Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" CornerRadius="{Binding Path=(mah:ControlsHelper.CornerRadius), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}}" />
         </Border>
     </DataTemplate>
 
@@ -98,6 +99,36 @@
 
     <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown"
            BasedOn="{StaticResource MahApps.Styles.ColorPalette}"
+           TargetType="{x:Type mah:ColorPalette}" />
+
+    <!--
+        The palettes of the two Windows sets. Neither Windows 10 nor WinUI heads a group of things
+        with a filled bar and a frame round what stands under it: the name of the group is plain text
+        over its swatches, and the swatches are the only thing in there carrying a colour.
+    -->
+    <Style x:Key="MahApps.Styles.ColorPalette.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ColorPalette}"
+           TargetType="{x:Type mah:ColorPalette}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="Transparent" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="SemiBold" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ColorPalette.Win10}"
+           TargetType="{x:Type mah:ColorPalette}" />
+
+    <!--  WinUI rounds what shows a colour along with everything else it rounds.  -->
+    <Style x:Key="MahApps.Styles.ColorPalette.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ColorPalette.Win10}"
+           TargetType="{x:Type mah:ColorPalette}">
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ColorPalette.WinUI}"
            TargetType="{x:Type mah:ColorPalette}" />
 
 </ResourceDictionary>

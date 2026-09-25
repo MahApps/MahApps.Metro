@@ -4,6 +4,7 @@
 
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Gallery.Controls;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -16,16 +17,25 @@ namespace MahApps.Metro.Gallery.Pages
         {
             this.InitializeComponent();
 
-            this.PickerExample.Watch(this.Picker,
-                                     ColorPicker.SelectedColorProperty,
-                                     ColorPicker.DefaultColorProperty,
-                                     ColorPicker.IsAvailableColorPaletteVisibleProperty,
-                                     ColorPicker.IsStandardColorPaletteVisibleProperty,
-                                     ColorPicker.IsRecentColorPaletteVisibleProperty);
-            this.PickerExample.Watch("Attached", this.Picker, TextBoxHelper.WatermarkProperty);
-            this.PickerExample.Watch("Layout", this.Picker, WidthProperty);
+            Options(this.PickerExample, this.Picker);
+            Options(this.Win10Example, this.Win10);
+            Options(this.WinUIExample, this.WinUI);
 
             this.CanvasExample.Watch(this.Canvas, ColorCanvas.SelectedColorProperty);
+            this.CanvasWin10Example.Watch(this.CanvasWin10, ColorCanvas.SelectedColorProperty);
+            this.CanvasWinUIExample.Watch(this.CanvasWinUI, ColorCanvas.SelectedColorProperty);
+        }
+
+        private static void Options(ControlExample example, ColorPicker picker)
+        {
+            example.Watch(picker,
+                          ColorPicker.SelectedColorProperty,
+                          ColorPicker.DefaultColorProperty,
+                          ColorPicker.IsAvailableColorPaletteVisibleProperty,
+                          ColorPicker.IsStandardColorPaletteVisibleProperty,
+                          ColorPicker.IsRecentColorPaletteVisibleProperty);
+            example.Watch("Attached", picker, TextBoxHelper.WatermarkProperty);
+            example.Watch("Layout", picker, WidthProperty);
         }
     }
 }

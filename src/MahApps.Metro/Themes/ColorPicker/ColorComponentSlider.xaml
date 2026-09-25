@@ -15,12 +15,14 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <Border Margin="5 2"
+                        <Border x:Name="Bar"
+                                Margin="5 2"
                                 Background="{DynamicResource MahApps.Brushes.Tile.Small}"
                                 BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Grid Background="{TemplateBinding Background}" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}" />
                         </Border>
                         <Track x:Name="PART_Track" Margin="{TemplateBinding BorderThickness}">
                             <Track.DecreaseRepeatButton>
