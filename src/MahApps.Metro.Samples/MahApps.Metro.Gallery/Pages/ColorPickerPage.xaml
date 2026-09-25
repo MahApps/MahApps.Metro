@@ -121,6 +121,27 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="DropperContentExample"
+                                     Description="The dropper takes whatever content you give it in place of the pipette, and its SelectedColor is a two-way binding like any other, so it can hand what it picked straight to something else. This one is bound to the canvas of the third card above: press and hold, let go over a colour anywhere on the screen, and the canvas follows."
+                                     Header="A dropper that says what it holds">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.EyeDropper.Content">
+                    <mah:ColorEyeDropper x:Name="DropperWithContent"
+                                         Width="260"
+                                         HorizontalAlignment="Left"
+                                         SelectedColor="{Binding ElementName=Canvas, Path=SelectedColor, Mode=TwoWay}">
+                        <!--  the dropper writes in bold, so the line says so itself and only the colour stays bold  -->
+                        <TextBlock FontWeight="Normal"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap">
+                            <Run Text="You selected this color: " />
+                            <Run FontWeight="Bold" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorEyeDropper}, Path=SelectedColor}" />
+                            <LineBreak />
+                            <Run Text="Press and hold to select a different color from screen." />
+                        </TextBlock>
+                    </mah:ColorEyeDropper>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

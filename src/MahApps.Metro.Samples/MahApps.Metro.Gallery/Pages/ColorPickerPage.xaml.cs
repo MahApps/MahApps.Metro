@@ -28,6 +28,11 @@ namespace MahApps.Metro.Gallery.Pages
             Options(this.DropperExample, this.Dropper);
             Options(this.DropperWin10Example, this.DropperWin10);
             Options(this.DropperWinUIExample, this.DropperWinUI);
+
+            // the content of this one is the sample, so it is not an option to type over
+            this.DropperContentExample.Watch(this.DropperWithContent,
+                                             ColorEyeDropper.SelectedColorProperty,
+                                             IsEnabledProperty);
         }
 
         private static void Options(ControlExample example, ColorEyeDropper dropper)
