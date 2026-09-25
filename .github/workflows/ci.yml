@@ -89,9 +89,15 @@ jobs:
       # tried out without waiting for the next release on nuget.org. Every push leaves a version
       # there; a rerun of the same commit finds its own version already on the shelf, which is
       # what --skip-duplicate is for.
+      # The shell resolves the name, rather than dotnet: it takes a star of its own but does not
+      # find anything behind one written with forward slashes on Windows.
       - name: Put the package on the shelf
         if: github.event_name == 'push'
-        run: dotnet nuget push "Publish/signed/*.nupkg" --source "https://nuget.pkg.github.com/MahApps/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem -Path Publish/signed -Filter *.nupkg | Select-Object -First 1
+          if (-not $package) { throw "No package to push in Publish/signed" }
+          dotnet nuget push $package.FullName --source "https://nuget.pkg.github.com/MahApps/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
 
       # A test run that was cut off for hanging leaves behind the name of the test that stopped
       # moving, which is of no use on an agent that is about to be thrown away. The dump next to it
