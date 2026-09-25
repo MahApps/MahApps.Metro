@@ -309,9 +309,47 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(dropper.BorderBrush, Is.SameAs(reference.BorderBrush), "the frame");
                     Assert.That(dropper.BorderThickness, Is.EqualTo(reference.BorderThickness), "how thick that frame is");
                     Assert.That(dropper.Foreground, Is.SameAs(reference.Foreground), "the glyph on it");
-                    Assert.That(dropper.Padding, Is.EqualTo(reference.Padding), "where that glyph stands");
+                    Assert.That(dropper.Padding.Left, Is.EqualTo(reference.Padding.Left), "the air either side of that glyph");
+                    Assert.That(dropper.Padding.Right, Is.EqualTo(reference.Padding.Right), "on both sides");
+                    // the button leaves a unit more under a line of text than over it; a pipette wants the same either way
+                    Assert.That(dropper.Padding.Bottom, Is.EqualTo(dropper.Padding.Top), "and the same over it as under it");
                     Assert.That(ControlsHelper.GetDisabledVisualElementVisibility(dropper), Is.EqualTo(Visibility.Collapsed), "and no veil over one that is off");
                     Assert.That(onTheCanvas?.BasedOn, Is.SameAs(Application.Current.FindResource(onTheCanvasKey)), "the canvas should hand its dropper the one of its set");
+                });
+        }
+
+        [TestCase("MahApps.Styles.ColorEyeDropper")]
+        [TestCase("MahApps.Styles.ColorEyeDropper.Win10")]
+        [TestCase("MahApps.Styles.ColorEyeDropper.WinUI")]
+        [Description("The pipette stands in the middle of the dropper however tall the row it is stretched into, so the air over it is the air under it.")]
+        public void ThePipetteStandsInTheMiddle(string key)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var dropper = new ColorEyeDropper
+                          {
+                              Style = (Style)Application.Current.FindResource(key),
+                              Width = 60,
+                              Height = 60,
+                              VerticalAlignment = VerticalAlignment.Top
+                          };
+
+            this.window!.Content = dropper;
+            this.Settle();
+
+            var glyph = dropper.FindChild<Viewbox>(null);
+            Assert.That(glyph, Is.Not.Null, "the dropper should draw a pipette");
+
+            var over = glyph!.TranslatePoint(new Point(0, 0), dropper);
+            var under = dropper.ActualHeight - (over.Y + glyph.ActualHeight);
+            var left = over.X;
+            var right = dropper.ActualWidth - (left + glyph.ActualWidth);
+
+            Assert.Multiple(() =>
+                {
+                    // a device pixel at 125 percent is eight tenths of a unit, and layout rounding spends it at one end or the other
+                    Assert.That(under, Is.EqualTo(over.Y).Within(1), $"over {over.Y}, under {under}");
+                    Assert.That(right, Is.EqualTo(left).Within(1), $"left {left}, right {right}");
                 });
         }
 
