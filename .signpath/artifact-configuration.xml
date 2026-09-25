@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The copy in the SignPath portal is the one that signs, under the project MahApps.Metro with the
+  slug nuget-package. This one is here so that a change to it is reviewed like any other change.
+
+  The workflow hands the package over as the file it is rather than as a zip around it, so the root
+  here is the package. What lies inside it is signed first, one library per target framework, and
+  the package itself after that, which is the order SignPath reads this in.
+-->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <nupkg-file>
+    <directory path="lib">
+      <directory path="*" max-matches="unbounded">
+        <pe-file path="MahApps.Metro.dll">
+          <authenticode-sign />
+        </pe-file>
+      </directory>
+    </directory>
+    <nuget-sign />
+  </nupkg-file>
+</artifact-configuration>

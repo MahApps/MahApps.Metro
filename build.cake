@@ -7,7 +7,6 @@
 #tool dotnet:?package=GitReleaseManager.Tool&version=0.15.0
 #tool dotnet:?package=XamlStyler.Console&version=3.2404.2
 #tool nuget:?package=GitVersion.CommandLine&version=5.12.0
-#addin nuget:?package=Cake.Powershell&version=4.0.0&loaddependencies=true
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -30,13 +29,6 @@ var gitVersionPath = Context.Tools.Resolve("gitversion.exe");
 
 var styler = Context.Tools.Resolve("xstyler.exe");
 var stylerFile = baseDir + "/Settings.XAMLStyler";
-
-// The SignPath PowerShell module (https://www.powershellgallery.com/packages/SignPath)
-var signPathModuleVersion = "4.4.6";
-var signPathModuleDir = Directory(baseDir + "/tools/SignPath." + signPathModuleVersion);
-var signPathSigningPolicySlug = "test-signing";
-// The default artifact configuration signs pe-files, NuGet packages need their own one
-var signPathNuGetArtifactConfigurationSlug = "nuget-package";
 
 public class BuildData
 {
@@ -288,28 +280,6 @@ Task("SignNuGet")
     }
 });
 
-Task("SignPath_Files")
-    .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
-    .OnError(exception => Error(exception.ToString())) // continue on error, but log the reason
-    .Does(() =>
-{
-    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro*.dll");
-    SignPathSignFiles(files, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
-
-    files = GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe");
-    SignPathSignFiles(files, "Demo application of MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
-});
-
-Task("SignPath_NuGet")
-    .WithCriteria<BuildData>((context, data) => !data.IsPullRequest)
-    .WithCriteria<BuildData>((context, data) => DirectoryExists(Directory(publishDir)))
-    .OnError(exception => Error(exception.ToString())) // continue on error, but log the reason
-    .Does(() =>
-{
-    var nugetFiles = GetFiles(publishDir + "/*.nupkg");
-    SignPathSignFiles(nugetFiles, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.", signPathNuGetArtifactConfigurationSlug);
-});
-
 Task("Zip")
     .Does<BuildData>(data =>
 {
@@ -448,98 +418,6 @@ void SignFiles(IEnumerable<FilePath> files, string description)
                     );
 }
 
-// Downloads the SignPath PowerShell module from the PowerShell Gallery, because it can't be restored
-// with a #tool directive (Cake doesn't find any assemblies inside a plain PowerShell module package).
-FilePath GetSignPathModule()
-{
-    var modulePath = new FilePath(MakeAbsolute(signPathModuleDir).FullPath + "/SignPath.psd1");
-
-    if (!FileExists(modulePath))
-    {
-        var packagePath = new FilePath(MakeAbsolute(signPathModuleDir).FullPath + ".nupkg");
-
-        Information($"Downloading the SignPath PowerShell module {signPathModuleVersion}");
-
-        DownloadFile($"https://www.powershellgallery.com/api/v2/package/SignPath/{signPathModuleVersion}", packagePath);
-        Unzip(packagePath, signPathModuleDir);
-        DeleteFile(packagePath);
-    }
-
-    if (!FileExists(modulePath))
-    {
-        throw new Exception($"Could not find the SignPath PowerShell module: {modulePath}");
-    }
-
-    return modulePath;
-}
-
-// Signs the given files with SignPath (https://about.signpath.io/).
-// The user of the api token must be a submitter for the given signing policy!
-void SignPathSignFiles(IEnumerable<FilePath> files, string description, string artifactConfigurationSlug = null)
-{
-    var organizationId = EnvironmentVariable("SignPath_OrganizationId");
-    if(string.IsNullOrWhiteSpace(organizationId)) {
-        Error("Could not resolve the SignPath organization id (SignPath_OrganizationId).");
-        return;
-    }
-
-    var apiToken = EnvironmentVariable("SignPath_ApiToken");
-    if(string.IsNullOrWhiteSpace(apiToken)) {
-        Error("Could not resolve the SignPath api token (SignPath_ApiToken).");
-        return;
-    }
-
-    var modulePath = GetSignPathModule();
-
-    // Cake.Powershell hosts PowerShell in process, so this sets the execution policy of the process scope.
-    // Without it the module can't be imported on a build agent which has scripts disabled.
-    System.Environment.SetEnvironmentVariable("PSExecutionPolicyPreference", "Bypass");
-
-    foreach(var file in files)
-    {
-        Information($"Sign file: {file}");
-
-        var inputArtifact = MakeAbsolute(file);
-        var outputArtifact = new FilePath(inputArtifact.FullPath + ".signed");
-
-        if (FileExists(outputArtifact))
-        {
-            DeleteFile(outputArtifact);
-        }
-
-        StartPowershellScript("Submit-SigningRequest",
-                                new PowershellSettings { FormatOutput = true, LogOutput = true, ExceptionOnScriptError = true }
-                                    .WithModule($"'{modulePath.FullPath}'") // Cake.Powershell doesn't quote the module itself
-                                    .WithArguments(args =>
-                                    {
-                                        args.AppendQuoted("InputArtifactPath", inputArtifact.FullPath)
-                                            .AppendQuoted("OutputArtifactPath", outputArtifact.FullPath)
-                                            .AppendQuotedSecret("ApiToken", apiToken)
-                                            .AppendQuotedSecret("OrganizationId", organizationId)
-                                            .AppendQuoted("ProjectSlug", repoName)
-                                            .AppendQuoted("SigningPolicySlug", signPathSigningPolicySlug)
-                                            .AppendQuoted("Description", description);
-
-                                        if (!string.IsNullOrWhiteSpace(artifactConfigurationSlug))
-                                        {
-                                            args.AppendQuoted("ArtifactConfigurationSlug", artifactConfigurationSlug);
-                                        }
-
-                                        args.Append("-WaitForCompletion")
-                                            .Append("-Verbose 3>&1 4>&1"); // redirect the warning and verbose stream, so that Cake logs them too
-                                    }));
-
-        if (!FileExists(outputArtifact))
-        {
-            throw new Exception($"The signed file was not created: {outputArtifact}");
-        }
-
-        // Replace the original file with the signed one
-        DeleteFile(inputArtifact);
-        MoveFile(outputArtifact, inputArtifact);
-    }
-}
-
 void ExecuteProcess(FilePath fileName, ProcessArgumentBuilder arguments, string workingDirectory = null)
 {
   if (!FileExists(fileName))
@@ -599,11 +477,11 @@ Task("Default")
     .IsDependentOn("Tests")
     ;
 
+// The signing happens after this, in the workflow itself, because SignPath only verifies where a
+// build came from when the request is made by the build system rather than by a script it ran.
 Task("ci")
     .IsDependentOn("Default")
-    .IsDependentOn("SignPath_Files")
     .IsDependentOn("Pack")
-    .IsDependentOn("SignPath_NuGet")
     .IsDependentOn("Zip")
     ;
 

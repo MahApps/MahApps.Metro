@@ -19,12 +19,6 @@ environment:
     secure: CUpRJxMLeUZwNPMcqI0wECaWfy5AMnWn1UZhBd9WnQ3Z16lJP1Vzrkf24mccbhUD
   azure-key-vault-certificate:
     secure: BSPdW2TgnQtoQXXbeDECug==
-  SignPath_ApiToken:
-    secure: IsW0HCtIqBHi8oOjEOdFIc8T0Nur5ooPTqK4+aDT57EC+RgK5FIM+hBfhkFTRRZu
-  SignPath_OrganizationId:
-    secure: aGxEA2pQI61oOKRFVW3jWQ4+IwST32pdb4uy1W6g7HyD5jrZpWEjLwvD4uLHYlRh
-  SignPath_SigningPolicySlug:
-    secure: SWZaNfP7arLimR05NS08cw==
 
 image: Visual Studio 2026
 test: false

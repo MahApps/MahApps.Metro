@@ -10,6 +10,11 @@ on:
     branches:
       - develop
 
+permissions:
+  # what SignPath reads to see which workflow run an artifact came out of
+  actions: read
+  contents: read
+
 jobs:
   windows-latest:
     name: windows-latest
@@ -38,9 +43,41 @@ jobs:
           azure-key-vault-tenant-id: ${{ secrets.AZURE_KEY_VAULT_TENANT_ID }}
           azure-key-vault-client-secret: ${{ secrets.AZURE_KEY_VAULT_CLIENT_SECRET }}
           azure-key-vault-certificate: ${{ secrets.AZURE_KEY_VAULT_CERTIFICATE }}
-          SignPath_ApiToken: ${{ secrets.SIGNPATH_APITOKEN }}
-          SignPath_OrganizationId: ${{ secrets.SIGNPATH_ORGANIZATIONID }}
-          SignPath_SigningPolicySlug: ${{ secrets.SIGNPATH_SIGNINGPOLICYSLUG }}
+
+      # SignPath signs what this workflow hands it, rather than what a build script uploads, and it
+      # reads the repository, the branch, the commit and the run from GitHub itself. That is what
+      # makes the origin of a package something SignPath knows rather than something we claim.
+      # The package goes up as the file it is instead of a zip around it, so that the artifact
+      # configuration on the other side is the one for a NuGet package.
+      - name: Hand the package to GitHub
+        id: unsigned-package
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          path: Publish/*.nupkg
+          archive: false
+          if-no-files-found: error
+
+      - name: Let SignPath sign it
+        if: github.event_name == 'push'
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_APITOKEN }}
+          organization-id: ${{ secrets.SIGNPATH_ORGANIZATIONID }}
+          project-slug: MahApps.Metro
+          signing-policy-slug: ${{ secrets.SIGNPATH_SIGNINGPOLICYSLUG }}
+          artifact-configuration-slug: nuget-package
+          github-artifact-id: ${{ steps.unsigned-package.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: Publish/signed
+
+      - name: Keep the signed package
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          name: signed-package
+          path: Publish/signed/*.nupkg
+          if-no-files-found: error
 
       # A test run that was cut off for hanging leaves behind the name of the test that stopped
       # moving, which is of no use on an agent that is about to be thrown away. The dump next to it
