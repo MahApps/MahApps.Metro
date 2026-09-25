@@ -53,6 +53,32 @@
                         </mah:SplitButton>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="Menu" />
+                        <Menu HorizontalAlignment="Left">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="New" InputGestureText="Ctrl+N" />
+                                <MenuItem Header="Open" InputGestureText="Ctrl+O" />
+                                <Separator />
+                                <MenuItem Header="Export as">
+                                    <MenuItem Header="PDF" />
+                                    <MenuItem Header="HTML" />
+                                </MenuItem>
+                                <MenuItem Header="Print"
+                                          InputGestureText="Ctrl+P"
+                                          IsEnabled="False" />
+                            </MenuItem>
+                            <MenuItem Header="_View">
+                                <MenuItem Header="Word wrap"
+                                          IsCheckable="True"
+                                          IsChecked="True" />
+                                <MenuItem Header="Show line numbers" IsCheckable="True" />
+                            </MenuItem>
+                            <MenuItem Header="_Help">
+                                <MenuItem Header="About" />
+                            </MenuItem>
+                        </Menu>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="TextBox" />
                         <TextBox mah:TextBoxHelper.ClearTextButton="True"
                                  mah:TextBoxHelper.Watermark="Type a name"

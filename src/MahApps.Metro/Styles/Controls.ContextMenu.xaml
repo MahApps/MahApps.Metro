@@ -72,4 +72,79 @@
         <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem}" />
     </ContextMenu>
 
+
+    <!--
+        The menu on the right button is the same flyout a submenu comes up in, so it takes the same
+        fill, the same frame and, in the WinUI look, the same rounding and the same air above and
+        below its rows.
+    -->
+    <Style x:Key="MahApps.Styles.ContextMenu.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ContextMenu}"
+           TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBorderBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Foreground}" />
+        <Setter Property="Padding" Value="0 1" />
+    </Style>
+
+
+    <!--
+        The menu on the right button of the WinUI set. It is the flyout of a submenu, so it casts
+        the same shadow, and the room that shadow needs is given back by the offsets in the style
+        below, so the menu still comes up where the pointer left it.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.ContextMenu.WinUI" TargetType="{x:Type ContextMenu}">
+        <Border x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="Border" Path="CornerRadius" />
+                        <Binding ElementName="Border" Path="BorderThickness" />
+                        <Binding ElementName="Border" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <ScrollViewer x:Name="SubMenuScrollViewer"
+                              CanContentScroll="True"
+                              Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                    <ItemsPresenter x:Name="ItemsPresenter"
+                                    Margin="{TemplateBinding Padding}"
+                                    Grid.IsSharedSizeScope="True"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                    KeyboardNavigation.TabNavigation="Cycle"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </ScrollViewer>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="HasDropShadow" Value="True">
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu.WinUI}" />
+                <Setter TargetName="Border" Property="Margin" Value="{DynamicResource MahApps.Thickness.Menu.WinUI.ShadowMargin}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ContextMenu.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ContextMenu.Win10}"
+           TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Foreground}" />
+        <Setter Property="HorizontalOffset" Value="-8" />
+        <Setter Property="Padding" Value="0 2" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ContextMenu.WinUI}" />
+        <Setter Property="VerticalOffset" Value="-4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
+    </Style>
+
 </ResourceDictionary>

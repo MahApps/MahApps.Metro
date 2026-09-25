@@ -41,7 +41,9 @@
                                       IsChecked="True" />
                             <MenuItem Header="Show line numbers" IsCheckable="True" />
                         </MenuItem>
-                        <MenuItem Header="_Help" />
+                        <MenuItem Header="_Help">
+                            <MenuItem Header="About" />
+                        </MenuItem>
                     </Menu>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
@@ -73,6 +75,148 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The same menu in the Windows 10 set. A row of it is a row of that set's list: square, thirty two units high, and filled the way a list row fills under the pointer. The bar at the top wears the same row as a tile."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="Menu.Win10">
+                    <StackPanel>
+                        <Menu x:Name="Win10Bar"
+                              HorizontalAlignment="Left"
+                              Style="{StaticResource MahApps.Styles.Menu.Win10}">
+                            <Menu.Resources>
+                                <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="{x:Type MenuItem}" />
+                                <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+                                       BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"
+                                       TargetType="{x:Type Separator}" />
+                            </Menu.Resources>
+                            <MenuItem Header="_File">
+                                <MenuItem Header="New" InputGestureText="Ctrl+N">
+                                    <MenuItem.Icon>
+                                        <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" Text="&#xE8A5;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Open" InputGestureText="Ctrl+O" />
+                                <Separator />
+                                <MenuItem Header="Export as">
+                                    <MenuItem Header="PDF" />
+                                    <MenuItem Header="HTML" />
+                                </MenuItem>
+                                <MenuItem Header="Print"
+                                          InputGestureText="Ctrl+P"
+                                          IsEnabled="False" />
+                            </MenuItem>
+                            <MenuItem Header="_View">
+                                <MenuItem Header="Word wrap"
+                                          IsCheckable="True"
+                                          IsChecked="True" />
+                                <MenuItem Header="Show line numbers" IsCheckable="True" />
+                            </MenuItem>
+                            <MenuItem Header="_Help">
+                                <MenuItem Header="About" />
+                            </MenuItem>
+                        </Menu>
+                        <Border x:Name="Win10Strip"
+                                Width="360"
+                                Height="90"
+                                Margin="0 12 0 0"
+                                HorizontalAlignment="Left"
+                                Background="{DynamicResource MahApps.Brushes.Gray10}">
+                            <Border.ContextMenu>
+                                <ContextMenu Style="{StaticResource MahApps.Styles.ContextMenu.Win10}">
+                                    <ContextMenu.Resources>
+                                        <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="{x:Type MenuItem}" />
+                                        <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+                                               BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"
+                                               TargetType="{x:Type Separator}" />
+                                    </ContextMenu.Resources>
+                                    <MenuItem Header="Cut" InputGestureText="Ctrl+X" />
+                                    <MenuItem Header="Copy" InputGestureText="Ctrl+C" />
+                                    <Separator />
+                                    <MenuItem Header="Word wrap"
+                                              IsCheckable="True"
+                                              IsChecked="True" />
+                                </ContextMenu>
+                            </Border.ContextMenu>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                       Text="Right click in here" />
+                        </Border>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI set, where a row is a rounded tile with air around it and the flyout it stands in is rounded by the number that set rounds a flyout by. Both looks come from merging Styles/WinUI/Controls.xaml; the styles are named here because the gallery itself wears the Metro look."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="Menu.WinUI">
+                    <StackPanel>
+                        <Menu x:Name="WinUIBar"
+                              HorizontalAlignment="Left"
+                              Style="{StaticResource MahApps.Styles.Menu.WinUI}">
+                            <Menu.Resources>
+                                <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="{x:Type MenuItem}" />
+                                <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+                                       BasedOn="{StaticResource MahApps.Styles.Separator.Menu.WinUI}"
+                                       TargetType="{x:Type Separator}" />
+                            </Menu.Resources>
+                            <MenuItem Header="_File">
+                                <MenuItem Header="New" InputGestureText="Ctrl+N">
+                                    <MenuItem.Icon>
+                                        <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" Text="&#xE8A5;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Open" InputGestureText="Ctrl+O" />
+                                <Separator />
+                                <MenuItem Header="Export as">
+                                    <MenuItem Header="PDF" />
+                                    <MenuItem Header="HTML" />
+                                </MenuItem>
+                                <MenuItem Header="Print"
+                                          InputGestureText="Ctrl+P"
+                                          IsEnabled="False" />
+                            </MenuItem>
+                            <MenuItem Header="_View">
+                                <MenuItem Header="Word wrap"
+                                          IsCheckable="True"
+                                          IsChecked="True" />
+                                <MenuItem Header="Show line numbers" IsCheckable="True" />
+                            </MenuItem>
+                            <MenuItem Header="_Help">
+                                <MenuItem Header="About" />
+                            </MenuItem>
+                        </Menu>
+                        <Border x:Name="WinUIStrip"
+                                Width="360"
+                                Height="90"
+                                Margin="0 12 0 0"
+                                HorizontalAlignment="Left"
+                                Background="{DynamicResource MahApps.Brushes.Gray10}">
+                            <Border.ContextMenu>
+                                <ContextMenu Style="{StaticResource MahApps.Styles.ContextMenu.WinUI}">
+                                    <ContextMenu.Resources>
+                                        <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="{x:Type MenuItem}" />
+                                        <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+                                               BasedOn="{StaticResource MahApps.Styles.Separator.Menu.WinUI}"
+                                               TargetType="{x:Type Separator}" />
+                                    </ContextMenu.Resources>
+                                    <MenuItem Header="Cut" InputGestureText="Ctrl+X" />
+                                    <MenuItem Header="Copy" InputGestureText="Ctrl+C" />
+                                    <Separator />
+                                    <MenuItem Header="Word wrap"
+                                              IsCheckable="True"
+                                              IsChecked="True" />
+                                </ContextMenu>
+                            </Border.ContextMenu>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                                       Text="Right click in here" />
+                        </Border>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

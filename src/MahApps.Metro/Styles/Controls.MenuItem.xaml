@@ -515,4 +515,564 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!--
+        The two Windows looks of a menu, GH-3328. A row of either of them is a row of that set's
+        list: the same height, the same padding, the same fill under the pointer, and the words in
+        the colour that set writes in. The bar at the top wears that row as a tile and the flyout
+        under it as a line, and what tells a header from an item is the chevron at its right hand
+        end. So each set brings two templates rather than four.
+    -->
+
+    <ControlTemplate x:Key="MahApps.Templates.MenuItem.TopLevel.Win10" TargetType="{x:Type MenuItem}">
+        <Grid SnapsToDevicePixels="True">
+            <Border x:Name="Background"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <StackPanel Margin="{TemplateBinding Padding}"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <!--  an icon of any size is brought down to the sixteen units this set draws one at, and one already smaller is left where it is rather than blown up  -->
+                <Viewbox x:Name="Icon"
+                         Width="16"
+                         Height="16"
+                         Margin="0 0 8 0"
+                         VerticalAlignment="Center"
+                         StretchDirection="DownOnly">
+                    <ContentPresenter ContentSource="Icon" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </Viewbox>
+                <mah:FontIcon x:Name="CheckGlyph"
+                              Margin="0 0 8 0"
+                              VerticalAlignment="Center"
+                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Foreground="{TemplateBinding Foreground}"
+                              Glyph="&#xE73E;"
+                              Visibility="Collapsed" />
+                <ContentPresenter VerticalAlignment="Center"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </StackPanel>
+            <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
+                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                <Border x:Name="Border"
+                        Padding="0 1"
+                        Background="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBackground}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="0"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid x:Name="ContentGrid">
+                        <Grid.Clip>
+                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                <Binding ElementName="Border" Path="CornerRadius" />
+                                <Binding ElementName="Border" Path="BorderThickness" />
+                                <Binding ElementName="Border" Path="Padding" />
+                            </MultiBinding>
+                        </Grid.Clip>
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+            </Trigger>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundPointerOver}" />
+            </Trigger>
+            <!--  while the flyout is down the tile stays in the colour it takes under the finger  -->
+            <Trigger Property="IsSubmenuOpen" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.BackgroundPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundDisabled}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.MenuItem.Submenu.Win10" TargetType="{x:Type MenuItem}">
+        <Grid SnapsToDevicePixels="True">
+            <Border x:Name="Background"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <Grid Margin="{TemplateBinding Padding}">
+                <Grid.ColumnDefinitions>
+                    <!--  the column the icon and the check mark share is measured across the whole menu, so it takes no room at all where nothing in that menu carries either  -->
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="Icon"
+                         Width="16"
+                         Height="16"
+                         Margin="0 0 12 0"
+                         VerticalAlignment="Center"
+                         StretchDirection="DownOnly">
+                    <ContentPresenter ContentSource="Icon" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </Viewbox>
+                <mah:FontIcon x:Name="CheckGlyph"
+                              Margin="0 0 12 0"
+                              VerticalAlignment="Center"
+                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Foreground="{TemplateBinding Foreground}"
+                              Glyph="&#xE73E;"
+                              Visibility="Collapsed" />
+                <ContentPresenter Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <!--  the shortcut and the chevron are the quiet end of the row, so they take the second colour of the set rather than the one the words are in  -->
+                <TextBlock x:Name="InputGestureText"
+                           Grid.Column="2"
+                           Margin="24 0 0 0"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource MahApps.Brushes.MenuItem.Win10.Chevron}"
+                           Text="{TemplateBinding InputGestureText}"
+                           TextAlignment="Right" />
+                <mah:FontIcon x:Name="Chevron"
+                              Grid.Column="3"
+                              Margin="24 0 0 0"
+                              VerticalAlignment="Center"
+                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Foreground="{DynamicResource MahApps.Brushes.MenuItem.Win10.Chevron}"
+                              Glyph="&#xE76C;"
+                              Visibility="Collapsed" />
+            </Grid>
+            <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
+                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Right"
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                   VerticalOffset="-1">
+                <Border x:Name="Border"
+                        Padding="0 1"
+                        Background="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBackground}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="0"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid x:Name="ContentGrid">
+                        <Grid.Clip>
+                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                <Binding ElementName="Border" Path="CornerRadius" />
+                                <Binding ElementName="Border" Path="BorderThickness" />
+                                <Binding ElementName="Border" Path="Padding" />
+                            </MultiBinding>
+                        </Grid.Clip>
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+            </Trigger>
+            <!--  a header says with the chevron that there is another menu behind it; an item has nothing there and gives the room back  -->
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter TargetName="Chevron" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundDisabled}" />
+                <Setter TargetName="Chevron" Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundDisabled}" />
+                <Setter TargetName="InputGestureText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.ForegroundDisabled}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.MenuItem.TopLevel.WinUI" TargetType="{x:Type MenuItem}">
+        <Grid SnapsToDevicePixels="True">
+            <Border x:Name="Background"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <StackPanel Margin="{TemplateBinding Padding}"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <!--  an icon of any size is brought down to the sixteen units this set draws one at, and one already smaller is left where it is rather than blown up  -->
+                <Viewbox x:Name="Icon"
+                         Width="16"
+                         Height="16"
+                         Margin="0 0 8 0"
+                         VerticalAlignment="Center"
+                         StretchDirection="DownOnly">
+                    <ContentPresenter ContentSource="Icon" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </Viewbox>
+                <mah:FontIcon x:Name="CheckGlyph"
+                              Margin="0 0 8 0"
+                              VerticalAlignment="Center"
+                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Foreground="{TemplateBinding Foreground}"
+                              Glyph="&#xE73E;"
+                              Visibility="Collapsed" />
+                <ContentPresenter VerticalAlignment="Center"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </StackPanel>
+            <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
+                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                <Border x:Name="Border"
+                        Padding="0 2"
+                        Background="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBackground}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid x:Name="ContentGrid">
+                        <Grid.Clip>
+                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                <Binding ElementName="Border" Path="CornerRadius" />
+                                <Binding ElementName="Border" Path="BorderThickness" />
+                                <Binding ElementName="Border" Path="Padding" />
+                            </MultiBinding>
+                        </Grid.Clip>
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+            </Trigger>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu.WinUI}" />
+                <Setter TargetName="Border" Property="Margin" Value="{DynamicResource MahApps.Thickness.Menu.WinUI.ShadowMargin}" />
+                <!--  and the room that margin keeps for the shadow is given back here, so the flyout still stands where it was placed  -->
+                <Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="-8" />
+                <Setter TargetName="PART_Popup" Property="VerticalOffset" Value="-4" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <!--  while the flyout is down the tile stays in the colour it takes under the finger  -->
+            <Trigger Property="IsSubmenuOpen" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.BackgroundPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.MenuItem.Submenu.WinUI" TargetType="{x:Type MenuItem}">
+        <Grid SnapsToDevicePixels="True">
+            <Border x:Name="Background"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <Grid Margin="{TemplateBinding Padding}">
+                <Grid.ColumnDefinitions>
+                    <!--  the column the icon and the check mark share is measured across the whole menu, so it takes no room at all where nothing in that menu carries either  -->
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="Icon"
+                         Width="16"
+                         Height="16"
+                         Margin="0 0 12 0"
+                         VerticalAlignment="Center"
+                         StretchDirection="DownOnly">
+                    <ContentPresenter ContentSource="Icon" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </Viewbox>
+                <mah:FontIcon x:Name="CheckGlyph"
+                              Margin="0 0 12 0"
+                              VerticalAlignment="Center"
+                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Foreground="{TemplateBinding Foreground}"
+                              Glyph="&#xE73E;"
+                              Visibility="Collapsed" />
+                <ContentPresenter Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <!--  the shortcut and the chevron are the quiet end of the row, so they take the second colour of the set rather than the one the words are in  -->
+                <TextBlock x:Name="InputGestureText"
+                           Grid.Column="2"
+                           Margin="24 0 0 0"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Chevron}"
+                           Text="{TemplateBinding InputGestureText}"
+                           TextAlignment="Right" />
+                <mah:FontIcon x:Name="Chevron"
+                              Grid.Column="3"
+                              Margin="24 0 0 0"
+                              VerticalAlignment="Center"
+                              FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Foreground="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Chevron}"
+                              Glyph="&#xE974;"
+                              Visibility="Collapsed" />
+            </Grid>
+            <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
+                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Right"
+                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                   VerticalOffset="-4">
+                <Border x:Name="Border"
+                        Padding="0 2"
+                        Background="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBackground}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid x:Name="ContentGrid">
+                        <Grid.Clip>
+                            <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                            <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                                <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                                <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                                <Binding ElementName="Border" Path="CornerRadius" />
+                                <Binding ElementName="Border" Path="BorderThickness" />
+                                <Binding ElementName="Border" Path="Padding" />
+                            </MultiBinding>
+                        </Grid.Clip>
+                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                      CanContentScroll="True"
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                            Grid.IsSharedSizeScope="True"
+                                            KeyboardNavigation.DirectionalNavigation="Cycle"
+                                            KeyboardNavigation.TabNavigation="Cycle"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+            </Trigger>
+            <!--  a header says with the chevron that there is another menu behind it; an item has nothing there and gives the room back  -->
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter TargetName="Chevron" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+                <Setter TargetName="Border" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu.WinUI}" />
+                <Setter TargetName="Border" Property="Margin" Value="{DynamicResource MahApps.Thickness.Menu.WinUI.ShadowMargin}" />
+                <!--  and the room that margin keeps for the shadow is given back here, so the flyout still stands where it was placed  -->
+                <Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="-8" />
+                <Setter TargetName="PART_Popup" Property="VerticalOffset" Value="-8" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundDisabled}" />
+                <Setter TargetName="Chevron" Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundDisabled}" />
+                <Setter TargetName="InputGestureText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  The line between two groups of a Windows menu: one unit, edge to edge, in a colour of its own.  -->
+    <Style x:Key="MahApps.Styles.Separator.Menu.Win10" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Win10.Separator}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Margin" Value="0 2" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Rectangle Height="1"
+                               Fill="{TemplateBinding Background}"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                               UseLayoutRounding="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Separator.Menu.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"
+           TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.Separator}" />
+    </Style>
+
+    <!--
+        The Windows 10 menu item. The four roles a menu item can be in take one of the two
+        templates, and each role brings the padding it stands in, since the padding of a role is
+        set by a trigger in the style this one stands on and a trigger beats a plain setter.
+    -->
+    <Style x:Key="MahApps.Styles.MenuItem.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem}"
+           TargetType="{x:Type MenuItem}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Background}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Foreground}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="11 5 11 7" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.Win10}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Style.Triggers>
+            <Trigger Property="Role" Value="TopLevelHeader">
+                <Setter Property="Padding" Value="11 5 11 7" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.TopLevel.Win10}" />
+            </Trigger>
+            <Trigger Property="Role" Value="TopLevelItem">
+                <Setter Property="Padding" Value="11 5 11 7" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.TopLevel.Win10}" />
+            </Trigger>
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter Property="Padding" Value="11 5 11 7" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.Win10}" />
+            </Trigger>
+            <Trigger Property="Role" Value="SubmenuItem">
+                <Setter Property="Padding" Value="11 5 11 7" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.Win10}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        And the WinUI one on top of it: the row is a rounded tile with air around it rather than a
+        line that goes edge to edge, which is what a flyout of that set does with its rows.
+    -->
+    <Style x:Key="MahApps.Styles.MenuItem.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}"
+           TargetType="{x:Type MenuItem}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Foreground}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.WinUI}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Style.Triggers>
+            <Trigger Property="Role" Value="TopLevelHeader">
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="10 4 10 4" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.TopLevel.WinUI}" />
+            </Trigger>
+            <Trigger Property="Role" Value="TopLevelItem">
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="10 4 10 4" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.TopLevel.WinUI}" />
+            </Trigger>
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter Property="Margin" Value="4 2" />
+                <Setter Property="Padding" Value="11 4 11 5" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.WinUI}" />
+            </Trigger>
+            <Trigger Property="Role" Value="SubmenuItem">
+                <Setter Property="Margin" Value="4 2" />
+                <Setter Property="Padding" Value="11 4 11 5" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.WinUI}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

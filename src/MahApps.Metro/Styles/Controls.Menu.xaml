@@ -41,4 +41,30 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     </Style>
 
+
+    <!--
+        The bar of the two Windows looks. It carries nothing of its own: no fill, no frame, no line
+        under it, since what a Windows menu bar shows is the tile under the pointer and nothing
+        else. The WinUI one is the taller of the two, because its tiles keep four units of air all
+        the way round.
+    -->
+    <Style x:Key="MahApps.Styles.Menu.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Menu}"
+           TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Win10.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Foreground}" />
+        <Setter Property="MinHeight" Value="32" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Menu.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Menu.Win10}"
+           TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Foreground}" />
+        <Setter Property="MinHeight" Value="40" />
+    </Style>
+
 </ResourceDictionary>

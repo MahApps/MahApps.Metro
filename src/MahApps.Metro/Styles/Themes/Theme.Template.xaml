@@ -440,6 +440,8 @@
     <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDisabled">{{MahApps.Colors.WinUI.ControlStrongStrokeDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.AccentFillDisabled">{{MahApps.Colors.WinUI.AccentFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextOnAccentDisabled">{{MahApps.Colors.WinUI.TextOnAccentDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SurfaceStrokeFlyout">{{MahApps.Colors.WinUI.SurfaceStrokeFlyout}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.FlyoutShadow">{{MahApps.Colors.WinUI.FlyoutShadow}}</Color>
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Background" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
@@ -507,6 +509,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" options:Freeze="True" />
+    <!--  the line around a flyout, which WinUI draws darker than the flyout rather than lighter, so that the shadow under it and this line together are what lift it off the page  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SurfaceStrokeFlyout" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeFlyout}" options:Freeze="True" />
     <!--
         The two strokes WinUI draws around a control filled with the accent. The upper one is a
         thin white, the lower one a black, so the frame reads as a lit edge above and a shadow
@@ -812,6 +816,33 @@
     <!--  Resources for MahApps.Styles.SplitButton.Win10 and .WinUI  -->
     <markup:StaticResource x:Key="MahApps.Brushes.SplitButton.Win10.Divider" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.SplitButton.WinUI.Divider" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+
+    <!--  Resources for MahApps.Styles.Menu.Win10, MahApps.Styles.ContextMenu.Win10 and MahApps.Styles.MenuItem.Win10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.Win10.FlyoutBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.Win10.FlyoutBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransientBorder" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.Win10.Separator" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.Win10.Chevron" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
+
+    <!--  Resources for MahApps.Styles.Menu.WinUI, MahApps.Styles.ContextMenu.WinUI and MahApps.Styles.MenuItem.WinUI  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.WinUI.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <!--  the flyout of a menu is the drop-down of that set's combo box, but named from the brush behind it rather than from that drop-down, since a name here is looked up while this file is read and the combo box is further down it  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.WinUI.FlyoutBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.WinUI.FlyoutBorderBrush" ResourceKey="MahApps.Brushes.WinUI.SurfaceStrokeFlyout" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Menu.WinUI.Separator" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.BackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.BackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.Chevron" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
 
     <!--  Resources for MahApps.Styles.RadioButton.WinUI  -->
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />

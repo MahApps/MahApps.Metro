@@ -21,6 +21,13 @@
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Win10}" TargetType="ComboBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Menu.Win10}" TargetType="Menu" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="MenuItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Win10}" TargetType="ContextMenu" />
+    <!--  the line between two groups of a menu is looked up by a key rather than by type, so the set hands its own over under that key  -->
+    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+           BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"
+           TargetType="{x:Type Separator}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Win10}" TargetType="RadioButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="ScrollBar" />
     <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
@@ -50,5 +57,15 @@
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.Win10}" TargetType="{x:Type mah:AnalogClock}" />
     <Style BasedOn="{StaticResource MahApps.Styles.DateTimePicker.Win10}" TargetType="{x:Type mah:DateTimePicker}" />
     <Style BasedOn="{StaticResource MahApps.Styles.TimePicker.Win10}" TargetType="{x:Type mah:TimePicker}" />
+
+
+    <!--  the menu a text box puts on the right button is a named resource rather than an implicit style, so a set that wants its own has to hand one over under the same name  -->
+    <ContextMenu x:Key="MahApps.TextBox.ContextMenu"
+                 x:Shared="False"
+                 Style="{StaticResource MahApps.Styles.ContextMenu.Win10}">
+        <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.Win10}" />
+        <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem.Win10}" />
+        <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem.Win10}" />
+    </ContextMenu>
 
 </ResourceDictionary>
