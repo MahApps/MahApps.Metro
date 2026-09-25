@@ -78,6 +78,12 @@
                     </StackPanel>
 
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ColorPicker" />
+                        <mah:ColorPicker mah:TextBoxHelper.ClearTextButton="True"
+                                         mah:TextBoxHelper.Watermark="Pick a colour"
+                                         SelectedColor="SteelBlue" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="DatePicker" />
                         <DatePicker mah:TextBoxHelper.ClearTextButton="True" SelectedDate="{x:Static system:DateTime.Now}" />
                     </StackPanel>
