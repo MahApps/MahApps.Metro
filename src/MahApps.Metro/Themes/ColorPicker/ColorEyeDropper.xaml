@@ -230,8 +230,8 @@
     <!--
         The same thing in the WinUI set: its button, down to the one unit of frame, the edge under it
         and the corners it rounds by. The eleven either side are what that button leaves around a
-        word; the five above and below are not, because what stands in here is a pipette rather than
-        a line of text.
+        word; what it leaves over and under a line of text is not, because a pipette wants the same
+        air either way and the frame takes a unit of it at the top only.
     -->
     <Style x:Key="MahApps.Styles.ColorEyeDropper.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.Win10}"
@@ -242,7 +242,8 @@
         <Setter Property="BorderThickness" Value="1 1 1 0" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
-        <Setter Property="Padding" Value="11 5" />
+        <!--  a unit more under the pipette than over it, because the frame draws no line along the bottom and the edge below it is not part of the layout  -->
+        <Setter Property="Padding" Value="11 5 11 6" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrush}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
