@@ -499,6 +499,9 @@
         <Style.Resources>
             <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}" TargetType="{x:Type TextBox}" />
             <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:NumericUpDown}" />
+            <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas"
+                   BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10}"
+                   TargetType="{x:Type mah:ColorEyeDropper}" />
         </Style.Resources>
     </Style>
 
@@ -509,6 +512,9 @@
         <Style.Resources>
             <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="{x:Type TextBox}" />
             <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}" TargetType="{x:Type mah:NumericUpDown}" />
+            <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas"
+                   BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI}"
+                   TargetType="{x:Type mah:ColorEyeDropper}" />
         </Style.Resources>
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>

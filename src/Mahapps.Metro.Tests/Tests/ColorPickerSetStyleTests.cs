@@ -292,6 +292,38 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(left, Has.Count.EqualTo(1), $"the boxes start at {string.Join(", ", left)}");
         }
 
+        [TestCase("MahApps.Styles.ColorEyeDropper.Win10", "MahApps.Styles.ColorCanvas.Win10", "MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10")]
+        [TestCase("MahApps.Styles.ColorEyeDropper.WinUI", "MahApps.Styles.ColorCanvas.WinUI", "MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI")]
+        [Description("The dropper is the button of its set, and a canvas of that set hands its own dropper to the one standing on it.")]
+        public void TheDropperIsTheButtonOfItsSet(string key, string canvasKey, string onTheCanvasKey)
+        {
+            var dropper = new ColorEyeDropper { Style = (Style)Application.Current.FindResource(key) };
+            var reference = new Button { Style = (Style)Application.Current.FindResource("MahApps.Styles.Button.Win10") };
+
+            var canvas = (Style)Application.Current.FindResource(canvasKey);
+            var onTheCanvas = (Style?)canvas.Resources["MahApps.Styles.ColorEyeDropper.ColorCanvas"];
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(dropper.Background, Is.SameAs(reference.Background), "the fill");
+                    Assert.That(dropper.BorderBrush, Is.SameAs(reference.BorderBrush), "the frame");
+                    Assert.That(dropper.BorderThickness, Is.EqualTo(reference.BorderThickness), "how thick that frame is");
+                    Assert.That(dropper.Foreground, Is.SameAs(reference.Foreground), "the glyph on it");
+                    Assert.That(dropper.Padding, Is.EqualTo(reference.Padding), "where that glyph stands");
+                    Assert.That(ControlsHelper.GetDisabledVisualElementVisibility(dropper), Is.EqualTo(Visibility.Collapsed), "and no veil over one that is off");
+                    Assert.That(onTheCanvas?.BasedOn, Is.SameAs(Application.Current.FindResource(onTheCanvasKey)), "the canvas should hand its dropper the one of its set");
+                });
+        }
+
+        [Test]
+        [Description("The Metro dropper keeps the veil it has always drawn over itself.")]
+        public void TheMetroDropperKeepsItsVeil()
+        {
+            var dropper = new ColorEyeDropper { Style = (Style)Application.Current.FindResource("MahApps.Styles.ColorEyeDropper") };
+
+            Assert.That(ControlsHelper.GetDisabledVisualElementVisibility(dropper), Is.EqualTo(Visibility.Visible));
+        }
+
         [TestCase("MahApps.Styles.ColorPicker.Win10")]
         [TestCase("MahApps.Styles.ColorPicker.WinUI")]
         [Description("The chevron is the one the combo box of that set draws, rather than the filled triangle the Metro picker has.")]
