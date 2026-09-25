@@ -40,6 +40,10 @@
     <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox.Win10}" TargetType="{x:Type mah:AutoSuggestBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox.Win10}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox.Win10}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker.Win10}" TargetType="{x:Type mah:ColorPicker}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorCanvas.Win10}" TargetType="{x:Type mah:ColorCanvas}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette.Win10}" TargetType="{x:Type mah:ColorPalette}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.Win10}" TargetType="{x:Type mah:ColorEyeDropper}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Calendar.Win10}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.Win10}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MahApps.Styles.AnalogClock.Win10}" TargetType="{x:Type mah:AnalogClock}" />

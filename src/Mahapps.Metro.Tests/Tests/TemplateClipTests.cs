@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -80,6 +81,9 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "MultiSelectionComboBox", "PART_InnerGrid" },
                 new object[] { "MultiSelectionComboBox Win10", "PART_InnerGrid" },
                 new object[] { "MultiSelectionComboBox WinUI", "PART_InnerGrid" },
+                new object[] { "ColorPicker", "PART_InnerGrid" },
+                new object[] { "ColorPicker Win10", "PART_InnerGrid" },
+                new object[] { "ColorPicker WinUI", "PART_InnerGrid" },
                 new object[] { "Chromeless button", "ContentGrid" }
             };
 
@@ -198,6 +202,15 @@ namespace MahApps.Metro.Tests.Tests
                 case "MultiSelectionComboBox WinUI":
                     return Picking((MultiSelectionComboBox)Styled(new MultiSelectionComboBox(), "MahApps.Styles.MultiSelectionComboBox.WinUI"));
 
+                case "ColorPicker":
+                    return Picked(new ColorPicker());
+
+                case "ColorPicker Win10":
+                    return Picked((ColorPicker)Styled(new ColorPicker(), "MahApps.Styles.ColorPicker.Win10"));
+
+                case "ColorPicker WinUI":
+                    return Picked((ColorPicker)Styled(new ColorPicker(), "MahApps.Styles.ColorPicker.WinUI"));
+
                 case "Chromeless button":
                     return Styled(new Button { Content = "Beam me up..." }, "MahApps.Styles.Button.Chromeless");
 
@@ -253,6 +266,18 @@ namespace MahApps.Metro.Tests.Tests
             box.SelectedItem = "Beam me up...";
 
             return box;
+        }
+
+        /// <summary>
+        /// A picker with a colour in it and a button to take it away again, so that the row the clip
+        /// has to cover is the one a picker being used really has.
+        /// </summary>
+        private static ColorPicker Picked(ColorPicker picker)
+        {
+            picker.SelectedColor = Colors.SteelBlue;
+            TextBoxHelper.SetClearTextButton(picker, true);
+
+            return picker;
         }
 
         /// <summary>

@@ -26,13 +26,119 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The picker in the Windows 10 look, which is the combo box of that set with a swatch and a name where the one pick would stand: the same fill, the same two units of frame, the same padding and the same chevron. What comes down behind it is the flyout of that set, with the group of swatches headed by plain text rather than by a filled bar."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.Win10">
+                    <mah:ColorPicker x:Name="Win10"
+                                     Width="280"
+                                     HorizontalAlignment="Left"
+                                     mah:TextBoxHelper.ClearTextButton="True"
+                                     mah:TextBoxHelper.Watermark="Pick a colour"
+                                     SelectedColor="SteelBlue"
+                                     Style="{DynamicResource MahApps.Styles.ColorPicker.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: rounded corners and a border a touch stronger along its bottom edge, which turns into the accent there while the caret is in. What it drops is rounded a little more, the way a flyout is there, and the swatches in it are rounded with the boxes beside them."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.WinUI">
+                    <mah:ColorPicker x:Name="WinUI"
+                                     Width="280"
+                                     HorizontalAlignment="Left"
+                                     mah:TextBoxHelper.ClearTextButton="True"
+                                     mah:TextBoxHelper.Watermark="Pick a colour"
+                                     SelectedColor="SteelBlue"
+                                     Style="{DynamicResource MahApps.Styles.ColorPicker.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="CanvasExample"
                                      Description="The same choice without the drop down, for a window that has the room to show it."
                                      Header="A colour on a canvas">
                 <smtx:XamlDisplay UniqueKey="ColorPicker.Canvas">
                     <mah:ColorCanvas x:Name="Canvas"
+                                     Width="360"
                                      HorizontalAlignment="Left"
                                      SelectedColor="SteelBlue" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CanvasWin10Example"
+                                     Description="The canvas in the Windows 10 look. The boxes a channel is typed into are the up-down boxes of that set, so the canvas in the drop-down of a Windows 10 picker is this one."
+                                     Header="The canvas in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.Canvas.Win10">
+                    <mah:ColorCanvas x:Name="CanvasWin10"
+                                     Width="360"
+                                     HorizontalAlignment="Left"
+                                     SelectedColor="SteelBlue"
+                                     Style="{DynamicResource MahApps.Styles.ColorCanvas.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CanvasWinUIExample"
+                                     Description="And in the WinUI one, where the square, the preview and the bars are rounded by the same number the boxes beside them are."
+                                     Header="The canvas in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.Canvas.WinUI">
+                    <mah:ColorCanvas x:Name="CanvasWinUI"
+                                     Width="360"
+                                     HorizontalAlignment="Left"
+                                     SelectedColor="SteelBlue"
+                                     Style="{DynamicResource MahApps.Styles.ColorCanvas.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="DropperExample"
+                                     Description="The button that takes a colour off the screen. Hold it down, move over whatever you want the colour of, and let go. It is the one standing on the canvas above, and it works on its own as well."
+                                     Header="A colour off the screen">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.EyeDropper">
+                    <mah:ColorEyeDropper x:Name="Dropper"
+                                         HorizontalAlignment="Left"
+                                         SelectedColor="SteelBlue" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="DropperWin10Example"
+                                     Description="The dropper in the Windows 10 look, which is the button of that set: its fill, its two units of frame and the colours it takes under the pointer. Switched off it says so with those colours rather than with a veil over it."
+                                     Header="The dropper in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.EyeDropper.Win10">
+                    <mah:ColorEyeDropper x:Name="DropperWin10"
+                                         HorizontalAlignment="Left"
+                                         SelectedColor="SteelBlue"
+                                         Style="{DynamicResource MahApps.Styles.ColorEyeDropper.Win10}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="DropperWinUIExample"
+                                     Description="And in the WinUI one. That set has no button of its own yet, so this is the Windows 10 button with the corners the set rounds by, which are the corners of the box it stands against on a canvas."
+                                     Header="The dropper in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.EyeDropper.WinUI">
+                    <mah:ColorEyeDropper x:Name="DropperWinUI"
+                                         HorizontalAlignment="Left"
+                                         SelectedColor="SteelBlue"
+                                         Style="{DynamicResource MahApps.Styles.ColorEyeDropper.WinUI}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="DropperContentExample"
+                                     Description="The dropper takes whatever content you give it in place of the pipette, and its SelectedColor is a two-way binding like any other, so it can hand what it picked straight to something else. This one is bound to the canvas of the third card above: press and hold, let go over a colour anywhere on the screen, and the canvas follows."
+                                     Header="A dropper that says what it holds">
+                <smtx:XamlDisplay UniqueKey="ColorPicker.EyeDropper.Content">
+                    <mah:ColorEyeDropper x:Name="DropperWithContent"
+                                         Width="260"
+                                         HorizontalAlignment="Left"
+                                         SelectedColor="{Binding ElementName=Canvas, Path=SelectedColor, Mode=TwoWay}">
+                        <!--  the dropper writes in bold, so the line says so itself and only the colour stays bold  -->
+                        <TextBlock FontWeight="Normal"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap">
+                            <Run Text="You selected this color: " />
+                            <Run FontWeight="Bold" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorEyeDropper}, Path=SelectedColor}" />
+                            <LineBreak />
+                            <Run Text="Press and hold to select a different color from screen." />
+                        </TextBlock>
+                    </mah:ColorEyeDropper>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

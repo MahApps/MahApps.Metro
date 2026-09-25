@@ -19,6 +19,8 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <!--  the pipette stands in the middle of the button however tall the row it is stretched into  -->
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Padding" Value="5 6" />
         <Setter Property="PreviewContentTemplate">
@@ -113,15 +115,17 @@
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!--
+                            What the frame is filled with under the pointer and under the finger is the
+                            style's to say rather than the template's, so that a set can say something
+                            else. A trigger in here would beat one in a style standing on this template.
+                        -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
@@ -134,11 +138,18 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="{DynamicResource MahApps.CharacterCasing.ColorEyeDropper}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
         <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+            </Trigger>
             <Trigger Property="Content" Value="{x:Null}">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
@@ -147,7 +158,7 @@
                                      Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=FontSize}"
                                      Stretch="Uniform">
                                 <Canvas Width="24" Height="24">
-                                    <Path Data="M19.35,11.72L17.22,13.85L15.81,12.43L8.1,20.14L3.5,22L2,20.5L3.86,15.9L11.57,8.19L10.15,6.78L12.28,4.65L19.35,11.72M16.76,3C17.93,1.83 19.83,1.83 21,3C22.17,4.17 22.17,6.07 21,7.24L19.08,9.16L14.84,4.92L16.76,3M5.56,17.03L4.5,19.5L6.97,18.44L14.4,11L13,9.6L5.56,17.03Z" Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                                    <Path Data="M19.35,11.72L17.22,13.85L15.81,12.43L8.1,20.14L3.5,22L2,20.5L3.86,15.9L11.57,8.19L10.15,6.78L12.28,4.65L19.35,11.72M16.76,3C17.93,1.83 19.83,1.83 21,3C22.17,4.17 22.17,6.07 21,7.24L19.08,9.16L14.84,4.92L16.76,3M5.56,17.03L4.5,19.5L6.97,18.44L14.4,11L13,9.6L5.56,17.03Z" Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=Foreground}" />
                                 </Canvas>
                             </Viewbox>
                         </DataTemplate>
@@ -162,5 +173,74 @@
            TargetType="{x:Type mah:ColorEyeDropper}">
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
     </Style>
+
+    <!--
+        The dropper of the two Windows sets, which is the button of the set: its fill, its two units
+        of frame, its padding and its colours under the pointer and under the finger. Switched off it
+        says so with those colours rather than with a veil over it, the way that button does. The
+        padding and the thickness are the numbers MahApps.Styles.Button.Win10 keeps in its own
+        resources, which are its to scope rather than the dictionary's to share.
+    -->
+    <Style x:Key="MahApps.Styles.ColorEyeDropper.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}"
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
+        <!--
+            The eight either side are what that button leaves; the four above and below are not,
+            because what stands in here is a pipette rather than a line of text and an icon wants the
+            same air above it as under it.
+        -->
+        <Setter Property="Padding" Value="8 4" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <!--  no veil over a dropper that is off: this set says it with the colours, the way its button does  -->
+        <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrushPointerOver}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrushPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.ForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrushDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The WinUI set has no button of its own yet and hands the Windows 10 one down, so the dropper
+        of that set is this one with the corners the set rounds by: it stands against the box the
+        colour is named in, and a square button beside a rounded box reads as a mistake.
+    -->
+    <Style x:Key="MahApps.Styles.ColorEyeDropper.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.Win10}"
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <!--
+        The dropper on a canvas of either set. The Metro one takes its corners off, because it stands
+        against a square box there; these two already carry the corners of the box beside them, so
+        there is nothing left for the canvas to take off.
+    -->
+    <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.Win10}"
+           TargetType="{x:Type mah:ColorEyeDropper}" />
+
+    <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.WinUI}"
+           TargetType="{x:Type mah:ColorEyeDropper}" />
 
 </ResourceDictionary>
