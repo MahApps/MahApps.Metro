@@ -6,16 +6,20 @@
   The workflow hands the package over as the file it is rather than as a zip around it, so the root
   here is the package. What lies inside it is signed first, one library per target framework, and
   the package itself after that, which is the order SignPath reads this in.
+
+  The two stars stand for the target framework folders. A single star stops at the directory
+  separator, so a pattern without them finds nothing but the root of the package, where no library
+  of ours lies. One match at least, or the request is to fail: a configuration that signs nothing
+  comes back looking exactly like one that worked.
 -->
 <artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
   <nupkg-file>
-    <directory path="lib">
-      <directory path="*" max-matches="unbounded">
-        <pe-file path="MahApps.Metro.dll">
-          <authenticode-sign />
-        </pe-file>
-      </directory>
-    </directory>
+    <pe-file-set>
+      <include path="lib/**/MahApps.Metro.dll" min-matches="1" max-matches="unbounded" />
+      <for-each>
+        <authenticode-sign />
+      </for-each>
+    </pe-file-set>
     <nuget-sign />
   </nupkg-file>
 </artifact-configuration>
