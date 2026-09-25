@@ -221,7 +221,10 @@
                                                               MinWidth="{DynamicResource MahApps.Font.Size.Content}"
                                                               SharedSizeGroup="Label" />
                                             <ColumnDefinition Width="*" MinWidth="50" />
-                                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                                            <!--  shared, so that the boxes of all three groups stand in one column however wide the widest of them has to be  -->
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="100"
+                                                              SharedSizeGroup="Value" />
                                         </Grid.ColumnDefinitions>
 
                                         <Grid.RowDefinitions>
@@ -297,7 +300,10 @@
                                                               MinWidth="{DynamicResource MahApps.Font.Size.Content}"
                                                               SharedSizeGroup="Label" />
                                             <ColumnDefinition Width="*" MinWidth="50" />
-                                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                                            <!--  shared, so that the boxes of all three groups stand in one column however wide the widest of them has to be  -->
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="100"
+                                                              SharedSizeGroup="Value" />
                                         </Grid.ColumnDefinitions>
 
                                         <Grid.RowDefinitions>
@@ -377,7 +383,10 @@
                                                               MinWidth="{DynamicResource MahApps.Font.Size.Content}"
                                                               SharedSizeGroup="Label" />
                                             <ColumnDefinition Width="*" MinWidth="50" />
-                                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                                            <!--  shared, so that the boxes of all three groups stand in one column however wide the widest of them has to be  -->
+                                            <ColumnDefinition Width="Auto"
+                                                              MinWidth="100"
+                                                              SharedSizeGroup="Value" />
                                         </Grid.ColumnDefinitions>
 
                                         <!--  A  -->

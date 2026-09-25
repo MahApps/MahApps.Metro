@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -204,6 +206,33 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(((Style?)canvas.Resources[typeof(TextBox)])?.BasedOn, Is.SameAs(Application.Current.FindResource(textBoxKey)), "the box the name is typed into");
                     Assert.That(((Style?)canvas.Resources[typeof(NumericUpDown)])?.BasedOn, Is.SameAs(Application.Current.FindResource(upDownKey)), "and the box a channel is typed into");
                 });
+        }
+
+        [TestCase("MahApps.Styles.ColorCanvas")]
+        [TestCase("MahApps.Styles.ColorCanvas.Win10")]
+        [TestCase("MahApps.Styles.ColorCanvas.WinUI")]
+        [Description("The boxes a channel is typed into stand in one column whatever is written in them, because the widest of them says how wide that column is for all three groups rather than for its own.")]
+        public void TheBoxesOnTheCanvasStandInOneColumn(string key)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var canvas = new ColorCanvas
+                         {
+                             Style = (Style)Application.Current.FindResource(key),
+                             SelectedColor = Colors.SteelBlue,
+                             Width = 460,
+                             VerticalAlignment = VerticalAlignment.Top
+                         };
+
+            this.window!.Content = canvas;
+            this.Settle();
+
+            var boxes = canvas.FindChildren<NumericUpDown>(true).ToList();
+            Assert.That(boxes, Has.Count.GreaterThanOrEqualTo(7), "the canvas should carry a box per channel");
+
+            var left = boxes.Select(box => Math.Round(box.TranslatePoint(new Point(0, 0), canvas).X, 2)).Distinct().ToList();
+
+            Assert.That(left, Has.Count.EqualTo(1), $"the boxes start at {string.Join(", ", left)}");
         }
 
         [TestCase("MahApps.Styles.ColorPicker.Win10")]
