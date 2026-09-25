@@ -13,6 +13,23 @@
                       Color="{DynamicResource MahApps.Colors.MenuShadow}"
                       po:Freeze="True" />
 
+    <!--
+        The shadow under a WinUI flyout: it falls straight down rather than to one side, it is
+        softer and further than the one the Metro look casts, and it is black in both themes. The
+        room it needs is kept by the margin beside it, and the popup gives that room back through
+        its offset so that the flyout still stands where it was placed.
+    -->
+    <DropShadowEffect x:Key="MahApps.DropShadowEffect.Menu.WinUI"
+                      x:Shared="False"
+                      BlurRadius="16"
+                      Direction="270"
+                      Opacity="0.3"
+                      ShadowDepth="4"
+                      Color="{DynamicResource MahApps.Colors.WinUI.FlyoutShadow}"
+                      po:Freeze="True" />
+
+    <Thickness x:Key="MahApps.Thickness.Menu.WinUI.ShadowMargin">8 4 8 12</Thickness>
+
     <DropShadowEffect x:Key="MahApps.DropShadowEffect.ToolTip"
                       x:Shared="False"
                       BlurRadius="4"
