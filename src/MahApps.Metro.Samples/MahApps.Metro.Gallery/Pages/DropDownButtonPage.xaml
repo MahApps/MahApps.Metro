@@ -7,6 +7,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
@@ -32,6 +33,86 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The same button in the Windows 10 set, which is that set's button with a chevron after the word. The menu under it is that set's menu, so its rows are the rows of a list. The left button is filled with menu items, the right one from an ItemsSource."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="DropDownButton.Win10">
+                    <StackPanel Orientation="Horizontal">
+                        <mah:DropDownButton x:Name="Win10DropDown"
+                                            Content="Export"
+                                            Style="{StaticResource MahApps.Styles.DropDownButton.Win10}">
+                            <mah:DropDownButton.Resources>
+                                <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="{x:Type MenuItem}" />
+                                <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+                                       BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"
+                                       TargetType="{x:Type Separator}" />
+                            </mah:DropDownButton.Resources>
+                            <mah:DropDownButton.Items>
+                                <MenuItem Header="As a picture" />
+                                <MenuItem Header="As a table" />
+                                <Separator />
+                                <MenuItem Header="As it is" />
+                            </mah:DropDownButton.Items>
+                        </mah:DropDownButton>
+                        <mah:DropDownButton x:Name="Win10Bound"
+                                            Margin="12 0 0 0"
+                                            Content="Open with"
+                                            Style="{StaticResource MahApps.Styles.DropDownButton.Win10}">
+                            <mah:DropDownButton.Resources>
+                                <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="{x:Type MenuItem}" />
+                            </mah:DropDownButton.Resources>
+                            <mah:DropDownButton.ItemsSource>
+                                <x:Array Type="{x:Type system:String}">
+                                    <system:String>Notepad</system:String>
+                                    <system:String>Visual Studio</system:String>
+                                    <system:String>Paint</system:String>
+                                </x:Array>
+                            </mah:DropDownButton.ItemsSource>
+                        </mah:DropDownButton>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI set, where the button is rounded and carries the stronger edge along its bottom, and the menu comes up as a rounded flyout with a shadow under it. Both looks come from merging Styles/WinUI/Controls.xaml; the styles are named here because the gallery itself wears the Metro look."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="DropDownButton.WinUI">
+                    <StackPanel Orientation="Horizontal">
+                        <mah:DropDownButton x:Name="WinUIDropDown"
+                                            Content="Export"
+                                            Style="{StaticResource MahApps.Styles.DropDownButton.WinUI}">
+                            <mah:DropDownButton.Resources>
+                                <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="{x:Type MenuItem}" />
+                                <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
+                                       BasedOn="{StaticResource MahApps.Styles.Separator.Menu.WinUI}"
+                                       TargetType="{x:Type Separator}" />
+                            </mah:DropDownButton.Resources>
+                            <mah:DropDownButton.Items>
+                                <MenuItem Header="As a picture" />
+                                <MenuItem Header="As a table" />
+                                <Separator />
+                                <MenuItem Header="As it is" />
+                            </mah:DropDownButton.Items>
+                        </mah:DropDownButton>
+                        <mah:DropDownButton x:Name="WinUIBound"
+                                            Margin="12 0 0 0"
+                                            Content="Open with"
+                                            Style="{StaticResource MahApps.Styles.DropDownButton.WinUI}">
+                            <mah:DropDownButton.Resources>
+                                <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="{x:Type MenuItem}" />
+                            </mah:DropDownButton.Resources>
+                            <mah:DropDownButton.ItemsSource>
+                                <x:Array Type="{x:Type system:String}">
+                                    <system:String>Notepad</system:String>
+                                    <system:String>Visual Studio</system:String>
+                                    <system:String>Paint</system:String>
+                                </x:Array>
+                            </mah:DropDownButton.ItemsSource>
+                        </mah:DropDownButton>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

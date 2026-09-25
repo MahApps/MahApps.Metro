@@ -1450,6 +1450,15 @@
         </Setter>
     </Style>
 
+    <!--
+        The drop-down button of a Windows set is the whole of that button rather than a half of it,
+        so it wears the same borderless one and takes the frame from the control around it. It has a
+        name of its own because the Metro set gives it one, and because the two could part ways.
+    -->
+    <Style x:Key="MahApps.Styles.Button.DropDown.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.Split.Win10}"
+           TargetType="{x:Type Button}" />
+
     <Style x:Key="MahApps.Styles.Button.Split.Arrow.WinUI"
            BasedOn="{StaticResource MahApps.Styles.Button.Split.WinUI}"
            TargetType="{x:Type Button}">
@@ -1457,5 +1466,9 @@
         <Setter Property="BorderThickness" Value="{DynamicResource SplitButtonDividerThickness}" />
         <Setter Property="Padding" Value="{DynamicResource SplitButtonDividerPadding}" />
     </Style>
+
+    <Style x:Key="MahApps.Styles.Button.DropDown.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.Split.WinUI}"
+           TargetType="{x:Type Button}" />
 
 </ResourceDictionary>
