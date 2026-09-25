@@ -176,6 +176,63 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        [TestCase("MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10")]
+        [TestCase("MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI")]
+        [Description("A palette in the drop-down leaves air under itself so the groups read apart, and that air is left once: the panel it stands in honours its margin, so the frame inside its template must not leave it a second time.")]
+        public void TheAirUnderAPaletteIsLeftOnce(string key)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var palette = new ColorPalette
+                          {
+                              Style = (Style)Application.Current.FindResource(key),
+                              ItemsSource = BuildInColorPalettes.StandardColorsPalette,
+                              Width = 280,
+                              VerticalAlignment = VerticalAlignment.Top
+                          };
+
+            this.window!.Content = palette;
+            this.Settle();
+
+            var inside = palette.Template?.FindName("ContentSite", palette) as FrameworkElement;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(palette.Margin, Is.EqualTo(new Thickness(0, 0, 0, 12)), "the palette leaves the air");
+                    Assert.That(inside?.Margin, Is.EqualTo(new Thickness(0)), "and the frame inside it leaves none of its own");
+                });
+        }
+
+        [TestCase("MahApps.Styles.ColorPalette")]
+        [TestCase("MahApps.Styles.ColorPalette.Win10")]
+        [TestCase("MahApps.Styles.ColorPalette.WinUI")]
+        [Description("A swatch stands on the checks rather than on the flyout behind it, so a transparent entry reads as transparent and a translucent one shows what it lets through.")]
+        public void ASwatchStandsOnTheChecks(string key)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var palette = new ColorPalette
+                          {
+                              Style = (Style)Application.Current.FindResource(key),
+                              ItemsSource = new[] { Colors.Transparent },
+                              Width = 280,
+                              VerticalAlignment = VerticalAlignment.Top
+                          };
+
+            this.window!.Content = palette;
+            this.Settle();
+
+            var checks = Application.Current.FindResource("MahApps.Brushes.Tile.Small");
+            var frames = palette.FindChildren<Border>(true).ToList();
+            var layers = palette.FindChildren<Panel>(true).ToList();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(frames.Any(frame => ReferenceEquals(frame.Background, checks)), Is.True, "the checks should stand behind the colour");
+                    Assert.That(layers.Any(layer => layer.Background is SolidColorBrush fill && fill.Color == Colors.Transparent), Is.True, "and the colour on top of them");
+                });
+        }
+
         [Test]
         [Description("WinUI rounds what shows a colour by the same number it rounds a control by, so the swatches and the square match the boxes beside them.")]
         public void TheWinUISwatchesAreRoundedByTheSameNumber()

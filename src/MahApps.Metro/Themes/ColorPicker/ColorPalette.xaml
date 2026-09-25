@@ -25,7 +25,8 @@
                 Background="{DynamicResource MahApps.Brushes.Tile.Small}"
                 BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                 BorderThickness="1"
-                CornerRadius="{Binding Path=(mah:ControlsHelper.CornerRadius), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}}">
+                CornerRadius="{Binding Path=(mah:ControlsHelper.CornerRadius), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}}"
+                SnapsToDevicePixels="True">
             <Border.ToolTip>
                 <MultiBinding Converter="{mahConverters:ColorToNameConverter}">
                     <Binding />
@@ -34,7 +35,25 @@
                     <Binding Path="IsAlphaChannelVisible" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
                 </MultiBinding>
             </Border.ToolTip>
-            <Border Background="{Binding Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" CornerRadius="{Binding Path=(mah:ControlsHelper.CornerRadius), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}}" />
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="ColorPresenter" Path="CornerRadius" />
+                        <Binding ElementName="ColorPresenter" Path="BorderThickness" />
+                        <Binding ElementName="ColorPresenter" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <!--
+                    The colour stands on the checks rather than on the flyout behind it, so that a
+                    transparent entry reads as transparent and a translucent one shows what it lets
+                    through. It is a layer of its own because the two carry different fills, and the
+                    clip above cuts it to the corners the frame leaves over.
+                -->
+                <Grid Background="{Binding Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
+            </Grid>
         </Border>
     </DataTemplate>
 
@@ -58,7 +77,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorPalette}">
                     <GroupBox x:Name="ContentSite"
-                              Margin="{TemplateBinding Margin}"
                               Padding="{TemplateBinding Padding}"
                               mah:ControlsHelper.ContentCharacterCasing="{TemplateBinding mah:ControlsHelper.ContentCharacterCasing}"
                               mah:HeaderedControlHelper.HeaderBackground="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
@@ -110,15 +128,24 @@
            BasedOn="{StaticResource MahApps.Styles.ColorPalette}"
            TargetType="{x:Type mah:ColorPalette}">
         <Setter Property="BorderThickness" Value="0" />
+        <!--  no padding round the swatches: the three units each of them leaves are the whole of the air in here  -->
+        <Setter Property="Padding" Value="0" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="Transparent" />
+        <!--  the size and the weight of a WinUI body strong, which is what heads a group of things there  -->
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontWeight" Value="SemiBold" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <!--  the name stands over the first swatch rather than over the air beside it, and leaves four under itself  -->
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="3 0 3 4" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10"
            BasedOn="{StaticResource MahApps.Styles.ColorPalette.Win10}"
-           TargetType="{x:Type mah:ColorPalette}" />
+           TargetType="{x:Type mah:ColorPalette}">
+        <!--  several of these stand under each other in the drop-down, so each leaves air under itself  -->
+        <Setter Property="Margin" Value="0 0 0 12" />
+    </Style>
 
     <!--  WinUI rounds what shows a colour along with everything else it rounds.  -->
     <Style x:Key="MahApps.Styles.ColorPalette.WinUI"
@@ -127,8 +154,11 @@
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
+    <!--  the drop-down palette of that set, which is the Windows 10 one with the corners of this one  -->
     <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI"
-           BasedOn="{StaticResource MahApps.Styles.ColorPalette.WinUI}"
-           TargetType="{x:Type mah:ColorPalette}" />
+           BasedOn="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10}"
+           TargetType="{x:Type mah:ColorPalette}">
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
 
 </ResourceDictionary>
