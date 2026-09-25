@@ -24,6 +24,18 @@ namespace MahApps.Metro.Gallery.Pages
             this.CanvasExample.Watch(this.Canvas, ColorCanvas.SelectedColorProperty);
             this.CanvasWin10Example.Watch(this.CanvasWin10, ColorCanvas.SelectedColorProperty);
             this.CanvasWinUIExample.Watch(this.CanvasWinUI, ColorCanvas.SelectedColorProperty);
+
+            Options(this.DropperExample, this.Dropper);
+            Options(this.DropperWin10Example, this.DropperWin10);
+            Options(this.DropperWinUIExample, this.DropperWinUI);
+        }
+
+        private static void Options(ControlExample example, ColorEyeDropper dropper)
+        {
+            example.Watch(dropper,
+                          ColorEyeDropper.SelectedColorProperty,
+                          ColorEyeDropper.ContentProperty,
+                          IsEnabledProperty);
         }
 
         private static void Options(ControlExample example, ColorPicker picker)
