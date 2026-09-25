@@ -53,6 +53,17 @@
                         </mah:SplitButton>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="DropDownButton" />
+                        <mah:DropDownButton HorizontalAlignment="Left" Content="Export">
+                            <mah:DropDownButton.Items>
+                                <MenuItem Header="As a picture" />
+                                <MenuItem Header="As a table" />
+                                <Separator />
+                                <MenuItem Header="As it is" />
+                            </mah:DropDownButton.Items>
+                        </mah:DropDownButton>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="Menu" />
                         <Menu HorizontalAlignment="Left">
                             <MenuItem Header="_File">

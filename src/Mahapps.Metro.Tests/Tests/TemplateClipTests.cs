@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,7 +46,7 @@ namespace MahApps.Metro.Tests.Tests
         private static object[] ClippedTemplates =>
             new object[]
             {
-                new object[] { "DropDownButton", "ContentGrid" },
+                new object[] { "DropDownButton", "PART_Container" },
                 new object[] { "SplitButton", "PART_Container" },
                 new object[] { "SplitButton vertical", "PART_Container" },
                 new object[] { "Underline", "ContentGrid" },

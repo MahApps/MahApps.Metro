@@ -44,6 +44,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox.WinUI}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox.WinUI}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WinUI}" TargetType="{x:Type mah:SplitButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton.WinUI}" TargetType="{x:Type mah:DropDownButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker.WinUI}" TargetType="{x:Type mah:ColorPicker}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorCanvas.WinUI}" TargetType="{x:Type mah:ColorCanvas}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette.WinUI}" TargetType="{x:Type mah:ColorPalette}" />

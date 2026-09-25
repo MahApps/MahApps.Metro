@@ -1,7 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  the arrow itself, so that a set can hand in the one its own controls use  -->
+    <DataTemplate x:Key="DropDownButtonArrowContentTemplate">
+        <!--  Material - ChevronDown  -->
+        <mah:PathIcon Width="9"
+                      Height="9"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+    </DataTemplate>
+
+    <!--  the air between the word and the arrow, and between an icon and the word, which a set keeps as wide as its own controls keep it  -->
+    <Thickness x:Key="DropDownButtonArrowMargin">3 0 0 0</Thickness>
+    <Thickness x:Key="DropDownButtonArrowMarginVertical">0 3 0 0</Thickness>
+    <Thickness x:Key="DropDownButtonIconMargin">0 0 3 0</Thickness>
+    <Thickness x:Key="DropDownButtonIconMarginVertical">0 0 0 3</Thickness>
+
+    <!--  the veil the Metro look draws over a control that is off, where a Windows set says it with colours instead  -->
+    <system:Double x:Key="DropDownButtonDisabledOpacity">0.55</system:Double>
 
     <Style x:Key="MahApps.Styles.DropDownButton.FocusVisualStyle">
         <Setter Property="Control.Template">
@@ -17,7 +37,149 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type mah:DropDownButton}">
+    <ControlTemplate x:Key="MahApps.Templates.DropDownButton" TargetType="{x:Type mah:DropDownButton}">
+        <Grid UseLayoutRounding="True">
+            <!--
+                The button fills the whole of it and the frame lies over it, the way the button of the
+                two Windows sets is built. A frame holding it instead would keep a strip of its own
+                thickness free all the way round, which is a gap wherever that frame is see through,
+                and the fill under the pointer would stop short of the edge.
+            -->
+            <Grid x:Name="PART_Container"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the frame over it is rounded by  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="PART_Container" Path="ActualWidth" />
+                        <Binding ElementName="PART_Container" Path="ActualHeight" />
+                        <Binding ElementName="PART_Border" Path="CornerRadius" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <Button x:Name="PART_Button"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Background="{TemplateBinding Background}"
+                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        Foreground="{TemplateBinding Foreground}"
+                        RenderOptions.ClearTypeHint="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(RenderOptions.ClearTypeHint), Mode=OneWay}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Style="{TemplateBinding ButtonStyle}">
+                    <!--
+                        The padding of the control lies around the whole of what the button carries
+                        rather than around the word alone, so the arrow keeps the same air from the
+                        frame as the word does and stands its own distance from the word.
+                    -->
+                    <DockPanel x:Name="PART_Content"
+                               Margin="{TemplateBinding Padding}"
+                               Focusable="False"
+                               LastChildFill="True">
+                        <ContentControl x:Name="PART_Arrow"
+                                        Margin="{DynamicResource DropDownButtonArrowMargin}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        ContentTemplate="{DynamicResource DropDownButtonArrowContentTemplate}"
+                                        DockPanel.Dock="Right"
+                                        Focusable="False"
+                                        Foreground="{TemplateBinding ArrowBrush}"
+                                        Visibility="{TemplateBinding ArrowVisibility}" />
+                        <StackPanel x:Name="PART_ContentOrientation"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Focusable="False"
+                                    Orientation="Horizontal">
+                            <ContentPresenter x:Name="PART_Icon"
+                                              Margin="{DynamicResource DropDownButtonIconMargin}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Icon}"
+                                              ContentTemplate="{TemplateBinding IconTemplate}"
+                                              Focusable="False"
+                                              RecognizesAccessKey="True"
+                                              UseLayoutRounding="False" />
+                            <mah:ContentControlEx x:Name="PART_ButtonContent"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  UseLayoutRounding="False" />
+                        </StackPanel>
+                    </DockPanel>
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="PART_Menu"
+                                     MinWidth="{TemplateBinding ActualWidth}"
+                                     DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                     GroupStyleSelector="{TemplateBinding GroupStyleSelector}"
+                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                     ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                     ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                     ItemTemplate="{TemplateBinding ItemTemplate}"
+                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                     ItemsPanel="{TemplateBinding ItemsPanel}"
+                                     ItemsSource="{TemplateBinding ItemsSource}"
+                                     Placement="Bottom"
+                                     StaysOpen="False"
+                                     Style="{TemplateBinding MenuStyle}"
+                                     UseLayoutRounding="False" />
+                    </Button.ContextMenu>
+                </Button>
+            </Grid>
+            <Border x:Name="PART_Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    IsHitTestVisible="False"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <!--
+                The edge the WinUI look draws a little stronger, which is what lifts the button off the page. It is a
+                frame of its own carrying nothing but that edge, so that it follows the corners of the one behind it and
+                is the same one unit on a button of any height. A set that draws no such edge leaves the brush unset and
+                nothing is drawn.
+            -->
+            <Border x:Name="BottomEdge"
+                    BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                    BorderThickness="0 0 0 1"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    IsHitTestVisible="False"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="PART_Icon" Property="Margin" Value="0" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter TargetName="PART_Arrow" Property="DockPanel.Dock" Value="Bottom" />
+                <Setter TargetName="PART_Arrow" Property="Margin" Value="{DynamicResource DropDownButtonArrowMarginVertical}" />
+                <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
+                <Setter TargetName="PART_Icon" Property="Margin" Value="{DynamicResource DropDownButtonIconMarginVertical}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+            </MultiTrigger>
+            <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
+                <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="{DynamicResource DropDownButtonDisabledOpacity}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.DropDownButton" TargetType="{x:Type mah:DropDownButton}">
         <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
@@ -35,128 +197,7 @@
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type mah:DropDownButton}">
-                    <Border x:Name="PART_Border"
-                            Background="Transparent"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            UseLayoutRounding="True">
-                        <Grid x:Name="ContentGrid">
-                            <Grid.Clip>
-                                <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                                    <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                                    <Binding ElementName="ContentGrid" Path="ActualHeight" />
-                                    <Binding ElementName="PART_Border" Path="CornerRadius" />
-                                    <Binding ElementName="PART_Border" Path="BorderThickness" />
-                                    <Binding ElementName="PART_Border" Path="Padding" />
-                                </MultiBinding>
-                            </Grid.Clip>
-                            <Button x:Name="PART_Button"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    RenderOptions.ClearTypeHint="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(RenderOptions.ClearTypeHint), Mode=OneWay}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    Style="{TemplateBinding ButtonStyle}">
-                                <DockPanel x:Name="PART_Content"
-                                           Focusable="False"
-                                           LastChildFill="True">
-                                    <!--  Material - ChevronDown  -->
-                                    <mah:PathIcon x:Name="PART_Arrow"
-                                                  Width="9"
-                                                  Height="9"
-                                                  Margin="0 0 3 0"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                                  DockPanel.Dock="Right"
-                                                  Foreground="{TemplateBinding ArrowBrush}"
-                                                  Visibility="{TemplateBinding ArrowVisibility}" />
-                                    <StackPanel x:Name="PART_ContentOrientation"
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Focusable="False"
-                                                Orientation="Horizontal">
-                                        <ContentPresenter HorizontalAlignment="Center"
-                                                          VerticalAlignment="Center"
-                                                          Content="{TemplateBinding Icon}"
-                                                          ContentTemplate="{TemplateBinding IconTemplate}"
-                                                          Focusable="False"
-                                                          RecognizesAccessKey="True"
-                                                          UseLayoutRounding="False" />
-                                        <mah:ContentControlEx x:Name="PART_ButtonContent"
-                                                              Padding="{TemplateBinding Padding}"
-                                                              HorizontalAlignment="Center"
-                                                              VerticalAlignment="Center"
-                                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                              Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
-                                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
-                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                              UseLayoutRounding="False" />
-                                    </StackPanel>
-                                </DockPanel>
-                                <Button.ContextMenu>
-                                    <ContextMenu x:Name="PART_Menu"
-                                                 MinWidth="{TemplateBinding ActualWidth}"
-                                                 DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                                                 GroupStyleSelector="{TemplateBinding GroupStyleSelector}"
-                                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                 ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                                                 ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                                                 ItemTemplate="{TemplateBinding ItemTemplate}"
-                                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                 ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                 ItemsSource="{TemplateBinding ItemsSource}"
-                                                 Placement="Bottom"
-                                                 StaysOpen="False"
-                                                 Style="{TemplateBinding MenuStyle}"
-                                                 UseLayoutRounding="False" />
-                                </Button.ContextMenu>
-                            </Button>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Content" Value="{x:Null}">
-                            <Setter TargetName="PART_ButtonContent" Property="Margin" Value="0" />
-                        </Trigger>
-                        <Trigger Property="Orientation" Value="Vertical">
-                            <Setter TargetName="PART_Arrow" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="PART_Arrow" Property="Margin" Value="0 0 0 3" />
-                            <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-                        </MultiTrigger>
-                        <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
-                        </Trigger>
-                        <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value=".55" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.DropDownButton}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
@@ -166,7 +207,134 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value=".55" />
+                <Setter Property="Opacity" Value="{DynamicResource DropDownButtonDisabledOpacity}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The Windows 10 drop-down button, which is that set's button with a chevron after the word. It
+        is that button down to the detail: the same fill, the same two units of frame, the same
+        padding, and the chevron a combo box carries. What it says about the pointer it says with the
+        frame, the way its button does, and a button that is switched off says so with its colours
+        rather than with the veil the Metro one draws over itself.
+    -->
+    <Style x:Key="MahApps.Styles.DropDownButton.Win10"
+           BasedOn="{StaticResource MahApps.Styles.DropDownButton}"
+           TargetType="{x:Type mah:DropDownButton}">
+        <Style.Resources>
+            <system:Double x:Key="DropDownButtonDisabledOpacity">1</system:Double>
+            <Thickness x:Key="DropDownButtonArrowMargin">8 0 0 0</Thickness>
+            <Thickness x:Key="DropDownButtonArrowMarginVertical">0 8 0 0</Thickness>
+            <Thickness x:Key="DropDownButtonIconMargin">0 0 8 0</Thickness>
+            <Thickness x:Key="DropDownButtonIconMarginVertical">0 0 0 8</Thickness>
+            <DataTemplate x:Key="DropDownButtonArrowContentTemplate">
+                <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Glyph="&#xE70D;"
+                              UseLayoutRounding="False" />
+            </DataTemplate>
+        </Style.Resources>
+        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Button.ForegroundPointerOver}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.Button.ForegroundPressed}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown.Win10}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
+        <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu.Win10}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="8 4 8 5" />
+        <Style.Triggers>
+            <!--  the frame of a Windows button says nothing about the focus, which the dotted rectangle over it does instead  -->
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
+            </Trigger>
+            <!--
+                What a Windows 10 button says about the pointer it says with its frame: the fill it
+                carries under one is the fill it carries at rest, and the line around it is what comes
+                up. It stands after the two above it, because a button keeps the focus after it has
+                been clicked and the pointer is still over it while it does.
+            -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrushPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrushDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        WinUI on top of it, the way its button has it: rounded corners, one unit of frame and the edge
+        along the bottom a shade stronger than the rest of it, which is what makes the button look as
+        if it stood a little above the page. The frame leaves its bottom line to that edge, so the two
+        do not lie on top of each other, and the word sits a unit lower in the padding to make up for
+        the line the frame no longer draws there.
+        
+        While the list is open the button is held down and the edge goes, so it reads as lying flat
+        for as long as there is something to pick.
+    -->
+    <Style x:Key="MahApps.Styles.DropDownButton.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.DropDownButton.Win10}"
+           TargetType="{x:Type mah:DropDownButton}">
+        <Style.Resources>
+            <system:Double x:Key="DropDownButtonDisabledOpacity">1</system:Double>
+            <Thickness x:Key="DropDownButtonArrowMargin">8 0 0 0</Thickness>
+            <Thickness x:Key="DropDownButtonArrowMarginVertical">0 8 0 0</Thickness>
+            <Thickness x:Key="DropDownButtonIconMargin">0 0 8 0</Thickness>
+            <Thickness x:Key="DropDownButtonIconMarginVertical">0 0 0 8</Thickness>
+            <DataTemplate x:Key="DropDownButtonArrowContentTemplate">
+                <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                              FontSize="12"
+                              Glyph="&#xE70D;"
+                              UseLayoutRounding="False" />
+            </DataTemplate>
+        </Style.Resources>
+        <!--  the arrow is the quieter of the two text colours here, and the full one under the pointer  -->
+        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.WinUI.TextPrimary}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+        <!--  the frame leaves its bottom line to the edge below it, so that the two do not add up to a line brighter than either  -->
+        <Setter Property="BorderThickness" Value="1 1 1 0" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
+        <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu.WinUI}" />
+        <Setter Property="Padding" Value="11 5 11 6" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrush}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+            </Trigger>
+            <!--  the frame of a WinUI button says nothing about the pointer either, which the fill under it does instead  -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsExpanded" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundPressed}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrushPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.ForegroundDisabled}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrushPressed}" />
             </Trigger>
         </Style.Triggers>
     </Style>

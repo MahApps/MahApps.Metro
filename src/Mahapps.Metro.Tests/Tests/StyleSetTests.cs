@@ -51,6 +51,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(HotKeyBox), "MahApps.Styles.HotKeyBox.Win10")]
         [TestCase(Win10, typeof(MultiSelectionComboBox), "MahApps.Styles.MultiSelectionComboBox.Win10")]
         [TestCase(Win10, typeof(SplitButton), "MahApps.Styles.SplitButton.Win10")]
+        [TestCase(Win10, typeof(DropDownButton), "MahApps.Styles.DropDownButton.Win10")]
         [TestCase(Win10, typeof(Menu), "MahApps.Styles.Menu.Win10")]
         [TestCase(Win10, typeof(MenuItem), "MahApps.Styles.MenuItem.Win10")]
         [TestCase(Win10, typeof(ContextMenu), "MahApps.Styles.ContextMenu.Win10")]
@@ -78,6 +79,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(HotKeyBox), "MahApps.Styles.HotKeyBox.WinUI")]
         [TestCase(WinUI, typeof(MultiSelectionComboBox), "MahApps.Styles.MultiSelectionComboBox.WinUI")]
         [TestCase(WinUI, typeof(SplitButton), "MahApps.Styles.SplitButton.WinUI")]
+        [TestCase(WinUI, typeof(DropDownButton), "MahApps.Styles.DropDownButton.WinUI")]
         [TestCase(WinUI, typeof(Menu), "MahApps.Styles.Menu.WinUI")]
         [TestCase(WinUI, typeof(MenuItem), "MahApps.Styles.MenuItem.WinUI")]
         [TestCase(WinUI, typeof(ContextMenu), "MahApps.Styles.ContextMenu.WinUI")]
@@ -123,6 +125,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.DateTimePicker.WinUI", typeof(DateTimePicker))]
         [TestCase("MahApps.Styles.NumericUpDown.WinUI", typeof(NumericUpDown))]
         [TestCase("MahApps.Styles.SplitButton.WinUI", typeof(SplitButton))]
+        [TestCase("MahApps.Styles.DropDownButton.WinUI", typeof(DropDownButton))]
         [Description("WinUI rounds a control by ControlCornerRadius and nothing else, so no style of that set carries a radius of its own and a box and the picker standing beside it are rounded alike.")]
         public void EveryWinUIControlIsRoundedByTheSameNumber(string key, Type type)
         {

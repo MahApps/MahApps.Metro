@@ -51,6 +51,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.SplitButton}" TargetType="{x:Type mah:SplitButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton}" TargetType="{x:Type mah:DropDownButton}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />
