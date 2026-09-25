@@ -50,6 +50,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(AutoSuggestBox), "MahApps.Styles.AutoSuggestBox.Win10")]
         [TestCase(Win10, typeof(HotKeyBox), "MahApps.Styles.HotKeyBox.Win10")]
         [TestCase(Win10, typeof(MultiSelectionComboBox), "MahApps.Styles.MultiSelectionComboBox.Win10")]
+        [TestCase(Win10, typeof(SplitButton), "MahApps.Styles.SplitButton.Win10")]
         [TestCase(Win10, typeof(ColorPicker), "MahApps.Styles.ColorPicker.Win10")]
         [TestCase(Win10, typeof(ColorCanvas), "MahApps.Styles.ColorCanvas.Win10")]
         [TestCase(Win10, typeof(ColorPalette), "MahApps.Styles.ColorPalette.Win10")]
@@ -73,6 +74,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(AutoSuggestBox), "MahApps.Styles.AutoSuggestBox.WinUI")]
         [TestCase(WinUI, typeof(HotKeyBox), "MahApps.Styles.HotKeyBox.WinUI")]
         [TestCase(WinUI, typeof(MultiSelectionComboBox), "MahApps.Styles.MultiSelectionComboBox.WinUI")]
+        [TestCase(WinUI, typeof(SplitButton), "MahApps.Styles.SplitButton.WinUI")]
         [TestCase(WinUI, typeof(ColorPicker), "MahApps.Styles.ColorPicker.WinUI")]
         [TestCase(WinUI, typeof(ColorCanvas), "MahApps.Styles.ColorCanvas.WinUI")]
         [TestCase(WinUI, typeof(ColorPalette), "MahApps.Styles.ColorPalette.WinUI")]
@@ -114,6 +116,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.TimePicker.WinUI", typeof(TimePicker))]
         [TestCase("MahApps.Styles.DateTimePicker.WinUI", typeof(DateTimePicker))]
         [TestCase("MahApps.Styles.NumericUpDown.WinUI", typeof(NumericUpDown))]
+        [TestCase("MahApps.Styles.SplitButton.WinUI", typeof(SplitButton))]
         [Description("WinUI rounds a control by ControlCornerRadius and nothing else, so no style of that set carries a radius of its own and a box and the picker standing beside it are rounded alike.")]
         public void EveryWinUIControlIsRoundedByTheSameNumber(string key, Type type)
         {

@@ -7,6 +7,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
@@ -15,20 +16,33 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="SplitExample"
-                                     Description="One half does what is selected and the other half offers the rest. The selected item stays selected, so the next click repeats it without opening the list again."
+                                     Description="One half does what is selected and the other half offers the rest. The selected item stays selected, so the next click repeats it without opening the list again. The list is filled from Items on the left and from an ItemsSource on the right, and the rows are the same rows either way."
                                      Header="A button split in two">
                 <smtx:XamlDisplay UniqueKey="SplitButton.Items">
-                    <mah:SplitButton x:Name="Split"
-                                     Width="220"
-                                     HorizontalAlignment="Left"
-                                     DisplayMemberPath="Header"
-                                     SelectedIndex="0">
-                        <mah:SplitButton.Items>
-                            <MenuItem Header="Save" />
-                            <MenuItem Header="Save as" />
-                            <MenuItem Header="Save a copy" />
-                        </mah:SplitButton.Items>
-                    </mah:SplitButton>
+                    <StackPanel Orientation="Horizontal">
+                        <mah:SplitButton x:Name="Split"
+                                         Width="220"
+                                         HorizontalAlignment="Left"
+                                         DisplayMemberPath="Header"
+                                         SelectedIndex="0">
+                            <mah:SplitButton.Items>
+                                <MenuItem Header="Save" />
+                                <MenuItem Header="Save as" />
+                                <MenuItem Header="Save a copy" />
+                            </mah:SplitButton.Items>
+                        </mah:SplitButton>
+                        <mah:SplitButton x:Name="SplitBound"
+                                         Width="220"
+                                         Margin="16 0 0 0"
+                                         HorizontalAlignment="Left"
+                                         SelectedIndex="0">
+                            <x:Array Type="{x:Type system:String}">
+                                <system:String>Save</system:String>
+                                <system:String>Save as</system:String>
+                                <system:String>Save a copy</system:String>
+                            </x:Array>
+                        </mah:SplitButton>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
@@ -51,6 +65,72 @@
                             <MenuItem Header="Save as" />
                         </mah:SplitButton.Items>
                     </mah:SplitButton>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The button in the Windows 10 look, which is that set's button cut in two: the same fill, the same two units of frame and the same padding, with the chevron of a combo box in the half beside the word and a line where the two meet. Each half fills on its own under the pointer, so what a click would do is the half that lit up. Switched off it says so with its colours rather than with a veil over it. Items on the left, an ItemsSource on the right, and the list of either one brings the rows of this set with it."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="SplitButton.Win10">
+                    <StackPanel Orientation="Horizontal">
+                        <mah:SplitButton x:Name="Win10"
+                                         Width="220"
+                                         HorizontalAlignment="Left"
+                                         DisplayMemberPath="Header"
+                                         SelectedIndex="0"
+                                         Style="{DynamicResource MahApps.Styles.SplitButton.Win10}">
+                            <mah:SplitButton.Items>
+                                <MenuItem Header="Save" />
+                                <MenuItem Header="Save as" />
+                                <MenuItem Header="Save a copy" />
+                            </mah:SplitButton.Items>
+                        </mah:SplitButton>
+                        <mah:SplitButton x:Name="Win10Bound"
+                                         Width="220"
+                                         Margin="16 0 0 0"
+                                         HorizontalAlignment="Left"
+                                         SelectedIndex="0"
+                                         Style="{DynamicResource MahApps.Styles.SplitButton.Win10}">
+                            <x:Array Type="{x:Type system:String}">
+                                <system:String>Save</system:String>
+                                <system:String>Save as</system:String>
+                                <system:String>Save a copy</system:String>
+                            </x:Array>
+                        </mah:SplitButton>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one: rounded corners, one unit of frame and an edge along the bottom a shade stronger than the rest of it, which is what makes the button look as if it stood a little above the page. While the list is open both halves are held down and that edge goes, so the button reads as lying flat for as long as there is something to pick. Items on the left, an ItemsSource on the right."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="SplitButton.WinUI">
+                    <StackPanel Orientation="Horizontal">
+                        <mah:SplitButton x:Name="WinUI"
+                                         Width="220"
+                                         HorizontalAlignment="Left"
+                                         DisplayMemberPath="Header"
+                                         SelectedIndex="0"
+                                         Style="{DynamicResource MahApps.Styles.SplitButton.WinUI}">
+                            <mah:SplitButton.Items>
+                                <MenuItem Header="Save" />
+                                <MenuItem Header="Save as" />
+                                <MenuItem Header="Save a copy" />
+                            </mah:SplitButton.Items>
+                        </mah:SplitButton>
+                        <mah:SplitButton x:Name="WinUIBound"
+                                         Width="220"
+                                         Margin="16 0 0 0"
+                                         HorizontalAlignment="Left"
+                                         SelectedIndex="0"
+                                         Style="{DynamicResource MahApps.Styles.SplitButton.WinUI}">
+                            <x:Array Type="{x:Type system:String}">
+                                <system:String>Save</system:String>
+                                <system:String>Save as</system:String>
+                                <system:String>Save a copy</system:String>
+                            </x:Array>
+                        </mah:SplitButton>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

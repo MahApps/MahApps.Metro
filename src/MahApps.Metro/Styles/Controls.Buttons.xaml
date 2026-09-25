@@ -1347,4 +1347,115 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <!--
+        A half of the Windows 10 split button. Both halves wear it: what tells them apart is the
+        content alignment the template gives the one with the word in it, not the style. It stands
+        apart from the Metro half rather than on it, because each half answers the pointer on its own
+        here, the way UWP fills the one under it and leaves the other where it is. Neither needs a
+        clip of its own: the frame around the pair gives them no corners, and the grid they stand in
+        is already cut to the ones that frame leaves over.
+    -->
+    <Style x:Key="MahApps.Styles.Button.Split.Win10" TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonLayoutGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundPressed}" />
+                        </Trigger>
+                        <!--
+                            A half that cannot be clicked says so on its own, rather than the whole
+                            control going pale over it: a command that cannot run leaves the word
+                            grey and the arrow beside it still worth pressing.
+                        -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.BackgroundDisabled}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Button.ForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--
+        The half with the arrow in it, which is the same half with the line where the two meet. That
+        line is its own near edge rather than a thing of its own, so it stays where it is while the
+        half behind it fills under the pointer, and which edge it is comes out of the template, since
+        the two halves stand side by side in one and one above the other in the other.
+    -->
+    <Style x:Key="MahApps.Styles.Button.Split.Arrow.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.Split.Win10}"
+           TargetType="{x:Type Button}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SplitButton.Win10.Divider}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource SplitButtonDividerThickness}" />
+        <Setter Property="Padding" Value="{DynamicResource SplitButtonDividerPadding}" />
+    </Style>
+
+    <!--  and the WinUI one, which is the same half in the colours Windows 11 fills it with  -->
+    <Style x:Key="MahApps.Styles.Button.Split.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.Split.Win10}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonLayoutGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundPressed}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundDisabled}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.ForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.Split.Arrow.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.Split.WinUI}"
+           TargetType="{x:Type Button}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SplitButton.WinUI.Divider}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource SplitButtonDividerThickness}" />
+        <Setter Property="Padding" Value="{DynamicResource SplitButtonDividerPadding}" />
+    </Style>
+
 </ResourceDictionary>

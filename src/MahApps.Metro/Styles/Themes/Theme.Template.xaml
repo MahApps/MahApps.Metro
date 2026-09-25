@@ -809,6 +809,10 @@
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminatePressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.CheckGlyphForegroundIndeterminateDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
 
+    <!--  Resources for MahApps.Styles.SplitButton.Win10 and .WinUI  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.SplitButton.Win10.Divider" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.SplitButton.WinUI.Divider" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+
     <!--  Resources for MahApps.Styles.RadioButton.WinUI  -->
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
