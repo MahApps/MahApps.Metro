@@ -72,6 +72,10 @@ jobs:
           github-artifact-id: ${{ steps.unsigned-package.outputs.artifact-id }}
           wait-for-completion: true
           output-artifact-directory: Publish/signed
+          # a nupkg is a zip, and what comes back is one file rather than an archive of several,
+          # so unpacking it here would leave us with the contents of the package instead of the
+          # package
+          skip-decompress: true
 
       - name: Keep the signed package
         if: github.event_name == 'push'
