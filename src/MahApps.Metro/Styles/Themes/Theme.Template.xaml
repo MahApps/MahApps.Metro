@@ -419,10 +419,13 @@
     <!--  Resources for MahApps.Styles.TextBox.WinUI  -->
     <Color x:Key="MahApps.Colors.WinUI.ControlFillDefault">{{MahApps.Colors.WinUI.ControlFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlFillSecondary">{{MahApps.Colors.WinUI.ControlFillSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlFillTertiary">{{MahApps.Colors.WinUI.ControlFillTertiary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlFillInputActive">{{MahApps.Colors.WinUI.ControlFillInputActive}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlFillDisabled">{{MahApps.Colors.WinUI.ControlFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlStrokeDefault">{{MahApps.Colors.WinUI.ControlStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlStrokeSecondary">{{MahApps.Colors.WinUI.ControlStrokeSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrokeOnAccentDefault">{{MahApps.Colors.WinUI.ControlStrokeOnAccentDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrokeOnAccentSecondary">{{MahApps.Colors.WinUI.ControlStrokeOnAccentSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextPrimary">{{MahApps.Colors.WinUI.TextPrimary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextSecondary">{{MahApps.Colors.WinUI.TextSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextTertiary">{{MahApps.Colors.WinUI.TextTertiary}}</Color>
@@ -488,6 +491,7 @@
         two quieter ones are that accent turned down, which is how WinUI writes them as well.
     -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextPrimary" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextSecondary" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SubtleFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SubtleFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillTertiary}" options:Freeze="True" />
@@ -497,6 +501,19 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlFillSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.ControlFillTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" options:Freeze="True" />
+    <!--
+        The two strokes WinUI draws around a control filled with the accent. The upper one is a
+        thin white, the lower one a black, so the frame reads as a lit edge above and a shadow
+        below whatever the accent underneath it happens to be.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeOnAccentDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeOnAccentDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeOnAccentSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeOnAccentSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillDefault" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillSecondary" Opacity="0.9" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillTertiary" Opacity="0.8" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
@@ -538,6 +555,38 @@
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
+
+    <!--  Resources for MahApps.Styles.Button.WinUI  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.ControlFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.BackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.BackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.ControlFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.BackgroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.ForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+    <!--
+        The edge along the bottom, which is what lifts a WinUI button off the page. Pressed it goes
+        away and the frame is the one line all the way round, which is how a button that is down
+        reads as lying flat.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.BottomBorderBrush" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.BottomBorderBrushPressed" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+
+    <!--  Resources for MahApps.Styles.Button.Accent.WinUI  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBackground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBackgroundDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentForeground" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBorderBrush" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeOnAccentDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBottomBorderBrush" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeOnAccentSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
 
     <!--  Resources for MahApps.Styles.CheckBox.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />

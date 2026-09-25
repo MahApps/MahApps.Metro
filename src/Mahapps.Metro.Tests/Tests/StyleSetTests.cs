@@ -64,6 +64,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(TimePicker), "MahApps.Styles.TimePicker.Win10")]
         [TestCase(Win10, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.Win10")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
+        [TestCase(WinUI, typeof(Button), "MahApps.Styles.Button.WinUI")]
+        [TestCase(WinUI, typeof(RepeatButton), "MahApps.Styles.Button.WinUI")]
         [TestCase(WinUI, typeof(CheckBox), "MahApps.Styles.CheckBox.WinUI")]
         [TestCase(WinUI, typeof(RadioButton), "MahApps.Styles.RadioButton.WinUI")]
         [TestCase(WinUI, typeof(ComboBox), "MahApps.Styles.ComboBox.WinUI")]
@@ -96,6 +98,8 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(implicitStyle!.BasedOn, Is.SameAs(dictionary[expected]), $"the implicit style for {target.Name} should stand on {expected}");
         }
 
+        [TestCase("MahApps.Styles.Button.WinUI", typeof(Button))]
+        [TestCase("MahApps.Styles.Button.Accent.WinUI", typeof(Button))]
         [TestCase("MahApps.Styles.TextBox.WinUI", typeof(TextBox))]
         [TestCase("MahApps.Styles.PasswordBox.WinUI", typeof(PasswordBox))]
         [TestCase("MahApps.Styles.RichTextBox.WinUI", typeof(RichTextBox))]
@@ -121,18 +125,6 @@ namespace MahApps.Metro.Tests.Tests
             ClipAssert.Pump();
 
             Assert.That(ControlsHelper.GetCornerRadius(control), Is.EqualTo(Application.Current.FindResource("MahApps.CornerRadius.WinUI.Control")));
-        }
-
-        [TestCase(typeof(Button), "MahApps.Styles.Button.Win10")]
-        [Description("The WinUI set has no style of its own for these yet and hands down the Windows 10 one rather than the default look.")]
-        public void WhatTheWinUISetHasNoStyleForKeepsTheWindows10One(Type target, string expected)
-        {
-            var dictionary = Load(WinUI);
-
-            var implicitStyle = dictionary[target] as Style;
-
-            Assert.That(implicitStyle, Is.Not.Null, $"nothing reaches {target.Name} at all");
-            Assert.That(implicitStyle!.BasedOn, Is.SameAs(dictionary[expected]));
         }
 
         [TestCase(typeof(Button), "MahApps.Styles.Button")]

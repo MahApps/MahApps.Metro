@@ -110,6 +110,14 @@
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Border>
+                        <!--  the edge a WinUI button is drawn a little stronger along; a set that draws no such edge leaves the brush unset  -->
+                        <Border x:Name="BottomEdge"
+                                BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                                BorderThickness="0 0 0 1"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                IsHitTestVisible="False"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
                         <Border x:Name="DisabledVisualElement"
                                 Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
@@ -220,14 +228,43 @@
     </Style>
 
     <!--
-        The WinUI set has no button of its own yet and hands the Windows 10 one down, so the dropper
-        of that set is this one with the corners the set rounds by: it stands against the box the
-        colour is named in, and a square button beside a rounded box reads as a mistake.
+        The same thing in the WinUI set: its button, down to the one unit of frame, the edge under it
+        and the corners it rounds by. The eleven either side are what that button leaves around a
+        word; what it leaves over and under a line of text is not, because a pipette wants the same
+        air either way and the frame takes a unit of it at the top only.
     -->
     <Style x:Key="MahApps.Styles.ColorEyeDropper.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.Win10}"
            TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+        <!--  the frame leaves its bottom line to the edge below it, the way that button does  -->
+        <Setter Property="BorderThickness" Value="1 1 1 0" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
+        <Setter Property="MinHeight" Value="32" />
+        <!--  a unit more under the pipette than over it, because the frame draws no line along the bottom and the edge below it is not part of the layout  -->
+        <Setter Property="Padding" Value="11 5 11 6" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrush}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.ForegroundPressed}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrushPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.ForegroundDisabled}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrushPressed}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!--
