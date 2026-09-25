@@ -226,6 +226,19 @@
                 <Setter TargetName="PART_Flyouts" Property="Panel.ZIndex" Value="6" />
             </Trigger>
 
+            <!--
+                Mica and Tabbed leave the window itself see through, and ClearType needs something
+                opaque under it, so the content brings a fill of its own and the material keeps to
+                where it is meant to be seen, along the title bar and the border. The word that
+                turns the sub pixel rendering back on is said once, by the window, in the style.
+            -->
+            <Trigger Property="controlzex:WindowBackdropManager.CurrentBackdropType" Value="Mica">
+                <Setter TargetName="PART_Content" Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Content}" />
+            </Trigger>
+            <Trigger Property="controlzex:WindowBackdropManager.CurrentBackdropType" Value="Tabbed">
+                <Setter TargetName="PART_Content" Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Content}" />
+            </Trigger>
+
             <Trigger Property="WindowStyle" Value="None">
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
@@ -506,6 +519,19 @@
                 <Setter TargetName="PART_Flyouts" Property="Panel.ZIndex" Value="6" />
             </Trigger>
 
+            <!--
+                Mica and Tabbed leave the window itself see through, and ClearType needs something
+                opaque under it, so the content brings a fill of its own and the material keeps to
+                where it is meant to be seen, along the title bar and the border. The word that
+                turns the sub pixel rendering back on is said once, by the window, in the style.
+            -->
+            <Trigger Property="controlzex:WindowBackdropManager.CurrentBackdropType" Value="Mica">
+                <Setter TargetName="PART_Content" Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Content}" />
+            </Trigger>
+            <Trigger Property="controlzex:WindowBackdropManager.CurrentBackdropType" Value="Tabbed">
+                <Setter TargetName="PART_Content" Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Content}" />
+            </Trigger>
+
             <Trigger Property="WindowStyle" Value="None">
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
@@ -589,7 +615,12 @@
             </Setter.Value>
         </Setter>
         <Setter Property="WindowTitleBrush" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
-        <Setter Property="controlzex:WindowBackdropManager.BackdropType" Value="Mica" />
+        <!--
+            A material behind the window costs the text its ClearType, since WPF draws no sub pixel
+            rendering onto a surface it can see through, so a window asks for one rather than being
+            given one. What it takes to have both is in the MetroWindow page of the gallery.
+        -->
+        <Setter Property="controlzex:WindowBackdropManager.BackdropType" Value="None" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">
@@ -619,13 +650,16 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background.Backdrop.Auto}" />
                 <Setter Property="GlassFrameThickness" Value="-1" />
             </Trigger>
+            <!--  a see through window is where ClearType stops, so the window says it is back on, and every element under it hears that  -->
             <Trigger Property="controlzex:WindowBackdropManager.CurrentBackdropType" Value="Mica">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="GlassFrameThickness" Value="-1" />
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
             </Trigger>
             <Trigger Property="controlzex:WindowBackdropManager.CurrentBackdropType" Value="Tabbed">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="GlassFrameThickness" Value="-1" />
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
             </Trigger>
         </Style.Triggers>
     </Style>
