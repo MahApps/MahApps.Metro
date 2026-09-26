@@ -1279,6 +1279,143 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        The button of the Windows 10 set that stays pressed. Up it is that set's button and down it
+        is that set's accent button, down to the frame that appears under the pointer and the grey
+        it drops to while it is held, so a toggle and a button standing beside each other are the
+        same control until one of them latches.
+
+        The third state a toggle can hold is drawn exactly like the unchecked one, the way Windows
+        draws it. Where that state has to be visible, a CheckBox has a dash for it.
+    -->
+    <Style x:Key="MahApps.Styles.ToggleButton.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.Win10}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ToggleButtonBorderThemeThickness}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.Foreground}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundPointerOver}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushPointerOver}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushPressed}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushDisabled}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundDisabled}" />
+            </Trigger>
+            <!--  the checked states come after the others, so that a toggle which is down keeps the accent whatever the pointer is doing  -->
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundChecked}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushChecked}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundChecked}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundCheckedPointerOver}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushCheckedPointerOver}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundCheckedPointerOver}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundCheckedPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushCheckedPressed}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundCheckedPressed}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BackgroundCheckedDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.BorderBrushCheckedDisabled}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.Win10.ForegroundCheckedDisabled}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The same in the WinUI look, and the same story: the button of that set while the toggle is up
+        and its accent button while it is down. So the rounded corners, the one unit of frame and the
+        edge along the bottom are all the button's, and checked that edge goes over to the accent
+        with the rest of it.
+    -->
+    <Style x:Key="MahApps.Styles.ToggleButton.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.WinUI}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.Foreground}" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundPointerOver}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrush}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrush}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundPressed}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrushPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrush}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundDisabled}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrushPressed}" />
+            </Trigger>
+            <!--  the checked states come after the others, so that a toggle which is down keeps the accent whatever the pointer is doing  -->
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundChecked}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrushChecked}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundChecked}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrushChecked}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundCheckedPointerOver}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundCheckedPointerOver}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundCheckedPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrushCheckedPressed}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundCheckedPressed}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrushCheckedPressed}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BackgroundCheckedDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrushCheckedDisabled}" />
+                <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.ForegroundCheckedDisabled}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleButton.WinUI.BorderBrushCheckedDisabled}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="MahApps.Styles.Button.DropDown"
            BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
            TargetType="{x:Type Button}">

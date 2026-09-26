@@ -43,6 +43,11 @@
                         <Button Content="Launch" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ToggleButton" />
+                        <ToggleButton Content="Bold" IsChecked="True" />
+                        <ToggleButton Content="Italic" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="SplitButton" />
                         <mah:SplitButton HorizontalAlignment="Left" SelectedIndex="0">
                             <x:Array Type="{x:Type system:String}">

@@ -14,6 +14,7 @@
 
     <Style BasedOn="{StaticResource MahApps.Styles.Button.WinUI}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Styles.Button.WinUI}" TargetType="RepeatButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton.WinUI}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.WinUI}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.WinUI}" TargetType="ComboBoxItem" />

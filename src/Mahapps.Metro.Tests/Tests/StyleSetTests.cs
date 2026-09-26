@@ -43,6 +43,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [TestCase(Win10, typeof(Button), "MahApps.Styles.Button.Win10")]
         [TestCase(Win10, typeof(RepeatButton), "MahApps.Styles.Button.Win10")]
+        [TestCase(Win10, typeof(ToggleButton), "MahApps.Styles.ToggleButton.Win10")]
         [TestCase(Win10, typeof(CheckBox), "MahApps.Styles.CheckBox.Win10")]
         [TestCase(Win10, typeof(RadioButton), "MahApps.Styles.RadioButton.Win10")]
         [TestCase(Win10, typeof(ComboBox), "MahApps.Styles.ComboBox.Win10")]
@@ -72,6 +73,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
         [TestCase(WinUI, typeof(Button), "MahApps.Styles.Button.WinUI")]
         [TestCase(WinUI, typeof(RepeatButton), "MahApps.Styles.Button.WinUI")]
+        [TestCase(WinUI, typeof(ToggleButton), "MahApps.Styles.ToggleButton.WinUI")]
         [TestCase(WinUI, typeof(CheckBox), "MahApps.Styles.CheckBox.WinUI")]
         [TestCase(WinUI, typeof(RadioButton), "MahApps.Styles.RadioButton.WinUI")]
         [TestCase(WinUI, typeof(ComboBox), "MahApps.Styles.ComboBox.WinUI")]
@@ -112,6 +114,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [TestCase("MahApps.Styles.Button.WinUI", typeof(Button))]
         [TestCase("MahApps.Styles.Button.Accent.WinUI", typeof(Button))]
+        [TestCase("MahApps.Styles.ToggleButton.WinUI", typeof(ToggleButton))]
         [TestCase("MahApps.Styles.TextBox.WinUI", typeof(TextBox))]
         [TestCase("MahApps.Styles.PasswordBox.WinUI", typeof(PasswordBox))]
         [TestCase("MahApps.Styles.RichTextBox.WinUI", typeof(RichTextBox))]

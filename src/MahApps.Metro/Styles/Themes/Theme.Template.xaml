@@ -609,6 +609,69 @@
     <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.WinUI.AccentBorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
 
+    <!--
+        Resources for MahApps.Styles.ToggleButton.Win10. Windows 10 gives the button that stays
+        pressed the colours of its button while it is up and the ones of its accent button while it
+        is down, so these are those two sets of keys under a name of their own, which is what lets an
+        application re-point the toggle without touching every button on the page.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.Background" ResourceKey="MahApps.Brushes.Button.Background" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundPointerOver" ResourceKey="MahApps.Brushes.Button.BackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundPressed" ResourceKey="MahApps.Brushes.Button.BackgroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundDisabled" ResourceKey="MahApps.Brushes.Button.BackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundChecked" ResourceKey="MahApps.Brushes.Button.AccentBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundCheckedPointerOver" ResourceKey="MahApps.Brushes.Button.AccentBackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundCheckedPressed" ResourceKey="MahApps.Brushes.Button.AccentBackgroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BackgroundCheckedDisabled" ResourceKey="MahApps.Brushes.Button.AccentBackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.Foreground" ResourceKey="MahApps.Brushes.Button.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundPointerOver" ResourceKey="MahApps.Brushes.Button.ForegroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundPressed" ResourceKey="MahApps.Brushes.Button.ForegroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.Button.ForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundChecked" ResourceKey="MahApps.Brushes.Button.AccentForeground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundCheckedPointerOver" ResourceKey="MahApps.Brushes.Button.AccentForegroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundCheckedPressed" ResourceKey="MahApps.Brushes.Button.AccentForegroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.ForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.Button.AccentForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrush" ResourceKey="MahApps.Brushes.Button.BorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.Button.BorderBrushPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushPressed" ResourceKey="MahApps.Brushes.Button.BorderBrushPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushDisabled" ResourceKey="MahApps.Brushes.Button.BorderBrushDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushChecked" ResourceKey="MahApps.Brushes.Button.AccentBorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushCheckedPointerOver" ResourceKey="MahApps.Brushes.Button.AccentBorderBrushPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushCheckedPressed" ResourceKey="MahApps.Brushes.Button.AccentBorderBrushPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.Win10.BorderBrushCheckedDisabled" ResourceKey="MahApps.Brushes.Button.AccentBorderBrushDisabled" />
+
+    <!--
+        Resources for MahApps.Styles.ToggleButton.WinUI. WinUI gives the toggle button the colours of
+        its button and, once it is checked, the ones of its accent button, down to the last key. They
+        stand here under a name of their own all the same, so that an application can re-point the
+        toggle without touching every button on the page.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.Background" ResourceKey="MahApps.Brushes.Button.WinUI.Background" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundPointerOver" ResourceKey="MahApps.Brushes.Button.WinUI.BackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundPressed" ResourceKey="MahApps.Brushes.Button.WinUI.BackgroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundDisabled" ResourceKey="MahApps.Brushes.Button.WinUI.BackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundCheckedPointerOver" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBackgroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundCheckedPressed" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBackgroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BackgroundCheckedDisabled" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBackgroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.Foreground" ResourceKey="MahApps.Brushes.Button.WinUI.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.Button.WinUI.ForegroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundPressed" ResourceKey="MahApps.Brushes.Button.WinUI.ForegroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.Button.WinUI.ForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentForeground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundCheckedPointerOver" ResourceKey="MahApps.Brushes.Button.WinUI.AccentForegroundPointerOver" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundCheckedPressed" ResourceKey="MahApps.Brushes.Button.WinUI.AccentForegroundPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.ForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.Button.WinUI.AccentForegroundDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.Button.WinUI.BorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BorderBrushChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BorderBrushCheckedPressed" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBorderBrushPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BorderBrushCheckedDisabled" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBorderBrushDisabled" />
+    <!--  the edge along the bottom, which lifts the toggle off the page the way it lifts a button, and which goes over to the accent once the toggle is checked  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrush" ResourceKey="MahApps.Brushes.Button.WinUI.BottomBorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrushPressed" ResourceKey="MahApps.Brushes.Button.WinUI.BottomBorderBrushPressed" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleButton.WinUI.BottomBorderBrushChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBottomBorderBrush" />
+
+
     <!--  Resources for MahApps.Styles.CheckBox.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.ForegroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />

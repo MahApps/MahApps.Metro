@@ -62,6 +62,50 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="MahApps.Styles.ToggleButton.Win10 is that set's button for as long as the toggle is up and that set's accent button once it is down, down to the frame that appears under the pointer and the grey it drops to while it is held. A toggle and a button standing beside each other are the same control until one of them latches. The third state is drawn like the unchecked one, the way Windows draws it. It is on develop and not in 2.4.11."
+                                     Header="The one in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ToggleButton.Win10">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <ToggleButton x:Name="Win10"
+                                      MinWidth="72"
+                                      Content="Bold"
+                                      IsChecked="True"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.Win10}" />
+                        <ToggleButton MinWidth="72"
+                                      Margin="8 0 0 0"
+                                      Content="Italic"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.Win10}" />
+                        <ToggleButton MinWidth="72"
+                                      Margin="8 0 0 0"
+                                      Content="42"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.Win10}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="MahApps.Styles.ToggleButton.WinUI is the same story in the WinUI look: the colours of that set's button while the toggle is up and the ones of its accent button while it is down. So the rounded corners, the one unit of frame and the line a shade stronger along the bottom are all the button's, and once the toggle is checked that line goes over to the accent with the rest of it. It is on develop and not in 2.4.11."
+                                     Header="The one in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="ToggleButton.WinUI">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <ToggleButton x:Name="WinUI"
+                                      MinWidth="72"
+                                      Content="Bold"
+                                      IsChecked="True"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.WinUI}" />
+                        <ToggleButton MinWidth="72"
+                                      Margin="8 0 0 0"
+                                      Content="Italic"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.WinUI}" />
+                        <ToggleButton MinWidth="72"
+                                      Margin="8 0 0 0"
+                                      Content="42"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.WinUI}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
