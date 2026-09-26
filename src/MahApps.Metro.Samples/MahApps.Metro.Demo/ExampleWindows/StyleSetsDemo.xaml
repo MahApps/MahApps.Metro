@@ -156,6 +156,12 @@
                         <Slider Maximum="100" Value="42" />
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="Expander" />
+                        <Expander Header="What is in here" IsExpanded="True">
+                            <TextBlock Text="42 of them, and room for more." TextWrapping="Wrap" />
+                        </Expander>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="ToggleSwitch" />
                         <mah:ToggleSwitch IsOn="True"
                                           OffContent="Off"

@@ -448,6 +448,9 @@
     <Color x:Key="MahApps.Colors.WinUI.TextOnAccentDisabled">{{MahApps.Colors.WinUI.TextOnAccentDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SurfaceStrokeFlyout">{{MahApps.Colors.WinUI.SurfaceStrokeFlyout}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.FlyoutShadow">{{MahApps.Colors.WinUI.FlyoutShadow}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillDefault">{{MahApps.Colors.WinUI.CardBackgroundFillDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillSecondary">{{MahApps.Colors.WinUI.CardBackgroundFillSecondary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Background" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
@@ -515,6 +518,14 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrokeSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" options:Freeze="True" />
+    <!--
+        The two fills and the line WinUI gives a card, the panel a setting or an expander stands on.
+        A card is a shade quieter than a control and its line a shade stronger, which is what sets
+        it apart from the page behind it without a frame around the whole of it.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillDefault" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.CardStrokeDefault}" options:Freeze="True" />
     <!--  the line around a flyout, which WinUI draws darker than the flyout rather than lighter, so that the shadow under it and this line together are what lift it off the page  -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SurfaceStrokeFlyout" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeFlyout}" options:Freeze="True" />
     <!--
@@ -849,6 +860,40 @@
     <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
     <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.MenuItem.WinUI.Chevron" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+
+    <!--
+        Resources for MahApps.Styles.Expander.Win10. The header of that set is a list row rather than
+        a tile: it is the page underneath until the pointer arrives, and what stands around the whole
+        of it is a line. The content keeps that page as well, so the expander reads as a frame with a
+        rule through it rather than as two blocks of colour.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.HeaderBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.HeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.HeaderBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.HeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.Chevron" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.ChevronBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.ChevronBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.Win10.ChevronBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+
+    <!--
+        Resources for MahApps.Styles.Expander.WinUI, where the same control is two cards: the header
+        on the card fill of that set and the content on the quieter one below it, with the card line
+        around both. The header itself does not answer the pointer there, the chevron does, so the
+        fill that arrives with the pointer is the one WinUI puts behind a quiet button.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.CardBackgroundFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.HeaderBackground" ResourceKey="MahApps.Brushes.WinUI.CardBackgroundFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.HeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.CardBackgroundFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.HeaderBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.CardBackgroundFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.HeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.Chevron" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.ChevronBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.ChevronBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Expander.WinUI.ChevronBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
 
     <!--  Resources for MahApps.Styles.RadioButton.WinUI  -->
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />

@@ -475,10 +475,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
+                        <!--  the veil over an expander that is off, which a set that would rather dim it alone can turn off the way it can everywhere else  -->
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    IsHitTestVisible="false"
-                                   Opacity="0" />
+                                   Opacity="0"
+                                   Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                         <DockPanel x:Name="ExpanderRoot">
                             <Border x:Name="HeaderSite"
                                     Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
@@ -505,6 +507,9 @@
                                                   VerticalContentAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   mah:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
                                                   mah:ExpanderHelper.ShowToggleButton="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton)}"
+                                                  mah:ExpanderHelper.ToggleButtonBackground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackground)}"
+                                                  mah:ExpanderHelper.ToggleButtonBackgroundMouseOver="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundMouseOver)}"
+                                                  mah:ExpanderHelper.ToggleButtonBackgroundPressed="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundPressed)}"
                                                   mah:ExpanderHelper.ToggleButtonForeground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground)}"
                                                   mah:ExpanderHelper.ToggleButtonForegroundMouseOver="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver)}"
                                                   mah:ExpanderHelper.ToggleButtonForegroundPressed="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed)}"
@@ -532,24 +537,37 @@
                                     </ToggleButton>
                                 </Grid>
                             </Border>
-                            <Border x:Name="ExpandSite"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
-                                    CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Top}}"
-                                    DockPanel.Dock="Bottom"
-                                    Focusable="false"
-                                    Opacity="0"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True"
-                                    Visibility="Collapsed">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  Cursor="{TemplateBinding Cursor}"
-                                                  UseLayoutRounding="False" />
+                            <!--
+                                Around the content goes a frame that clips, because what the two Windows sets
+                                slide in slides inside this one: the room is taken the moment the expander opens
+                                and the content walks into it, so the part that is still on its way stays behind
+                                the header rather than over it. The Metro set fades instead and notices nothing.
+                            -->
+                            <Border x:Name="ExpandSiteClip"
+                                    ClipToBounds="True"
+                                    DockPanel.Dock="Bottom">
+                                <Border x:Name="ExpandSite"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Top}}"
+                                        CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Top}}"
+                                        Focusable="false"
+                                        Opacity="0"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        UseLayoutRounding="True"
+                                        Visibility="Collapsed">
+                                    <Border.RenderTransform>
+                                        <TranslateTransform />
+                                    </Border.RenderTransform>
+                                    <!--  where the content stands is where it stands inside the frame, the way a content control aligns what it holds, so that the frame itself stays the width of the expander  -->
+                                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      Cursor="{TemplateBinding Cursor}"
+                                                      UseLayoutRounding="False" />
+                                </Border>
                             </Border>
                         </DockPanel>
                         <VisualStateManager.VisualStateGroups>
@@ -620,7 +638,7 @@
                         <Trigger Property="ExpandDirection" Value="Right">
                             <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Left}}" />
                             <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Left}}" />
-                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="ExpandSiteClip" Property="DockPanel.Dock" Value="Right" />
                             <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Right}}" />
                             <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Left" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderRightStyle)}" />
@@ -628,7 +646,7 @@
                         <Trigger Property="ExpandDirection" Value="Up">
                             <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Bottom}}" />
                             <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Bottom}}" />
-                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
+                            <Setter TargetName="ExpandSiteClip" Property="DockPanel.Dock" Value="Top" />
                             <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Top}}" />
                             <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Bottom" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderUpStyle)}" />
@@ -636,7 +654,7 @@
                         <Trigger Property="ExpandDirection" Value="Left">
                             <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static mahConverters:ThicknessSideType.Right}}" />
                             <Setter TargetName="ExpandSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Right}}" />
-                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="ExpandSiteClip" Property="DockPanel.Dock" Value="Left" />
                             <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static mahConverters:RadiusType.Left}}" />
                             <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Right" />
                             <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.HeaderLeftStyle)}" />
@@ -663,4 +681,573 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource ExpanderHeaderThemePadding}" />
     </Style>
+
+    <!--
+        What the content of the two Windows sets rides in on. WinUI slides the whole of it out from
+        behind the header rather than fading it in, and the room it needs is taken the moment the
+        expander opens, so what moves is the content and not the layout around it. How far it has to
+        travel is the height of that content, which no storyboard can be told, since an animation
+        carries no bindings. It comes in over the last stretch of that way instead, which under a
+        clip reads the same, and fades while it does so that the edge it starts from is not a line of
+        its own.
+        
+        The times and the curves are the ones WinUI uses: a third of a second out, a sixth back, and
+        a spline that is all deceleration on the way out and all acceleration on the way back.
+    -->
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Down">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="0"
+                         To="1"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="-24" />
+            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                  KeyTime="0:0:0.333"
+                                  Value="0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Down">
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1"
+                         To="0"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
+                                  KeyTime="0:0:0.167"
+                                  Value="-24" />
+        </DoubleAnimationUsingKeyFrames>
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <!--  an expander that opens upwards has its content come from below, and one that opens sideways travels along the other axis  -->
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Up">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="0"
+                         To="1"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="24" />
+            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                  KeyTime="0:0:0.333"
+                                  Value="0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Up">
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1"
+                         To="0"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
+                                  KeyTime="0:0:0.167"
+                                  Value="24" />
+        </DoubleAnimationUsingKeyFrames>
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Right">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="0"
+                         To="1"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="-24" />
+            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                  KeyTime="0:0:0.333"
+                                  Value="0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Right">
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1"
+                         To="0"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
+                                  KeyTime="0:0:0.167"
+                                  Value="-24" />
+        </DoubleAnimationUsingKeyFrames>
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Left">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="0"
+                         To="1"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="24" />
+            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
+                                  KeyTime="0:0:0.333"
+                                  Value="0" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Left">
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1"
+                         To="0"
+                         Duration="0:0:0.167" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
+                                  KeyTime="0:0:0.167"
+                                  Value="24" />
+        </DoubleAnimationUsingKeyFrames>
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <!--
+        The header of the two Windows sets. Where the Metro one carries a ringed arrow in front of
+        the words, these put a chevron at the far end of the row, in a square of its own. That square
+        is what answers the pointer in the WinUI look, and it takes the fill it is given rather than
+        one of its own, so both sets share the one template and hand in what belongs to them.
+        
+        The chevron turns rather than being swapped for another glyph, which is what WinUI animates
+        as well. Which way it points at rest is the one thing an expander that opens the other way
+        changes, and it says so with a glyph of its own.
+    -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70D;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">12 0 4 0</Thickness>
+        </Style.Resources>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid MinHeight="{TemplateBinding MinHeight}" Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <mah:ContentControlEx Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border x:Name="ChevronSite"
+                                Grid.Column="1"
+                                Width="32"
+                                Height="32"
+                                Margin="{DynamicResource MahApps.Thickness.ExpanderHeader.Chevron}"
+                                VerticalAlignment="Center"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackground), Mode=OneWay}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <mah:FontIcon x:Name="Chevron"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                          FontSize="12"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Glyph="{DynamicResource MahApps.Glyph.ExpanderHeader.Chevron}"
+                                          RenderTransformOrigin="0.5 0.5">
+                                <mah:FontIcon.RenderTransform>
+                                    <RotateTransform />
+                                </mah:FontIcon.RenderTransform>
+                            </mah:FontIcon>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--  the chevron turns to point back the way the content came, over the time WinUI turns it in  -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         To="180"
+                                                         Duration="0:0:0.167">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         To="0"
+                                                         Duration="0:0:0.167">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!--  A fill of its own for the square behind the chevron, if the set hands one in. Left unset, nothing is drawn there.  -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ChevronSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ChevronSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <!--  and the same for the chevron itself, which otherwise writes in the colour of the header  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True">
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--  an expander that opens upwards carries the same header with the chevron the other way up  -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Up"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70E;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">12 0 4 0</Thickness>
+        </Style.Resources>
+    </Style>
+
+    <!--
+        The header of an expander that opens to the side. The words stand on their end, the way the
+        Metro set stands them, and the chevron sits above them pointing the way the content will
+        come out.
+    -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Right"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76C;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 4 0 12</Thickness>
+        </Style.Resources>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="40" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid MinWidth="{TemplateBinding MinWidth}" Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border x:Name="ChevronSite"
+                                Width="32"
+                                Height="32"
+                                Margin="{DynamicResource MahApps.Thickness.ExpanderHeader.Chevron}"
+                                HorizontalAlignment="Center"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackground), Mode=OneWay}"
+                                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ShowToggleButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <mah:FontIcon x:Name="Chevron"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                          FontSize="12"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Glyph="{DynamicResource MahApps.Glyph.ExpanderHeader.Chevron}"
+                                          RenderTransformOrigin="0.5 0.5">
+                                <mah:FontIcon.RenderTransform>
+                                    <RotateTransform />
+                                </mah:FontIcon.RenderTransform>
+                            </mah:FontIcon>
+                        </Border>
+                        <mah:ContentControlEx Grid.Row="1"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <mah:ContentControlEx.LayoutTransform>
+                                <RotateTransform Angle="-90" />
+                            </mah:ContentControlEx.LayoutTransform>
+                        </mah:ContentControlEx>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         To="180"
+                                                         Duration="0:0:0.167">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Chevron"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         To="0"
+                                                         Duration="0:0:0.167">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ChevronSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ChevronSite" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonBackgroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True">
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground), Mode=OneWay}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Converter={x:Static mahConverters:IsNotNullConverter.Instance}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed), Mode=OneWay}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Left"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Right}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76B;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 4 0 12</Thickness>
+        </Style.Resources>
+    </Style>
+
+    <!--
+        The same four headers in the WinUI look: the square behind the chevron is rounded the way
+        that set rounds a control, and it stands the distance from the words that WinUI leaves there.
+        The row itself is taller, since every control of that set is.
+    -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Down"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70D;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">20 0 8 0</Thickness>
+        </Style.Resources>
+        <Setter Property="MinHeight" Value="48" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Up"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Down}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70E;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">20 0 8 0</Thickness>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Right"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Right}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76C;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 8 0 20</Thickness>
+        </Style.Resources>
+        <Setter Property="MinWidth" Value="48" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Left"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Right}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Resources>
+            <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76B;</system:String>
+            <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 8 0 20</Thickness>
+        </Style.Resources>
+    </Style>
+
+    <!--
+        The expander of the Windows 10 set. The header is a list row of that set rather than a band
+        of the accent: it is the page underneath until the pointer arrives, and what holds header and
+        content together is the line around them with a rule between the two. The words are written
+        as they were given, since nothing in that set is set in capitals.
+    -->
+    <Style x:Key="MahApps.Styles.Expander.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Expander}"
+           TargetType="{x:Type Expander}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Expander.Win10.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Expander.Win10.BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
+        <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Down}" />
+        <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Down}" />
+        <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down}" />
+        <Setter Property="mah:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Left}" />
+        <Setter Property="mah:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Right}" />
+        <Setter Property="mah:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Up}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonBackground" Value="{DynamicResource MahApps.Brushes.Expander.Win10.ChevronBackground}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonBackgroundMouseOver" Value="{DynamicResource MahApps.Brushes.Expander.Win10.ChevronBackgroundPointerOver}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonBackgroundPressed" Value="{DynamicResource MahApps.Brushes.Expander.Win10.ChevronBackgroundPressed}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonForeground" Value="{DynamicResource MahApps.Brushes.Expander.Win10.Chevron}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Expander.Win10.HeaderBackground}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundMouseOver" Value="{DynamicResource MahApps.Brushes.Expander.Win10.HeaderBackgroundPointerOver}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundPressed" Value="{DynamicResource MahApps.Brushes.Expander.Win10.HeaderBackgroundPressed}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Expander.Win10.HeaderForeground}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderHorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="12 0 0 0" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <!--  the content leaves by the side it came out of, so which way it travels is the direction the expander opens  -->
+            <Trigger Property="ExpandDirection" Value="Up">
+                <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Up}" />
+                <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Up}" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="12 0 0 0" />
+            </Trigger>
+            <Trigger Property="ExpandDirection" Value="Right">
+                <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Right}" />
+                <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Right}" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 12" />
+            </Trigger>
+            <Trigger Property="ExpandDirection" Value="Left">
+                <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Left}" />
+                <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Left}" />
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 12" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        And the WinUI one, where the same control is two cards: the header on the card fill of that
+        set with the chevron in a rounded square at its end, and the content on the quieter fill
+        below it. What answers the pointer there is that square rather than the whole of the header,
+        which is how WinUI has it, and the corners are the ones the set rounds a control by, so the
+        pair reads as one panel with a rule through it.
+    -->
+    <Style x:Key="MahApps.Styles.Expander.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Expander.Win10}"
+           TargetType="{x:Type Expander}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.BorderBrush}" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Down}" />
+        <Setter Property="mah:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Left}" />
+        <Setter Property="mah:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Right}" />
+        <Setter Property="mah:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Up}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonBackground" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.ChevronBackground}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonBackgroundMouseOver" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.ChevronBackgroundPointerOver}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonBackgroundPressed" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.ChevronBackgroundPressed}" />
+        <Setter Property="mah:ExpanderHelper.ToggleButtonForeground" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.Chevron}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.HeaderBackground}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundMouseOver" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.HeaderBackgroundPointerOver}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackgroundPressed" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.HeaderBackgroundPressed}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.HeaderForeground}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="16 0 0 0" />
+        <Style.Triggers>
+            <Trigger Property="ExpandDirection" Value="Right">
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 16" />
+            </Trigger>
+            <Trigger Property="ExpandDirection" Value="Left">
+                <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 16" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
