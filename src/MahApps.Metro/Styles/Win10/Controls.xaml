@@ -7,10 +7,10 @@
         own styles in front of the handful it has, so an application merges this one instead of
         Styles/Controls.xaml rather than next to it.
         
-        The slider, the range slider and the window buttons wear their Win10 style by default
-        already, so they are not repeated here. MahApps.Styles.CheckBox.DataGrid.Win10 has no
-        implicit style either, because a DataGrid column takes one through ElementStyle and
-        EditingElementStyle rather than by type.
+        The slider, the range slider, the toggle switch and the window buttons wear their Win10
+        style by default already, so they are not repeated here.
+        MahApps.Styles.CheckBox.DataGrid.Win10 has no implicit style either, because a DataGrid
+        column takes one through ElementStyle and EditingElementStyle rather than by type.
     -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />

@@ -818,6 +818,48 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundBaseLow" />
 
+    <!--
+        Resources for MahApps.Styles.ToggleSwitch.WinUI. WinUI turns the switch around: the track of
+        a switch that is off is filled rather than hollow, it carries a line one unit thick rather
+        than two, and the knob is the writing colour rather than the chrome white. On it is the
+        accent with the ideal foreground riding in it, and the knob keeps a thin lit edge so that it
+        stays visible against a light accent.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.ContentForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.ContentForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.HeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.HeaderForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.ContainerBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.ContainerBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.ContainerBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.ContainerBackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOff" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOffPointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOffPressed" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillQuarternary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOffDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOff" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOffPointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOffPressed" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOffDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOn" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOnPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOnPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOnDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOn" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOnPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOnPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.StrokeOnDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOff" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOffPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOffPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOffDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOn" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOnPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOnPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobFillOnDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+    <!--  the lit edge round the knob that is on, which is what keeps it visible against a light accent  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.KnobStrokeOn" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeOnAccentDefault" />
+
 
     <!--  Resources for MahApps.Styles.CheckBox.WinUI  -->
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.WinUI.ForegroundUnchecked" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />

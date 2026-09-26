@@ -36,6 +36,23 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="MahApps.Styles.ToggleSwitch.WinUI is the switch Windows 11 draws. There is no second style for the Windows 10 look, because the switch the library hands out by default is that one already. Where the two part company: the track of a switch that is off is filled here rather than hollow and carries one unit of line rather than two, the knob is a 12 unit circle rather than a 10 unit one and answers the pointer by growing, and the track is 40 wide rather than 44. It is on develop and not in 2.4.11."
+                                     Header="The one in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="ToggleSwitch.WinUI">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:ToggleSwitch x:Name="WinUI"
+                                          Header="Show the ribbon"
+                                          IsOn="True"
+                                          Style="{DynamicResource MahApps.Styles.ToggleSwitch.WinUI}" />
+                        <mah:ToggleSwitch Margin="0 8 0 0"
+                                          OffContent="Silent"
+                                          OnContent="Audible"
+                                          Style="{DynamicResource MahApps.Styles.ToggleSwitch.WinUI}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
