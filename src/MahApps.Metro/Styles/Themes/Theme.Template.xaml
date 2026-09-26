@@ -150,6 +150,12 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Acrylic" Color="{{MahApps.Brushes.Window.Background.Backdrop.Acrylic}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Auto" Color="{{MahApps.Brushes.Window.Background.Backdrop.Auto}}" options:Freeze="True" />
+    <!--
+        What the content of a window stands on while a material shows through the window itself. It
+        has to be opaque, since WPF draws no ClearType onto anything see through. Paint it
+        Transparent to have the material behind the content as well, at the price of that text.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Content" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Separator" Color="#FFC4C4C5" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background" Color="#D5D5D5" options:Freeze="True" />

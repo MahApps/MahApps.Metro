@@ -20,6 +20,15 @@
                         Content="Open the window" />
             </controls:ControlExample>
 
+            <controls:ControlExample Description="A window can have one of the materials Windows draws behind a window, which it asks for with the attached property of ControlzEx. A material is see through, and WPF draws no ClearType onto anything see through, so a window that has one gives its content a fill of its own and says that the sub pixel rendering is back on. The window behind this button switches between the materials while it is open, and shows the one thing that still costs a line its sub pixels."
+                                     Header="A window with a material behind it"
+                                     MarkupResource="MahApps.Metro.Gallery.Windows.BackdropWindow.xaml">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnOpenBackdropWindow"
+                        Content="Open the window" />
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -1249,6 +1249,16 @@ namespace MahApps.Metro.Controls
 
             EventManager.RegisterClassHandler(typeof(MetroWindow), AccessKeyManager.AccessKeyPressedEvent, new AccessKeyPressedEventHandler(OnAccessKeyPressed));
 
+            // A window with a material behind it is see through, and WPF draws no ClearType onto
+            // anything see through. RenderOptions.ClearTypeHint is what turns it back on, but WPF
+            // registers that one without inheritance, so the word of a window carries only as far
+            // as the next clip or layer, and the templates here are full of both. Handing the
+            // property its inheritance puts that word on every element under the window instead.
+            // A window without a material notices nothing, since what it hands down is Auto.
+            RenderOptions.ClearTypeHintProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(ClearTypeHint.Auto, FrameworkPropertyMetadataOptions.Inherits));
+
             IconProperty.OverrideMetadata(
                 typeof(MetroWindow),
                 new FrameworkPropertyMetadata(
