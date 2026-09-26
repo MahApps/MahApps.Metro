@@ -36,6 +36,20 @@ namespace MahApps.Metro.Gallery.Pages
                                    ContentControl.ContentProperty,
                                    IsEnabledProperty);
             this.FlatExample.Watch("Attached", this.Flat, ControlsHelper.ContentCharacterCasingProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    ToggleButton.IsCheckedProperty,
+                                    ToggleButton.IsThreeStateProperty,
+                                    ContentControl.ContentProperty,
+                                    IsEnabledProperty);
+            this.Win10Example.Watch("Attached", this.Win10, ControlsHelper.ContentCharacterCasingProperty, ControlsHelper.CornerRadiusProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    ToggleButton.IsCheckedProperty,
+                                    ToggleButton.IsThreeStateProperty,
+                                    ContentControl.ContentProperty,
+                                    IsEnabledProperty);
+            this.WinUIExample.Watch("Attached", this.WinUI, ControlsHelper.ContentCharacterCasingProperty, ControlsHelper.CornerRadiusProperty);
         }
     }
 }
