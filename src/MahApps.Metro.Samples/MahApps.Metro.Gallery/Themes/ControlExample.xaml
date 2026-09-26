@@ -139,8 +139,7 @@
                                 <ContentPresenter Grid.Column="0"
                                                   Margin="16 4 16 14"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  UseLayoutRounding="False" />
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 
                                 <Border x:Name="OptionsPane"
                                         Grid.Column="1"

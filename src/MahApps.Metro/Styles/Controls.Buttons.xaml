@@ -202,7 +202,7 @@
         which is what makes the button look as if it stood a little above the page. Pressed, that
         edge goes and the frame is one line all the way round, so a button that is down reads as
         lying flat.
-        
+
         The smallest height is the one every other control of this set carries, so that a button with
         nothing but an icon in it is still as tall as the box it stands next to.
     -->
