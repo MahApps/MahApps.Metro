@@ -140,6 +140,96 @@ namespace MahApps.Metro.Controls
             element.SetValue(ToggleButtonForegroundPressedProperty, value);
         }
 
+        public static readonly DependencyProperty ToggleButtonBackgroundProperty
+            = DependencyProperty.RegisterAttached("ToggleButtonBackground",
+                                                  typeof(Brush),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="ToggleButtonBackgroundProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ToggleButtonBackgroundProperty"/> from.</param>
+        /// <remarks>Gets the brush behind the toggle button of the header at rest. Left unset, nothing is drawn behind it and what shows is the header.</remarks>
+        /// <returns>ToggleButtonBackground property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static Brush? GetToggleButtonBackground(DependencyObject element)
+        {
+            return (Brush?)element.GetValue(ToggleButtonBackgroundProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ToggleButtonBackgroundProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ToggleButtonBackgroundProperty"/> on.</param>
+        /// <param name="value">ToggleButtonBackground property value.</param>
+        /// <remarks>Sets the brush behind the toggle button of the header at rest. Left unset, nothing is drawn behind it and what shows is the header.</remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetToggleButtonBackground(DependencyObject element, Brush? value)
+        {
+            element.SetValue(ToggleButtonBackgroundProperty, value);
+        }
+
+        public static readonly DependencyProperty ToggleButtonBackgroundMouseOverProperty
+            = DependencyProperty.RegisterAttached("ToggleButtonBackgroundMouseOver",
+                                                  typeof(Brush),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="ToggleButtonBackgroundMouseOverProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ToggleButtonBackgroundMouseOverProperty"/> from.</param>
+        /// <remarks>Gets the brush behind the toggle button of the header while the mouse is over it. Left unset, it keeps what it has at rest.</remarks>
+        /// <returns>ToggleButtonBackgroundMouseOver property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static Brush? GetToggleButtonBackgroundMouseOver(DependencyObject element)
+        {
+            return (Brush?)element.GetValue(ToggleButtonBackgroundMouseOverProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ToggleButtonBackgroundMouseOverProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ToggleButtonBackgroundMouseOverProperty"/> on.</param>
+        /// <param name="value">ToggleButtonBackgroundMouseOver property value.</param>
+        /// <remarks>Sets the brush behind the toggle button of the header while the mouse is over it. Left unset, it keeps what it has at rest.</remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetToggleButtonBackgroundMouseOver(DependencyObject element, Brush? value)
+        {
+            element.SetValue(ToggleButtonBackgroundMouseOverProperty, value);
+        }
+
+        public static readonly DependencyProperty ToggleButtonBackgroundPressedProperty
+            = DependencyProperty.RegisterAttached("ToggleButtonBackgroundPressed",
+                                                  typeof(Brush),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(null));
+
+        /// <summary>Helper for getting <see cref="ToggleButtonBackgroundPressedProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ToggleButtonBackgroundPressedProperty"/> from.</param>
+        /// <remarks>Gets the brush behind the toggle button of the header while it is held down. Left unset, it keeps what it has at rest.</remarks>
+        /// <returns>ToggleButtonBackgroundPressed property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static Brush? GetToggleButtonBackgroundPressed(DependencyObject element)
+        {
+            return (Brush?)element.GetValue(ToggleButtonBackgroundPressedProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ToggleButtonBackgroundPressedProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ToggleButtonBackgroundPressedProperty"/> on.</param>
+        /// <param name="value">ToggleButtonBackgroundPressed property value.</param>
+        /// <remarks>Sets the brush behind the toggle button of the header while it is held down. Left unset, it keeps what it has at rest.</remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetToggleButtonBackgroundPressed(DependencyObject element, Brush? value)
+        {
+            element.SetValue(ToggleButtonBackgroundPressedProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderUpStyleProperty
             = DependencyProperty.RegisterAttached(
                 "HeaderUpStyle",

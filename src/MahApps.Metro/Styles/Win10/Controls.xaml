@@ -24,6 +24,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.Menu.Win10}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Win10}" TargetType="ContextMenu" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Expander.Win10}" TargetType="Expander" />
     <!--  the line between two groups of a menu is looked up by a key rather than by type, so the set hands its own over under that key  -->
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"

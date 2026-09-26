@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              d:DesignHeight="600"
@@ -25,6 +26,53 @@
                                    Style="{DynamicResource MahApps.Styles.TextBlock}"
                                    Text="42 of them, and room for more."
                                    TextWrapping="Wrap" />
+                    </Expander>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The Windows 10 set, where the header is a list row rather than a band of the accent: the page underneath until the pointer arrives, with a line around header and content and a rule between the two. The chevron sits at the far end and turns as the content comes out."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="Expander.Win10">
+                    <Expander x:Name="Win10"
+                              Width="360"
+                              HorizontalAlignment="Left"
+                              Header="This text is in the header"
+                              IsExpanded="True"
+                              Style="{StaticResource MahApps.Styles.Expander.Win10}">
+                        <TextBlock Text="And this text is in the content area." TextWrapping="Wrap" />
+                    </Expander>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI set, where the same control is two cards: the header on the card fill of that set with the chevron in a rounded square at its end, and the content on the quieter fill below it. What answers the pointer there is that square rather than the whole of the header. Both looks come from merging Styles/WinUI/Controls.xaml; the styles are named here because the gallery itself wears the Metro look."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="Expander.WinUI">
+                    <Expander x:Name="WinUI"
+                              Width="360"
+                              HorizontalAlignment="Left"
+                              Header="This text is in the header"
+                              IsExpanded="True"
+                              Style="{StaticResource MahApps.Styles.Expander.WinUI}">
+                        <TextBlock Text="And this text is in the content area." TextWrapping="Wrap" />
+                    </Expander>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="AlignmentExample"
+                                     Description="Where the words stand is two properties: HeaderedControlHelper.HeaderHorizontalContentAlignment for the header, HorizontalContentAlignment for what is behind it. The header keeps the room the chevron takes, so a centred header is centred in what is left of the row."
+                                     Header="Where the words stand">
+                <smtx:XamlDisplay UniqueKey="Expander.Alignment">
+                    <Expander x:Name="Alignment"
+                              Width="360"
+                              HorizontalAlignment="Left"
+                              HorizontalContentAlignment="Left"
+                              mah:HeaderedControlHelper.HeaderHorizontalContentAlignment="Center"
+                              Header="This text is centered"
+                              IsExpanded="True"
+                              Style="{StaticResource MahApps.Styles.Expander.WinUI}">
+                        <TextBlock Text="And this text is left aligned" TextWrapping="Wrap" />
                     </Expander>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
