@@ -637,4 +637,351 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        WinUI RangeSlider style. WinUI has no range slider of its own, so this one is the WinUI
+        slider with two thumbs on it: the same ring with the accent inside it, the same line four
+        high with its ends rounded, and the bar between the two thumbs drawn as that line in the
+        accent rather than as a block.
+    -->
+
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.Horizontal.Middle.WinUI" TargetType="{x:Type mah:MetroThumb}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:MetroThumb}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle Height="{DynamicResource MahApps.Sizes.Slider.TrackHeight.WinUI}"
+                                   Fill="{TemplateBinding Foreground}"
+                                   RadiusX="2"
+                                   RadiusY="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.Vertical.Middle.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSlider.Horizontal.Middle.WinUI}"
+           TargetType="{x:Type mah:MetroThumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:MetroThumb}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle Width="{DynamicResource MahApps.Sizes.Slider.TrackHeight.WinUI}"
+                                   Fill="{TemplateBinding Foreground}"
+                                   RadiusX="2"
+                                   RadiusY="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="MahApps.Templates.RangeSlider.Horizontal.WinUI" TargetType="{x:Type mah:RangeSlider}">
+        <Grid x:Name="PART_Container"
+              MinHeight="{DynamicResource MahApps.Sizes.Slider.WinUI.MinHeight}"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              Background="{TemplateBinding Background}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding mah:RangeSlider.MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TickBar x:Name="PART_TopTick"
+                     Grid.Row="0"
+                     Height="4"
+                     Fill="{TemplateBinding Foreground}"
+                     IsSelectionRangeEnabled="{TemplateBinding IsSelectionRangeEnabled}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Top"
+                     ReservedSpace="0"
+                     SelectionEnd="{TemplateBinding SelectionEnd}"
+                     SelectionStart="{TemplateBinding SelectionStart}"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
+                     Visibility="Collapsed" />
+            <TickBar x:Name="PART_BottomTick"
+                     Grid.Row="2"
+                     Height="4"
+                     Fill="{TemplateBinding Foreground}"
+                     IsSelectionRangeEnabled="{TemplateBinding IsSelectionRangeEnabled}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Bottom"
+                     ReservedSpace="0"
+                     SelectionEnd="{TemplateBinding SelectionEnd}"
+                     SelectionStart="{TemplateBinding SelectionStart}"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
+                     Visibility="Collapsed" />
+            <StackPanel x:Name="PART_RangeSliderContainer"
+                        Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Background="Transparent"
+                        Orientation="Horizontal">
+                <RepeatButton x:Name="PART_LeftEdge"
+                              Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillBrush)}"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.WinUI}" />
+
+                <mah:MetroThumb x:Name="PART_LeftThumb"
+                                Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Width.WinUI}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height.WinUI}"
+                                Margin="{DynamicResource MahApps.Margins.Slider.HorizontalThumb.Overhang.WinUI}"
+                                Panel.ZIndex="1"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
+                                Cursor="Arrow"
+                                Style="{DynamicResource MahApps.Styles.Thumb.Slider.WinUI}" />
+                <mah:MetroThumb x:Name="PART_MiddleThumb"
+                                Cursor="Hand"
+                                Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillBrush)}"
+                                Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSlider.Horizontal.Middle.WinUI}" />
+                <mah:MetroThumb x:Name="PART_RightThumb"
+                                Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Width.WinUI}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height.WinUI}"
+                                Margin="{DynamicResource MahApps.Margins.Slider.HorizontalThumb.Overhang.WinUI}"
+                                Panel.ZIndex="1"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
+                                Cursor="Arrow"
+                                Style="{DynamicResource MahApps.Styles.Thumb.Slider.WinUI}" />
+
+                <RepeatButton x:Name="PART_RightEdge"
+                              Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillBrush)}"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.WinUI}" />
+            </StackPanel>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillHoverBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillHoverBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillHoverBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillHoverBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillHoverBrush)}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="PART_LeftEdge" Property="IsPressed" Value="True" />
+                    <Condition Property="IsMoveToPointEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="PART_RightEdge" Property="IsPressed" Value="True" />
+                    <Condition Property="IsMoveToPointEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </MultiTrigger>
+            <Trigger SourceName="PART_LeftThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="PART_MiddleThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="PART_RightThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillDisabledBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillDisabledBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillDisabledBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillDisabledBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillDisabledBrush)}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.RangeSlider.Vertical.WinUI" TargetType="{x:Type mah:RangeSlider}">
+        <Grid x:Name="PART_Container"
+              MinWidth="{DynamicResource MahApps.Sizes.Slider.WinUI.MinHeight}"
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding mah:RangeSlider.MinWidth}" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TickBar x:Name="PART_TopTick"
+                     Grid.Column="0"
+                     Width="4"
+                     Fill="{TemplateBinding Foreground}"
+                     IsSelectionRangeEnabled="{TemplateBinding IsSelectionRangeEnabled}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Left"
+                     ReservedSpace="0"
+                     SelectionEnd="{TemplateBinding SelectionEnd}"
+                     SelectionStart="{TemplateBinding SelectionStart}"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
+                     Visibility="Collapsed" />
+            <TickBar x:Name="PART_BottomTick"
+                     Grid.Column="2"
+                     Width="4"
+                     Fill="{TemplateBinding Foreground}"
+                     IsSelectionRangeEnabled="{TemplateBinding IsSelectionRangeEnabled}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Right"
+                     ReservedSpace="0"
+                     SelectionEnd="{TemplateBinding SelectionEnd}"
+                     SelectionStart="{TemplateBinding SelectionStart}"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
+                     Visibility="Collapsed" />
+            <StackPanel x:Name="PART_RangeSliderContainer"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Background="Transparent"
+                        Orientation="Vertical">
+                <RepeatButton x:Name="PART_RightEdge"
+                              Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillBrush)}"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.WinUI}" />
+
+                <mah:MetroThumb x:Name="PART_RightThumb"
+                                Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Width.WinUI}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Height.WinUI}"
+                                Margin="{DynamicResource MahApps.Margins.Slider.VerticalThumb.Overhang.WinUI}"
+                                Panel.ZIndex="1"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
+                                Cursor="Arrow"
+                                Style="{DynamicResource MahApps.Styles.Thumb.Slider.WinUI}" />
+                <mah:MetroThumb x:Name="PART_MiddleThumb"
+                                Cursor="Hand"
+                                Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillBrush)}"
+                                Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSlider.Vertical.Middle.WinUI}" />
+                <mah:MetroThumb x:Name="PART_LeftThumb"
+                                Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Width.WinUI}"
+                                Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Height.WinUI}"
+                                Margin="{DynamicResource MahApps.Margins.Slider.VerticalThumb.Overhang.WinUI}"
+                                Panel.ZIndex="1"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
+                                Cursor="Arrow"
+                                Style="{DynamicResource MahApps.Styles.Thumb.Slider.WinUI}" />
+
+                <RepeatButton x:Name="PART_LeftEdge"
+                              Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillBrush)}"
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.WinUI}" />
+            </StackPanel>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillHoverBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillHoverBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillHoverBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillHoverBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillHoverBrush)}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="PART_LeftEdge" Property="IsPressed" Value="True" />
+                    <Condition Property="IsMoveToPointEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="PART_RightEdge" Property="IsPressed" Value="True" />
+                    <Condition Property="IsMoveToPointEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </MultiTrigger>
+            <Trigger SourceName="PART_RightThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="PART_MiddleThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="PART_LeftThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_LeftEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillDisabledBrush)}" />
+                <Setter TargetName="PART_LeftThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillDisabledBrush)}" />
+                <Setter TargetName="PART_MiddleThumb" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillDisabledBrush)}" />
+                <Setter TargetName="PART_RightEdge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillDisabledBrush)}" />
+                <Setter TargetName="PART_RightThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillDisabledBrush)}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.RangeSlider.WinUI" TargetType="{x:Type mah:RangeSlider}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TickBarFill}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Horizontal.WinUI}" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFill}" />
+        <Setter Property="mah:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillDisabled}" />
+        <Setter Property="mah:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillPointerOver}" />
+        <Setter Property="mah:SliderHelper.ThumbFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillPressed}" />
+        <Setter Property="mah:SliderHelper.TrackFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFill}" />
+        <Setter Property="mah:SliderHelper.TrackFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFillDisabled}" />
+        <Setter Property="mah:SliderHelper.TrackFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFill}" />
+        <Setter Property="mah:SliderHelper.TrackFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFill}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFill}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFillDisabled}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFillPointerOver}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFillPressed}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Vertical.WinUI}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

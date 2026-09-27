@@ -24,6 +24,18 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="The Windows 11 one turns that thumb inside out. The ring is drawn in the colour a control covers its ground with and the accent is the dot in the middle of it, which grows under the pointer and pulls back in while the thumb is dragged. The line it runs along is twice as thick and its ends are rounded off."
+                                     Header="The Windows 11 one">
+                <smtx:XamlDisplay UniqueKey="Slider.WinUI">
+                    <Slider x:Name="WinUI"
+                            Width="260"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource MahApps.Styles.Slider.WinUI}"
+                            Value="42" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="PlainExample"
                                      Description="And the one named after the control, which is not the one applied to it. MahApps.Styles.Slider has the thicker track and the small grey thumb, and it has to be asked for by name, so a style based on it changes the look along with whatever else it was meant to change."
                                      Header="The one called Slider">
@@ -37,7 +49,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="ColourExample"
-                                     Description="The colours of both come from SliderHelper, three brushes per part and one per state. The styles fill in all twelve, so a slider given only the resting three goes back to the theme colour the moment the pointer is over it: the hover and pressed brushes are what keep it."
+                                     Description="The colours of every one of them come from SliderHelper, three brushes per part and one per state. The styles fill in all twelve, so a slider given only the resting three goes back to the theme colour the moment the pointer is over it: the hover and pressed brushes are what keep it."
                                      Header="Other colours">
                 <smtx:XamlDisplay UniqueKey="Slider.Colours">
                     <Slider x:Name="Colours"
