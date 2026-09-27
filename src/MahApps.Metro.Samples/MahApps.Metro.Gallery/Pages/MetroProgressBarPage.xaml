@@ -37,6 +37,52 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The bar this control already draws is the Windows 10 one, dots and all, so MahApps.Styles.MetroProgressBar.Win10 only hands it that set's colours and the height Windows gives it. EllipseDiameter and EllipseOffset still say how big the dots are and how much room is between them, which is the one thing this control has that a plain ProgressBar has not. It is on develop and not in 2.4.11."
+                                     Header="The one in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="MetroProgressBar.Win10">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:MetroProgressBar x:Name="Win10"
+                                              Width="360"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.Win10}"
+                                              Value="42" />
+                        <mah:MetroProgressBar Width="360"
+                                              Margin="0 20 0 0"
+                                              EllipseDiameter="8"
+                                              EllipseOffset="12"
+                                              IsIndeterminate="True"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.Win10}" />
+                        <mah:MetroProgressBar Width="360"
+                                              Margin="0 20 0 0"
+                                              mah:ProgressBarHelper.ShowError="True"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.Win10}"
+                                              Value="42" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="WinUI has no dots, so MahApps.Styles.MetroProgressBar.WinUI brings a template of its own: two bars travelling along a line at a stagger. EllipseDiameter and EllipseOffset say nothing here, since there is nothing left for them to size. Work that has been held up or has gone wrong is said through ProgressBarHelper.ShowPaused and ShowError, the same two properties the plain bar takes. It is on develop and not in 2.4.11."
+                                     Header="The one in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="MetroProgressBar.WinUI">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:MetroProgressBar x:Name="WinUI"
+                                              Width="360"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.WinUI}"
+                                              Value="42" />
+                        <mah:MetroProgressBar Width="360"
+                                              Margin="0 20 0 0"
+                                              IsIndeterminate="True"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.WinUI}" />
+                        <mah:MetroProgressBar Width="360"
+                                              Margin="0 20 0 0"
+                                              mah:ProgressBarHelper.ShowPaused="True"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.WinUI}"
+                                              Value="42" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

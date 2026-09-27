@@ -29,6 +29,24 @@ namespace MahApps.Metro.Gallery.Pages
                                       ProgressBar.IsIndeterminateProperty,
                                       MetroProgressBar.EllipseDiameterProperty,
                                       MetroProgressBar.EllipseOffsetProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    RangeBase.ValueProperty,
+                                    ProgressBar.IsIndeterminateProperty,
+                                    MetroProgressBar.EllipseDiameterProperty,
+                                    MetroProgressBar.EllipseOffsetProperty);
+            this.Win10Example.Watch("Attached",
+                                    this.Win10,
+                                    ProgressBarHelper.ShowPausedProperty,
+                                    ProgressBarHelper.ShowErrorProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    RangeBase.ValueProperty,
+                                    ProgressBar.IsIndeterminateProperty);
+            this.WinUIExample.Watch("Attached",
+                                    this.WinUI,
+                                    ProgressBarHelper.ShowPausedProperty,
+                                    ProgressBarHelper.ShowErrorProperty);
         }
     }
 }

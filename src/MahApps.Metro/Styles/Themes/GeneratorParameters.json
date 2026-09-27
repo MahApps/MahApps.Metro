@@ -1,4 +1,4 @@
-{
+﻿{
   "TemplateFile": "Theme.Template.xaml",
   "DefaultValues": {
     "MahApps.Colors.IdealForeground": "White"
@@ -99,6 +99,8 @@
         "MahApps.Colors.WinUI.CardBackgroundFillDefault": "#0DFFFFFF",
         "MahApps.Colors.WinUI.CardBackgroundFillSecondary": "#08FFFFFF",
         "MahApps.Colors.WinUI.CardStrokeDefault": "#19000000",
+        "MahApps.Colors.WinUI.SystemFillCaution": "#FFFCE100",
+        "MahApps.Colors.WinUI.SystemFillCritical": "#FFFF99A4",
         "MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity": "0.9",
         "MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity": "0.6",
         "MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity": "0.8",
@@ -205,6 +207,8 @@
         "MahApps.Colors.WinUI.CardBackgroundFillDefault": "#B3FFFFFF",
         "MahApps.Colors.WinUI.CardBackgroundFillSecondary": "#80F6F6F6",
         "MahApps.Colors.WinUI.CardStrokeDefault": "#0F000000",
+        "MahApps.Colors.WinUI.SystemFillCaution": "#FF9D5D00",
+        "MahApps.Colors.WinUI.SystemFillCritical": "#FFC42B1C",
         "MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity": "0.7",
         "MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity": "0.4",
         "MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity": "0.6",

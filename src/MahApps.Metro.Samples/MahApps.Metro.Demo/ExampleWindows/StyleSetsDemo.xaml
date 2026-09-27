@@ -172,6 +172,19 @@
                                           OffContent="Off"
                                           OnContent="On" />
                     </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ProgressBar" />
+                        <ProgressBar Value="42" />
+                        <ProgressBar Margin="0 12 0 0" IsIndeterminate="True" />
+                        <ProgressBar Margin="0 12 0 0"
+                                     mah:ProgressBarHelper.ShowError="True"
+                                     Value="42" />
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="MetroProgressBar" />
+                        <mah:MetroProgressBar Value="42" />
+                        <mah:MetroProgressBar Margin="0 12 0 0" IsIndeterminate="True" />
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
 

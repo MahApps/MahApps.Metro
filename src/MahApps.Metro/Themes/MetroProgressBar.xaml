@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:Double x:Key="MahApps.Sizes.ProgressBar.MinHeight">6</system:Double>
@@ -282,5 +283,189 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <system:Double x:Key="MahApps.Sizes.MetroProgressBar.Win10.MinHeight">4</system:Double>
+
+    <!--
+        The bar this control already draws is the Windows 10 one, dots and all, so the set only has
+        to hand it the colours of that set and the height Windows gives it. What it adds is the two
+        ways work can stop: held up, which Windows 10 says by taking the accent back rather than by
+        changing it, and gone wrong, which it said by taking the bar away altogether and which this
+        set says in red instead.
+    -->
+    <Style x:Key="MahApps.Styles.MetroProgressBar.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}"
+           TargetType="{x:Type mah:MetroProgressBar}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ProgressBar.Win10.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.Win10.Foreground}" />
+        <Setter Property="MinHeight" Value="{StaticResource MahApps.Sizes.MetroProgressBar.Win10.MinHeight}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style.Triggers>
+            <!--  the error comes after the pause, so that a bar which is both reads as the worse of the two  -->
+            <Trigger Property="mah:ProgressBarHelper.ShowPaused" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.Win10.Paused}" />
+            </Trigger>
+            <Trigger Property="mah:ProgressBarHelper.ShowError" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.Win10.Error}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <system:Double x:Key="MahApps.Sizes.MetroProgressBar.WinUI.MinHeight">3</system:Double>
+    <system:Double x:Key="MahApps.Sizes.MetroProgressBar.WinUI.TrackHeight">1</system:Double>
+
+    <!--
+        WinUI has no dots, which for this control means a template of its own rather than a set of
+        colours: two bars travel along the track at a stagger, one four tenths of the way across and
+        one six tenths. Both are a share of the bar and both travel by shares of it, so they are
+        drawn in hundredths and a scale reads the real width off the track, which is what keeps a
+        Storyboard that knows nothing about how wide the bar is from having to.
+
+        EllipseDiameter and EllipseOffset say nothing here. There is nothing left for them to size.
+    -->
+    <Style x:Key="MahApps.Styles.MetroProgressBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}"
+           TargetType="{x:Type mah:MetroProgressBar}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ProgressBar.WinUI.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.WinUI.Foreground}" />
+        <Setter Property="MinHeight" Value="{StaticResource MahApps.Sizes.MetroProgressBar.WinUI.MinHeight}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:MetroProgressBar}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="RunningStoryboard" RepeatBehavior="Forever">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunningBar1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)">
+                                <DiscreteDoubleKeyFrame KeyTime="0" Value="-40" />
+                                <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                      KeyTime="0:0:1.5"
+                                                      Value="120" />
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2" Value="120" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RunningBar2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)">
+                                <DiscreteDoubleKeyFrame KeyTime="0" Value="-90" />
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.75" Value="-90" />
+                                <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                      KeyTime="0:0:2"
+                                                      Value="99.6" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid x:Name="Root">
+                        <Grid x:Name="Runway"
+                              Height="{TemplateBinding MinHeight}"
+                              Margin="{TemplateBinding Padding}"
+                              ClipToBounds="True">
+                            <Rectangle x:Name="PART_Track"
+                                       Height="{StaticResource MahApps.Sizes.MetroProgressBar.WinUI.TrackHeight}"
+                                       VerticalAlignment="Center"
+                                       Fill="{TemplateBinding Background}"
+                                       RadiusX="0.5"
+                                       RadiusY="0.5" />
+                            <Rectangle x:Name="PART_Indicator"
+                                       HorizontalAlignment="Left"
+                                       Fill="{TemplateBinding Foreground}"
+                                       RadiusX="1.5"
+                                       RadiusY="1.5" />
+                            <!--  the two that travel carry no rounded ends, since a radius would be stretched along with them  -->
+                            <Rectangle x:Name="RunningBar1"
+                                       Width="40"
+                                       HorizontalAlignment="Left"
+                                       Fill="{TemplateBinding Foreground}"
+                                       Opacity="0">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="-40" />
+                                        <ScaleTransform ScaleX="{Binding ActualWidth, ElementName=Runway, Converter={mahConverters:MathMultiplyConverter}, ConverterParameter=0.01}" />
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <Rectangle x:Name="RunningBar2"
+                                       Width="60"
+                                       HorizontalAlignment="Left"
+                                       Fill="{TemplateBinding Foreground}"
+                                       Opacity="0">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <TranslateTransform X="-90" />
+                                        <ScaleTransform ScaleX="{Binding ActualWidth, ElementName=Runway, Converter={mahConverters:MathMultiplyConverter}, ConverterParameter=0.01}" />
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <!--  and the one that stands still, for a wait of unknown length that has been held up or has gone wrong  -->
+                            <Rectangle x:Name="StoppedBar"
+                                       Width="60"
+                                       HorizontalAlignment="Center"
+                                       Fill="{TemplateBinding Foreground}"
+                                       Opacity="0"
+                                       RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <ScaleTransform ScaleX="{Binding ActualWidth, ElementName=Runway, Converter={mahConverters:MathMultiplyConverter}, ConverterParameter=0.01}" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Opacity" Value="0" />
+                            <Setter TargetName="PART_Track" Property="Opacity" Value="0" />
+                            <Setter TargetName="RunningBar1" Property="Opacity" Value="1" />
+                            <Setter TargetName="RunningBar2" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsIndeterminate" Value="True" />
+                                <Condition Property="mah:ProgressBarHelper.ShowPaused" Value="False" />
+                                <Condition Property="mah:ProgressBarHelper.ShowError" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard x:Name="Running" Storyboard="{StaticResource RunningStoryboard}" />
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="Running" />
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsIndeterminate" Value="True" />
+                                <Condition Property="mah:ProgressBarHelper.ShowPaused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="RunningBar1" Property="Opacity" Value="0" />
+                            <Setter TargetName="RunningBar2" Property="Opacity" Value="0" />
+                            <Setter TargetName="StoppedBar" Property="Opacity" Value="1" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsIndeterminate" Value="True" />
+                                <Condition Property="mah:ProgressBarHelper.ShowError" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="RunningBar1" Property="Opacity" Value="0" />
+                            <Setter TargetName="RunningBar2" Property="Opacity" Value="0" />
+                            <Setter TargetName="StoppedBar" Property="Opacity" Value="1" />
+                        </MultiTrigger>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="MinWidth" Value="{StaticResource MahApps.Sizes.MetroProgressBar.WinUI.MinHeight}" />
+                            <Setter Property="UseLayoutRounding" Value="True" />
+                            <Setter TargetName="Root" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style.Triggers>
+            <!--  the error comes after the pause, so that a bar which is both reads as the worse of the two  -->
+            <Trigger Property="mah:ProgressBarHelper.ShowPaused" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.WinUI.Paused}" />
+            </Trigger>
+            <Trigger Property="mah:ProgressBarHelper.ShowError" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.WinUI.Error}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
