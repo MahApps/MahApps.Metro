@@ -23,6 +23,61 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="MahApps.Styles.ProgressRing.Win10 is the ring the library has always drawn, because the six dots and the path they take came out of Windows 10 in the first place. All the set changes is the colour: off the library accent and onto the one the system hands out. It is on develop and not in 2.4.11."
+                                     Header="The one in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ProgressRing.Win10">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <mah:ProgressRing x:Name="Win10" Style="{DynamicResource MahApps.Styles.ProgressRing.Win10}" />
+                        <mah:ProgressRing Width="32"
+                                          Height="32"
+                                          Margin="24 0 0 0"
+                                          VerticalAlignment="Center"
+                                          IsLarge="False"
+                                          Style="{DynamicResource MahApps.Styles.ProgressRing.Win10}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="DeterminateExample"
+                                     Description="The ring says how far along it is rather than only that something is going on. ProgressRing took Value, Minimum and Maximum from RangeBase for it, and IsIndeterminate picks which of the two it draws. Windows 10 never had a ring that could say how far, so only a set that draws an arc has anything to do with this, and the Win10 ring keeps turning either way. A background is the track behind the arc. It is on develop and not in 2.4.11."
+                                     Header="How far along it is">
+                <smtx:XamlDisplay UniqueKey="ProgressRing.Determinate">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <mah:ProgressRing x:Name="Determinate"
+                                          Background="Gray"
+                                          IsIndeterminate="False"
+                                          Style="{DynamicResource MahApps.Styles.ProgressRing.WinUI}"
+                                          Value="42" />
+                        <mah:ProgressRing Width="60"
+                                          Height="60"
+                                          Margin="24 0 0 0"
+                                          VerticalAlignment="Center"
+                                          IsIndeterminate="False"
+                                          Style="{DynamicResource MahApps.Styles.ProgressRing.WinUI}"
+                                          Value="42" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="MahApps.Styles.ProgressRing.WinUI drops the dots for a single arc that grows to half the circle and is eaten away from the front again while the whole thing turns. WinUI ships that as a Lottie animation and WPF has no player for one, so it is rebuilt out of the numbers that animation holds. The square it is drawn in is fixed and scaled to whatever size the ring is given, so the stroke keeps its proportion at any size. A background is a track behind the arc rather than a fill behind the ring. It is on develop and not in 2.4.11."
+                                     Header="The one in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="ProgressRing.WinUI">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <mah:ProgressRing x:Name="WinUI"
+                                          VerticalAlignment="Center"
+                                          Style="{DynamicResource MahApps.Styles.ProgressRing.WinUI}" />
+                        <mah:ProgressRing Width="60"
+                                          Height="60"
+                                          Margin="24 0 0 0"
+                                          VerticalAlignment="Center"
+                                          Background="Gray"
+                                          Style="{DynamicResource MahApps.Styles.ProgressRing.WinUI}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

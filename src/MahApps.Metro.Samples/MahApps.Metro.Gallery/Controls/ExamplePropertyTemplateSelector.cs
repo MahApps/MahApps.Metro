@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Gallery.Controls
 {
@@ -52,6 +53,11 @@ namespace MahApps.Metro.Gallery.Controls
             if (type == typeof(bool))
             {
                 return Prefix + "Boolean";
+            }
+
+            if (typeof(Brush).IsAssignableFrom(type))
+            {
+                return Prefix + "Brush";
             }
 
             if (type == typeof(sbyte) || type == typeof(byte)

@@ -1178,4 +1178,18 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.WinUI.Paused" ResourceKey="MahApps.Brushes.WinUI.SystemFillCaution" />
     <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.WinUI.Error" ResourceKey="MahApps.Brushes.WinUI.SystemFillCritical" />
 
+    <!--
+        Resources for MahApps.Styles.ProgressRing.Win10.
+        Windows 10 spins the accent, and this is one of the few places where the library already
+        drew what Windows did, so the set hands the ring a colour and leaves the rest alone.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressRing.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlHighlightAltAccent" />
+
+    <!--
+        Resources for MahApps.Styles.ProgressRing.WinUI.
+        WinUI keeps the accent and drops the dots for a single arc. The background is a track behind
+        that arc which WinUI leaves transparent, so nothing shows unless somebody asks for it.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressRing.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+
 </ResourceDictionary>
