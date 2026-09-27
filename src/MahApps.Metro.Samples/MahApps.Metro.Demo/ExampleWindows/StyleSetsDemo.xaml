@@ -109,6 +109,14 @@
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ListBox" />
+                        <ListBox SelectedIndex="1">
+                            <ListBoxItem Content="Enterprise" />
+                            <ListBoxItem Content="Voyager" />
+                            <ListBoxItem Content="Defiant" />
+                        </ListBox>
+                    </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
                         <TextBlock Style="{StaticResource RowLabel}" Text="AutoSuggestBox" />
                         <mah:AutoSuggestBox mah:TextBoxHelper.ClearTextButton="True"
                                             mah:TextBoxHelper.Watermark="Search a control"

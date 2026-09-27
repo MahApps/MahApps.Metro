@@ -23,6 +23,16 @@ namespace MahApps.Metro.Gallery.Pages
                                    IsEnabledProperty);
             this.ListExample.Watch("Layout", this.List, WidthProperty, HeightProperty);
 
+            this.Win10Example.Watch(this.Win10,
+                                    ListBox.SelectionModeProperty,
+                                    IsEnabledProperty);
+            this.Win10Example.Watch("Layout", this.Win10, WidthProperty, HeightProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    ListBox.SelectionModeProperty,
+                                    IsEnabledProperty);
+            this.WinUIExample.Watch("Layout", this.WinUI, WidthProperty, HeightProperty);
+
             this.BorderExample.Watch(this.Bordered,
                                      Control.BorderThicknessProperty,
                                      ListBox.SelectionModeProperty);

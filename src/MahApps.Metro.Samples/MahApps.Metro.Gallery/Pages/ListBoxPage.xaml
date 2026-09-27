@@ -29,6 +29,42 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The list in the Windows 10 look: a neutral a step off the page rather than the page itself, rows taller than the Metro ones and square, and the accent turned right down behind the row that is picked rather than the accent itself, which is what keeps the text on it readable without a colour of its own. The list hands its rows that style itself, so this one card is all it takes."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ListBox.Win10">
+                    <ListBox x:Name="Win10"
+                             Width="280"
+                             Height="180"
+                             HorizontalAlignment="Left"
+                             Style="{DynamicResource MahApps.Styles.ListBox.Win10}">
+                        <ListBoxItem Content="Ada Lovelace" />
+                        <ListBoxItem Content="Grace Hopper" IsSelected="True" />
+                        <ListBoxItem Content="Alan Turing" />
+                        <ListBoxItem Content="Edsger Dijkstra" IsEnabled="False" />
+                        <ListBoxItem Content="Barbara Liskov" />
+                    </ListBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI one. WinUI never drew its own list box a second time, so this is the row its list view has, which is what Windows 11 shows a list as: a rounded tile filled a shade off the ground, the same fill whether the row is picked or only under the pointer, the text the same colour throughout, and the accent kept for the short bar along the left edge."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="ListBox.WinUI">
+                    <ListBox x:Name="WinUI"
+                             Width="280"
+                             Height="180"
+                             HorizontalAlignment="Left"
+                             Style="{DynamicResource MahApps.Styles.ListBox.WinUI}">
+                        <ListBoxItem Content="Ada Lovelace" />
+                        <ListBoxItem Content="Grace Hopper" IsSelected="True" />
+                        <ListBoxItem Content="Alan Turing" />
+                        <ListBoxItem Content="Edsger Dijkstra" IsEnabled="False" />
+                        <ListBoxItem Content="Barbara Liskov" />
+                    </ListBox>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="BorderExample"
                                      Description="The same list with a frame around it. A MahApps list has none, which catches people coming from WPF, and its BorderBrush is the theme foreground, so switching the thickness on alone gives a black box. Both belong together."
                                      Header="A list with a border">
