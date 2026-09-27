@@ -28,6 +28,8 @@
            BasedOn="{StaticResource MahApps.Styles.Separator.Menu.WinUI}"
            TargetType="{x:Type Separator}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.WinUI}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar.WinUI}" TargetType="ProgressBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar.WinUI}" TargetType="{x:Type mah:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.WinUI}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox.WinUI}" TargetType="RichTextBox" />

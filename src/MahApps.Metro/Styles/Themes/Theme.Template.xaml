@@ -451,6 +451,8 @@
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillDefault">{{MahApps.Colors.WinUI.CardBackgroundFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillSecondary">{{MahApps.Colors.WinUI.CardBackgroundFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillCaution">{{MahApps.Colors.WinUI.SystemFillCaution}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillCritical">{{MahApps.Colors.WinUI.SystemFillCritical}}</Color>
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Background" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
@@ -526,6 +528,9 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillDefault" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.CardStrokeDefault}" options:Freeze="True" />
+    <!--  the two colours WinUI says something with rather than draws something in: the amber it holds work up in and the red it fails in  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCaution" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCaution}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCritical" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCritical}" options:Freeze="True" />
     <!--  the line around a flyout, which WinUI draws darker than the flyout rather than lighter, so that the shadow under it and this line together are what lift it off the page  -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SurfaceStrokeFlyout" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeFlyout}" options:Freeze="True" />
     <!--
@@ -1146,5 +1151,31 @@
     <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver" />
     <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundPressed" ResourceKey="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed" />
     <markup:StaticResource x:Key="MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" />
+
+    <!--
+        Resources for MahApps.Styles.ProgressBar.Win10 and MahApps.Styles.MetroProgressBar.Win10.
+        Windows 10 lays a bar of the accent over the same grey a button rests in and draws no frame
+        around either of them. A bar that is on hold keeps the accent and is only taken back in how
+        solid it is. A bar that has gone wrong was taken away altogether, which says nothing at all,
+        so this set does what every later one does and turns it red instead.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ProgressBar.Win10.Paused"
+                     Opacity="0.6"
+                     Color="{StaticResource MahApps.Colors.SystemAccent}"
+                     options:Freeze="True" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.Win10.Error" ResourceKey="MahApps.Brushes.SystemControlErrorTextForeground" />
+
+    <!--
+        Resources for MahApps.Styles.ProgressBar.WinUI and MahApps.Styles.MetroProgressBar.WinUI.
+        The track behind the bar is a stroke rather than a fill here, because WinUI draws it as a
+        line one unit high under a bar three high. And where Windows 10 had one answer for work that
+        stops, this set has two: the amber it holds something up in and the red it fails in.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.WinUI.Paused" ResourceKey="MahApps.Brushes.WinUI.SystemFillCaution" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ProgressBar.WinUI.Error" ResourceKey="MahApps.Brushes.WinUI.SystemFillCritical" />
 
 </ResourceDictionary>

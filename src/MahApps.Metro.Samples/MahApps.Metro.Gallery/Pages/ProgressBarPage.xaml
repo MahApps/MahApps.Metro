@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              d:DesignHeight="600"
@@ -33,6 +34,55 @@
                                  Height="12"
                                  HorizontalAlignment="Left"
                                  IsIndeterminate="True" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="MahApps.Styles.ProgressBar.Win10 is the line Windows 10 draws: four units high, no frame, the accent over the grey a button rests in. A wait that cannot say how long it will be sends five dots along the track instead of stripes, and those dots grow with the bar. How far they travel is worked out from how wide the bar turned out to be, because a Storyboard cannot look that up for itself. It is on develop and not in 2.4.11."
+                                     Header="The one in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ProgressBar.Win10">
+                    <StackPanel HorizontalAlignment="Left">
+                        <ProgressBar x:Name="Win10"
+                                     Width="320"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.Win10}"
+                                     Value="42" />
+                        <ProgressBar Width="320"
+                                     Margin="0 20 0 0"
+                                     IsIndeterminate="True"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.Win10}" />
+                        <ProgressBar Width="320"
+                                     Margin="0 20 0 0"
+                                     mah:ProgressBarHelper.ShowError="True"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.Win10}"
+                                     Value="42" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="MahApps.Styles.ProgressBar.WinUI has no dots. It is a line one unit high with a bar three high over it, and a wait of unknown length sends two bars along that line at a stagger. Held up it turns amber and stands still, gone wrong it turns red, which is what ProgressBarHelper.ShowPaused and ShowError are for: WPF has no properties of its own for either. It is on develop and not in 2.4.11."
+                                     Header="The one in the WinUI look">
+                <smtx:XamlDisplay UniqueKey="ProgressBar.WinUI">
+                    <StackPanel HorizontalAlignment="Left">
+                        <ProgressBar x:Name="WinUI"
+                                     Width="320"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.WinUI}"
+                                     Value="42" />
+                        <ProgressBar Width="320"
+                                     Margin="0 20 0 0"
+                                     IsIndeterminate="True"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.WinUI}" />
+                        <ProgressBar Width="320"
+                                     Margin="0 20 0 0"
+                                     mah:ProgressBarHelper.ShowPaused="True"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.WinUI}"
+                                     Value="42" />
+                        <ProgressBar Width="320"
+                                     Margin="0 20 0 0"
+                                     mah:ProgressBarHelper.ShowError="True"
+                                     Style="{DynamicResource MahApps.Styles.ProgressBar.WinUI}"
+                                     Value="42" />
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

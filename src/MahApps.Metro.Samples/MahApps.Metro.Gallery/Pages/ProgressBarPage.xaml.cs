@@ -4,6 +4,7 @@
 
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -28,6 +29,26 @@ namespace MahApps.Metro.Gallery.Pages
                                    ProgressBar.IsIndeterminateProperty,
                                    ProgressBar.OrientationProperty);
             this.BusyExample.Watch("Layout", this.Busy, WidthProperty, HeightProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    RangeBase.ValueProperty,
+                                    ProgressBar.IsIndeterminateProperty,
+                                    ProgressBar.OrientationProperty);
+            this.Win10Example.Watch("Attached",
+                                    this.Win10,
+                                    ProgressBarHelper.ShowPausedProperty,
+                                    ProgressBarHelper.ShowErrorProperty,
+                                    ProgressBarHelper.EllipseDiameterProperty,
+                                    ProgressBarHelper.EllipseOffsetProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    RangeBase.ValueProperty,
+                                    ProgressBar.IsIndeterminateProperty,
+                                    ProgressBar.OrientationProperty);
+            this.WinUIExample.Watch("Attached",
+                                    this.WinUI,
+                                    ProgressBarHelper.ShowPausedProperty,
+                                    ProgressBarHelper.ShowErrorProperty);
         }
     }
 }

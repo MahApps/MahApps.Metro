@@ -102,6 +102,10 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.WinUI")]
         [TestCase(WinUI, typeof(AnalogClock), "MahApps.Styles.AnalogClock.WinUI")]
         [TestCase(WinUI, typeof(ToggleSwitch), "MahApps.Styles.ToggleSwitch.WinUI")]
+        [TestCase(Win10, typeof(ProgressBar), "MahApps.Styles.ProgressBar.Win10")]
+        [TestCase(Win10, typeof(MetroProgressBar), "MahApps.Styles.MetroProgressBar.Win10")]
+        [TestCase(WinUI, typeof(ProgressBar), "MahApps.Styles.ProgressBar.WinUI")]
+        [TestCase(WinUI, typeof(MetroProgressBar), "MahApps.Styles.MetroProgressBar.WinUI")]
         [Description("A set puts its own style in front of the one the default set declares for that type.")]
         public void ASetPutsItsOwnStyleInFront(string set, Type target, string expected)
         {

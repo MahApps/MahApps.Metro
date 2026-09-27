@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -88,7 +87,7 @@ namespace MahApps.Metro.Controls
             }
 
             var indeterminateState = bar.GetIndeterminate();
-            var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
+            var containingObject = bar.GetTemplateChild(ProgressBarEllipseAnimation.ContainingGridName) as FrameworkElement;
             if (indeterminateState != null && containingObject != null)
             {
                 var resetAction = new Action(() =>
@@ -140,11 +139,6 @@ namespace MahApps.Metro.Controls
 
             lock (this.lockme)
             {
-                //perform calculations
-                var containerAnimStart = this.CalcContainerAnimStart(width);
-                var containerAnimEnd = this.CalcContainerAnimEnd(width);
-                var ellipseAnimWell = this.CalcEllipseAnimWell(width);
-                var ellipseAnimEnd = this.CalcEllipseAnimEnd(width);
                 //reset the main double animation
                 try
                 {
@@ -152,43 +146,9 @@ namespace MahApps.Metro.Controls
 
                     if (indeterminate != null && this.indeterminateStoryboard != null)
                     {
-                        var newStoryboard = this.indeterminateStoryboard.Clone();
-                        var doubleAnim = newStoryboard.Children.First(t => t.Name == "MainDoubleAnim");
-                        doubleAnim.SetValue(DoubleAnimation.FromProperty, containerAnimStart);
-                        doubleAnim.SetValue(DoubleAnimation.ToProperty, containerAnimEnd);
+                        var newStoryboard = ProgressBarEllipseAnimation.Rebuild(this.indeterminateStoryboard, width);
 
-                        var namesOfElements = new[] { "E1", "E2", "E3", "E4", "E5" };
-                        foreach (var elemName in namesOfElements)
-                        {
-                            var doubleAnimParent = (DoubleAnimationUsingKeyFrames)newStoryboard.Children.First(t => t.Name == elemName + "Anim");
-                            DoubleKeyFrame first,
-                                           second,
-                                           third;
-                            if (elemName == "E1")
-                            {
-                                first = doubleAnimParent.KeyFrames[1];
-                                second = doubleAnimParent.KeyFrames[2];
-                                third = doubleAnimParent.KeyFrames[3];
-                            }
-                            else
-                            {
-                                first = doubleAnimParent.KeyFrames[2];
-                                second = doubleAnimParent.KeyFrames[3];
-                                third = doubleAnimParent.KeyFrames[4];
-                            }
-
-                            first.Value = ellipseAnimWell;
-                            second.Value = ellipseAnimWell;
-                            third.Value = ellipseAnimEnd;
-                            first.InvalidateProperty(DoubleKeyFrame.ValueProperty);
-                            second.InvalidateProperty(DoubleKeyFrame.ValueProperty);
-                            third.InvalidateProperty(DoubleKeyFrame.ValueProperty);
-
-                            doubleAnimParent.InvalidateProperty(Storyboard.TargetPropertyProperty);
-                            doubleAnimParent.InvalidateProperty(Storyboard.TargetNameProperty);
-                        }
-
-                        var containingGrid = (FrameworkElement)this.GetTemplateChild("ContainingGrid");
+                        var containingGrid = (FrameworkElement)this.GetTemplateChild(ProgressBarEllipseAnimation.ContainingGridName);
 
                         if (removeOldStoryboard && indeterminate.Storyboard != null)
                         {
@@ -211,52 +171,18 @@ namespace MahApps.Metro.Controls
 
         private VisualState? GetIndeterminate()
         {
-            var templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
+            var templateGrid = this.GetTemplateChild(ProgressBarEllipseAnimation.ContainingGridName) as FrameworkElement;
             if (templateGrid is null)
             {
                 this.ApplyTemplate();
-                templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
+                templateGrid = this.GetTemplateChild(ProgressBarEllipseAnimation.ContainingGridName) as FrameworkElement;
                 if (templateGrid is null)
                 {
                     return null;
                 }
             }
 
-            var groups = VisualStateManager.GetVisualStateGroups(templateGrid);
-            return groups?.OfType<VisualStateGroup>()
-                         .SelectMany(group => group.States.OfType<VisualState>())
-                         .FirstOrDefault(state => state.Name == "Indeterminate");
-        }
-
-        private void SetEllipseDiameter(double width)
-        {
-            this.SetCurrentValue(EllipseDiameterProperty, width <= 180 ? 4d : (width <= 280 ? 5d : 6d));
-        }
-
-        private void SetEllipseOffset(double width)
-        {
-            this.SetCurrentValue(EllipseOffsetProperty, width <= 180 ? 4d : (width <= 280 ? 7d : 9d));
-        }
-
-        private double CalcContainerAnimStart(double width)
-        {
-            return width <= 180 ? -34 : (width <= 280 ? -50.5 : -63);
-        }
-
-        private double CalcContainerAnimEnd(double width)
-        {
-            var firstPart = 0.4352 * width;
-            return width <= 180 ? firstPart - 25.731 : (width <= 280 ? firstPart + 27.84 : firstPart + 58.862);
-        }
-
-        private double CalcEllipseAnimWell(double width)
-        {
-            return width * 1.0 / 3.0;
-        }
-
-        private double CalcEllipseAnimEnd(double width)
-        {
-            return width * 2.0 / 3.0;
+            return ProgressBarEllipseAnimation.FindIndeterminateState(templateGrid);
         }
 
         public override void OnApplyTemplate()
@@ -265,7 +191,7 @@ namespace MahApps.Metro.Controls
 
             lock (this.lockme)
             {
-                this.indeterminateStoryboard = this.TryFindResource("IndeterminateStoryboard") as Storyboard;
+                this.indeterminateStoryboard = this.TryFindResource(ProgressBarEllipseAnimation.StoryboardKey) as Storyboard;
             }
 
             this.Loaded -= this.LoadedHandler;
@@ -294,12 +220,12 @@ namespace MahApps.Metro.Controls
             {
                 if (this.EllipseDiameter.Equals(0))
                 {
-                    this.SetEllipseDiameter(actualSize);
+                    this.SetCurrentValue(EllipseDiameterProperty, ProgressBarEllipseAnimation.DiameterFor(actualSize));
                 }
 
                 if (this.EllipseOffset.Equals(0))
                 {
-                    this.SetEllipseOffset(actualSize);
+                    this.SetCurrentValue(EllipseOffsetProperty, ProgressBarEllipseAnimation.OffsetFor(actualSize));
                 }
             }
         }
