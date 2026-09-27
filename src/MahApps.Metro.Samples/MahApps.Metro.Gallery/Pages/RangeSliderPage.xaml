@@ -28,6 +28,21 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="The Windows 11 look, which WinUI itself has no range slider for, so it is the WinUI slider with a second thumb on it: the same ring with the accent inside it, and the part between the two thumbs drawn as the same rounded line in the accent."
+                                     Header="The Windows 11 one">
+                <smtx:XamlDisplay UniqueKey="RangeSlider.WinUI">
+                    <mah:RangeSlider x:Name="WinUI"
+                                     Width="420"
+                                     HorizontalAlignment="Left"
+                                     LowerValue="20"
+                                     Maximum="100"
+                                     Minimum="0"
+                                     Style="{DynamicResource MahApps.Styles.RangeSlider.WinUI}"
+                                     UpperValue="60" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="TicksExample"
                                      Description="The same slider snapping to whole steps, with the marks under it and the numbers shown while dragging."
                                      Header="A range in steps">

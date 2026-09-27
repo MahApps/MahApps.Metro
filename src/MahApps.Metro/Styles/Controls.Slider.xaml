@@ -550,4 +550,315 @@
         </Style.Triggers>
     </Style>
 
+
+    <!--  WinUI  -->
+
+    <!--
+        WinUI turns the Windows 10 thumb inside out. There it was a bar of the accent lying across
+        the track; here it is a ring drawn in the colour a control covers its ground with, and the
+        accent is the dot in the middle of that ring. The thumb is laid out in a box of 18 and the
+        ring is drawn two past it either way, so the ring itself comes to 22.
+
+        The dot is what answers the pointer. WinUI keeps it a 12 and scales it, by 0.86 at rest,
+        1.167 under the pointer and 0.71 while the thumb is dragged, which comes to 10.32, 14 and
+        8.52. The ring holds still through all three, so here the three are the padding inside it
+        rather than three sizes. A slider that is off gets the same dot as one under the pointer,
+        which is what WinUI draws.
+    -->
+    <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height.WinUI">18</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width.WinUI">18</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width.WinUI">18</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height.WinUI">18</system:Double>
+    <system:Double x:Key="MahApps.Sizes.Slider.TrackHeight.WinUI">4</system:Double>
+
+    <!--  what a WinUI slider takes up across the bar, which is a good deal more than the thumb, and all of it answers the pointer  -->
+    <system:Double x:Key="MahApps.Sizes.Slider.WinUI.MinHeight">32</system:Double>
+
+    <Thickness x:Key="MahApps.Margins.Slider.HorizontalThumb.Overhang.WinUI">-9 0</Thickness>
+    <Thickness x:Key="MahApps.Margins.Slider.VerticalThumb.Overhang.WinUI">0 -9</Thickness>
+
+    <Thickness x:Key="MahApps.Margins.Slider.Thumb.WinUI.Ring">-2</Thickness>
+
+    <Thickness x:Key="MahApps.Thickness.Slider.Thumb.WinUI">5.84</Thickness>
+    <Thickness x:Key="MahApps.Thickness.Slider.Thumb.WinUI.Hover">4</Thickness>
+    <Thickness x:Key="MahApps.Thickness.Slider.Thumb.WinUI.Pressed">6.74</Thickness>
+
+    <Style x:Key="MahApps.Styles.Thumb.Slider.WinUI" TargetType="Thumb">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFill}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbRingStroke}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="{StaticResource MahApps.Thickness.Slider.Thumb.WinUI}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Grid Margin="{StaticResource MahApps.Margins.Slider.Thumb.WinUI.Ring}">
+                        <Ellipse x:Name="ThumbRing"
+                                 Fill="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbRingFill}"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="1" />
+                        <Border Padding="{TemplateBinding Padding}">
+                            <Ellipse x:Name="ThumbDot" Fill="{TemplateBinding Background}" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Padding" Value="{StaticResource MahApps.Thickness.Slider.Thumb.WinUI.Hover}" />
+            </Trigger>
+            <Trigger Property="IsDragging" Value="True">
+                <Setter Property="Padding" Value="{StaticResource MahApps.Thickness.Slider.Thumb.WinUI.Pressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Padding" Value="{StaticResource MahApps.Thickness.Slider.Thumb.WinUI.Hover}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  the track is a line four high with its ends rounded off, and the thumb covers the join between the part behind it and the part in front  -->
+    <Style x:Key="MahApps.Styles.RepeatButton.Slider.HorizontalTrack.WinUI" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle Height="{StaticResource MahApps.Sizes.Slider.TrackHeight.WinUI}"
+                                   Fill="{TemplateBinding Foreground}"
+                                   RadiusX="2"
+                                   RadiusY="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.RepeatButton.Slider.VerticalTrack.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.WinUI}"
+           TargetType="{x:Type RepeatButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle Width="{StaticResource MahApps.Sizes.Slider.TrackHeight.WinUI}"
+                                   Fill="{TemplateBinding Foreground}"
+                                   RadiusX="2"
+                                   RadiusY="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  HorizontalSlider  -->
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Horizontal.WinUI" TargetType="{x:Type Slider}">
+        <Grid x:Name="HorizontalTemplate"
+              MinHeight="{StaticResource MahApps.Sizes.Slider.WinUI.MinHeight}"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              Background="{TemplateBinding Background}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TickBar x:Name="TopTick"
+                     Grid.Row="0"
+                     Height="4"
+                     Fill="{TemplateBinding Foreground}"
+                     Placement="Top"
+                     Visibility="Collapsed" />
+            <TickBar x:Name="BottomTick"
+                     Grid.Row="2"
+                     Height="4"
+                     Fill="{TemplateBinding Foreground}"
+                     Placement="Bottom"
+                     Visibility="Collapsed" />
+            <Track x:Name="PART_Track"
+                   Grid.Row="0"
+                   Grid.RowSpan="3">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton x:Name="DecreaseLarge"
+                                  Command="{x:Static Slider.DecreaseLarge}"
+                                  Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillBrush)}"
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.WinUI}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton x:Name="IncreaseLarge"
+                                  Command="{x:Static Slider.IncreaseLarge}"
+                                  Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillBrush)}"
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.WinUI}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <mah:MetroThumb x:Name="HorizontalThumb"
+                                    Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Width.WinUI}"
+                                    Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height.WinUI}"
+                                    Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
+                                    IsTabStop="True"
+                                    Style="{DynamicResource MahApps.Styles.Thumb.Slider.WinUI}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillHoverBrush)}" />
+                <Setter TargetName="HorizontalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillHoverBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillHoverBrush)}" />
+            </Trigger>
+            <Trigger SourceName="DecreaseLarge" Property="IsPressed" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="HorizontalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="IncreaseLarge" Property="IsPressed" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="HorizontalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="HorizontalThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="HorizontalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillDisabledBrush)}" />
+                <Setter TargetName="HorizontalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillDisabledBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillDisabledBrush)}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  VerticalSlider  -->
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Vertical.WinUI" TargetType="{x:Type Slider}">
+        <Grid x:Name="VerticalTemplate"
+              MinWidth="{StaticResource MahApps.Sizes.Slider.WinUI.MinHeight}"
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TickBar x:Name="TopTick"
+                     Grid.Column="0"
+                     Width="4"
+                     Fill="{TemplateBinding Foreground}"
+                     Placement="Left"
+                     Visibility="Collapsed" />
+            <TickBar x:Name="BottomTick"
+                     Grid.Column="2"
+                     Width="4"
+                     Fill="{TemplateBinding Foreground}"
+                     Placement="Right"
+                     Visibility="Collapsed" />
+            <Track x:Name="PART_Track"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton x:Name="DecreaseLarge"
+                                  Command="{x:Static Slider.DecreaseLarge}"
+                                  Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillBrush)}"
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.WinUI}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton x:Name="IncreaseLarge"
+                                  Command="{x:Static Slider.IncreaseLarge}"
+                                  Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillBrush)}"
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.WinUI}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <mah:MetroThumb x:Name="VerticalThumb"
+                                    Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Width.WinUI}"
+                                    Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumb.Height.WinUI}"
+                                    Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillBrush)}"
+                                    IsTabStop="True"
+                                    Style="{DynamicResource MahApps.Styles.Thumb.Slider.WinUI}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillHoverBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillHoverBrush)}" />
+                <Setter TargetName="VerticalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillHoverBrush)}" />
+            </Trigger>
+            <Trigger SourceName="DecreaseLarge" Property="IsPressed" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="VerticalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="IncreaseLarge" Property="IsPressed" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="VerticalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger SourceName="VerticalThumb" Property="IsDragging" Value="True">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillPressedBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillPressedBrush)}" />
+                <Setter TargetName="VerticalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillPressedBrush)}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="DecreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackValueFillDisabledBrush)}" />
+                <Setter TargetName="IncreaseLarge" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.TrackFillDisabledBrush)}" />
+                <Setter TargetName="VerticalThumb" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:SliderHelper.ThumbFillDisabledBrush)}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  Slider WinUI Style  -->
+    <Style x:Key="MahApps.Styles.Slider.WinUI" TargetType="{x:Type Slider}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TickBarFill}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="IsMoveToPointEnabled" Value="True" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Horizontal.WinUI}" />
+        <Setter Property="Value" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFill}" />
+        <Setter Property="mah:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillDisabled}" />
+        <Setter Property="mah:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillPointerOver}" />
+        <Setter Property="mah:SliderHelper.ThumbFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillPressed}" />
+        <Setter Property="mah:SliderHelper.TrackFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFill}" />
+        <Setter Property="mah:SliderHelper.TrackFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFillDisabled}" />
+        <Setter Property="mah:SliderHelper.TrackFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFill}" />
+        <Setter Property="mah:SliderHelper.TrackFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackFill}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFill}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFillDisabled}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFillPointerOver}" />
+        <Setter Property="mah:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TrackValueFillPressed}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Vertical.WinUI}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

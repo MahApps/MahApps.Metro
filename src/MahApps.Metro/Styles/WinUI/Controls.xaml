@@ -31,6 +31,8 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar.WinUI}" TargetType="ProgressBar" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar.WinUI}" TargetType="{x:Type mah:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ProgressRing.WinUI}" TargetType="{x:Type mah:ProgressRing}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Slider.WinUI}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.WinUI}" TargetType="{x:Type mah:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.WinUI}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox.WinUI}" TargetType="RichTextBox" />

@@ -444,6 +444,7 @@
     <Color x:Key="MahApps.Colors.WinUI.ControlAltFillDisabled">{{MahApps.Colors.WinUI.ControlAltFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDefault">{{MahApps.Colors.WinUI.ControlStrongStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDisabled">{{MahApps.Colors.WinUI.ControlStrongStrokeDisabled}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlSolidFillDefault">{{MahApps.Colors.WinUI.ControlSolidFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.AccentFillDisabled">{{MahApps.Colors.WinUI.AccentFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextOnAccentDisabled">{{MahApps.Colors.WinUI.TextOnAccentDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SurfaceStrokeFlyout">{{MahApps.Colors.WinUI.SurfaceStrokeFlyout}}</Color>
@@ -514,6 +515,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDisabled}" options:Freeze="True" />
+    <!--  the one fill WinUI keeps opaque: the surface a control that has to cover what it runs over is drawn in, which in the dark theme is lighter than the page rather than the same  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlSolidFillDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlSolidFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.ControlFillTertiary}" options:Freeze="True" />
@@ -1191,5 +1194,26 @@
         that arc which WinUI leaves transparent, so nothing shows unless somebody asks for it.
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.ProgressRing.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+
+    <!--
+        Resources for MahApps.Styles.Slider.WinUI and MahApps.Styles.RangeSlider.WinUI.
+        WinUI puts the accent inside the thumb rather than on it: the thumb is a ring drawn in the
+        colour a control covers its ground with, and the dot in the middle of it is the accent,
+        which grows under the pointer and pulls back in while it is dragged. The track the thumb
+        runs along is a stroke rather than a fill, the same way the progress bar draws its line.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbRingFill" ResourceKey="MahApps.Brushes.WinUI.ControlSolidFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbRingStroke" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFillPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackFillDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TickBarFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
 
 </ResourceDictionary>
