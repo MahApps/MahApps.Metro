@@ -19,6 +19,8 @@
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.WinUI}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.WinUI}" TargetType="ComboBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBox.WinUI}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem.WinUI}" TargetType="ListBoxItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.Menu.WinUI}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.WinUI}" TargetType="ContextMenu" />

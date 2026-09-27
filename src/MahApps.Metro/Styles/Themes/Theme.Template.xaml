@@ -1110,6 +1110,35 @@
     <markup:StaticResource x:Key="MahApps.Brushes.MultiSelectionComboBox.WinUI.ItemBackground" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillQuarternary" />
 
     <!--
+        Resources for MahApps.Styles.ListBox.Win10. A row of a Windows 10 list keeps the colour of
+        its text whatever is happening to it and says the rest with what is behind it: the neutral
+        turned down under the pointer, a step up of it while the button is held, and the accent
+        turned right down once the row is picked.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMedium" />
+
+    <!--
+        Resources for MahApps.Styles.ListBox.WinUI. WinUI never drew its own list box a second
+        time, so the row here is the one its list view has, which is what Windows 11 shows a list
+        as: nothing behind a picked row but a fill a shade off the ground, and the accent kept for
+        the short bar along the left edge.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemPillFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+
+    <!--
         Resources for MahApps.Styles.NumericUpDown.Win10. The box is the Windows 10 text box with a
         pair of buttons standing in it, so everything but those buttons is read from there. A spin
         button carries no fill at rest and lights the cell it stands in under the pointer, the way a
