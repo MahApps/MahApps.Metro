@@ -4,6 +4,7 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
 
     <core:NumberConverter x:Key="NumberConverter" />
+    <core:BrushToColorConverter x:Key="BrushToColorConverter" />
 
     <!--
         The editors a ControlExample puts in front of the properties it watches. Which one a property
@@ -45,6 +46,13 @@
             <ComboBox HorizontalAlignment="Stretch"
                       ItemsSource="{Binding Values, Mode=OneTime}"
                       SelectedItem="{Binding Value, Mode=TwoWay}" />
+        </mah:MetroHeader>
+    </DataTemplate>
+
+    <!--  a brush is picked with the library's own colour picker, which is a combo box that knows what colours are called  -->
+    <DataTemplate x:Key="MahApps.Gallery.Templates.Option.Brush">
+        <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <mah:ColorPicker HorizontalAlignment="Stretch" SelectedColor="{Binding Value, Converter={StaticResource BrushToColorConverter}, Mode=TwoWay}" />
         </mah:MetroHeader>
     </DataTemplate>
 

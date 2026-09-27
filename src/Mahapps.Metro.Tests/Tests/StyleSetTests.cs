@@ -106,6 +106,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(MetroProgressBar), "MahApps.Styles.MetroProgressBar.Win10")]
         [TestCase(WinUI, typeof(ProgressBar), "MahApps.Styles.ProgressBar.WinUI")]
         [TestCase(WinUI, typeof(MetroProgressBar), "MahApps.Styles.MetroProgressBar.WinUI")]
+        [TestCase(Win10, typeof(ProgressRing), "MahApps.Styles.ProgressRing.Win10")]
+        [TestCase(WinUI, typeof(ProgressRing), "MahApps.Styles.ProgressRing.WinUI")]
         [Description("A set puts its own style in front of the one the default set declares for that type.")]
         public void ASetPutsItsOwnStyleInFront(string set, Type target, string expected)
         {

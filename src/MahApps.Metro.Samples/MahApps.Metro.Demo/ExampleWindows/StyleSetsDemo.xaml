@@ -185,6 +185,16 @@
                         <mah:MetroProgressBar Value="42" />
                         <mah:MetroProgressBar Margin="0 12 0 0" IsIndeterminate="True" />
                     </StackPanel>
+                    <StackPanel Style="{StaticResource Row}">
+                        <TextBlock Style="{StaticResource RowLabel}" Text="ProgressRing" />
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <mah:ProgressRing VerticalAlignment="Center" />
+                            <mah:ProgressRing Margin="16 0 0 0"
+                                              VerticalAlignment="Center"
+                                              IsIndeterminate="False"
+                                              Value="42" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
 

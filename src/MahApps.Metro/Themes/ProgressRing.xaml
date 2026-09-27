@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <Style TargetType="mah:ProgressRing">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -315,4 +317,235 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Width" Value="60" />
     </Style>
+    <!--
+        The Windows 10 ring.
+        There is nothing to rebuild here: the six dots above are what Windows 10 span, and the
+        template they run in came from it in the first place. All this set does is take the ring
+        off the library accent and put it on the one the system hands out.
+    -->
+    <Style x:Key="MahApps.Styles.ProgressRing.Win10"
+           BasedOn="{StaticResource {x:Type mah:ProgressRing}}"
+           TargetType="{x:Type mah:ProgressRing}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressRing.Win10.Foreground}" />
+    </Style>
+
+    <system:Double x:Key="MahApps.Sizes.ProgressRing.WinUI.Size">32</system:Double>
+    <system:Double x:Key="MahApps.Sizes.ProgressRing.WinUI.MinSize">16</system:Double>
+
+    <!--
+        The WinUI ring.
+        WinUI drew this one in Lottie and plays it back through an AnimatedVisualPlayer, which WPF
+        has nothing to answer with, so the arc is rebuilt here out of the numbers that animation
+        holds: a circle of radius 35 stroked 7.5 wide in a square of 80, turning 900 degrees over
+        two seconds while the arc it draws grows from nothing to half the circle and is eaten away
+        from the front again. Half a ring behind a clip on the right half does both: turn it back
+        180 degrees and none of it is in the clip, turn it forward 180 and none of it is left, and
+        every step in between is the arc at that moment. The square is fixed and a Viewbox takes
+        it to whatever size the ring is given, which is also what keeps the stroke in proportion
+        the way it is under a Lottie player set to fill.
+
+        Two seconds end 180 degrees short of a whole number of turns, and at that moment the arc
+        has just been eaten away, so the jump back to the start of the next round has nothing to
+        show.
+
+        The half ring stops 6.56 degrees short at either end, which is exactly as far as a round
+        cap reaches back over the point it sits on. Without that the cap of an arc that has been
+        turned right out of the clip still reaches back into it, and what is left of a ring that
+        should be showing nothing is a dot at six o'clock.
+    -->
+    <Style x:Key="MahApps.Styles.ProgressRing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ProgressRing.Win10}"
+           TargetType="{x:Type mah:ProgressRing}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressRing.WinUI.Foreground}" />
+        <Setter Property="Height" Value="{StaticResource MahApps.Sizes.ProgressRing.WinUI.Size}" />
+        <Setter Property="MinHeight" Value="{StaticResource MahApps.Sizes.ProgressRing.WinUI.MinSize}" />
+        <Setter Property="MinWidth" Value="{StaticResource MahApps.Sizes.ProgressRing.WinUI.MinSize}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:ProgressRing}">
+                    <ControlTemplate.Resources>
+                        <!--
+                            Where the arc begins and where it ends, over the two seconds WinUI
+                            gives one round. The ring starts this on itself rather than a visual
+                            state doing it, because a state runs its storyboard against the
+                            template rather than against the control the angles belong to.
+                        -->
+                        <Storyboard x:Key="TurningStoryboard" RepeatBehavior="Forever">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(mah:ProgressRing.ArcStartAngle)">
+                                <SplineDoubleKeyFrame KeyTime="0" Value="0" />
+                                <SplineDoubleKeyFrame KeySpline="0.167,0.167 0.833,0.833"
+                                                      KeyTime="0:0:1"
+                                                      Value="450" />
+                                <SplineDoubleKeyFrame KeySpline="0.167,0.167 0.833,0.833"
+                                                      KeyTime="0:0:2"
+                                                      Value="1080" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(mah:ProgressRing.ArcEndAngle)">
+                                <SplineDoubleKeyFrame KeyTime="0" Value="0" />
+                                <SplineDoubleKeyFrame KeySpline="0.167,0.167 0.833,0.833"
+                                                      KeyTime="0:0:1"
+                                                      Value="630" />
+                                <SplineDoubleKeyFrame KeySpline="0.167,0.167 0.833,0.833"
+                                                      KeyTime="0:0:2"
+                                                      Value="1080" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+
+                    <Grid x:Name="LayoutRoot"
+                          Margin="{TemplateBinding Padding}"
+                          Opacity="0">
+                        <Viewbox Stretch="Uniform">
+                            <Grid x:Name="RingSquare"
+                                  Width="80"
+                                  Height="80">
+
+
+                                <!--
+                                    The arc that says how far along it is. One circle, dashed so
+                                    that a single stroke and a single gap each cover the whole way
+                                    round, and the offset decides how much of the stroke has been
+                                    pushed off the end. At nothing there is no stroke left on the
+                                    ring at all, at full the two ends of it meet, and the dash caps
+                                    round both of them off wherever they happen to be. The dash
+                                    lengths are in strokes rather than units, so 29.3215 is this
+                                    ring's own circumference: 2 pi times 35, over a stroke of 7.5.
+                                    A circle is drawn inside the box it is given, so the box has to
+                                    be a stroke wider than the circle for the two to line up with
+                                    the arc that turns.
+                                    A circle starts at three o'clock, and the turn brings that back
+                                    up to twelve where an arc is supposed to start.
+                                -->
+                                <Canvas x:Name="DeterminateArc"
+                                        Width="80"
+                                        Height="80"
+                                        Visibility="Collapsed">
+                                    <!--
+                                        The rest of the circle, drawn with the same dash pushed the
+                                        other way, so that it picks up exactly where the arc stops.
+                                        The track behind it is switched off instead of left running
+                                        under the arc: two strokes on one line come out mixed along
+                                        their edges, and the one underneath shows through.
+                                    -->
+                                    <Ellipse x:Name="DeterminateTrackRing"
+                                             Canvas.Left="1.25"
+                                             Canvas.Top="1.25"
+                                             Width="77.5"
+                                             Height="77.5"
+                                             RenderTransformOrigin="0.5,0.5"
+                                             Stroke="{TemplateBinding Background}"
+                                             StrokeDashArray="29.3215,29.3215"
+                                             StrokeDashCap="Round"
+                                             StrokeDashOffset="{Binding Path=ArcFraction, RelativeSource={RelativeSource TemplatedParent}, Converter={mahConverters:MathMultiplyConverter}, ConverterParameter=-29.3215, Mode=OneWay}"
+                                             StrokeThickness="7.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90" />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <Ellipse x:Name="DeterminateArcRing"
+                                             Canvas.Left="1.25"
+                                             Canvas.Top="1.25"
+                                             Width="77.5"
+                                             Height="77.5"
+                                             RenderTransformOrigin="0.5,0.5"
+                                             Stroke="{TemplateBinding Foreground}"
+                                             StrokeDashArray="29.3215,29.3215"
+                                             StrokeDashCap="Round"
+                                             StrokeDashOffset="{Binding Path=ArcRemainder, RelativeSource={RelativeSource TemplatedParent}, Converter={mahConverters:MathMultiplyConverter}, ConverterParameter=29.3215, Mode=OneWay}"
+                                             StrokeThickness="7.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90" />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Canvas>
+
+                                <!--
+                                    The arc that says nothing more than that something is going on.
+                                    It is the same trick as the one above: one circle, dashed so a
+                                    stroke and a gap together cover the whole way round, and the
+                                    ring works that dash out from the two angles animated below. An
+                                    angle can be animated and a dash cannot, which is why what runs
+                                    here says where the arc begins and ends, and the ring turns it
+                                    into something to draw. The track takes the rest of the same
+                                    turn, so neither of the two is ever under the other, and both
+                                    ends of the arc are ends of a stroke, which the dash cap rounds
+                                    off the way WinUI does.
+                                -->
+                                <Canvas x:Name="IndeterminateArc"
+                                        Width="80"
+                                        Height="80">
+                                    <Ellipse x:Name="PART_TurningTrack"
+                                             Canvas.Left="1.25"
+                                             Canvas.Top="1.25"
+                                             Width="77.5"
+                                             Height="77.5"
+                                             RenderTransformOrigin="0.5,0.5"
+                                             Stroke="{TemplateBinding Background}"
+                                             StrokeDashCap="Round"
+                                             StrokeThickness="7.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90" />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                    <Ellipse x:Name="PART_TurningArc"
+                                             Canvas.Left="1.25"
+                                             Canvas.Top="1.25"
+                                             Width="77.5"
+                                             Height="77.5"
+                                             RenderTransformOrigin="0.5,0.5"
+                                             Stroke="{TemplateBinding Foreground}"
+                                             StrokeDashCap="Round"
+                                             StrokeThickness="7.5">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90" />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Canvas>
+
+                            </Grid>
+                        </Viewbox>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <!--  an arc has no dots to add a sixth to, so both sizes draw the same ring  -->
+                            <VisualStateGroup x:Name="SizeStates">
+                                <VisualState x:Name="Large" />
+                                <VisualState x:Name="Small" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ActiveStates">
+                                <VisualState x:Name="Inactive" />
+                                <VisualState x:Name="Active">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation Storyboard.TargetName="LayoutRoot"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="False">
+                            <Setter TargetName="DeterminateArc" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="IndeterminateArc" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!--
+                            A ring at the bottom of its range has nothing to draw. The dash gap
+                            ought to cover the whole way round on its own, but the path of a circle
+                            comes out a hair longer than the circumference it is worked out from,
+                            and the round cap on the stroke that begins just past the end of it
+                            leaves a dot at twelve o'clock.
+                        -->
+                        <Trigger Property="ArcRemainder" Value="1">
+                            <Setter TargetName="DeterminateArc" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="{StaticResource MahApps.Sizes.ProgressRing.WinUI.Size}" />
+    </Style>
+
 </ResourceDictionary>
