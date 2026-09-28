@@ -203,7 +203,7 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A group header is held at the top of the list while the rows of its own group pass under it, and it goes no further down than the bottom of that group, so the next group pushes it out of the way rather than being drawn over.")]
         public void TheHeaderOfAGroupIsHeldAtTheTopOfTheList()
         {
-            var list = this.ShowGrouped();
+            var list = this.ShowGrouped(WinUI);
 
             var scrollViewer = list.FindChild<ScrollViewer>();
             Assert.That(scrollViewer, Is.Not.Null);
@@ -513,7 +513,7 @@ namespace MahApps.Metro.Tests.Tests
             return list;
         }
 
-        private ListView ShowGrouped(string key = WinUI, bool boxes = false, bool sticky = true, GroupStyle? groupStyle = null)
+        private ListView ShowGrouped(string key, bool boxes = false, bool sticky = true, GroupStyle? groupStyle = null)
         {
             Assert.That(this.window, Is.Not.Null);
 
