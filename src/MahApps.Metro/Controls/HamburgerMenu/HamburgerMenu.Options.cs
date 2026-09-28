@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(OptionsItemsSource),
                                           typeof(object),
                                           typeof(HamburgerMenu),
-                                          new PropertyMetadata(null));
+                                          new PropertyMetadata(null, OnItemsSourceChanged));
 
         /// <summary>
         /// Gets or sets an object source used to generate the content of the options.

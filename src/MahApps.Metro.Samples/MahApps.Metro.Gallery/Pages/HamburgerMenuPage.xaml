@@ -7,9 +7,31 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="600"
              d:DesignWidth="900"
              mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <!--  one row for every list on this page, since an option is a row of the same kind as an item  -->
+        <DataTemplate x:Key="MenuItem" DataType="{x:Type mah:HamburgerMenuIconItem}">
+            <Grid Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ContentControl Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{Binding Icon}"
+                                Focusable="False"
+                                IsTabStop="False" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
         <StackPanel>
@@ -29,26 +51,6 @@
                                        OpenPaneLength="160"
                                        OptionsItemTemplate="{DynamicResource MenuItem}"
                                        SelectedIndex="0">
-                        <!--  one template for both lists, since an option is a row of the same kind as an item  -->
-                        <mah:HamburgerMenu.Resources>
-                            <DataTemplate x:Key="MenuItem" DataType="{x:Type mah:HamburgerMenuIconItem}">
-                                <Grid Height="40">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <ContentControl Grid.Column="0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Content="{Binding Icon}"
-                                                    Focusable="False"
-                                                    IsTabStop="False" />
-                                    <TextBlock Grid.Column="1"
-                                               VerticalAlignment="Center"
-                                               Text="{Binding Label}" />
-                                </Grid>
-                            </DataTemplate>
-                        </mah:HamburgerMenu.Resources>
                         <mah:HamburgerMenu.ItemsSource>
                             <mah:HamburgerMenuItemCollection>
                                 <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Home, Width=18, Height=18}"
@@ -89,6 +91,52 @@
                             </mah:HamburgerMenuItemCollection>
                         </mah:HamburgerMenu.OptionsItemsSource>
                     </mah:HamburgerMenu>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+
+            <controls:ControlExample x:Name="LanguageExample"
+                                     Description="An app that carries its words in a resource dictionary swaps that dictionary when the language changes, and every label written as a DynamicResource follows. A menu item is not a plain data object for exactly this reason: the menu takes it into its logical tree, so it sees the dictionaries above it and hears about it when one of them is exchanged. Pick another language and watch the pane, including the options at its foot."
+                                     Header="Labels that come out of a language dictionary">
+                <smtx:XamlDisplay UniqueKey="HamburgerMenu.Language">
+                    <StackPanel HorizontalAlignment="Left">
+                        <ComboBox x:Name="LanguagePicker"
+                                  Width="160"
+                                  Margin="0 0 0 12"
+                                  HorizontalAlignment="Left"
+                                  mah:TextBoxHelper.UseFloatingWatermark="True"
+                                  mah:TextBoxHelper.Watermark="Language"
+                                  SelectedIndex="0"
+                                  SelectionChanged="OnLanguageChanged">
+                            <system:String>English</system:String>
+                            <system:String>Deutsch</system:String>
+                            <system:String>Français</system:String>
+                        </ComboBox>
+                        <mah:HamburgerMenu x:Name="LanguageMenu"
+                                           Width="400"
+                                           Height="260"
+                                           DisplayMode="Inline"
+                                           IsPaneOpen="True"
+                                           ItemTemplate="{DynamicResource MenuItem}"
+                                           OpenPaneLength="180"
+                                           OptionsItemTemplate="{DynamicResource MenuItem}"
+                                           SelectedIndex="0">
+                            <mah:HamburgerMenu.ItemsSource>
+                                <mah:HamburgerMenuItemCollection>
+                                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Home, Width=18, Height=18}" Label="{DynamicResource Gallery.Menu.Home}" />
+                                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Email, Width=18, Height=18}" Label="{DynamicResource Gallery.Menu.Mail}" />
+                                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CalendarMonthOutline, Width=18, Height=18}" Label="{DynamicResource Gallery.Menu.Calendar}" />
+                                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountOutline, Width=18, Height=18}" Label="{DynamicResource Gallery.Menu.People}" />
+                                </mah:HamburgerMenuItemCollection>
+                            </mah:HamburgerMenu.ItemsSource>
+                            <mah:HamburgerMenu.OptionsItemsSource>
+                                <mah:HamburgerMenuItemCollection>
+                                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}" Label="{DynamicResource Gallery.Menu.Settings}" />
+                                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=InformationOutline, Width=18, Height=18}" Label="{DynamicResource Gallery.Menu.About}" />
+                                </mah:HamburgerMenuItemCollection>
+                            </mah:HamburgerMenu.OptionsItemsSource>
+                        </mah:HamburgerMenu>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

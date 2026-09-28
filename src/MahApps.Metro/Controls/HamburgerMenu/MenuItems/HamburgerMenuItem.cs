@@ -5,8 +5,6 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
-using JetBrains.Annotations;
-using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -114,54 +112,10 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Identifies the <see cref="IsEnabled"/> dependency property.
+        /// Gets whether this item can be used. A command that says it cannot run right now turns its
+        /// item off, on top of whatever the menu above it already says.
         /// </summary>
-        public static readonly DependencyProperty IsEnabledProperty
-            = DependencyProperty.Register(nameof(IsEnabled),
-                                          typeof(bool),
-                                          typeof(HamburgerMenuItem),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox, null, IsEnabledCoerceValueCallback));
-
-        [MustUseReturnValue]
-        private static object IsEnabledCoerceValueCallback(DependencyObject d, object? value)
-        {
-            if (value is bool isEnabled && isEnabled == false)
-            {
-                return BooleanBoxes.FalseBox;
-            }
-
-            return ((HamburgerMenuItem)d).CanExecute;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this item is enabled in the user interface (UI). This is a dependency property.
-        /// </summary>
-        /// <returns>
-        /// true if the item is enabled; otherwise, false. The default value is true.
-        /// </returns>
-        public bool IsEnabled
-        {
-            get => (bool)this.GetValue(IsEnabledProperty);
-            set => this.SetValue(IsEnabledProperty, BooleanBoxes.Box(value));
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="ToolTip"/> dependency property. 
-        /// </summary>
-        public static readonly DependencyProperty ToolTipProperty
-            = DependencyProperty.Register(nameof(ToolTip),
-                                          typeof(object),
-                                          typeof(HamburgerMenuItem),
-                                          new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets a value that specifies ToolTip to display.
-        /// </summary>
-        public object? ToolTip
-        {
-            get => this.GetValue(ToolTipProperty);
-            set => this.SetValue(ToolTipProperty, value);
-        }
+        protected override bool IsEnabledCore => base.IsEnabledCore && this.canExecute;
 
         /// <summary>
         /// Executes the command which can be set by the user.
@@ -221,11 +175,6 @@ namespace MahApps.Metro.Controls
                 this.canExecute = value;
                 this.CoerceValue(IsEnabledProperty);
             }
-        }
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new HamburgerMenuItem();
         }
     }
 }

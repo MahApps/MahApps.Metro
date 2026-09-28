@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,26 +7,17 @@ using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
-    public class HamburgerMenuItemBase : Freezable, IHamburgerMenuItemBase
+    /// <summary>
+    /// The base of everything a <see cref="HamburgerMenu"/> shows in its pane.
+    /// </summary>
+    /// <remarks>
+    /// An item is a content element rather than a plain data object, and the menu takes it into its
+    /// logical tree. That is what lets a <c>DynamicResource</c> on one of its properties find the
+    /// dictionaries above the menu and hear about it when one of them is exchanged, which is what a
+    /// menu whose labels come from a language dictionary needs.
+    /// </remarks>
+    public class HamburgerMenuItemBase : FrameworkContentElement, IHamburgerMenuItemBase
     {
-        /// <summary>
-        /// Identifies the <see cref="Tag"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TagProperty
-            = DependencyProperty.Register(nameof(Tag),
-                                          typeof(object),
-                                          typeof(HamburgerMenuItemBase),
-                                          new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets a value that specifies an user specific value.
-        /// </summary>
-        public object? Tag
-        {
-            get => this.GetValue(TagProperty);
-            set => this.SetValue(TagProperty, value);
-        }
-
         /// <summary>
         /// Identifies the <see cref="IsVisible" /> dependency property.
         /// </summary>
@@ -46,11 +37,6 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(IsVisibleProperty);
             set => this.SetValue(IsVisibleProperty, BooleanBoxes.Box(value));
-        }
-
-        protected override Freezable CreateInstanceCore()
-        {
-            return new HamburgerMenuItemBase();
         }
     }
 }

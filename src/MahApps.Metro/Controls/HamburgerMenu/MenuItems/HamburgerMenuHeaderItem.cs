@@ -26,9 +26,5 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(LabelProperty, value);
         }
 
-        protected override Freezable CreateInstanceCore()
-        {
-            return new HamburgerMenuHeaderItem();
-        }
     }
 }
