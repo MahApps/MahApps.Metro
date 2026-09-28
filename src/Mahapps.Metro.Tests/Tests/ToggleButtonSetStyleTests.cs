@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -19,32 +18,8 @@ namespace MahApps.Metro.Tests.Tests
     /// button in both of them.
     /// </summary>
     [TestFixture]
-    public class ToggleButtonSetStyleTests
+    public class ToggleButtonSetStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
-
         [TestCase("MahApps.Styles.ToggleButton.Win10", "MahApps.Brushes.ToggleButton.Win10.BackgroundChecked", "MahApps.Brushes.ToggleButton.Win10.ForegroundChecked")]
         [TestCase("MahApps.Styles.ToggleButton.WinUI", "MahApps.Brushes.ToggleButton.WinUI.BackgroundChecked", "MahApps.Brushes.ToggleButton.WinUI.ForegroundChecked")]
         [Description("A toggle that is down fills with the accent of its set and writes over it in the foreground that set picks for the accent.")]

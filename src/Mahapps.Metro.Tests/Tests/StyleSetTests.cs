@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,26 +19,11 @@ namespace MahApps.Metro.Tests.Tests
     /// Windows 10 look as the default; it is a set you can pick instead.
     /// </summary>
     [TestFixture]
-    public class StyleSetTests
+    public class StyleSetTests : WindowTestFixture<TestWindow>
     {
         private const string Default = "pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml";
         private const string Win10 = "pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml";
         private const string WinUI = "pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [TestCase(Win10, typeof(Button), "MahApps.Styles.Button.Win10")]
         [TestCase(Win10, typeof(RepeatButton), "MahApps.Styles.Button.Win10")]
@@ -50,6 +34,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(ComboBoxItem), "MahApps.Styles.ComboBoxItem.Win10")]
         [TestCase(Win10, typeof(ListBox), "MahApps.Styles.ListBox.Win10")]
         [TestCase(Win10, typeof(ListBoxItem), "MahApps.Styles.ListBoxItem.Win10")]
+        [TestCase(Win10, typeof(ListView), "MahApps.Styles.ListView.Win10")]
+        [TestCase(Win10, typeof(ListViewItem), "MahApps.Styles.ListViewItem.Win10")]
         [TestCase(Win10, typeof(AutoSuggestBox), "MahApps.Styles.AutoSuggestBox.Win10")]
         [TestCase(Win10, typeof(HotKeyBox), "MahApps.Styles.HotKeyBox.Win10")]
         [TestCase(Win10, typeof(MultiSelectionComboBox), "MahApps.Styles.MultiSelectionComboBox.Win10")]
@@ -82,6 +68,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(ComboBoxItem), "MahApps.Styles.ComboBoxItem.WinUI")]
         [TestCase(WinUI, typeof(ListBox), "MahApps.Styles.ListBox.WinUI")]
         [TestCase(WinUI, typeof(ListBoxItem), "MahApps.Styles.ListBoxItem.WinUI")]
+        [TestCase(WinUI, typeof(ListView), "MahApps.Styles.ListView.WinUI")]
+        [TestCase(WinUI, typeof(ListViewItem), "MahApps.Styles.ListViewItem.WinUI")]
         [TestCase(WinUI, typeof(AutoSuggestBox), "MahApps.Styles.AutoSuggestBox.WinUI")]
         [TestCase(WinUI, typeof(HotKeyBox), "MahApps.Styles.HotKeyBox.WinUI")]
         [TestCase(WinUI, typeof(MultiSelectionComboBox), "MahApps.Styles.MultiSelectionComboBox.WinUI")]
@@ -134,6 +122,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.ComboBox.WinUI", typeof(ComboBox))]
         [TestCase("MahApps.Styles.ComboBoxItem.WinUI", typeof(ComboBoxItem))]
         [TestCase("MahApps.Styles.ListBoxItem.WinUI", typeof(ListBoxItem))]
+        [TestCase("MahApps.Styles.ListViewItem.WinUI", typeof(ListViewItem))]
         [TestCase("MahApps.Styles.AutoSuggestBox.WinUI", typeof(AutoSuggestBox))]
         [TestCase("MahApps.Styles.HotKeyBox.WinUI", typeof(HotKeyBox))]
         [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", typeof(MultiSelectionComboBox))]

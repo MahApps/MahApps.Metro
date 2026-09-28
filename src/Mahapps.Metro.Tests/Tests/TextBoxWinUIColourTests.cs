@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,23 +20,8 @@ namespace MahApps.Metro.Tests.Tests
     /// generator parameters without a test having to be edited.
     /// </summary>
     [TestFixture]
-    public class TextBoxWinUIColourTests
+    public class TextBoxWinUIColourTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("A box nobody has touched: the WinUI fill, the WinUI text and a border that is drawn a little stronger along its bottom edge.")]
         public void AnIdleBoxCarriesTheWinUIFill()

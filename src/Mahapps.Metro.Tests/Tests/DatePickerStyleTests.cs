@@ -1,9 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,23 +19,8 @@ namespace MahApps.Metro.Tests.Tests
     /// along its bottom edge, the other two say it with the frame.
     /// </summary>
     [TestFixture]
-    public class DatePickerStyleTests
+    public class DatePickerStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [TestCase("MahApps.Styles.DatePicker")]
         [TestCase("MahApps.Styles.DatePicker.Win10")]
         [Description("A set that draws no edge of its own says the focus with the frame, the way the picker always has.")]

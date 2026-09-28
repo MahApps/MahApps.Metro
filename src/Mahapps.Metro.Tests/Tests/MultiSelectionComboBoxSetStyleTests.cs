@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,32 +17,8 @@ namespace MahApps.Metro.Tests.Tests
     /// own combo box: the same fill, the same frame, the same chevron and the same rows in the list.
     /// </summary>
     [TestFixture]
-    public class MultiSelectionComboBoxSetStyleTests
+    public class MultiSelectionComboBoxSetStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
-
         [TestCase("MahApps.Styles.MultiSelectionComboBox", "MahApps.Styles.ComboBox")]
         [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", "MahApps.Styles.ComboBox.Win10")]
         [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", "MahApps.Styles.ComboBox.WinUI")]

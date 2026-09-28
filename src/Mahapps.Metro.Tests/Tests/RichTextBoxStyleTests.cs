@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -19,23 +18,8 @@ namespace MahApps.Metro.Tests.Tests
     /// Windows styles stand on that one, so what they inherit is worth an assertion of its own.
     /// </summary>
     [TestFixture]
-    public class RichTextBoxStyleTests
+    public class RichTextBoxStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [TestCase("MahApps.Styles.RichTextBox")]
         [TestCase("MahApps.Styles.RichTextBox.Win10")]
         [TestCase("MahApps.Styles.RichTextBox.WinUI")]

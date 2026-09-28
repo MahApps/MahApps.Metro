@@ -1139,6 +1139,49 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemPillFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
 
     <!--
+        Resources for MahApps.Styles.ListView.Win10. A row of a list view is the row of a list box,
+        since UWP draws the two alike, so the colours are read off the same places. They get keys of
+        their own all the same, so that an application can move one of the two without the other.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMedium" />
+    <!--  a group header is written in the colour of the rows under it rather than in one of its own, and it is filled with the ground of the list so that rows can pass under it while it holds its place  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.GroupHeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.GroupHeaderBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.GroupHeaderSeparator" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseLow" />
+    <!--  the row of column headers: no fill of its own, a line under it, and the fills a row answers the pointer with  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ColumnHeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ColumnHeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ColumnHeaderBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ColumnHeaderSeparator" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseLow" />
+
+    <!--
+        Resources for MahApps.Styles.ListView.WinUI. The row WinUI draws a list view with is the one
+        the list box took its WinUI look from, so these are the same colours again under keys of
+        their own.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemPillFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.GroupHeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.GroupHeaderBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.GroupHeaderSeparator" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ColumnHeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ColumnHeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ColumnHeaderBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ColumnHeaderSeparator" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+
+    <!--
         Resources for MahApps.Styles.NumericUpDown.Win10. The box is the Windows 10 text box with a
         pair of buttons standing in it, so everything but those buttons is read from there. A spin
         button carries no fill at rest and lights the cell it stands in under the pointer, the way a

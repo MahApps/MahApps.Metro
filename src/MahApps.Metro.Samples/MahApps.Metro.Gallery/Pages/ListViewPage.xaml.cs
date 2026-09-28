@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -24,9 +25,48 @@ namespace MahApps.Metro.Gallery.Pages
 
             this.ColumnsExample.Watch(this.Columns,
                                       ListView.SelectionModeProperty,
+                                      ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
                                       Control.BorderThicknessProperty,
                                       IsEnabledProperty);
             this.ColumnsExample.Watch("Layout", this.Columns, WidthProperty, HeightProperty);
+
+            this.Win10ColumnsExample.Watch(this.Win10Columns,
+                                          ListView.SelectionModeProperty,
+                                          ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
+                                          IsEnabledProperty);
+            this.Win10ColumnsExample.Watch("Layout", this.Win10Columns, WidthProperty, HeightProperty);
+
+            this.WinUIColumnsExample.Watch(this.WinUIColumns,
+                                          ListView.SelectionModeProperty,
+                                          ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
+                                          IsEnabledProperty);
+            this.WinUIColumnsExample.Watch("Layout", this.WinUIColumns, WidthProperty, HeightProperty);
+
+            this.Win10Example.Watch(this.Win10,
+                                    ListView.SelectionModeProperty,
+                                    ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
+                                    IsEnabledProperty);
+            this.Win10Example.Watch("Layout", this.Win10, WidthProperty, HeightProperty);
+
+            this.WinUIExample.Watch(this.WinUI,
+                                    ListView.SelectionModeProperty,
+                                    ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
+                                    IsEnabledProperty);
+            this.WinUIExample.Watch("Layout", this.WinUI, WidthProperty, HeightProperty);
+
+            this.Win10GroupExample.Watch(this.Win10Grouped,
+                                         ListView.SelectionModeProperty,
+                                         ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
+                                         GroupItemHelper.CanSelectAllItemsProperty,
+                                         GroupItemHelper.IsHeaderStickyProperty);
+            this.Win10GroupExample.Watch("Layout", this.Win10Grouped, WidthProperty, HeightProperty);
+
+            this.WinUIGroupExample.Watch(this.WinUIGrouped,
+                                         ListView.SelectionModeProperty,
+                                         ItemHelper.IsMultiSelectCheckBoxEnabledProperty,
+                                         GroupItemHelper.CanSelectAllItemsProperty,
+                                         GroupItemHelper.IsHeaderStickyProperty);
+            this.WinUIGroupExample.Watch("Layout", this.WinUIGrouped, WidthProperty, HeightProperty);
 
             this.ReadExample.Watch(this.Reading, ListView.SelectionModeProperty);
             this.ReadExample.Watch("Layout", this.Reading, WidthProperty, HeightProperty);

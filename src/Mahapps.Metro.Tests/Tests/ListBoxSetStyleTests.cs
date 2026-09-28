@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -19,36 +18,12 @@ namespace MahApps.Metro.Tests.Tests
     /// GH-3328 asked for the Windows looks.
     /// </summary>
     [TestFixture]
-    public class ListBoxSetStyleTests
+    public class ListBoxSetStyleTests : WindowTestFixture<TestWindow>
     {
         private const string Win10 = "MahApps.Styles.ListBox.Win10";
         private const string WinUI = "MahApps.Styles.ListBox.WinUI";
         private const string RowWin10 = "MahApps.Styles.ListBoxItem.Win10";
         private const string RowWinUI = "MahApps.Styles.ListBoxItem.WinUI";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
 
         [TestCase(Win10, 32d)]
         [TestCase(WinUI, 40d)]

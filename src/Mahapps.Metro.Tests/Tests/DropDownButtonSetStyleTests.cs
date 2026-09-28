@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
@@ -19,32 +18,8 @@ namespace MahApps.Metro.Tests.Tests
     /// both of them.
     /// </summary>
     [TestFixture]
-    public class DropDownButtonSetStyleTests
+    public class DropDownButtonSetStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
-
         [TestCase("MahApps.Styles.DropDownButton.Win10", "MahApps.Styles.Button.Win10")]
         [TestCase("MahApps.Styles.DropDownButton.WinUI", "MahApps.Styles.Button.WinUI")]
         [Description("The drop-down button wears the chrome of the button of its own set, so the two stand next to each other in a row the way Windows draws them.")]

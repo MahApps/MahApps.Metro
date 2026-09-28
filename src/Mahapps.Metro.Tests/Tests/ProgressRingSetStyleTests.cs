@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,34 +21,10 @@ namespace MahApps.Metro.Tests.Tests
     /// whole thing turns. GH-3328 asked for the Windows looks; these are the two of them.
     /// </summary>
     [TestFixture]
-    public class ProgressRingSetStyleTests
+    public class ProgressRingSetStyleTests : WindowTestFixture<TestWindow>
     {
         private const string Win10 = "MahApps.Styles.ProgressRing.Win10";
         private const string WinUI = "MahApps.Styles.ProgressRing.WinUI";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
 
         [TestCase(Win10, 60d, 20d)]
         [TestCase(WinUI, 32d, 16d)]
