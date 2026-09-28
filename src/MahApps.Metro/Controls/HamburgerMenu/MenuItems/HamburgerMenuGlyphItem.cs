@@ -30,9 +30,5 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(GlyphProperty, value);
         }
 
-        protected override Freezable CreateInstanceCore()
-        {
-            return new HamburgerMenuGlyphItem();
-        }
     }
 }
