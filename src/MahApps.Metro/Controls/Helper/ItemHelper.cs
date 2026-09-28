@@ -2,9 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.ValueBoxes;
@@ -1002,6 +1005,127 @@ namespace MahApps.Metro.Controls
         public static void SetGridViewHeaderIndicatorBrush(UIElement element, Brush? value)
         {
             element.SetValue(GridViewHeaderIndicatorBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets whether a row shows a box saying whether it is picked, the way Windows does
+        /// once a list lets more than one row be picked at a time. The box only stands for what is
+        /// picked; it is the row under it that answers the pointer.
+        /// </summary>
+        public static readonly DependencyProperty IsMultiSelectCheckBoxEnabledProperty
+            = DependencyProperty.RegisterAttached(
+                "IsMultiSelectCheckBoxEnabled",
+                typeof(bool),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits, OnIsMultiSelectCheckBoxEnabledChanged));
+
+        /// <summary>Helper for getting <see cref="IsMultiSelectCheckBoxEnabledProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element">Element to read <see cref="IsMultiSelectCheckBoxEnabledProperty"/> from.</param>
+        /// <returns>Whether a row shows a box saying whether it is picked.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBox))]
+        [AttachedPropertyBrowsableForType(typeof(ListView))]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(ListViewItem))]
+        public static bool GetIsMultiSelectCheckBoxEnabled(DependencyObject element)
+        {
+            return (bool)element.GetValue(IsMultiSelectCheckBoxEnabledProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="IsMultiSelectCheckBoxEnabledProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element">Element to set <see cref="IsMultiSelectCheckBoxEnabledProperty"/> on.</param>
+        /// <param name="value">Whether a row shows a box saying whether it is picked.</param>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBox))]
+        [AttachedPropertyBrowsableForType(typeof(ListView))]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(ListViewItem))]
+        public static void SetIsMultiSelectCheckBoxEnabled(DependencyObject element, bool value)
+        {
+            element.SetValue(IsMultiSelectCheckBoxEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>
+        /// Whether a row is in fact showing that box: what the list was asked for above, and only
+        /// while it lets more than one row be picked at a time.
+        /// </summary>
+        /// <remarks>
+        /// The list works this out and hands it down, rather than every row looking up the tree for
+        /// the list to ask. A row is styled before it is put in place, and a binding looking for an
+        /// ancestor that is not there yet says so in the output window, once for every row.
+        /// </remarks>
+        private static readonly DependencyPropertyKey ShowsMultiSelectCheckBoxPropertyKey
+            = DependencyProperty.RegisterAttachedReadOnly(
+                "ShowsMultiSelectCheckBox",
+                typeof(bool),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>Identifies the ShowsMultiSelectCheckBox attached property.</summary>
+        public static readonly DependencyProperty ShowsMultiSelectCheckBoxProperty = ShowsMultiSelectCheckBoxPropertyKey.DependencyProperty;
+
+        /// <summary>Helper for getting <see cref="ShowsMultiSelectCheckBoxProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element">Element to read <see cref="ShowsMultiSelectCheckBoxProperty"/> from.</param>
+        /// <returns>Whether a row is showing the box that says whether it is picked.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBox))]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        public static bool GetShowsMultiSelectCheckBox(DependencyObject element)
+        {
+            return (bool)element.GetValue(ShowsMultiSelectCheckBoxProperty);
+        }
+
+        /// <summary>
+        /// What the binding on the list writes into, which is then handed on as the read only
+        /// answer above. A read only property cannot be the target of a binding itself.
+        /// </summary>
+        private static readonly DependencyProperty MultiSelectCheckBoxSourceProperty
+            = DependencyProperty.RegisterAttached(
+                "MultiSelectCheckBoxSource",
+                typeof(bool),
+                typeof(ItemHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnMultiSelectCheckBoxSourceChanged));
+
+        private static void OnIsMultiSelectCheckBoxEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            // The property is handed down the tree, so every row hears this as well. Only the list
+            // has the selection mode to weigh it against.
+            if (dependencyObject is not ListBox listBox
+                || BindingOperations.GetMultiBindingExpression(listBox, MultiSelectCheckBoxSourceProperty) is not null)
+            {
+                return;
+            }
+
+            var binding = new MultiBinding { Converter = MultiSelectCheckBoxConverter.Instance, Mode = BindingMode.OneWay };
+            binding.Bindings.Add(new Binding { Path = new PropertyPath(IsMultiSelectCheckBoxEnabledProperty), Source = listBox, Mode = BindingMode.OneWay });
+            binding.Bindings.Add(new Binding { Path = new PropertyPath(ListBox.SelectionModeProperty), Source = listBox, Mode = BindingMode.OneWay });
+
+            BindingOperations.SetBinding(listBox, MultiSelectCheckBoxSourceProperty, binding);
+        }
+
+        private static void SetShowsMultiSelectCheckBox(DependencyObject element, bool value)
+        {
+            element.SetValue(ShowsMultiSelectCheckBoxPropertyKey, BooleanBoxes.Box(value));
+        }
+
+        private static void OnMultiSelectCheckBoxSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            SetShowsMultiSelectCheckBox(dependencyObject, e.NewValue is true);
+        }
+
+        private sealed class MultiSelectCheckBoxConverter : IMultiValueConverter
+        {
+            public static readonly MultiSelectCheckBoxConverter Instance = new();
+
+            public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+            {
+                return BooleanBoxes.Box(values.Length == 2 && values[0] is true && values[1] is SelectionMode.Multiple);
+            }
+
+            public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            {
+                throw new NotSupportedException();
+            }
         }
     }
 }

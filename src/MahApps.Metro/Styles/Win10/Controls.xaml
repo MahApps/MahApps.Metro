@@ -24,6 +24,9 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Win10}" TargetType="ComboBoxItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Win10}" TargetType="ListBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem.Win10}" TargetType="ListBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListView.Win10}" TargetType="ListView" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem.Win10}" TargetType="ListViewItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader.Win10}" TargetType="GridViewColumnHeader" />
     <Style BasedOn="{StaticResource MahApps.Styles.Menu.Win10}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Win10}" TargetType="ContextMenu" />
