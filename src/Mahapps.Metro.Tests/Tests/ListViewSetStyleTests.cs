@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -25,37 +24,13 @@ namespace MahApps.Metro.Tests.Tests
     /// a short bar along the left edge. GH-3328 asked for the Windows looks.
     /// </summary>
     [TestFixture]
-    public class ListViewSetStyleTests
+    public class ListViewSetStyleTests : WindowTestFixture<TestWindow>
     {
         private const string Win10 = "MahApps.Styles.ListView.Win10";
         private const string WinUI = "MahApps.Styles.ListView.WinUI";
         private const string Metro = "MahApps.Styles.ListView";
         private const string RowWin10 = "MahApps.Styles.ListViewItem.Win10";
         private const string RowWinUI = "MahApps.Styles.ListViewItem.WinUI";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
 
         [TestCase(Win10, 32d)]
         [TestCase(WinUI, 40d)]

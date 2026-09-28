@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,35 +22,11 @@ namespace MahApps.Metro.Tests.Tests
     /// button and the item in both of them.
     /// </summary>
     [TestFixture]
-    public class MenuSetStyleTests
+    public class MenuSetStyleTests : WindowTestFixture<TestWindow>
     {
         private const string Default = "pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml";
         private const string Win10 = "pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml";
         private const string WinUI = "pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
 
         [TestCase("MahApps.Styles.MenuItem.Win10", "MahApps.Styles.ComboBoxItem.Win10")]
         [TestCase("MahApps.Styles.MenuItem.WinUI", "MahApps.Styles.ComboBoxItem.WinUI")]

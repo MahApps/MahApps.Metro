@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -21,35 +20,11 @@ namespace MahApps.Metro.Tests.Tests
     /// all along, and these tests hold the WinUI one to what it is meant to draw.
     /// </summary>
     [TestFixture]
-    public class SliderSetStyleTests
+    public class SliderSetStyleTests : WindowTestFixture<TestWindow>
     {
         private const string Win10 = "MahApps.Styles.Slider.Win10";
         private const string WinUI = "MahApps.Styles.Slider.WinUI";
         private const string RangeWinUI = "MahApps.Styles.RangeSlider.WinUI";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
 
         [TestCase(Win10, 8d, 24d)]
         [TestCase(WinUI, 18d, 18d)]

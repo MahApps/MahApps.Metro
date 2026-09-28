@@ -1,10 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -22,32 +21,8 @@ namespace MahApps.Metro.Tests.Tests
     /// fills the drop-down behind it with the palettes and the canvas of that set.
     /// </summary>
     [TestFixture]
-    public class ColorPickerSetStyleTests
+    public class ColorPickerSetStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
-
         [TestCase("MahApps.Styles.ColorPicker.Win10", "MahApps.Styles.ComboBox.Win10")]
         [TestCase("MahApps.Styles.ColorPicker.WinUI", "MahApps.Styles.ComboBox.WinUI")]
         [Description("The picker wears the chrome of the combo box of its own set, so the two stand next to each other in a form the way Windows draws them.")]

@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,32 +18,8 @@ namespace MahApps.Metro.Tests.Tests
     /// Windows looks; this is the split button in both of them.
     /// </summary>
     [TestFixture]
-    public class SplitButtonSetStyleTests
+    public class SplitButtonSetStyleTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
-
         [TestCase("MahApps.Styles.SplitButton.Win10", "MahApps.Styles.Button.Win10")]
         [TestCase("MahApps.Styles.SplitButton.WinUI", "MahApps.Styles.Button.WinUI")]
         [Description("The split button wears the chrome of the button of its own set, so the two stand next to each other in a row the way Windows draws them.")]

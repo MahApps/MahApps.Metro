@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,26 +19,11 @@ namespace MahApps.Metro.Tests.Tests
     /// Windows 10 look as the default; it is a set you can pick instead.
     /// </summary>
     [TestFixture]
-    public class StyleSetTests
+    public class StyleSetTests : WindowTestFixture<TestWindow>
     {
         private const string Default = "pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml";
         private const string Win10 = "pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml";
         private const string WinUI = "pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [TestCase(Win10, typeof(Button), "MahApps.Styles.Button.Win10")]
         [TestCase(Win10, typeof(RepeatButton), "MahApps.Styles.Button.Win10")]

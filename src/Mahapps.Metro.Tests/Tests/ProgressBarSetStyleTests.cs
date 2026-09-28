@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -20,37 +19,13 @@ namespace MahApps.Metro.Tests.Tests
     /// gone wrong. GH-3328 asked for the Windows looks; these are the two of them side by side.
     /// </summary>
     [TestFixture]
-    public class ProgressBarSetStyleTests
+    public class ProgressBarSetStyleTests : WindowTestFixture<TestWindow>
     {
         private const string Default = "MahApps.Styles.ProgressBar";
         private const string Win10 = "MahApps.Styles.ProgressBar.Win10";
         private const string WinUI = "MahApps.Styles.ProgressBar.WinUI";
         private const string MetroWin10 = "MahApps.Styles.MetroProgressBar.Win10";
         private const string MetroWinUI = "MahApps.Styles.MetroProgressBar.WinUI";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(true);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (this.window is not null)
-            {
-                this.window.Content = null;
-            }
-        }
 
         [TestCase(Default, 10d)]
         [TestCase(Win10, 4d)]
