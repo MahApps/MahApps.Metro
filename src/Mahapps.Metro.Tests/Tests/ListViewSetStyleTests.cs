@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -308,26 +309,8 @@ namespace MahApps.Metro.Tests.Tests
         {
             var list = this.ShowGrouped(key, boxes: true);
             var group = Group(list, 0);
-            var items = ((CollectionViewGroup)group.Content).Items;
 
-            Assert.That(GroupItemHelper.GetIsGroupSelected(group), Is.False, "nothing picked to begin with");
-
-            list.SelectedItems.Add(items[0]);
-            this.Settle();
-
-            Assert.That(GroupItemHelper.GetIsGroupSelected(group), Is.Null, "one of several picked");
-
-            foreach (var item in items)
-            {
-                if (!list.SelectedItems.Contains(item))
-                {
-                    list.SelectedItems.Add(item);
-                }
-            }
-
-            this.Settle();
-
-            Assert.That(GroupItemHelper.GetIsGroupSelected(group), Is.True, "all of them picked");
+            this.PickTheRowsOfAGroupOneAtATime(list, group, () => GroupItemHelper.GetIsGroupSelected(group));
         }
 
         [TestCase(Win10, 32d)]
@@ -410,26 +393,8 @@ namespace MahApps.Metro.Tests.Tests
             var list = this.ShowGrouped(WinUI, boxes: true);
             var group = Group(list, 0);
             var box = (CheckBox)group.Template.FindName("PART_CheckBox", group);
-            var items = ((CollectionViewGroup)group.Content).Items;
 
-            Assert.That(box.IsChecked, Is.False, "nothing picked to begin with");
-
-            list.SelectedItems.Add(items[0]);
-            this.Settle();
-
-            Assert.That(box.IsChecked, Is.Null, "one of several picked");
-
-            foreach (var item in items)
-            {
-                if (!list.SelectedItems.Contains(item))
-                {
-                    list.SelectedItems.Add(item);
-                }
-            }
-
-            this.Settle();
-
-            Assert.That(box.IsChecked, Is.True, "all of them picked");
+            this.PickTheRowsOfAGroupOneAtATime(list, group, () => box.IsChecked);
         }
 
         [TestCase(Win10)]
@@ -462,6 +427,35 @@ namespace MahApps.Metro.Tests.Tests
         private static ListViewItem Row(ListView list, int index)
         {
             return (ListViewItem)list.ItemContainerGenerator.ContainerFromIndex(index);
+        }
+
+        /// <summary>
+        /// Picks the rows of a group one at a time and reads the state after every step. The
+        /// property on the group and the box in its header answer the same question, so both tests
+        /// walk the same way and only differ in where they read the answer.
+        /// </summary>
+        private void PickTheRowsOfAGroupOneAtATime(ListView list, GroupItem group, Func<bool?> read)
+        {
+            var items = ((CollectionViewGroup)group.Content).Items;
+
+            Assert.That(read(), Is.False, "nothing picked to begin with");
+
+            list.SelectedItems.Add(items[0]);
+            this.Settle();
+
+            Assert.That(read(), Is.Null, "one of several picked");
+
+            foreach (var item in items)
+            {
+                if (!list.SelectedItems.Contains(item))
+                {
+                    list.SelectedItems.Add(item);
+                }
+            }
+
+            this.Settle();
+
+            Assert.That(read(), Is.True, "all of them picked");
         }
 
         private ListView Show(string key, bool columns = false, bool boxes = false)
