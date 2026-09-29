@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -227,7 +228,15 @@ namespace MahApps.Metro.Controls
             }
 
             this.RefreshPosition();
-            this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(canShow));
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(canShow && this.IsAdornedElementInView()));
+
+            if (canShow)
+            {
+                // the element and the view it sits in are measured after this, so whether one can
+                // be seen in the other is only settled a moment later
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                                            new Action(() => this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(this.IsAdornedElementInView()))));
+            }
 
             this.OnLoaded();
 
@@ -251,9 +260,9 @@ namespace MahApps.Metro.Controls
         {
             this.RefreshPosition();
 
-            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
-
-            this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
+            var inView = this.IsAdornedElementInView();
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(inView && this.ShouldPopupOpen()));
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(inView));
         }
 
         private void Flyout_IsOpenChanged(object? sender, RoutedEventArgs e)
@@ -278,9 +287,9 @@ namespace MahApps.Metro.Controls
         {
             this.RefreshPosition();
 
-            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
-
-            this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
+            var inView = this.IsAdornedElementInView();
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(inView && this.ShouldPopupOpen()));
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(inView));
         }
 
         private void ScrollViewer_ScrollChanged(object? sender, ScrollChangedEventArgs e)
@@ -289,15 +298,38 @@ namespace MahApps.Metro.Controls
             {
                 this.RefreshPosition();
 
-                if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
-                {
-                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(this.ShouldPopupOpen()));
-                }
-                else
-                {
-                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
-                }
+                var inView = this.IsAdornedElementInView();
+                this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(inView));
+                this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(inView && this.ShouldPopupOpen()));
             }
+        }
+
+        /// <summary>
+        /// Whether the element the message belongs to is there to be seen. The message is shown
+        /// beside that element, so a message for an element the view it sits in has scrolled away
+        /// would float on its own, next to nothing, which is what GH-4404 shows.
+        /// </summary>
+        private bool IsAdornedElementInView()
+        {
+            if (this.AdornedElement is not FrameworkElement adornedElement || !adornedElement.IsVisible)
+            {
+                return false;
+            }
+
+            // the popup is asked this before it is loaded as well, so what it found back then is
+            // only a shortcut here and not what the answer rests on
+            var view = this.scrollViewer ?? adornedElement.GetVisualAncestor<ScrollViewer>();
+
+            // neither of the two answers anything before it has been measured, and a question
+            // without an answer is no reason to keep the message away
+            if (view is null
+                || view.ActualWidth <= 0 || view.ActualHeight <= 0
+                || adornedElement.ActualWidth <= 0 || adornedElement.ActualHeight <= 0)
+            {
+                return true;
+            }
+
+            return IsElementVisible(adornedElement, view);
         }
 
         private static bool IsElementVisible(FrameworkElement? element, FrameworkElement? container)
@@ -315,6 +347,17 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Opened(object? sender, EventArgs e)
         {
+            if (!this.IsAdornedElementInView())
+            {
+                this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
+                this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
+                return;
+            }
+
+            // the window behind the message is made before it is placed, so it stands at the corner
+            // of the screen for as long as that takes, which is the flash GH-4404 reports
+            this.RefreshPosition();
+
             this.SetTopmostState(true);
         }
 
@@ -401,6 +444,12 @@ namespace MahApps.Metro.Controls
         private void OnSizeOrLocationChanged(object? sender, EventArgs e)
         {
             this.RefreshPosition();
+
+            // a window that is made smaller can put the box out of the view it sits in just as
+            // scrolling does, and then the message has nothing left to stand beside
+            var inView = this.IsAdornedElementInView();
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(inView));
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(inView && this.ShouldPopupOpen()));
         }
 
         private void RefreshPosition()

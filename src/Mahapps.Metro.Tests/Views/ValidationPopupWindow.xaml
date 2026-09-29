@@ -1,0 +1,67 @@
+﻿<tests:TestWindow x:Class="MahApps.Metro.Tests.Views.ValidationPopupWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  xmlns:views="clr-namespace:MahApps.Metro.Tests.Views"
+                  d:DesignHeight="300"
+                  d:DesignWidth="300"
+                  WindowTransitionsEnabled="False"
+                  mc:Ignorable="d">
+    <ScrollViewer x:Name="Scroller"
+                  Width="400"
+                  HorizontalAlignment="Left"
+                  VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <AdornerDecorator HorizontalAlignment="Left">
+                <TextBox x:Name="Near"
+                         Width="200"
+                         mah:ValidationHelper.AlwaysShowValidationError="True">
+                    <TextBox.Text>
+                        <Binding Path="Title"
+                                 RelativeSource="{RelativeSource AncestorType=Window}"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <views:AlwaysWrong ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </AdornerDecorator>
+
+            <AdornerDecorator Margin="0 250 0 0" HorizontalAlignment="Left">
+                <TextBox x:Name="Middle"
+                         Width="200"
+                         mah:ValidationHelper.AlwaysShowValidationError="True">
+                    <TextBox.Text>
+                        <Binding Path="Title"
+                                 RelativeSource="{RelativeSource AncestorType=Window}"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <views:AlwaysWrong ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </AdornerDecorator>
+
+            <AdornerDecorator Margin="0 600 0 0" HorizontalAlignment="Left">
+                <TextBox x:Name="Far"
+                         Width="200"
+                         mah:ValidationHelper.AlwaysShowValidationError="True">
+                    <TextBox.Text>
+                        <Binding Path="Title"
+                                 RelativeSource="{RelativeSource AncestorType=Window}"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <views:AlwaysWrong ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </AdornerDecorator>
+        </StackPanel>
+    </ScrollViewer>
+</tests:TestWindow>
