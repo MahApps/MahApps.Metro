@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Gallery.Core;
 using MahApps.Metro.Gallery.Pages;
@@ -127,6 +128,26 @@ namespace MahApps.Metro.Gallery
                     list.SelectedItem = item;
                 }
             }
+        }
+
+        /// <summary>
+        /// A submenu brings a scroll viewer of its own which has nothing to scroll, and one of those
+        /// swallows the wheel rather than letting it past, so the pane above is handed it instead.
+        /// </summary>
+        private void OnSubMenuMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is not UIElement list)
+            {
+                return;
+            }
+
+            e.Handled = true;
+
+            list.RaiseEvent(new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+                            {
+                                RoutedEvent = MouseWheelEvent,
+                                Source = list
+                            });
         }
 
         private static HamburgerMenuItem? ItemIn(ItemsControl list, GalleryPage page)

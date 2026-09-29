@@ -179,6 +179,7 @@
                                                   ItemTemplate="{StaticResource MenuRow}"
                                                   ItemsSource="{Binding Pages}"
                                                   Loaded="OnSubMenuLoaded"
+                                                  PreviewMouseWheel="OnSubMenuMouseWheel"
                                                   SelectionChanged="OnSubMenuSelectionChanged"
                                                   SelectionMode="Single"
                                                   Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibility}}" />
