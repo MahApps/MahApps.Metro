@@ -18,6 +18,33 @@
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
 
+    <mah:MetroWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+
+        <!--  the menu hands out the container style a row of its pane wears, and the submenus ask it for the same one  -->
+        <mah:HamburgerMenuItemStyleSelector x:Key="MenuItemStyleSelector" />
+
+        <!--  one row of the pane: the icon in the column the compact pane keeps free, and the label beside it  -->
+        <DataTemplate x:Key="MenuRow" DataType="{x:Type mah:HamburgerMenuIconItem}">
+            <Grid Height="44">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ContentControl Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{Binding Icon}"
+                                Focusable="False"
+                                IsTabStop="False" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="14"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+    </mah:MetroWindow.Resources>
+
     <!--  where a page hangs the flyouts it wants to show, since a flyout belongs to the window  -->
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl />
@@ -112,46 +139,63 @@
                 </DataTemplate>
             </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
 
+            <!--
+                A category is a row that holds pages rather than being one, so it comes out as an
+                expander with a menu of its own under it. That menu is a HamburgerMenuListBox like
+                the one the pane itself uses, and it asks the menu above for the container style, so
+                a page in a submenu looks and answers the pointer like any other row.
+            -->
             <mah:HamburgerMenu.ItemTemplate>
-                <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
-                    <Grid Height="44">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <ContentControl Grid.Column="0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Content="{Binding Icon}"
-                                        Focusable="False"
-                                        IsTabStop="False" />
-                        <TextBlock Grid.Column="1"
-                                   VerticalAlignment="Center"
-                                   FontSize="14"
-                                   Text="{Binding Label}" />
-                    </Grid>
+                <DataTemplate DataType="{x:Type core:GalleryCategoryItem}">
+                    <Expander x:Name="Card"
+                              Margin="0 2"
+                              Padding="12 0 0 6"
+                              mah:HeaderedControlHelper.HeaderMargin="0"
+                              Collapsed="OnCategoryToggled"
+                              Expanded="OnCategoryToggled"
+                              IsExpanded="{Binding IsExpanded, Mode=TwoWay}"
+                              Style="{StaticResource MahApps.Styles.Expander.WinUI}">
+                        <Expander.Header>
+                            <Grid Height="44">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Grid.Column="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Content="{Binding Icon}"
+                                                Focusable="False"
+                                                IsTabStop="False" />
+                                <TextBlock Grid.Column="1"
+                                           VerticalAlignment="Center"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           Text="{Binding Label}" />
+                            </Grid>
+                        </Expander.Header>
+
+                        <mah:HamburgerMenuListBox ItemContainerStyleSelector="{StaticResource MenuItemStyleSelector}"
+                                                  ItemTemplate="{StaticResource MenuRow}"
+                                                  ItemsSource="{Binding Pages}"
+                                                  Loaded="OnSubMenuLoaded"
+                                                  SelectionChanged="OnSubMenuSelectionChanged"
+                                                  SelectionMode="Single"
+                                                  Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=IsPaneOpen, Converter={StaticResource BooleanToVisibility}}" />
+                    </Expander>
+                    <DataTemplate.Triggers>
+                        <!--  a closed pane is 48 pixels wide, which is no place for a card, so what is left of it there is the icon  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=IsPaneOpen}" Value="False">
+                            <Setter TargetName="Card" Property="Background" Value="Transparent" />
+                            <Setter TargetName="Card" Property="BorderThickness" Value="0" />
+                            <Setter TargetName="Card" Property="mah:HeaderedControlHelper.HeaderBackground" Value="Transparent" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </mah:HamburgerMenu.ItemTemplate>
 
             <mah:HamburgerMenu.OptionsItemTemplate>
-                <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
-                    <Grid Height="44">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <ContentControl Grid.Column="0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Content="{Binding Icon}"
-                                        Focusable="False"
-                                        IsTabStop="False" />
-                        <TextBlock Grid.Column="1"
-                                   VerticalAlignment="Center"
-                                   FontSize="14"
-                                   Text="{Binding Label}" />
-                    </Grid>
-                </DataTemplate>
+                <StaticResource ResourceKey="MenuRow" />
             </mah:HamburgerMenu.OptionsItemTemplate>
 
             <!--
