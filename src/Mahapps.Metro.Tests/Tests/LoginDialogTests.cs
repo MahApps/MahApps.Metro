@@ -109,7 +109,18 @@ namespace MahApps.Metro.Tests.Tests
 
             try
             {
-                _ = window.ShowLoginAsync("Title", "Message", new LoginDialogSettings { NegativeButtonText = "Nope" });
+                // The settings handed over here replace the ones on the window, animations and all,
+                // so they have to switch those off again. Left on, HideMetroDialogAsync waits for
+                // the closing storyboard, and on a build agent that clock does not always tick:
+                // the net6 host hung five minutes in this test and the run was aborted.
+                _ = window.ShowLoginAsync("Title",
+                                          "Message",
+                                          new LoginDialogSettings
+                                          {
+                                              NegativeButtonText = "Nope",
+                                              AnimateShow = false,
+                                              AnimateHide = false
+                                          });
 
                 var dialog = await WaitForLoginDialogAsync(window);
 
