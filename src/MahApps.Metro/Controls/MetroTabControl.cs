@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -106,24 +108,86 @@ namespace MahApps.Metro.Controls
         public delegate void TabItemClosingEventHandler(object sender, TabItemClosingEventArgs e);
 
         /// <summary>
-        /// An event that is raised when a TabItem is closed.
+        /// An event that is raised when a TabItem is about to be closed.
         /// </summary>
-        // Todo Rename this to TabItemClosing
+        /// <remarks>
+        /// <see cref="TabItemClosing"/> carries the name this event should have had and works the
+        /// same way. Both are raised, this one first.
+        /// </remarks>
         public event TabItemClosingEventHandler? TabItemClosingEvent;
 
-        internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
+        /// <summary>
+        /// An event that is raised when a TabItem is about to be closed. A handler says no by
+        /// setting <see cref="CancelEventArgs.Cancel"/>, and it can take its time over that answer
+        /// by asking for a deferral first.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// private async void OnTabItemClosing(object sender, BaseMetroTabControl.TabItemClosingEventArgs e)
+        /// {
+        ///     using var deferral = e.GetDeferral();
+        ///     e.Cancel = !await this.viewModel.MayTheTabCloseAsync(e.ClosingTabItem.DataContext);
+        /// }
+        /// </code>
+        /// </example>
+        public event EventHandler<TabItemClosingEventArgs>? TabItemClosing;
+
+        private IEnumerable<Delegate> ClosingHandlers()
         {
             var tabItemClosingEvent = this.TabItemClosingEvent;
-            if (tabItemClosingEvent != null)
+            if (tabItemClosingEvent is not null)
             {
-                foreach (TabItemClosingEventHandler subHandler in tabItemClosingEvent.GetInvocationList().OfType<TabItemClosingEventHandler>())
+                foreach (var handler in tabItemClosingEvent.GetInvocationList())
                 {
-                    var args = new TabItemClosingEventArgs(closingItem);
-                    subHandler.Invoke(this, args);
-                    if (args.Cancel)
-                    {
-                        return true;
-                    }
+                    yield return handler;
+                }
+            }
+
+            var tabItemClosing = this.TabItemClosing;
+            if (tabItemClosing is not null)
+            {
+                foreach (var handler in tabItemClosing.GetInvocationList())
+                {
+                    yield return handler;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Asks every handler whether the item may go and tells whether one of them said no.
+        /// </summary>
+        /// <remarks>
+        /// As long as no handler asks for a deferral this runs to its end without suspending once,
+        /// so the task that comes back is already done and the closing stays as synchronous as it
+        /// has always been.
+        /// </remarks>
+        private async Task<bool> RaiseTabItemClosingEventAsync(MetroTabItem closingItem)
+        {
+            foreach (var handler in this.ClosingHandlers())
+            {
+                var args = new TabItemClosingEventArgs(closingItem);
+
+                switch (handler)
+                {
+                    case TabItemClosingEventHandler tabItemClosingEventHandler:
+                        tabItemClosingEventHandler(this, args);
+                        break;
+
+                    case EventHandler<TabItemClosingEventArgs> eventHandler:
+                        eventHandler(this, args);
+                        break;
+
+                    default:
+                        continue;
+                }
+
+                // a handler that asked for a deferral gets the time it wanted, and only then
+                // is its answer read
+                await args.WaitForDeferralsAsync().ConfigureAwait(true);
+
+                if (args.Cancel)
+                {
+                    return true;
                 }
             }
 
@@ -135,6 +199,10 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public class TabItemClosingEventArgs : CancelEventArgs
         {
+            private TaskCompletionSource<bool>? completion;
+
+            private int outstandingDeferrals;
+
             internal TabItemClosingEventArgs(MetroTabItem item)
             {
                 this.ClosingTabItem = item;
@@ -144,6 +212,33 @@ namespace MahApps.Metro.Controls
             /// Gets the MetroTabItem that will be closed.
             /// </summary>
             public MetroTabItem ClosingTabItem { get; private set; }
+
+            /// <summary>
+            /// Asks the tab control to wait for this handler before it goes on with the closing.
+            /// Set <see cref="CancelEventArgs.Cancel"/> while the answer is being worked out and
+            /// complete or dispose the deferral once it stands.
+            /// </summary>
+            /// <returns>The deferral to complete when the handler is done.</returns>
+            public TabItemClosingDeferral GetDeferral()
+            {
+                this.completion ??= new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                this.outstandingDeferrals++;
+
+                return new TabItemClosingDeferral(this.OneDeferralIsDone);
+            }
+
+            internal Task WaitForDeferralsAsync()
+            {
+                return this.completion?.Task ?? Task.CompletedTask;
+            }
+
+            private void OneDeferralIsDone()
+            {
+                if (--this.outstandingDeferrals <= 0)
+                {
+                    this.completion?.TrySetResult(true);
+                }
+            }
         }
 
         internal void CloseThisTabItem([NotNull] MetroTabItem tabItem)
@@ -153,49 +248,68 @@ namespace MahApps.Metro.Controls
                 throw new ArgumentNullException(nameof(tabItem));
             }
 
-            if (this.CloseTabCommand != null)
+            // the handlers are allowed to say no, and to take their time over it
+            var closing = this.RaiseTabItemClosingEventAsync(tabItem);
+
+            if (closing.IsCompleted)
             {
-                var closeTabCommandParameter = tabItem.CloseTabCommandParameter ?? tabItem;
-                if (this.CloseTabCommand.CanExecute(closeTabCommandParameter))
-                {
-                    this.CloseTabCommand.Execute(closeTabCommandParameter);
-                }
+                this.CloseThisTabItemNow(tabItem, closing.GetAwaiter().GetResult());
             }
             else
             {
-                // KIDS: don't try this at home
-                // this is not good MVVM habits and I'm only doing it
-                // because I want the demos to be absolutely bitching
+                this.CloseThisTabItemWhenTheHandlersAreDone(tabItem, closing);
+            }
+        }
 
-                // the control is allowed to cancel this event
-                if (this.RaiseTabItemClosingEvent(tabItem))
+        private async void CloseThisTabItemWhenTheHandlersAreDone(MetroTabItem tabItem, Task<bool> closing)
+        {
+            this.CloseThisTabItemNow(tabItem, await closing.ConfigureAwait(true));
+        }
+
+        private void CloseThisTabItemNow(MetroTabItem tabItem, bool cancelled)
+        {
+            if (cancelled)
+            {
+                return;
+            }
+
+            if (this.CloseTabCommand is { } closeTabCommand)
+            {
+                var closeTabCommandParameter = tabItem.CloseTabCommandParameter ?? tabItem;
+                if (closeTabCommand.CanExecute(closeTabCommandParameter))
+                {
+                    closeTabCommand.Execute(closeTabCommandParameter);
+                }
+
+                return;
+            }
+
+            // KIDS: don't try this at home
+            // this is not good MVVM habits and I'm only doing it
+            // because I want the demos to be absolutely bitching
+
+            if (this.ItemsSource is null)
+            {
+                // if the list is hard-coded (i.e. has no ItemsSource)
+                // then we remove the item from the collection
+                tabItem.ClearStyle();
+                this.Items.Remove(tabItem);
+            }
+            else
+            {
+                // if ItemsSource is something we cannot work with, bail out
+                var collection = this.ItemsSource as IList;
+                if (collection is null)
                 {
                     return;
                 }
 
-                if (this.ItemsSource is null)
+                // find the item and kill it (I mean, remove it)
+                var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
+                if (item2Remove != null)
                 {
-                    // if the list is hard-coded (i.e. has no ItemsSource)
-                    // then we remove the item from the collection
                     tabItem.ClearStyle();
-                    this.Items.Remove(tabItem);
-                }
-                else
-                {
-                    // if ItemsSource is something we cannot work with, bail out
-                    var collection = this.ItemsSource as IList;
-                    if (collection is null)
-                    {
-                        return;
-                    }
-
-                    // find the item and kill it (I mean, remove it)
-                    var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
-                    if (item2Remove != null)
-                    {
-                        tabItem.ClearStyle();
-                        collection.Remove(item2Remove);
-                    }
+                    collection.Remove(item2Remove);
                 }
             }
         }
