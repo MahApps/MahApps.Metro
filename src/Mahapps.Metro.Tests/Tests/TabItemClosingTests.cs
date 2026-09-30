@@ -30,16 +30,14 @@ namespace MahApps.Metro.Tests.Tests
         public void ACommandThatSaysNoKeepsTheTab()
         {
             var command = new Probe();
-            var control = new MetroTabControl();
-            var item = Tab("first", command);
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
+            var control = TwoTabs(out var item, command);
 
             this.ShowAndClose(control, item, command);
 
             Assert.Multiple(() =>
                 {
                     Assert.That(control.Items, Has.Count.EqualTo(2), "the tab should still be there");
+                    Assert.That(command.AskedAbout, Is.SameAs(item), "the command should have been asked about the item whose button was clicked");
                     Assert.That(command.Ran, Is.Zero, "and a command that says no should not have run");
                 });
         }
@@ -90,21 +88,44 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("A command that says yes runs, and the tab goes.")]
+        [Description("A command that says yes runs, is handed the item it is about, and the tab goes.")]
         public void ACommandThatSaysYesLetsTheTabGo()
         {
             var command = new Probe();
-            var control = new MetroTabControl();
-            var item = Tab("first", command);
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
+            var control = TwoTabs(out var item, command);
 
             this.ShowAndClose(control, item);
 
             Assert.Multiple(() =>
                 {
                     Assert.That(command.Ran, Is.EqualTo(1), "the command should have run");
+                    Assert.That(command.RanWith, Is.SameAs(item), "with the item whose button was clicked");
                     Assert.That(control.Items, Has.Count.EqualTo(1), "and the tab should be gone");
+                });
+        }
+
+        [Test]
+        [Description("A command that says its answer turned leaves the button disabled, so the click never arrives at all.")]
+        public void ACommandThatAnnouncesItsNoDisablesTheButton()
+        {
+            var command = new Probe();
+            var control = TwoTabs(out var item, command);
+
+            this.window.Show(control);
+
+            command.Allow = false;
+            command.SayTheAnswerTurned();
+            this.window.Settle();
+
+            var button = item.FindChild<Button>("PART_CloseButton");
+            Assert.That(button, Is.Not.Null);
+
+            Click(item);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(button!.IsEnabled, Is.False, "the close button should be disabled");
+                    Assert.That(control.Items, Has.Count.EqualTo(2), "and the tab should still be there");
                 });
         }
 
@@ -113,15 +134,12 @@ namespace MahApps.Metro.Tests.Tests
         public void AHandlerThatCancelsKeepsTheTab()
         {
             var asked = 0;
-            var control = new MetroTabControl();
+            var control = TwoTabs(out var item);
             control.TabItemClosing += (_, e) =>
                 {
                     asked++;
                     e.Cancel = true;
                 };
-            var item = Tab("first");
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
 
             this.ShowAndClose(control, item);
 
@@ -137,15 +155,12 @@ namespace MahApps.Metro.Tests.Tests
         public void TheOlderEventIsStillAsked()
         {
             var asked = 0;
-            var control = new MetroTabControl();
+            var control = TwoTabs(out var item);
             control.TabItemClosingEvent += (_, e) =>
                 {
                     asked++;
                     e.Cancel = true;
                 };
-            var item = Tab("first");
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
 
             this.ShowAndClose(control, item);
 
@@ -161,11 +176,9 @@ namespace MahApps.Metro.Tests.Tests
         public void AHandlerThatCancelsStopsTheCommandOfTheControl()
         {
             var command = new Probe();
-            var control = new MetroTabControl { CloseTabCommand = command };
+            var control = TwoTabs(out var item);
+            control.CloseTabCommand = command;
             control.TabItemClosing += (_, e) => e.Cancel = true;
-            var item = Tab("first");
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
 
             this.ShowAndClose(control, item);
 
@@ -181,10 +194,8 @@ namespace MahApps.Metro.Tests.Tests
         public void TheCommandOfTheControlRunsWhenNobodyCancels()
         {
             var command = new Probe();
-            var control = new MetroTabControl { CloseTabCommand = command };
-            var item = Tab("first");
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
+            var control = TwoTabs(out var item);
+            control.CloseTabCommand = command;
 
             this.ShowAndClose(control, item);
 
@@ -200,15 +211,12 @@ namespace MahApps.Metro.Tests.Tests
         public void ADeferralHoldsTheClosingUntilItIsDone()
         {
             var letGo = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var control = new MetroTabControl();
+            var control = TwoTabs(out var item);
             control.TabItemClosing += async (_, e) =>
                 {
                     using var deferral = e.GetDeferral();
                     e.Cancel = !await letGo.Task.ConfigureAwait(true);
                 };
-            var item = Tab("first");
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
 
             this.ShowAndClose(control, item);
 
@@ -221,21 +229,18 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("A handler that says no after its work keeps the tab, which is what the event under a blocking call could never do.")]
+        [Description("A handler that says no after its work keeps the tab, which is what a blocking call could never do.")]
         public void ADeferralThatSaysNoAfterItsWorkKeepsTheTab()
         {
             var letGo = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var done = false;
-            var control = new MetroTabControl();
+            var control = TwoTabs(out var item);
             control.TabItemClosing += async (_, e) =>
                 {
                     using var deferral = e.GetDeferral();
                     e.Cancel = !await letGo.Task.ConfigureAwait(true);
                     done = true;
                 };
-            var item = Tab("first");
-            control.Items.Add(item);
-            control.Items.Add(Tab("second"));
 
             this.ShowAndClose(control, item);
 
@@ -244,6 +249,19 @@ namespace MahApps.Metro.Tests.Tests
             ClipAssert.Pump();
 
             Assert.That(control.Items, Has.Count.EqualTo(2));
+        }
+
+        /// <summary>
+        /// A control of two closable tabs, the first of which is the one every test here clicks.
+        /// </summary>
+        private static MetroTabControl TwoTabs(out MetroTabItem first, ICommand? closeTabCommand = null)
+        {
+            var control = new MetroTabControl();
+            first = Tab("first", closeTabCommand);
+            control.Items.Add(first);
+            control.Items.Add(Tab("second"));
+
+            return control;
         }
 
         private static MetroTabItem Tab(string header, ICommand? closeTabCommand = null)
@@ -281,29 +299,46 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         /// <summary>
-        /// A command that answers what the test tells it to and never says that its answer changed,
-        /// which is the case the close button used to get wrong.
+        /// A command that answers what the test tells it to and only says that its answer turned
+        /// when the test asks it to, which is how a command that stays quiet about it gets tested.
         /// </summary>
         private sealed class Probe : ICommand
         {
+            public event EventHandler? CanExecuteChanged;
+
             public bool Allow { get; set; } = true;
 
             public int Ran { get; private set; }
 
+            /// <summary>
+            /// Gets what the command was last asked about.
+            /// </summary>
+            public object? AskedAbout { get; private set; }
+
+            /// <summary>
+            /// Gets what the command was last told to run with.
+            /// </summary>
+            public object? RanWith { get; private set; }
+
             public bool CanExecute(object? parameter)
             {
+                this.AskedAbout = parameter;
+
                 return this.Allow;
             }
 
             public void Execute(object? parameter)
             {
+                this.RanWith = parameter;
                 this.Ran++;
             }
 
-            public event EventHandler? CanExecuteChanged
+            /// <summary>
+            /// Says that the answer turned, the way a well behaved command does.
+            /// </summary>
+            public void SayTheAnswerTurned()
             {
-                add { }
-                remove { }
+                this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }
