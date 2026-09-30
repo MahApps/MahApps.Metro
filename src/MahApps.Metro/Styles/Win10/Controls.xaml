@@ -72,6 +72,7 @@
 
     <!--  the menu a text box puts on the right button is a named resource rather than an implicit style, so a set that wants its own has to hand one over under the same name  -->
     <ContextMenu x:Key="MahApps.TextBox.ContextMenu"
+                 mah:ContextMenuHelper.UseSystemCommandText="True"
                  x:Shared="False"
                  Style="{StaticResource MahApps.Styles.ContextMenu.Win10}">
         <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.Win10}" />

@@ -66,6 +66,7 @@
     </Style>
 
     <ContextMenu x:Key="MahApps.TextBox.ContextMenu"
+                 mah:ContextMenuHelper.UseSystemCommandText="True"
                  x:Shared="False"
                  Style="{StaticResource MahApps.Styles.ContextMenu.VisualStudio}">
         <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.VisualStudio}" />
