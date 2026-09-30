@@ -36,6 +36,29 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="AskExample"
+                                     Description="A tab does not have to go the moment its button is clicked. A handler of TabItemClosing says no by setting Cancel on the event args, and one that has to ask somebody first takes a deferral, awaits the answer and sets Cancel once it has it. Close a tab here and the dialog decides. Without the deferral the handler would have to answer before it could ask."
+                                     Header="A tab that asks before it goes">
+                <smtx:XamlDisplay UniqueKey="MetroTabItem.Asking">
+                    <mah:MetroTabControl x:Name="AskingTabs"
+                                         Width="480"
+                                         Height="180"
+                                         HorizontalAlignment="Left"
+                                         TabItemClosing="AskBeforeTheTabGoes">
+                        <mah:MetroTabItem CloseButtonEnabled="True" Header="notes">
+                            <TextBox Margin="12"
+                                     VerticalAlignment="Top"
+                                     Text="42" />
+                        </mah:MetroTabItem>
+                        <mah:MetroTabItem CloseButtonEnabled="True" Header="more notes">
+                            <TextBox Margin="12"
+                                     VerticalAlignment="Top"
+                                     Text="Close this one and say no" />
+                        </mah:MetroTabItem>
+                    </mah:MetroTabControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

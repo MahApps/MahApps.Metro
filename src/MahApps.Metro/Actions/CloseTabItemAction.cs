@@ -34,10 +34,14 @@ namespace MahApps.Metro.Actions
             if (command != null)
             {
                 var commandParameter = this.GetCommandParameter();
-                if (command.CanExecute(commandParameter))
+
+                // a command that says no keeps the item where it is, see #4078
+                if (!command.CanExecute(commandParameter))
                 {
-                    command.Execute(commandParameter);
+                    return;
                 }
+
+                command.Execute(commandParameter);
             }
 
             if (tabControl is BaseMetroTabControl metroTabControl && tabItem is MetroTabItem metroTabItem)
@@ -52,7 +56,8 @@ namespace MahApps.Metro.Actions
                     new Action(
                         () =>
                             {
-                                // TODO Raise a closing event to cancel this action
+                                // a plain TabControl has no closing event, so the answer of a
+                                // command bound to this action is all there is to ask
 
                                 if (tabControl.ItemsSource is null)
                                 {
