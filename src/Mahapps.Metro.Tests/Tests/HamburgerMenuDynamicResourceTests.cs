@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
-using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -83,12 +82,9 @@ namespace MahApps.Metro.Tests.Tests
         {
             var menu = (HamburgerMenu)XamlReader.Load(new MemoryStream(Encoding.UTF8.GetBytes(Markup(itemsProperty, itemType))));
 
-            this.window!.Content = menu;
-            this.window.UpdateLayout();
-            this.window.Dispatcher.Invoke(() => { }, DispatcherPriority.Loaded);
-            this.window.UpdateLayout();
-
-            return menu;
+            // the shared helper waits on ContextIdle, which sits under measure, arrange, render
+            // and the Loaded handlers, so the rows of the menu are there to be read once it is back
+            return this.window.Show(menu);
         }
 
         private static HamburgerMenuItemBase Item(HamburgerMenu menu, string itemsProperty)

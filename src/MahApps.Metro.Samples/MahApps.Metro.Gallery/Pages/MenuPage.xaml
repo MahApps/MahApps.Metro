@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              d:DesignHeight="600"
@@ -214,6 +215,35 @@
                                        Style="{DynamicResource MahApps.Styles.TextBlock}"
                                        Text="Right click in here" />
                         </Border>
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="LanguageExample"
+                                     Description="An item built from a command and nothing else is named after that command, and WPF reads the name once per process and then keeps it, so the menu stays in the language the application started in. ContextMenuHelper.UseSystemCommandText takes the words from the menu WPF builds for a text box instead, which are written anew every time one opens. The left box wears the menu of the library, which has the property set already; the right one carries a menu of its own. Pick a language and open them again."
+                                     Header="A menu in the language the application is set to">
+                <controls:ControlExample.Options>
+                    <mah:MetroHeader Margin="0 4" Header="Language">
+                        <ComboBox x:Name="LanguagePicker"
+                                  HorizontalAlignment="Stretch"
+                                  DisplayMemberPath="NativeName"
+                                  SelectionChanged="LanguageChanged" />
+                    </mah:MetroHeader>
+                </controls:ControlExample.Options>
+                <smtx:XamlDisplay UniqueKey="Menu.Language">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="170" Text="42" />
+                        <TextBox Width="170"
+                                 Margin="12 0 0 0"
+                                 Text="42">
+                            <TextBox.ContextMenu>
+                                <ContextMenu mah:ContextMenuHelper.UseSystemCommandText="True">
+                                    <MenuItem Command="ApplicationCommands.Cut" />
+                                    <MenuItem Command="ApplicationCommands.Copy" />
+                                    <MenuItem Command="ApplicationCommands.Paste" />
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
                     </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
