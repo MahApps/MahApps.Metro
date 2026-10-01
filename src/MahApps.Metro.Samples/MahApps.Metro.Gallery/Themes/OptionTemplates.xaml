@@ -33,6 +33,29 @@
         </mah:MetroHeader>
     </DataTemplate>
 
+    <!--
+        A number that is counted rather than measured gets the up-down that holds it: the editor
+        writes what the property takes, so an index never travels there as a double and the box never
+        offers a decimal separator for something that could not hold one.
+    -->
+    <DataTemplate x:Key="MahApps.Gallery.Templates.Option.WholeNumber">
+        <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <mah:IntegerUpDown HorizontalAlignment="Stretch" Value="{Binding Value, Mode=TwoWay}" />
+        </mah:MetroHeader>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MahApps.Gallery.Templates.Option.LongNumber">
+        <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <mah:LongUpDown HorizontalAlignment="Stretch" Value="{Binding Value, Mode=TwoWay}" />
+        </mah:MetroHeader>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MahApps.Gallery.Templates.Option.DecimalNumber">
+        <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <mah:DecimalUpDown HorizontalAlignment="Stretch" Value="{Binding Value, Mode=TwoWay}" />
+        </mah:MetroHeader>
+    </DataTemplate>
+
     <DataTemplate x:Key="MahApps.Gallery.Templates.Option.Number">
         <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
             <mah:NumericUpDown HorizontalAlignment="Stretch"

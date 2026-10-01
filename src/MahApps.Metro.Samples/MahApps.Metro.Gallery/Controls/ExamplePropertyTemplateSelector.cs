@@ -60,12 +60,29 @@ namespace MahApps.Metro.Gallery.Controls
                 return Prefix + "Brush";
             }
 
+            // the three the library has an up-down of its own for, so that what the editor writes is
+            // already what the property holds
+            if (type == typeof(int))
+            {
+                return Prefix + "WholeNumber";
+            }
+
+            if (type == typeof(long))
+            {
+                return Prefix + "LongNumber";
+            }
+
+            if (type == typeof(decimal))
+            {
+                return Prefix + "DecimalNumber";
+            }
+
+            // and the rest, which go through the one that counts in doubles and are brought into
+            // their own type on the way to the property
             if (type == typeof(sbyte) || type == typeof(byte)
                                       || type == typeof(short) || type == typeof(ushort)
-                                      || type == typeof(int) || type == typeof(uint)
-                                      || type == typeof(long) || type == typeof(ulong)
-                                      || type == typeof(float) || type == typeof(double)
-                                      || type == typeof(decimal))
+                                      || type == typeof(uint) || type == typeof(ulong)
+                                      || type == typeof(float) || type == typeof(double))
             {
                 return Prefix + "Number";
             }

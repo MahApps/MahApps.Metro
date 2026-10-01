@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -82,7 +82,8 @@ namespace MahApps.Metro.Gallery.Controls
                                          {
                                              Path = new PropertyPath(property),
                                              Source = target,
-                                             Mode = this.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay
+                                             Mode = this.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay,
+                                             Converter = ValueConverter.Instance
                                          });
         }
 
@@ -209,9 +210,10 @@ namespace MahApps.Metro.Gallery.Controls
         }
 
         /// <summary>
-        /// Brings the value into the type the watched property holds. The editor for a number only
-        /// ever writes a double, and handing that to a property that wants an int would be dropped
-        /// by the binding with nothing but a line in the debug output.
+        /// Brings the value this holds into the type the watched property holds, so that the editor
+        /// and the shown markup read the same thing the property does. What travels on to the
+        /// property is brought there by <see cref="ValueConverter"/> instead: a value written into
+        /// this one goes to the property before it is coerced here.
         /// </summary>
         private static object? CoerceValue(DependencyObject d, object? value)
         {
@@ -222,16 +224,24 @@ namespace MahApps.Metro.Gallery.Controls
 
             if (value is null)
             {
-                // an emptied editor means the property goes back to holding what it holds without
-                // anybody saying so, and for Height that is NaN rather than nothing at all, which a
-                // double could not take anyway
+                // an emptied editor says nothing about a property that cannot hold nothing, so the
+                // editor goes back to showing what that property holds. For Height that is NaN,
+                // which the number box shows as the empty box it already is.
                 return Nullable.GetUnderlyingType(property.PropertyType) is null && property.PropertyType.IsValueType
-                    ? property.Property.GetMetadata(property.Target).DefaultValue
+                    ? property.Target.GetValue(property.Property)
                     : null;
             }
 
-            var wanted = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+            return Bring(value, Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType);
+        }
 
+        /// <summary>
+        /// The value in the type asked for, or as it stands where that cannot be done. A number box
+        /// only ever writes a double, and what a type converter does with one on its way into an int
+        /// is throw.
+        /// </summary>
+        private static object? Bring(object value, Type wanted)
+        {
             if (value.GetType() == wanted || !typeof(IConvertible).IsAssignableFrom(wanted) || wanted.IsEnum)
             {
                 return value;
@@ -244,6 +254,40 @@ namespace MahApps.Metro.Gallery.Controls
             catch (Exception exception) when (exception is InvalidCastException or FormatException or OverflowException)
             {
                 return value;
+            }
+        }
+
+        /// <summary>
+        /// Brings what an editor writes into the type the watched property holds, on the way there.
+        /// <para>
+        /// A value set on <see cref="Value"/> reaches the property through the binding before this
+        /// object coerces it, so the coercion cannot help here: the double a number box writes
+        /// arrived at an Int32 property as a double, and SelectedIndex kept what it had.
+        /// </para>
+        /// </summary>
+        private sealed class ValueConverter : IValueConverter
+        {
+            internal static readonly ValueConverter Instance = new();
+
+            /// <inheritdoc />
+            public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+            {
+                return value;
+            }
+
+            /// <inheritdoc />
+            public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+            {
+                if (value is null)
+                {
+                    // an emptied editor says nothing about a property that cannot hold nothing, so
+                    // that property keeps what it has and the coercion above puts the editor right
+                    return targetType.IsValueType && Nullable.GetUnderlyingType(targetType) is null
+                        ? Binding.DoNothing
+                        : null;
+                }
+
+                return Bring(value, Nullable.GetUnderlyingType(targetType) ?? targetType);
             }
         }
     }
