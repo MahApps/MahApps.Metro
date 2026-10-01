@@ -1,0 +1,23 @@
+<mah:MetroWindow x:Class="MahAppsMetroApp.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="MahAppsMetroApp"
+                 Width="800"
+                 Height="450"
+                 WindowStartupLocation="CenterScreen">
+
+    <!--  what a MetroWindow carries beside its title, left here as a start  -->
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Content="Settings" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Text="Your window is a MetroWindow." />
+    </Grid>
+
+</mah:MetroWindow>

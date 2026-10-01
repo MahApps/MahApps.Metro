@@ -1,4 +1,4 @@
-
+﻿
 name: ci
 
 on:
@@ -97,6 +97,53 @@ jobs:
         run: |
           $package = Get-ChildItem -Path Publish/signed -Filter *.nupkg | Select-Object -First 1
           if (-not $package) { throw "No package to push in Publish/signed" }
+          dotnet nuget push $package.FullName --source "https://nuget.pkg.github.com/MahApps/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
+
+      # The templates package goes the same way, from the folder of its own that the Pack target
+      # puts it in. It carries no assembly, only the files a generated project is made of, so
+      # SignPath needs an artifact configuration that signs the package itself and asks for nothing
+      # inside it. Until that configuration is there this step says so and stops, rather than
+      # holding up the package everyone is waiting for.
+      - name: Hand the templates package to GitHub
+        id: unsigned-templates
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v7
+        with:
+          name: unsigned-templates-package
+          path: Publish/templates/*.nupkg
+          archive: false
+          if-no-files-found: error
+
+      - name: Let SignPath sign the templates package
+        id: sign-templates
+        if: github.event_name == 'push'
+        continue-on-error: true
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_APITOKEN }}
+          organization-id: ${{ secrets.SIGNPATH_ORGANIZATIONID }}
+          project-slug: MahApps.Metro
+          signing-policy-slug: ${{ secrets.SIGNPATH_SIGNINGPOLICYSLUG }}
+          artifact-configuration-slug: nuget-package-templates
+          github-artifact-id: ${{ steps.unsigned-templates.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: Publish/templates/signed
+          skip-decompress: true
+
+      - name: Keep the signed templates package
+        if: github.event_name == 'push' && steps.sign-templates.outcome == 'success'
+        uses: actions/upload-artifact@v7
+        with:
+          name: signed-templates-package
+          path: Publish/templates/signed/*.nupkg
+          if-no-files-found: error
+
+      - name: Put the templates package on the shelf
+        if: github.event_name == 'push' && steps.sign-templates.outcome == 'success'
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem -Path Publish/templates/signed -Filter *.nupkg | Select-Object -First 1
+          if (-not $package) { throw "No templates package to push in Publish/templates/signed" }
           dotnet nuget push $package.FullName --source "https://nuget.pkg.github.com/MahApps/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
 
       # A test run that was cut off for hanging leaves behind the name of the test that stopped

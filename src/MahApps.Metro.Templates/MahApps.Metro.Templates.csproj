@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <!--
+        The templates `dotnet new` installs, packed as a NuGet package. Nothing here is compiled:
+        what lies under templates/ is content, and this project exists to put it in a package.
+        Visual Studio reads the same package, so a template installed with `dotnet new install` is
+        in the New Project dialog as well.
+    -->
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <IncludeContentInPack>true</IncludeContentInPack>
+        <ContentTargetFolders>content</ContentTargetFolders>
+        <!--  a template folder carries a .template.config, which NuGet would leave out as a dot folder  -->
+        <NoDefaultExcludes>true</NoDefaultExcludes>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <!--  NU5128: a package of content has no lib folder for the framework it names  -->
+        <NoWarn>$(NoWarn);NU5128</NoWarn>
+    </PropertyGroup>
+
+    <!-- NuGet -->
+    <PropertyGroup>
+        <PackageId>MahApps.Metro.Templates</PackageId>
+        <PackageType>Template</PackageType>
+        <Title>MahApps.Metro Templates</Title>
+        <Authors>Jan Karger, Bastian Schmidt, Dennis Daume, Brendan Forster, Alex Mitchell, Paul Jenkins, Jake Ginnivan</Authors>
+        <Company>MahApps</Company>
+        <Product>MahApps.Metro</Product>
+        <Copyright>Copyright © $([System.DateTime]::Today.ToString(yyyy)) .NET Foundation and Contributors. All rights reserved.</Copyright>
+        <Description>Templates for MahApps.Metro: a WPF application whose window is a MetroWindow, in the WinUI look of that set, on its own, with the MVVM Toolkit, or with a HamburgerMenu beside a Frame that keeps its history, and a MetroWindow to add to a project that has one already. Install with: dotnet new install MahApps.Metro.Templates</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/MahApps/MahApps.Metro</PackageProjectUrl>
+        <PackageIcon>mahapps.metro.logo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>WPF;UI;Metro;Modern;XAML;Template;dotnet-new;MVVM;.NET;OSS;OpenSource</PackageTags>
+        <PackageReleaseNotes>https://github.com/MahApps/MahApps.Metro/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/MahApps/MahApps.Metro.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\mahapps.metro.logo.png" Pack="true" PackagePath="" />
+        <None Include="README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <!--
+        The version of the library a generated project asks for is the version this package was
+        built with, so the two always go together. It is written into the staged copy of the
+        templates rather than into the working tree, and it stays a parameter of the template, so
+        the mahapps-version option reaches an older one.
+    -->
+    <PropertyGroup>
+        <StagedTemplatesDir>$(BaseIntermediateOutputPath)templates\</StagedTemplatesDir>
+        <MahAppsVersionPlaceholder>0.0.0-stamped-when-packed</MahAppsVersionPlaceholder>
+    </PropertyGroup>
+
+    <Target Name="StageTemplates" BeforeTargets="_GetPackageFiles;GenerateNuspec">
+        <ItemGroup>
+            <TemplateSource Include="templates\**\*" Exclude="templates\**\bin\**;templates\**\obj\**" />
+        </ItemGroup>
+
+        <Copy SourceFiles="@(TemplateSource)" DestinationFiles="@(TemplateSource->'$(StagedTemplatesDir)%(RecursiveDir)%(Filename)%(Extension)')" />
+
+        <ItemGroup>
+            <StagedConfig Include="$(StagedTemplatesDir)**\.template.config\template.json" />
+            <Content Include="$(StagedTemplatesDir)**\*" PackagePath="content\%(RecursiveDir)%(Filename)%(Extension)" />
+        </ItemGroup>
+
+        <WriteLinesToFile File="%(StagedConfig.FullPath)"
+                          Lines="$([System.IO.File]::ReadAllText('%(StagedConfig.FullPath)').Replace('$(MahAppsVersionPlaceholder)','$(PackageVersion)'))"
+                          Overwrite="true" />
+    </Target>
+
+</Project>
