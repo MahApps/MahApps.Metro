@@ -1,0 +1,29 @@
+﻿<Page x:Class="MahAppsMetroNavApp.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="Home"
+      d:DesignHeight="600"
+      d:DesignWidth="800"
+      KeepAlive="True"
+      mc:Ignorable="d">
+
+    <StackPanel Margin="24">
+        <TextBlock FontSize="28" Text="Home" />
+        <TextBlock Margin="0 8 0 0"
+                   Text="The pane on the left names the pages, and the frame beside it keeps the history of what you walked through."
+                   TextWrapping="Wrap" />
+
+        <Button Width="200"
+                Margin="0 24 0 0"
+                HorizontalAlignment="Left"
+                Click="OnOpenDetails"
+                Content="Open the details" />
+
+        <TextBlock Margin="0 8 0 0"
+                   Text="That page belongs to no entry of the pane. The arrow in the title bar brings you back from it."
+                   TextWrapping="Wrap" />
+    </StackPanel>
+
+</Page>

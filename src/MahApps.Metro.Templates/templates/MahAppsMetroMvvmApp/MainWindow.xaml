@@ -1,0 +1,39 @@
+﻿<mah:MetroWindow x:Class="MahAppsMetroMvvmApp.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:viewModels="clr-namespace:MahAppsMetroMvvmApp.ViewModels"
+                 Title="MahAppsMetroMvvmApp"
+                 Width="800"
+                 Height="450"
+                 WindowStartupLocation="CenterScreen">
+
+    <!--  the window makes its own view model, which is as much wiring as a start needs  -->
+    <mah:MetroWindow.DataContext>
+        <viewModels:MainWindowViewModel />
+    </mah:MetroWindow.DataContext>
+
+    <!--  what a MetroWindow carries beside its title, left here as a start  -->
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Content="Settings" />
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <StackPanel Width="280"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+        <TextBox mah:TextBoxHelper.Watermark="Your name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Button Margin="0 8 0 0"
+                Command="{Binding GreetCommand}"
+                Content="Say hello" />
+
+        <TextBlock Margin="0 16 0 0"
+                   HorizontalAlignment="Center"
+                   Text="{Binding Greeting}" />
+
+    </StackPanel>
+
+</mah:MetroWindow>

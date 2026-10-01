@@ -1,0 +1,79 @@
+﻿<mah:MetroWindow x:Class="MahAppsMetroNavApp.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:pages="clr-namespace:MahAppsMetroNavApp.Pages"
+                 Title="MahAppsMetroNavApp"
+                 Width="1000"
+                 Height="600"
+                 Loaded="OnLoaded"
+                 WindowStartupLocation="CenterScreen">
+
+    <mah:MetroWindow.Resources>
+        <!--  one entry of the pane: a glyph of the symbol font beside the label, the glyph column as wide as the closed pane  -->
+        <DataTemplate x:Key="MenuItemTemplate" DataType="{x:Type mah:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding CompactPaneLength, RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}}" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <mah:FontIcon HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Glyph="{Binding Glyph}" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+    </mah:MetroWindow.Resources>
+
+    <!--  the arrow walks the history the frame keeps, and says so by going dead at the first page  -->
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button Click="OnGoBack"
+                    IsEnabled="{Binding CanGoBack, ElementName=ContentFrame}"
+                    ToolTip="Back">
+                <mah:FontIcon Glyph="&#xE72B;" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <mah:HamburgerMenu x:Name="Menu"
+                       DisplayMode="CompactInline"
+                       ItemInvoked="OnItemInvoked"
+                       ItemTemplate="{StaticResource MenuItemTemplate}"
+                       OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+                       ShowSelectionIndicator="True">
+
+        <mah:HamburgerMenu.ItemsSource>
+            <mah:HamburgerMenuItemCollection>
+                <mah:HamburgerMenuGlyphItem Glyph="&#xE80F;"
+                                            Label="Home"
+                                            TargetPageType="{x:Type pages:HomePage}" />
+                <mah:HamburgerMenuGlyphItem Glyph="&#xE8F1;"
+                                            Label="Library"
+                                            TargetPageType="{x:Type pages:LibraryPage}" />
+            </mah:HamburgerMenuItemCollection>
+        </mah:HamburgerMenu.ItemsSource>
+
+        <!--  what stands at the foot of the pane, where Windows keeps the settings of an application  -->
+        <mah:HamburgerMenu.OptionsItemsSource>
+            <mah:HamburgerMenuItemCollection>
+                <mah:HamburgerMenuGlyphItem Glyph="&#xE713;"
+                                            Label="Settings"
+                                            TargetPageType="{x:Type pages:SettingsPage}" />
+            </mah:HamburgerMenuItemCollection>
+        </mah:HamburgerMenu.OptionsItemsSource>
+
+        <!--  the frame owns its history, and shows none of the navigation chrome of its own, since the pane and the arrow are it  -->
+        <mah:HamburgerMenu.Content>
+            <Frame x:Name="ContentFrame"
+                   JournalOwnership="OwnsJournal"
+                   Navigated="OnNavigated"
+                   NavigationUIVisibility="Hidden" />
+        </mah:HamburgerMenu.Content>
+
+    </mah:HamburgerMenu>
+
+</mah:MetroWindow>

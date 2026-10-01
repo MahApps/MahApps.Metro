@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "MahApps",
+  "classifications": [
+    "WPF",
+    "Desktop",
+    "Windows",
+    "MahApps.Metro"
+  ],
+  "identity": "MahApps.Metro.Window.CSharp",
+  "name": "MahApps.Metro Window",
+  "description": "A window of its own as a MetroWindow, for a project that already uses MahApps.Metro.",
+  "shortName": "mahapps-window",
+  "defaultName": "MahAppsMetroWindow",
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "sourceName": "MahAppsMetroWindow",
+  "symbols": {
+    "DefaultNamespace": {
+      "type": "bind",
+      "binding": "msbuild:RootNamespace",
+      "replaces": "MahAppsMetroApp",
+      "defaultValue": "MahAppsMetroApp"
+    }
+  },
+  "primaryOutputs": [
+    {
+      "path": "MahAppsMetroWindow.xaml"
+    },
+    {
+      "path": "MahAppsMetroWindow.xaml.cs"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+﻿<Application x:Class="MahAppsMetroMvvmApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--
+                    The controls. A style set goes in place of this line rather than beside it, since
+                    each merges the one below it: Styles/WinUI stands on Styles/Win10 and that one on
+                    Styles/Controls. The names are case sensitive.
+                -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <!--  and the theme, here the light base with a blue accent. Swapping this one line changes the look.  -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,10 @@
+<Project>
+
+    <!--
+        Nothing above this folder applies here. The properties the library and the samples share,
+        the four target frameworks, the strong name, the analysers and the rule that every png is a
+        WPF resource, would all land on the files of the templates, which are content to be packed
+        rather than code to be built.
+    -->
+
+</Project>

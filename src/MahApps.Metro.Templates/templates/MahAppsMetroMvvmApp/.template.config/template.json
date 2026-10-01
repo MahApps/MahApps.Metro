@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "MahApps",
+  "classifications": [
+    "WPF",
+    "Desktop",
+    "Windows",
+    "MahApps.Metro"
+  ],
+  "identity": "MahApps.Metro.MvvmApp.CSharp",
+  "name": "MahApps.Metro WPF Application (MVVM Toolkit)",
+  "description": "The same application with the MVVM Toolkit added and a view model the window is bound to.",
+  "shortName": "mahapps-mvvm",
+  "defaultName": "MahAppsMetroMvvmApp",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "MahAppsMetroMvvmApp",
+  "preferNameDirectory": true,
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "datatype": "choice",
+      "description": "The target framework for the project.",
+      "defaultValue": "net8.0-windows",
+      "replaces": "net8.0-windows",
+      "choices": [
+        {
+          "choice": "net10.0-windows",
+          "description": ".NET 10"
+        },
+        {
+          "choice": "net9.0-windows",
+          "description": ".NET 9"
+        },
+        {
+          "choice": "net8.0-windows",
+          "description": ".NET 8"
+        },
+        {
+          "choice": "net462",
+          "description": ".NET Framework 4.6.2"
+        }
+      ]
+    },
+    "Style": {
+      "type": "parameter",
+      "datatype": "choice",
+      "description": "The style set the application wears.",
+      "defaultValue": "winui",
+      "choices": [
+        {
+          "choice": "winui",
+          "description": "The WinUI set, the look Windows 11 draws"
+        },
+        {
+          "choice": "win10",
+          "description": "The Windows 10 set, the look UWP gave a control"
+        },
+        {
+          "choice": "metro",
+          "description": "The Metro set, the look the library has always drawn"
+        }
+      ]
+    },
+    "StyleDictionary": {
+      "type": "generated",
+      "generator": "switch",
+      "replaces": "Styles/WinUI/Controls.xaml",
+      "parameters": {
+        "evaluator": "C++",
+        "datatype": "string",
+        "cases": [
+          {
+            "condition": "(Style == 'win10')",
+            "value": "Styles/Win10/Controls.xaml"
+          },
+          {
+            "condition": "(Style == 'metro')",
+            "value": "Styles/Controls.xaml"
+          },
+          {
+            "condition": "(true)",
+            "value": "Styles/WinUI/Controls.xaml"
+          }
+        ]
+      }
+    },
+    "MahAppsVersion": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "The version of MahApps.Metro the project asks for.",
+      "defaultValue": "0.0.0-stamped-when-packed",
+      "replaces": "0.0.0-mahapps-version"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(Framework != \"net462\")",
+          "exclude": [
+            "App.config"
+          ]
+        }
+      ]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "MahAppsMetroMvvmApp.csproj"
+    }
+  ]
+}
