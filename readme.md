@@ -87,7 +87,7 @@ Version 2.4 runs on .NET Framework 4.5.2 and newer as well as .NET Core 3.x. Ver
 - [Contributing](https://github.com/MahApps/MahApps.Metro/wiki/Contributing) to MahApps.Metro
 - [Building](https://github.com/MahApps/MahApps.Metro/wiki/Building-the-MahApps.Metro-solution) the MahApps.Metro solution
 - [Releases and Release Notes](https://github.com/MahApps/MahApps.Metro/releases)
-- [Visual Studio Templates](https://github.com/MahApps/MahApps.Metro/wiki/Visual-Studio-Templates)
+- [Project templates](src/MahApps.Metro.Templates/README.md) for `dotnet new` and the Visual Studio New Project dialog
 - [Wiki](https://github.com/MahApps/MahApps.Metro/wiki)
 
 ## Get in touch

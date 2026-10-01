@@ -206,6 +206,34 @@ Task("Pack")
 
     var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
     DotNetPack(project, settings);
+
+    // The templates go into a package of their own, and into a folder of their own: the step that
+    // hands the library package to the signing service takes whatever lies directly in Publish, and
+    // a second file there would travel in the same request. The properties are the ones above minus
+    // the two that belong to the library, since a package of templates carries no assembly at all
+    // and says what it is in its own project file.
+    var templateMSBuildSettings = new DotNetMSBuildSettings
+    {
+      MaxCpuCount = 0,
+      Version = data.GitVersion.NuGetVersion,
+      AssemblyVersion = data.GitVersion.AssemblySemVer,
+      FileVersion = data.GitVersion.AssemblySemFileVer,
+      InformationalVersion = data.GitVersion.InformationalVersion
+    }
+    .WithProperty("RepositoryBranch", data.GitVersion.BranchName)
+    .WithProperty("RepositoryCommit", data.GitVersion.Sha)
+    ;
+
+    var templateSettings = new DotNetPackSettings
+    {
+      Configuration = data.Configuration,
+      OutputDirectory = MakeAbsolute(Directory(publishDir + "/templates")).FullPath,
+      MSBuildSettings = templateMSBuildSettings,
+      NoBuild = true,
+      NoRestore = true
+    };
+
+    DotNetPack("./src/MahApps.Metro.Templates/MahApps.Metro.Templates.csproj", templateSettings);
 });
 
 Task("Sign")
