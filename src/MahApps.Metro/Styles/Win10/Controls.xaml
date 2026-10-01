@@ -19,6 +19,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.Button.Win10}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Styles.Button.Win10}" TargetType="RepeatButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton.Win10}" TargetType="ToggleButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" TargetType="{x:Type mah:ToggleSwitch}" />
     <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Win10}" TargetType="ComboBoxItem" />
@@ -39,6 +40,8 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar.Win10}" TargetType="ProgressBar" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar.Win10}" TargetType="{x:Type mah:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ProgressRing.Win10}" TargetType="{x:Type mah:ProgressRing}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="ScrollBar" />
     <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
     <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"
