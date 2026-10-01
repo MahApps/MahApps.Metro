@@ -434,6 +434,7 @@
     <Style x:Key="MahApps.Styles.CheckBox.Win10"
            BasedOn="{StaticResource MahApps.Styles.CheckBox}"
            TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="120" />
         <Setter Property="Padding" Value="8 0 0 0" />
@@ -533,6 +534,7 @@
         <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedDisabled}" />
         <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedMouseOver}" />
         <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedPressed}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
         <Style.Triggers>
             <!--  UncheckedPressed  -->
             <MultiTrigger>
@@ -587,6 +589,7 @@
     <Style x:Key="MahApps.Styles.CheckBox.WinUI"
            BasedOn="{StaticResource MahApps.Styles.CheckBox}"
            TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="120" />
         <Setter Property="Padding" Value="8 5 0 0" />
@@ -686,6 +689,7 @@
         <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedDisabled}" />
         <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedMouseOver}" />
         <Setter Property="mah:CheckBoxHelper.ForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.WinUI.ForegroundUncheckedPressed}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Style.Triggers>
             <Trigger Property="mah:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
                 <Setter Property="HorizontalContentAlignment" Value="Right" />

@@ -390,6 +390,7 @@
     <Style x:Key="MahApps.Styles.Button.NumericUpDown.Spin.Win10" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.SpinButtonBackground}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <!--  the chevron is the number beside it, and turns with it once the caret has made the box white  -->
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -441,6 +442,7 @@
            BasedOn="{StaticResource MahApps.Styles.Button.NumericUpDown.Spin.Win10}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonBackground}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.SpinButtonForeground}" />
         <Setter Property="Template">
             <Setter.Value>

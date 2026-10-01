@@ -549,6 +549,7 @@
 
     <Style x:Key="MahApps.Styles.ComboBoxItem.TimePickerBase.Win10" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="32" />
@@ -583,14 +584,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
     </Style>
 
     <!--  The selected row of a WinUI list is a rounded pill, which is the whole of the difference.  -->
     <Style x:Key="MahApps.Styles.ComboBoxItem.TimePickerBase.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.Win10}"
            TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Margin" Value="2 1" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ComboBox.TimePickerBase.Win10"
@@ -598,6 +602,7 @@
            TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.Win10}" />
@@ -612,6 +617,7 @@
     <Style x:Key="MahApps.Styles.ComboBox.TimePickerBase.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.Win10}"
            TargetType="{x:Type ComboBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.WinUI}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
@@ -636,6 +642,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.BorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="ClockStyle" Value="{DynamicResource MahApps.Styles.AnalogClock.Win10}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Foreground}" />
         <Setter Property="IsClockVisible" Value="False" />
         <Setter Property="MinHeight" Value="32" />
@@ -693,6 +700,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1 1 1 2" />
         <Setter Property="ClockStyle" Value="{DynamicResource MahApps.Styles.AnalogClock.WinUI}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottom}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />

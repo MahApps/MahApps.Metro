@@ -303,6 +303,32 @@ namespace MahApps.Metro.Controls
             return false;
         }
 
+        /// <inheritdoc />
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            // The control is one stop in the tab order and neither half takes the focus, so the keys
+            // that press a button have to reach the half that carries the action. What opens the list
+            // is left to the combo box underneath, which does that on Alt+Down and on F4, and so are
+            // the keys that walk an open list.
+            if (!this.IsDropDownOpen
+                && (e.Key == Key.Space || e.Key == Key.Enter)
+                && this.button is { IsEnabled: true })
+            {
+                this.button.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, this.button));
+                e.Handled = true;
+                return;
+            }
+
+            base.OnKeyDown(e);
+        }
+
+        private void ButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // neither half can take the focus, so a press on one would leave it wherever it was. The
+            // control takes it instead, the way a press on a button of one piece does.
+            this.Focus();
+        }
+
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             CommandHelpers.ExecuteCommandSource(this);
@@ -315,6 +341,8 @@ namespace MahApps.Metro.Controls
 
         private void ExpanderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            this.Focus();
+
             this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.Box(!this.IsDropDownOpen));
             e.Handled = true;
         }
@@ -326,12 +354,14 @@ namespace MahApps.Metro.Controls
             if (this.button != null)
             {
                 this.button.Click -= this.ButtonClick;
+                this.button.PreviewMouseLeftButtonDown -= this.ButtonMouseLeftButtonDown;
             }
 
             this.button = this.GetTemplateChild("PART_Button") as Button;
             if (this.button != null)
             {
                 this.button.Click += this.ButtonClick;
+                this.button.PreviewMouseLeftButtonDown += this.ButtonMouseLeftButtonDown;
             }
 
             if (this.expanderButton != null)

@@ -595,6 +595,7 @@
     <!--  A day: a round disc, filled for today and ringed when it is the one that is selected.  -->
     <Style x:Key="MahApps.Styles.CalendarDayButton.WinUI" TargetType="{x:Type CalendarDayButton}">
         <Setter Property="ClickMode" Value="Release" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}, Path=FontFamily, Mode=OneWay}" />
         <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}, Path=FontSize, Mode=OneWay}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -698,6 +699,7 @@
 
     <!--  A month or a year: the same rules on a rounded rectangle.  -->
     <Style x:Key="MahApps.Styles.CalendarButton.WinUI" TargetType="{x:Type CalendarButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}, Path=FontFamily, Mode=OneWay}" />
         <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}, Path=FontSize, Mode=OneWay}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -776,16 +778,19 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.Button.Calendar.Header.WinUI" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Padding" Value="10 0" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Calendar.WinUI}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Calendar.Previous.WinUI" TargetType="{x:Type Button}">
         <Setter Property="Content" Value="&#xE70E;" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
         <Setter Property="FontSize" Value="10" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -793,10 +798,12 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Calendar.WinUI}" />
         <Setter Property="Width" Value="32" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Calendar.Next.WinUI" TargetType="{x:Type Button}">
         <Setter Property="Content" Value="&#xE70D;" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
         <Setter Property="FontSize" Value="10" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -804,9 +811,11 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Calendar.WinUI}" />
         <Setter Property="Width" Value="32" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.CalendarItem.WinUI" TargetType="{x:Type CalendarItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -955,6 +964,7 @@
         <Setter Property="CalendarButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarButton.WinUI}" />
         <Setter Property="CalendarDayButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarDayButton.WinUI}" />
         <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.WinUI}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <!--
@@ -990,6 +1000,7 @@
         <Setter Property="CalendarButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarButton.Win10}" />
         <Setter Property="CalendarDayButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarDayButton.Win10}" />
         <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.Win10}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <!--

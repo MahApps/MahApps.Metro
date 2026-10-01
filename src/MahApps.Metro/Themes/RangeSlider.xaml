@@ -613,11 +613,13 @@
 
     <Style x:Key="MahApps.Styles.RangeSlider.Win10" TargetType="{x:Type mah:RangeSlider}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Horizontal.Win10}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
         <Setter Property="mah:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="mah:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
         <Setter Property="mah:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
@@ -960,11 +962,13 @@
 
     <Style x:Key="MahApps.Styles.RangeSlider.WinUI" TargetType="{x:Type mah:RangeSlider}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TickBarFill}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Horizontal.WinUI}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Setter Property="mah:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFill}" />
         <Setter Property="mah:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillDisabled}" />
         <Setter Property="mah:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillPointerOver}" />

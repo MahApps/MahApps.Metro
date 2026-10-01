@@ -15,6 +15,112 @@
     <CornerRadius x:Key="MahApps.CornerRadius.WinUI.Control">4</CornerRadius>
     <CornerRadius x:Key="MahApps.CornerRadius.WinUI.Overlay">8</CornerRadius>
 
+    <!--  a ring around the control lies three units out, so it is rounded by three more than the control is  -->
+    <CornerRadius x:Key="MahApps.CornerRadius.WinUI.FocusVisual.Around.Outer">7</CornerRadius>
+    <CornerRadius x:Key="MahApps.CornerRadius.WinUI.FocusVisual.Around.Inner">5</CornerRadius>
+
+
+    <!--
+        The ring Windows draws around whatever holds the keyboard. Two lines rather than one, a
+        strong outer and a light inner, because the ring has to be seen on whatever the control
+        happens to be sitting on: on a light page the outer line carries it, on a dark one the inner.
+        Two units for the outer and one for the inner are the numbers Windows uses, and so is the
+        three units it stands away from the control, which is why the ring lies outside the control
+        rather than over it. Nothing about the control itself changes when it takes the focus.
+        
+        A control that says the same thing with its own frame, a text box and everything built on
+        one, sets FocusVisualStyle to x:Null instead of taking this, so that the two are never drawn
+        at once.
+    -->
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.Win10">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-3"
+                            BorderBrush="{DynamicResource MahApps.Brushes.SystemControlFocusVisualPrimary}"
+                            BorderThickness="2"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
+                        <Border BorderBrush="{DynamicResource MahApps.Brushes.SystemControlFocusVisualSecondary}"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        The same ring drawn just inside the edge of the control rather than around it, for the ones
+        that stand flush against their neighbours: the rows of a list, the entries of a menu, the
+        headers of a grid. A ring outside one of those lies over the row above and the row below.
+    -->
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.Win10.Inside">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.SystemControlFocusVisualPrimary}"
+                            BorderThickness="2"
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
+                        <Border BorderBrush="{DynamicResource MahApps.Brushes.SystemControlFocusVisualSecondary}"
+                                BorderThickness="1"
+                                CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
+                                SnapsToDevicePixels="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        And the WinUI ones of those. The corner is a number here rather than read off the row the
+        ring sits in: a path naming an attached property by prefix is resolved against whatever
+        builds the style, and the control carrying a ring is built in code rather than parsed from a
+        document, so it knows no prefixes and the attempt throws every time. Hence one key per shape
+        a row of this set has.
+    -->
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.WinUI.Inside">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Outer}"
+                            BorderThickness="2"
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
+                        <Border BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Inner}"
+                                BorderThickness="1"
+                                CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource TemplatedParent}}"
+                                SnapsToDevicePixels="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  the same ring, rounded the way Windows 11 rounds it, and in the two colours that set gives it  -->
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.WinUI">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-3"
+                            BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Outer}"
+                            BorderThickness="2"
+                            CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.FocusVisual.Around.Outer}"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
+                        <Border BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Inner}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.FocusVisual.Around.Inner}"
+                                SnapsToDevicePixels="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <ExponentialEase x:Key="MahApps.ExponentialEase.EaseInOut"
                      EasingMode="EaseInOut"
                      Exponent="2" />

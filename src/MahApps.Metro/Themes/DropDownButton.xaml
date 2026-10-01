@@ -242,12 +242,14 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown.Win10}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
         <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu.Win10}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="8 4 8 5" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
         <Style.Triggers>
             <!--  the frame of a Windows button says nothing about the focus, which the dotted rectangle over it does instead  -->
             <Trigger Property="IsFocused" Value="True">
@@ -309,11 +311,13 @@
         <!--  the frame leaves its bottom line to the edge below it, so that the two do not add up to a line brighter than either  -->
         <Setter Property="BorderThickness" Value="1 1 1 0" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown.WinUI}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
         <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu.WinUI}" />
         <Setter Property="Padding" Value="11 5 11 6" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrush}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />

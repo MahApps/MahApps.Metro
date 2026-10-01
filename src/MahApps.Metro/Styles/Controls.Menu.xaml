@@ -52,6 +52,7 @@
            BasedOn="{StaticResource MahApps.Styles.Menu}"
            TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Win10.Background}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
         <Setter Property="FontWeight" Value="Normal" />
@@ -63,6 +64,7 @@
            BasedOn="{StaticResource MahApps.Styles.Menu.Win10}"
            TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.Background}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Foreground}" />
         <Setter Property="MinHeight" Value="40" />
     </Style>
