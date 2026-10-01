@@ -180,6 +180,29 @@
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedBorderBrush), Mode=OneWay}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedForegroundBrush), Mode=OneWay}" />
                         </Trigger>
+                        <!--
+                            A row already carrying the colour of being picked says a press with a
+                            step up of that rather than falling back to the neutral an unpicked row
+                            uses, and it says it the same way whichever button is down.
+                        -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:ItemHelper.IsMouseLeftButtonPressed" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:ItemHelper.IsMouseRightButtonPressed" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
@@ -225,9 +248,11 @@
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="12 5 12 7" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
         <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForegroundDisabled}" />
@@ -242,6 +267,8 @@
         <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
         <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemBackgroundPressed}" />
         <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.PressedSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemBackgroundSelectedPressed}" />
+        <Setter Property="mah:ItemHelper.PressedSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
         <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
     </Style>
@@ -255,6 +282,7 @@
            BasedOn="{StaticResource MahApps.Styles.ListBox}"
            TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.Background}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListBox.Win10.ItemForeground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.Win10}" />
     </Style>
@@ -272,9 +300,11 @@
     <Style x:Key="MahApps.Styles.ListBoxItem.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ListBoxItem.Win10}"
            TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
         <Setter Property="MinHeight" Value="40" />
-        <Setter Property="Padding" Value="16 0 12 0" />
+        <!--  the padding WinUI gives this row, which is not the one it gives the row of a list view  -->
+        <Setter Property="Padding" Value="12 9 12 12" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -310,24 +340,12 @@
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Border>
-
-                        <Rectangle x:Name="Pill"
-                                   Width="3"
-                                   Height="16"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
-                                   Fill="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemPillFill}"
-                                   IsHitTestVisible="False"
-                                   RadiusX="1.5"
-                                   RadiusY="1.5"
-                                   Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBorderBrush), Mode=OneWay}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Pill" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -368,12 +386,35 @@
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedBorderBrush), Mode=OneWay}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedForegroundBrush), Mode=OneWay}" />
                         </Trigger>
+                        <!--
+                            A row already carrying the colour of being picked says a press with a
+                            step up of that rather than falling back to the neutral an unpicked row
+                            uses, and it says it the same way whichever button is down.
+                        -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:ItemHelper.IsMouseLeftButtonPressed" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:ItemHelper.IsMouseRightButtonPressed" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Background" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBorderBrush), Mode=OneWay}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
-                            <Setter TargetName="Pill" Property="Fill" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemPillFillDisabled}" />
                             <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
@@ -389,7 +430,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <!--  a row of a list box is square in this set, unlike the row of a list view, which is what WinUI draws  -->
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
         <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForegroundDisabled}" />
@@ -403,6 +445,8 @@
         <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
         <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemBackgroundPressed}" />
         <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.PressedSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelectedPressed}" />
+        <Setter Property="mah:ItemHelper.PressedSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
         <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
     </Style>
@@ -415,6 +459,7 @@
     <Style x:Key="MahApps.Styles.ListBox.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ListBox.Win10}"
            TargetType="{x:Type ListBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListBox.WinUI.ItemForeground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.WinUI}" />
     </Style>

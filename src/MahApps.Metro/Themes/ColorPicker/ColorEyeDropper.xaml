@@ -195,6 +195,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
         <Setter Property="FontWeight" Value="Normal" />
@@ -240,6 +241,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />
         <!--  the frame leaves its bottom line to the edge below it, the way that button does  -->
         <Setter Property="BorderThickness" Value="1 1 1 0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <!--  a unit more under the pipette than over it, because the frame draws no line along the bottom and the edge below it is not part of the layout  -->
@@ -274,10 +276,14 @@
     -->
     <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10"
            BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.Win10}"
-           TargetType="{x:Type mah:ColorEyeDropper}" />
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
 
     <Style x:Key="MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.WinUI}"
-           TargetType="{x:Type mah:ColorEyeDropper}" />
+           TargetType="{x:Type mah:ColorEyeDropper}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
 
 </ResourceDictionary>

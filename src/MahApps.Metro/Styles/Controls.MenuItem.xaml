@@ -1015,11 +1015,13 @@
            TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Background}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Win10.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="11 5 11 7" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.Win10}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Padding" Value="11 5 11 7" />
@@ -1048,9 +1050,11 @@
            BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Background}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Foreground}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MenuItem.Submenu.WinUI}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Margin" Value="4" />

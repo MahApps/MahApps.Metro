@@ -366,6 +366,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightChromeWhite" Color="{StaticResource MahApps.Colors.SystemChromeWhite}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentHigh" Opacity="{{MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity}}" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentLow" Opacity="{{MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity}}" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentMediumLow" Opacity="{{MahApps.Brushes.SystemControlHighlightListAccentMediumLow.Opacity}}" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentVeryHigh" Opacity="{{MahApps.Brushes.SystemControlHighlightListAccentVeryHigh.Opacity}}" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListAccentMedium" Opacity="{{MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity}}" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListLow" Color="{StaticResource MahApps.Colors.SystemListLow}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlHighlightListMedium" Color="{StaticResource MahApps.Colors.SystemListMedium}" options:Freeze="True" />
@@ -397,8 +399,8 @@
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundAltMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BackgroundFocused" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushFocused" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
@@ -444,6 +446,9 @@
     <Color x:Key="MahApps.Colors.WinUI.ControlAltFillDisabled">{{MahApps.Colors.WinUI.ControlAltFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDefault">{{MahApps.Colors.WinUI.ControlStrongStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlStrongStrokeDisabled">{{MahApps.Colors.WinUI.ControlStrongStrokeDisabled}}</Color>
+    <!--  the fill is the stroke turned up a little where a control is off, and exactly the stroke where it is not  -->
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrongFillDefault">{{MahApps.Colors.WinUI.ControlStrongFillDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.ControlStrongFillDisabled">{{MahApps.Colors.WinUI.ControlStrongFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlSolidFillDefault">{{MahApps.Colors.WinUI.ControlSolidFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.AccentFillDisabled">{{MahApps.Colors.WinUI.AccentFillDisabled}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextOnAccentDisabled">{{MahApps.Colors.WinUI.TextOnAccentDisabled}}</Color>
@@ -454,6 +459,18 @@
     <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SystemFillCaution">{{MahApps.Colors.WinUI.SystemFillCaution}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SystemFillCritical">{{MahApps.Colors.WinUI.SystemFillCritical}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.FocusStrokeOuter">{{MahApps.Colors.WinUI.FocusStrokeOuter}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.FocusStrokeInner">{{MahApps.Colors.WinUI.FocusStrokeInner}}</Color>
+
+    <!--
+        The two lines the ring around the focused control is drawn with. The outer one carries it on
+        a light page and the inner one on a dark one, which is why there are two rather than one: the
+        ring has to be visible on whatever it happens to lie over, and a control may well be sitting
+        on either. Windows 10 says the same thing with SystemControlFocusVisualPrimary and
+        SystemControlFocusVisualSecondary above; these are the values Windows 11 gives it.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.FocusVisual.WinUI.Outer" Color="{StaticResource MahApps.Colors.WinUI.FocusStrokeOuter}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.FocusVisual.WinUI.Inner" Color="{StaticResource MahApps.Colors.WinUI.FocusStrokeInner}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Background" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.Foreground" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
@@ -475,7 +492,7 @@
         The frame of a drop-down belonging to one of these. It is the stronger of the two strokes
         the border of a box is made of, since a flyout has to stand away from whatever it hangs over.
     -->
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.DropDownBorderBrush" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.DropDownBorderBrush" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeFlyout}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BackgroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.ControlFillSecondary}" options:Freeze="True" />
@@ -486,13 +503,13 @@
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForeground" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillTertiary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForeground" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonForegroundPressed" Color="{StaticResource MahApps.Colors.WinUI.TextTertiary}" options:Freeze="True" />
 
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
@@ -515,6 +532,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongStrokeDisabled}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongFillDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongFillDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlStrongFillDisabled" Color="{StaticResource MahApps.Colors.WinUI.ControlStrongFillDisabled}" options:Freeze="True" />
     <!--  the one fill WinUI keeps opaque: the surface a control that has to cover what it runs over is drawn in, which in the dark theme is lighter than the page rather than the same  -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlSolidFillDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlSolidFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlFillDefault" Color="{StaticResource MahApps.Colors.WinUI.ControlFillDefault}" options:Freeze="True" />
@@ -567,7 +586,7 @@
     <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
 
@@ -578,10 +597,10 @@
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForeground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeWhite" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrush" ResourceKey="MahApps.Brushes.SystemControlForegroundTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledTransparent" />
 
@@ -825,6 +844,49 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundBaseLow" />
+
+    <!--
+        Resources for MahApps.Styles.ToggleSwitch.Win10. The switch of that set is a pill drawn in
+        outline while it is off, filled with the accent once it is on, and the knob is the theme
+        foreground over the one and white over the other.
+
+        Windows 10 lights the track a shade and darkens it a shade while the pointer is over an on
+        switch and while it is held. Those are SystemAccentColorLight1 and Dark1, which the accent
+        of a MahApps theme has no counterpart for, so all three take the accent itself.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContentForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContentForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.HeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.HeaderForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOff" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOn" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOff" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPressed" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOn" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOff" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOn" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightChromeWhite" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobStrokeOn" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
 
     <!--
         Resources for MahApps.Styles.ToggleSwitch.WinUI. WinUI turns the switch around: the track of
@@ -1120,23 +1182,24 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.Win10.ItemBackgroundSelectedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentVeryHigh" />
 
     <!--
-        Resources for MahApps.Styles.ListBox.WinUI. WinUI never drew its own list box a second
-        time, so the row here is the one its list view has, which is what Windows 11 shows a list
-        as: nothing behind a picked row but a fill a shade off the ground, and the accent kept for
-        the short bar along the left edge.
+        Resources for MahApps.Styles.ListBox.WinUI. WinUI never drew its own list box a second time
+        and the one it carries is the Windows 10 row with the newer neutrals over it: the accent
+        turned right down behind a picked row, a step up of it under the pointer and another while
+        the button is held, and the text the same colour in every one of those. The rounded tile
+        and the bar along the left edge belong to the list view of that set, not to this.
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemPillFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelectedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentHigh" />
 
     <!--
         Resources for MahApps.Styles.ListView.Win10. A row of a list view is the row of a list box,
@@ -1148,8 +1211,9 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.ItemBackgroundSelectedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentVeryHigh" />
     <!--  a group header is written in the colour of the rows under it rather than in one of its own, and it is filled with the ground of the list so that rows can pass under it while it holds its place  -->
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.GroupHeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.Win10.GroupHeaderBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
@@ -1171,6 +1235,7 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemBackgroundSelectedPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemPillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.ItemPillFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.ListView.WinUI.GroupHeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
@@ -1280,12 +1345,12 @@
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFillPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.ThumbFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackFillDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackFillDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TickBarFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TickBarFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
 
 </ResourceDictionary>

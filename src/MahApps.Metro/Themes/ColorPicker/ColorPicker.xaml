@@ -572,6 +572,7 @@
         <Setter Property="CustomColorPalette02Style" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10}" />
         <!--  the rows in there are a set taller, so what holds them is taller by about that much  -->
         <Setter Property="DropDownHeight" Value="400" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="10 6 6 5" />
@@ -633,6 +634,7 @@
         <Setter Property="BorderThickness" Value="1 1 1 2" />
         <Setter Property="CustomColorPalette01Style" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI}" />
         <Setter Property="CustomColorPalette02Style" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
         <Setter Property="RecentColorPaletteStyle" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI}" />
         <Setter Property="StandardColorPaletteStyle" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI}" />

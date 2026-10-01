@@ -5,6 +5,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -235,6 +236,61 @@ namespace MahApps.Metro.Tests.Tests
             this.Settle();
 
             Assert.That(splitButton.Opacity, Is.EqualTo(0.55));
+        }
+
+        [TestCase("MahApps.Styles.SplitButton")]
+        [TestCase("MahApps.Styles.SplitButton.Win10")]
+        [TestCase("MahApps.Styles.SplitButton.WinUI")]
+        [Description("Windows gives the whole of a split button one place in the tab order rather than one per half, so neither half takes the focus of its own and the control carries it for both.")]
+        public void TheWholeOfItIsOneStopInTheTabOrder(string key)
+        {
+            var splitButton = this.Show(key);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(splitButton.IsTabStop, Is.True, "the control itself");
+                    Assert.That(splitButton.FindChild<Button>("PART_Button")?.Focusable, Is.False, "the half with the word in it");
+                    Assert.That(splitButton.FindChild<Button>("PART_Expander")?.Focusable, Is.False, "and the half with the arrow");
+                });
+        }
+
+        [TestCase("MahApps.Styles.SplitButton")]
+        [TestCase("MahApps.Styles.SplitButton.Win10")]
+        [TestCase("MahApps.Styles.SplitButton.WinUI")]
+        [Description("Neither half can be reached on its own, so the keys that press a button press the half that carries the action, and what opens the list is left to the combo box underneath.")]
+        public void TheKeysThatPressAButtonPressTheHalfWithTheAction(string key)
+        {
+            var splitButton = this.Show(key);
+            splitButton.Focus();
+            this.Settle();
+
+            var clicks = 0;
+            splitButton.Click += (_, _) => clicks++;
+
+            this.Press(splitButton, Key.Space);
+            this.Press(splitButton, Key.Enter);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(clicks, Is.EqualTo(2), "the space bar and the enter key both press it");
+                    Assert.That(splitButton.IsDropDownOpen, Is.False, "and neither of them opens the list");
+                });
+
+            this.Press(splitButton, Key.F4);
+
+            Assert.That(splitButton.IsDropDownOpen, Is.True, "which F4 does, the way it does on a combo box");
+
+            splitButton.IsDropDownOpen = false;
+            this.Settle();
+        }
+
+        private void Press(SplitButton splitButton, Key key)
+        {
+            var source = PresentationSource.FromVisual(splitButton);
+
+            splitButton.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = Keyboard.KeyDownEvent });
+            splitButton.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = Keyboard.KeyUpEvent });
+            this.Settle();
         }
 
         private static object? PointerOver(Style style, DependencyProperty property)

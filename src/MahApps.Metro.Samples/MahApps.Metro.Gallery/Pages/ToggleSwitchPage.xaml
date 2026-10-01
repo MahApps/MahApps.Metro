@@ -36,8 +36,25 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="MahApps.Styles.ToggleSwitch.Win10 is the switch Windows 10 draws: a pill in outline while it is off and filled with the accent once it is on, with a 10 unit knob that is the theme foreground over the one and white over the other. The knob holds that size throughout, which is the whole of the difference to the card below. It is on develop and not in 2.4.11."
+                                     Header="The one in the Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ToggleSwitch.Win10">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:ToggleSwitch x:Name="Win10"
+                                          Header="Show the ribbon"
+                                          IsOn="True"
+                                          Style="{DynamicResource MahApps.Styles.ToggleSwitch.Win10}" />
+                        <mah:ToggleSwitch Margin="0 8 0 0"
+                                          OffContent="Silent"
+                                          OnContent="Audible"
+                                          Style="{DynamicResource MahApps.Styles.ToggleSwitch.Win10}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="WinUIExample"
-                                     Description="MahApps.Styles.ToggleSwitch.WinUI is the switch Windows 11 draws. There is no second style for the Windows 10 look, because the switch the library hands out by default is that one already. Where the two part company: the track of a switch that is off is filled here rather than hollow and carries one unit of line rather than two, the knob is a 12 unit circle rather than a 10 unit one and answers the pointer by growing, and the track is 40 wide rather than 44. It is on develop and not in 2.4.11."
+                                     Description="MahApps.Styles.ToggleSwitch.WinUI is the switch Windows 11 draws, built the same way as the one above and differing only in the knob: a 12 unit circle rather than a 10 unit one, which grows to 14 under the pointer and stretches into a pill towards the middle of the track while the button is held. It is on develop and not in 2.4.11."
                                      Header="The one in the WinUI look">
                 <smtx:XamlDisplay UniqueKey="ToggleSwitch.WinUI">
                     <StackPanel HorizontalAlignment="Left">

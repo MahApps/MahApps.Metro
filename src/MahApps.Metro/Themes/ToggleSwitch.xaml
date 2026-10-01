@@ -14,7 +14,8 @@
     <system:Double x:Key="ToggleSwitchThemeMinWidth">154</system:Double>
 
     <!--  the WinUI switch is a shorter track with a bigger knob in it, so the knob has less of a way to go  -->
-    <system:Double x:Key="ToggleSwitchWinUIOffStrokeThickness">1</system:Double>
+    <!--  the edge of the track with the switch off, one unit in both Windows sets  -->
+    <system:Double x:Key="ToggleSwitchWindowsOffStrokeThickness">1</system:Double>
     <system:Double x:Key="ToggleSwitchWinUIKnobTranslation">20</system:Double>
 
     <KeyTime x:Key="ToggleSwitchTranslateDuration">0:0:0.500</KeyTime>
@@ -171,11 +172,13 @@
                                         </Grid.RenderTransform>
                                     </Grid>
                                 </Grid>
+                                <!--  it is here to drag the knob with the pointer and for nothing else, so it stays out of the tab order  -->
                                 <Thumb x:Name="SwitchThumb"
                                        Grid.Row="0"
                                        Grid.RowSpan="3"
                                        Grid.Column="0"
-                                       Grid.ColumnSpan="3">
+                                       Grid.ColumnSpan="3"
+                                       Focusable="False">
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="Thumb">
                                             <Rectangle Fill="Transparent" />
@@ -423,19 +426,382 @@
         numbers hang together, four units of air between it and the end of the track, and that is
         also why the travel cannot come out of a setter: it lives in a storyboard, and a storyboard
         carries no lookups.
-
+        
         Where the two sets really part company is the track that is off. Windows 10 leaves it hollow
         with a two unit line round it, WinUI fills it and draws one unit. The knob follows: the
         writing colour while the switch is off, the ideal foreground while it is on, and a lit edge
         round it there so that it stays visible against a light accent.
-
+        
         The knob also answers the pointer, which the Windows 10 one does not. It grows from 12 to 14
         while the pointer is over it and stretches to a 17 by 14 pill while it is held, the way
         WinUI has it.
     -->
+    <!--
+        The switch of the Windows 10 set. It is built the same way as the WinUI one below it, down to
+        the track of forty by twenty and the twenty the knob travels, because the two sets draw this
+        control alike. Windows 10 leaves the knob the size it is: it neither grows under the pointer
+        nor stretches into a pill while the button is held, and it is ten units across rather than
+        twelve.
+    -->
+    <Style x:Key="MahApps.Styles.ToggleSwitch.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
+           TargetType="{x:Type mah:ToggleSwitch}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContentForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:ToggleSwitch}">
+                    <Border Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <ContentPresenter x:Name="HeaderContentPresenter"
+                                              Grid.Row="0"
+                                              Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                              HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                              Content="{TemplateBinding Header}"
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              IsHitTestVisible="False"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              TextElement.FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
+                                              TextElement.FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                              TextElement.Foreground="{TemplateBinding mah:HeaderedControlHelper.HeaderForeground}"
+                                              Visibility="Collapsed" />
+
+                            <Grid x:Name="SwitchContentGrid"
+                                  Grid.Row="1"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="{DynamicResource ToggleSwitchPreContentMargin}" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="{DynamicResource ToggleSwitchPostContentMargin}" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="{DynamicResource ToggleSwitchContentSpaceMargin}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid x:Name="SwitchAreaGrid"
+                                      Grid.RowSpan="3"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0 5"
+                                      Background="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContainerBackground}" />
+
+                                <ContentPresenter x:Name="OffContentPresenter"
+                                                  Grid.Row="0"
+                                                  Grid.RowSpan="3"
+                                                  Grid.Column="2"
+                                                  Margin="{TemplateBinding ContentPadding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding OffContent}"
+                                                  ContentStringFormat="{TemplateBinding OffContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding OffContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding OffContentTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  Opacity="0"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}" />
+                                <ContentPresenter x:Name="OnContentPresenter"
+                                                  Grid.Row="0"
+                                                  Grid.RowSpan="3"
+                                                  Grid.Column="2"
+                                                  Margin="{TemplateBinding ContentPadding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding OnContent}"
+                                                  ContentStringFormat="{TemplateBinding OnContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding OnContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding OnContentTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  Opacity="0"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}" />
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  Grid.Row="0"
+                                                  Grid.RowSpan="3"
+                                                  Grid.Column="2"
+                                                  Margin="{TemplateBinding ContentPadding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"
+                                                  Visibility="Collapsed" />
+
+                                <Grid x:Name="Switch"
+                                      Grid.Row="1"
+                                      Grid.Column="0"
+                                      Width="40"
+                                      Height="20"
+                                      HorizontalAlignment="Left">
+                                    <Rectangle x:Name="OuterBorder"
+                                               Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOff}"
+                                               RadiusX="10"
+                                               RadiusY="10"
+                                               Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOff}"
+                                               StrokeThickness="{DynamicResource ToggleSwitchWindowsOffStrokeThickness}" />
+                                    <Rectangle x:Name="SwitchKnobBounds"
+                                               Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOn}"
+                                               Opacity="0"
+                                               RadiusX="10"
+                                               RadiusY="10"
+                                               Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOn}"
+                                               StrokeThickness="{DynamicResource ToggleSwitchOnStrokeThickness}" />
+                                    <Grid x:Name="SwitchKnob"
+                                          Width="20"
+                                          Height="20"
+                                          HorizontalAlignment="Left">
+                                        <Ellipse x:Name="SwitchKnobOn"
+                                                 Width="10"
+                                                 Height="10"
+                                                 Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOn}"
+                                                 Opacity="0"
+                                                 Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobStrokeOn}"
+                                                 StrokeThickness="1" />
+                                        <Ellipse x:Name="SwitchKnobOff"
+                                                 Width="10"
+                                                 Height="10"
+                                                 Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOff}" />
+                                        <Grid.RenderTransform>
+                                            <TranslateTransform x:Name="KnobTranslateTransform" />
+                                        </Grid.RenderTransform>
+                                    </Grid>
+                                </Grid>
+                                <!--  it is here to drag the knob with the pointer and for nothing else, so it stays out of the tab order  -->
+                                <Thumb x:Name="SwitchThumb"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="3"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="3"
+                                       Focusable="False">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Rectangle Fill="Transparent" />
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Grid>
+
+                        </Grid>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ToggleStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition x:Name="DraggingToOnTransition"
+                                                      GeneratedDuration="0"
+                                                      From="Dragging"
+                                                      To="On">
+
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="{StaticResource ToggleSwitchWinUIKnobTranslation}">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <ExponentialEase Exponent="9" />
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition x:Name="DraggingToOffTransition"
+                                                      GeneratedDuration="0"
+                                                      From="Dragging"
+                                                      To="Off">
+
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="0">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <ExponentialEase Exponent="9" />
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition x:Name="OnToOffTransition"
+                                                      GeneratedDuration="0"
+                                                      From="On"
+                                                      To="Off">
+
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="0">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <ExponentialEase Exponent="9" />
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+
+                                    <VisualTransition x:Name="OffToOnTransition"
+                                                      GeneratedDuration="0"
+                                                      From="Off"
+                                                      To="On">
+
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="{StaticResource ToggleSwitchWinUIKnobTranslation}">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <ExponentialEase Exponent="9" />
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+
+                                </VisualStateGroup.Transitions>
+
+                                <VisualState x:Name="Dragging" />
+                                <VisualState x:Name="Off">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="KnobTranslateTransform"
+                                                         Storyboard.TargetProperty="X"
+                                                         To="0"
+                                                         Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="On">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="KnobTranslateTransform"
+                                                         Storyboard.TargetProperty="X"
+                                                         To="{StaticResource ToggleSwitchWinUIKnobTranslation}"
+                                                         Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="ContentStates">
+                                <VisualState x:Name="OffContent">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="OffContentPresenter"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OffContentPresenter" Storyboard.TargetProperty="IsHitTestVisible">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <system:Boolean>True</system:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="OnContent">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="OnContentPresenter"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OnContentPresenter" Storyboard.TargetProperty="IsHitTestVisible">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <system:Boolean>True</system:Boolean>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!--
+                            What a switch that is on looks like hangs on IsOn rather than on the state
+                            it is in, because pressing one puts it into the dragging state, and that
+                            state knows nothing about the side the switch is standing on. The states
+                            move the knob and nothing else.
+                        -->
+                        <Trigger Property="IsOn" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Opacity" Value="0" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Opacity" Value="1" />
+                            <Setter TargetName="SwitchKnobOff" Property="Opacity" Value="0" />
+                            <Setter TargetName="SwitchKnobOn" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="ContentDirection" Value="LeftToRight">
+                            <Setter TargetName="ContentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="OffContentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="OnContentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Switch" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="SwitchContentGrid" Property="HorizontalAlignment" Value="Right" />
+                        </Trigger>
+
+                        <!--  MouseOver  -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOffPointerOver}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPointerOver}" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPointerOver}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOnPointerOver}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPointerOver}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffPointerOver}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOnPointerOver}" />
+                        </Trigger>
+
+                        <!--  Pressed  -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOffPressed}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPressed}" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPressed}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOnPressed}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPressed}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffPressed}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOnPressed}" />
+                        </Trigger>
+
+                        <!--  Disabled  -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContentForegroundDisabled}" />
+                            <Setter TargetName="HeaderContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.HeaderForegroundDisabled}" />
+                            <Setter TargetName="OffContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContentForegroundDisabled}" />
+                            <Setter TargetName="OnContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContentForegroundDisabled}" />
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOffDisabled}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOffDisabled}" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundDisabled}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.FillOnDisabled}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.StrokeOnDisabled}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffDisabled}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.KnobFillOnDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.HeaderForeground}" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.ToggleSwitch.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
            TargetType="{x:Type mah:ToggleSwitch}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.WinUI.ContentForeground}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -554,7 +920,7 @@
                                                RadiusX="10"
                                                RadiusY="10"
                                                Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.WinUI.StrokeOff}"
-                                               StrokeThickness="{DynamicResource ToggleSwitchWinUIOffStrokeThickness}" />
+                                               StrokeThickness="{DynamicResource ToggleSwitchWindowsOffStrokeThickness}" />
                                     <Rectangle x:Name="SwitchKnobBounds"
                                                Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.WinUI.FillOn}"
                                                Opacity="0"
@@ -582,11 +948,13 @@
                                         </Grid.RenderTransform>
                                     </Grid>
                                 </Grid>
+                                <!--  it is here to drag the knob with the pointer and for nothing else, so it stays out of the tab order  -->
                                 <Thumb x:Name="SwitchThumb"
                                        Grid.Row="0"
                                        Grid.RowSpan="3"
                                        Grid.Column="0"
-                                       Grid.ColumnSpan="3">
+                                       Grid.ColumnSpan="3"
+                                       Focusable="False">
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="Thumb">
                                             <Rectangle Fill="Transparent" />
@@ -813,6 +1181,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.WinUI.HeaderForeground}" />
     </Style>
 

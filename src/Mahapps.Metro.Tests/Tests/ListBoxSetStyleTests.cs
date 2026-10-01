@@ -12,10 +12,9 @@ using NUnit.Framework;
 namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
-    /// The two Windows lists. Windows 10 puts the accent turned right down behind the row that is
-    /// picked; WinUI never drew its own list box a second time, so the WinUI row here is the one
-    /// its list view has, a rounded tile with the accent kept for a short bar along the left edge.
-    /// GH-3328 asked for the Windows looks.
+    /// The two Windows lists. Both put the accent behind the row that is picked, Windows 10 turned
+    /// right down and WinUI at full strength, and neither draws the bar along the left edge that the
+    /// WinUI list view has. GH-3328 asked for the Windows looks.
     /// </summary>
     [TestFixture]
     public class ListBoxSetStyleTests : WindowTestFixture<TestWindow>
@@ -75,22 +74,15 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("The bar along the left edge is the whole of what says which WinUI row is picked, so it shows on that row and on no other, and it keeps the three by sixteen a list view draws it at whatever the row is filled with.")]
-        public void TheBarOnTheLeftSaysWhichWinUIRowIsPicked()
+        [Description("The WinUI list box has no bar along the left edge, which is a thing of that set's list view. The row that is picked says so with the accent behind the whole of it.")]
+        public void TheWinUIRowSaysItWithWhatIsBehindItInstead()
         {
-            var list = this.Show(WinUI);
-
-            var picked = Row(list, 1).FindChild<Rectangle>("Pill");
-            var rest = Row(list, 0).FindChild<Rectangle>("Pill");
+            var row = Row(this.Show(WinUI), 1);
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(picked, Is.Not.Null);
-                    Assert.That(picked!.Visibility, Is.EqualTo(Visibility.Visible), "the row that is picked");
-                    Assert.That(picked.ActualWidth, Is.EqualTo(3d).Within(1d));
-                    Assert.That(picked.ActualHeight, Is.EqualTo(16d).Within(1d));
-                    Assert.That(rest, Is.Not.Null);
-                    Assert.That(rest!.Visibility, Is.EqualTo(Visibility.Collapsed), "every other row");
+                    Assert.That(row.FindChild<Rectangle>("Pill"), Is.Null);
+                    Assert.That(ItemHelper.GetSelectedBackgroundBrush(row), Is.SameAs(Application.Current.FindResource("MahApps.Brushes.ListBox.WinUI.ItemBackgroundSelected")));
                 });
         }
 

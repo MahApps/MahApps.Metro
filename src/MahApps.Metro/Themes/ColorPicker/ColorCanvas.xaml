@@ -503,6 +503,7 @@
                    BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.ColorCanvas.Win10}"
                    TargetType="{x:Type mah:ColorEyeDropper}" />
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <!--  WinUI rounds the square, the preview and the bars, the way it rounds the boxes beside them.  -->
@@ -516,6 +517,7 @@
                    BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper.ColorCanvas.WinUI}"
                    TargetType="{x:Type mah:ColorEyeDropper}" />
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 

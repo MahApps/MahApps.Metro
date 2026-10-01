@@ -56,7 +56,7 @@
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Background="{TemplateBinding Background}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        Focusable="False"
                         Foreground="{TemplateBinding Foreground}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Style="{TemplateBinding ButtonStyle}">
@@ -92,7 +92,7 @@
                         Width="{DynamicResource SplitButtonExpanderSize}"
                         Background="{TemplateBinding Background}"
                         ContentTemplate="{DynamicResource SplitButtonArrowContentTemplate}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        Focusable="False"
                         Foreground="{TemplateBinding ArrowBrush}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Style="{TemplateBinding ButtonArrowStyle}" />
@@ -219,7 +219,7 @@
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         Background="{TemplateBinding Background}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        Focusable="False"
                         Foreground="{TemplateBinding Foreground}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Style="{TemplateBinding ButtonStyle}">
@@ -255,7 +255,7 @@
                         Height="{DynamicResource SplitButtonExpanderSize}"
                         Background="{TemplateBinding Background}"
                         ContentTemplate="{DynamicResource SplitButtonArrowContentTemplate}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        Focusable="False"
                         Foreground="{TemplateBinding ArrowBrush}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Style="{TemplateBinding ButtonArrowStyle}" />
@@ -455,6 +455,7 @@
         <!--  both halves are the same button, and the one with the arrow draws the line where the two meet  -->
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Arrow.Win10}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Win10}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
@@ -463,6 +464,7 @@
         <Setter Property="Padding" Value="8 4 8 5" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
         <Style.Triggers>
             <!--  the frame of a Windows button says nothing about the focus, which the dotted rectangle over it does instead  -->
             <Trigger Property="IsFocused" Value="True">
@@ -522,6 +524,7 @@
         <Setter Property="BorderThickness" Value="1 1 1 0" />
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Arrow.WinUI}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split.WinUI}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.ComboBoxItem.WinUI}" />
         <Setter Property="Padding" Value="11 5 11 6" />
@@ -530,6 +533,7 @@
         <Setter Property="mah:ComboBoxHelper.DropDownCornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BottomBorderBrush}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.WinUI.BorderBrush}" />

@@ -523,6 +523,7 @@
     <Style x:Key="MahApps.Styles.Slider.Win10" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
         <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
@@ -531,6 +532,7 @@
         <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Horizontal.Win10}" />
         <Setter Property="Value" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
         <Setter Property="mah:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="mah:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
         <Setter Property="mah:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
@@ -558,7 +560,7 @@
         the track; here it is a ring drawn in the colour a control covers its ground with, and the
         accent is the dot in the middle of that ring. The thumb is laid out in a box of 18 and the
         ring is drawn two past it either way, so the ring itself comes to 22.
-
+        
         The dot is what answers the pointer. WinUI keeps it a 12 and scales it, by 0.86 at rest,
         1.167 under the pointer and 0.71 while the thumb is dragged, which comes to 10.32, 14 and
         8.52. The ring holds still through all three, so here the three are the padding inside it
@@ -834,6 +836,7 @@
     <!--  Slider WinUI Style  -->
     <Style x:Key="MahApps.Styles.Slider.WinUI" TargetType="{x:Type Slider}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.TickBarFill}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
@@ -842,6 +845,7 @@
         <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Horizontal.WinUI}" />
         <Setter Property="Value" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Setter Property="mah:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFill}" />
         <Setter Property="mah:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillDisabled}" />
         <Setter Property="mah:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Slider.WinUI.ThumbFillPointerOver}" />

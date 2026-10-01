@@ -193,11 +193,12 @@
            TargetType="RadioButton">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrush}" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="120" />
         <Setter Property="Padding" Value="8 0 0 0" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
         <Setter Property="mah:RadioButtonHelper.BackgroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundDisabled}" />
         <Setter Property="mah:RadioButtonHelper.BackgroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPointerOver}" />
         <Setter Property="mah:RadioButtonHelper.BackgroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPressed}" />
@@ -259,9 +260,11 @@
            TargetType="RadioButton">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.BorderBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.Foreground}" />
         <Setter Property="Padding" Value="8 6 0 0" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
         <Setter Property="mah:RadioButtonHelper.BackgroundDisabled" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.BackgroundDisabled}" />
         <Setter Property="mah:RadioButtonHelper.BackgroundPointerOver" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.BackgroundPointerOver}" />
         <Setter Property="mah:RadioButtonHelper.BackgroundPressed" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.BackgroundPressed}" />

@@ -28,6 +28,11 @@ namespace MahApps.Metro.Gallery.Pages
                                       ToggleSwitch.ContentDirectionProperty,
                                       ToggleSwitch.ContentPaddingProperty);
 
+            this.Win10Example.Watch(this.Win10,
+                                    ToggleSwitch.IsOnProperty,
+                                    HeaderedContentControl.HeaderProperty,
+                                    IsEnabledProperty);
+
             this.WinUIExample.Watch(this.WinUI,
                                     ToggleSwitch.IsOnProperty,
                                     HeaderedContentControl.HeaderProperty,

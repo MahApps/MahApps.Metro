@@ -21,7 +21,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="{DynamicResource ExpanderHeaderThemePadding}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -513,6 +513,7 @@
                                                   mah:ExpanderHelper.ToggleButtonForeground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForeground)}"
                                                   mah:ExpanderHelper.ToggleButtonForegroundMouseOver="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundMouseOver)}"
                                                   mah:ExpanderHelper.ToggleButtonForegroundPressed="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ExpanderHelper.ToggleButtonForegroundPressed)}"
+                                                  mah:FocusVisualHelper.CornerRadius="{Binding ElementName=HeaderSite, Path=CornerRadius, Mode=OneWay}"
                                                   Content="{TemplateBinding Header}"
                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
@@ -852,6 +853,7 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70D;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">12 0 4 0</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="MinHeight" Value="40" />
         <Setter Property="Template">
@@ -965,6 +967,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
     </Style>
 
     <!--  an expander that opens upwards carries the same header with the chevron the other way up  -->
@@ -975,6 +978,8 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70E;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">12 0 4 0</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
     </Style>
 
     <!--
@@ -989,6 +994,7 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76C;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 4 0 12</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="MinWidth" Value="40" />
@@ -1104,6 +1110,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Left"
@@ -1113,6 +1120,8 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76B;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 4 0 12</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
     </Style>
 
     <!--
@@ -1127,8 +1136,10 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70D;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">20 0 8 0</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="MinHeight" Value="48" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Up"
@@ -1138,6 +1149,8 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE70E;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">20 0 8 0</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Right"
@@ -1147,8 +1160,10 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76C;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 8 0 20</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="MinWidth" Value="48" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Left"
@@ -1158,6 +1173,8 @@
             <system:String x:Key="MahApps.Glyph.ExpanderHeader.Chevron">&#xE76B;</system:String>
             <Thickness x:Key="MahApps.Thickness.ExpanderHeader.Chevron">0 8 0 20</Thickness>
         </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
     </Style>
 
     <!--
@@ -1172,6 +1189,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Expander.Win10.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Expander.Win10.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
@@ -1225,6 +1243,7 @@
            TargetType="{x:Type Expander}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.BorderBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Padding" Value="16" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Down}" />

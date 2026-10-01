@@ -121,7 +121,6 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.RichTextBox.WinUI", typeof(RichTextBox))]
         [TestCase("MahApps.Styles.ComboBox.WinUI", typeof(ComboBox))]
         [TestCase("MahApps.Styles.ComboBoxItem.WinUI", typeof(ComboBoxItem))]
-        [TestCase("MahApps.Styles.ListBoxItem.WinUI", typeof(ListBoxItem))]
         [TestCase("MahApps.Styles.ListViewItem.WinUI", typeof(ListViewItem))]
         [TestCase("MahApps.Styles.AutoSuggestBox.WinUI", typeof(AutoSuggestBox))]
         [TestCase("MahApps.Styles.HotKeyBox.WinUI", typeof(HotKeyBox))]
@@ -134,7 +133,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.NumericUpDown.WinUI", typeof(NumericUpDown))]
         [TestCase("MahApps.Styles.SplitButton.WinUI", typeof(SplitButton))]
         [TestCase("MahApps.Styles.DropDownButton.WinUI", typeof(DropDownButton))]
-        [Description("WinUI rounds a control by ControlCornerRadius and nothing else, so no style of that set carries a radius of its own and a box and the picker standing beside it are rounded alike.")]
+        [Description("WinUI rounds a control by ControlCornerRadius and nothing else, so no style of that set carries a radius of its own and a box and the picker standing beside it are rounded alike. The rows of a list box are not among them: that set draws them square.")]
         public void EveryWinUIControlIsRoundedByTheSameNumber(string key, Type type)
         {
             var control = (Control)Activator.CreateInstance(type)!;

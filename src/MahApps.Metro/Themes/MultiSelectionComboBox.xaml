@@ -150,9 +150,11 @@
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem}"
            TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForeground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="11 5 11 7" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundSelected}" />
         <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ItemForegroundDisabled}" />
@@ -169,7 +171,9 @@
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.CheckBox.Win10"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}"
            TargetType="ListBoxItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxItem.CheckBox}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
     </Style>
 
     <!--
@@ -182,9 +186,11 @@
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.WinUI"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}"
            TargetType="ListBoxItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
         <Setter Property="Margin" Value="4 2" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemBackgroundSelected}" />
         <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForeground}" />
         <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemForegroundDisabled}" />
@@ -201,7 +207,9 @@
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxItem.CheckBox.WinUI"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.WinUI}"
            TargetType="ListBoxItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxItem.CheckBox}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem" TargetType="ListBoxItem">
@@ -311,11 +319,13 @@
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}"
            TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MultiSelectionComboBox.Win10.ItemBackground}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable.Win10"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.Win10}"
            TargetType="ListBoxItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxSelectedItem.Removable}" />
     </Style>
 
@@ -323,11 +333,13 @@
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem}"
            TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MultiSelectionComboBox.WinUI.ItemBackground}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.MultiSelectionComboBoxSelectedItem.Removable.WinUI"
            BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.WinUI}"
            TargetType="ListBoxItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MultiSelectionComboBoxSelectedItem.Removable}" />
     </Style>
 
@@ -873,6 +885,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.Win10}" />
         <Setter Property="MinHeight" Value="32" />
@@ -934,6 +947,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1 1 1 2" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxItem.WinUI}" />
         <Setter Property="SelectedItemContainerStyle" Value="{StaticResource MahApps.Styles.MultiSelectionComboBoxSelectedItem.WinUI}" />

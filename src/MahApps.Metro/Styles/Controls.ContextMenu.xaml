@@ -84,6 +84,7 @@
            TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Menu.Win10.FlyoutBorderBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
         <Setter Property="FontWeight" Value="Normal" />
@@ -140,6 +141,7 @@
            TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.FlyoutBorderBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.WinUI.Foreground}" />
         <Setter Property="HorizontalOffset" Value="-8" />
         <Setter Property="Padding" Value="0 2" />

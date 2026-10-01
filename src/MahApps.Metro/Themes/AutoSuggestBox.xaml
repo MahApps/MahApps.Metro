@@ -241,6 +241,7 @@
     <Style x:Key="MahApps.Styles.AutoSuggestBox.Win10"
            BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}"
            TargetType="{x:Type mah:AutoSuggestBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
     </Style>
@@ -248,6 +249,7 @@
     <Style x:Key="MahApps.Styles.AutoSuggestBox.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}"
            TargetType="{x:Type mah:AutoSuggestBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
     </Style>

@@ -979,7 +979,108 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets the brush which will be used when the indicator of the <see cref="GridViewHeaderRowPresenter"/> become visible. 
+        /// Gets or sets the background brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        /// <remarks>
+        /// One brush for either button, unlike the two above it: an item that is already carrying
+        /// the colour of being picked says the press with a step up of that, whichever button it
+        /// was. Leave it unset and the item falls back to the brush for the button that is down.
+        /// </remarks>
+        public static readonly DependencyProperty PressedSelectedBackgroundBrushProperty
+            = DependencyProperty.RegisterAttached(
+                "PressedSelectedBackgroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the background brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush? GetPressedSelectedBackgroundBrush(UIElement element)
+        {
+            return (Brush?)element.GetValue(PressedSelectedBackgroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the background brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetPressedSelectedBackgroundBrush(UIElement element, Brush? value)
+        {
+            element.SetValue(PressedSelectedBackgroundBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the border brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        public static readonly DependencyProperty PressedSelectedBorderBrushProperty
+            = DependencyProperty.RegisterAttached(
+                "PressedSelectedBorderBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the border brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush? GetPressedSelectedBorderBrush(UIElement element)
+        {
+            return (Brush?)element.GetValue(PressedSelectedBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the border brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetPressedSelectedBorderBrush(UIElement element, Brush? value)
+        {
+            element.SetValue(PressedSelectedBorderBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the foreground brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        public static readonly DependencyProperty PressedSelectedForegroundBrushProperty
+            = DependencyProperty.RegisterAttached(
+                "PressedSelectedForegroundBrush",
+                typeof(Brush),
+                typeof(ItemHelper),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the foreground brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush? GetPressedSelectedForegroundBrush(UIElement element)
+        {
+            return (Brush?)element.GetValue(PressedSelectedForegroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the foreground brush which will be used for a selected item while a mouse button is held down on it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetPressedSelectedForegroundBrush(UIElement element, Brush? value)
+        {
+            element.SetValue(PressedSelectedForegroundBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the brush which will be used when the indicator of the <see cref="GridViewHeaderRowPresenter"/> become visible.
         /// </summary>
         public static readonly DependencyProperty GridViewHeaderIndicatorBrushProperty
             = DependencyProperty.RegisterAttached(

@@ -25,6 +25,16 @@
                 <Setter Property="TextWrapping" Value="Wrap" />
             </Style>
 
+            <!--
+                The focus ring of the two Windows sets is drawn three units outside the control it
+                belongs to, and a ScrollViewer clips whatever leaves its viewport, so a control
+                sitting against the edge of a column would lose the side of its ring that hangs
+                over. Four units of room all round is enough for the whole of it.
+            -->
+            <Style x:Key="Column" TargetType="{x:Type ContentControl}">
+                <Setter Property="Margin" Value="4" />
+            </Style>
+
             <Style x:Key="Row" TargetType="{x:Type StackPanel}">
                 <Setter Property="Margin" Value="0 0 0 14" />
             </Style>
@@ -222,18 +232,39 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!--  the three headings hold their place while the controls under them scroll  -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <!--  the default set, which is what the window already has  -->
-        <StackPanel Grid.Column="0" Margin="0 0 16 0">
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0 0 16 0">
             <TextBlock Style="{StaticResource SetHeader}" Text="Default" />
             <TextBlock Style="{StaticResource SetCaption}" Text="Styles/Controls.xaml, the look the library has always drawn." />
-            <ContentControl ContentTemplate="{StaticResource TheSameControls}" />
         </StackPanel>
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="0"
+                      Margin="0 0 16 0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <ContentControl ContentTemplate="{StaticResource TheSameControls}" Style="{StaticResource Column}" />
+        </ScrollViewer>
 
-        <StackPanel Grid.Column="1" Margin="0 0 16 0">
+        <StackPanel Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0 0 16 0">
             <TextBlock Style="{StaticResource SetHeader}" Text="Win10" />
             <TextBlock Style="{StaticResource SetCaption}" Text="Styles/Win10/Controls.xaml, merged into this column alone." />
-            <ContentControl ContentTemplate="{StaticResource TheSameControls}">
+        </StackPanel>
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="1"
+                      Margin="0 0 16 0"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <ContentControl ContentTemplate="{StaticResource TheSameControls}" Style="{StaticResource Column}">
                 <ContentControl.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
@@ -242,12 +273,17 @@
                     </ResourceDictionary>
                 </ContentControl.Resources>
             </ContentControl>
-        </StackPanel>
+        </ScrollViewer>
 
-        <StackPanel Grid.Column="2">
+        <StackPanel Grid.Row="0" Grid.Column="2">
             <TextBlock Style="{StaticResource SetHeader}" Text="WinUI" />
             <TextBlock Style="{StaticResource SetCaption}" Text="Styles/WinUI/Controls.xaml, which stands on the Win10 one." />
-            <ContentControl ContentTemplate="{StaticResource TheSameControls}">
+        </StackPanel>
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="2"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <ContentControl ContentTemplate="{StaticResource TheSameControls}" Style="{StaticResource Column}">
                 <ContentControl.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
@@ -256,7 +292,7 @@
                     </ResourceDictionary>
                 </ContentControl.Resources>
             </ContentControl>
-        </StackPanel>
+        </ScrollViewer>
 
     </Grid>
 </mah:MetroWindow>

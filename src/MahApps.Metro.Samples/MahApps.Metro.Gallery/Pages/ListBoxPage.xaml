@@ -48,7 +48,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="WinUIExample"
-                                     Description="And the WinUI one. WinUI never drew its own list box a second time, so this is the row its list view has, which is what Windows 11 shows a list as: a rounded tile filled a shade off the ground, the same fill whether the row is picked or only under the pointer, the text the same colour throughout, and the accent kept for the short bar along the left edge."
+                                     Description="And the WinUI one. WinUI never drew its own list box a second time: the row it carries is the Windows 10 row in the newer neutrals, square rather than rounded, with the accent turned right down behind the row that is picked and a step up of it under the pointer. The rounded tile and the bar along the left edge are what its list view shows, not this."
                                      Header="The WinUI look">
                 <smtx:XamlDisplay UniqueKey="ListBox.WinUI">
                     <ListBox x:Name="WinUI"
