@@ -581,6 +581,10 @@ namespace MahApps.Metro.Controls
         {
             var timePartPickerBase = (TimePickerBase)d;
 
+            // The time of day is this value without its date, so it follows the value itself,
+            // the paths included that the guard below keeps away from the parts of the control.
+            timePartPickerBase.SetCurrentValue(SelectedTimeProperty, (e.NewValue as DateTime?)?.TimeOfDay);
+
             if (timePartPickerBase.deactivateRangeBaseEvent)
             {
                 return;
@@ -603,6 +607,50 @@ namespace MahApps.Metro.Controls
         {
             get => (DateTime?)this.GetValue(SelectedDateTimeProperty);
             set => this.SetValue(SelectedDateTimeProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="SelectedTime"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedTimeProperty
+            = DependencyProperty.Register(nameof(SelectedTime),
+                                          typeof(TimeSpan?),
+                                          typeof(TimePickerBase),
+                                          new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged));
+
+        private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePartPickerBase = (TimePickerBase)d;
+
+            if (e.NewValue is not TimeSpan time)
+            {
+                timePartPickerBase.SetCurrentValue(SelectedDateTimeProperty, null);
+                return;
+            }
+
+            // The day this time of day belongs to is the one already selected. Without one it is
+            // today and without a kind, which is what the drop-down and the text box produce.
+            var date = timePartPickerBase.SelectedDateTime ?? DateTime.SpecifyKind(DateTime.Today, DateTimeKind.Unspecified);
+
+            timePartPickerBase.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
+        }
+
+        /// <summary>
+        ///     Gets or sets the currently selected time of day, which is <see cref="SelectedDateTime"/>
+        ///     without the day it falls on.
+        /// </summary>
+        /// <remarks>
+        /// The two follow each other, so a model that keeps a <see cref="TimeSpan"/> can be bound
+        /// here and needs no converter on the way. Set, this one keeps the day that is already
+        /// selected and puts its own time on it, or settles on today where there is none; a value
+        /// past a day takes the date along, the way adding it to that day would. Null clears the
+        /// selection.
+        /// </remarks>
+        /// <returns>
+        ///     The time of day which is currently selected. The default is null.
+        /// </returns>
+        public TimeSpan? SelectedTime
+        {
+            get => (TimeSpan?)this.GetValue(SelectedTimeProperty);
+            set => this.SetValue(SelectedTimeProperty, value);
         }
 
         /// <summary>Identifies the <see cref="SelectedTimeFormat"/> dependency property.</summary>
