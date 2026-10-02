@@ -383,6 +383,7 @@ namespace MahApps.Metro.Controls
                   { typeof(DecimalUpDown), DecimalUpDown.ValueProperty },
                   { typeof(IntegerUpDown), IntegerUpDown.ValueProperty },
                   { typeof(LongUpDown), LongUpDown.ValueProperty },
+                  { typeof(TimeSpanUpDown), TimeSpanUpDown.ValueProperty },
                   { typeof(HotKeyBox), HotKeyBox.HotKeyProperty },
                   { typeof(DatePicker), DatePicker.SelectedDateProperty },
                   { typeof(TimePicker), TimePickerBase.SelectedDateTimeProperty },

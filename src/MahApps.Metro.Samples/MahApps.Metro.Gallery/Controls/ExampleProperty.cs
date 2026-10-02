@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -242,17 +243,38 @@ namespace MahApps.Metro.Gallery.Controls
         /// </summary>
         private static object? Bring(object value, Type wanted)
         {
-            if (value.GetType() == wanted || !typeof(IConvertible).IsAssignableFrom(wanted) || wanted.IsEnum)
+            if (value.GetType() == wanted || wanted.IsEnum)
+            {
+                return value;
+            }
+
+            if (typeof(IConvertible).IsAssignableFrom(wanted))
+            {
+                try
+                {
+                    return System.Convert.ChangeType(value, wanted, CultureInfo.InvariantCulture);
+                }
+                catch (Exception exception) when (exception is InvalidCastException or FormatException or OverflowException)
+                {
+                    return value;
+                }
+            }
+
+            // and a type that is no number at all but can be read out of text, which is what the
+            // text box in front of it writes: the Interval of a TimeSpanUpDown is one of those.
+            var converter = TypeDescriptor.GetConverter(wanted);
+            if (!converter.CanConvertFrom(value.GetType()))
             {
                 return value;
             }
 
             try
             {
-                return System.Convert.ChangeType(value, wanted, CultureInfo.InvariantCulture);
+                return converter.ConvertFrom(null, CultureInfo.InvariantCulture, value);
             }
-            catch (Exception exception) when (exception is InvalidCastException or FormatException or OverflowException)
+            catch (Exception exception) when (exception is FormatException or NotSupportedException or ArgumentException)
             {
+                // half of what will be a value once it is typed out, so it stays text for now
                 return value;
             }
         }
@@ -287,7 +309,12 @@ namespace MahApps.Metro.Gallery.Controls
                         : null;
                 }
 
-                return Bring(value, Nullable.GetUnderlyingType(targetType) ?? targetType);
+                var wanted = Nullable.GetUnderlyingType(targetType) ?? targetType;
+                var brought = Bring(value, wanted);
+
+                // text that does not read as the type yet, half of a TimeSpan for one, leaves the
+                // property with what it has rather than being refused at it
+                return brought is null || wanted.IsInstanceOfType(brought) ? brought : Binding.DoNothing;
             }
         }
     }

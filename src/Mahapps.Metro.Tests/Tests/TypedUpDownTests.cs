@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +40,7 @@ namespace MahApps.Metro.Tests.Tests
             this.window?.TheDecimal.ClearDependencyProperties();
             this.window?.TheInteger.ClearDependencyProperties();
             this.window?.TheLong.ClearDependencyProperties();
+            this.window?.TheTimeSpan.ClearDependencyProperties();
         }
 
         [TearDown]
@@ -50,6 +52,7 @@ namespace MahApps.Metro.Tests.Tests
             this.window?.TheDecimal.FindChild<TextBox>()?.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
             this.window?.TheInteger.FindChild<TextBox>()?.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
             this.window?.TheLong.FindChild<TextBox>()?.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+            this.window?.TheTimeSpan.FindChild<TextBox>()?.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
         [Test]
@@ -58,7 +61,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             Assert.That(this.window, Is.Not.Null);
 
-            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong };
+            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong, this.window.TheTimeSpan };
 
             Assert.Multiple(() =>
                 {
@@ -95,6 +98,10 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(this.window.TheLong.Minimum, Is.EqualTo(long.MinValue));
                     Assert.That(this.window.TheLong.Maximum, Is.EqualTo(long.MaxValue));
                     Assert.That(this.window.TheLong.Interval, Is.EqualTo(1L));
+
+                    Assert.That(this.window.TheTimeSpan.Minimum, Is.EqualTo(TimeSpan.MinValue));
+                    Assert.That(this.window.TheTimeSpan.Maximum, Is.EqualTo(TimeSpan.MaxValue));
+                    Assert.That(this.window.TheTimeSpan.Interval, Is.EqualTo(TimeSpan.FromMinutes(1)));
                 });
         }
 
@@ -259,8 +266,9 @@ namespace MahApps.Metro.Tests.Tests
             this.window.TheDecimal.SetCurrentValue(DecimalUpDown.ValueProperty, 12m);
             this.window.TheInteger.SetCurrentValue(IntegerUpDown.ValueProperty, 12);
             this.window.TheLong.SetCurrentValue(LongUpDown.ValueProperty, 12L);
+            this.window.TheTimeSpan.SetCurrentValue(TimeSpanUpDown.ValueProperty, TimeSpan.FromMinutes(12));
 
-            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong };
+            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong, this.window.TheTimeSpan };
 
             foreach (var control in controls)
             {
@@ -274,6 +282,7 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(this.window.TheDecimal.Value, Is.Null, "decimal");
                     Assert.That(this.window.TheInteger.Value, Is.Null, "int");
                     Assert.That(this.window.TheLong.Value, Is.Null, "long");
+                    Assert.That(this.window.TheTimeSpan.Value, Is.Null, "TimeSpan");
                 });
         }
 
@@ -283,7 +292,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             Assert.That(this.window, Is.Not.Null);
 
-            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong };
+            NumericUpDownBase[] controls = { this.window.TheDouble, this.window.TheDecimal, this.window.TheInteger, this.window.TheLong, this.window.TheTimeSpan };
 
             foreach (var control in controls)
             {
@@ -294,6 +303,7 @@ namespace MahApps.Metro.Tests.Tests
             this.window.TheDecimal.SetCurrentValue(DecimalUpDown.ValueProperty, 12m);
             this.window.TheInteger.SetCurrentValue(IntegerUpDown.ValueProperty, 12);
             this.window.TheLong.SetCurrentValue(LongUpDown.ValueProperty, 12L);
+            this.window.TheTimeSpan.SetCurrentValue(TimeSpanUpDown.ValueProperty, TimeSpan.FromMinutes(12));
 
             Assert.Multiple(() =>
                 {
@@ -302,6 +312,76 @@ namespace MahApps.Metro.Tests.Tests
                         Assert.That(TextBoxHelper.GetHasText(control), Is.True, control.GetType().Name);
                     }
                 });
+        }
+
+        [Test]
+        [Description("GH-3718: a length of time is typed the way it is written, colons and all, which the number of a numeric control would never let through.")]
+        public void ATimeSpanIsTypedWithItsColons()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheTimeSpan.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            SetText(textBox, "01:30:00");
+
+            Assert.That(this.window.TheTimeSpan.Value, Is.EqualTo(TimeSpan.FromMinutes(90)));
+            Assert.That(textBox.Text, Is.EqualTo("1:30:00"));
+        }
+
+        [Test]
+        [Description("The step is the interval and nothing else, so it does not change with where the caret happens to stand.")]
+        public void ATimeSpanStepsByItsIntervalWhereverTheCaretStands()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheTimeSpan.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+
+            this.window.TheTimeSpan.SetCurrentValue(TimeSpanUpDown.IntervalProperty, TimeSpan.FromSeconds(30));
+            this.window.TheTimeSpan.SetCurrentValue(TimeSpanUpDown.ValueProperty, TimeSpan.FromHours(1));
+
+            // on the hours
+            textBox.CaretIndex = 0;
+            StepUp(this.window.TheTimeSpan);
+
+            Assert.That(this.window.TheTimeSpan.Value, Is.EqualTo(new TimeSpan(1, 0, 30)));
+
+            // and on the seconds
+            textBox.CaretIndex = textBox.Text.Length;
+            StepUp(this.window.TheTimeSpan);
+
+            Assert.That(this.window.TheTimeSpan.Value, Is.EqualTo(new TimeSpan(1, 1, 0)));
+        }
+
+        [Test]
+        [Description("A TimeSpan throws where a number would wrap, so both ends stop at what it can hold.")]
+        public void ATimeSpanStopsAtWhatItCanHold()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            this.window.TheTimeSpan.SetCurrentValue(TimeSpanUpDown.ValueProperty, TimeSpan.MaxValue);
+
+            StepUp(this.window.TheTimeSpan);
+
+            Assert.That(this.window.TheTimeSpan.Value, Is.EqualTo(TimeSpan.MaxValue));
+        }
+
+        [Test]
+        [Description("Pasted text is searched for a length of time rather than for a number.")]
+        public void OnlyTheTimeIsPasted()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var textBox = this.window.TheTimeSpan.FindChild<TextBox>();
+            Assert.That(textBox, Is.Not.Null);
+            textBox.Clear();
+
+            var args = new DataObjectPastingEventArgs(new DataObject(DataFormats.Text, "runs for 1:30:00 or so"), false, DataFormats.Text);
+            textBox.RaiseEvent(args);
+
+            Assert.That(args.CommandCancelled, Is.False, "the paste should go through");
+            Assert.That(args.DataObject.GetData(DataFormats.Text), Is.EqualTo("1:30:00"));
         }
 
         private static void StepUp(NumericUpDownBase control)

@@ -13,6 +13,7 @@
         <mah:DecimalUpDown x:Name="TheDecimal" Culture="en-GB" />
         <mah:IntegerUpDown x:Name="TheInteger" Culture="en-GB" />
         <mah:LongUpDown x:Name="TheLong" Culture="en-GB" />
+        <mah:TimeSpanUpDown x:Name="TheTimeSpan" Culture="en-GB" />
         <mah:DecimalUpDown x:Name="TheBoundDecimal"
                            Culture="en-GB"
                            Value="{Binding Price, Mode=TwoWay}" />
