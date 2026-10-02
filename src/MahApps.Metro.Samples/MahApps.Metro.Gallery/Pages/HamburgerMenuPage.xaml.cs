@@ -3,9 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Gallery.Navigation;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -32,6 +36,10 @@ namespace MahApps.Metro.Gallery.Pages
             this.MenuExample.Watch("Layout", this.Menu, WidthProperty, HeightProperty);
 
             this.SpeakIn("en");
+
+            // Where the frame starts. A Page of its own rather than a Uri, so that the pages find
+            // each other next door whichever assembly they end up in.
+            this.JournalFrame.Navigate(new ReleasePage());
         }
 
         /// <summary>
@@ -42,6 +50,49 @@ namespace MahApps.Metro.Gallery.Pages
         private void OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
         {
             this.Menu.Content = (e.InvokedItem as HamburgerMenuItemBase)?.Tag;
+        }
+
+        /// <summary>
+        /// A row of the pane stands for a page, and that page is what the frame is told to show.
+        /// Nothing happens when it is the one already showing, since the pane and the frame keep
+        /// each other in step and would otherwise push one another round in circles.
+        /// </summary>
+        private void OnJournalItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
+        {
+            if ((e.InvokedItem as HamburgerMenuItemBase)?.Tag is Type page
+                && this.JournalFrame.Content?.GetType() != page
+                && Activator.CreateInstance(page) is { } content)
+            {
+                this.JournalFrame.Navigate(content);
+            }
+        }
+
+        /// <summary>
+        /// The journal decides what shows, so the pane follows it rather than the other way round:
+        /// a step back lights the row that page belongs to, and the two lists let go of each other
+        /// on their own, since picking in one of them clears the other.
+        /// </summary>
+        private void OnJournalNavigated(object sender, NavigationEventArgs e)
+        {
+            var page = e.Content?.GetType();
+
+            this.JournalMenu.SetCurrentValue(HamburgerMenu.SelectedItemProperty, RowFor(this.JournalMenu.ItemsSource, page));
+            this.JournalMenu.SetCurrentValue(HamburgerMenu.SelectedOptionsItemProperty, RowFor(this.JournalMenu.OptionsItemsSource, page));
+
+            static object? RowFor(object? rows, Type? page)
+            {
+                return (rows as IEnumerable)?.OfType<HamburgerMenuItemBase>().FirstOrDefault(row => row.Tag as Type == page);
+            }
+        }
+
+        private void OnJournalBack(object sender, RoutedEventArgs e)
+        {
+            this.JournalFrame.GoBack();
+        }
+
+        private void OnJournalForward(object sender, RoutedEventArgs e)
+        {
+            this.JournalFrame.GoForward();
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:navigation="clr-namespace:MahApps.Metro.Gallery.Navigation"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="600"
@@ -90,6 +91,80 @@
                                                            Tag="OptionsVisibility takes both of them away, and OptionsItemsSource is where they come from" />
                             </mah:HamburgerMenuItemCollection>
                         </mah:HamburgerMenu.OptionsItemsSource>
+                    </mah:HamburgerMenu>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+
+            <controls:ControlExample Description="A HamburgerMenu is a ContentControl, so its content can be a Frame, and a Frame keeps a journal. The items then navigate rather than hand the menu an object, which buys a step back and a step forward over everything that has been shown, the pages a link inside a page leads to included. Two things are worth copying. A navigation only happens when the page is not the one already there, since the pane and the frame keep each other in step and would otherwise push one another round in circles. And on Navigated the pane follows the journal rather than the other way round, which is what lights the right row up again when you walk back, options included. The frame hides its own navigation UI, and the two arrows above it are the ones a MetroNavigationWindow would otherwise draw for you." Header="Pages behind the items, and a journal to walk back through">
+                <smtx:XamlDisplay UniqueKey="HamburgerMenu.Journal">
+                    <mah:HamburgerMenu x:Name="JournalMenu"
+                                       Width="560"
+                                       Height="360"
+                                       HorizontalAlignment="Left"
+                                       DisplayMode="CompactInline"
+                                       IsPaneOpen="True"
+                                       ItemInvoked="OnJournalItemInvoked"
+                                       ItemTemplate="{DynamicResource MenuItem}"
+                                       OpenPaneLength="160"
+                                       OptionsItemTemplate="{DynamicResource MenuItem}">
+                        <mah:HamburgerMenu.ItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TagOutline, Width=18, Height=18}"
+                                                           Label="Release"
+                                                           Tag="{x:Type navigation:ReleasePage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=BugOutline, Width=18, Height=18}"
+                                                           Label="Issues"
+                                                           Tag="{x:Type navigation:IssuesPage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountGroupOutline, Width=18, Height=18}"
+                                                           Label="Team"
+                                                           Tag="{x:Type navigation:TeamPage}" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.ItemsSource>
+                        <mah:HamburgerMenu.OptionsItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}"
+                                                           Label="Settings"
+                                                           Tag="{x:Type navigation:SettingsPage}" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.OptionsItemsSource>
+
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="4 4 2 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnJournalBack"
+                                        IsEnabled="{Binding ElementName=JournalFrame, Mode=OneWay, Path=CanGoBack}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Back">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE112;" />
+                                </Button>
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="2 4 4 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnJournalForward"
+                                        IsEnabled="{Binding ElementName=JournalFrame, Mode=OneWay, Path=CanGoForward}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Forward">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE111;" />
+                                </Button>
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                                           Text="{Binding ElementName=JournalFrame, Mode=OneWay, Path=Content.Title}" />
+                            </StackPanel>
+                            <Frame x:Name="JournalFrame"
+                                   JournalOwnership="OwnsJournal"
+                                   Navigated="OnJournalNavigated"
+                                   NavigationUIVisibility="Hidden" />
+                        </DockPanel>
                     </mah:HamburgerMenu>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
