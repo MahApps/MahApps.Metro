@@ -1,0 +1,49 @@
+﻿<tests:TestWindow x:Class="MahApps.Metro.Tests.Views.TextBoxButtonsWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                  d:DesignHeight="300"
+                  d:DesignWidth="300"
+                  mc:Ignorable="d">
+    <StackPanel>
+        <TextBox x:Name="TestTextBox"
+                 mah:TextBoxHelper.ClearTextButton="True"
+                 Text="42">
+            <mah:TextBoxHelper.Buttons>
+                <mah:TextBoxButtonCollection>
+                    <mah:TextBoxButton x:Name="TestFolderButton" Content="Ordner" />
+                    <mah:TextBoxButton x:Name="TestSearchButton" Content="Suchen" />
+                </mah:TextBoxButtonCollection>
+            </mah:TextBoxHelper.Buttons>
+        </TextBox>
+
+        <ComboBox x:Name="TestComboBox"
+                  mah:TextBoxHelper.ClearTextButton="True"
+                  IsEditable="True"
+                  Text="42">
+            <mah:TextBoxHelper.Buttons>
+                <mah:TextBoxButtonCollection>
+                    <mah:TextBoxButton x:Name="TestComboBoxButton" Content="Ordner" />
+                </mah:TextBoxButtonCollection>
+            </mah:TextBoxHelper.Buttons>
+        </ComboBox>
+
+        <!--  the clear button of this set is there only while the box has the keyboard, so the row has to keep it  -->
+        <TextBox x:Name="TestWin10Box"
+                 mah:TextBoxHelper.ClearTextButton="True"
+                 Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                 Text="42">
+            <mah:TextBoxHelper.Buttons>
+                <mah:TextBoxButtonCollection>
+                    <mah:TextBoxButton x:Name="TestTabStopButton"
+                                       Content="Ordner"
+                                       Focusable="True"
+                                       IsTabStop="True" />
+                </mah:TextBoxButtonCollection>
+            </mah:TextBoxHelper.Buttons>
+        </TextBox>
+    </StackPanel>
+</tests:TestWindow>
