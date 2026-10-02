@@ -351,5 +351,79 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(border, Is.Not.Null);
             Assert.That(border!.CornerRadius, Is.EqualTo(new CornerRadius(0)), "a picker without a corner radius should keep its square drop down");
         }
+
+        /// <summary>
+        /// GH-4080: the value of a picker is a DateTime, which a model that keeps a time of day in a
+        /// TimeSpan could only reach through a converter. SelectedTime is the same value without its
+        /// date, and the two follow each other whichever one is written to.
+        /// </summary>
+        [Test]
+        public void SelectedTimeShouldFollowTheSelectedValue()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, new DateTime(2016, 8, 31, 14, 42, 12));
+
+            Assert.That(picker.SelectedTime, Is.EqualTo(new TimeSpan(14, 42, 12)));
+
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+
+            Assert.That(picker.SelectedTime, Is.Null);
+        }
+
+        [Test]
+        public void TheSelectedValueShouldFollowSelectedTime()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, new DateTime(2016, 8, 31, 14, 42, 12));
+            picker.SetCurrentValue(TimePickerBase.SelectedTimeProperty, new TimeSpan(8, 15, 0));
+
+            // the day stays where it was, only the time of day moves
+            Assert.That(picker.SelectedDateTime, Is.EqualTo(new DateTime(2016, 8, 31, 8, 15, 0)));
+
+            picker.SetCurrentValue(TimePickerBase.SelectedTimeProperty, null);
+
+            Assert.That(picker.SelectedDateTime, Is.Null);
+        }
+
+        [Test]
+        public void SelectedTimeShouldSettleOnTodayWithoutADayOfItsOwn()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, null);
+
+            // The control reads the day itself, so bracket the change instead of reading it again
+            // afterwards. Both values are the same day unless the test crosses local midnight, and
+            // then either day is correct.
+            var before = DateTime.Today;
+            picker.SetCurrentValue(TimePickerBase.SelectedTimeProperty, new TimeSpan(8, 15, 0));
+            var after = DateTime.Today;
+
+            Assert.That(picker.SelectedDateTime, Is.Not.Null);
+            Assert.That(picker.SelectedDateTime!.Value.Date, Is.InRange(before, after));
+            Assert.That(picker.SelectedDateTime.Value.TimeOfDay, Is.EqualTo(new TimeSpan(8, 15, 0)));
+            Assert.That(picker.SelectedDateTime.Value.Kind, Is.EqualTo(DateTimeKind.Unspecified));
+        }
+
+        [Test]
+        public void SelectedTimePastADayShouldTakeTheDateAlong()
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = this.window.EmptyTimePicker;
+
+            picker.SetCurrentValue(TimePickerBase.SelectedDateTimeProperty, new DateTime(2016, 8, 31, 14, 42, 12));
+            picker.SetCurrentValue(TimePickerBase.SelectedTimeProperty, new TimeSpan(25, 0, 0));
+
+            Assert.That(picker.SelectedDateTime, Is.EqualTo(new DateTime(2016, 9, 1, 1, 0, 0)));
+            Assert.That(picker.SelectedTime, Is.EqualTo(new TimeSpan(1, 0, 0)));
+        }
     }
 }
