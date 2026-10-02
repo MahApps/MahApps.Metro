@@ -529,6 +529,74 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonsAlignmentProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="GetButtons(DependencyObject)"/> attached property.</summary>
+        /// <remarks>
+        /// A text control draws one button of its own, the one that clears it. These stand next to
+        /// it, and <see cref="ButtonsPlacementProperty"/> says on which side. A button is a visual
+        /// element and has one parent, so the collection belongs to the control it is written on and
+        /// cannot be handed to a second one through a style setter. In XAML the collection is named
+        /// along with the buttons, the way the behaviours of a style are:
+        /// <code>
+        /// &lt;mah:TextBoxHelper.Buttons&gt;
+        ///     &lt;mah:TextBoxButtonCollection&gt;
+        ///         &lt;mah:TextBoxButton Command="{Binding PickFolderCommand}" /&gt;
+        ///     &lt;/mah:TextBoxButtonCollection&gt;
+        /// &lt;/mah:TextBoxHelper.Buttons&gt;
+        /// </code>
+        /// </remarks>
+        public static readonly DependencyProperty ButtonsProperty
+            = DependencyProperty.RegisterAttached(
+                "Buttons",
+                typeof(TextBoxButtonCollection),
+                typeof(TextBoxHelper),
+                new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the buttons the control shows next to its clear button.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public static TextBoxButtonCollection? GetButtons(DependencyObject d)
+        {
+            return (TextBoxButtonCollection?)d.GetValue(ButtonsProperty);
+        }
+
+        /// <summary>
+        /// Sets the buttons the control shows next to its clear button.
+        /// </summary>
+        public static void SetButtons(DependencyObject obj, TextBoxButtonCollection? value)
+        {
+            obj.SetValue(ButtonsProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="GetButtonsPlacement(DependencyObject)"/> attached property.</summary>
+        public static readonly DependencyProperty ButtonsPlacementProperty
+            = DependencyProperty.RegisterAttached(
+                "ButtonsPlacement",
+                typeof(ButtonsPlacement),
+                typeof(TextBoxHelper),
+                new FrameworkPropertyMetadata(ButtonsPlacement.Inside, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets where the buttons of <see cref="ButtonsProperty"/> stand in relation to the clear button.
+        /// </summary>
+        /// <remarks>
+        /// Inside means next to the text, whichever side <see cref="ButtonsAlignmentProperty"/> leaves
+        /// the text on, so the two work together: the strip moves as a whole and keeps its order.
+        /// </remarks>
+        [Category(AppName.MahApps)]
+        public static ButtonsPlacement GetButtonsPlacement(DependencyObject d)
+        {
+            return (ButtonsPlacement)d.GetValue(ButtonsPlacementProperty);
+        }
+
+        /// <summary>
+        /// Sets where the buttons of <see cref="ButtonsProperty"/> stand in relation to the clear button.
+        /// </summary>
+        public static void SetButtonsPlacement(DependencyObject obj, ButtonsPlacement value)
+        {
+            obj.SetValue(ButtonsPlacementProperty, value);
+        }
+
         /// <summary>
         /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
         /// </summary>

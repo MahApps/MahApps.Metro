@@ -141,25 +141,66 @@
                                     </TextBlock>
                                 </ContentControl>
 
-                                <Button x:Name="PART_ClearText"
-                                        Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Grid.Column="1"
-                                        Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                        mah:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusRightConverter}}"
-                                        AutomationProperties.Name="{x:Static lang:Automation.Clear}"
-                                        Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                        CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                        CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                        Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                        ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                        Focusable="False"
-                                        FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                        FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                        IsTabStop="False"
-                                        Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-                                        Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                        Visibility="Visible" />
+                                <Grid x:Name="PART_ButtonsHost"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ItemsControl x:Name="PART_Buttons"
+                                                  mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                                  Focusable="False"
+                                                  IsTabStop="False"
+                                                  ItemContainerStyle="{DynamicResource MahApps.Styles.TextBoxButton}"
+                                                  ItemsSource="{TemplateBinding mah:TextBoxHelper.Buttons}">
+                                        <Grid.Column>
+                                            <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.Instance}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.Column>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                    <Button x:Name="PART_ClearText"
+                                            Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                            mah:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusRightConverter}}"
+                                            AutomationProperties.Name="{x:Static lang:Automation.Clear}"
+                                            Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                            CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                            CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                            Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                            ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                            Focusable="False"
+                                            FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                            FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                            IsTabStop="False"
+                                            Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                            Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                            Visibility="Visible">
+                                        <Grid.Column>
+                                            <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.ClearButton}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.Column>
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Border>
 
@@ -187,7 +228,7 @@
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ButtonsHost" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ClearText" Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusLeftConverter}}" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
@@ -423,25 +464,66 @@
                                     </TextBlock>
                                 </ContentControl>
 
-                                <Button x:Name="PART_ClearText"
-                                        Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Grid.Column="1"
-                                        Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                        mah:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusRightConverter}}"
-                                        BorderThickness="0"
-                                        Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                        CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                        CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                        Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                        ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                        Focusable="False"
-                                        FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                        FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                        IsTabStop="False"
-                                        Style="{DynamicResource MahApps.Styles.Button.TextControl.Delete}"
-                                        Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                        Visibility="Visible" />
+                                <Grid x:Name="PART_ButtonsHost"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ItemsControl x:Name="PART_Buttons"
+                                                  mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                                  Focusable="False"
+                                                  IsTabStop="False"
+                                                  ItemContainerStyle="{DynamicResource MahApps.Styles.TextBoxButton.Win10}"
+                                                  ItemsSource="{TemplateBinding mah:TextBoxHelper.Buttons}">
+                                        <Grid.Column>
+                                            <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.Instance}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.Column>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                    <Button x:Name="PART_ClearText"
+                                            Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                            mah:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusRightConverter}}"
+                                            BorderThickness="0"
+                                            Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                            CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                            CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                            Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                            ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                            Focusable="False"
+                                            FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                            FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                            IsTabStop="False"
+                                            Style="{DynamicResource MahApps.Styles.Button.TextControl.Delete}"
+                                            Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                            Visibility="Visible">
+                                        <Grid.Column>
+                                            <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.ClearButton}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.Column>
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Grid>
@@ -471,14 +553,14 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
-                                <Condition Property="IsKeyboardFocused" Value="False" />
+                                <Condition Property="IsKeyboardFocusWithin" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ButtonsHost" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ClearText" Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusLeftConverter}}" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
@@ -692,25 +774,66 @@
                                     </TextBlock>
                                 </ContentControl>
 
-                                <Button x:Name="PART_ClearText"
-                                        Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Grid.Column="1"
-                                        Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                        mah:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusRightConverter}}"
-                                        BorderThickness="0"
-                                        Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                        CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                        CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                        Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                        ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                        Focusable="False"
-                                        FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                        FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                        IsTabStop="False"
-                                        Style="{DynamicResource MahApps.Styles.Button.TextControl.Delete}"
-                                        Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                        Visibility="Visible" />
+                                <Grid x:Name="PART_ButtonsHost"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ItemsControl x:Name="PART_Buttons"
+                                                  mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                                  Focusable="False"
+                                                  IsTabStop="False"
+                                                  ItemContainerStyle="{DynamicResource MahApps.Styles.TextBoxButton.WinUI}"
+                                                  ItemsSource="{TemplateBinding mah:TextBoxHelper.Buttons}">
+                                        <Grid.Column>
+                                            <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.Instance}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.Column>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                    <Button x:Name="PART_ClearText"
+                                            Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                            mah:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusRightConverter}}"
+                                            BorderThickness="0"
+                                            Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                            CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                            CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                            Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                            ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                            Focusable="False"
+                                            FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                            FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                            IsTabStop="False"
+                                            Style="{DynamicResource MahApps.Styles.Button.TextControl.Delete}"
+                                            Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                            Visibility="Visible">
+                                        <Grid.Column>
+                                            <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.ClearButton}">
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                                <Binding Mode="OneWay"
+                                                         Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                                            </MultiBinding>
+                                        </Grid.Column>
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Border>
 
@@ -753,14 +876,14 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
-                                <Condition Property="IsKeyboardFocused" Value="False" />
+                                <Condition Property="IsKeyboardFocusWithin" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.ButtonsAlignment)}" Value="Left">
                             <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ButtonsHost" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_ClearText" Property="mah:ControlsHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusLeftConverter}}" />
                             <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="1" />
