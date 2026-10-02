@@ -6,6 +6,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:navigation="clr-namespace:MahApps.Metro.Gallery.Navigation"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="600"
@@ -90,6 +91,191 @@
                                                            Tag="OptionsVisibility takes both of them away, and OptionsItemsSource is where they come from" />
                             </mah:HamburgerMenuItemCollection>
                         </mah:HamburgerMenu.OptionsItemsSource>
+                    </mah:HamburgerMenu>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+
+            <controls:ControlExample Description="A HamburgerMenu is a ContentControl, so its content can be a Frame, and a Frame keeps a journal. The items then navigate rather than hand the menu an object, which buys a step back and a step forward over everything that has been shown, the pages a link inside a page leads to included. Two things are worth copying. A navigation only happens when the page is not the one already there, since the pane and the frame keep each other in step and would otherwise push one another round in circles. And on Navigated the pane follows the journal rather than the other way round, which is what lights the right row up again when you walk back, options included. The frame hides its own navigation UI, and the two arrows above it are the ones a MetroNavigationWindow would otherwise draw for you." Header="Pages behind the items, and a journal to walk back through">
+                <smtx:XamlDisplay UniqueKey="HamburgerMenu.Journal">
+                    <mah:HamburgerMenu x:Name="JournalMenu"
+                                       Width="560"
+                                       Height="360"
+                                       HorizontalAlignment="Left"
+                                       DisplayMode="CompactInline"
+                                       IsPaneOpen="True"
+                                       ItemInvoked="OnJournalItemInvoked"
+                                       ItemTemplate="{DynamicResource MenuItem}"
+                                       OpenPaneLength="160"
+                                       OptionsItemTemplate="{DynamicResource MenuItem}">
+                        <mah:HamburgerMenu.ItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TagOutline, Width=18, Height=18}"
+                                                           Label="Release"
+                                                           Tag="{x:Type navigation:ReleasePage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=BugOutline, Width=18, Height=18}"
+                                                           Label="Issues"
+                                                           Tag="{x:Type navigation:IssuesPage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountGroupOutline, Width=18, Height=18}"
+                                                           Label="Team"
+                                                           Tag="{x:Type navigation:TeamPage}" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.ItemsSource>
+                        <mah:HamburgerMenu.OptionsItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CogOutline, Width=18, Height=18}"
+                                                           Label="Settings"
+                                                           Tag="{x:Type navigation:SettingsPage}" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.OptionsItemsSource>
+
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="4 4 2 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnJournalBack"
+                                        IsEnabled="{Binding ElementName=JournalFrame, Mode=OneWay, Path=CanGoBack}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Back">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE112;" />
+                                </Button>
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="2 4 4 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnJournalForward"
+                                        IsEnabled="{Binding ElementName=JournalFrame, Mode=OneWay, Path=CanGoForward}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Forward">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE111;" />
+                                </Button>
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                                           Text="{Binding ElementName=JournalFrame, Mode=OneWay, Path=Content.Title}" />
+                            </StackPanel>
+                            <Frame x:Name="JournalFrame"
+                                   JournalOwnership="OwnsJournal"
+                                   Navigated="OnJournalNavigated"
+                                   NavigationUIVisibility="Hidden" />
+                        </DockPanel>
+                    </mah:HamburgerMenu>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+
+            <controls:ControlExample x:Name="TransitionExample"
+                                     Description="The same thing again, with the pages sliding in. A frame shows what it has navigated to in a plain presenter, so the swap is instant and nothing animates. Give the frame a template whose presenter is the TransitioningContentControl this library already ships, and every navigation animates with nothing behind it: no handler on Navigating, no storyboard of your own, no walk through the visual tree to find the thing to run it on. Transition is an attached property, so it can be written on the frame and the template reads it off there. It has to read it rather than inherit it, since a frame is where property value inheritance stops, which is the same reason a page inside one needs the page style. RestartTransitionOnContentChange keeps a quick second click from waiting for the first one to finish. Pick Custom in the option and a visual state of the template&apos;s own plays instead: the arriving page fades in over 150 ms and slides up from 200 units with an ease on the way, which is the animation this started out as in a sample of its own years ago. There it took a storyboard, an attached property and a handler on Navigating to run it. Here it is a VisualState in CustomVisualStates, named after CustomVisualStatesName, and the control runs it. The page on its way out fades with it, because the control keeps two presenters rather than one."
+                                     Header="The same, with the pages sliding in">
+                <smtx:XamlDisplay UniqueKey="HamburgerMenu.Transition">
+                    <mah:HamburgerMenu x:Name="TransitionMenu"
+                                       Width="480"
+                                       Height="360"
+                                       HorizontalAlignment="Left"
+                                       DisplayMode="CompactInline"
+                                       IsPaneOpen="True"
+                                       ItemInvoked="OnTransitionItemInvoked"
+                                       ItemTemplate="{DynamicResource MenuItem}"
+                                       OpenPaneLength="160">
+                        <mah:HamburgerMenu.Resources>
+                            <Style x:Key="FrameWithATransition" TargetType="{x:Type Frame}">
+                                <Setter Property="ClipToBounds" Value="True" />
+                                <Setter Property="JournalOwnership" Value="OwnsJournal" />
+                                <Setter Property="NavigationUIVisibility" Value="Hidden" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Frame}">
+                                            <mah:TransitioningContentControl Content="{TemplateBinding Content}"
+                                                                             RestartTransitionOnContentChange="True"
+                                                                             Transition="{TemplateBinding mah:TransitioningContentControl.Transition}">
+                                                <mah:TransitioningContentControl.CustomVisualStates>
+                                                    <VisualState x:Name="CustomTransition">
+                                                        <Storyboard>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00.150" Value="1" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="200" />
+                                                                <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1"
+                                                                                      KeyTime="00:00:00.300"
+                                                                                      Value="0" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00.150" Value="0" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </mah:TransitioningContentControl.CustomVisualStates>
+                                            </mah:TransitioningContentControl>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </mah:HamburgerMenu.Resources>
+                        <mah:HamburgerMenu.ItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TagOutline, Width=18, Height=18}"
+                                                           Label="Release"
+                                                           Tag="{x:Type navigation:ReleasePage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=BugOutline, Width=18, Height=18}"
+                                                           Label="Issues"
+                                                           Tag="{x:Type navigation:IssuesPage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountGroupOutline, Width=18, Height=18}"
+                                                           Label="Team"
+                                                           Tag="{x:Type navigation:TeamPage}" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.ItemsSource>
+
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="4 4 2 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnTransitionBack"
+                                        IsEnabled="{Binding ElementName=TransitionFrame, Mode=OneWay, Path=CanGoBack}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Back">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE112;" />
+                                </Button>
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="2 4 4 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnTransitionForward"
+                                        IsEnabled="{Binding ElementName=TransitionFrame, Mode=OneWay, Path=CanGoForward}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Forward">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE111;" />
+                                </Button>
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                                           Text="{Binding ElementName=TransitionFrame, Mode=OneWay, Path=Content.Title}" />
+                            </StackPanel>
+                            <Frame x:Name="TransitionFrame"
+                                   mah:TransitioningContentControl.Transition="LeftReplace"
+                                   Navigated="OnTransitionNavigated"
+                                   Style="{DynamicResource FrameWithATransition}" />
+                        </DockPanel>
                     </mah:HamburgerMenu>
                 </smtx:XamlDisplay>
             </controls:ControlExample>

@@ -1,0 +1,27 @@
+﻿<Page x:Class="MahApps.Metro.Gallery.Navigation.TeamPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="Team"
+      d:DesignHeight="300"
+      d:DesignWidth="600"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <TextBlock FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                       Text="Three people sign a release off"
+                       TextWrapping="Wrap" />
+            <TextBlock Margin="0 12 0 0"
+                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                       TextWrapping="Wrap">
+                <Run Text="Walk back from here and every page you came through is still in the journal, in the order you saw it. Walk forward again and the frame hands them back without building them a second time." />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="What they have yet to agree on: " /><Hyperlink NavigateUri="IssuesPage.xaml">the 7 on the milestone</Hyperlink><Run Text="." />
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

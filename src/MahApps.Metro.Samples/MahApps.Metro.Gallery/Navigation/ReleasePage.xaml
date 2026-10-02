@@ -1,0 +1,27 @@
+﻿<Page x:Class="MahApps.Metro.Gallery.Navigation.ReleasePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="Release 42"
+      d:DesignHeight="300"
+      d:DesignWidth="600"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <TextBlock FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                       Text="Due in two weeks"
+                       TextWrapping="Wrap" />
+            <TextBlock Margin="0 12 0 0"
+                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                       TextWrapping="Wrap">
+                <Run Text="This is a Page like any other, and the frame in the content of the menu is what shows it. A link on it goes into the same frame and onto the same journal, so it makes no difference afterwards whether you came here from the pane or from a line of text." />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="What is left for this one: " /><Hyperlink NavigateUri="IssuesPage.xaml">the 42 issues still open</Hyperlink><Run Text=", and " /><Hyperlink NavigateUri="TeamPage.xaml">the three who sign it off</Hyperlink><Run Text="." />
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,27 @@
+﻿<Page x:Class="MahApps.Metro.Gallery.Navigation.IssuesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="Issues"
+      d:DesignHeight="300"
+      d:DesignWidth="600"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <TextBlock FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                       Text="42 open, 7 of them on the milestone"
+                       TextWrapping="Wrap" />
+            <TextBlock Margin="0 12 0 0"
+                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                       TextWrapping="Wrap">
+                <Run Text="The row in the pane lit up on its own when you arrived here, because the pane reads the journal rather than the other way round. That is what makes the arrow above work: it takes a step back and the pane follows." />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="A link does the opposite and adds one, so " /><Hyperlink NavigateUri="ReleasePage.xaml">back to the release</Hyperlink><Run Text=" leaves the arrow with something to do, and " /><Hyperlink NavigateUri="TeamPage.xaml">the three who sign it off</Hyperlink><Run Text=" are one step further again." />
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
