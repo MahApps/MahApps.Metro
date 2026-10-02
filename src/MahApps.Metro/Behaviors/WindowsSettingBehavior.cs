@@ -5,8 +5,10 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
@@ -67,7 +69,26 @@ namespace MahApps.Metro.Behaviors
 
         private void CurrentApplicationSessionEnding(object? sender, SessionEndingCancelEventArgs e)
         {
-            this.SaveWindowState();
+            // The session ending is raised on the thread the Application lives on, and the window this
+            // behavior belongs to can live on another one, which is the case the handler was attached for.
+            // Reading the associated object from the wrong thread throws, and since this runs while Windows
+            // asks whether it may end the session, the log off then hangs on an application that no longer
+            // answers. So the save goes back to the window's own thread, and a thread that does not answer
+            // within a second is left alone rather than kept waiting for.
+            if (this.Dispatcher.CheckAccess())
+            {
+                this.SaveWindowState();
+                return;
+            }
+
+            try
+            {
+                this.Dispatcher.Invoke(this.SaveWindowState, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(1));
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"{this}: The window state could not be saved on the window's thread! {ex}");
+            }
         }
 
         private void AssociatedObject_StateChanged(object? sender, EventArgs e)
