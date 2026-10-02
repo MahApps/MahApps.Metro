@@ -171,7 +171,7 @@
 
 
             <controls:ControlExample x:Name="TransitionExample"
-                                     Description="The same thing again, with the pages sliding in. A frame shows what it has navigated to in a plain presenter, so the swap is instant and nothing animates. Give the frame a template whose presenter is the TransitioningContentControl this library already ships, and every navigation animates with nothing behind it: no handler on Navigating, no storyboard of your own, no walk through the visual tree to find the thing to run it on. Transition is an attached property, so it can be written on the frame and the template reads it off there. It has to read it rather than inherit it, since a frame is where property value inheritance stops, which is the same reason a page inside one needs the page style. RestartTransitionOnContentChange keeps a quick second click from waiting for the first one to finish."
+                                     Description="The same thing again, with the pages sliding in. A frame shows what it has navigated to in a plain presenter, so the swap is instant and nothing animates. Give the frame a template whose presenter is the TransitioningContentControl this library already ships, and every navigation animates with nothing behind it: no handler on Navigating, no storyboard of your own, no walk through the visual tree to find the thing to run it on. Transition is an attached property, so it can be written on the frame and the template reads it off there. It has to read it rather than inherit it, since a frame is where property value inheritance stops, which is the same reason a page inside one needs the page style. RestartTransitionOnContentChange keeps a quick second click from waiting for the first one to finish. Pick Custom in the option and a visual state of the template&apos;s own plays instead: the arriving page fades in over 150 ms and slides up from 200 units with an ease on the way, which is the animation this started out as in a sample of its own years ago. There it took a storyboard, an attached property and a handler on Navigating to run it. Here it is a VisualState in CustomVisualStates, named after CustomVisualStatesName, and the control runs it. The page on its way out fades with it, because the control keeps two presenters rather than one."
                                      Header="The same, with the pages sliding in">
                 <smtx:XamlDisplay UniqueKey="HamburgerMenu.Transition">
                     <mah:HamburgerMenu x:Name="TransitionMenu"
@@ -193,7 +193,34 @@
                                         <ControlTemplate TargetType="{x:Type Frame}">
                                             <mah:TransitioningContentControl Content="{TemplateBinding Content}"
                                                                              RestartTransitionOnContentChange="True"
-                                                                             Transition="{TemplateBinding mah:TransitioningContentControl.Transition}" />
+                                                                             Transition="{TemplateBinding mah:TransitioningContentControl.Transition}">
+                                                <mah:TransitioningContentControl.CustomVisualStates>
+                                                    <VisualState x:Name="CustomTransition">
+                                                        <Storyboard>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00.150" Value="1" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="200" />
+                                                                <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1"
+                                                                                      KeyTime="00:00:00.300"
+                                                                                      Value="0" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
+                                                                <SplineDoubleKeyFrame KeyTime="00:00:00.150" Value="0" />
+                                                            </DoubleAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                </mah:TransitioningContentControl.CustomVisualStates>
+                                            </mah:TransitioningContentControl>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
