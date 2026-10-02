@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,6 +35,14 @@ namespace MahApps.Metro.Gallery.Pages
                                      TextBoxHelper.WatermarkProperty,
                                      TextBoxHelper.ButtonsAlignmentProperty,
                                      TextBoxHelper.ButtonWidthProperty);
+
+            this.ButtonsExample.Watch(this.Buttons, TextBox.TextProperty, IsEnabledProperty);
+            this.ButtonsExample.Watch("Attached",
+                                      this.Buttons,
+                                      TextBoxHelper.ClearTextButtonProperty,
+                                      TextBoxHelper.ButtonsPlacementProperty,
+                                      TextBoxHelper.ButtonsAlignmentProperty,
+                                      ControlsHelper.CornerRadiusProperty);
 
             this.Win10Example.Watch(this.Win10, TextBox.TextProperty, IsEnabledProperty);
             this.Win10Example.Watch("Attached",
