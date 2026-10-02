@@ -9,17 +9,19 @@
       Style="{DynamicResource MahApps.Styles.Page}"
       mc:Ignorable="d">
 
-    <StackPanel Margin="20">
-        <TextBlock FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
-                   Text="42 open, 7 of them on the milestone"
-                   TextWrapping="Wrap" />
-        <TextBlock Margin="0 12 0 0"
-                   Style="{DynamicResource MahApps.Styles.TextBlock}"
-                   TextWrapping="Wrap">
-            <Run Text="The row in the pane lit up on its own when you arrived here, because the pane reads the journal rather than the other way round. That is what makes the arrow above work: it takes a step back and the pane follows." />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="A link does the opposite and adds one, so " /><Hyperlink NavigateUri="ReleasePage.xaml">back to the release</Hyperlink><Run Text=" leaves the arrow with something to do, and " /><Hyperlink NavigateUri="TeamPage.xaml">the three who sign it off</Hyperlink><Run Text=" are one step further again." />
-        </TextBlock>
-    </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <TextBlock FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                       Text="42 open, 7 of them on the milestone"
+                       TextWrapping="Wrap" />
+            <TextBlock Margin="0 12 0 0"
+                       Style="{DynamicResource MahApps.Styles.TextBlock}"
+                       TextWrapping="Wrap">
+                <Run Text="The row in the pane lit up on its own when you arrived here, because the pane reads the journal rather than the other way round. That is what makes the arrow above work: it takes a step back and the pane follows." />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="A link does the opposite and adds one, so " /><Hyperlink NavigateUri="ReleasePage.xaml">back to the release</Hyperlink><Run Text=" leaves the arrow with something to do, and " /><Hyperlink NavigateUri="TeamPage.xaml">the three who sign it off</Hyperlink><Run Text=" are one step further again." />
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
 </Page>

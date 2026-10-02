@@ -170,6 +170,90 @@
             </controls:ControlExample>
 
 
+            <controls:ControlExample x:Name="TransitionExample"
+                                     Description="The same thing again, with the pages sliding in. A frame shows what it has navigated to in a plain presenter, so the swap is instant and nothing animates. Give the frame a template whose presenter is the TransitioningContentControl this library already ships, and every navigation animates with nothing behind it: no handler on Navigating, no storyboard of your own, no walk through the visual tree to find the thing to run it on. Transition is an attached property, so it can be written on the frame and the template reads it off there. It has to read it rather than inherit it, since a frame is where property value inheritance stops, which is the same reason a page inside one needs the page style. RestartTransitionOnContentChange keeps a quick second click from waiting for the first one to finish."
+                                     Header="The same, with the pages sliding in">
+                <smtx:XamlDisplay UniqueKey="HamburgerMenu.Transition">
+                    <mah:HamburgerMenu x:Name="TransitionMenu"
+                                       Width="480"
+                                       Height="360"
+                                       HorizontalAlignment="Left"
+                                       DisplayMode="CompactInline"
+                                       IsPaneOpen="True"
+                                       ItemInvoked="OnTransitionItemInvoked"
+                                       ItemTemplate="{DynamicResource MenuItem}"
+                                       OpenPaneLength="160">
+                        <mah:HamburgerMenu.Resources>
+                            <Style x:Key="FrameWithATransition" TargetType="{x:Type Frame}">
+                                <Setter Property="ClipToBounds" Value="True" />
+                                <Setter Property="JournalOwnership" Value="OwnsJournal" />
+                                <Setter Property="NavigationUIVisibility" Value="Hidden" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Frame}">
+                                            <mah:TransitioningContentControl Content="{TemplateBinding Content}"
+                                                                             RestartTransitionOnContentChange="True"
+                                                                             Transition="{TemplateBinding mah:TransitioningContentControl.Transition}" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </mah:HamburgerMenu.Resources>
+                        <mah:HamburgerMenu.ItemsSource>
+                            <mah:HamburgerMenuItemCollection>
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TagOutline, Width=18, Height=18}"
+                                                           Label="Release"
+                                                           Tag="{x:Type navigation:ReleasePage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=BugOutline, Width=18, Height=18}"
+                                                           Label="Issues"
+                                                           Tag="{x:Type navigation:IssuesPage}" />
+                                <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountGroupOutline, Width=18, Height=18}"
+                                                           Label="Team"
+                                                           Tag="{x:Type navigation:TeamPage}" />
+                            </mah:HamburgerMenuItemCollection>
+                        </mah:HamburgerMenu.ItemsSource>
+
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="4 4 2 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnTransitionBack"
+                                        IsEnabled="{Binding ElementName=TransitionFrame, Mode=OneWay, Path=CanGoBack}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Back">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE112;" />
+                                </Button>
+                                <Button Width="34"
+                                        Height="34"
+                                        Margin="2 4 4 4"
+                                        VerticalAlignment="Center"
+                                        Click="OnTransitionForward"
+                                        IsEnabled="{Binding ElementName=TransitionFrame, Mode=OneWay, Path=CanGoForward}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                                        ToolTip="Forward">
+                                    <mah:FontIcon FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                                  FontSize="20"
+                                                  Glyph="&#xE111;" />
+                                </Button>
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           FontSize="{DynamicResource MahApps.Font.Size.SubHeader}"
+                                           Text="{Binding ElementName=TransitionFrame, Mode=OneWay, Path=Content.Title}" />
+                            </StackPanel>
+                            <Frame x:Name="TransitionFrame"
+                                   mah:TransitioningContentControl.Transition="LeftReplace"
+                                   Navigated="OnTransitionNavigated"
+                                   Style="{DynamicResource FrameWithATransition}" />
+                        </DockPanel>
+                    </mah:HamburgerMenu>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+
             <controls:ControlExample x:Name="LanguageExample"
                                      Description="An app that carries its words in a resource dictionary swaps that dictionary when the language changes, and every label written as a DynamicResource follows. A menu item is not a plain data object for exactly this reason: the menu takes it into its logical tree, so it sees the dictionaries above it and hears about it when one of them is exchanged. Pick another language and watch the pane, including the options at its foot."
                                      Header="Labels that come out of a language dictionary">
