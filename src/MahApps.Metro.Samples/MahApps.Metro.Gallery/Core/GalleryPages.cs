@@ -160,7 +160,7 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    "Controls",
                                                                                    typeof(NumericUpDownPage),
                                                                                    PackIconMaterialKind.Counter,
-                                                                                   keywords: "number spinner value",
+                                                                                   keywords: "number spinner value timespan duration",
                                                                                    control: "Controls/NumericUpDown.cs"),
                                                                    new GalleryPage("ProgressRing",
                                                                                    "Controls",

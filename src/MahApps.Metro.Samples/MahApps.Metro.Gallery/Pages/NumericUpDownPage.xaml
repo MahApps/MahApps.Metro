@@ -14,65 +14,185 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="NumberExample"
-                                     Description="A text box that takes a number and nothing else, with a pair of buttons to step it."
+                                     Description="A text box that takes a number and nothing else, with a pair of buttons to step it. The three below are the same markup with the Metro, the Windows 10 and the WinUI style on the box, and the options drive all three at once."
                                      Header="A number to step through">
                 <smtx:XamlDisplay UniqueKey="NumericUpDown.Number">
-                    <mah:NumericUpDown x:Name="Number"
-                                       Width="220"
-                                       HorizontalAlignment="Left"
-                                       Interval="1"
-                                       Maximum="100"
-                                       Minimum="0"
-                                       Value="42" />
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:NumericUpDown x:Name="Number"
+                                           Width="220"
+                                           HorizontalAlignment="Left"
+                                           Interval="1"
+                                           Maximum="100"
+                                           Minimum="0"
+                                           Value="42" />
+
+                        <mah:NumericUpDown x:Name="NumberWin10"
+                                           Width="{Binding ElementName=Number, Path=Width}"
+                                           Margin="0 8 0 0"
+                                           HorizontalAlignment="Left"
+                                           smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                           HideUpDownButtons="{Binding ElementName=Number, Path=HideUpDownButtons}"
+                                           Interval="{Binding ElementName=Number, Path=Interval}"
+                                           Maximum="{Binding ElementName=Number, Path=Maximum}"
+                                           Minimum="{Binding ElementName=Number, Path=Minimum}"
+                                           NumericInputMode="{Binding ElementName=Number, Path=NumericInputMode}"
+                                           Style="{DynamicResource MahApps.Styles.NumericUpDown.Win10}"
+                                           Value="{Binding ElementName=Number, Path=Value}" />
+
+                        <mah:NumericUpDown x:Name="NumberWinUI"
+                                           Width="{Binding ElementName=Number, Path=Width}"
+                                           Margin="0 8 0 0"
+                                           HorizontalAlignment="Left"
+                                           smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                           HideUpDownButtons="{Binding ElementName=Number, Path=HideUpDownButtons}"
+                                           Interval="{Binding ElementName=Number, Path=Interval}"
+                                           Maximum="{Binding ElementName=Number, Path=Maximum}"
+                                           Minimum="{Binding ElementName=Number, Path=Minimum}"
+                                           NumericInputMode="{Binding ElementName=Number, Path=NumericInputMode}"
+                                           Style="{DynamicResource MahApps.Styles.NumericUpDown.WinUI}"
+                                           Value="{Binding ElementName=Number, Path=Value}" />
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="FormattedExample"
-                                     Description="The same box showing a share rather than a count, which is what StringFormat is for."
+                                     Description="The same box showing a share rather than a count, which is what StringFormat is for. SnapToMultipleOfInterval holds the value to a whole number of steps, however it was typed."
                                      Header="A number with a format">
                 <smtx:XamlDisplay UniqueKey="NumericUpDown.Formatted">
-                    <mah:NumericUpDown x:Name="Formatted"
-                                       Width="220"
-                                       HorizontalAlignment="Left"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       Interval="0.01"
-                                       Maximum="1"
-                                       Minimum="0"
-                                       StringFormat="P2"
-                                       Value="0.42" />
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:NumericUpDown x:Name="Formatted"
+                                           Width="220"
+                                           HorizontalAlignment="Left"
+                                           mah:TextBoxHelper.ClearTextButton="True"
+                                           Interval="0.01"
+                                           Maximum="1"
+                                           Minimum="0"
+                                           StringFormat="P2"
+                                           Value="0.42" />
+
+                        <mah:NumericUpDown x:Name="FormattedWin10"
+                                           Width="220"
+                                           Margin="0 8 0 0"
+                                           HorizontalAlignment="Left"
+                                           mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Formatted, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                           smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                           Interval="{Binding ElementName=Formatted, Path=Interval}"
+                                           Maximum="1"
+                                           Minimum="0"
+                                           SnapToMultipleOfInterval="{Binding ElementName=Formatted, Path=SnapToMultipleOfInterval}"
+                                           StringFormat="{Binding ElementName=Formatted, Path=StringFormat}"
+                                           Style="{DynamicResource MahApps.Styles.NumericUpDown.Win10}"
+                                           Value="{Binding ElementName=Formatted, Path=Value}" />
+
+                        <mah:NumericUpDown x:Name="FormattedWinUI"
+                                           Width="220"
+                                           Margin="0 8 0 0"
+                                           HorizontalAlignment="Left"
+                                           mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Formatted, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                           smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                           Interval="{Binding ElementName=Formatted, Path=Interval}"
+                                           Maximum="1"
+                                           Minimum="0"
+                                           SnapToMultipleOfInterval="{Binding ElementName=Formatted, Path=SnapToMultipleOfInterval}"
+                                           StringFormat="{Binding ElementName=Formatted, Path=StringFormat}"
+                                           Style="{DynamicResource MahApps.Styles.NumericUpDown.WinUI}"
+                                           Value="{Binding ElementName=Formatted, Path=Value}" />
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="ButtonsExample"
+                                     Description="The same three boxes, this time to turn the chrome on. The Windows 10 one is the text box of that set with a pair of buttons standing in it: the same fill, the same two units of frame, the same padding and the same delete button, a frame that turns into the accent once the caret is in, and buttons that carry no fill of their own until the pointer is over one of them. The WinUI one has rounded corners and a border a touch stronger along its bottom edge, which turns into the accent there while the caret is in; that edge is a border of its own, two units thick either way, so the box stays as tall as it was and nothing under it moves, and its chevrons stand in the quieter of the two text colours until the pointer reaches them. Switched off, all three say so with their colours rather than with a veil over them."
+                                     Header="The buttons">
+                <smtx:XamlDisplay UniqueKey="NumericUpDown.Buttons">
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:NumericUpDown x:Name="Buttons"
+                                           Width="220"
+                                           HorizontalAlignment="Left"
+                                           mah:TextBoxHelper.ClearTextButton="True"
+                                           mah:TextBoxHelper.Watermark="How many"
+                                           Interval="1"
+                                           Maximum="100"
+                                           Minimum="0"
+                                           Value="42" />
 
-            <controls:ControlExample x:Name="Win10Example"
-                                     Description="The box in the Windows 10 look, which is the text box of that set with a pair of buttons standing in it: the same fill, the same two units of frame, the same padding and the same delete button, and a frame that turns into the accent once the caret is in. The buttons carry no fill of their own until the pointer is over one of them. Switched off it says so with its colours rather than with a veil over it."
-                                     Header="The Windows 10 look">
-                <smtx:XamlDisplay UniqueKey="NumericUpDown.Win10">
-                    <mah:NumericUpDown x:Name="Win10"
-                                       Width="220"
-                                       HorizontalAlignment="Left"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       Interval="1"
-                                       Maximum="100"
-                                       Minimum="0"
-                                       Style="{DynamicResource MahApps.Styles.NumericUpDown.Win10}"
-                                       Value="42" />
+                        <mah:NumericUpDown x:Name="ButtonsWin10"
+                                           Width="220"
+                                           Margin="0 8 0 0"
+                                           HorizontalAlignment="Left"
+                                           mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                           mah:TextBoxHelper.Watermark="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.Watermark)}"
+                                           smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                           ButtonsAlignment="{Binding ElementName=Buttons, Path=ButtonsAlignment}"
+                                           HideUpDownButtons="{Binding ElementName=Buttons, Path=HideUpDownButtons}"
+                                           Interval="1"
+                                           IsEnabled="{Binding ElementName=Buttons, Path=IsEnabled}"
+                                           Maximum="100"
+                                           Minimum="0"
+                                           Style="{DynamicResource MahApps.Styles.NumericUpDown.Win10}"
+                                           SwitchUpDownButtons="{Binding ElementName=Buttons, Path=SwitchUpDownButtons}"
+                                           Value="{Binding ElementName=Buttons, Path=Value}" />
+
+                        <mah:NumericUpDown x:Name="ButtonsWinUI"
+                                           Width="220"
+                                           Margin="0 8 0 0"
+                                           HorizontalAlignment="Left"
+                                           mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                           mah:TextBoxHelper.Watermark="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.Watermark)}"
+                                           smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                           ButtonsAlignment="{Binding ElementName=Buttons, Path=ButtonsAlignment}"
+                                           HideUpDownButtons="{Binding ElementName=Buttons, Path=HideUpDownButtons}"
+                                           Interval="1"
+                                           IsEnabled="{Binding ElementName=Buttons, Path=IsEnabled}"
+                                           Maximum="100"
+                                           Minimum="0"
+                                           Style="{DynamicResource MahApps.Styles.NumericUpDown.WinUI}"
+                                           SwitchUpDownButtons="{Binding ElementName=Buttons, Path=SwitchUpDownButtons}"
+                                           Value="{Binding ElementName=Buttons, Path=Value}" />
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
-            <controls:ControlExample x:Name="WinUIExample"
-                                     Description="And the WinUI one: rounded corners and a border a touch stronger along its bottom edge, which turns into the accent there while the caret is in. That edge is a border of its own, two units thick either way, so the box stays as tall as it was and nothing under it moves. Its chevrons stand in the quieter of the two text colours until the pointer reaches them."
-                                     Header="The WinUI look">
-                <smtx:XamlDisplay UniqueKey="NumericUpDown.WinUI">
-                    <mah:NumericUpDown x:Name="WinUI"
-                                       Width="220"
-                                       HorizontalAlignment="Left"
-                                       mah:TextBoxHelper.ClearTextButton="True"
-                                       Interval="1"
-                                       Maximum="100"
-                                       Minimum="0"
-                                       Style="{DynamicResource MahApps.Styles.NumericUpDown.WinUI}"
-                                       Value="42" />
+            <controls:ControlExample x:Name="TimeSpanExample"
+                                     Description="The same control over a TimeSpan, for how long something runs rather than for a count. Interval is a TimeSpan as well, so the step is fixed wherever the caret stands: 00:00:30 counts in half minutes, 01:00:00 in hours. What is typed is read the way a TimeSpan is written, so a bare number is a count of days."
+                                     Header="A length of time">
+                <smtx:XamlDisplay UniqueKey="NumericUpDown.TimeSpan">
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:TimeSpanUpDown x:Name="Duration"
+                                            Width="220"
+                                            HorizontalAlignment="Left"
+                                            mah:TextBoxHelper.ClearTextButton="True"
+                                            Interval="00:00:30"
+                                            Maximum="1.00:00:00"
+                                            Minimum="00:00:00"
+                                            Value="00:30:00" />
+
+                        <mah:TimeSpanUpDown x:Name="DurationWin10"
+                                            Width="220"
+                                            Margin="0 8 0 0"
+                                            HorizontalAlignment="Left"
+                                            mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Duration, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                            smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                            HideUpDownButtons="{Binding ElementName=Duration, Path=HideUpDownButtons}"
+                                            Interval="{Binding ElementName=Duration, Path=Interval}"
+                                            Maximum="{Binding ElementName=Duration, Path=Maximum}"
+                                            Minimum="{Binding ElementName=Duration, Path=Minimum}"
+                                            Style="{DynamicResource MahApps.Styles.NumericUpDown.Win10}"
+                                            Value="{Binding ElementName=Duration, Path=Value}" />
+
+                        <mah:TimeSpanUpDown x:Name="DurationWinUI"
+                                            Width="220"
+                                            Margin="0 8 0 0"
+                                            HorizontalAlignment="Left"
+                                            mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Duration, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                            smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                            HideUpDownButtons="{Binding ElementName=Duration, Path=HideUpDownButtons}"
+                                            Interval="{Binding ElementName=Duration, Path=Interval}"
+                                            Maximum="{Binding ElementName=Duration, Path=Maximum}"
+                                            Minimum="{Binding ElementName=Duration, Path=Minimum}"
+                                            Style="{DynamicResource MahApps.Styles.NumericUpDown.WinUI}"
+                                            Value="{Binding ElementName=Duration, Path=Value}" />
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
