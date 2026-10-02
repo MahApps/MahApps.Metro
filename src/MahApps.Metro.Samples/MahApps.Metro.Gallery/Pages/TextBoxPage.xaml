@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
@@ -34,6 +35,95 @@
                              HorizontalAlignment="Left"
                              mah:TextBoxHelper.Watermark="Search"
                              Style="{DynamicResource MahApps.Styles.TextBox.Search}" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ButtonsExample"
+                                     Description="Beside the clear button the box takes buttons of your own, written into TextBoxHelper.Buttons. Each one is a MahApps TextBoxButton, which is a Button and nothing else, so it carries the content, the command and the tool tip a button carries, and what it looks like comes from the box it stands in: the three below are the same markup with the Metro, the Windows 10 and the WinUI style on the box, and the options drive all three at once. ButtonsPlacement says which side of the clear button they stand on, and ButtonsAlignment moves the whole row to the other side of the text and keeps that order while it does. The lower two draw their clear button only while the caret is in the box, the way a UWP box does, so put it there before you look for what the first two options did to them."
+                                     Header="Buttons of your own">
+                <smtx:XamlDisplay UniqueKey="TextBox.Buttons">
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <TextBox x:Name="Buttons"
+                                 Width="260"
+                                 HorizontalAlignment="Left"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Where the files are"
+                                 Text="C:\Reports\42">
+                            <mah:TextBoxHelper.Buttons>
+                                <mah:TextBoxButtonCollection>
+                                    <mah:TextBoxButton ToolTip="Pick a folder">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="FolderOpenOutline" />
+                                    </mah:TextBoxButton>
+                                    <mah:TextBoxButton ToolTip="Look inside it">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="Magnify" />
+                                    </mah:TextBoxButton>
+                                </mah:TextBoxButtonCollection>
+                            </mah:TextBoxHelper.Buttons>
+                        </TextBox>
+
+                        <TextBox x:Name="ButtonsWin10"
+                                 Width="260"
+                                 Margin="0 8 0 0"
+                                 HorizontalAlignment="Left"
+                                 mah:ControlsHelper.CornerRadius="{Binding ElementName=Buttons, Path=(mah:ControlsHelper.CornerRadius)}"
+                                 mah:TextBoxHelper.ButtonsAlignment="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ButtonsAlignment)}"
+                                 mah:TextBoxHelper.ButtonsPlacement="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ButtonsPlacement)}"
+                                 mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                 mah:TextBoxHelper.Watermark="Where the files are"
+                                 smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                 IsEnabled="{Binding ElementName=Buttons, Path=IsEnabled}"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                                 Text="{Binding ElementName=Buttons, Path=Text}">
+                            <mah:TextBoxHelper.Buttons>
+                                <mah:TextBoxButtonCollection>
+                                    <mah:TextBoxButton ToolTip="Pick a folder">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="FolderOpenOutline" />
+                                    </mah:TextBoxButton>
+                                    <mah:TextBoxButton ToolTip="Look inside it">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="Magnify" />
+                                    </mah:TextBoxButton>
+                                </mah:TextBoxButtonCollection>
+                            </mah:TextBoxHelper.Buttons>
+                        </TextBox>
+
+                        <TextBox x:Name="ButtonsWinUI"
+                                 Width="260"
+                                 Margin="0 8 0 0"
+                                 HorizontalAlignment="Left"
+                                 mah:ControlsHelper.CornerRadius="{Binding ElementName=Buttons, Path=(mah:ControlsHelper.CornerRadius)}"
+                                 mah:TextBoxHelper.ButtonsAlignment="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ButtonsAlignment)}"
+                                 mah:TextBoxHelper.ButtonsPlacement="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ButtonsPlacement)}"
+                                 mah:TextBoxHelper.ClearTextButton="{Binding ElementName=Buttons, Path=(mah:TextBoxHelper.ClearTextButton)}"
+                                 mah:TextBoxHelper.Watermark="Where the files are"
+                                 smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                 IsEnabled="{Binding ElementName=Buttons, Path=IsEnabled}"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.WinUI}"
+                                 Text="{Binding ElementName=Buttons, Path=Text}">
+                            <mah:TextBoxHelper.Buttons>
+                                <mah:TextBoxButtonCollection>
+                                    <mah:TextBoxButton ToolTip="Pick a folder">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="FolderOpenOutline" />
+                                    </mah:TextBoxButton>
+                                    <mah:TextBoxButton ToolTip="Look inside it">
+                                        <iconPacks:PackIconMaterial Width="14"
+                                                                    Height="14"
+                                                                    Kind="Magnify" />
+                                    </mah:TextBoxButton>
+                                </mah:TextBoxButtonCollection>
+                            </mah:TextBoxHelper.Buttons>
+                        </TextBox>
+
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

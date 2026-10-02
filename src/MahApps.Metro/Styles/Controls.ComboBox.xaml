@@ -163,26 +163,69 @@
                           UseLayoutRounding="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="TextColumn" Width="*" />
-                            <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                            <ColumnDefinition x:Name="ButtonColumn"
+                                              Width="Auto"
+                                              MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                              SharedSizeGroup="MahApps.ComboBox.Buttons" />
                             <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Button x:Name="PART_ClearText"
-                                Grid.Column="1"
-                                Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                AutomationProperties.Name="{x:Static lang:Automation.Clear}"
-                                Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                Focusable="False"
-                                FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                IsTabStop="False"
-                                Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-                                Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                Visibility="Visible" />
+                        <Grid x:Name="PART_ButtonsHost" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ItemsControl x:Name="PART_Buttons"
+                                          mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                          Focusable="False"
+                                          IsTabStop="False"
+                                          ItemContainerStyle="{DynamicResource MahApps.Styles.TextBoxButton}"
+                                          ItemsSource="{TemplateBinding mah:TextBoxHelper.Buttons}">
+                                <Grid.Column>
+                                    <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.Instance}">
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </Grid.Column>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+
+                            <Button x:Name="PART_ClearText"
+                                    Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                    AutomationProperties.Name="{x:Static lang:Automation.Clear}"
+                                    Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                    CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                    CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                    Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                    Focusable="False"
+                                    FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                    Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                    Visibility="Visible">
+                                <Grid.Column>
+                                    <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.ClearButton}">
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </Grid.Column>
+                            </Button>
+                        </Grid>
 
                         <Grid x:Name="BtnArrowBackground"
                               Grid.Column="2"
@@ -262,7 +305,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Grid x:Name="PART_InnerGrid">
+                            <Grid x:Name="PART_InnerGrid" Grid.IsSharedSizeScope="True">
                                 <Grid.Clip>
                                     <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
                                     <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
@@ -275,7 +318,10 @@
                                 </Grid.Clip>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition x:Name="TextColumn" Width="*" />
-                                    <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                                    <!--  the strip is drawn inside the toggle button, which lies over all three columns, so this one is told by the size group how wide it came out  -->
+                                    <ColumnDefinition x:Name="ButtonColumn"
+                                                      Width="Auto"
+                                                      SharedSizeGroup="MahApps.ComboBox.Buttons" />
                                     <ColumnDefinition x:Name="ToggleButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -298,6 +344,8 @@
                                               mah:TextBoxHelper.ButtonFontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
                                               mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
                                               mah:TextBoxHelper.ButtonWidth="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                              mah:TextBoxHelper.Buttons="{TemplateBinding mah:TextBoxHelper.Buttons}"
+                                              mah:TextBoxHelper.ButtonsPlacement="{TemplateBinding mah:TextBoxHelper.ButtonsPlacement}"
                                               mah:TextBoxHelper.ClearTextButton="{TemplateBinding mah:TextBoxHelper.ClearTextButton}"
                                               Background="Transparent"
                                               BorderThickness="0"
@@ -814,26 +862,69 @@
                           UseLayoutRounding="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="TextColumn" Width="*" />
-                            <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                            <ColumnDefinition x:Name="ButtonColumn"
+                                              Width="Auto"
+                                              MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                              SharedSizeGroup="MahApps.ComboBox.Buttons" />
                             <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Button x:Name="PART_ClearText"
-                                Grid.Column="1"
-                                Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                AutomationProperties.Name="{x:Static lang:Automation.Clear}"
-                                Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
-                                CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
-                                CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
-                                Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
-                                ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
-                                Focusable="False"
-                                FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
-                                FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
-                                IsTabStop="False"
-                                Style="{DynamicResource MahApps.Styles.Button.TextControl.Delete}"
-                                Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
-                                Visibility="Visible" />
+                        <Grid x:Name="PART_ButtonsHost" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ItemsControl x:Name="PART_Buttons"
+                                          mah:TextBoxHelper.ButtonTemplate="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                          Focusable="False"
+                                          IsTabStop="False"
+                                          ItemContainerStyle="{DynamicResource MahApps.Styles.TextBoxButton.Win10}"
+                                          ItemsSource="{TemplateBinding mah:TextBoxHelper.Buttons}">
+                                <Grid.Column>
+                                    <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.Instance}">
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </Grid.Column>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+
+                            <Button x:Name="PART_ClearText"
+                                    Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                    AutomationProperties.Name="{x:Static lang:Automation.Clear}"
+                                    Command="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
+                                    CommandParameter="{TemplateBinding mah:TextBoxHelper.ButtonCommandParameter}"
+                                    CommandTarget="{TemplateBinding mah:TextBoxHelper.ButtonCommandTarget}"
+                                    Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                    Focusable="False"
+                                    FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource MahApps.Styles.Button.TextControl.Delete}"
+                                    Template="{TemplateBinding mah:TextBoxHelper.ButtonTemplate}"
+                                    Visibility="Visible">
+                                <Grid.Column>
+                                    <MultiBinding Converter="{x:Static mahConverters:ButtonsPlacementToColumnConverter.ClearButton}">
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsAlignment)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Mode="OneWay"
+                                                 Path="(mah:TextBoxHelper.ButtonsPlacement)"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                    </MultiBinding>
+                                </Grid.Column>
+                            </Button>
+                        </Grid>
 
                         <!--
                             The cell carries the click rather than the glyph in it. An editable box
