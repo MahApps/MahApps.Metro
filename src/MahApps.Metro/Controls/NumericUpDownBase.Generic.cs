@@ -818,7 +818,9 @@ var interval = this.ToDouble(amount) * (toPositive ? 1d : -1d);
                             || this.ParsingNumberStyle == NumberStyles.Integer
                             || this.ParsingNumberStyle == NumberStyles.Number;
 
-            var number = this.WithSignOfCulture(this.TryGetNumberFromText(text, this.ReadsHexadecimal));
+            // Through TakeNumberFrom rather than straight to the regex, so that a type whose value
+            // is not a number, a TimeSpan for one, can say what to take out of what was typed.
+            var number = this.WithSignOfCulture(this.TakeNumberFrom(text));
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)

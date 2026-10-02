@@ -57,6 +57,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:DecimalUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:IntegerUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:LongUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown.Win10}" TargetType="{x:Type mah:TimeSpanUpDown}" />
     <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox.Win10}" TargetType="{x:Type mah:AutoSuggestBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox.Win10}" TargetType="{x:Type mah:HotKeyBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox.Win10}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
