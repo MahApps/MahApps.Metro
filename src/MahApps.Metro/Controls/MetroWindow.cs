@@ -1583,6 +1583,24 @@ namespace MahApps.Metro.Controls
             return new MetroWindowAutomationPeer(this);
         }
 
+        /// <summary>
+        /// A touch pan that runs past the end of a scrollable area asks the window to give way, and
+        /// <see cref="Window"/> answers it by nudging the window itself through the Win32 panning
+        /// feedback API. A maximized window is held on its monitor by the window chrome, so each
+        /// nudge is taken back as fast as it arrives and the window flickers in place instead of
+        /// leaning. The feedback is therefore left alone while the window can move and dropped while
+        /// it cannot.
+        /// </summary>
+        protected override void OnManipulationBoundaryFeedback(ManipulationBoundaryFeedbackEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                return;
+            }
+
+            base.OnManipulationBoundaryFeedback(e);
+        }
+
         private void ClearWindowEvents()
         {
             if (this.windowTitleThumb != null)
