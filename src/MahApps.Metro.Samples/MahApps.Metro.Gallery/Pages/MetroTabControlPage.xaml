@@ -14,45 +14,149 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="TabsExample"
-                                     Description="The tab control every WPF application knows, with the MahApps look and a line under the row of headers."
+                                     Description="The tab control every WPF application knows, with the MahApps look and a line under the row of headers. Under it the same control in the two WinUI sets, MahApps.Styles.MetroTabControl.WinUI and the SelectorBar beside it. Every option here moves all three at once."
                                      Header="Tabs">
                 <smtx:XamlDisplay UniqueKey="MetroTabControl.Tabs">
-                    <TabControl x:Name="Tabs"
-                                Width="480"
-                                Height="180"
-                                HorizontalAlignment="Left"
-                                mah:TabControlHelper.Underlined="TabPanel">
-                        <TabItem Header="first">
-                            <TextBlock Margin="12" Text="What the first tab holds" />
-                        </TabItem>
-                        <TabItem Header="second">
-                            <TextBlock Margin="12" Text="And the second" />
-                        </TabItem>
-                        <TabItem Header="third">
-                            <TextBlock Margin="12" Text="42" />
-                        </TabItem>
-                    </TabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:MetroTabControl x:Name="Tabs"
+                                             Width="480"
+                                             Height="150"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.Underlined="TabPanel">
+                            <TabItem Header="first">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="second">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </mah:MetroTabControl>
+                        <mah:MetroTabControl x:Name="TabsWinUI"
+                                             Width="480"
+                                             Height="150"
+                                             Margin="0 16 0 0"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                             mah:TabControlHelper.TabWidthMode="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                             mah:TabControlHelper.Transition="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Transition)}"
+                                             mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                             mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                             mah:TabControlHelper.Underlined="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Underlined)}"
+                                             smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                             SelectedIndex="{Binding ElementName=Tabs, Path=SelectedIndex}"
+                                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI}"
+                                             TabStripPlacement="{Binding ElementName=Tabs, Path=TabStripPlacement}">
+                            <TabItem Header="first">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="second">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </mah:MetroTabControl>
+                        <mah:MetroTabControl x:Name="TabsSelectorBar"
+                                             Width="480"
+                                             Height="150"
+                                             Margin="0 16 0 0"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                             mah:TabControlHelper.TabWidthMode="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                             mah:TabControlHelper.Transition="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Transition)}"
+                                             mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                             mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                             mah:TabControlHelper.Underlined="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Underlined)}"
+                                             smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                             SelectedIndex="{Binding ElementName=Tabs, Path=SelectedIndex}"
+                                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI.SelectorBar}"
+                                             TabStripPlacement="{Binding ElementName=Tabs, Path=TabStripPlacement}">
+                            <TabItem Header="first">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="second">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </mah:MetroTabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="AnimatedExample"
-                                     Description="The same tabs with the content sliding in as it changes. There are two of these: this one keeps the headers in a single row, its sibling MetroAnimatedTabControl lets them wrap."
+                                     Description="The same tabs with the content sliding in as it changes. There are two of these: this one keeps the headers in a single row, its sibling MetroAnimatedTabControl lets them wrap. Both carry the two WinUI sets as well, under the key of the control with .WinUI or .WinUI.SelectorBar after it."
                                      Header="Tabs that slide">
                 <smtx:XamlDisplay UniqueKey="MetroTabControl.Animated">
-                    <mah:MetroAnimatedSingleRowTabControl x:Name="Animated"
-                                                          Width="480"
-                                                          Height="180"
-                                                          HorizontalAlignment="Left">
-                        <TabItem Header="first">
-                            <TextBlock Margin="12" Text="Click the next one and watch this move" />
-                        </TabItem>
-                        <TabItem Header="second">
-                            <TextBlock Margin="12" Text="Here it is" />
-                        </TabItem>
-                        <TabItem Header="third">
-                            <TextBlock Margin="12" Text="42" />
-                        </TabItem>
-                    </mah:MetroAnimatedSingleRowTabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:MetroAnimatedSingleRowTabControl x:Name="Animated"
+                                                              Width="480"
+                                                              Height="150"
+                                                              HorizontalAlignment="Left">
+                            <TabItem Header="first">
+                                <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                            </TabItem>
+                            <TabItem Header="second">
+                                <TextBlock Margin="12" Text="Here it is" />
+                            </TabItem>
+                            <TabItem Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </mah:MetroAnimatedSingleRowTabControl>
+                        <mah:MetroAnimatedSingleRowTabControl x:Name="AnimatedWinUI"
+                                                              Width="480"
+                                                              Height="150"
+                                                              Margin="0 16 0 0"
+                                                              HorizontalAlignment="Left"
+                                                              mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Animated, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                                              mah:TabControlHelper.TabWidthMode="{Binding ElementName=Animated, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                                              mah:TabControlHelper.Transition="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Transition)}"
+                                                              mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                                              mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                                              mah:TabControlHelper.Underlined="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Underlined)}"
+                                                              smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                                              SelectedIndex="{Binding ElementName=Animated, Path=SelectedIndex}"
+                                                              Style="{DynamicResource MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI}"
+                                                              TabStripPlacement="{Binding ElementName=Animated, Path=TabStripPlacement}">
+                            <TabItem Header="first">
+                                <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                            </TabItem>
+                            <TabItem Header="second">
+                                <TextBlock Margin="12" Text="Here it is" />
+                            </TabItem>
+                            <TabItem Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </mah:MetroAnimatedSingleRowTabControl>
+                        <mah:MetroAnimatedSingleRowTabControl x:Name="AnimatedSelectorBar"
+                                                              Width="480"
+                                                              Height="150"
+                                                              Margin="0 16 0 0"
+                                                              HorizontalAlignment="Left"
+                                                              mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Animated, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                                              mah:TabControlHelper.TabWidthMode="{Binding ElementName=Animated, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                                              mah:TabControlHelper.Transition="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Transition)}"
+                                                              mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                                              mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                                              mah:TabControlHelper.Underlined="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Underlined)}"
+                                                              smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                                              SelectedIndex="{Binding ElementName=Animated, Path=SelectedIndex}"
+                                                              Style="{DynamicResource MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI.SelectorBar}"
+                                                              TabStripPlacement="{Binding ElementName=Animated, Path=TabStripPlacement}">
+                            <TabItem Header="first">
+                                <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                            </TabItem>
+                            <TabItem Header="second">
+                                <TextBlock Margin="12" Text="Here it is" />
+                            </TabItem>
+                            <TabItem Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </mah:MetroAnimatedSingleRowTabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

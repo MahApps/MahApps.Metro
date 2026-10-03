@@ -14,48 +14,152 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="CloseExample"
-                                     Description="A tab with a button to close it. The tab does not close itself, it asks: CloseTabCommand is where an application decides what closing means, which is usually asking first and then removing the item."
+                                     Description="A tab with a button to close it. The tab does not close itself, it asks: CloseTabCommand is where an application decides what closing means, which is usually asking first and then removing the item. Under it the same tabs in the two WinUI sets, where the button is the cross the TabView draws and waits for the pointer unless the tab is the one showing."
                                      Header="A tab that can be closed">
                 <smtx:XamlDisplay UniqueKey="MetroTabItem.Closeable">
-                    <mah:MetroTabControl x:Name="Tabs"
-                                         Width="480"
-                                         Height="180"
-                                         HorizontalAlignment="Left">
-                        <mah:MetroTabItem x:Name="First"
-                                          CloseButtonEnabled="True"
-                                          Header="first">
-                            <TextBlock Margin="12" Text="Close this one and the next takes over" />
-                        </mah:MetroTabItem>
-                        <mah:MetroTabItem CloseButtonEnabled="True" Header="second">
-                            <TextBlock Margin="12" Text="And this one is here as well" />
-                        </mah:MetroTabItem>
-                        <mah:MetroTabItem CloseButtonEnabled="True" Header="third">
-                            <TextBlock Margin="12" Text="42" />
-                        </mah:MetroTabItem>
-                    </mah:MetroTabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:MetroTabControl x:Name="Tabs"
+                                             Width="480"
+                                             Height="150"
+                                             HorizontalAlignment="Left">
+                            <mah:MetroTabItem x:Name="First"
+                                              CloseButtonEnabled="True"
+                                              Header="first">
+                                <TextBlock Margin="12" Text="Close this one and the next takes over" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="second">
+                                <TextBlock Margin="12" Text="And this one is here as well" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </mah:MetroTabItem>
+                        </mah:MetroTabControl>
+                        <mah:MetroTabControl x:Name="TabsWinUI"
+                                             Width="480"
+                                             Height="150"
+                                             Margin="0 16 0 0"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                             mah:TabControlHelper.TabWidthMode="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                             mah:TabControlHelper.Transition="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Transition)}"
+                                             mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                             mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                             mah:TabControlHelper.Underlined="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Underlined)}"
+                                             smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                             SelectedIndex="{Binding ElementName=Tabs, Path=SelectedIndex}"
+                                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI}">
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="{Binding ElementName=First, Path=Header}">
+                                <TextBlock Margin="12" Text="Close this one and the next takes over" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="second">
+                                <TextBlock Margin="12" Text="And this one is here as well" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </mah:MetroTabItem>
+                        </mah:MetroTabControl>
+                        <mah:MetroTabControl x:Name="TabsSelectorBar"
+                                             Width="480"
+                                             Height="150"
+                                             Margin="0 16 0 0"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                             mah:TabControlHelper.TabWidthMode="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                             mah:TabControlHelper.Transition="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Transition)}"
+                                             mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                             mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                             mah:TabControlHelper.Underlined="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Underlined)}"
+                                             smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                             SelectedIndex="{Binding ElementName=Tabs, Path=SelectedIndex}"
+                                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI.SelectorBar}">
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="{Binding ElementName=First, Path=Header}">
+                                <TextBlock Margin="12" Text="Close this one and the next takes over" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="second">
+                                <TextBlock Margin="12" Text="And this one is here as well" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="{Binding ElementName=First, Path=CloseButtonEnabled}" Header="third">
+                                <TextBlock Margin="12" Text="42" />
+                            </mah:MetroTabItem>
+                        </mah:MetroTabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="AskExample"
-                                     Description="A tab does not have to go the moment its button is clicked. A handler of TabItemClosing says no by setting Cancel on the event args, and one that has to ask somebody first takes a deferral, awaits the answer and sets Cancel once it has it. Close a tab here and the dialog decides. Without the deferral the handler would have to answer before it could ask."
+                                     Description="A tab does not have to go the moment its button is clicked. A handler of TabItemClosing says no by setting Cancel on the event args, and one that has to ask somebody first takes a deferral, awaits the answer and sets Cancel once it has it. Close a tab here and the dialog decides. Without the deferral the handler would have to answer before it could ask. All three sets run through the same handler, so the question is the same wherever it is asked."
                                      Header="A tab that asks before it goes">
                 <smtx:XamlDisplay UniqueKey="MetroTabItem.Asking">
-                    <mah:MetroTabControl x:Name="AskingTabs"
-                                         Width="480"
-                                         Height="180"
-                                         HorizontalAlignment="Left"
-                                         TabItemClosing="AskBeforeTheTabGoes">
-                        <mah:MetroTabItem CloseButtonEnabled="True" Header="notes">
-                            <TextBox Margin="12"
-                                     VerticalAlignment="Top"
-                                     Text="42" />
-                        </mah:MetroTabItem>
-                        <mah:MetroTabItem CloseButtonEnabled="True" Header="more notes">
-                            <TextBox Margin="12"
-                                     VerticalAlignment="Top"
-                                     Text="Close this one and say no" />
-                        </mah:MetroTabItem>
-                    </mah:MetroTabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <mah:MetroTabControl x:Name="AskingTabs"
+                                             Width="480"
+                                             Height="150"
+                                             HorizontalAlignment="Left"
+                                             TabItemClosing="AskBeforeTheTabGoes">
+                            <mah:MetroTabItem CloseButtonEnabled="True" Header="notes">
+                                <TextBox Margin="12"
+                                         VerticalAlignment="Top"
+                                         Text="42" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="True" Header="more notes">
+                                <TextBox Margin="12"
+                                         VerticalAlignment="Top"
+                                         Text="Close this one and say no" />
+                            </mah:MetroTabItem>
+                        </mah:MetroTabControl>
+                        <mah:MetroTabControl x:Name="AskingTabsWinUI"
+                                             Width="480"
+                                             Height="150"
+                                             Margin="0 16 0 0"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                             mah:TabControlHelper.TabWidthMode="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                             mah:TabControlHelper.Transition="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.Transition)}"
+                                             mah:TabControlHelper.UnderlineMargin="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                             mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                             mah:TabControlHelper.Underlined="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.Underlined)}"
+                                             smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                             SelectedIndex="{Binding ElementName=AskingTabs, Path=SelectedIndex}"
+                                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI}"
+                                             TabItemClosing="AskBeforeTheTabGoes">
+                            <mah:MetroTabItem CloseButtonEnabled="True" Header="notes">
+                                <TextBox Margin="12"
+                                         VerticalAlignment="Top"
+                                         Text="42" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="True" Header="more notes">
+                                <TextBox Margin="12"
+                                         VerticalAlignment="Top"
+                                         Text="Close this one and say no" />
+                            </mah:MetroTabItem>
+                        </mah:MetroTabControl>
+                        <mah:MetroTabControl x:Name="AskingTabsSelectorBar"
+                                             Width="480"
+                                             Height="150"
+                                             Margin="0 16 0 0"
+                                             HorizontalAlignment="Left"
+                                             mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                             mah:TabControlHelper.TabWidthMode="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                             mah:TabControlHelper.Transition="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.Transition)}"
+                                             mah:TabControlHelper.UnderlineMargin="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                             mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                             mah:TabControlHelper.Underlined="{Binding ElementName=AskingTabs, Path=(mah:TabControlHelper.Underlined)}"
+                                             smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                             SelectedIndex="{Binding ElementName=AskingTabs, Path=SelectedIndex}"
+                                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI.SelectorBar}"
+                                             TabItemClosing="AskBeforeTheTabGoes">
+                            <mah:MetroTabItem CloseButtonEnabled="True" Header="notes">
+                                <TextBox Margin="12"
+                                         VerticalAlignment="Top"
+                                         Text="42" />
+                            </mah:MetroTabItem>
+                            <mah:MetroTabItem CloseButtonEnabled="True" Header="more notes">
+                                <TextBox Margin="12"
+                                         VerticalAlignment="Top"
+                                         Text="Close this one and say no" />
+                            </mah:MetroTabItem>
+                        </mah:MetroTabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 

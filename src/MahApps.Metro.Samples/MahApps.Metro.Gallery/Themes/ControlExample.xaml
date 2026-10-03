@@ -139,7 +139,8 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--  the card rounds itself to whole pixels, the sample in it does not: it should stand the way it would in any other window  -->
-                                <ContentPresenter Grid.Column="0"
+                                <ContentPresenter x:Name="Sample"
+                                                  Grid.Column="0"
                                                   Margin="16 4 16 14"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -153,12 +154,19 @@
                                         BorderThickness="1 0 0 0">
                                     <StackPanel>
                                         <!--
+                                            The list is as tall as the sample beside it, so that a
+                                            card with a tall sample has no empty pane under a short
+                                            list of options and a long one scrolls instead of being
+                                            cut off at some number nobody picked. The floor is there
+                                            for the cards whose sample is a single small control.
+                                            
                                             The height goes on the scroll viewer itself. On the panel
                                             around it the list would simply be cut off, because a
                                             stack panel measures its children with all the room they
                                             ask for and the viewer then never has anything to scroll.
                                         -->
-                                        <ScrollViewer MaxHeight="180"
+                                        <ScrollViewer MinHeight="180"
+                                                      MaxHeight="{Binding ActualHeight, ElementName=Sample}"
                                                       Padding="0 0 8 0"
                                                       VerticalScrollBarVisibility="Auto">
                                             <ItemsControl Focusable="False" ItemsSource="{Binding PropertyGroups, RelativeSource={RelativeSource TemplatedParent}}">
