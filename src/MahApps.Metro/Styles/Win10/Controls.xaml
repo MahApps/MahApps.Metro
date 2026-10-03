@@ -32,6 +32,13 @@
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Win10}" TargetType="ContextMenu" />
     <Style BasedOn="{StaticResource MahApps.Styles.Expander.Win10}" TargetType="Expander" />
+    <!--  UWP drew no tab strip of its own, so this set hands over the look the library has always drawn  -->
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl.Win10}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.Win10}" TargetType="TabItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroTabControl.Win10}" TargetType="{x:Type mah:MetroTabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroAnimatedTabControl.Win10}" TargetType="{x:Type mah:MetroAnimatedTabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroAnimatedSingleRowTabControl.Win10}" TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroTabItem.Win10}" TargetType="{x:Type mah:MetroTabItem}" />
     <!--  the line between two groups of a menu is looked up by a key rather than by type, so the set hands its own over under that key  -->
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"

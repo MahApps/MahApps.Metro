@@ -457,6 +457,10 @@
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillDefault">{{MahApps.Colors.WinUI.CardBackgroundFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillSecondary">{{MahApps.Colors.WinUI.CardBackgroundFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.DividerStrokeDefault">{{MahApps.Colors.WinUI.DividerStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SolidBackgroundFillTertiary">{{MahApps.Colors.WinUI.SolidBackgroundFillTertiary}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.LayerOnMicaBaseAltFillDefault">{{MahApps.Colors.WinUI.LayerOnMicaBaseAltFillDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary">{{MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SystemFillCaution">{{MahApps.Colors.WinUI.SystemFillCaution}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SystemFillCritical">{{MahApps.Colors.WinUI.SystemFillCritical}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.FocusStrokeOuter">{{MahApps.Colors.WinUI.FocusStrokeOuter}}</Color>
@@ -523,7 +527,18 @@
     -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextPrimary" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextSecondary" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextTertiary" Color="{StaticResource MahApps.Colors.WinUI.TextTertiary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
+    <!--  the line WinUI draws between two things of the same kind, which is quieter than the one it draws around a card  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.DividerStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.DividerStrokeDefault}" options:Freeze="True" />
+    <!--
+        The ground a surface standing on the page is filled with, and the two fills a surface
+        like that answers the pointer with. WinUI calls the second pair LayerOnMicaBaseAlt,
+        because what lies under them is the mica of the window rather than a page of its own.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SolidBackgroundFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.SolidBackgroundFillTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.LayerOnMicaBaseAltFillDefault" Color="{StaticResource MahApps.Colors.WinUI.LayerOnMicaBaseAltFillDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.LayerOnMicaBaseAltFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SubtleFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SubtleFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillTertiary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.ControlAltFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.ControlAltFillSecondary}" options:Freeze="True" />
@@ -1352,5 +1367,40 @@
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TrackValueFillDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.Slider.WinUI.TickBarFill" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+
+    <!--
+        Resources for MahApps.Styles.TabControl.WinUI and MahApps.Styles.TabItem.WinUI, which are
+        read off the TabView, since that is the control WinUI draws a row of tabs with. The tab
+        that is showing is a card: it carries the same fill as the page under it, so the two read
+        as one surface, and the line that runs along the strip stops where that card begins. The
+        others carry no fill at all until the pointer reaches them, and a hairline between two of
+        them keeps them apart while neither is lit.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.TabControl.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabControl.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.LayerOnMicaBaseAltFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.LayerOnMicaBaseAltFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderForegroundSelected" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.HeaderForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.Separator" ResourceKey="MahApps.Brushes.WinUI.DividerStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.CloseButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.CloseButtonBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+
+    <!--
+        Resources for MahApps.Styles.TabControl.WinUI.SelectorBar and the item that goes with it.
+        The SelectorBar carries no card and no line along the strip: the tab that is showing says so
+        with a short bar of the accent under its text, and the text itself is the only other thing
+        that changes. That bar is the underline the tab item already draws, so the kind of underline
+        asked for still decides whether there is one and which tabs get it.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.PillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.PillFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
 
 </ResourceDictionary>

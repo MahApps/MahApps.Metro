@@ -23,6 +23,24 @@ namespace MahApps.Metro.Controls
         TabPanel
     }
 
+    /// <summary>
+    /// How wide the tabs of a tab control are.
+    /// </summary>
+    public enum TabWidthMode
+    {
+        /// <summary>
+        /// Every tab is as wide as what is written on it, which is what a tab control has always done.
+        /// </summary>
+        SizeToContent,
+
+        /// <summary>
+        /// The room is shared out between the tabs, so each of them is the same width. What one gets
+        /// is held between its own MinWidth and MaxWidth, and where that no longer fits, the strip
+        /// runs past the edge of the control. This is the way the TabView of WinUI draws a row.
+        /// </summary>
+        Equal
+    }
+
     public static class TabControlHelper
     {
         /// Sets the Style and Template property to null.
@@ -139,6 +157,36 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Defines whether the underline below the <see cref="TabItem"/> or <see cref="TabPanel"/> is shown or not.
         /// </summary>
+        /// <summary>
+        /// Identifies the TabWidthMode attached property.
+        /// </summary>
+        public static readonly DependencyProperty TabWidthModeProperty =
+            DependencyProperty.RegisterAttached(
+                "TabWidthMode",
+                typeof(TabWidthMode),
+                typeof(TabControlHelper),
+                new FrameworkPropertyMetadata(TabWidthMode.SizeToContent, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets how wide the tabs of this tab control are.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static TabWidthMode GetTabWidthMode(UIElement element)
+        {
+            return (TabWidthMode)element.GetValue(TabWidthModeProperty);
+        }
+
+        /// <summary>
+        /// Sets how wide the tabs of this tab control are.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static void SetTabWidthMode(UIElement element, TabWidthMode value)
+        {
+            element.SetValue(TabWidthModeProperty, value);
+        }
+
         public static readonly DependencyProperty UnderlinedProperty =
             DependencyProperty.RegisterAttached(
                 "Underlined",

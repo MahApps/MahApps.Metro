@@ -25,9 +25,10 @@
                                Placement="Bottom"
                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                Visibility="Collapsed" />
-                <TabPanel x:Name="HeaderPanel"
-                          IsItemsHost="true"
-                          KeyboardNavigation.TabIndex="1" />
+                <mah:TabPanelEx x:Name="HeaderPanel"
+                                IsItemsHost="true"
+                                KeyboardNavigation.TabIndex="1"
+                                TabWidthMode="{TemplateBinding mah:TabControlHelper.TabWidthMode}" />
             </Grid>
             <Border x:Name="ContentPanel"
                     Grid.Row="1"
@@ -103,9 +104,10 @@
                                Placement="Bottom"
                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                Visibility="Collapsed" />
-                <TabPanel x:Name="HeaderPanel"
-                          IsItemsHost="true"
-                          KeyboardNavigation.TabIndex="1" />
+                <mah:TabPanelEx x:Name="HeaderPanel"
+                                IsItemsHost="true"
+                                KeyboardNavigation.TabIndex="1"
+                                TabWidthMode="{TemplateBinding mah:TabControlHelper.TabWidthMode}" />
             </Grid>
             <Border x:Name="ContentPanel"
                     Grid.Row="1"
@@ -161,6 +163,38 @@
 
     <Style x:Key="{x:Type mah:MetroTabControl}"
            BasedOn="{StaticResource MahApps.Styles.TabControl}"
+           TargetType="{x:Type mah:MetroTabControl}">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemory}" />
+        <Style.Triggers>
+            <Trigger Property="KeepVisualTreeInMemoryWhenChangingTabs" Value="True">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.KeepVisualTreeInMemory}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The same three sets for the control itself. Each of them keeps the template this control
+        brings, since that is where it differs from a plain tab control, and takes everything the
+        set has to say about colour and spacing from the shared style. The tab that can be closed
+        is handed over by type, so that a plain one sitting in here keeps the style meant for it.
+    -->
+    <Style x:Key="MahApps.Styles.MetroTabControl.Win10"
+           BasedOn="{StaticResource {x:Type mah:MetroTabControl}}"
+           TargetType="{x:Type mah:MetroTabControl}" />
+
+    <Style x:Key="MahApps.Styles.MetroTabControl.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI}"
+           TargetType="{x:Type mah:MetroTabControl}">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemory}" />
+        <Style.Triggers>
+            <Trigger Property="KeepVisualTreeInMemoryWhenChangingTabs" Value="True">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.KeepVisualTreeInMemory}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MetroTabControl.WinUI.SelectorBar"
+           BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI.SelectorBar}"
            TargetType="{x:Type mah:MetroTabControl}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemory}" />
         <Style.Triggers>

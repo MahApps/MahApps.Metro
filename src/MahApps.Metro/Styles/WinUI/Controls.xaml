@@ -28,6 +28,17 @@
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.WinUI}" TargetType="ContextMenu" />
     <Style BasedOn="{StaticResource MahApps.Styles.Expander.WinUI}" TargetType="Expander" />
+    <!--
+        The tab strip Windows 11 draws, read off the TabView. MahApps.Styles.TabControl.WinUI.SelectorBar
+        is the other reading of it and stays a keyed style, since a set can only hand one of the two over
+        by type and the card is the one a tab control is usually after.
+    -->
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.WinUI}" TargetType="TabItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroTabControl.WinUI}" TargetType="{x:Type mah:MetroTabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroAnimatedTabControl.WinUI}" TargetType="{x:Type mah:MetroAnimatedTabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI}" TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroTabItem.WinUI}" TargetType="{x:Type mah:MetroTabItem}" />
     <!--  the line between two groups of a menu is looked up by a key rather than by type, so the set hands its own over under that key  -->
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.Separator.Menu.WinUI}"

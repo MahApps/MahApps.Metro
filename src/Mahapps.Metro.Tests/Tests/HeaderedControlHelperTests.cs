@@ -389,9 +389,9 @@ namespace MahApps.Metro.Tests.Tests
             // TabItem
 
             window.TestTabItem.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
-            Assert.That(window.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin, Is.EqualTo(headerMargin));
+            Assert.That(window.TestTabItem.FindChild<Grid>("PART_ContentSite")?.Margin, Is.EqualTo(headerMargin));
             window.TestTabItem.SetCurrentValue(TabItem.PaddingProperty, new Thickness(8));
-            Assert.That(window.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin, Is.EqualTo(new Thickness(8)));
+            Assert.That(window.TestTabItem.FindChild<Grid>("PART_ContentSite")?.Margin, Is.EqualTo(new Thickness(8)));
 
             window.TestTabItemVS.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Margin, Is.EqualTo(headerMargin));
@@ -414,7 +414,7 @@ namespace MahApps.Metro.Tests.Tests
             // TabControl
 
             window.TestTabControl.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
-            Assert.That(window.TestTabItem.FindChild<ContentControlEx>("ContentSite")?.Margin, Is.EqualTo(headerMargin));
+            Assert.That(window.TestTabItem.FindChild<Grid>("PART_ContentSite")?.Margin, Is.EqualTo(headerMargin));
 
             window.TestTabControlVS.SetCurrentValue(HeaderedControlHelper.HeaderMarginProperty, headerMargin);
             Assert.That(window.TestTabItemVS.FindChild<ContentControlEx>("ContentSite")?.Margin, Is.EqualTo(headerMargin));
