@@ -14,111 +14,345 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="TabsExample"
-                                     Description="A plain WPF tab control with the MahApps look: no frame around the content, since the style sets the border brush to null, and headers well above body text, which is the Metro part of it and the first thing anyone wants to change. The size comes from HeaderedControlHelper and it is inherited, so the 16 here is set once on the control and every header takes it."
+                                     Description="A plain WPF tab control in the three sets the library draws: the Metro look on top, then the WinUI one, which is the TabView of Windows 11 with the showing tab as a card, and under it the second WinUI reading, which looks like a SelectorBar. The two below take their style from MahApps.Styles.TabControl.WinUI and MahApps.Styles.TabControl.WinUI.SelectorBar, and every option here moves all three at once."
                                      Header="Tabs">
                 <smtx:XamlDisplay UniqueKey="TabControl.Tabs">
-                    <TabControl x:Name="Tabs"
-                                Width="480"
-                                Height="180"
-                                HorizontalAlignment="Left"
-                                mah:HeaderedControlHelper.HeaderFontSize="16"
-                                SelectedIndex="1">
-                        <TabItem x:Name="General" Header="General">
-                            <TextBlock Margin="12" Text="What the first tab holds" />
-                        </TabItem>
-                        <TabItem Header="Display">
-                            <TextBlock Margin="12" Text="And the second" />
-                        </TabItem>
-                        <TabItem Header="Advanced">
-                            <TextBlock Margin="12" Text="42" />
-                        </TabItem>
-                    </TabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <TabControl x:Name="Tabs"
+                                    Width="480"
+                                    Height="150"
+                                    HorizontalAlignment="Left"
+                                    mah:HeaderedControlHelper.HeaderFontSize="16"
+                                    SelectedIndex="1">
+                            <TabItem x:Name="General" Header="General">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="TabsWinUI"
+                                    Width="{Binding ElementName=Tabs, Path=Width}"
+                                    Height="{Binding ElementName=Tabs, Path=Height}"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:HeaderedControlHelper.HeaderFontSize="{Binding ElementName=Tabs, Path=(mah:HeaderedControlHelper.HeaderFontSize)}"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=Tabs, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.WinUI}"
+                                    TabStripPlacement="{Binding ElementName=Tabs, Path=TabStripPlacement}">
+                            <TabItem mah:ControlsHelper.ContentCharacterCasing="{Binding ElementName=General, Path=(mah:ControlsHelper.ContentCharacterCasing)}" Header="General">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="TabsSelectorBar"
+                                    Width="{Binding ElementName=Tabs, Path=Width}"
+                                    Height="{Binding ElementName=Tabs, Path=Height}"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:HeaderedControlHelper.HeaderFontSize="{Binding ElementName=Tabs, Path=(mah:HeaderedControlHelper.HeaderFontSize)}"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=Tabs, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=Tabs, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.WinUI.SelectorBar}"
+                                    TabStripPlacement="{Binding ElementName=Tabs, Path=TabStripPlacement}">
+                            <TabItem mah:ControlsHelper.ContentCharacterCasing="{Binding ElementName=General, Path=(mah:ControlsHelper.ContentCharacterCasing)}" Header="General">
+                                <TextBlock Margin="12" Text="What the first tab holds" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="UnderlineExample"
-                                     Description="The marker under the selected tab is off until TabControlHelper asks for it, and it has four values: none, the selected item, the whole panel, or both. The element that draws it is part of the control template as well as the item one, which is why the property on the tab control reaches everything."
+                                     Description="The marker under the selected tab is off until TabControlHelper asks for it, and it has four values: none, the selected item, the whole panel, or both. Which of the three sets is drawing decides how much of that is left: the Metro look reads all four, the card of the WinUI set has no room for a marker and says so by ignoring it, and the SelectorBar is the one where it matters most, because its short bar of the accent is the marker. Turn the knob and watch the three answer differently."
                                      Header="The underline">
                 <smtx:XamlDisplay UniqueKey="TabControl.Underline">
-                    <TabControl x:Name="Underlined"
-                                Width="480"
-                                Height="180"
-                                HorizontalAlignment="Left"
-                                mah:HeaderedControlHelper.HeaderFontSize="16"
-                                mah:TabControlHelper.Underlined="TabPanel">
-                        <TabItem Header="General">
-                            <TextBlock Margin="12" Text="A hairline under the strip and the accent under the tab" />
-                        </TabItem>
-                        <TabItem Header="Display">
-                            <TextBlock Margin="12" Text="And the second" />
-                        </TabItem>
-                        <TabItem Header="Advanced">
-                            <TextBlock Margin="12" Text="42" />
-                        </TabItem>
-                    </TabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <TabControl x:Name="Underlined"
+                                    Width="480"
+                                    Height="150"
+                                    HorizontalAlignment="Left"
+                                    mah:HeaderedControlHelper.HeaderFontSize="16"
+                                    mah:TabControlHelper.Underlined="TabPanel">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="A hairline under the strip and the accent under the tab" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="UnderlinedWinUI"
+                                    Width="480"
+                                    Height="150"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=Underlined, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.WinUI}"
+                                    TabStripPlacement="{Binding ElementName=Underlined, Path=TabStripPlacement}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="The card says it instead" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="UnderlinedSelectorBar"
+                                    Width="480"
+                                    Height="150"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=Underlined, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=Underlined, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.WinUI.SelectorBar}"
+                                    TabStripPlacement="{Binding ElementName=Underlined, Path=TabStripPlacement}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="A short bar of the accent under the tab showing" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="AnimatedExample"
-                                     Description="The animated variant wraps the content in a MetroContentControl, so a new page slides in instead of appearing. Which way it comes from is the transition, which TabControlHelper carries along with the underline."
+                                     Description="The animated variant wraps the content in a MetroContentControl, so a new page slides in instead of appearing. Which way it comes from is the transition, which TabControlHelper carries along with the underline. Each of the three sets has that variant, under MahApps.Styles.TabControl.Animated and the two WinUI keys beside it."
                                      Header="Tabs that slide">
                 <smtx:XamlDisplay UniqueKey="TabControl.Animated">
-                    <TabControl x:Name="Animated"
-                                Width="480"
-                                Height="180"
-                                HorizontalAlignment="Left"
-                                mah:HeaderedControlHelper.HeaderFontSize="16"
-                                Style="{DynamicResource MahApps.Styles.TabControl.Animated}">
-                        <TabItem Header="General">
-                            <TextBlock Margin="12" Text="Click the next one and watch this move" />
-                        </TabItem>
-                        <TabItem Header="Display">
-                            <TextBlock Margin="12" Text="Here it is" />
-                        </TabItem>
-                        <TabItem Header="Advanced">
-                            <TextBlock Margin="12" Text="42" />
-                        </TabItem>
-                    </TabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <TabControl x:Name="Animated"
+                                    Width="480"
+                                    Height="150"
+                                    HorizontalAlignment="Left"
+                                    mah:HeaderedControlHelper.HeaderFontSize="16"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.Animated}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="Here it is" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="AnimatedWinUI"
+                                    Width="480"
+                                    Height="150"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Animated, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=Animated, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=Animated, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.Animated.WinUI}"
+                                    TabStripPlacement="{Binding ElementName=Animated, Path=TabStripPlacement}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="Here it is" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="AnimatedSelectorBar"
+                                    Width="480"
+                                    Height="150"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=Animated, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=Animated, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=Animated, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=Animated, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=Animated, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.Animated.WinUI.SelectorBar}"
+                                    TabStripPlacement="{Binding ElementName=Animated, Path=TabStripPlacement}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="Click the next one and watch this move" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="Here it is" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="SingleRowExample"
-                                     Description="More tabs than fit are the reason for the second variant. The default panel wraps them onto another row and pushes the content down; this one keeps the strip on one line and puts the overflow in a scroll viewer with a button at each end."
+                                     Description="More tabs than fit are the reason for the second variant. The default panel wraps them onto another row and pushes the content down; this one keeps the strip on one line and puts the overflow in a scroll viewer with a button at each end. It has the same three sets, and the WinUI card is where it is closest to the TabView it was read off, since that control scrolls its strip too."
                                      Header="More tabs than fit">
                 <smtx:XamlDisplay UniqueKey="TabControl.SingleRow">
-                    <TabControl x:Name="SingleRow"
-                                Width="420"
-                                Height="180"
-                                HorizontalAlignment="Left"
-                                mah:HeaderedControlHelper.HeaderFontSize="16"
-                                Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}">
-                        <TabItem Header="General">
-                            <TextBlock Margin="12" Text="Seven of them, and the strip stays one line" />
-                        </TabItem>
-                        <TabItem Header="Display">
-                            <TextBlock Margin="12" Text="And the second" />
-                        </TabItem>
-                        <TabItem Header="Advanced">
-                            <TextBlock Margin="12" Text="42" />
-                        </TabItem>
-                        <TabItem Header="Network">
-                            <TextBlock Margin="12" Text="The fourth" />
-                        </TabItem>
-                        <TabItem Header="Updates">
-                            <TextBlock Margin="12" Text="The fifth" />
-                        </TabItem>
-                        <TabItem Header="Privacy">
-                            <TextBlock Margin="12" Text="The sixth" />
-                        </TabItem>
-                        <TabItem Header="About">
-                            <TextBlock Margin="12" Text="And the last" />
-                        </TabItem>
-                    </TabControl>
+                    <StackPanel smtx:XamlDisplay.Ignore="This">
+                        <TabControl x:Name="SingleRow"
+                                    Width="420"
+                                    Height="150"
+                                    HorizontalAlignment="Left"
+                                    mah:HeaderedControlHelper.HeaderFontSize="16"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="Seven of them, and the strip stays one line" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                            <TabItem Header="Network">
+                                <TextBlock Margin="12" Text="The fourth" />
+                            </TabItem>
+                            <TabItem Header="Updates">
+                                <TextBlock Margin="12" Text="The fifth" />
+                            </TabItem>
+                            <TabItem Header="Privacy">
+                                <TextBlock Margin="12" Text="The sixth" />
+                            </TabItem>
+                            <TabItem Header="About">
+                                <TextBlock Margin="12" Text="And the last" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="SingleRowWinUI"
+                                    Width="{Binding ElementName=SingleRow, Path=Width}"
+                                    Height="{Binding ElementName=SingleRow, Path=Height}"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=SingleRow, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow.WinUI}"
+                                    TabStripPlacement="{Binding ElementName=SingleRow, Path=TabStripPlacement}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="Seven of them, and the strip stays one line" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                            <TabItem Header="Network">
+                                <TextBlock Margin="12" Text="The fourth" />
+                            </TabItem>
+                            <TabItem Header="Updates">
+                                <TextBlock Margin="12" Text="The fifth" />
+                            </TabItem>
+                            <TabItem Header="Privacy">
+                                <TextBlock Margin="12" Text="The sixth" />
+                            </TabItem>
+                            <TabItem Header="About">
+                                <TextBlock Margin="12" Text="And the last" />
+                            </TabItem>
+                        </TabControl>
+                        <TabControl x:Name="SingleRowSelectorBar"
+                                    Width="{Binding ElementName=SingleRow, Path=Width}"
+                                    Height="{Binding ElementName=SingleRow, Path=Height}"
+                                    Margin="0 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    mah:TabControlHelper.CloseButtonEnabled="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.CloseButtonEnabled)}"
+                                    mah:TabControlHelper.TabWidthMode="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.TabWidthMode)}"
+                                    mah:TabControlHelper.Transition="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.Transition)}"
+                                    mah:TabControlHelper.UnderlineMargin="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.UnderlineMargin)}"
+                                    mah:TabControlHelper.UnderlinePlacement="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.UnderlinePlacement)}"
+                                    mah:TabControlHelper.Underlined="{Binding ElementName=SingleRow, Path=(mah:TabControlHelper.Underlined)}"
+                                    smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                    SelectedIndex="{Binding ElementName=SingleRow, Path=SelectedIndex}"
+                                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow.WinUI.SelectorBar}"
+                                    TabStripPlacement="{Binding ElementName=SingleRow, Path=TabStripPlacement}">
+                            <TabItem Header="General">
+                                <TextBlock Margin="12" Text="Seven of them, and the strip stays one line" />
+                            </TabItem>
+                            <TabItem Header="Display">
+                                <TextBlock Margin="12" Text="And the second" />
+                            </TabItem>
+                            <TabItem Header="Advanced">
+                                <TextBlock Margin="12" Text="42" />
+                            </TabItem>
+                            <TabItem Header="Network">
+                                <TextBlock Margin="12" Text="The fourth" />
+                            </TabItem>
+                            <TabItem Header="Updates">
+                                <TextBlock Margin="12" Text="The fifth" />
+                            </TabItem>
+                            <TabItem Header="Privacy">
+                                <TextBlock Margin="12" Text="The sixth" />
+                            </TabItem>
+                            <TabItem Header="About">
+                                <TextBlock Margin="12" Text="And the last" />
+                            </TabItem>
+                        </TabControl>
+                    </StackPanel>
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="StudioExample"
-                                     Description="And the Visual Studio variant, the document well of the shell: small headers, a three-unit line under the strip and the selected tab filled with the accent colour. It is the only one of these that turns the close button on by itself, and it hides it again on every tab but the selected one. The item style is keyed as well as the control one, so both have to be asked for, and it is drawn for the dark shell."
+                                     Description="And the Visual Studio variant, the document well of the shell: small headers, a three-unit line under the strip and the selected tab filled with the accent colour. It is the only one of these that turns the close button on by itself, and it hides it again on every tab but the selected one. The item style is keyed as well as the control one, so both have to be asked for, and it is drawn for the dark shell. It is a set of its own rather than a reading of Windows, which is why it stands alone in this card."
                                      Header="The Visual Studio look">
                 <smtx:XamlDisplay UniqueKey="TabControl.VisualStudio">
                     <Border Width="480"

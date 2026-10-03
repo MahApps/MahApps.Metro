@@ -24,14 +24,18 @@
                                    Placement="Bottom"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    Visibility="Collapsed" />
-                    <TabPanel x:Name="HeaderPanel"
-                              IsItemsHost="true"
-                              KeyboardNavigation.TabIndex="1" />
+                    <mah:TabPanelEx x:Name="HeaderPanel"
+                                    IsItemsHost="true"
+                                    KeyboardNavigation.TabIndex="1"
+                                    TabWidthMode="{TemplateBinding mah:TabControlHelper.TabWidthMode}" />
                 </Grid>
             </ScrollViewer>
             <mah:TransitioningContentControl x:Name="ContentPanel"
                                              Grid.Row="1"
                                              behaviors:ReloadBehavior.OnSelectedTabChanged="True"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
                                              RestartTransitionOnContentChange="True"
                                              Transition="{TemplateBinding mah:TabControlHelper.Transition}"
                                              UseLayoutRounding="True">
@@ -83,14 +87,18 @@
                                    Placement="Bottom"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    Visibility="Collapsed" />
-                    <TabPanel x:Name="HeaderPanel"
-                              IsItemsHost="true"
-                              KeyboardNavigation.TabIndex="1" />
+                    <mah:TabPanelEx x:Name="HeaderPanel"
+                                    IsItemsHost="true"
+                                    KeyboardNavigation.TabIndex="1"
+                                    TabWidthMode="{TemplateBinding mah:TabControlHelper.TabWidthMode}" />
                 </Grid>
             </ScrollViewer>
             <mah:TransitioningContentControl x:Name="ContentPanel"
                                              Grid.Column="0"
                                              behaviors:ReloadBehavior.OnSelectedTabChanged="True"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
                                              RestartTransitionOnContentChange="True"
                                              Transition="{TemplateBinding mah:TabControlHelper.Transition}"
                                              UseLayoutRounding="True">
@@ -141,4 +149,53 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <!--  the same three sets, each keeping the pair of templates that holds the strip on one line  -->
+    <Style x:Key="MahApps.Styles.MetroAnimatedSingleRowTabControl.Win10"
+           BasedOn="{StaticResource {x:Type mah:MetroAnimatedSingleRowTabControl}}"
+           TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}" />
+
+    <Style x:Key="MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI}"
+           TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+        <Setter Property="mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
+        <Setter Property="mah:TabControlHelper.Transition" Value="Left" />
+        <Style.Triggers>
+            <Trigger Property="TabStripPlacement" Value="Top">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI.SelectorBar"
+           BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI.SelectorBar}"
+           TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+        <Setter Property="mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
+        <Setter Property="mah:TabControlHelper.Transition" Value="Left" />
+        <Style.Triggers>
+            <Trigger Property="TabStripPlacement" Value="Top">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

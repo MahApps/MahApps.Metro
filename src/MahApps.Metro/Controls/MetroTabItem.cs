@@ -12,6 +12,14 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// An extended TabItem with a metro style.
     /// </summary>
+    /// <remarks>
+    /// The three properties about closing it are its own rather than the attached ones on
+    /// <see cref="TabControlHelper"/>, which is where every other tab item says the same thing.
+    /// Whatever is put on one of them is therefore handed to the matching attached property as
+    /// well, so that a style written for a plain tab item draws this one's close button too. An
+    /// untouched property hands nothing over, which leaves the value the tab control passed down
+    /// where it is.
+    /// </remarks>
     public class MetroTabItem : TabItem
     {
         public MetroTabItem()
@@ -24,7 +32,12 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(CloseButtonEnabled),
                                         typeof(bool),
                                         typeof(MetroTabItem),
-                                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits, OnCloseButtonEnabledChanged));
+
+        private static void OnCloseButtonEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            d.SetCurrentValue(TabControlHelper.CloseButtonEnabledProperty, e.NewValue);
+        }
 
         /// <summary>
         /// Gets or sets whether the Close Button is visible.
@@ -39,7 +52,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseTabCommandProperty =
             DependencyProperty.Register(nameof(CloseTabCommand),
                                         typeof(ICommand),
-                                        typeof(MetroTabItem));
+                                        typeof(MetroTabItem),
+                                        new PropertyMetadata(null, OnCloseTabCommandChanged));
+
+        private static void OnCloseTabCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            d.SetCurrentValue(TabControlHelper.CloseTabCommandProperty, e.NewValue);
+        }
 
         /// <summary>
         /// Gets or sets the command that is executed when the Close Button is clicked.
@@ -55,7 +74,12 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(CloseTabCommandParameter),
                                         typeof(object),
                                         typeof(MetroTabItem),
-                                        new PropertyMetadata(null));
+                                        new PropertyMetadata(null, OnCloseTabCommandParameterChanged));
+
+        private static void OnCloseTabCommandParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            d.SetCurrentValue(TabControlHelper.CloseTabCommandParameterProperty, e.NewValue);
+        }
 
         /// <summary>
         /// Gets or sets the command parameter which is passed to the close button command.

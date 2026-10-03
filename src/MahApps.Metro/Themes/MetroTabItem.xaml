@@ -513,4 +513,14 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--
+        The Windows 10 set of the tab that can be closed, which is the look that has always been
+        here. Its two WinUI siblings stand next to the shared tab in Styles/Controls.TabControl.xaml
+        rather than here, because the controls that hand them to their tabs are read before this
+        file is.
+    -->
+    <Style x:Key="MahApps.Styles.MetroTabItem.Win10"
+           BasedOn="{StaticResource {x:Type mah:MetroTabItem}}"
+           TargetType="{x:Type mah:MetroTabItem}" />
+
 </ResourceDictionary>
