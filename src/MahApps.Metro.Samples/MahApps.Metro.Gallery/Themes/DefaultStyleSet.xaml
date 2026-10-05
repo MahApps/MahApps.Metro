@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+
+    <!--
+        The default set of the library, the one an application gets that merges Styles/Controls.xaml.
+        The gallery itself wears the WinUI set, and this is what a sample stands in instead, so that
+        a control written without a style of its own shows the look a reader would get by copying it.
+        
+        The WinUI scroll bar comes along all the same, since the gallery has always shown its samples
+        with that one: a thin line at the edge that grows into a bar under the pointer. The pages that
+        show a bar of another kind pin the style they mean. The thumb of the panning indicator follows
+        the bar, because the hamburger menu draws that line itself while the pointer is elsewhere.
+    -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--
+        The implicit styles the library declares in Themes/Generic.xaml rather than in Controls.xaml.
+        WPF reaches for that dictionary only when nothing in the tree has a style for the type, and
+        the WinUI set of the application has one for most of these, so the default ones are declared
+        again here, the same lines as there.
+    -->
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDownBase}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:NumericUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:DecimalUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:IntegerUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:LongUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.NumericUpDown}" TargetType="{x:Type mah:TimeSpanUpDown}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Flyout}" TargetType="{x:Type mah:Flyout}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type mah:ToggleSwitch}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContentControlEx}" TargetType="{x:Type mah:ContentControlEx}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroThumbContentControl}" TargetType="{x:Type mah:MetroThumbContentControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommandsItem}" TargetType="{x:Type mah:WindowCommandsItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands}" TargetType="{x:Type mah:WindowCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Win10}" TargetType="{x:Type mah:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenuListBox}" TargetType="{x:Type mah:HamburgerMenuListBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}" TargetType="{x:Type mah:HamburgerMenu}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type mah:MetroHeader}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RevealImage}" TargetType="{x:Type mah:RevealImage}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type mah:MetroProgressBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.FlipViewItem}" TargetType="{x:Type mah:FlipViewItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type mah:FlipView}" />
+    <!--#region ColorPicker-->
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorCanvas}" TargetType="{x:Type mah:ColorCanvas}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorEyeDropper}" TargetType="{x:Type mah:ColorEyeDropper}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette}" TargetType="{x:Type mah:ColorPalette}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type mah:ColorPicker}" />
+    <!--#endregion-->
+    <Style BasedOn="{StaticResource MahApps.Styles.AutoSuggestBox}" TargetType="{x:Type mah:AutoSuggestBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HotKeyBox}" TargetType="{x:Type mah:HotKeyBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MultiSelectionComboBox}" TargetType="{x:Type mah:MultiSelectionComboBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.SplitButton}" TargetType="{x:Type mah:SplitButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton}" TargetType="{x:Type mah:DropDownButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBoxButton}" TargetType="{x:Type mah:TextBoxButton}" />
+    <!--#region Dialogs-->
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.InputDialog}" TargetType="{x:Type dialogs:InputDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.LoginDialog}" TargetType="{x:Type dialogs:LoginDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressDialog}" TargetType="{x:Type dialogs:ProgressDialog}" />
+    <!--#endregion-->
+
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.WinUI}" TargetType="{x:Type ScrollBar}" />
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ScrollBar.WinUI.Vertical}"
+           TargetType="{x:Type Thumb}" />
+    <Thickness x:Key="MahApps.Thickness.ScrollBar.PanningIndicator">0 12 0 12</Thickness>
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.WinUI}" TargetType="{x:Type ScrollViewer}" />
+
+</ResourceDictionary>

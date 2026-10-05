@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using MahApps.Metro.Controls;
+using MahApps.Metro.Gallery.Core;
 
 namespace MahApps.Metro.Gallery.Windows
 {
@@ -14,6 +15,9 @@ namespace MahApps.Metro.Gallery.Windows
         public TitleBarWindow()
         {
             this.InitializeComponent();
+
+            // a sample window shows what the default set gives it, whatever the gallery around it wears
+            DefaultStyleSet.Apply(this);
         }
     }
 }

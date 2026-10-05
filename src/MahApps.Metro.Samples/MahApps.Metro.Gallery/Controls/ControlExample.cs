@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -204,6 +204,13 @@ namespace MahApps.Metro.Gallery.Controls
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             base.OnContentChanged(oldContent, newContent);
+
+            // the card itself wears the set of the gallery and its sample the default one, which is
+            // what the markup shown under it gives an application that merges nothing else
+            if (newContent is FrameworkElement sample)
+            {
+                DefaultStyleSet.Apply(sample);
+            }
 
             this.RefreshXaml();
         }

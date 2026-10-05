@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using ShowMeTheXAML;
+using MahApps.Metro.Gallery.Core;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -74,6 +75,9 @@ namespace MahApps.Metro.Gallery.Pages
             var flyout = (Flyout)display.Content;
 
             display.Content = null;
+
+            // the window it goes into wears the set of the gallery, and the flyout is a sample
+            DefaultStyleSet.Apply(flyout);
 
             return flyout;
         }

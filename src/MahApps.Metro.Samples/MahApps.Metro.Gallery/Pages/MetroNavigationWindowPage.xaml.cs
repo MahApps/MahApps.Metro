@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Gallery.Windows;
+using MahApps.Metro.Gallery.Core;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -35,6 +36,9 @@ namespace MahApps.Metro.Gallery.Pages
                              WindowStartupLocation = WindowStartupLocation.CenterOwner,
                              Owner = Window.GetWindow(this)
                          };
+
+            // the pages in it are samples, so they stand in the default set like every other one
+            DefaultStyleSet.Apply(window);
 
             window.Show();
             window.Navigate(new NavigationSampleFirstPage());
