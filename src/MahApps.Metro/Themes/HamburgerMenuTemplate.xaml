@@ -608,4 +608,416 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!--  WinUI  -->
+
+    <!--
+        The button that opens and closes the pane, the way the NavigationView draws it: no fill at
+        rest, the fill of a row under the pointer and a step up of it while the button is held, and
+        the corners of a control. Its size is the menu's to say, through HamburgerWidth and
+        HamburgerHeight.
+    -->
+    <Style x:Key="MahApps.Styles.Button.Hamburger.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.Hamburger}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ButtonBackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ButtonBackgroundPressed}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ButtonForegroundPressed}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ButtonForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
+    </Style>
+
+    <!--
+        A row of the NavigationView. WinUI lays the tile of a row inside the pane with four units on
+        either side and two above and below, and that is where the fill and the bar of the accent go
+        here as well. The content keeps the whole width of the row, so an item template written for
+        the menu, with its icon in a column as wide as the closed pane, puts the icon where WinUI
+        puts it, in the middle of that strip, and the text where WinUI starts it.
+        
+        A closed pane keeps its open length and is cut down to the compact strip, which would leave
+        the tile running on past the edge and its far corners cut away. While the pane is closed the
+        tile is therefore only as wide as the strip, on whichever side of the pane the strip shows.
+    -->
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForeground}" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid x:Name="RootGrid"
+                          Background="Transparent"
+                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid x:Name="TileHost">
+                            <Grid Margin="4 2">
+                                <Border x:Name="Border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <Rectangle x:Name="SelectionIndicator"
+                                           Width="3"
+                                           Height="16"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           Fill="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.SelectionIndicator}"
+                                           Focusable="False"
+                                           Opacity="0"
+                                           RadiusX="1.5"
+                                           RadiusY="1.5"
+                                           Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=ShowSelectionIndicator, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </Grid>
+                        </Grid>
+                        <ContentPresenter x:Name="ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=IsPaneOpen}" Value="False">
+                            <Setter TargetName="TileHost" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="TileHost" Property="Width" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=IsPaneOpen}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="TileHost" Property="HorizontalAlignment" Value="Right" />
+                        </MultiDataTrigger>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="SelectionIndicator" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
+                        <Trigger Property="mah:ItemHelper.IsMouseLeftButtonPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseLeftButtonPressedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseLeftButtonPressedForegroundBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="mah:ItemHelper.IsMouseRightButtonPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.MouseRightButtonPressedForegroundBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <!--  the row showing says a press with a step of its own fill rather than with the one an unpicked row is pressed with, whichever button is down  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:ItemHelper.IsMouseLeftButtonPressed" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:ItemHelper.IsMouseRightButtonPressed" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.PressedSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="RootGrid" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background, Mode=OneWay}" />
+                            <Setter TargetName="SelectionIndicator" Property="Fill" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.SelectionIndicatorDisabled}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="4" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.DisabledBackgroundBrush" Value="Transparent" />
+        <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundDisabled}" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundDisabled}" />
+        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundPointerOver}" />
+        <Setter Property="mah:ItemHelper.HoverForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelectedPointerOver}" />
+        <Setter Property="mah:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForeground}" />
+        <Setter Property="mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundPressed}" />
+        <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundPressed}" />
+        <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundPressed}" />
+        <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundPressed}" />
+        <Setter Property="mah:ItemHelper.PressedSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelectedPressed}" />
+        <Setter Property="mah:ItemHelper.PressedSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundPressed}" />
+        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelected}" />
+        <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ItemForeground}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TextBlock.HamburgerMenuHeader.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TextBlock.HamburgerMenuHeader}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.HeaderForeground}" />
+    </Style>
+
+    <!--  a header of the NavigationView is forty units tall with its text sixteen in, and it is gone altogether while the pane is closed rather than leaving its height behind  -->
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuHeader.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuHeader}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Padding" Value="16 0 0 0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid x:Name="RootGrid"
+                          Height="40"
+                          Background="{TemplateBinding Background}"
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <TextBlock x:Name="PART_HeaderText"
+                                   Margin="{TemplateBinding Padding}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="Center"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader.WinUI}"
+                                   Text="{Binding Label}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsPaneOpen, RelativeSource={RelativeSource AncestorType=mah:HamburgerMenu}}" Value="False">
+                            <Setter TargetName="PART_HeaderText" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="RootGrid" Property="Height" Value="0" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  the line between two groups of rows: a single unit of the divider, three units clear above it and four below  -->
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuSeparator.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuSeparator}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Padding" Value="0 3 0 4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle Height="1"
+                                   Margin="{TemplateBinding Padding}"
+                                   VerticalAlignment="Center"
+                                   Fill="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.Separator}"
+                                   SnapsToDevicePixels="True" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        The NavigationView lays its content on the ground of the window as a page of its own: a
+        layer filled a shade off that ground, edged with the line of a card along the side of the
+        pane and along the top, and rounded where those two lines meet. Where there is no pane
+        beside the content, which is an Overlay menu or an Inline one with its pane closed, WinUI
+        keeps only the line along the top and drops the corner, and so does this.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.HamburgerMenu.WinUI" TargetType="{x:Type mah:HamburgerMenu}">
+        <Grid Background="{TemplateBinding Background}">
+            <mah:SplitView x:Name="MainSplitView"
+                           CanResizeOpenPane="{TemplateBinding CanResizeOpenPane}"
+                           CompactPaneLength="{TemplateBinding CompactPaneLength}"
+                           DisplayMode="{TemplateBinding DisplayMode}"
+                           IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                           IsTabStop="False"
+                           MaximumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MaximumOpenPaneLength}"
+                           MinimumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinimumOpenPaneLength}"
+                           OpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=OpenPaneLength, Mode=TwoWay}"
+                           PaneBackground="{TemplateBinding PaneBackground}"
+                           PaneForeground="{TemplateBinding PaneForeground}"
+                           PanePlacement="{TemplateBinding PanePlacement}"
+                           ResizeThumbStyle="{TemplateBinding ResizeThumbStyle}">
+                <mah:SplitView.Pane>
+                    <Grid x:Name="PaneGrid" Margin="{TemplateBinding PaneMargin}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <DockPanel x:Name="PaneHeader"
+                                   Grid.Row="0"
+                                   Margin="{TemplateBinding PaneHeaderMargin}"
+                                   LastChildFill="True">
+                            <Grid x:Name="HamburgerButtonSpace"
+                                  Width="{TemplateBinding HamburgerWidth}"
+                                  Height="{TemplateBinding HamburgerHeight}"
+                                  Margin="{TemplateBinding HamburgerMargin}"
+                                  DockPanel.Dock="Left"
+                                  Visibility="{TemplateBinding HamburgerVisibility}" />
+                            <ContentControl x:Name="PaneHeaderContent"
+                                            VerticalAlignment="Stretch"
+                                            ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
+                                            IsTabStop="False" />
+                        </DockPanel>
+
+                        <mah:HamburgerMenuListBox x:Name="ButtonsListView"
+                                                  Grid.Row="1"
+                                                  Width="{TemplateBinding OpenPaneLength}"
+                                                  mah:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
+                                                  AutomationProperties.Name="{x:Static lang:Automation.MenuItems}"
+                                                  Foreground="{TemplateBinding PaneForeground}"
+                                                  IsTextSearchEnabled="False"
+                                                  ItemContainerStyleSelector="{StaticResource HamburgerMenuItemStyleSelector}"
+                                                  ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  ItemsSource="{TemplateBinding ItemsSource}"
+                                                  ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+                                                  SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
+                                                  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
+                                                  SelectionMode="Single"
+                                                  TabIndex="1" />
+                        <mah:HamburgerMenuListBox x:Name="OptionsListView"
+                                                  Grid.Row="2"
+                                                  Width="{TemplateBinding OpenPaneLength}"
+                                                  Margin="0 4 0 0"
+                                                  VerticalAlignment="Bottom"
+                                                  AutomationProperties.Name="{x:Static lang:Automation.OptionItems}"
+                                                  Foreground="{TemplateBinding PaneForeground}"
+                                                  IsTextSearchEnabled="False"
+                                                  ItemContainerStyleSelector="{StaticResource HamburgerMenuItemOptionsStyleSelector}"
+                                                  ItemTemplate="{TemplateBinding OptionsItemTemplate}"
+                                                  ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
+                                                  ItemsSource="{TemplateBinding OptionsItemsSource}"
+                                                  ScrollViewer.VerticalScrollBarVisibility="{TemplateBinding OptionsVerticalScrollBarVisibility}"
+                                                  SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
+                                                  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
+                                                  SelectionMode="Single"
+                                                  TabIndex="2"
+                                                  Visibility="{TemplateBinding OptionsVisibility}" />
+                    </Grid>
+                </mah:SplitView.Pane>
+                <Border x:Name="ContentBorder"
+                        Background="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ContentBackground}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.ContentBorderBrush}"
+                        BorderThickness="1 1 0 0"
+                        CornerRadius="8 0 0 0">
+                    <mah:TransitioningContentControl x:Name="ContentPart"
+                                                     Padding="{TemplateBinding Padding}"
+                                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                     AutomationProperties.Name="{x:Static lang:Automation.Content}"
+                                                     Content="{TemplateBinding Content}"
+                                                     ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                     ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                     ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                     RestartTransitionOnContentChange="True"
+                                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                     Transition="{TemplateBinding ContentTransition}" />
+                </Border>
+            </mah:SplitView>
+            <Button x:Name="HamburgerButton"
+                    Width="{TemplateBinding HamburgerWidth}"
+                    Height="{TemplateBinding HamburgerHeight}"
+                    Margin="{TemplateBinding HamburgerMargin}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    AutomationProperties.AutomationId="HamburgerButton"
+                    AutomationProperties.HelpText="{TemplateBinding HamburgerButtonHelpText}"
+                    AutomationProperties.Name="{TemplateBinding HamburgerButtonName}"
+                    ContentTemplate="{TemplateBinding HamburgerButtonTemplate}"
+                    Foreground="{TemplateBinding PaneForeground}"
+                    IsTabStop="{TemplateBinding IsTabStop}"
+                    Style="{TemplateBinding HamburgerButtonStyle}"
+                    TabIndex="0"
+                    Visibility="{TemplateBinding HamburgerVisibility}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="PanePlacement" Value="Right">
+                <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0 1 1 0" />
+                <Setter TargetName="ContentBorder" Property="CornerRadius" Value="0 8 0 0" />
+                <Setter TargetName="HamburgerButton" Property="HorizontalAlignment" Value="Right" />
+                <Setter TargetName="HamburgerButtonSpace" Property="DockPanel.Dock" Value="Right" />
+            </Trigger>
+            <Trigger Property="DisplayMode" Value="Overlay">
+                <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0 1 0 0" />
+                <Setter TargetName="ContentBorder" Property="CornerRadius" Value="0" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="DisplayMode" Value="Inline" />
+                    <Condition Property="IsPaneOpen" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="ContentBorder" Property="BorderThickness" Value="0 1 0 0" />
+                <Setter TargetName="ContentBorder" Property="CornerRadius" Value="0" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
 </ResourceDictionary>

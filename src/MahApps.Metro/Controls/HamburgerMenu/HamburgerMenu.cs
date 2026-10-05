@@ -71,6 +71,9 @@ namespace MahApps.Metro.Controls
                 this.optionsListView.SelectionChanged += this.OptionsListView_SelectionChanged;
             }
 
+            // the ring is looked up again here rather than kept from before, since a property set
+            // ahead of the style already looked for one, and a style can bring a ring of its own
+            this._defaultItemFocusVisualTemplate = null;
             this.ChangeItemFocusVisualStyle();
 
             this.Loaded -= this.HamburgerMenu_Loaded;
