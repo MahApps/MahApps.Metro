@@ -1086,6 +1086,15 @@
     </Style>
 
     <!--
+        Named rather than left to the implicit tab style, since a set such as the WinUI one hands
+        tabs a look of their own that goes only with its own tab strip, and the strip of the picker
+        is this one.
+    -->
+    <Style x:Key="MahApps.Styles.TabItem.ColorPicker"
+           BasedOn="{StaticResource MahApps.Styles.TabItem}"
+           TargetType="TabItem" />
+
+    <!--
         The Windows 10 set of a tab strip. UWP never drew one: the Pivot it carries is a different
         control with a different job, so this set keeps the look the library has always drawn and
         the two keys below are here so that a set can hand a style over by name the way the others

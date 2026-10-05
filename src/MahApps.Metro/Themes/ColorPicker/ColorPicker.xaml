@@ -111,6 +111,7 @@
         <Setter Property="StandardColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.StandardColorsPalette}" />
         <Setter Property="StandardColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <Setter Property="TabControlStyle" Value="{DynamicResource MahApps.Styles.TabControl.ColorPicker}" />
+        <Setter Property="TabItemStyle" Value="{DynamicResource MahApps.Styles.TabItem.ColorPicker}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorPicker}">
