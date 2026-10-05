@@ -74,6 +74,12 @@ namespace MahApps.Metro.Gallery.Core
         public string? Keywords { get; }
 
         /// <summary>
+        /// Whether the page writes its heading itself, the way the settings do in their own column,
+        /// so the gallery leaves out the one it puts above every page.
+        /// </summary>
+        public bool HasOwnHeading { get; set; }
+
+        /// <summary>
         /// The page itself, built when it is asked for the first time and kept afterwards, so that
         /// walking the navigation does not build all of them.
         /// </summary>
