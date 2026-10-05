@@ -441,6 +441,48 @@ namespace MahApps.Metro.Tests.Tests
             return picker;
         }
 
+        [TestCase("MahApps.Styles.ColorPicker")]
+        [TestCase("MahApps.Styles.ColorPicker.Win10")]
+        [TestCase("MahApps.Styles.ColorPicker.WinUI")]
+        [Description("The tabs of the drop-down go with its tab strip, also where a set hands every other tab a look of its own, which in the WinUI set left the header of the open tab unseen.")]
+        public void TheTabsOfTheDropDownGoWithItsStrip(string key)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var picker = new ColorPicker
+                         {
+                             Style = (Style)Application.Current.FindResource(key),
+                             SelectedColor = Colors.SteelBlue,
+                             Width = 280,
+                             VerticalAlignment = VerticalAlignment.Top
+                         };
+
+            var corner = new Border
+                         {
+                             Resources = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml", UriKind.Absolute) },
+                             Child = picker
+                         };
+
+            this.window!.Content = corner;
+            this.Settle();
+
+            picker.IsDropDownOpen = true;
+            this.Settle();
+
+            try
+            {
+                var tab = (TabItem)Part(picker, "PART_ColorPalettesTab");
+
+                // the corner merges a copy of its own, so the style is the one found from there
+                Assert.That(tab.Style, Is.SameAs(picker.FindResource("MahApps.Styles.TabItem.ColorPicker")));
+            }
+            finally
+            {
+                picker.IsDropDownOpen = false;
+                this.Settle();
+            }
+        }
+
         private ColorPicker Show(string key)
         {
             Assert.That(this.window, Is.Not.Null);

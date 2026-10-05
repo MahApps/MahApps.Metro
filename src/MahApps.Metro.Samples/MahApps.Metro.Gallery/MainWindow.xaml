@@ -212,6 +212,15 @@
                         </Grid.RowDefinitions>
 
                         <DockPanel Grid.Row="0" Margin="24 20 20 4">
+                            <DockPanel.Style>
+                                <Style TargetType="{x:Type DockPanel}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasOwnHeading}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DockPanel.Style>
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                                 <Button Command="{x:Static core:GalleryCommands.OpenLink}"
                                         CommandParameter="{Binding Documentation}"

@@ -22,7 +22,7 @@ namespace MahApps.Metro.Gallery
         private static readonly GalleryPage Settings = new GalleryPage("Settings",
                                                                       "Gallery",
                                                                       typeof(SettingsPage),
-                                                                      PackIconMaterialKind.CogOutline);
+                                                                      PackIconMaterialKind.CogOutline) { HasOwnHeading = true };
 
         /// <summary>
         /// The submenus, one per category, as they turn up. A page is picked in one of them at a
