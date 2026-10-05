@@ -112,6 +112,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(MetroTabItem), "MahApps.Styles.MetroTabItem.WinUI")]
         [TestCase(WinUI, typeof(MetroAnimatedTabControl), "MahApps.Styles.MetroAnimatedTabControl.WinUI")]
         [TestCase(WinUI, typeof(MetroAnimatedSingleRowTabControl), "MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI")]
+        [TestCase(WinUI, typeof(HamburgerMenu), "MahApps.Styles.HamburgerMenu.WinUI")]
         [TestCase(WinUI, typeof(Slider), "MahApps.Styles.Slider.WinUI")]
         [TestCase(WinUI, typeof(RangeSlider), "MahApps.Styles.RangeSlider.WinUI")]
         [Description("A set puts its own style in front of the one the default set declares for that type.")]

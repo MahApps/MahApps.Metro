@@ -458,6 +458,7 @@
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillSecondary">{{MahApps.Colors.WinUI.CardBackgroundFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.DividerStrokeDefault">{{MahApps.Colors.WinUI.DividerStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SolidBackgroundFillBase">{{MahApps.Colors.WinUI.SolidBackgroundFillBase}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SolidBackgroundFillTertiary">{{MahApps.Colors.WinUI.SolidBackgroundFillTertiary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.LayerOnMicaBaseAltFillDefault">{{MahApps.Colors.WinUI.LayerOnMicaBaseAltFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary">{{MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary}}</Color>
@@ -536,6 +537,8 @@
         like that answers the pointer with. WinUI calls the second pair LayerOnMicaBaseAlt,
         because what lies under them is the mica of the window rather than a page of its own.
     -->
+    <!--  the ground of the window itself, which is what WinUI leaves under a navigation pane  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SolidBackgroundFillBase" Color="{StaticResource MahApps.Colors.WinUI.SolidBackgroundFillBase}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SolidBackgroundFillTertiary" Color="{StaticResource MahApps.Colors.WinUI.SolidBackgroundFillTertiary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.LayerOnMicaBaseAltFillDefault" Color="{StaticResource MahApps.Colors.WinUI.LayerOnMicaBaseAltFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.LayerOnMicaBaseAltFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary}" options:Freeze="True" />
@@ -1402,5 +1405,37 @@
     <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.PillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.PillFillPointerOver" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+
+    <!--
+        Resources for MahApps.Styles.HamburgerMenu.WinUI, read off the NavigationView, which is what
+        WinUI draws a navigation down the side with. The pane is the ground of the window and the
+        content is a page laid on it, filled the way a layer over that ground comes out and edged
+        with the line of a card. A row carries no fill until the pointer reaches it, the one showing
+        keeps the fill of the pointer, and what says which row that is is the short bar of the
+        accent at its left edge. The text stays the same colour throughout and only goes quieter
+        while the button is held.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillBase" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.PaneBackground" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillBase" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.PaneForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ContentBackground" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ContentBorderBrush" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ItemBackgroundSelectedPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.SelectionIndicator" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.SelectionIndicatorDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.HeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.Separator" ResourceKey="MahApps.Brushes.WinUI.DividerStrokeDefault" />
+    <!--  the button that opens and closes the pane answers the pointer with the fills of a row  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
 
 </ResourceDictionary>

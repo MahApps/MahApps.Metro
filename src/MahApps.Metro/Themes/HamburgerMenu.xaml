@@ -47,4 +47,55 @@
         <Setter Property="ShowSelectionIndicator" Value="True" />
     </Style>
 
+    <!--
+        The HamburgerMenu the way WinUI draws a navigation down the side, read off the NavigationView.
+        The button sits where the NavigationView puts its own, four units in and six down, and is the
+        size of that one. The bar of the accent is part of the look rather than a choice, so it is on.
+    -->
+    <Style x:Key="MahApps.Styles.HamburgerMenu.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}"
+           TargetType="{x:Type mah:HamburgerMenu}">
+        <Style.Resources>
+            <!--  the menu looks the ring for a row up under this key, and a row of this set is a rounded tile inside the row rather than the row itself  -->
+            <ControlTemplate x:Key="MahApps.Templates.HamburgerMenuItem.FocusVisual">
+                <Border Margin="4 2"
+                        BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Outer}"
+                        BorderThickness="2"
+                        CornerRadius="4"
+                        SnapsToDevicePixels="True"
+                        UseLayoutRounding="True">
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Inner}"
+                            BorderThickness="1"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="True" />
+                </Border>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.Background}" />
+        <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger.WinUI}" />
+        <Setter Property="HamburgerButtonTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--  the three lines of the GlobalNavigationButton glyph, which the NavigationView draws at sixteen units  -->
+                    <mah:PathIcon Width="16"
+                                  Height="16"
+                                  Data="M0,2.5H16V3.5H0Z M0,7.5H16V8.5H0Z M0,12.5H16V13.5H0Z" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HamburgerHeight" Value="36" />
+        <Setter Property="HamburgerMargin" Value="4 6 4 3" />
+        <Setter Property="HamburgerWidth" Value="40" />
+        <Setter Property="HeaderItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuHeader.WinUI}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.WinUI}" />
+        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.WinUI}" />
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.PaneBackground}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.PaneForeground}" />
+        <Setter Property="PaneHeaderMargin" Value="0" />
+        <Setter Property="PaneMargin" Value="0 0 0 4" />
+        <Setter Property="SeparatorItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuSeparator.WinUI}" />
+        <Setter Property="ShowSelectionIndicator" Value="True" />
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.HamburgerMenu.WinUI}" />
+    </Style>
+
 </ResourceDictionary>

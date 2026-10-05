@@ -28,6 +28,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.WinUI}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.WinUI}" TargetType="ContextMenu" />
     <Style BasedOn="{StaticResource MahApps.Styles.Expander.WinUI}" TargetType="Expander" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu.WinUI}" TargetType="{x:Type mah:HamburgerMenu}" />
     <!--
         The tab strip Windows 11 draws, read off the TabView. MahApps.Styles.TabControl.WinUI.SelectorBar
         is the other reading of it and stays a keyed style, since a set can only hand one of the two over
