@@ -458,6 +458,120 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        /// <summary>
+        /// What an application hands over for an empty box when it wants all of it shown, the way the
+        /// handler in <see cref="SetUp"/> answers an emptied box.
+        /// </summary>
+        private void EverythingIsOnOffer()
+        {
+            foreach (var planet in Planets)
+            {
+                this.suggestions.Add(planet);
+            }
+
+            ClipAssert.Pump();
+        }
+
+        [Test]
+        [Description("GH-4698: stepping into the box brings the list up when that is asked for and there is something in it.")]
+        public void SteppingInOpensTheListWhenAskedFor()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SetCurrentValue(AutoSuggestBox.TextProperty, "Ma");
+            this.suggestions.Add("Mars");
+            ClipAssert.Pump();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False, "nobody is in the box yet");
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.IsDropDownOpen, Is.True);
+                    Assert.That(this.box.Text, Is.EqualTo("Ma"), "and what stood in the box stays");
+                });
+        }
+
+        [Test]
+        [Description("Without being asked for, stepping into the box opens nothing, as it always did.")]
+        public void SteppingInOpensNothingByDefault()
+        {
+            this.box.SetCurrentValue(AutoSuggestBox.TextProperty, "Ma");
+            this.suggestions.Add("Mars");
+            ClipAssert.Pump();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False);
+        }
+
+        [Test]
+        [Description("GH-4698: with both switches on, an empty box shows all there is the moment the user steps in.")]
+        public void AnEmptyBoxShowsEverythingOnTheWayIn()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SuggestsWhenEmpty = true;
+            this.EverythingIsOnOffer();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.IsDropDownOpen, Is.True);
+                    Assert.That(this.box.Items, Has.Count.EqualTo(Planets.Length));
+                });
+        }
+
+        [Test]
+        [Description("Opening on the way in still keeps an empty box closed unless an empty box is allowed to suggest.")]
+        public void SteppingIntoAnEmptyBoxNeedsTheOtherSwitchAsWell()
+        {
+            this.box.OpenOnFocus = true;
+            this.EverythingIsOnOffer();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False);
+        }
+
+        [Test]
+        [Description("GH-4698: deleting the query keeps the list up with whatever the application offers for an empty box.")]
+        public void DeletingTheQueryKeepsTheListUpWhenAskedFor()
+        {
+            this.box.SuggestsWhenEmpty = true;
+
+            this.Type("Ma");
+            Assert.That(this.box.IsDropDownOpen, Is.True);
+
+            this.Type(string.Empty);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.IsDropDownOpen, Is.True);
+                    Assert.That(this.box.Items, Has.Count.EqualTo(Planets.Length), "the handler answers an empty text with all of them");
+                });
+        }
+
+        [Test]
+        [Description("A submitted query closes the list, and staying in the box does not bring it back.")]
+        public void StayingInTheBoxAfterSubmittingBringsNothingBack()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SuggestsWhenEmpty = true;
+
+            this.TypeKeys("Sat");
+            this.Press(Key.Enter);
+            ClipAssert.Pump();
+
+            this.TheDesktopIsStillOurs();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False);
+        }
+
         [Test]
         [Description("The MahApps text box outfit is there, and so is the behaviour a suggestion box needs.")]
         public void TheBoxComesDressedAndSetUp()

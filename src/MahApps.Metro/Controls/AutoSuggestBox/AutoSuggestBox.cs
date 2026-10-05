@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,6 +58,47 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(string.Empty,
                                                                         FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal,
                                                                         OnTextChanged));
+        }
+
+        /// <summary>Identifies the <see cref="OpenOnFocus"/> dependency property.</summary>
+        public static readonly DependencyProperty OpenOnFocusProperty
+            = DependencyProperty.Register(nameof(OpenOnFocus),
+                                          typeof(bool),
+                                          typeof(AutoSuggestBox),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>
+        /// Gets or sets whether the list comes up as soon as the user steps into the box, before a key
+        /// is pressed, as long as there is something in it to show.
+        /// </summary>
+        public bool OpenOnFocus
+        {
+            get => (bool)this.GetValue(OpenOnFocusProperty);
+            set => this.SetValue(OpenOnFocusProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>Identifies the <see cref="SuggestsWhenEmpty"/> dependency property.</summary>
+        public static readonly DependencyProperty SuggestsWhenEmptyProperty
+            = DependencyProperty.Register(nameof(SuggestsWhenEmpty),
+                                          typeof(bool),
+                                          typeof(AutoSuggestBox),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnSuggestsWhenEmptyChanged));
+
+        /// <summary>
+        /// Gets or sets whether the list stays up over an empty box. By default an empty box has nothing
+        /// to suggest and closes the list. With this on, whatever the application hands over for an empty
+        /// text is shown, so a user who deletes the query sees all there is to pick from again.
+        /// </summary>
+        public bool SuggestsWhenEmpty
+        {
+            get => (bool)this.GetValue(SuggestsWhenEmptyProperty);
+            set => this.SetValue(SuggestsWhenEmptyProperty, BooleanBoxes.Box(value));
+        }
+
+        private static void OnSuggestsWhenEmptyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var autoSuggestBox = (AutoSuggestBox)dependencyObject;
+            autoSuggestBox.UpdateTheList(false);
         }
 
         /// <summary>Identifies the <see cref="TextChanged"/> routed event.</summary>
@@ -154,14 +195,28 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <inheritdoc />
+        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsKeyboardFocusWithinChanged(e);
+
+            // stepping in is the one moment the list may come up without a key pressed, and only when
+            // asked for. Staying in, as after picking a suggestion, brings nothing back on its own.
+            if (this.OpenOnFocus && e.NewValue is true)
+            {
+                this.UpdateTheList(true);
+            }
+        }
+
         /// <summary>
         /// The list is up while there is something to show for what stands in the box. It comes up for
         /// the user's own typing, and goes away whenever there is nothing left to show, whoever wrote it.
         /// </summary>
         private void UpdateTheList(bool mayOpen)
         {
-            // an empty box has nothing to suggest, and a list with nothing in it is a sliver of border
-            var worthShowing = !string.IsNullOrEmpty(this.Text) && this.HasItems;
+            // an empty box has nothing to suggest unless the application says otherwise, and a list
+            // with nothing in it is a sliver of border
+            var worthShowing = this.HasItems && (this.SuggestsWhenEmpty || !string.IsNullOrEmpty(this.Text));
 
             if (worthShowing == this.IsDropDownOpen || (worthShowing && !mayOpen))
             {
