@@ -147,6 +147,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Dialog.Foreground.Accent" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.Window.FlyoutOverlay" Opacity="0.5" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.Overlay" Opacity="0.7" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Acrylic" Color="{{MahApps.Brushes.Window.Background.Backdrop.Acrylic}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Auto" Color="{{MahApps.Brushes.Window.Background.Backdrop.Auto}}" options:Freeze="True" />

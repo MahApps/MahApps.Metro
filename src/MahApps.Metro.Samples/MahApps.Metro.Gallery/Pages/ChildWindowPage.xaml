@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ChildWindowPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <!--
+        A child window opens in the dialog container of the window, not in the card, so these are
+        declared here and taken out of their display when the page loads, the way the flyout page
+        does it. The display has written the markup down by then, and the card finds it by its key.
+    -->
+    <UserControl.Resources>
+        <smtx:XamlDisplay x:Key="PlainChildWindow" UniqueKey="ChildWindow.Plain">
+            <mah:ChildWindow Title="A child window" ChildWindowWidth="360">
+                <StackPanel Margin="16">
+                    <TextBlock Text="It sits in the window over an overlay, and Escape closes it." TextWrapping="Wrap" />
+                    <Button Margin="0 16 0 0"
+                            HorizontalAlignment="Right"
+                            Click="OnClose"
+                            Content="Close" />
+                </StackPanel>
+            </mah:ChildWindow>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="MovableChildWindow" UniqueKey="ChildWindow.Movable">
+            <mah:ChildWindow Title="Drag me by the title"
+                             AllowMove="True"
+                             ChildWindowWidth="360"
+                             ShowTitleBarCloseButton="True">
+                <TextBlock Margin="16"
+                           Text="With AllowMove the title bar moves it around inside the window, and the button in the corner closes it."
+                           TextWrapping="Wrap" />
+            </mah:ChildWindow>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="ModelessChildWindow" UniqueKey="ChildWindow.Modeless">
+            <mah:ChildWindow Title="Not modal"
+                             ChildWindowWidth="360"
+                             CloseOnOverlay="True"
+                             IsModal="False"
+                             ShowTitleBarCloseButton="True">
+                <TextBlock Margin="16"
+                           Text="Without IsModal there is no veil behind it."
+                           TextWrapping="Wrap" />
+            </mah:ChildWindow>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="AnswerChildWindow" UniqueKey="ChildWindow.Answer">
+            <mah:ChildWindow Title="A question" ChildWindowWidth="360">
+                <StackPanel Margin="16">
+                    <TextBlock Text="What is the answer?" />
+                    <StackPanel Margin="0 16 0 0"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Click="OnAnswer"
+                                Content="42"
+                                Tag="42" />
+                        <Button Margin="8 0 0 0"
+                                Click="OnAnswer"
+                                Content="I do not know"
+                                Tag="no idea" />
+                    </StackPanel>
+                </StackPanel>
+            </mah:ChildWindow>
+        </smtx:XamlDisplay>
+    </UserControl.Resources>
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="PlainExample"
+                                     Description="A window inside the window. It opens in the container the dialogs use, with an overlay behind it, and closes by a call to Close, by Escape or, if you let it, by a click on the overlay."
+                                     Header="A plain child window"
+                                     UniqueKey="ChildWindow.Plain">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowPlain"
+                        Content="Show the child window" />
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="MovableExample"
+                                     Description="AllowMove lets the title bar move the window, as long as it is not stretched, and ShowTitleBarCloseButton puts the close button into the title bar."
+                                     Header="One you can move"
+                                     UniqueKey="ChildWindow.Movable">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowMovable"
+                        Content="Show the child window" />
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ModelessExample"
+                                     Description="IsModal set to false takes the veil away. The overlay is still there and still catches the click that CloseOnOverlay asks for."
+                                     Header="One that is not modal"
+                                     UniqueKey="ChildWindow.Modeless">
+                <Button Width="200"
+                        HorizontalAlignment="Left"
+                        Click="OnShowModeless"
+                        Content="Show the child window" />
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="AnswerExample"
+                                     Description="Close takes a result, and ShowChildWindowAsync hands it back once the window is gone. Closed without one, by Escape for instance, it hands back the reason instead."
+                                     Header="One with a result"
+                                     UniqueKey="ChildWindow.Answer">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="200"
+                            Click="OnShowAnswer"
+                            Content="Ask" />
+                    <TextBlock x:Name="AnswerText"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

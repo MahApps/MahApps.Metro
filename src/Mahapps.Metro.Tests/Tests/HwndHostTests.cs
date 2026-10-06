@@ -85,6 +85,24 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
+        [Description("A child window sits in the container the dialogs use, and goes over the handle the same way.")]
+        public async Task AHostGoesOutOfSightWhileAChildWindowIsOpen()
+        {
+            this.window!.SetCurrentValue(MetroWindow.CollapseHwndHostsProperty, true);
+
+            var childWindow = new ChildWindow { Title = "a child window" };
+            var showing = this.window.ShowChildWindowAsync(childWindow);
+            ClipAssert.PumpUntil(() => childWindow.IsOpen);
+
+            Assert.That(this.host!.Visibility, Is.EqualTo(Visibility.Collapsed), "out of sight while the child window is up");
+
+            childWindow.Close();
+            await showing.Within("the child window to close");
+
+            Assert.That(this.host.Visibility, Is.EqualTo(Visibility.Visible), "and back once it is gone");
+        }
+
+        [Test]
         [Description("A Flyout is drawn over the window in the same way.")]
         public void AHostGoesOutOfSightWhileAFlyoutIsOpen()
         {

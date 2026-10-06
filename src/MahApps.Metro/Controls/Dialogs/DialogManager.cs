@@ -456,7 +456,9 @@ namespace MahApps.Metro.Controls.Dialogs
                 window.metroInactiveDialogContainer.Children.Add(activeDialog);
             }
 
-            window.metroActiveDialogContainer.Children.Add(dialog); //add the dialog to the container}
+            // over the overlay at least, and over a child window that may be open in this container
+            Panel.SetZIndex(dialog, Math.Max(Panel.GetZIndex(dialog), window.metroActiveDialogContainer.ZIndexOnTop(dialog)));
+            window.metroActiveDialogContainer.Children.Add(dialog);
 
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.TrueBox);
 
