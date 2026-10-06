@@ -1198,6 +1198,19 @@
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundPressed}" />
             </Trigger>
+            <!--
+                A box that can be typed into is a text box while the caret is in it, and the Windows
+                10 one turns white with dark text then, the way the TextBox of this set does and the
+                one in the editable ComboBox of Windows does. The caret is drawn in that dark text.
+            -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEditable" Value="True" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundFocused}" />
+            </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundDisabled}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ForegroundDisabled}" />
@@ -1245,6 +1258,15 @@
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundPointerOver}" />
             </Trigger>
+            <!--  and the WinUI one takes the colours of its own text box there rather than the white the Windows 10 one is based on  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEditable" Value="True" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundFocused}" />
+            </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundDisabled}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ForegroundDisabled}" />
