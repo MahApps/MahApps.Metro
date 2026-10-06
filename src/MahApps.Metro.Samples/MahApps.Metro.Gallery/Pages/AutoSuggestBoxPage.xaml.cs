@@ -28,7 +28,10 @@ namespace MahApps.Metro.Gallery.Pages
 
         private static void Options(ControlExample example, AutoSuggestBox box)
         {
-            example.Watch(box, IsEnabledProperty);
+            // what there is for an empty box is on hand from the start, so stepping in can show it
+            FillSuggestions(box);
+
+            example.Watch(box, IsEnabledProperty, AutoSuggestBox.OpenOnFocusProperty, AutoSuggestBox.SuggestsWhenEmptyProperty);
             example.Watch("Attached",
                           box,
                           TextBoxHelper.WatermarkProperty,
@@ -46,8 +49,11 @@ namespace MahApps.Metro.Gallery.Pages
                 return;
             }
 
-            var box = (AutoSuggestBox)sender;
+            FillSuggestions((AutoSuggestBox)sender);
+        }
 
+        private static void FillSuggestions(AutoSuggestBox box)
+        {
             // the pages of this gallery are the list, so the sample has something to say without
             // carrying data of its own around
             box.ItemsSource = GalleryPages.All

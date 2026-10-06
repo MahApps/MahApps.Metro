@@ -56,6 +56,7 @@
                              Background="{x:Null}"
                              BorderThickness="0"
                              CharacterCasing="{TemplateBinding mah:ComboBoxHelper.CharacterCasing}"
+                             FocusVisualStyle="{x:Null}"
                              Focusable="True"
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"
@@ -268,10 +269,49 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!--
+        The rows of the list. A ComboBox row looks its ClearType hint up on the list it sits in, and a
+        suggestion box throws its rows away whenever the suggestions change, which leaves every old
+        row looking for a list it is no longer in and saying so in the output. A suggestion box has
+        the hint Enabled, the way a ComboBox has it, so its rows take that straight away. The trigger
+        is the one of the row style, so it is this value that wins there.
+    -->
+    <Style x:Key="MahApps.Styles.ComboBoxItem.AutoSuggestBox"
+           BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}"
+           TargetType="{x:Type ComboBoxItem}">
+        <Style.Triggers>
+            <Trigger Property="IsVisible" Value="True">
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ComboBoxItem.AutoSuggestBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Win10}"
+           TargetType="{x:Type ComboBoxItem}">
+        <Style.Triggers>
+            <Trigger Property="IsVisible" Value="True">
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ComboBoxItem.AutoSuggestBox.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.WinUI}"
+           TargetType="{x:Type ComboBoxItem}">
+        <Style.Triggers>
+            <Trigger Property="IsVisible" Value="True">
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="MahApps.Styles.AutoSuggestBox"
            BasedOn="{StaticResource MahApps.Styles.ComboBox}"
            TargetType="{x:Type mah:AutoSuggestBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
     </Style>
 
@@ -286,6 +326,7 @@
            TargetType="{x:Type mah:AutoSuggestBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox.Win10}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
     </Style>
 
@@ -294,6 +335,7 @@
            TargetType="{x:Type mah:AutoSuggestBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox.WinUI}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
     </Style>
 

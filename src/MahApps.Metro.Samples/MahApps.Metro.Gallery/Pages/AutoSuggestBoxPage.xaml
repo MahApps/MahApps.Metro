@@ -14,7 +14,7 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="SuggestExample"
-                                     Description="The box does not filter anything itself. It says that the text changed and the code behind answers with what fits, which is what makes it work against a database just as well as against a list."
+                                     Description="The box does not filter anything itself. It says that the text changed and the code behind answers with what fits, which is what makes it work against a database just as well as against a list. With OpenOnFocus the list comes up as soon as you step in, and with SuggestsWhenEmpty an empty box shows everything there is, so deleting the query brings the whole list back."
                                      Header="A box that suggests while you type">
                 <smtx:XamlDisplay UniqueKey="AutoSuggestBox.Suggest">
                     <mah:AutoSuggestBox x:Name="Suggest"

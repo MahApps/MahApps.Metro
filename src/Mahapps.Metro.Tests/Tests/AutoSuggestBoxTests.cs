@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,7 +13,9 @@ using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
@@ -456,6 +459,305 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(this.box.IsDropDownOpen, Is.False, "the list should be gone");
                     Assert.That(submissions, Is.Zero);
                 });
+        }
+
+        /// <summary>
+        /// What an application hands over for an empty box when it wants all of it shown, the way the
+        /// handler in <see cref="SetUp"/> answers an emptied box.
+        /// </summary>
+        private void EverythingIsOnOffer()
+        {
+            foreach (var planet in Planets)
+            {
+                this.suggestions.Add(planet);
+            }
+
+            ClipAssert.Pump();
+        }
+
+        [Test]
+        [Description("GH-4698: stepping into the box brings the list up when that is asked for and there is something in it.")]
+        public void SteppingInOpensTheListWhenAskedFor()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SetCurrentValue(AutoSuggestBox.TextProperty, "Ma");
+            this.suggestions.Add("Mars");
+            ClipAssert.Pump();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False, "nobody is in the box yet");
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.IsDropDownOpen, Is.True);
+                    Assert.That(this.box.Text, Is.EqualTo("Ma"), "and what stood in the box stays");
+                });
+        }
+
+        [Test]
+        [Description("Without being asked for, stepping into the box opens nothing, as it always did.")]
+        public void SteppingInOpensNothingByDefault()
+        {
+            this.box.SetCurrentValue(AutoSuggestBox.TextProperty, "Ma");
+            this.suggestions.Add("Mars");
+            ClipAssert.Pump();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False);
+        }
+
+        [Test]
+        [Description("GH-4698: with both switches on, an empty box shows all there is the moment the user steps in.")]
+        public void AnEmptyBoxShowsEverythingOnTheWayIn()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SuggestsWhenEmpty = true;
+            this.EverythingIsOnOffer();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.IsDropDownOpen, Is.True);
+                    Assert.That(this.box.Items, Has.Count.EqualTo(Planets.Length));
+                });
+        }
+
+        [Test]
+        [Description("Opening on the way in still keeps an empty box closed unless an empty box is allowed to suggest.")]
+        public void SteppingIntoAnEmptyBoxNeedsTheOtherSwitchAsWell()
+        {
+            this.box.OpenOnFocus = true;
+            this.EverythingIsOnOffer();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False);
+        }
+
+        [Test]
+        [Description("GH-4698: deleting the query keeps the list up with whatever the application offers for an empty box.")]
+        public void DeletingTheQueryKeepsTheListUpWhenAskedFor()
+        {
+            this.box.SuggestsWhenEmpty = true;
+
+            this.Type("Ma");
+            Assert.That(this.box.IsDropDownOpen, Is.True);
+
+            this.Type(string.Empty);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.IsDropDownOpen, Is.True);
+                    Assert.That(this.box.Items, Has.Count.EqualTo(Planets.Length), "the handler answers an empty text with all of them");
+                });
+        }
+
+        [Test]
+        [Description("A submitted query closes the list, and staying in the box does not bring it back.")]
+        public void StayingInTheBoxAfterSubmittingBringsNothingBack()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SuggestsWhenEmpty = true;
+
+            this.TypeKeys("Sat");
+            this.Press(Key.Enter);
+            ClipAssert.Pump();
+
+            this.TheDesktopIsStillOurs();
+
+            Assert.That(this.box.IsDropDownOpen, Is.False);
+        }
+
+        [Test]
+        [Description("The arrow keys walk the list one suggestion at a time and stop at either end.")]
+        public void TheArrowKeysWalkTheListAndStopAtTheEnds()
+        {
+            this.TypeKeys("M");
+            Assume.That(this.box.Items, Has.Count.EqualTo(2));
+
+            this.Press(Key.Down);
+            Assert.That(this.box.SelectedItem, Is.EqualTo("Merkur"), "the first press down lands on the first one");
+
+            this.Press(Key.Down);
+            this.Press(Key.Down);
+            Assert.That(this.box.SelectedItem, Is.EqualTo("Mars"), "and the walk stops at the last one");
+
+            this.Press(Key.Up);
+            this.Press(Key.Up);
+            Assert.That(this.box.SelectedItem, Is.EqualTo("Merkur"), "and at the first one on the way back");
+        }
+
+        [Test]
+        [Description("The first press up starts from the bottom of the list.")]
+        public void TheFirstPressUpStartsAtTheBottom()
+        {
+            this.TypeKeys("M");
+            this.Press(Key.Up);
+
+            Assert.That(this.box.SelectedItem, Is.EqualTo("Mars"));
+        }
+
+        [Test]
+        [Description("GH-4698: a list that came up over the empty box and was swapped for the hits of the first key is walked like any other.")]
+        public void TheArrowKeysWalkAListThatWasUpBeforeTheFirstKey()
+        {
+            this.box.OpenOnFocus = true;
+            this.box.SuggestsWhenEmpty = true;
+            this.EverythingIsOnOffer();
+
+            // the gallery hands over a new list for every key
+            this.box.TextChanged += (_, _) => this.box.ItemsSource = this.suggestions.ToList();
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+            Assume.That(this.box.IsDropDownOpen, Is.True);
+
+            this.TypeKeys("M");
+            this.Press(Key.Down);
+            this.Press(Key.Down);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.SelectedItem, Is.EqualTo("Mars"));
+                    Assert.That(this.box.Text, Is.EqualTo("Mars"));
+                    Assert.That(this.box.IsDropDownOpen, Is.True, "walking the list keeps it up");
+                });
+        }
+
+        [TestCase("MahApps.Styles.AutoSuggestBox")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.Win10")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.WinUI")]
+        [Description("A row takes its ClearType hint as it is rather than looking it up on a list it may already have been thrown out of.")]
+        public void ARowLooksNothingUpForItsClearTypeHint(string key)
+        {
+            this.box.Style = (Style)Application.Current.FindResource(key);
+            this.window.UpdateLayout();
+            ClipAssert.Pump();
+
+            // a new style brings a new template, and with it a new text box to type into
+            this.editableTextBox = this.box.FindChild<TextBox>("PART_EditableTextBox")!;
+
+            this.TypeKeys("M");
+            Assume.That(this.box.IsDropDownOpen, Is.True);
+
+            var row = (ComboBoxItem)this.box.ItemContainerGenerator.ContainerFromIndex(0);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(row, Is.Not.Null);
+                    Assert.That(BindingOperations.GetBindingExpression(row, RenderOptions.ClearTypeHintProperty), Is.Null);
+                    Assert.That(RenderOptions.GetClearTypeHint(row), Is.EqualTo(ClearTypeHint.Enabled));
+                });
+        }
+
+        [Test]
+        [Description("New suggestions while the list is up leave no complaint about a binding behind.")]
+        public void NewSuggestionsLeaveNoBindingWarnings()
+        {
+            var listener = new CollectingTraceListener();
+            var source = PresentationTraceSources.DataBindingSource;
+            var level = source.Switch.Level;
+            // without this the binding traces are only written with a debugger attached
+            PresentationTraceSources.Refresh();
+            source.Listeners.Add(listener);
+            source.Switch.Level = SourceLevels.Warning;
+
+            // the gallery hands over a new list for every key, which is where the rows of the old one
+            // are thrown away while the list is up
+            this.box.TextChanged += (_, _) => this.box.ItemsSource = this.suggestions.ToList();
+
+            try
+            {
+                this.Type("M");
+                Assume.That(this.box.IsDropDownOpen, Is.True);
+
+                this.Type("Ma");
+                this.Type("M");
+                this.window.UpdateLayout();
+                ClipAssert.Pump();
+            }
+            finally
+            {
+                source.Listeners.Remove(listener);
+                source.Switch.Level = level;
+            }
+
+            Assert.That(listener.Messages, Is.Empty);
+        }
+
+        [TestCase("MahApps.Styles.AutoSuggestBox")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.Win10")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.WinUI")]
+        [Description("The text box inside draws no ring of its own, since the box around it is the control and says the focus itself.")]
+        public void TheTextBoxInsideDrawsNoRing(string key)
+        {
+            this.box.Style = (Style)Application.Current.FindResource(key);
+            this.window.UpdateLayout();
+            ClipAssert.Pump();
+
+            var textBox = this.box.FindChild<TextBox>("PART_EditableTextBox");
+
+            Assert.That(textBox!.FocusVisualStyle, Is.Null);
+        }
+
+        [TestCase("MahApps.Styles.AutoSuggestBox")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.Win10")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.WinUI")]
+        [Description("No box draws a ring around itself either: a text box of any set says the focus with its own frame.")]
+        public void NoBoxDrawsARing(string key)
+        {
+            this.box.Style = (Style)Application.Current.FindResource(key);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.FocusVisualStyle, Is.Null);
+                    Assert.That(FocusVisualHelper.GetFocusVisualStyle(this.box), Is.Null);
+                });
+        }
+
+        [TestCase("MahApps.Styles.AutoSuggestBox.Win10", "MahApps.Brushes.TextControl.BackgroundFocused", "MahApps.Brushes.TextControl.ForegroundFocused")]
+        [TestCase("MahApps.Styles.AutoSuggestBox.WinUI", "MahApps.Brushes.TextControl.WinUI.BackgroundFocused", "MahApps.Brushes.TextControl.WinUI.ForegroundFocused")]
+        [Description("With the caret in it the box takes the colours of the text box of its set, which in the Windows 10 one is white with dark text, the colour the caret is drawn in.")]
+        public void WithTheCaretInItTheBoxIsTheTextBoxOfItsSet(string key, string background, string foreground)
+        {
+            this.box.Style = (Style)Application.Current.FindResource(key);
+            this.window.UpdateLayout();
+            ClipAssert.Pump();
+            this.editableTextBox = this.box.FindChild<TextBox>("PART_EditableTextBox")!;
+
+            this.TheUserIsInTheBox();
+            this.TheDesktopIsStillOurs();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(this.box.Background, Is.SameAs(Application.Current.FindResource(background)));
+                    Assert.That(this.box.Foreground, Is.SameAs(Application.Current.FindResource(foreground)));
+                    Assert.That(this.editableTextBox.CaretBrush, Is.SameAs(Application.Current.FindResource(foreground)), "and the caret is drawn in that text colour");
+                });
+        }
+
+        private sealed class CollectingTraceListener : TraceListener
+        {
+            public List<string> Messages { get; } = new();
+
+            public override void Write(string? message)
+            {
+            }
+
+            public override void WriteLine(string? message)
+            {
+                if (message is not null)
+                {
+                    this.Messages.Add(message);
+                }
+            }
         }
 
         [Test]
