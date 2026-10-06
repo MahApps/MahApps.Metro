@@ -52,12 +52,15 @@ namespace MahApps.Metro.Tests.Tests
             var box = this.Show(key);
             var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey) };
 
+            // the Metro ComboBox leaves its rows to the implicit style, which is this one
+            var row = reference.ItemContainerStyle ?? (Style)Application.Current.FindResource("MahApps.Styles.ComboBoxItem");
+
             Assert.Multiple(() =>
                 {
                     Assert.That(ComboBoxHelper.GetDropDownBackground(box), Is.SameAs(ComboBoxHelper.GetDropDownBackground(reference)), "what the list is filled with");
                     Assert.That(ComboBoxHelper.GetDropDownBorderBrush(box), Is.SameAs(ComboBoxHelper.GetDropDownBorderBrush(reference)), "the frame round it");
                     Assert.That(ComboBoxHelper.GetDropDownCornerRadius(box), Is.EqualTo(ComboBoxHelper.GetDropDownCornerRadius(reference)), "how it is rounded");
-                    Assert.That(box.ItemContainerStyle, Is.SameAs(reference.ItemContainerStyle), "and a row in it");
+                    Assert.That(box.ItemContainerStyle?.BasedOn, Is.SameAs(row), "and a row in it, which only sets its ClearType hint on top");
                 });
         }
 

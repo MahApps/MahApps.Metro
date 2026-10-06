@@ -266,6 +266,11 @@ namespace MahApps.Metro.Controls
         /// <inheritdoc />
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
+            if (ReferenceEquals(e.OriginalSource, this.editableTextBox) && this.WalkTheList(e))
+            {
+                return;
+            }
+
             // A ComboBox does its key work here for everything that comes out of the editable text box,
             // which is where a suggestion box gets its keys, and it is where enter closes the list and
             // takes over whatever the arrow keys had walked to. So the base goes first and the query is
@@ -284,6 +289,41 @@ namespace MahApps.Metro.Controls
             base.OnKeyDown(e);
 
             this.SubmitOnEnter(e);
+        }
+
+        /// <summary>
+        /// The arrow keys walk the open list one suggestion at a time, from the top on the first press
+        /// down and from the bottom on the first press up, and stop at either end.
+        /// </summary>
+        /// <remarks>
+        /// A ComboBox walks its list by pages of what it can see, and once the list was open over an
+        /// empty box and the suggestions changed underneath it, that walk found nothing to go to and the
+        /// keys did nothing at all. A list of suggestions has no pages to speak of, so the box walks it
+        /// itself.
+        /// </remarks>
+        private bool WalkTheList(KeyEventArgs e)
+        {
+            var key = e.Key == Key.System ? e.SystemKey : e.Key;
+            if ((key != Key.Down && key != Key.Up)
+                || (e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt
+                || !this.IsDropDownOpen
+                || !this.HasItems)
+            {
+                return false;
+            }
+
+            var last = this.Items.Count - 1;
+            var index = this.SelectedIndex;
+
+            index = key == Key.Down
+                ? (index < 0 ? 0 : Math.Min(index + 1, last))
+                : (index < 0 ? last : Math.Max(index - 1, 0));
+
+            this.SetCurrentValue(SelectedIndexProperty, index);
+            (this.ItemContainerGenerator.ContainerFromIndex(index) as FrameworkElement)?.BringIntoView();
+
+            e.Handled = true;
+            return true;
         }
 
         private void SubmitOnEnter(KeyEventArgs e)
