@@ -76,6 +76,12 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.Invoke(() => metroWindow.GetCurrentDialogAsync<TDialog>());
         }
 
+        public Task<ContentDialogResult> ShowContentDialogAsync(object context, ContentDialog dialog)
+        {
+            var metroWindow = GetMetroWindow(context);
+            return metroWindow.Invoke(() => metroWindow.ShowContentDialogAsync(dialog));
+        }
+
         public Task ShowChildWindowAsync(object context, ChildWindow childWindow, ChildWindowManager.OverlayFillBehavior overlayFillBehavior = ChildWindowManager.OverlayFillBehavior.WindowContent)
         {
             return this.ShowChildWindowAsync<object>(context, childWindow, overlayFillBehavior);

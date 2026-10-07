@@ -131,6 +131,13 @@ namespace MahApps.Metro.Controls.Dialogs
         Task<TResult?> ShowChildWindowAsync<TResult>(object context, ChildWindow childWindow, ChildWindowManager.OverlayFillBehavior overlayFillBehavior = ChildWindowManager.OverlayFillBehavior.WindowContent);
 
         /// <summary>
+        /// Shows the given content dialog in the window the context is registered on, and returns what it was closed with.
+        /// </summary>
+        /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
+        /// <param name="dialog">The content dialog to show.</param>
+        Task<ContentDialogResult> ShowContentDialogAsync(object context, ContentDialog dialog);
+
+        /// <summary>
         /// Gets the current shown dialog.
         /// </summary>
         /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>

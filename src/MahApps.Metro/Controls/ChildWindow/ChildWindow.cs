@@ -834,6 +834,13 @@ namespace MahApps.Metro.Controls
 
             var childWindow = (ChildWindow)dependencyObject;
 
+            if ((bool)e.NewValue)
+            {
+                // a window shown again starts without what closed it the time before
+                childWindow.ChildWindowResult = null;
+                childWindow.ClosedBy = CloseReason.None;
+            }
+
             void OpenChangedAction()
             {
                 if ((bool)e.NewValue)
@@ -884,12 +891,7 @@ namespace MahApps.Metro.Controls
                 // first focus itself
                 this.Focus();
 
-                var elementToFocus = this.FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
-                if (this.ShowTitleBarCloseButton && this.closeButton != null && elementToFocus == null)
-                {
-                    this.closeButton.SetCurrentValue(FocusableProperty, true);
-                    elementToFocus = this.closeButton;
-                }
+                var elementToFocus = this.GetElementToFocus();
 
                 if (elementToFocus != null)
                 {
@@ -905,6 +907,21 @@ namespace MahApps.Metro.Controls
                     elementToFocus.IsVisibleChanged += OnIsVisibleChanged;
                 }
             }
+        }
+
+        /// <summary>
+        /// The element that gets the focus once the window is open.
+        /// </summary>
+        protected virtual UIElement? GetElementToFocus()
+        {
+            var elementToFocus = this.FocusedElement ?? this.FindChildren<UIElement>().FirstOrDefault(c => c.Focusable);
+            if (this.ShowTitleBarCloseButton && this.closeButton != null && elementToFocus == null)
+            {
+                this.closeButton.SetCurrentValue(FocusableProperty, true);
+                elementToFocus = this.closeButton;
+            }
+
+            return elementToFocus;
         }
 
         private void HideStoryboard_Completed(object? sender, EventArgs e)
@@ -1087,13 +1104,13 @@ namespace MahApps.Metro.Controls
 
             if (this.headerThumb != null)
             {
-                this.headerThumb.DragDelta -= this.HeaderThumbDragDelta;
+                this.headerThumb.DragDelta -= this.OnTitleBarThumbDragDelta;
             }
 
             this.headerThumb = this.Template.FindName(PART_TitleBarThumb, this) as IMetroThumb;
             if (this.headerThumb != null && this.partWindow != null)
             {
-                this.headerThumb.DragDelta += this.HeaderThumbDragDelta;
+                this.headerThumb.DragDelta += this.OnTitleBarThumbDragDelta;
             }
 
             if (this.closeButton != null)
@@ -1127,7 +1144,10 @@ namespace MahApps.Metro.Controls
             this.ProcessMove(0, 0);
         }
 
-        private void HeaderThumbDragDelta(object sender, DragDeltaEventArgs e)
+        /// <summary>
+        /// Moves the window by a drag on its title, for a template that offers more than one place to drag it by.
+        /// </summary>
+        protected void OnTitleBarThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             if (this.partWindow is null)
             {
@@ -1234,6 +1254,16 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Creates the arguments of the <see cref="Closing"/> event, so that a derived window can hand out its own.
+        /// </summary>
+        /// <param name="closedBy">Why the window closes.</param>
+        /// <param name="childWindowResult">The result it closes with.</param>
+        protected virtual CancelEventArgs CreateClosingEventArgs(CloseReason closedBy, object? childWindowResult)
+        {
+            return new CancelEventArgs();
+        }
+
+        /// <summary>
         /// Closes this dialog.
         /// </summary>
         /// <param name="childWindowResult">A dialog result (optional).</param>
@@ -1252,7 +1282,7 @@ namespace MahApps.Metro.Controls
             this.ClosedBy = closedBy;
 
             // check if we really want close the dialog
-            var e = new CancelEventArgs();
+            var e = this.CreateClosingEventArgs(closedBy, childWindowResult);
             this.OnClosing(e);
 
             if (!e.Cancel)
