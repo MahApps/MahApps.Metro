@@ -1,0 +1,203 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ContentDialogPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <!--
+        A content dialog opens in the dialog container of the window, not in the card, so the dialogs
+        are declared here and taken out of their display when the page loads, as on the child window
+        page. Each display holds the same dialog three times: the one without a style is what the
+        card shows, the other two wear the Windows 10 and the WinUI style and follow the first.
+    -->
+    <UserControl.Resources>
+        <smtx:XamlDisplay x:Key="ThreeButtonsDisplay" UniqueKey="ContentDialog.ThreeButtons">
+            <StackPanel smtx:XamlDisplay.Ignore="This">
+                <mah:ContentDialog Title="Save the answer?"
+                                   CloseButtonText="Cancel"
+                                   DefaultButton="Primary"
+                                   PrimaryButtonText="Save"
+                                   SecondaryButtonText="Don't save">
+                    <TextBlock Text="The answer is 42. Do you want to keep it for the next question?" TextWrapping="Wrap" />
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren" Style="{DynamicResource MahApps.Styles.ContentDialog.Win10}">
+                    <TextBlock Text="The answer is 42. Do you want to keep it for the next question?" TextWrapping="Wrap" />
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren" Style="{DynamicResource MahApps.Styles.ContentDialog.WinUI}">
+                    <TextBlock Text="The answer is 42. Do you want to keep it for the next question?" TextWrapping="Wrap" />
+                </mah:ContentDialog>
+            </StackPanel>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="ResultDisplay" UniqueKey="ContentDialog.Result">
+            <StackPanel smtx:XamlDisplay.Ignore="This">
+                <mah:ContentDialog Title="What is the answer?"
+                                   CloseButtonText="I do not know"
+                                   PrimaryButtonText="42"
+                                   SecondaryButtonText="43">
+                    <TextBlock Text="Pick one. The page shows what the dialog handed back." TextWrapping="Wrap" />
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren" Style="{DynamicResource MahApps.Styles.ContentDialog.Win10}">
+                    <TextBlock Text="Pick one. The page shows what the dialog handed back." TextWrapping="Wrap" />
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren" Style="{DynamicResource MahApps.Styles.ContentDialog.WinUI}">
+                    <TextBlock Text="Pick one. The page shows what the dialog handed back." TextWrapping="Wrap" />
+                </mah:ContentDialog>
+            </StackPanel>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="InputDisplay" UniqueKey="ContentDialog.Input">
+            <StackPanel smtx:XamlDisplay.Ignore="This">
+                <mah:ContentDialog Title="Name the answer"
+                                   CloseButtonText="Cancel"
+                                   DefaultButton="Primary"
+                                   IsPrimaryButtonEnabled="False"
+                                   PrimaryButtonText="Ok">
+                    <StackPanel>
+                        <TextBlock Text="Ok stays off until there is a name." TextWrapping="Wrap" />
+                        <TextBox Margin="0 12 0 0" TextChanged="OnAnswerTextChanged" />
+                    </StackPanel>
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                   IsPrimaryButtonEnabled="False"
+                                   Style="{DynamicResource MahApps.Styles.ContentDialog.Win10}">
+                    <StackPanel>
+                        <TextBlock Text="Ok stays off until there is a name." TextWrapping="Wrap" />
+                        <TextBox Margin="0 12 0 0"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                                 TextChanged="OnAnswerTextChanged" />
+                    </StackPanel>
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren"
+                                   IsPrimaryButtonEnabled="False"
+                                   Style="{DynamicResource MahApps.Styles.ContentDialog.WinUI}">
+                    <StackPanel>
+                        <TextBlock Text="Ok stays off until there is a name." TextWrapping="Wrap" />
+                        <TextBox Margin="0 12 0 0" TextChanged="OnAnswerTextChanged" />
+                    </StackPanel>
+                </mah:ContentDialog>
+            </StackPanel>
+        </smtx:XamlDisplay>
+
+        <smtx:XamlDisplay x:Key="TitleBarDisplay" UniqueKey="ContentDialog.TitleBar">
+            <StackPanel smtx:XamlDisplay.Ignore="This">
+                <mah:ContentDialog Title="Move me"
+                                   AllowMove="True"
+                                   PrimaryButtonText="Ok"
+                                   ShowTitleBar="True"
+                                   ShowTitleBarCloseButton="True">
+                    <TextBlock Text="With a title bar, a close button and room to move, in all three looks." TextWrapping="Wrap" />
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren" Style="{DynamicResource MahApps.Styles.ContentDialog.Win10}">
+                    <TextBlock Text="With a title bar, a close button and room to move, in all three looks." TextWrapping="Wrap" />
+                </mah:ContentDialog>
+                <mah:ContentDialog smtx:XamlDisplay.Ignore="ThisAndChildren" Style="{DynamicResource MahApps.Styles.ContentDialog.WinUI}">
+                    <TextBlock Text="With a title bar, a close button and room to move, in all three looks." TextWrapping="Wrap" />
+                </mah:ContentDialog>
+            </StackPanel>
+        </smtx:XamlDisplay>
+    </UserControl.Resources>
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="ThreeButtonsExample"
+                                     Description="A dialog with three buttons after the ContentDialog of WinUI. The default button takes Enter and the accent look, Escape is the close button. The three buttons open the same markup in the Metro, the Windows 10 and the WinUI look, and the options drive all three."
+                                     Header="Three buttons"
+                                     UniqueKey="ContentDialog.ThreeButtons">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnShow"
+                            Content="Metro"
+                            Tag="ThreeButtons0" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="Windows 10"
+                            Tag="ThreeButtons1" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="WinUI"
+                            Tag="ThreeButtons2" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ResultExample"
+                                     Description="ShowAsync hands back which button closed the dialog: Primary, Secondary, or None for the close button, Escape and everything else."
+                                     Header="The result"
+                                     UniqueKey="ContentDialog.Result">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnShow"
+                            Content="Metro"
+                            Tag="Result0" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="Windows 10"
+                            Tag="Result1" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="WinUI"
+                            Tag="Result2" />
+                    <TextBlock x:Name="ResultText"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="InputExample"
+                                     Description="A dialog that asks for something keeps its primary button off until there is something to take."
+                                     Header="Asking for something"
+                                     UniqueKey="ContentDialog.Input">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnShow"
+                            Content="Metro"
+                            Tag="Input0" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="Windows 10"
+                            Tag="Input1" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="WinUI"
+                            Tag="Input2" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TitleBarExample"
+                                     Description="Windows 10 and WinUI leave the title bar out, the way Microsoft draws the dialog. ShowTitleBar, AllowMove and ShowTitleBarCloseButton put it back, and the Metro look has it anyway."
+                                     Header="A title bar, moving and the close button"
+                                     UniqueKey="ContentDialog.TitleBar">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnShow"
+                            Content="Metro"
+                            Tag="TitleBar0" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="Windows 10"
+                            Tag="TitleBar1" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnShow"
+                            Content="WinUI"
+                            Tag="TitleBar2" />
+                </StackPanel>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -49,6 +49,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ProgressRing.Win10}" TargetType="{x:Type mah:ProgressRing}" />
     <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog.Win10}" TargetType="{x:Type mah:ContentDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="ScrollBar" />
     <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
     <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"

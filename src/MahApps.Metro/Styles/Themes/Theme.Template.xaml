@@ -34,6 +34,7 @@
 
     <!--  BASE COLORS  -->
     <Color x:Key="MahApps.Colors.ThemeForeground">{{MahApps.Colors.ThemeForeground}}</Color>
+    <Color x:Key="MahApps.Colors.ChildWindow.Overlay">{{MahApps.Colors.ChildWindow.Overlay}}</Color>
     <Color x:Key="MahApps.Colors.ThemeBackground">{{MahApps.Colors.ThemeBackground}}</Color>
     <Color x:Key="MahApps.Colors.IdealForeground">{{MahApps.Colors.IdealForeground}}</Color>
 
@@ -147,6 +148,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Dialog.Foreground.Accent" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.Window.FlyoutOverlay" Opacity="0.5" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ChildWindow.Overlay" Opacity="0.7" Color="{StaticResource MahApps.Colors.ChildWindow.Overlay}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Acrylic" Color="{{MahApps.Brushes.Window.Background.Backdrop.Acrylic}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Window.Background.Backdrop.Auto" Color="{{MahApps.Brushes.Window.Background.Backdrop.Auto}}" options:Freeze="True" />
@@ -457,6 +459,9 @@
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillDefault">{{MahApps.Colors.WinUI.CardBackgroundFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillSecondary">{{MahApps.Colors.WinUI.CardBackgroundFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.LayerFillAlt">{{MahApps.Colors.WinUI.LayerFillAlt}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SurfaceStrokeDefault">{{MahApps.Colors.WinUI.SurfaceStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SmokeFillDefault">{{MahApps.Colors.WinUI.SmokeFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.DividerStrokeDefault">{{MahApps.Colors.WinUI.DividerStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SolidBackgroundFillBase">{{MahApps.Colors.WinUI.SolidBackgroundFillBase}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SolidBackgroundFillTertiary">{{MahApps.Colors.WinUI.SolidBackgroundFillTertiary}}</Color>
@@ -568,6 +573,9 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillDefault" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.CardStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.LayerFillAlt" Color="{StaticResource MahApps.Colors.WinUI.LayerFillAlt}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SurfaceStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SmokeFillDefault" Color="{StaticResource MahApps.Colors.WinUI.SmokeFillDefault}" options:Freeze="True" />
     <!--  the two colours WinUI says something with rather than draws something in: the amber it holds work up in and the red it fails in  -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCaution" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCaution}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCritical" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCritical}" options:Freeze="True" />
@@ -1437,5 +1445,16 @@
     <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.ButtonForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <!--  ContentDialog, after ContentDialog_themeresources.xaml of WinUI and the generic.xaml of the Windows 10 SDK  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundAltHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlPageTextBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.Win10.Border" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.Win10.Overlay" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundMediumAltMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillBase" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.WinUI.TopOverlay" ResourceKey="MahApps.Brushes.WinUI.LayerFillAlt" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.WinUI.Border" ResourceKey="MahApps.Brushes.WinUI.SurfaceStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.WinUI.Separator" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ContentDialog.WinUI.Overlay" ResourceKey="MahApps.Brushes.WinUI.SmokeFillDefault" />
 
 </ResourceDictionary>
