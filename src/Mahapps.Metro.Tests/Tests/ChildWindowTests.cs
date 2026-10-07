@@ -109,9 +109,11 @@ namespace MahApps.Metro.Tests.Tests
                 ThemeManager.Current.ChangeTheme(this.window!, "Dark.Blue");
                 ClipAssert.Pump();
 
-                var expected = (Color)this.window!.FindResource("MahApps.Colors.ThemeForeground");
+                // a dark veil in the dark theme as well, where the theme foreground would be a white one
+                var expected = (Color)this.window!.FindResource("MahApps.Colors.ChildWindow.Overlay");
                 var overlay = (SolidColorBrush)childWindow.OverlayBrush;
                 Assert.That(overlay.Color, Is.EqualTo(expected));
+                Assert.That(overlay.Color, Is.EqualTo(Colors.Black));
                 Assert.That(overlay.Opacity, Is.EqualTo(0.7).Within(0.001));
             }
             finally
@@ -578,6 +580,21 @@ namespace MahApps.Metro.Tests.Tests
             await showing.Within("the child window to close in code");
 
             Assert.That(command.Executed, Is.EqualTo(0));
+        }
+
+        [TestCase("MahApps.Styles.TextBox.Win10")]
+        [TestCase("MahApps.Styles.TextBox.WinUI")]
+        [Description("A box of the Windows 10 or the WinUI set takes the focus as the window opens; WPF threw when the focus arrived before the box had its template.")]
+        public void ABoxOfAnotherSetTakesTheFocus(string style)
+        {
+            var box = new TextBox { Style = (Style)Application.Current.FindResource(style) };
+            var childWindow = this.NewChildWindow();
+            childWindow.Content = new StackPanel { Children = { box } };
+
+            _ = this.Show<object>(childWindow);
+            ClipAssert.PumpUntil(() => box.IsFocused);
+
+            Assert.That(box.IsFocused, Is.True);
         }
     }
 }

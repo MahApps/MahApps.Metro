@@ -898,10 +898,17 @@ namespace MahApps.Metro.Controls
                     void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
                     {
                         elementToFocus.IsVisibleChanged -= OnIsVisibleChanged;
-                        if (elementToFocus.Focusable && elementToFocus is HwndHost == false)
-                        {
-                            elementToFocus.Focus();
-                        }
+
+                        // visible is not laid out yet: a text box of the Windows 10 or the WinUI set that gets the
+                        // focus before it has its template makes WPF throw while the template loads, so the focus
+                        // waits until the layout has run
+                        elementToFocus.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)(() =>
+                            {
+                                if (elementToFocus.Focusable && elementToFocus.IsVisible && elementToFocus is HwndHost == false)
+                                {
+                                    elementToFocus.Focus();
+                                }
+                            }));
                     }
 
                     elementToFocus.IsVisibleChanged += OnIsVisibleChanged;
