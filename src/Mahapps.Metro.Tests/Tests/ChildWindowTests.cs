@@ -15,8 +15,8 @@ using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
 using NUnit.Framework;
 
-// the template still frames the window with the obsolete ClipBorder, as SimpleChildWindow did;
-// that border goes when the rounding of the child window is looked at
+// The template still frames the window with the obsolete ClipBorder, as SimpleChildWindow did.
+// That border goes when the rounding of the child window is looked at.
 #pragma warning disable CS0618
 
 namespace MahApps.Metro.Tests.Tests
@@ -509,26 +509,6 @@ namespace MahApps.Metro.Tests.Tests
             PressAccessKey(childWindow, "B");
 
             Assert.That(clicked, Is.False);
-        }
-
-        /// <summary>
-        /// A command that counts how often it ran and can be told to refuse.
-        /// </summary>
-        private sealed class CountingCommand : ICommand
-        {
-            public bool Allowed { get; set; } = true;
-
-            public int Executed { get; private set; }
-
-            public event System.EventHandler? CanExecuteChanged
-            {
-                add { }
-                remove { }
-            }
-
-            public bool CanExecute(object? parameter) => this.Allowed;
-
-            public void Execute(object? parameter) => this.Executed++;
         }
 
         private static void ClickTheTitleBarCloseButton(ChildWindow childWindow)

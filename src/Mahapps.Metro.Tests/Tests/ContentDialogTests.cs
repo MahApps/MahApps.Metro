@@ -67,23 +67,6 @@ namespace MahApps.Metro.Tests.Tests
             ClipAssert.Pump();
         }
 
-        private sealed class CountingCommand : ICommand
-        {
-            public bool Allowed { get; set; } = true;
-
-            public int Executed { get; private set; }
-
-            public event System.EventHandler? CanExecuteChanged
-            {
-                add { }
-                remove { }
-            }
-
-            public bool CanExecute(object? parameter) => this.Allowed;
-
-            public void Execute(object? parameter) => this.Executed++;
-        }
-
         [TearDown]
         public void CloseAllDialogs()
         {
@@ -758,6 +741,23 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(underlay.ActualWidth, Is.EqualTo(border.ActualWidth).Within(0.5));
             Assert.That(underlay.ActualHeight, Is.EqualTo(border.ActualHeight).Within(0.5));
             Assert.That(underlay.CornerRadius, Is.EqualTo(border.CornerRadius));
+        }
+
+        [TestCase(Metro)]
+        [NUnit.Framework.Description("The command of a button gets the parameter that is set for it.")]
+        public async Task TheCommandGetsItsParameter(string style)
+        {
+            var command = new CountingCommand();
+            var dialog = NewDialog(style);
+            dialog.PrimaryButtonCommand = command;
+            dialog.PrimaryButtonCommandParameter = "42";
+            var showing = this.ShowDialog(dialog);
+
+            Click(dialog, "PART_PrimaryButton");
+
+            Assert.That(await ClosedWith(showing), Is.EqualTo(ContentDialogResult.Primary));
+            Assert.That(command.Executed, Is.EqualTo(1));
+            Assert.That(command.LastParameter, Is.EqualTo("42"));
         }
     }
 }
