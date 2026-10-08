@@ -407,8 +407,10 @@ namespace MahApps.Metro.Tests.Tests
 
             var widths = new[] { "PART_PrimaryButton", "PART_SecondaryButton", "PART_CloseButton" }.Select(p => Part(dialog, p).ActualWidth).ToArray();
 
-            // three equal columns; in the Windows 10 original the middle button gives up two more units to its margins
-            Assert.That(widths.Max() - widths.Min(), Is.LessThanOrEqualTo(2.5), "three thirds");
+            // three equal columns; in the Windows 10 original the middle button gives up two more units to its margins,
+            // and the layout rounding to whole device pixels may add one pixel on either side
+            var pixel = 1 / System.Windows.Media.VisualTreeHelper.GetDpi(dialog).PixelsPerDip;
+            Assert.That(widths.Max() - widths.Min(), Is.LessThanOrEqualTo(2 + 2 * pixel + 0.01), "three thirds");
             Assert.That(Bounds(Part(dialog, "PART_PrimaryButton"), row).Left, Is.LessThan(Bounds(Part(dialog, "PART_SecondaryButton"), row).Left));
             Assert.That(Bounds(Part(dialog, "PART_SecondaryButton"), row).Left, Is.LessThan(Bounds(Part(dialog, "PART_CloseButton"), row).Left));
         }
