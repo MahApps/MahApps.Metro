@@ -15,6 +15,7 @@
                  controlzex:WindowBackdropManager.BackdropType="Mica"
                  Icon="mahapps.metro.logo2.ico"
                  ResizeMode="CanResizeWithGrip"
+                 Style="{DynamicResource MahApps.Styles.MetroWindow.WinUI}"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
 

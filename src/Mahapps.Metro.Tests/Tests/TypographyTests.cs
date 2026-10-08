@@ -4,6 +4,7 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
 
@@ -68,6 +69,73 @@ namespace MahApps.Metro.Tests.Tests
             this.window.UpdateLayout();
 
             Assert.That(text.FontSize, Is.EqualTo(32));
+        }
+
+        [TestCase("MahApps.Styles.MetroWindow.Win10", "MahApps.Font.Size.Window.Title.Win10")]
+        [TestCase("MahApps.Styles.MetroWindow.WinUI", "MahApps.Font.Size.Window.Title.WinUI")]
+        [Description("The title of a window of a set takes its size through a key of its look, so an application can make it larger.")]
+        public void TheTitleOfAWindowOfASetCanBeMadeLarger(string style, string key)
+        {
+            var window = new MetroWindow
+                         {
+                             Style = (Style)Application.Current.FindResource(style),
+                             Title = "Deep Thought",
+                             Width = 400,
+                             Height = 300,
+                             Left = -10000,
+                             ShowInTaskbar = false
+                         };
+            window.Resources[key] = 16d;
+            window.Show();
+            try
+            {
+                window.UpdateLayout();
+                var titleText = window.FindChild<MetroThumbContentControl>("PART_TitleBar")?.FindChild<TextBlock>();
+
+                Assert.That(titleText, Is.Not.Null, "the title bar should show the title");
+                Assert.That(titleText!.FontSize, Is.EqualTo(16));
+            }
+            finally
+            {
+                window.Close();
+            }
+        }
+
+        [TestCase("MahApps.Styles.MetroWindow.Win10", "Segoe UI", "Segoe UI")]
+        [TestCase("MahApps.Styles.MetroWindow.WinUI", "Segoe UI Variable Text, Segoe UI", "Segoe UI Variable Small, Segoe UI")]
+        [Description("A window of a Windows set writes its content in the font of the set at 14, and its title the way Windows writes a title bar, at 12.")]
+        public void AWindowOfASetWritesLikeWindows(string key, string content, string title)
+        {
+            var text = new TextBlock { Text = "42" };
+            var window = new MetroWindow
+                         {
+                             Style = (Style)Application.Current.FindResource(key),
+                             Title = "Deep Thought",
+                             Content = text,
+                             Width = 400,
+                             Height = 300,
+                             Left = -10000,
+                             ShowInTaskbar = false
+                         };
+            window.Show();
+            try
+            {
+                window.UpdateLayout();
+                var titleText = window.FindChild<MetroThumbContentControl>("PART_TitleBar")?.FindChild<TextBlock>();
+
+                Assert.That(titleText, Is.Not.Null, "the title bar should show the title");
+                Assert.Multiple(() =>
+                    {
+                        Assert.That(text.FontSize, Is.EqualTo(14), "the size of the content");
+                        Assert.That(text.FontFamily.Source, Is.EqualTo(content), "the family of the content");
+                        Assert.That(titleText!.FontSize, Is.EqualTo(12), "the size of the title");
+                        Assert.That(titleText.FontFamily.Source, Is.EqualTo(title), "the family of the title");
+                    });
+            }
+            finally
+            {
+                window.Close();
+            }
         }
     }
 }

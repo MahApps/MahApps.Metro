@@ -59,6 +59,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(DatePicker), "MahApps.Styles.DatePicker.Win10")]
         [TestCase(Win10, typeof(TimePicker), "MahApps.Styles.TimePicker.Win10")]
         [TestCase(Win10, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.Win10")]
+        [TestCase(Win10, typeof(MetroWindow), "MahApps.Styles.MetroWindow.Win10")]
+        [TestCase(WinUI, typeof(MetroWindow), "MahApps.Styles.MetroWindow.WinUI")]
         [TestCase(Win10, typeof(ContentDialog), "MahApps.Styles.ContentDialog.Win10")]
         [TestCase(WinUI, typeof(ContentDialog), "MahApps.Styles.ContentDialog.WinUI")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
@@ -138,6 +140,7 @@ namespace MahApps.Metro.Tests.Tests
             var implicitStyle = dictionary[target] as Style;
 
             Assert.That(implicitStyle, Is.Not.Null, $"the set declares no implicit style for {target.Name}");
+            Assert.That(dictionary[expected], Is.Not.Null, $"the set knows no {expected}");
             Assert.That(implicitStyle!.BasedOn, Is.SameAs(dictionary[expected]), $"the implicit style for {target.Name} should stand on {expected}");
         }
 

@@ -51,6 +51,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog.Win10}" TargetType="{x:Type mah:ContentDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow.Win10}" TargetType="{x:Type mah:MetroWindow}" />
     <!--  the old dialogs; Dialogs.xaml holds the same six for a single call  -->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:CustomDialog}" />

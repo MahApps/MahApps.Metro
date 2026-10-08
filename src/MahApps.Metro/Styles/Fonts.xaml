@@ -46,6 +46,10 @@
     <FontFamily x:Key="MahApps.Fonts.Family.Control.WinUI">Segoe UI Variable Text, Segoe UI</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.Caption.WinUI">Segoe UI Variable Small, Segoe UI</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.Display.WinUI">Segoe UI Variable Display, Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Window.Title.Win10">Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Window.Title.WinUI">Segoe UI Variable Small, Segoe UI</FontFamily>
+    <system:Double x:Key="MahApps.Font.Size.Window.Title.Win10">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Window.Title.WinUI">12</system:Double>
 
     <system:Double x:Key="MahApps.Font.Size.Control.Win10">14</system:Double>
     <system:Double x:Key="MahApps.Font.Size.Caption.Win10">12</system:Double>

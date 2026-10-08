@@ -663,4 +663,43 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!--
+        The windows of the two Windows sets. The content takes the font of the set, and the title the
+        one Windows writes its title bars in, 12 in Segoe UI or in the small cut of Segoe UI Variable.
+        A set hands them out by type, so a window derived from MetroWindow names its style itself.
+    -->
+    <Style x:Key="MahApps.Styles.MetroWindow.Win10" TargetType="{x:Type mah:MetroWindow}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="TextElement.FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="TitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Margin="8 -1 1 0"
+                               VerticalAlignment="Center"
+                               FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title.Win10}"
+                               FontSize="{DynamicResource MahApps.Font.Size.Window.Title.Win10}"
+                               Text="{TemplateBinding Content}"
+                               TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.MetroWindow.WinUI" TargetType="{x:Type mah:MetroWindow}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="TextElement.FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="TitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Margin="8 -1 1 0"
+                               VerticalAlignment="Center"
+                               FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title.WinUI}"
+                               FontSize="{DynamicResource MahApps.Font.Size.Window.Title.WinUI}"
+                               Text="{TemplateBinding Content}"
+                               TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
