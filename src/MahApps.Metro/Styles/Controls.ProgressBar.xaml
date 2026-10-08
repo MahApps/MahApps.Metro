@@ -132,7 +132,7 @@
         The Windows 10 bar: a line of the accent over a line of the grey a button rests in, no frame
         around either of them. A wait that cannot say how long it will be sends five dots along that
         line instead.
-
+        
         How far those dots travel depends on how wide the bar turned out to be, and a Storyboard
         carries no lookups, so the numbers have to be written into it. That is what
         ProgressBarHelper.AdjustIndeterminateAnimation does, on a copy of the Storyboard below,
@@ -437,7 +437,7 @@
         The WinUI bar has no dots in it. It is a line one unit high with a bar three high over it,
         and for a wait of unknown length two bars travel along that line instead, one four tenths of
         the way across and one six tenths, at a stagger.
-
+        
         Those two are as wide as a share of the bar and travel by shares of it as well, so the whole
         thing is drawn in hundredths and a scale reads the real width off the track. That is what
         keeps a Storyboard which knows nothing about how wide the bar is from having to.

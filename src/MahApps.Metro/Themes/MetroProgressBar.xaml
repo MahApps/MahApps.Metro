@@ -321,7 +321,7 @@
         one six tenths. Both are a share of the bar and both travel by shares of it, so they are
         drawn in hundredths and a scale reads the real width off the track, which is what keeps a
         Storyboard that knows nothing about how wide the bar is from having to.
-
+        
         EllipseDiameter and EllipseOffset say nothing here. There is nothing left for them to size.
     -->
     <Style x:Key="MahApps.Styles.MetroProgressBar.WinUI"
