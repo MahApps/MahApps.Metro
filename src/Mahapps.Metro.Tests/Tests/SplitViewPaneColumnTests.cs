@@ -51,6 +51,10 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window = await WindowHelpers.CreateInvisibleWindowAsync<SizeToContentWindow>().ConfigureAwait(true);
             this.window.Settle();
+
+            // the storyboard of the closed state sets the column, and a slow build agent is not done
+            // with it when the window is up; a column stuck at the wrong length still fails below
+            ClipAssert.PumpUntil(() => this.PaneColumn().ActualWidth <= this.window.Menu.CompactPaneLength + 0.01);
         }
 
         [OneTimeTearDown]
