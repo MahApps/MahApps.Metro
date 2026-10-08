@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <!--
@@ -50,6 +51,13 @@
     <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type mah:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog.Win10}" TargetType="{x:Type mah:ContentDialog}" />
+    <!--  the old dialogs; Dialogs.xaml holds the same six for a single call  -->
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:CustomDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog.Win10}" TargetType="{x:Type dialogs:MessageDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.InputDialog.Win10}" TargetType="{x:Type dialogs:InputDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.LoginDialog.Win10}" TargetType="{x:Type dialogs:LoginDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressDialog.Win10}" TargetType="{x:Type dialogs:ProgressDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Win10}" TargetType="ScrollBar" />
     <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
     <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"

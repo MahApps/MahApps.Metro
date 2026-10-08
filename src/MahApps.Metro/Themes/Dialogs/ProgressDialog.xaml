@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
     <ControlTemplate x:Key="MahApps.Templates.ProgressDialog" TargetType="{x:Type dialogs:ProgressDialog}">
         <Grid Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
@@ -127,5 +128,242 @@
            TargetType="{x:Type dialogs:ProgressDialog}">
         <Setter Property="ProgressBarForeground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ProgressDialog}" />
+    </Style>
+
+    <!--  The Windows 10 look, a card like the content dialog of that look; see BaseMetroDialog.xaml  -->
+
+    <ControlTemplate x:Key="MahApps.Templates.ProgressDialog.Win10" TargetType="{x:Type dialogs:ProgressDialog}">
+        <Grid x:Name="Card"
+              MinWidth="320"
+              MaxWidth="{DynamicResource MahApps.Sizes.Dialogs.Card.MaxWidth}"
+              HorizontalAlignment="Center"
+              TextElement.Foreground="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Foreground}"
+              UseLayoutRounding="True">
+            <!--  the stroke is see-through, so the card lies under it and not the window behind  -->
+            <Border x:Name="BackgroundUnderlay" Background="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Background}" />
+            <Border x:Name="CardBorder"
+                    Background="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Background}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Border}"
+                    BorderThickness="1">
+                <Grid Margin="24 18 24 24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ContentPresenter x:Name="PART_Top"
+                                      Grid.Row="0"
+                                      AutomationProperties.Name="{x:Static lang:Automation.DialogTop}"
+                                      Content="{TemplateBinding DialogTop}" />
+                    <TextBlock x:Name="PART_Title"
+                               Grid.Row="1"
+                               Margin="0 0 0 12"
+                               AutomationProperties.Name="{x:Static lang:Automation.DialogTitle}"
+                               FontSize="{TemplateBinding DialogTitleFontSize}"
+                               Text="{TemplateBinding Title}"
+                               TextWrapping="Wrap" />
+                    <StackPanel x:Name="PART_Content"
+                                Grid.Row="2"
+                                AutomationProperties.Name="{x:Static lang:Automation.DialogContent}">
+                        <TextBlock x:Name="PART_MessageTextBlock"
+                                   FontSize="{TemplateBinding DialogMessageFontSize}"
+                                   Foreground="{TemplateBinding MessageForeground}"
+                                   Text="{TemplateBinding Message}"
+                                   TextWrapping="Wrap" />
+                        <mah:MetroProgressBar x:Name="PART_ProgressBar"
+                                              Margin="0 16 0 0"
+                                              Foreground="{TemplateBinding ProgressBarForeground}"
+                                              Maximum="1.0"
+                                              Minimum="0.0"
+                                              Style="{DynamicResource MahApps.Styles.MetroProgressBar.Win10}" />
+                    </StackPanel>
+                    <UniformGrid x:Name="ButtonRow"
+                                 Grid.Row="3"
+                                 Margin="-4 24 -4 0"
+                                 Columns="2"
+                                 FirstColumn="1"
+                                 Rows="1"
+                                 Visibility="Collapsed">
+                        <Button x:Name="PART_NegativeButton"
+                                Margin="4 0"
+                                HorizontalAlignment="Stretch"
+                                Content="{TemplateBinding NegativeButtonText}"
+                                Cursor="Arrow"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Win10}" />
+                    </UniformGrid>
+                    <ContentPresenter x:Name="PART_Bottom"
+                                      Grid.Row="4"
+                                      AutomationProperties.Name="{x:Static lang:Automation.DialogBottom}"
+                                      Content="{TemplateBinding DialogBottom}" />
+                </Grid>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the card  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding (TextElement.Foreground), ElementName=Card}" />
+            </Trigger>
+            <!--  the row of buttons only shows once there is something to cancel  -->
+            <Trigger Property="IsCancelable" Value="True">
+                <Setter TargetName="ButtonRow" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="Title" Value="{x:Null}">
+                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Dialogs.Show}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  The WinUI look, the content on the lighter layer and the buttons on the base colour  -->
+
+    <ControlTemplate x:Key="MahApps.Templates.ProgressDialog.WinUI" TargetType="{x:Type dialogs:ProgressDialog}">
+        <Grid x:Name="Card"
+              MinWidth="320"
+              MaxWidth="{DynamicResource MahApps.Sizes.Dialogs.Card.MaxWidth}"
+              HorizontalAlignment="Center"
+              TextElement.Foreground="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Foreground}"
+              UseLayoutRounding="True">
+            <!--  the stroke is see-through, so the card lies under it and not the window behind  -->
+            <Border x:Name="BackgroundUnderlay"
+                    Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Background}"
+                    CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
+            <Border x:Name="CardBorder"
+                    Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Background}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Border}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}">
+                <Grid x:Name="ClipGrid">
+                    <Grid.Clip>
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="ClipGrid" Path="ActualWidth" />
+                            <Binding ElementName="ClipGrid" Path="ActualHeight" />
+                            <Binding ElementName="CardBorder" Path="CornerRadius" />
+                            <Binding ElementName="CardBorder" Path="BorderThickness" />
+                            <Binding ElementName="CardBorder" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <!--  the content on the lighter layer, a line under it  -->
+                    <Border x:Name="ContentLayer"
+                            Grid.Row="0"
+                            Padding="24"
+                            Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.TopOverlay}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Separator}"
+                            BorderThickness="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter x:Name="PART_Top"
+                                              Grid.Row="0"
+                                              AutomationProperties.Name="{x:Static lang:Automation.DialogTop}"
+                                              Content="{TemplateBinding DialogTop}" />
+                            <TextBlock x:Name="PART_Title"
+                                       Grid.Row="1"
+                                       Margin="0 0 0 12"
+                                       AutomationProperties.Name="{x:Static lang:Automation.DialogTitle}"
+                                       FontSize="{TemplateBinding DialogTitleFontSize}"
+                                       FontWeight="SemiBold"
+                                       Text="{TemplateBinding Title}"
+                                       TextWrapping="Wrap" />
+                            <StackPanel x:Name="PART_Content"
+                                        Grid.Row="2"
+                                        AutomationProperties.Name="{x:Static lang:Automation.DialogContent}">
+                                <TextBlock x:Name="PART_MessageTextBlock"
+                                           FontSize="{TemplateBinding DialogMessageFontSize}"
+                                           Foreground="{TemplateBinding MessageForeground}"
+                                           Text="{TemplateBinding Message}"
+                                           TextWrapping="Wrap" />
+                                <mah:MetroProgressBar x:Name="PART_ProgressBar"
+                                                      Margin="0 16 0 0"
+                                                      Foreground="{TemplateBinding ProgressBarForeground}"
+                                                      Maximum="1.0"
+                                                      Minimum="0.0"
+                                                      Style="{DynamicResource MahApps.Styles.MetroProgressBar.WinUI}" />
+                            </StackPanel>
+                            <ContentPresenter x:Name="PART_Bottom"
+                                              Grid.Row="3"
+                                              AutomationProperties.Name="{x:Static lang:Automation.DialogBottom}"
+                                              Content="{TemplateBinding DialogBottom}" />
+                        </Grid>
+                    </Border>
+                    <!--  the buttons on the base colour  -->
+                    <Border x:Name="CommandSpace"
+                            Grid.Row="1"
+                            Padding="20 24"
+                            Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Background}"
+                            Visibility="Collapsed">
+                        <UniformGrid x:Name="ButtonRow"
+                                     Columns="2"
+                                     FirstColumn="1"
+                                     Rows="1"
+                                     Visibility="Collapsed">
+                            <Button x:Name="PART_NegativeButton"
+                                    Margin="4 0"
+                                    HorizontalAlignment="Stretch"
+                                    Content="{TemplateBinding NegativeButtonText}"
+                                    Cursor="Arrow"
+                                    FontSize="{TemplateBinding DialogButtonFontSize}"
+                                    Style="{DynamicResource MahApps.Styles.Button.WinUI}" />
+                        </UniformGrid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the card  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding (TextElement.Foreground), ElementName=Card}" />
+            </Trigger>
+            <!--  the row of buttons only shows once there is something to cancel  -->
+            <Trigger Property="IsCancelable" Value="True">
+                <Setter TargetName="ButtonRow" Property="Visibility" Value="Visible" />
+                <Setter TargetName="CommandSpace" Property="Visibility" Value="Visible" />
+                <Setter TargetName="ContentLayer" Property="BorderThickness" Value="0 0 0 1" />
+            </Trigger>
+            <Trigger Property="Title" Value="{x:Null}">
+                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Dialogs.Show}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ProgressDialog.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ProgressDialog}"
+           TargetType="{x:Type dialogs:ProgressDialog}">
+        <Setter Property="DialogButtonFontSize" Value="14" />
+        <Setter Property="DialogMessageFontSize" Value="14" />
+        <Setter Property="DialogTitleFontSize" Value="20" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ProgressDialog.Win10}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ProgressDialog.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ProgressDialog}"
+           TargetType="{x:Type dialogs:ProgressDialog}">
+        <Setter Property="DialogButtonFontSize" Value="14" />
+        <Setter Property="DialogMessageFontSize" Value="14" />
+        <Setter Property="DialogTitleFontSize" Value="20" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ProgressDialog.WinUI}" />
     </Style>
 </ResourceDictionary>
