@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ContentDialogExamples.LoginContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+    <StackPanel>
+        <TextBox mah:TextBoxHelper.Watermark="User name" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+        <PasswordBox x:Name="PasswordBox"
+                     Margin="0 8 0 0"
+                     mah:TextBoxHelper.Watermark="Password" />
+        <CheckBox Margin="0 8 0 0"
+                  Content="Remember me"
+                  IsChecked="{Binding RememberMe}" />
+    </StackPanel>
+</UserControl>

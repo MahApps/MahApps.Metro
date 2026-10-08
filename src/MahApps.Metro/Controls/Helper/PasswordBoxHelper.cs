@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -149,6 +150,35 @@ namespace MahApps.Metro.Controls
         public static void SetRevealButtonContentTemplate(DependencyObject obj, DataTemplate? value)
         {
             obj.SetValue(RevealButtonContentTemplateProperty, value);
+        }
+
+        /// <summary>Identifies the ShowRevealButton attached property.</summary>
+        public static readonly DependencyProperty ShowRevealButtonProperty
+            = DependencyProperty.RegisterAttached(
+                "ShowRevealButton",
+                typeof(bool),
+                typeof(PasswordBoxHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
+
+        /// <summary>
+        /// Gets whether a password box that carries the eye shows it. The Windows 10 and the WinUI
+        /// box carry it the way Windows does; false takes it away, for a screen others can see.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static bool GetShowRevealButton(DependencyObject d)
+        {
+            return (bool)d.GetValue(ShowRevealButtonProperty);
+        }
+
+        /// <summary>
+        /// Sets whether a password box that carries the eye shows it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static void SetShowRevealButton(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ShowRevealButtonProperty, BooleanBoxes.Box(value));
         }
     }
 }

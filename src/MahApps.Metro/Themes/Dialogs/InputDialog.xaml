@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:lang="clr-namespace:MahApps.Metro.Lang"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
     <ControlTemplate x:Key="MahApps.Templates.InputDialog" TargetType="{x:Type dialogs:InputDialog}">
         <Grid Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
@@ -137,5 +138,252 @@
            BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}"
            TargetType="{x:Type dialogs:InputDialog}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog}" />
+    </Style>
+
+    <!--  The Windows 10 look, a card like the content dialog of that look; see BaseMetroDialog.xaml  -->
+
+    <ControlTemplate x:Key="MahApps.Templates.InputDialog.Win10" TargetType="{x:Type dialogs:InputDialog}">
+        <Grid x:Name="Card"
+              MinWidth="320"
+              MaxWidth="{DynamicResource MahApps.Sizes.Dialogs.Card.MaxWidth}"
+              HorizontalAlignment="Center"
+              TextElement.Foreground="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Foreground}"
+              UseLayoutRounding="True">
+            <!--  the stroke is see-through, so the card lies under it and not the window behind  -->
+            <Border x:Name="BackgroundUnderlay" Background="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Background}" />
+            <Border x:Name="CardBorder"
+                    Background="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Background}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Border}"
+                    BorderThickness="1">
+                <Grid Margin="24 18 24 24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ContentPresenter x:Name="PART_Top"
+                                      Grid.Row="0"
+                                      AutomationProperties.Name="{x:Static lang:Automation.DialogTop}"
+                                      Content="{TemplateBinding DialogTop}" />
+                    <TextBlock x:Name="PART_Title"
+                               Grid.Row="1"
+                               Margin="0 0 0 12"
+                               AutomationProperties.Name="{x:Static lang:Automation.DialogTitle}"
+                               FontSize="{TemplateBinding DialogTitleFontSize}"
+                               Text="{TemplateBinding Title}"
+                               TextWrapping="Wrap" />
+                    <StackPanel x:Name="PART_Content"
+                                Grid.Row="2"
+                                AutomationProperties.Name="{x:Static lang:Automation.DialogContent}">
+                        <TextBlock x:Name="PART_MessageTextBlock"
+                                   FontSize="{TemplateBinding DialogMessageFontSize}"
+                                   Foreground="{TemplateBinding MessageForeground}"
+                                   Text="{TemplateBinding Message}"
+                                   TextWrapping="Wrap" />
+                        <TextBox x:Name="PART_TextBox"
+                                 Margin="0 12 0 0"
+                                 mah:TextBoxHelper.SelectAllOnFocus="True"
+                                 FontSize="{TemplateBinding DialogMessageFontSize}"
+                                 Style="{DynamicResource MahApps.Styles.TextBox.Win10}"
+                                 Text="{Binding Input, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                 TextWrapping="Wrap" />
+                    </StackPanel>
+                    <UniformGrid x:Name="ButtonRow"
+                                 Grid.Row="3"
+                                 Margin="-4 24 -4 0"
+                                 Rows="1">
+                        <Button x:Name="PART_AffirmativeButton"
+                                Margin="4 0"
+                                HorizontalAlignment="Stretch"
+                                Content="{TemplateBinding AffirmativeButtonText}"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Accent.Win10}" />
+                        <Button x:Name="PART_NegativeButton"
+                                Margin="4 0"
+                                HorizontalAlignment="Stretch"
+                                Content="{TemplateBinding NegativeButtonText}"
+                                FontSize="{TemplateBinding DialogButtonFontSize}"
+                                Style="{DynamicResource MahApps.Styles.Button.Win10}" />
+                    </UniformGrid>
+                    <ContentPresenter x:Name="PART_Bottom"
+                                      Grid.Row="4"
+                                      AutomationProperties.Name="{x:Static lang:Automation.DialogBottom}"
+                                      Content="{TemplateBinding DialogBottom}" />
+                </Grid>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the card  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding (TextElement.Foreground), ElementName=Card}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Accent.Win10}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Win10}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Negative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Win10}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Accent.Win10}" />
+            </Trigger>
+            <Trigger Property="Title" Value="{x:Null}">
+                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Dialogs.Show}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  The WinUI look, the content on the lighter layer and the buttons on the base colour  -->
+
+    <ControlTemplate x:Key="MahApps.Templates.InputDialog.WinUI" TargetType="{x:Type dialogs:InputDialog}">
+        <Grid x:Name="Card"
+              MinWidth="320"
+              MaxWidth="{DynamicResource MahApps.Sizes.Dialogs.Card.MaxWidth}"
+              HorizontalAlignment="Center"
+              TextElement.Foreground="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Foreground}"
+              UseLayoutRounding="True">
+            <!--  the stroke is see-through, so the card lies under it and not the window behind  -->
+            <Border x:Name="BackgroundUnderlay"
+                    Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Background}"
+                    CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
+            <Border x:Name="CardBorder"
+                    Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Background}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Border}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}">
+                <Grid x:Name="ClipGrid">
+                    <Grid.Clip>
+                        <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                            <Binding ElementName="ClipGrid" Path="ActualWidth" />
+                            <Binding ElementName="ClipGrid" Path="ActualHeight" />
+                            <Binding ElementName="CardBorder" Path="CornerRadius" />
+                            <Binding ElementName="CardBorder" Path="BorderThickness" />
+                            <Binding ElementName="CardBorder" Path="Padding" />
+                        </MultiBinding>
+                    </Grid.Clip>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <!--  the content on the lighter layer, a line under it  -->
+                    <Border x:Name="ContentLayer"
+                            Grid.Row="0"
+                            Padding="24"
+                            Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.TopOverlay}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Separator}"
+                            BorderThickness="0 0 0 1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter x:Name="PART_Top"
+                                              Grid.Row="0"
+                                              AutomationProperties.Name="{x:Static lang:Automation.DialogTop}"
+                                              Content="{TemplateBinding DialogTop}" />
+                            <TextBlock x:Name="PART_Title"
+                                       Grid.Row="1"
+                                       Margin="0 0 0 12"
+                                       AutomationProperties.Name="{x:Static lang:Automation.DialogTitle}"
+                                       FontSize="{TemplateBinding DialogTitleFontSize}"
+                                       FontWeight="SemiBold"
+                                       Text="{TemplateBinding Title}"
+                                       TextWrapping="Wrap" />
+                            <StackPanel x:Name="PART_Content"
+                                        Grid.Row="2"
+                                        AutomationProperties.Name="{x:Static lang:Automation.DialogContent}">
+                                <TextBlock x:Name="PART_MessageTextBlock"
+                                           FontSize="{TemplateBinding DialogMessageFontSize}"
+                                           Foreground="{TemplateBinding MessageForeground}"
+                                           Text="{TemplateBinding Message}"
+                                           TextWrapping="Wrap" />
+                                <TextBox x:Name="PART_TextBox"
+                                         Margin="0 12 0 0"
+                                         mah:TextBoxHelper.SelectAllOnFocus="True"
+                                         FontSize="{TemplateBinding DialogMessageFontSize}"
+                                         Style="{DynamicResource MahApps.Styles.TextBox.WinUI}"
+                                         Text="{Binding Input, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                         TextWrapping="Wrap" />
+                            </StackPanel>
+                            <ContentPresenter x:Name="PART_Bottom"
+                                              Grid.Row="3"
+                                              AutomationProperties.Name="{x:Static lang:Automation.DialogBottom}"
+                                              Content="{TemplateBinding DialogBottom}" />
+                        </Grid>
+                    </Border>
+                    <!--  the buttons on the base colour  -->
+                    <Border x:Name="CommandSpace"
+                            Grid.Row="1"
+                            Padding="20 24"
+                            Background="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Background}">
+                        <UniformGrid x:Name="ButtonRow" Rows="1">
+                            <Button x:Name="PART_AffirmativeButton"
+                                    Margin="4 0"
+                                    HorizontalAlignment="Stretch"
+                                    Content="{TemplateBinding AffirmativeButtonText}"
+                                    FontSize="{TemplateBinding DialogButtonFontSize}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Accent.WinUI}" />
+                            <Button x:Name="PART_NegativeButton"
+                                    Margin="4 0"
+                                    HorizontalAlignment="Stretch"
+                                    Content="{TemplateBinding NegativeButtonText}"
+                                    FontSize="{TemplateBinding DialogButtonFontSize}"
+                                    Style="{DynamicResource MahApps.Styles.Button.WinUI}" />
+                        </UniformGrid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <!--  Told no colour of its own, the message is written along with the rest of the card  -->
+            <Trigger Property="MessageForeground" Value="{x:Null}">
+                <Setter TargetName="PART_MessageTextBlock" Property="Foreground" Value="{Binding (TextElement.Foreground), ElementName=Card}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Accent.WinUI}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.WinUI}" />
+            </Trigger>
+            <Trigger Property="DefaultButtonFocus" Value="Negative">
+                <Setter TargetName="PART_AffirmativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.WinUI}" />
+                <Setter TargetName="PART_NegativeButton" Property="Style" Value="{DynamicResource MahApps.Styles.Button.Accent.WinUI}" />
+            </Trigger>
+            <Trigger Property="Title" Value="{x:Null}">
+                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Dialogs.Show}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.InputDialog.Win10"
+           BasedOn="{StaticResource MahApps.Styles.InputDialog}"
+           TargetType="{x:Type dialogs:InputDialog}">
+        <Setter Property="DialogButtonFontSize" Value="14" />
+        <Setter Property="DialogMessageFontSize" Value="14" />
+        <Setter Property="DialogTitleFontSize" Value="20" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog.Win10}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.InputDialog.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.InputDialog}"
+           TargetType="{x:Type dialogs:InputDialog}">
+        <Setter Property="DialogButtonFontSize" Value="14" />
+        <Setter Property="DialogMessageFontSize" Value="14" />
+        <Setter Property="DialogTitleFontSize" Value="20" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog.WinUI}" />
     </Style>
 </ResourceDictionary>

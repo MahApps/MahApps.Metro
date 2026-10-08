@@ -54,14 +54,19 @@ namespace MahApps.Metro.Tests.Tests
                 childWindow.Close();
             }
 
-            // long enough for the hide storyboard, after which the manager takes its windows out
-            ClipAssert.Pump(300);
+            // the hide storyboard has to run out before the manager takes its windows out, and a slow
+            // build agent needs longer for that than a fixed wait gave it
+            ClipAssert.PumpUntil(() => this.ActiveContainer.Children.OfType<ChildWindow>().All(c => c.FindChild<Grid>("PART_Overlay")?.Visibility != Visibility.Visible));
+            ClipAssert.Pump(100);
 
             // what a test opened by hand is still there, no manager was around to take it out
             foreach (var childWindow in this.ActiveContainer.Children.OfType<ChildWindow>().ToList())
             {
                 this.ActiveContainer.Children.Remove(childWindow);
             }
+
+            // and the window may only say that no dialog is open once the last one has gone
+            ClipAssert.PumpUntil(() => !this.window!.IsAnyDialogOpen);
         }
 
         [Test]

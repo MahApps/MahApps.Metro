@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.ComponentModel;
@@ -46,6 +47,22 @@ namespace MahApps.Metro.Gallery.Controls
                                           typeof(string),
                                           typeof(ControlExample),
                                           new PropertyMetadata(null, OnMarkupResourceChanged));
+
+        /// <summary>Identifies the <see cref="MarkupRegion"/> dependency property.</summary>
+        public static readonly DependencyProperty MarkupRegionProperty
+            = DependencyProperty.Register(nameof(MarkupRegion),
+                                          typeof(string),
+                                          typeof(ControlExample),
+                                          new PropertyMetadata(null, OnMarkupRegionChanged));
+
+        private static readonly DependencyPropertyKey MarkupLanguagePropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(MarkupLanguage),
+                                                  typeof(string),
+                                                  typeof(ControlExample),
+                                                  new PropertyMetadata("XAML"));
+
+        /// <summary>Identifies the <see cref="MarkupLanguage"/> dependency property.</summary>
+        public static readonly DependencyProperty MarkupLanguageProperty = MarkupLanguagePropertyKey.DependencyProperty;
 
         /// <summary>Identifies the <see cref="Markup"/> dependency property.</summary>
         public static readonly DependencyProperty MarkupProperty
@@ -121,6 +138,27 @@ namespace MahApps.Metro.Gallery.Controls
         {
             get => (string?)this.GetValue(MarkupResourceProperty);
             set => this.SetValue(MarkupResourceProperty, value);
+        }
+
+        /// <summary>
+        /// The regions of <see cref="MarkupResource"/> to show, by name and in this order, separated
+        /// by a semicolon. A sample that runs in code shows the part of the file that does the work
+        /// rather than the whole file, and the part is cut out of the file that runs, so it cannot
+        /// drift from it.
+        /// </summary>
+        public string? MarkupRegion
+        {
+            get => (string?)this.GetValue(MarkupRegionProperty);
+            set => this.SetValue(MarkupRegionProperty, value);
+        }
+
+        /// <summary>
+        /// What the shown code is written in, XAML or C#, read off the name of the resource.
+        /// </summary>
+        public string MarkupLanguage
+        {
+            get => (string)this.GetValue(MarkupLanguageProperty);
+            private set => this.SetValue(MarkupLanguagePropertyKey, value);
         }
 
         /// <summary>
@@ -240,6 +278,11 @@ namespace MahApps.Metro.Gallery.Controls
             (d as ControlExample)?.RefreshXaml();
         }
 
+        private static void OnMarkupRegionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as ControlExample)?.RefreshXaml();
+        }
+
         /// <summary>
         /// The text of a file that was built into this assembly next to its compiled form.
         /// </summary>
@@ -260,7 +303,9 @@ namespace MahApps.Metro.Gallery.Controls
         {
             if (this.MarkupResource is { } resource)
             {
-                this.Markup = Read(resource);
+                var text = Read(resource);
+                this.MarkupLanguage = resource.EndsWith(".cs", StringComparison.OrdinalIgnoreCase) ? "C#" : "XAML";
+                this.Markup = this.MarkupRegion is { } regions ? CodeRegions.Cut(text, regions) : text;
                 return;
             }
 

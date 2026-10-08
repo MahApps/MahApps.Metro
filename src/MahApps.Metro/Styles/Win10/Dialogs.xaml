@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
+
+    <!--
+        The old dialogs in the Windows 10 look. The Windows 10 set merges this, and a single call
+        gets the look by handing it over as the CustomResourceDictionary of its settings. It merges
+        nothing itself: the styles it stands on are in the library already, and a dictionary handed
+        to every call should not load the whole library again.
+    -->
+
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:CustomDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog.Win10}" TargetType="{x:Type dialogs:MessageDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.InputDialog.Win10}" TargetType="{x:Type dialogs:InputDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.LoginDialog.Win10}" TargetType="{x:Type dialogs:LoginDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressDialog.Win10}" TargetType="{x:Type dialogs:ProgressDialog}" />
+</ResourceDictionary>

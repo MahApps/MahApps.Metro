@@ -510,6 +510,22 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(Part(dialog, x).IsVisible, Is.True);
         }
 
+        [TestCase(Win10)]
+        [TestCase(WinUI)]
+        public void TheXInTheTitleBarWearsTheColourOfTheTitleBar(string style)
+        {
+            var dialog = NewDialog(style);
+            dialog.ShowTitleBar = true;
+            dialog.ShowTitleBarCloseButton = true;
+            dialog.TitleBarForeground = System.Windows.Media.Brushes.Orange;
+            _ = this.ShowDialog(dialog);
+
+            var x = Part(dialog, "PART_TitleBarCloseButton");
+
+            Assert.That(((System.Windows.Media.SolidColorBrush)x.Foreground).Color, Is.EqualTo(System.Windows.Media.Colors.Orange));
+            Assert.That(x.Width, Is.EqualTo(46));
+        }
+
         [TestCase(Win10, false)]
         [TestCase(WinUI, false)]
         [TestCase(Win10, true)]

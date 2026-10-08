@@ -99,6 +99,24 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        [TestCase("MahApps.Styles.PasswordBox.Win10")]
+        [TestCase("MahApps.Styles.PasswordBox.WinUI")]
+        [TestCase("MahApps.Styles.PasswordBox.Revealed")]
+        [Description("Told not to, the box shows no eye, not even with the caret in it.")]
+        public void ShowRevealButtonTakesTheEyeAway(string key)
+        {
+            var box = this.Show(key, "42 lets you in");
+            PasswordBoxHelper.SetShowRevealButton(box, false);
+
+            box.Focus();
+            Keyboard.Focus(box);
+            this.Settle();
+
+            Assume.That(box.IsKeyboardFocused, Is.True);
+
+            Assert.That(Eye(box).Visibility, Is.EqualTo(Visibility.Collapsed));
+        }
+
         private static Button Eye(PasswordBox box)
         {
             var eye = box.FindChild<Button>("PART_RevealButton");

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
 
@@ -61,6 +62,18 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(ContentDialog), "MahApps.Styles.ContentDialog.Win10")]
         [TestCase(WinUI, typeof(ContentDialog), "MahApps.Styles.ContentDialog.WinUI")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
+        [TestCase(Win10, typeof(BaseMetroDialog), "MahApps.Styles.BaseMetroDialog.Win10")]
+        [TestCase(Win10, typeof(CustomDialog), "MahApps.Styles.BaseMetroDialog.Win10")]
+        [TestCase(Win10, typeof(MessageDialog), "MahApps.Styles.MessageDialog.Win10")]
+        [TestCase(Win10, typeof(InputDialog), "MahApps.Styles.InputDialog.Win10")]
+        [TestCase(Win10, typeof(LoginDialog), "MahApps.Styles.LoginDialog.Win10")]
+        [TestCase(Win10, typeof(ProgressDialog), "MahApps.Styles.ProgressDialog.Win10")]
+        [TestCase(WinUI, typeof(BaseMetroDialog), "MahApps.Styles.BaseMetroDialog.WinUI")]
+        [TestCase(WinUI, typeof(CustomDialog), "MahApps.Styles.BaseMetroDialog.WinUI")]
+        [TestCase(WinUI, typeof(MessageDialog), "MahApps.Styles.MessageDialog.WinUI")]
+        [TestCase(WinUI, typeof(InputDialog), "MahApps.Styles.InputDialog.WinUI")]
+        [TestCase(WinUI, typeof(LoginDialog), "MahApps.Styles.LoginDialog.WinUI")]
+        [TestCase(WinUI, typeof(ProgressDialog), "MahApps.Styles.ProgressDialog.WinUI")]
         [TestCase(WinUI, typeof(Button), "MahApps.Styles.Button.WinUI")]
         [TestCase(WinUI, typeof(RepeatButton), "MahApps.Styles.Button.WinUI")]
         [TestCase(WinUI, typeof(ToggleButton), "MahApps.Styles.ToggleButton.WinUI")]

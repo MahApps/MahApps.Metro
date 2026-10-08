@@ -60,6 +60,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog}" TargetType="{x:Type mah:ContentDialog}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:CustomDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.InputDialog}" TargetType="{x:Type dialogs:InputDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.LoginDialog}" TargetType="{x:Type dialogs:LoginDialog}" />

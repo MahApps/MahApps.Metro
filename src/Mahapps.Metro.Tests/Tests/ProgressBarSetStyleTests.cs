@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -162,6 +164,73 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(track.Fill, Is.SameAs(Application.Current.FindResource("MahApps.Brushes.ProgressBar.WinUI.Background")));
                     Assert.That(this.Show(WinUI, 320, isIndeterminate: true).FindChild<Rectangle>("PART_Track")!.Opacity, Is.EqualTo(0d));
                 });
+        }
+
+        [TestCase(WinUI)]
+        [TestCase(MetroWinUI)]
+        [Description("The WinUI bar draws in hundredths and stretches them to the track without a binding that has to wait for the tree, so applying the template writes nothing to the output window.")]
+        public void TheWinUIBarComesUpWithoutBindingErrors(string key)
+        {
+            var errors = new BindingErrors();
+            var level = PresentationTraceSources.DataBindingSource.Switch.Level;
+            PresentationTraceSources.Refresh();
+            PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning;
+            PresentationTraceSources.DataBindingSource.Listeners.Add(errors);
+
+            try
+            {
+                this.Show(key, 320, isIndeterminate: true);
+
+                // a binding that cannot attach says so only once it has given up retrying
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(() => { }, System.Windows.Threading.DispatcherPriority.ContextIdle);
+            }
+            finally
+            {
+                PresentationTraceSources.DataBindingSource.Listeners.Remove(errors);
+                PresentationTraceSources.DataBindingSource.Switch.Level = level;
+            }
+
+            Assert.That(errors.Text.ToString(), Is.Empty);
+        }
+
+        [TestCase(WinUI)]
+        [TestCase(MetroWinUI)]
+        [Description("The bar that stands still is six tenths of the track, in its middle, and the two that travel are four and six tenths of it.")]
+        public void TheStandingBarIsSixTenthsInTheMiddle(string key)
+        {
+            var bar = this.Show(key, 320, isIndeterminate: true);
+            ProgressBarHelper.SetShowPaused(bar, true);
+            this.Settle();
+
+            var runway = bar.FindChild<FrameworkElement>("Runway")!;
+            var standing = bar.FindChild<Rectangle>("StoppedBar")!;
+            var bounds = standing.TransformToAncestor(runway).TransformBounds(new Rect(standing.RenderSize));
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(bounds.Width, Is.EqualTo(runway.ActualWidth * 0.6).Within(1.0));
+                    Assert.That(bounds.Left, Is.EqualTo(runway.ActualWidth * 0.2).Within(1.0));
+                    Assert.That(Width(bar, "RunningBar1", runway), Is.EqualTo(runway.ActualWidth * 0.4).Within(1.0), "the first one that travels");
+                    Assert.That(Width(bar, "RunningBar2", runway), Is.EqualTo(runway.ActualWidth * 0.6).Within(1.0), "the second one that travels");
+                });
+        }
+
+        private static double Width(FrameworkElement bar, string name, FrameworkElement runway)
+        {
+            var part = bar.FindChild<Rectangle>(name)!;
+            return part.TransformToAncestor(runway).TransformBounds(new Rect(part.RenderSize)).Width;
+        }
+
+        /// <summary>
+        /// Collects what WPF writes about bindings while a template is applied.
+        /// </summary>
+        private sealed class BindingErrors : TraceListener
+        {
+            public StringBuilder Text { get; } = new StringBuilder();
+
+            public override void Write(string? message) => this.Text.Append(message);
+
+            public override void WriteLine(string? message) => this.Text.AppendLine(message);
         }
 
         private ProgressBar Show(string key, double width, bool isIndeterminate = false)
