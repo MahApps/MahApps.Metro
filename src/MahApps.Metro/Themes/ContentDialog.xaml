@@ -359,6 +359,12 @@
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ContentDialog}" />
     </Style>
 
+    <Style x:Key="MahApps.Styles.Button.ContentDialog.TitleBarClose"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Close.Light.Win10}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="46" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.Button.ContentDialog.TitleClose.Win10"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Close.Light.Win10}"
            TargetType="{x:Type Button}">
@@ -412,6 +418,7 @@
                                       Grid.Row="0"
                                       Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Background="{TemplateBinding TitleBarBackground}"
+                                      TextElement.Foreground="{TemplateBinding TitleBarForeground}"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -442,8 +449,10 @@
                                             Visibility="{TemplateBinding ShowTitleBarCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Path Width="10"
                                               Height="10"
-                                              Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                                              Data="F1M8.583,8L13,12.424 12.424,13 8,8.583 3.576,13 3,12.424 7.417,8 3,3.576 3.576,3 8,7.417 12.424,3 13,3.576z"
                                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                              RenderOptions.EdgeMode="Aliased"
+                                              SnapsToDevicePixels="True"
                                               Stretch="Uniform" />
                                     </Button>
                                 </Grid>
@@ -485,8 +494,10 @@
                                                 Visibility="{TemplateBinding ShowTitleBarCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}">
                                             <Path Width="10"
                                                   Height="10"
-                                                  Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                                                  Data="F1M8.583,8L13,12.424 12.424,13 8,8.583 3.576,13 3,12.424 7.417,8 3,3.576 3.576,3 8,7.417 12.424,3 13,3.576z"
                                                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                                  RenderOptions.EdgeMode="Aliased"
+                                                  SnapsToDevicePixels="True"
                                                   Stretch="Uniform" />
                                         </Button>
                                     </Grid>
@@ -915,7 +926,7 @@
         <Setter Property="ShowTitleBarCloseButton" Value="False" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ContentDialog.Win10}" />
         <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
-        <Setter Property="TitleBarCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Close.Light.Win10}" />
+        <Setter Property="TitleBarCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.ContentDialog.TitleBarClose}" />
         <Setter Property="TitleBarForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="TitleFontSize" Value="20" />
@@ -1026,7 +1037,8 @@
                                             Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <Grid x:Name="PART_TitleBar"
                                               Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                              Background="{TemplateBinding TitleBarBackground}">
+                                              Background="{TemplateBinding TitleBarBackground}"
+                                              TextElement.Foreground="{TemplateBinding TitleBarForeground}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
@@ -1050,15 +1062,16 @@
                                             <Button x:Name="PART_TitleBarCloseButton"
                                                     Grid.Column="2"
                                                     Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                    mah:ControlsHelper.CornerRadius="0"
                                                     Focusable="False"
                                                     Style="{TemplateBinding TitleBarCloseButtonStyle}"
                                                     ToolTip="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TitleBarCloseButtonToolTip, Mode=OneWay}"
                                                     Visibility="{TemplateBinding ShowTitleBarCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                 <Path Width="10"
                                                       Height="10"
-                                                      Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                                                      Data="F1M8.583,8L13,12.424 12.424,13 8,8.583 3.576,13 3,12.424 7.417,8 3,3.576 3.576,3 8,7.417 12.424,3 13,3.576z"
                                                       Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                                      RenderOptions.EdgeMode="Aliased"
+                                                      SnapsToDevicePixels="True"
                                                       Stretch="Uniform" />
                                             </Button>
                                         </Grid>
@@ -1106,8 +1119,10 @@
                                                         Visibility="{TemplateBinding ShowTitleBarCloseButton, Converter={StaticResource BooleanToVisibilityConverter}}">
                                                     <Path Width="10"
                                                           Height="10"
-                                                          Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                                                          Data="F1M8.583,8L13,12.424 12.424,13 8,8.583 3.576,13 3,12.424 7.417,8 3,3.576 3.576,3 8,7.417 12.424,3 13,3.576z"
                                                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                                          RenderOptions.EdgeMode="Aliased"
+                                                          SnapsToDevicePixels="True"
                                                           Stretch="Uniform" />
                                                 </Button>
                                             </Grid>
@@ -1395,7 +1410,7 @@
         <Setter Property="ShowTitleBarCloseButton" Value="False" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ContentDialog.WinUI}" />
         <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.TopOverlay}" />
-        <Setter Property="TitleBarCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.ContentDialog.Close.WinUI}" />
+        <Setter Property="TitleBarCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.ContentDialog.TitleBarClose}" />
         <Setter Property="TitleBarForeground" Value="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Foreground}" />
         <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
         <Setter Property="TitleFontSize" Value="20" />
