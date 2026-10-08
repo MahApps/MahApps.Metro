@@ -1,0 +1,8 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ContentDialogExamples.SelectionContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ListBox MaxHeight="240"
+             DisplayMemberPath="Name"
+             ItemsSource="{Binding People}"
+             SelectedItem="{Binding Selected}" />
+</UserControl>

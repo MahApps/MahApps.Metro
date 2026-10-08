@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.DialogsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <!--
+        The async dialogs open in the dialog container of the window, so a card holds the buttons
+        that open them and shows the code that does, cut out of the code behind of this page.
+    -->
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="MessageExample"
+                                     Description="ShowMessageAsync with up to four buttons. The look comes with the settings, through the CustomResourceDictionary: Styles/Win10/Dialogs.xaml or Styles/WinUI/Dialogs.xaml, or nothing for the style set the application merged."
+                                     Header="Message"
+                                     MarkupRegion="Look;Message"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnMessage"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnMessage"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnMessage"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="MessageAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="InputExample"
+                                     Description="ShowInputAsync asks for a line of text and hands it back, or null when it was cancelled."
+                                     Header="Input"
+                                     MarkupRegion="Input"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnInput"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnInput"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnInput"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="InputAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="LoginExample"
+                                     Description="ShowLoginAsync asks for a user name and a password, here with the box to remember them."
+                                     Header="Login"
+                                     MarkupRegion="Login"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnLogin"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnLogin"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnLogin"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="LoginAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="ProgressExample"
+                                     Description="ShowProgressAsync hands back a controller that moves the bar, changes the message and tells whether the dialog was cancelled."
+                                     Header="Progress"
+                                     MarkupRegion="Progress"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnProgress"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnProgress"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnProgress"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="ProgressAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CustomExample"
+                                     Description="A CustomDialog takes any content and stays until the code hides it again."
+                                     Header="Custom"
+                                     MarkupRegion="Custom"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnCustom"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCustom"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCustom"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="CustomAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

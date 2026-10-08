@@ -210,10 +210,11 @@
                                       Background="{DynamicResource MahApps.Brushes.Gray10}"
                                       BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
                                       BorderThickness="0 1 0 0"
-                                      Header="XAML"
+                                      Header="{Binding MarkupLanguage, RelativeSource={RelativeSource TemplatedParent}}"
                                       IsExpanded="False">
                                 <Grid>
-                                    <avalonEdit:TextEditor MaxHeight="400"
+                                    <avalonEdit:TextEditor x:Name="Editor"
+                                                           MaxHeight="400"
                                                            Document="{Binding Markup, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TextDocumentValueConverter}}"
                                                            Style="{StaticResource MahApps.Gallery.Styles.TextEditor}" />
                                     <Button Margin="8"
@@ -222,7 +223,7 @@
                                             Command="{x:Static core:GalleryCommands.CopyText}"
                                             CommandParameter="{Binding Markup, RelativeSource={RelativeSource TemplatedParent}}"
                                             Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
-                                            ToolTip="Copy the XAML to the clipboard">
+                                            ToolTip="Copy the code to the clipboard">
                                         <iconPacks:PackIconMaterial Width="14"
                                                                     Height="14"
                                                                     Kind="ContentCopy" />
@@ -233,6 +234,10 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
+                        <!--  a card that shows the code behind it colours it as C#  -->
+                        <Trigger Property="MarkupLanguage" Value="C#">
+                            <Setter TargetName="Editor" Property="SyntaxHighlighting" Value="{Binding CSharpDefinition, Source={x:Static core:XamlSyntaxHighlighting.Current}}" />
+                        </Trigger>
                         <Trigger Property="IsOptionsExpanded" Value="False">
                             <Setter TargetName="OptionsPane" Property="Visibility" Value="Collapsed" />
                         </Trigger>

@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.ContentDialogExamples.ProgressContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+        <ProgressBar Margin="0 16 0 0"
+                     Maximum="1"
+                     Value="{Binding Value, Mode=OneWay}" />
+    </StackPanel>
+</UserControl>

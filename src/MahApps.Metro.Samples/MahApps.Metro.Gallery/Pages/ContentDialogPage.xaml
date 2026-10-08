@@ -198,6 +198,135 @@
                 </StackPanel>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="CodeMessageExample"
+                                     Description="The same dialog without any markup: a title, a text and a close button, set in code. The look comes through the style, and the styles of that look go into the resources of the dialog, so its content matches."
+                                     Header="A message, built in code"
+                                     MarkupRegion="Look;Message"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnCodeMessage"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeMessage"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeMessage"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="CodeMessageAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CodeLoginExample"
+                                     Description="A user control as the content and a view model behind it. Sign in stays off until there is a name, and the password comes out of the password box in code, since it takes no binding."
+                                     Header="Signing in"
+                                     MarkupRegion="Login"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnCodeLogin"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeLogin"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeLogin"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="CodeLoginAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CodeInputExample"
+                                     Description="A question and a box for the answer, with OK bound to whether there is one."
+                                     Header="An input, built in code"
+                                     MarkupRegion="Input"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnCodeInput"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeInput"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeInput"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="CodeInputAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CodeProgressExample"
+                                     Description="The work runs while the dialog is up and closes it with Hide when it is done. Cancel stops it through a cancellation token."
+                                     Header="Progress"
+                                     MarkupRegion="Progress"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnCodeProgress"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeProgress"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeProgress"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="CodeProgressAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CodeSelectionExample"
+                                     Description="A list box as the content. Choose stays off until somebody is chosen."
+                                     Header="Choosing from a list"
+                                     MarkupRegion="Selection"
+                                     MarkupResource="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs">
+                <StackPanel Orientation="Horizontal">
+                    <Button Width="120"
+                            Click="OnCodeSelection"
+                            Content="Metro"
+                            Tag="Metro" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeSelection"
+                            Content="Windows 10"
+                            Tag="Win10" />
+                    <Button Width="120"
+                            Margin="8 0 0 0"
+                            Click="OnCodeSelection"
+                            Content="WinUI"
+                            Tag="WinUI" />
+                    <TextBlock x:Name="CodeSelectionAnswer"
+                               Margin="16 0 0 0"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:ControlExample>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

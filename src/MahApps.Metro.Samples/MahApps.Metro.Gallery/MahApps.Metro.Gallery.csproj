@@ -32,6 +32,9 @@
         <EmbeddedResource Include="Windows\SampleWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.SampleWindow.xaml" />
         <EmbeddedResource Include="Windows\TitleBarWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.TitleBarWindow.xaml" />
         <EmbeddedResource Include="Windows\NavigationSampleFirstPage.xaml" LogicalName="MahApps.Metro.Gallery.Windows.NavigationSampleFirstPage.xaml" />
+        <!--  the pages whose samples run in code show regions of their code behind, cut out of these  -->
+        <EmbeddedResource Include="Pages\DialogsPage.xaml.cs" LogicalName="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs" />
+        <EmbeddedResource Include="Pages\ContentDialogPage.xaml.cs" LogicalName="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs" />
     </ItemGroup>
 
     <ItemGroup>
