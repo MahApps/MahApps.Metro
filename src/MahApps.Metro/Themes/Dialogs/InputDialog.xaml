@@ -292,6 +292,7 @@
                                        Grid.Row="1"
                                        Margin="0 0 0 12"
                                        AutomationProperties.Name="{x:Static lang:Automation.DialogTitle}"
+                                       FontFamily="{DynamicResource MahApps.Fonts.Family.Display.WinUI}"
                                        FontSize="{TemplateBinding DialogTitleFontSize}"
                                        FontWeight="SemiBold"
                                        Text="{TemplateBinding Title}"
@@ -368,9 +369,9 @@
     <Style x:Key="MahApps.Styles.InputDialog.Win10"
            BasedOn="{StaticResource MahApps.Styles.InputDialog}"
            TargetType="{x:Type dialogs:InputDialog}">
-        <Setter Property="DialogButtonFontSize" Value="14" />
-        <Setter Property="DialogMessageFontSize" Value="14" />
-        <Setter Property="DialogTitleFontSize" Value="20" />
+        <Setter Property="DialogButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Font.Size.Body.Win10}" />
+        <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Font.Size.Subtitle.Win10}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Padding" Value="0" />
@@ -380,9 +381,9 @@
     <Style x:Key="MahApps.Styles.InputDialog.WinUI"
            BasedOn="{StaticResource MahApps.Styles.InputDialog}"
            TargetType="{x:Type dialogs:InputDialog}">
-        <Setter Property="DialogButtonFontSize" Value="14" />
-        <Setter Property="DialogMessageFontSize" Value="14" />
-        <Setter Property="DialogTitleFontSize" Value="20" />
+        <Setter Property="DialogButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Font.Size.Body.WinUI}" />
+        <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Font.Size.Subtitle.WinUI}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Padding" Value="0" />

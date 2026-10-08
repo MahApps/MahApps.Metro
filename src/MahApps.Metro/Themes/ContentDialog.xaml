@@ -437,8 +437,8 @@
                                                                   VerticalContentAlignment="Center"
                                                                   Content="{TemplateBinding Title}"
                                                                   Focusable="False"
-                                                                  FontFamily="{TemplateBinding TitleFontFamily}"
-                                                                  FontSize="12"
+                                                                  FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title.Win10}"
+                                                                  FontSize="{DynamicResource MahApps.Font.Size.Window.Title.Win10}"
                                                                   Foreground="{TemplateBinding TitleBarForeground}" />
                                     <Button x:Name="PART_TitleBarCloseButton"
                                             Grid.Column="2"
@@ -519,7 +519,7 @@
                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                          TextElement.FontSize="14" />
+                                                          TextElement.FontSize="{DynamicResource MahApps.Font.Size.Body.Win10}" />
                                     </Grid>
 
                                     <Grid x:Name="CommandSpace"
@@ -929,8 +929,8 @@
         <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.WindowTitle}" />
         <Setter Property="TitleBarCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.ContentDialog.TitleBarClose}" />
         <Setter Property="TitleBarForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
-        <Setter Property="TitleFontSize" Value="20" />
+        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="TitleFontSize" Value="{DynamicResource MahApps.Font.Size.Subtitle.Win10}" />
         <Setter Property="TitleTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -1057,8 +1057,8 @@
                                                                           VerticalContentAlignment="Center"
                                                                           Content="{TemplateBinding Title}"
                                                                           Focusable="False"
-                                                                          FontFamily="{TemplateBinding TitleFontFamily}"
-                                                                          FontSize="12"
+                                                                          FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title.WinUI}"
+                                                                          FontSize="{DynamicResource MahApps.Font.Size.Window.Title.WinUI}"
                                                                           Foreground="{TemplateBinding TitleBarForeground}" />
                                             <Button x:Name="PART_TitleBarCloseButton"
                                                     Grid.Column="2"
@@ -1144,7 +1144,7 @@
                                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                                  TextElement.FontSize="14" />
+                                                                  TextElement.FontSize="{DynamicResource MahApps.Font.Size.Body.WinUI}" />
                                             </Grid>
                                         </Grid>
                                     </Border>
@@ -1414,8 +1414,8 @@
         <Setter Property="TitleBarBackground" Value="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.TopOverlay}" />
         <Setter Property="TitleBarCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.ContentDialog.TitleBarClose}" />
         <Setter Property="TitleBarForeground" Value="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Foreground}" />
-        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
-        <Setter Property="TitleFontSize" Value="20" />
+        <Setter Property="TitleFontFamily" Value="{DynamicResource MahApps.Fonts.Family.Display.WinUI}" />
+        <Setter Property="TitleFontSize" Value="{DynamicResource MahApps.Font.Size.Subtitle.WinUI}" />
         <Setter Property="TitleTemplate">
             <Setter.Value>
                 <DataTemplate>
