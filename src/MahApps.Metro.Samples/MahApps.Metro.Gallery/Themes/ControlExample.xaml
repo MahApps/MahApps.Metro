@@ -35,7 +35,7 @@
     </Style>
 
     <Style x:Key="MahApps.Gallery.Styles.TextEditor" TargetType="{x:Type avalonEdit:TextEditor}">
-        <!--  the expander around it paints the Gray10, so that its rounded corners stay round  -->
+        <!--  the expander around it paints the background, so that its rounded corners stay round  -->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontFamily" Value="Consolas, Courier New, monospace" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
@@ -83,10 +83,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ControlExample}">
-                    <Border Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                            BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                    <!--  the colours of the ControlExample of the WinUI 3 Gallery  -->
+                    <Border Background="{DynamicResource MahApps.Brushes.WinUI.SolidBackgroundFillBase}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.WinUI.CardStrokeDefault}"
                             BorderThickness="1"
-                            CornerRadius="4">
+                            CornerRadius="8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -150,7 +151,8 @@
                                         MinWidth="240"
                                         MaxWidth="320"
                                         Padding="16 4 16 16"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                        Background="{DynamicResource MahApps.Brushes.WinUI.CardBackgroundFillDefault}"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.WinUI.DividerStrokeDefault}"
                                         BorderThickness="1 0 0 0">
                                     <StackPanel>
                                         <!--
@@ -204,11 +206,11 @@
                             -->
                             <Expander Grid.Row="2"
                                       Margin="0"
-                                      mah:ControlsHelper.CornerRadius="0 0 3 3"
-                                      mah:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Gray10}"
+                                      mah:ControlsHelper.CornerRadius="0 0 7 7"
+                                      mah:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.WinUI.CardBackgroundFillSecondary}"
                                       mah:HeaderedControlHelper.HeaderForeground="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                      Background="{DynamicResource MahApps.Brushes.Gray10}"
-                                      BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                      Background="{DynamicResource MahApps.Brushes.WinUI.CardBackgroundFillSecondary}"
+                                      BorderBrush="{DynamicResource MahApps.Brushes.WinUI.DividerStrokeDefault}"
                                       BorderThickness="0 1 0 0"
                                       Header="{Binding MarkupLanguage, RelativeSource={RelativeSource TemplatedParent}}"
                                       IsExpanded="False">

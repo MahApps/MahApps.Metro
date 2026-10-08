@@ -491,6 +491,42 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(dialog.FindChild<FrameworkElement>("ContentTitle")!.Visibility, Is.EqualTo(Visibility.Collapsed));
         }
 
+        [TestCase(Win10, "Segoe UI", "Segoe UI")]
+        [TestCase(WinUI, "Segoe UI Variable Text, Segoe UI", "Segoe UI Variable Display, Segoe UI")]
+        public void TheTitleAndTheContentAreStepsOfTheRamp(string style, string text, string title)
+        {
+            var dialog = NewDialog(style);
+            _ = this.ShowDialog(dialog);
+
+            var heading = dialog.FindChild<MetroThumbContentControl>("PART_ContentTitleThumb")!.FindChild<TextBlock>()!;
+            var content = (TextBlock)dialog.Content;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(heading.FontSize, Is.EqualTo(20), "the size of the title");
+                    Assert.That(heading.FontFamily.Source, Is.EqualTo(title), "the family of the title");
+                    Assert.That(content.FontSize, Is.EqualTo(14), "the size of the content");
+                    Assert.That(content.FontFamily.Source, Is.EqualTo(text), "the family of the content");
+                });
+        }
+
+        [TestCase(Win10, "Segoe UI")]
+        [TestCase(WinUI, "Segoe UI Variable Small, Segoe UI")]
+        public void TheTitleInTheBarIsWrittenLikeAWindowTitle(string style, string family)
+        {
+            var dialog = NewDialog(style);
+            dialog.ShowTitleBar = true;
+            _ = this.ShowDialog(dialog);
+
+            var title = dialog.FindChild<MetroThumbContentControl>("PART_TitleBarThumb")!.FindChild<TextBlock>()!;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(title.FontSize, Is.EqualTo(12));
+                    Assert.That(title.FontFamily.Source, Is.EqualTo(family));
+                });
+        }
+
         [TestCase(Win10, false)]
         [TestCase(WinUI, false)]
         [TestCase(Win10, true)]

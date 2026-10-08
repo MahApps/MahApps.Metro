@@ -644,6 +644,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.Win10}" />
@@ -659,6 +660,7 @@
            BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.Win10}"
            TargetType="{x:Type ComboBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.TimePickerBase.WinUI}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
@@ -708,6 +710,8 @@
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
            TargetType="{x:Type mah:DateTimePicker}">
         <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker.Win10}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
         <Style.Triggers>
@@ -721,6 +725,8 @@
     <Style x:Key="MahApps.Styles.TimePicker.Win10"
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Win10}"
            TargetType="{x:Type mah:TimePicker}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="mah:DatePickerHelper.DropDownButtonContent" Value="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a time" />
     </Style>
@@ -761,6 +767,8 @@
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.WinUI}"
            TargetType="{x:Type mah:DateTimePicker}">
         <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.DateTimePicker.WinUI}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a date" />
         <Style.Triggers>
@@ -774,6 +782,8 @@
     <Style x:Key="MahApps.Styles.TimePicker.WinUI"
            BasedOn="{StaticResource MahApps.Styles.TimePickerBase.WinUI}"
            TargetType="{x:Type mah:TimePicker}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="mah:DatePickerHelper.DropDownButtonContent" Value="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="Select a time" />
     </Style>

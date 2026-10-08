@@ -35,6 +35,42 @@
     <system:Double x:Key="MahApps.Font.Size.ColorPicker.TabItemHeader">16</system:Double>
     <system:Double x:Key="MahApps.Font.Size.ControlContentTheme">14</system:Double>
 
+    <!--
+        The fonts of the two Windows looks. The Windows 10 values are the ones of the UWP generic.xaml,
+        the WinUI ones those of TextBlock_themeresources.xaml in microsoft-ui-xaml. WPF does not drive
+        the optical axis of Segoe UI Variable, but it knows the three named families of it, so the WinUI
+        ramp picks Small, Text or Display the way Microsoft assigns them. Windows 10 has none of them
+        and falls back to Segoe UI.
+    -->
+    <FontFamily x:Key="MahApps.Fonts.Family.Control.Win10">Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Control.WinUI">Segoe UI Variable Text, Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Caption.WinUI">Segoe UI Variable Small, Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Display.WinUI">Segoe UI Variable Display, Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Window.Title.Win10">Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Window.Title.WinUI">Segoe UI Variable Small, Segoe UI</FontFamily>
+    <system:Double x:Key="MahApps.Font.Size.Window.Title.Win10">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Window.Title.WinUI">12</system:Double>
+
+    <system:Double x:Key="MahApps.Font.Size.Control.Win10">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Caption.Win10">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Body.Win10">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Base.Win10">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Subtitle.Win10">20</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Title.Win10">24</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Subheader.Win10">34</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Header.Win10">46</system:Double>
+
+    <system:Double x:Key="MahApps.Font.Size.Control.WinUI">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Caption.WinUI">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Body.WinUI">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.BodyStrong.WinUI">14</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.BodyLarge.WinUI">18</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.BodyLargeStrong.WinUI">18</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Subtitle.WinUI">20</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Title.WinUI">28</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.TitleLarge.WinUI">40</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.Display.WinUI">68</system:Double>
+
     <CharacterCasing x:Key="MahApps.CharacterCasing.Button">Upper</CharacterCasing>
     <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Square">Lower</CharacterCasing>
     <CharacterCasing x:Key="MahApps.CharacterCasing.Button.Dialogs">Normal</CharacterCasing>

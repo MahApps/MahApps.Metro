@@ -984,6 +984,8 @@
     <!--  The line between two groups of a Windows menu: one unit, edge to edge, in a colour of its own.  -->
     <Style x:Key="MahApps.Styles.Separator.Menu.Win10" TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Win10.Separator}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="0 2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -1003,6 +1005,8 @@
            BasedOn="{StaticResource MahApps.Styles.Separator.Menu.Win10}"
            TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.WinUI.Separator}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
     </Style>
 
     <!--

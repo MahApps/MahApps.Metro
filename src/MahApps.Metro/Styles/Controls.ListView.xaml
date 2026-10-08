@@ -577,6 +577,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ListView.Win10.ColumnHeaderSeparator}" />
         <Setter Property="BorderThickness" Value="0 0 0 1" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListView.Win10.ColumnHeaderForeground}" />
         <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.ListView.RowHeight.Win10}" />
         <Setter Property="Padding" Value="4 0" />
@@ -630,6 +632,8 @@
            TargetType="GridViewColumnHeader">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ListView.WinUI.ColumnHeaderSeparator}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListView.WinUI.ColumnHeaderForeground}" />
         <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.ListView.RowHeight.WinUI}" />
         <Setter Property="Template">
@@ -1331,6 +1335,8 @@
            TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ListView.Win10.Background}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListView.Win10.ItemForeground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListViewItem.Win10}" />
         <!--
@@ -1356,6 +1362,8 @@
            BasedOn="{StaticResource MahApps.Styles.ListView.Win10}"
            TargetType="{x:Type ListView}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ListView.WinUI.ItemForeground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListViewItem.WinUI}" />
         <Setter Property="mah:GroupItemHelper.GroupContainerStyle" Value="{StaticResource MahApps.Styles.GroupItem.ListView.WinUI}" />

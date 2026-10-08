@@ -517,7 +517,8 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.Win10.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="Padding" Value="10 6 6 5" />
@@ -583,6 +584,8 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1 1 1 2" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.Foreground}" />
         <Setter Property="SpinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.NumericUpDown.Spin.WinUI}" />
         <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.NumericUpDown.WinUI.BorderBrushBottom}" />

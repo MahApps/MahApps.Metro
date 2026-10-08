@@ -200,6 +200,39 @@ namespace MahApps.Metro.Tests.Tests
             }
         }
 
+        [TestCase(Win10, "Segoe UI", "Segoe UI", "Normal")]
+        [TestCase(WinUI, "Segoe UI Variable Text, Segoe UI", "Segoe UI Variable Display, Segoe UI", "SemiBold")]
+        [Description("The title of a dialog in a Windows look is the Subtitle step of its ramp, the message the Body step, and the buttons write like the other controls of that look.")]
+        public async Task TheTextOfADialogIsOnTheRampOfItsLook(string look, string text, string titleFamily, string titleWeight)
+        {
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
+
+            try
+            {
+                _ = window.ShowMessageAsync("Deep Thought", "Come back in seven and a half million years.", MessageDialogStyle.Affirmative, new MetroDialogSettings { CustomResourceDictionary = Look(look) });
+                var dialog = await WaitFor<MessageDialog>(window);
+
+                var title = dialog.FindChild<TextBlock>("PART_Title")!;
+                var message = dialog.FindChild<TextBlock>("PART_MessageTextBlock")!;
+                var button = dialog.FindChild<Button>("PART_AffirmativeButton")!;
+
+                Assert.Multiple(() =>
+                    {
+                        Assert.That(title.FontSize, Is.EqualTo(20), "the size of the title");
+                        Assert.That(title.FontFamily.Source, Is.EqualTo(titleFamily), "the family of the title");
+                        Assert.That(title.FontWeight.ToString(), Is.EqualTo(titleWeight), "the weight of the title");
+                        Assert.That(message.FontSize, Is.EqualTo(14), "the size of the message");
+                        Assert.That(message.FontFamily.Source, Is.EqualTo(text), "the family of the message");
+                        Assert.That(button.FontSize, Is.EqualTo(14), "the size of the button");
+                        Assert.That(button.FontFamily.Source, Is.EqualTo(text), "the family of the button");
+                    });
+            }
+            finally
+            {
+                window.Close();
+            }
+        }
+
         [TestCase(Win10)]
         [TestCase(WinUI)]
         [Description("A single button stands in the right half.")]

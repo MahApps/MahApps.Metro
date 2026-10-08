@@ -152,11 +152,16 @@
     <!--  the same three sets, each keeping the pair of templates that holds the strip on one line  -->
     <Style x:Key="MahApps.Styles.MetroAnimatedSingleRowTabControl.Win10"
            BasedOn="{StaticResource {x:Type mah:MetroAnimatedSingleRowTabControl}}"
-           TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}" />
+           TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+    </Style>
 
     <Style x:Key="MahApps.Styles.MetroAnimatedSingleRowTabControl.WinUI"
            BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI}"
            TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
         <Setter Property="mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
         <Setter Property="mah:TabControlHelper.Transition" Value="Left" />

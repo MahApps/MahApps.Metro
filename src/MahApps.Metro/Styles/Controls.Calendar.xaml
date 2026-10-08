@@ -965,6 +965,8 @@
         <Setter Property="CalendarDayButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarDayButton.WinUI}" />
         <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.WinUI}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
     </Style>
 
     <!--
@@ -1001,6 +1003,8 @@
         <Setter Property="CalendarDayButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarDayButton.Win10}" />
         <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.Win10}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
     </Style>
 
     <!--

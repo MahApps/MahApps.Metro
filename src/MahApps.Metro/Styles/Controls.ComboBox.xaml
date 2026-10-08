@@ -974,6 +974,8 @@
            TargetType="{x:Type TextBox}">
         <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.TextControl.ForegroundFocused}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource MahApps.Brushes.TextControl.SelectionHighlightColor}" />
     </Style>
 
@@ -982,6 +984,8 @@
            TargetType="{x:Type TextBox}">
         <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.ForegroundFocused}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource MahApps.Brushes.TextControl.SelectionHighlightColor}" />
     </Style>
 
@@ -1166,6 +1170,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.Win10}" />
         <Setter Property="MinHeight" Value="32" />
@@ -1240,6 +1246,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1 1 1 2" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.WinUI}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBackground}" />

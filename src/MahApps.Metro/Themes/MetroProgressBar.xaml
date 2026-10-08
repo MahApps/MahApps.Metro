@@ -297,6 +297,8 @@
            BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}"
            TargetType="{x:Type mah:MetroProgressBar}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ProgressBar.Win10.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.Win10.Foreground}" />
         <Setter Property="MinHeight" Value="{StaticResource MahApps.Sizes.MetroProgressBar.Win10.MinHeight}" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -327,6 +329,8 @@
            BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}"
            TargetType="{x:Type mah:MetroProgressBar}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ProgressBar.WinUI.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressBar.WinUI.Foreground}" />
         <Setter Property="MinHeight" Value="{StaticResource MahApps.Sizes.MetroProgressBar.WinUI.MinHeight}" />
         <Setter Property="Template">

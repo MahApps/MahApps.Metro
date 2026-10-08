@@ -100,11 +100,16 @@
     <!--  the same three sets, each keeping the template that slides the page in as the tab changes  -->
     <Style x:Key="MahApps.Styles.MetroAnimatedTabControl.Win10"
            BasedOn="{StaticResource {x:Type mah:MetroAnimatedTabControl}}"
-           TargetType="{x:Type mah:MetroAnimatedTabControl}" />
+           TargetType="{x:Type mah:MetroAnimatedTabControl}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+    </Style>
 
     <Style x:Key="MahApps.Styles.MetroAnimatedTabControl.WinUI"
            BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI}"
            TargetType="{x:Type mah:MetroAnimatedTabControl}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedTabControl}" />
         <Setter Property="mah:TabControlHelper.Transition" Value="Left" />
     </Style>

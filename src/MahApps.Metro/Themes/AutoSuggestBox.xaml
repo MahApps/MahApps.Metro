@@ -325,6 +325,8 @@
            BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}"
            TargetType="{x:Type mah:AutoSuggestBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox.Win10}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
@@ -334,6 +336,8 @@
            BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}"
            TargetType="{x:Type mah:AutoSuggestBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox.WinUI}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
