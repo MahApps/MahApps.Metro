@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.TypographyPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <TextBlock Margin="0 0 0 16"
+                       Style="{DynamicResource MahApps.Styles.TextBlock.Body.WinUI}"
+                       TextWrapping="Wrap">
+                Typography helps provide structure and hierarchy to UI. Windows 11 writes in Segoe UI Variable, Windows 10 in Segoe UI, and Metro in the fonts this library has always had. Use Regular weight for most text and SemiBold for titles; the smallest text should be 12 px Regular or 14 px SemiBold.
+            </TextBlock>
+
+            <StackPanel Margin="0 0 0 24" Orientation="Horizontal">
+                <RadioButton Margin="0 0 24 0"
+                             Checked="OnLookChecked"
+                             Content="Metro"
+                             GroupName="Look"
+                             Tag="Metro" />
+                <RadioButton Margin="0 0 24 0"
+                             Checked="OnLookChecked"
+                             Content="Windows 10"
+                             GroupName="Look"
+                             Tag="Win10" />
+                <RadioButton x:Name="WinUILook"
+                             Checked="OnLookChecked"
+                             Content="WinUI"
+                             GroupName="Look"
+                             Tag="WinUI" />
+            </StackPanel>
+
+            <TextBlock Margin="0 0 0 12"
+                       Style="{DynamicResource MahApps.Styles.TextBlock.BodyStrong.WinUI}"
+                       Text="Type ramp" />
+
+            <Border Padding="16"
+                    Background="{DynamicResource MahApps.Brushes.WinUI.SolidBackgroundFillBase}"
+                    BorderBrush="{DynamicResource MahApps.Brushes.WinUI.CardStrokeDefault}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel Grid.IsSharedSizeScope="True">
+                    <Border MinHeight="64" Padding="20 16">
+                        <Grid x:Name="Columns" />
+                    </Border>
+                    <ItemsControl x:Name="Ramp" Focusable="False" />
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
