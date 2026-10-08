@@ -128,6 +128,8 @@
            BasedOn="{StaticResource MahApps.Styles.ColorPalette}"
            TargetType="{x:Type mah:ColorPalette}">
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <!--  no padding round the swatches: the three units each of them leaves are the whole of the air in here  -->
         <Setter Property="Padding" Value="0" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
@@ -151,6 +153,8 @@
     <Style x:Key="MahApps.Styles.ColorPalette.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ColorPalette.Win10}"
            TargetType="{x:Type mah:ColorPalette}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
@@ -158,6 +162,8 @@
     <Style x:Key="MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI"
            BasedOn="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10}"
            TargetType="{x:Type mah:ColorPalette}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 

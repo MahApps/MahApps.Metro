@@ -807,6 +807,8 @@
     <Style x:Key="MahApps.Styles.ScrollBar.Win10" TargetType="{x:Type ScrollBar}">
         <!--  Transparent, not unset: all sixteen units have to answer hit tests or the pointer never reaches the bar.  -->
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>
@@ -1209,6 +1211,8 @@
     <Style x:Key="MahApps.Styles.ScrollBar.WinUI" TargetType="{x:Type ScrollBar}">
         <!--  Transparent, not unset: all twelve units have to answer hit tests or the pointer never reaches the bar.  -->
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>

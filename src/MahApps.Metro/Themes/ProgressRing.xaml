@@ -326,6 +326,8 @@
     <Style x:Key="MahApps.Styles.ProgressRing.Win10"
            BasedOn="{StaticResource {x:Type mah:ProgressRing}}"
            TargetType="{x:Type mah:ProgressRing}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressRing.Win10.Foreground}" />
     </Style>
 
@@ -357,6 +359,8 @@
            BasedOn="{StaticResource MahApps.Styles.ProgressRing.Win10}"
            TargetType="{x:Type mah:ProgressRing}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ProgressRing.WinUI.Foreground}" />
         <Setter Property="Height" Value="{StaticResource MahApps.Sizes.ProgressRing.WinUI.Size}" />
         <Setter Property="MinHeight" Value="{StaticResource MahApps.Sizes.ProgressRing.WinUI.MinSize}" />

@@ -206,12 +206,16 @@
     <Style x:Key="MahApps.Styles.AnalogClock.Win10"
            BasedOn="{StaticResource MahApps.Styles.AnalogClock}"
            TargetType="{x:Type mah:AnalogClock}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.Foreground}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.AnalogClock.WinUI"
            BasedOn="{StaticResource MahApps.Styles.AnalogClock.Win10}"
            TargetType="{x:Type mah:AnalogClock}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Foreground}" />
     </Style>
 

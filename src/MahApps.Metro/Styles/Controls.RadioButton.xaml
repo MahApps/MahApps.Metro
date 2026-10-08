@@ -194,6 +194,8 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="MinWidth" Value="120" />
@@ -261,6 +263,8 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.BorderBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.WinUI.Foreground}" />
         <Setter Property="Padding" Value="8 6 0 0" />
         <Setter Property="VerticalContentAlignment" Value="Top" />

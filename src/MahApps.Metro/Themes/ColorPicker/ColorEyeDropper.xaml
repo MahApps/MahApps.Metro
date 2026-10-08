@@ -196,8 +196,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.BorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
         <!--
@@ -242,6 +242,8 @@
         <!--  the frame leaves its bottom line to the edge below it, the way that button does  -->
         <Setter Property="BorderThickness" Value="1 1 1 0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
         <Setter Property="MinHeight" Value="32" />
         <!--  a unit more under the pipette than over it, because the frame draws no line along the bottom and the edge below it is not part of the layout  -->

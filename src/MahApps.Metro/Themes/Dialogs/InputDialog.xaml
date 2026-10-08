@@ -371,7 +371,8 @@
         <Setter Property="DialogButtonFontSize" Value="14" />
         <Setter Property="DialogMessageFontSize" Value="14" />
         <Setter Property="DialogTitleFontSize" Value="20" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog.Win10}" />
     </Style>
@@ -382,7 +383,8 @@
         <Setter Property="DialogButtonFontSize" Value="14" />
         <Setter Property="DialogMessageFontSize" Value="14" />
         <Setter Property="DialogTitleFontSize" Value="20" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.InputDialog.WinUI}" />
     </Style>

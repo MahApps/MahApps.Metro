@@ -1190,6 +1190,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Expander.Win10.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Padding" Value="12" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
@@ -1244,6 +1246,8 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Expander.WinUI.BorderBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Padding" Value="16" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
         <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Down}" />

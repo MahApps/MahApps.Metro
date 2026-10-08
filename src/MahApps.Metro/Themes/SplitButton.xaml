@@ -456,8 +456,8 @@
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Arrow.Win10}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Win10}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ControlContentTheme}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.ComboBoxItem.Win10}" />
         <Setter Property="MinHeight" Value="32" />
@@ -525,6 +525,8 @@
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Arrow.WinUI}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split.WinUI}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.WinUI.Foreground}" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.ComboBoxItem.WinUI}" />
         <Setter Property="Padding" Value="11 5 11 6" />

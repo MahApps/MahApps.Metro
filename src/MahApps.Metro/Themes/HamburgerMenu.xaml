@@ -72,6 +72,8 @@
             </ControlTemplate>
         </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.HamburgerMenu.WinUI.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger.WinUI}" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>

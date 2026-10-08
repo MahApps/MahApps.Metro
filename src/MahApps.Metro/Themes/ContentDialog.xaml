@@ -916,7 +916,8 @@
         <Setter Property="ChildWindowMinWidth" Value="320" />
         <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Win10}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Foreground}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.ContentDialog.Win10.Overlay}" />
@@ -1400,7 +1401,8 @@
         <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.WinUI}" />
         <Setter Property="CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ContentControlTheme}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Foreground}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.ContentDialog.WinUI.Overlay}" />

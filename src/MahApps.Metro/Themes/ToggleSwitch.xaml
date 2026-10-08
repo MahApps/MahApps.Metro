@@ -447,6 +447,8 @@
            BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
            TargetType="{x:Type mah:ToggleSwitch}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.Win10.ContentForeground}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -802,6 +804,8 @@
            BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
            TargetType="{x:Type mah:ToggleSwitch}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.WinUI.ContentForeground}" />
         <Setter Property="Template">
             <Setter.Value>
