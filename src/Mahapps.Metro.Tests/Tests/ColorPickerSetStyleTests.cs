@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -441,11 +442,11 @@ namespace MahApps.Metro.Tests.Tests
             return picker;
         }
 
-        [TestCase("MahApps.Styles.ColorPicker")]
-        [TestCase("MahApps.Styles.ColorPicker.Win10")]
-        [TestCase("MahApps.Styles.ColorPicker.WinUI")]
+        [TestCase("MahApps.Styles.ColorPicker", "MahApps.Styles.TabItem.ColorPicker")]
+        [TestCase("MahApps.Styles.ColorPicker.Win10", "MahApps.Styles.TabItem.ColorPicker.Win10")]
+        [TestCase("MahApps.Styles.ColorPicker.WinUI", "MahApps.Styles.TabItem.ColorPicker.WinUI")]
         [Description("The tabs of the drop-down go with its tab strip, also where a set hands every other tab a look of its own, which in the WinUI set left the header of the open tab unseen.")]
-        public void TheTabsOfTheDropDownGoWithItsStrip(string key)
+        public void TheTabsOfTheDropDownGoWithItsStrip(string key, string tabKey)
         {
             Assert.That(this.window, Is.Not.Null);
 
@@ -474,12 +475,82 @@ namespace MahApps.Metro.Tests.Tests
                 var tab = (TabItem)Part(picker, "PART_ColorPalettesTab");
 
                 // the corner merges a copy of its own, so the style is the one found from there
-                Assert.That(tab.Style, Is.SameAs(picker.FindResource("MahApps.Styles.TabItem.ColorPicker")));
+                Assert.That(tab.Style, Is.SameAs(picker.FindResource(tabKey)));
             }
             finally
             {
                 picker.IsDropDownOpen = false;
                 this.Settle();
+            }
+        }
+
+        [TestCase("MahApps.Styles.ColorPicker.Win10")]
+        [TestCase("MahApps.Styles.ColorPicker.WinUI")]
+        [Description("The tab strip of a Windows set stands on the drop-down itself, without the band of the theme background the Metro strip lays behind its headers.")]
+        public void TheStripOfAWindowsSetStandsOnTheDropDown(string key)
+        {
+            var strip = Strip(this.Show(key));
+
+            Assert.That(strip.Background, Is.Null.Or.EqualTo(Brushes.Transparent));
+        }
+
+        [TestCase("MahApps.Styles.ColorPicker.Win10")]
+        [TestCase("MahApps.Styles.ColorPicker.WinUI")]
+        [Description("The swatches of a Windows set stand on whatever is under the palette, in the drop-down the drop-down itself, rather than each on a tile of the theme background, which ran as a darker band behind every row.")]
+        public void TheSwatchesStandOnTheDropDown(string key)
+        {
+            var picker = this.Show(key);
+            var palette = new ColorPalette { Style = picker.AvailableColorPaletteStyle, ItemsSource = new[] { Colors.SteelBlue, Colors.Gold } };
+            this.window!.Content = palette;
+            this.Settle();
+
+            var swatch = (ListBoxItem)palette.ItemContainerGenerator.ContainerFromIndex(0);
+
+            Assert.That(swatch, Is.Not.Null, "the palette should have made its swatches");
+            Assert.That(swatch.Background, Is.Null.Or.EqualTo(Brushes.Transparent));
+        }
+
+        [Test]
+        [Description("The Windows 10 tabs are read off the Pivot of UWP: the header showing in the colour of the text, the others in the medium one, a step up under the pointer, and nothing in the accent and nothing under them. They write in the size of the set rather than the 24 of a Pivot, which a drop-down has no room for.")]
+        public void TheWindows10TabsAreTheHeadersOfAPivot()
+        {
+            var strip = Strip(this.Show("MahApps.Styles.ColorPicker.Win10"));
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(HeaderedControlHelper.GetHeaderForeground(strip), Is.SameAs(strip.FindResource("MahApps.Brushes.SystemControlForegroundBaseMedium")), "the others");
+                    Assert.That(HeaderedControlHelper.GetHeaderForegroundMouseOver(strip), Is.SameAs(strip.FindResource("MahApps.Brushes.SystemControlHighlightAltBaseMediumHigh")), "under the pointer");
+                    Assert.That(HeaderedControlHelper.GetHeaderForegroundSelected(strip), Is.SameAs(strip.FindResource("MahApps.Brushes.SystemControlHighlightAltBaseHigh")), "the one showing");
+                    Assert.That(TabControlHelper.GetUnderlined(strip), Is.EqualTo(UnderlinedType.None), "nothing under them");
+                    Assert.That(HeaderedControlHelper.GetHeaderFontSize(strip), Is.EqualTo((double)strip.FindResource("MahApps.Font.Size.Control.Win10")), "in the size of the set");
+                });
+        }
+
+        [Test]
+        [Description("The WinUI tabs are the SelectorBar of that set, which is what WinUI 3 switches between views with inside a flyout: plain headers and a short bar of the accent under the one showing.")]
+        public void TheWinUITabsAreTheSelectorBar()
+        {
+            var picker = this.Show("MahApps.Styles.ColorPicker.WinUI");
+            var strip = Strip(picker);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(BasedOnChain(picker.TabControlStyle!), Does.Contain(picker.FindResource("MahApps.Styles.TabControl.WinUI.SelectorBar")), "the strip");
+                    Assert.That(BasedOnChain(picker.TabItemStyle!), Does.Contain(picker.FindResource("MahApps.Styles.TabItem.WinUI.SelectorBar")), "and its tabs");
+                    Assert.That(TabControlHelper.GetUnderlined(strip), Is.EqualTo(UnderlinedType.SelectedTabItem), "with the bar under the one showing");
+                });
+        }
+
+        private static TabControl Strip(ColorPicker picker)
+        {
+            return (TabControl)Part(picker, "PART_PopupTabControl");
+        }
+
+        private static IEnumerable<Style> BasedOnChain(Style style)
+        {
+            for (var s = style; s is not null; s = s.BasedOn)
+            {
+                yield return s;
             }
         }
 

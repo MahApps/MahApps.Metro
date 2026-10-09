@@ -581,6 +581,8 @@
         <Setter Property="Padding" Value="10 6 6 5" />
         <Setter Property="RecentColorPaletteStyle" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10}" />
         <Setter Property="StandardColorPaletteStyle" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.Win10}" />
+        <Setter Property="TabControlStyle" Value="{DynamicResource MahApps.Styles.TabControl.ColorPicker.Win10}" />
+        <Setter Property="TabItemStyle" Value="{DynamicResource MahApps.Styles.TabItem.ColorPicker.Win10}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush}" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushDisabled}" />
@@ -647,6 +649,8 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
         <Setter Property="RecentColorPaletteStyle" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI}" />
         <Setter Property="StandardColorPaletteStyle" Value="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown.WinUI}" />
+        <Setter Property="TabControlStyle" Value="{DynamicResource MahApps.Styles.TabControl.ColorPicker.WinUI}" />
+        <Setter Property="TabItemStyle" Value="{DynamicResource MahApps.Styles.TabItem.ColorPicker.WinUI}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.DropDownBorderBrush}" />
         <Setter Property="mah:ComboBoxHelper.DropDownCornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />

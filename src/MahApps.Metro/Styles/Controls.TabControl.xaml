@@ -1737,4 +1737,44 @@
            BasedOn="{StaticResource MahApps.Styles.TabItem.WinUI.SelectorBar}"
            TargetType="{x:Type mah:MetroTabItem}" />
 
+    <!--
+        The tabs in the drop-down of the Windows 10 color picker. UWP had no tab strip, and what it
+        switched views with was the Pivot, so these are its headers: the one showing in the colour of
+        the text, the others in the medium one and a step up under the pointer, nothing in the accent
+        and nothing under them. They write in the size of the set, since a drop-down has no room for
+        the 24 of a Pivot, and the strip stands on the drop-down rather than on a band of its own.
+    -->
+    <Style x:Key="MahApps.Styles.TabControl.ColorPicker.Win10"
+           BasedOn="{StaticResource MahApps.Styles.TabControl.ColorPicker}"
+           TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseMedium}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForegroundMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightAltBaseMediumHigh}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderForegroundSelected" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightAltBaseHigh}" />
+        <Setter Property="mah:TabControlHelper.Underlined" Value="None" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TabItem.ColorPicker.Win10"
+           BasedOn="{StaticResource MahApps.Styles.TabItem.ColorPicker}"
+           TargetType="{x:Type TabItem}" />
+
+    <!--
+        And the WinUI ones, which are the SelectorBar of that set: what WinUI 3 switches views with
+        inside a flyout, plain headers and a short bar of the accent under the one showing. The strip
+        stands on the drop-down here as well.
+    -->
+    <Style x:Key="MahApps.Styles.TabControl.ColorPicker.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TabControl.WinUI.SelectorBar}"
+           TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TabItem.ColorPicker.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TabItem.WinUI.SelectorBar}"
+           TargetType="{x:Type TabItem}" />
+
 </ResourceDictionary>
