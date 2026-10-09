@@ -194,6 +194,52 @@ namespace MahApps.Metro.Controls
             obj.SetValue(WatermarkTrimmingProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="P:FadeWatermarkOnFocus"/> attached property.</summary>
+        public static readonly DependencyProperty FadeWatermarkOnFocusProperty
+            = DependencyProperty.RegisterAttached(
+                "FadeWatermarkOnFocus",
+                typeof(bool),
+                typeof(TextBoxHelper),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets whether the watermark fades while the control has the caret and is still empty.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
+        public static bool GetFadeWatermarkOnFocus(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(FadeWatermarkOnFocusProperty);
+        }
+
+        /// <summary>
+        /// Sets whether the watermark fades while the control has the caret and is still empty. The Metro look
+        /// fades it; the WinUI look turns this off and gives the watermark a quieter colour instead. The value is
+        /// handed down, so set on a combo box or a picker it reaches the text box inside it.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(MultiSelectionComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDownBase))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
+        [AttachedPropertyBrowsableForType(typeof(ColorPicker))]
+        public static void SetFadeWatermarkOnFocus(DependencyObject obj, bool value)
+        {
+            obj.SetValue(FadeWatermarkOnFocusProperty, BooleanBoxes.Box(value));
+        }
+
         public static readonly DependencyProperty WatermarkWrappingProperty
             = DependencyProperty.RegisterAttached(
                 "WatermarkWrapping",

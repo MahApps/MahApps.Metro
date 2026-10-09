@@ -49,7 +49,6 @@
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                        Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
@@ -126,6 +125,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="mah:TextBoxHelper.HasText" Value="False" />
                                 <Condition Property="IsFocused" Value="True" />
+                                <Condition Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
@@ -411,7 +411,6 @@
                                            Padding="{TemplateBinding Padding}"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                            Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
@@ -567,6 +566,7 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocusWithin}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.FadeWatermarkOnFocus)}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
@@ -1165,6 +1165,35 @@
             <Thickness x:Key="TextControlPlaceholderMargin">0,0,0,0</Thickness>
             <!--  the four units above and below the rows are the ones UWP leaves there  -->
             <Thickness x:Key="ComboBoxPopupBorderThemePadding">0 4</Thickness>
+            <!--
+                The watermark at full strength, in the colours UWP writes it in. A box that cannot be
+                typed into writes it in the colour of its text, ComboBoxPlaceHolderForeground being
+                SystemControlPageTextBaseHigh. One that can writes it in the placeholder colours of
+                the text box inside it, the darker one while the caret turns the box white.
+            -->
+            <Style x:Key="MahApps.Styles.TextBlock.Watermark" TargetType="{x:Type TextBlock}">
+                <Setter Property="IsHitTestVisible" Value="False" />
+                <Setter Property="Opacity" Value="1" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.PlaceholderForeground}" />
+                    </DataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="True" />
+                            <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="True" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.PlaceholderForegroundFocused}" />
+                    </MultiDataTrigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="True" />
+                            <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.PlaceholderForegroundDisabled}" />
+                    </MultiDataTrigger>
+                </Style.Triggers>
+            </Style>
         </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrush}" />
@@ -1196,6 +1225,8 @@
         </Setter>
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.Win10}" />
         <Setter Property="mah:TextBoxHelper.ButtonWidth" Value="30" />
+        <!--  the colour of the watermark says that the caret is there, so it does not fade on top of that  -->
+        <Setter Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="False" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundPointerOver}" />
@@ -1241,6 +1272,10 @@
                    TargetType="{x:Type TextBox}" />
             <Thickness x:Key="TextControlPlaceholderMargin">0,0,0,0</Thickness>
             <Thickness x:Key="ComboBoxPopupBorderThemePadding">0 4</Thickness>
+            <!--  the watermark of the WinUI text box, in its placeholder colours and at full strength  -->
+            <Style x:Key="MahApps.Styles.TextBlock.Watermark"
+                   BasedOn="{StaticResource MahApps.Styles.TextBlock.Watermark.WinUI}"
+                   TargetType="{x:Type TextBlock}" />
         </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />

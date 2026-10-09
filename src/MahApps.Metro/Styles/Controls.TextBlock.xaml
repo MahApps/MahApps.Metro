@@ -11,6 +11,32 @@
         <Setter Property="Opacity" Value="0.6" />
     </Style>
 
+    <!--
+        The watermark of the WinUI set, for the controls that draw it through the template they share
+        with the Metro look. It is written in the placeholder colours of the WinUI text box at full
+        strength, and the state it follows is the one of the control the watermark belongs to, which
+        for a combo box that can be typed into is the text box inside it. A set puts this under the
+        key of the plain watermark in its resources.
+    -->
+    <Style x:Key="MahApps.Styles.TextBlock.Watermark.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForeground}" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Opacity" Value="1" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundPointerOver}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="MahApps.Styles.TextBlock.AutoCollapsing"
            BasedOn="{StaticResource MahApps.Styles.TextBlock}"
            TargetType="{x:Type TextBlock}">
