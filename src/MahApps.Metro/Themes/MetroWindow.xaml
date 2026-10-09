@@ -619,6 +619,11 @@
             A material behind the window costs the text its ClearType, since WPF draws no sub pixel
             rendering onto a surface it can see through, so a window asks for one rather than being
             given one. What it takes to have both is in the MetroWindow page of the gallery.
+            
+            Even with the word that turns it back on, dark text keeps its ClearType only where it stands
+            on something opaque inside its own layer. Behind a clip, a scroll viewer to begin with, or on
+            a fill that lets something through, it comes out grey in a light theme, while light text in a
+            dark one keeps its colours.
         -->
         <Setter Property="controlzex:WindowBackdropManager.BackdropType" Value="None" />
         <Style.Triggers>

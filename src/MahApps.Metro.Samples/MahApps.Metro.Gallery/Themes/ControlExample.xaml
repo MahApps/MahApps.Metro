@@ -70,13 +70,6 @@
         <Setter Property="Width" Value="30" />
     </Style>
 
-    <!--
-        The quieter of the two colours a card writes in. It is the foreground of the theme with some
-        of it taken away, put into the brush rather than onto the text, because an opacity on the
-        text itself puts that text on a layer of its own and a layer starts without ClearType.
-    -->
-    <SolidColorBrush x:Key="MahApps.Gallery.Brushes.ControlExample.Quiet" Opacity="0.75" Color="{DynamicResource MahApps.Colors.ThemeForeground}" />
-
     <Style TargetType="{x:Type controls:ControlExample}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Margin" Value="0 0 0 16" />
@@ -116,7 +109,7 @@
                                                     FontWeight="SemiBold"
                                                     IsTabStop="False" />
                                     <TextBlock Margin="0 2 0 0"
-                                               Foreground="{StaticResource MahApps.Gallery.Brushes.ControlExample.Quiet}"
+                                               Foreground="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}"
                                                Text="{TemplateBinding Description}"
                                                TextWrapping="Wrap">
                                         <TextBlock.Style>
@@ -181,7 +174,7 @@
                                                             <DataTemplate>
                                                                 <TextBlock Margin="0 8 0 4"
                                                                            FontWeight="SemiBold"
-                                                                           Foreground="{StaticResource MahApps.Gallery.Brushes.ControlExample.Quiet}"
+                                                                           Foreground="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}"
                                                                            Text="{Binding Name}" />
                                                             </DataTemplate>
                                                         </GroupStyle.HeaderTemplate>
