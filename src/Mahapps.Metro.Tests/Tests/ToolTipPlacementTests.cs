@@ -106,6 +106,8 @@ namespace MahApps.Metro.Tests.Tests
         [Description("The room the shadow of the WinUI tool tip takes is no part of the tip, so it is the box that stands 12 above the control, not the shadow.")]
         public void TheShadowIsLeftOutOfTheGap()
         {
+            Assume.That(SystemParameters.DropShadow, Is.True, "this desktop draws no shadows");
+
             var (tip, scale) = this.Open("MahApps.Styles.ToolTip.WinUI");
             // the margin the WinUI template gives the box for its shadow: 8 4 8 12
             var popup = new Size((100 + 16) * scale, (30 + 16) * scale);

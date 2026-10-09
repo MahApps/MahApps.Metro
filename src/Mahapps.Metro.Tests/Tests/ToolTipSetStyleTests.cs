@@ -69,13 +69,19 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(dictionary["MahApps.Colors.WinUI.AcrylicInAppFillDefault"], Is.EqualTo((Color)ColorConverter.ConvertFromString(expected)));
         }
 
-        [TestCase("MahApps.Styles.ToolTip.Win10")]
-        [TestCase("MahApps.Styles.ToolTip.WinUI")]
-        [Description("A long text breaks into lines rather than running off, as it does in the tool tip of Windows.")]
-        public void ALongTextWraps(string key)
+        [TestCase("MahApps.Styles.ToolTip.Win10", false)]
+        [TestCase("MahApps.Styles.ToolTip.WinUI", true)]
+        [TestCase("MahApps.Styles.ToolTip.WinUI", false)]
+        [Description("A long text breaks into lines rather than running off, as it does in the tool tip of Windows, and the box is 320 wide whether a shadow takes room around it or not.")]
+        public void ALongTextWraps(string key, bool shadow)
         {
+            if (shadow)
+            {
+                Assume.That(SystemParameters.DropShadow, Is.True, "this desktop draws no shadows");
+            }
+
             var target = new Button { Content = "42" };
-            var tip = new ToolTip { Style = (Style)Application.Current.FindResource(key), Content = LongText, PlacementTarget = target };
+            var tip = new ToolTip { Style = (Style)Application.Current.FindResource(key), Content = LongText, PlacementTarget = target, HasDropShadow = shadow };
             target.ToolTip = tip;
             this.window!.Content = target;
             this.window.UpdateLayout();
@@ -106,6 +112,8 @@ namespace MahApps.Metro.Tests.Tests
         [Description("The WinUI tool tip casts the shadow of a WinUI flyout, the Windows 10 one casts none, as its UWP template has none.")]
         public void OnlyTheWinUIToolTipCastsAShadow()
         {
+            Assume.That(SystemParameters.DropShadow, Is.True, "this desktop draws no shadows");
+
             var win10 = this.Open("MahApps.Styles.ToolTip.Win10");
             var winUI = this.Open("MahApps.Styles.ToolTip.WinUI");
 

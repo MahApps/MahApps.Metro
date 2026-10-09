@@ -166,6 +166,8 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="HasDropShadow" Value="True">
+                <!--  the 320 of Microsoft is the box; the room its shadow takes either side comes on top, and only while there is a shadow  -->
+                <Setter Property="MaxWidth" Value="336" />
                 <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu.WinUI}" />
                 <Setter TargetName="Root" Property="Margin" Value="{DynamicResource MahApps.Thickness.Menu.WinUI.ShadowMargin}" />
             </Trigger>
@@ -187,8 +189,6 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Caption.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolTip.WinUI.Foreground}" />
         <Setter Property="HasDropShadow" Value="True" />
-        <!--  the 320 of Microsoft for the tip itself, and the room its shadow takes either side  -->
-        <Setter Property="MaxWidth" Value="336" />
         <Setter Property="Padding" Value="9 6 9 8" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolTip.WinUI}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
