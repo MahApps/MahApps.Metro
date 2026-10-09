@@ -2,9 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using ControlzEx.Theming;
 using ICSharpCode.AvalonEdit;
@@ -24,6 +26,7 @@ namespace MahApps.Metro.Gallery.Pages
         private const string UseWindows = "Use Windows setting";
 
         private bool isFilling;
+        private Color? pendingAccent;
 
         public SettingsPage()
         {
@@ -49,6 +52,11 @@ namespace MahApps.Metro.Gallery.Pages
                                                 GalleryLink.For("ShowMeTheXAML", typeof(XamlDisplay), "https://github.com/Keboo/ShowMeTheXAML"),
                                                 GalleryLink.For("AvalonEdit", typeof(TextEditor), "https://github.com/icsharpcode/AvalonEdit")
                                             };
+
+            // the thumbs of the sliders mark the release as handled, so the picker asks for it anyway,
+            // and the closing drop-down catches one that never got that far
+            this.Accent.AddHandler(MouseLeftButtonUpEvent, new MouseButtonEventHandler(this.OnAccentReleased), true);
+            this.Accent.DropDownClosed += this.OnAccentReleased;
 
             this.Fill();
 
@@ -106,6 +114,35 @@ namespace MahApps.Metro.Gallery.Pages
             // and that one is no pick, so only a colour other than the one on counts
             var theme = ThemeManager.Current.DetectTheme(Application.Current);
             if (this.isFilling || e.NewValue is not { } accent || accent == theme?.PrimaryAccentColor)
+            {
+                return;
+            }
+
+            // dragging through the field or along a slider reports a colour with every move, and a
+            // theme for each of them is more than the window keeps up with, so the picker shows the
+            // colour right away and the theme follows once the button is let go
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                this.pendingAccent = accent;
+                return;
+            }
+
+            this.pendingAccent = null;
+            LetGo(ThemeSyncMode.SyncWithAccent);
+            Apply(theme?.BaseColorScheme ?? ThemeManager.BaseColorLight, accent);
+        }
+
+        private void OnAccentReleased(object? sender, EventArgs e)
+        {
+            if (this.pendingAccent is not { } accent)
+            {
+                return;
+            }
+
+            this.pendingAccent = null;
+
+            var theme = ThemeManager.Current.DetectTheme(Application.Current);
+            if (accent == theme?.PrimaryAccentColor)
             {
                 return;
             }
