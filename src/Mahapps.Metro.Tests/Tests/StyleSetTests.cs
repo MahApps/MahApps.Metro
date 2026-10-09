@@ -59,6 +59,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(DatePicker), "MahApps.Styles.DatePicker.Win10")]
         [TestCase(Win10, typeof(TimePicker), "MahApps.Styles.TimePicker.Win10")]
         [TestCase(Win10, typeof(DateTimePicker), "MahApps.Styles.DateTimePicker.Win10")]
+        [TestCase(Win10, typeof(ToolTip), "MahApps.Styles.ToolTip.Win10")]
+        [TestCase(WinUI, typeof(ToolTip), "MahApps.Styles.ToolTip.WinUI")]
         [TestCase(Win10, typeof(MetroWindow), "MahApps.Styles.MetroWindow.Win10")]
         [TestCase(WinUI, typeof(MetroWindow), "MahApps.Styles.MetroWindow.WinUI")]
         [TestCase(Win10, typeof(ContentDialog), "MahApps.Styles.ContentDialog.Win10")]
