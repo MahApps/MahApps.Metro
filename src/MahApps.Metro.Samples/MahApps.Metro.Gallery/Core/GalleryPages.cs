@@ -401,7 +401,7 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    "Styles",
                                                                                    typeof(ToolTipPage),
                                                                                    PackIconMaterialKind.TooltipTextOutline,
-                                                                                   keywords: "tooltip hint delay placement shadow",
+                                                                                   keywords: "tooltip hint delay placement shadow win10 winui",
                                                                                    control: "Styles/Controls.Tooltip.xaml"),
                                                                    new GalleryPage("TreeView",
                                                                                    "Styles",

@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Tooltip Style  -->
     <Style x:Key="MahApps.Styles.ToolTip" TargetType="ToolTip">
@@ -63,5 +65,132 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ToolTipHelper.CloseOnScroll" Value="True" />
+    </Style>
+
+    <!--
+        The tool tip of the Windows 10 look, after the ToolTip style of the UWP generic.xaml: the
+        chrome of a flyout, a thin frame, no rounding and no shadow, text at 12 that breaks into
+        lines at 320. Windows shows it at once, so it has no fade, and neither has the WinUI one.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.ToolTip.Win10" TargetType="ToolTip">
+        <Border x:Name="Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="Root" Path="CornerRadius" />
+                        <Binding ElementName="Root" Path="BorderThickness" />
+                        <Binding ElementName="Root" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                      Margin="{TemplateBinding Padding}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="HasDropShadow" Value="True">
+                <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.ToolTip}" />
+                <Setter TargetName="Root" Property="Margin" Value="0 0 6 6" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ToolTip.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ToolTip}"
+           TargetType="ToolTip">
+        <Style.Resources>
+            <!--  a ToolTip in UWP wraps the text it is given, so a plain string does it here too  -->
+            <DataTemplate DataType="{x:Type system:String}">
+                <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+            </DataTemplate>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolTip.Win10.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToolTip.Win10.BorderBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Caption.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolTip.Win10.Foreground}" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="MaxWidth" Value="320" />
+        <Setter Property="Padding" Value="8 5 8 7" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolTip.Win10}" />
+        <Setter Property="mah:ToolTipHelper.PlaceLikeWindows" Value="True" />
+    </Style>
+
+    <!--
+        The tool tip of the WinUI look, after ToolTip_themeresources.xaml of microsoft-ui-xaml. Its
+        fill is acrylic there, which WPF cannot draw, so it takes the colour that acrylic falls back
+        to. It casts the shadow of a WinUI flyout, and ToolTipHelper.PlaceLikeWindows leaves the
+        room that shadow needs out of the gap, so the tip still stands where Windows would put it.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.ToolTip.WinUI" TargetType="ToolTip">
+        <Border x:Name="Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="Root" Path="CornerRadius" />
+                        <Binding ElementName="Root" Path="BorderThickness" />
+                        <Binding ElementName="Root" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                      Margin="{TemplateBinding Padding}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="HasDropShadow" Value="True">
+                <!--  the 320 of Microsoft is the box; the room its shadow takes either side comes on top, and only while there is a shadow  -->
+                <Setter Property="MaxWidth" Value="336" />
+                <Setter TargetName="Root" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu.WinUI}" />
+                <Setter TargetName="Root" Property="Margin" Value="{DynamicResource MahApps.Thickness.Menu.WinUI.ShadowMargin}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ToolTip.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ToolTip.Win10}"
+           TargetType="ToolTip">
+        <Style.Resources>
+            <!--  the resources of the style this one stands on are not looked into for the template of the content, so the text wraps by one of its own  -->
+            <DataTemplate DataType="{x:Type system:String}">
+                <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+            </DataTemplate>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolTip.WinUI.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToolTip.WinUI.BorderBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Caption.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Caption.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolTip.WinUI.Foreground}" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="Padding" Value="9 6 9 8" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolTip.WinUI}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 </ResourceDictionary>

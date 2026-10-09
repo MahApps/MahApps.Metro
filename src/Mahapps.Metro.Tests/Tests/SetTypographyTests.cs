@@ -50,8 +50,17 @@ namespace MahApps.Metro.Tests.Tests
             typeof(TabItem)
         };
 
+        /// <summary>
+        /// What Microsoft writes at the Caption step, 12, rather than at the size of its controls.
+        /// </summary>
+        private static readonly Type[] Captions =
+        {
+            typeof(ToolTip)
+        };
+
         private const string Win10Family = "Segoe UI";
         private const string WinUIFamily = "Segoe UI Variable Text, Segoe UI";
+        private const string WinUICaptionFamily = "Segoe UI Variable Small, Segoe UI";
 
         // the pack scheme is there only once the application of the tests is up, which is after
         // NUnit has asked for its cases, so the controls of a set are walked inside the test
@@ -79,10 +88,11 @@ namespace MahApps.Metro.Tests.Tests
                             Assert.That(metro.FontSize, Is.EqualTo(HostSize), $"{type.Name} follows what it sits in in the default set too");
                         }
 
+                        var caption = Captions.Any(c => c.IsAssignableFrom(type));
                         var control = this.Show(dictionary, type, null);
 
-                        Assert.That(control.FontSize, Is.EqualTo(follows ? HostSize : 14), $"the size of {type.Name}");
-                        Assert.That(control.FontFamily.Source, Is.EqualTo(follows ? HostFamily : family), $"the family of {type.Name}");
+                        Assert.That(control.FontSize, Is.EqualTo(follows ? HostSize : caption ? 12 : 14), $"the size of {type.Name}");
+                        Assert.That(control.FontFamily.Source, Is.EqualTo(follows ? HostFamily : caption ? CaptionFamily(set, family) : family), $"the family of {type.Name}");
                     }
                 });
         }
@@ -116,7 +126,7 @@ namespace MahApps.Metro.Tests.Tests
                         var control = this.Show(dictionary, style!.TargetType, style);
                         var source = control.FontFamily.Source;
 
-                        Assert.That(source == family || source == HostFamily || IsSymbolFont(source), Is.True, $"the family of {key} is {source}");
+                        Assert.That(source == family || source == CaptionFamily(set, family) || source == HostFamily || IsSymbolFont(source), Is.True, $"the family of {key} is {source}");
                     }
                 });
         }
@@ -155,6 +165,11 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(button.FontSize, Is.EqualTo(16));
         }
 
+        private static string CaptionFamily(string set, string family)
+        {
+            return set == WinUI ? WinUICaptionFamily : family;
+        }
+
         private static bool IsSymbolFont(string source)
         {
             return source.IndexOf("MDL2", StringComparison.Ordinal) >= 0 || source.IndexOf("Fluent Icons", StringComparison.Ordinal) >= 0;
@@ -183,6 +198,12 @@ namespace MahApps.Metro.Tests.Tests
                 // a context menu cannot have a parent; it takes the style of the set and the keys of the application
                 menu.Style = style ?? (Style?)dictionary[typeof(ContextMenu)];
                 host.ContextMenu = menu;
+            }
+            else if (control is ToolTip tip)
+            {
+                // nor can a tool tip; it hangs on what it explains the same way
+                tip.Style = style ?? (Style?)dictionary[typeof(ToolTip)];
+                host.ToolTip = tip;
             }
             else
             {

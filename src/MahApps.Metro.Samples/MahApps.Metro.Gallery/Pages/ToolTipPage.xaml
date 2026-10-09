@@ -25,6 +25,34 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="Win10Example"
+                                     Description="The Windows 10 set, after the ToolTip of UWP: the fill of a flyout, a thin frame, square corners and no shadow. It writes at 12, the Caption step of the type ramp, and a plain string breaks into lines at 320, so a long sentence needs no MaxWidth of its own here."
+                                     Header="The Windows 10 look">
+                <smtx:XamlDisplay UniqueKey="ToolTip.Win10">
+                    <Button Content="Save">
+                        <Button.ToolTip>
+                            <ToolTip x:Name="Win10Tip"
+                                     Content="Writes the current document to disk. Ctrl+S does the same, and there are 42 of them waiting."
+                                     Style="{StaticResource MahApps.Styles.ToolTip.Win10}" />
+                        </Button.ToolTip>
+                    </Button>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="WinUIExample"
+                                     Description="And the WinUI set, after the ToolTip of WinUI 3: corners of 4, the shadow of a flyout and Segoe UI Variable in its small cut. Windows lays acrylic under it, which WPF cannot draw, so it takes the colour that acrylic falls back to. Both looks come from merging Styles/Win10/Controls.xaml or Styles/WinUI/Controls.xaml; the styles are named here because a sample on this page wears the Metro look."
+                                     Header="The WinUI look">
+                <smtx:XamlDisplay UniqueKey="ToolTip.WinUI">
+                    <Button Content="Save">
+                        <Button.ToolTip>
+                            <ToolTip x:Name="WinUITip"
+                                     Content="Writes the current document to disk. Ctrl+S does the same, and there are 42 of them waiting."
+                                     Style="{StaticResource MahApps.Styles.ToolTip.WinUI}" />
+                        </Button.ToolTip>
+                    </Button>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
             <controls:ControlExample x:Name="ContentExample"
                                      Description="A tooltip is a content control, so a string is only the short way of filling it. Anything that is laid out normally can go in, and the one thing to remember is that a tooltip does not size itself: give a wrapping block a MaxWidth or a long sentence comes out as one very long line."
                                      Header="More than a line of text">
