@@ -557,8 +557,24 @@
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         UseLayoutRounding="True"
                                         Visibility="Collapsed">
+                                    <!--  how far the content stands behind the header, which the storyboards of the Windows sets give as a part of its own size  -->
                                     <Border.RenderTransform>
-                                        <TranslateTransform />
+                                        <TranslateTransform>
+                                            <TranslateTransform.X>
+                                                <MultiBinding Converter="{x:Static mahConverters:ExpanderContentSlideConverter.Instance}" ConverterParameter="{x:Static Orientation.Horizontal}">
+                                                    <Binding ElementName="ExpandSite" Path="(mah:ExpanderHelper.ContentSlide)" />
+                                                    <Binding ElementName="ExpandSite" Path="ActualWidth" />
+                                                    <Binding Path="ExpandDirection" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                </MultiBinding>
+                                            </TranslateTransform.X>
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{x:Static mahConverters:ExpanderContentSlideConverter.Instance}" ConverterParameter="{x:Static Orientation.Vertical}">
+                                                    <Binding ElementName="ExpandSite" Path="(mah:ExpanderHelper.ContentSlide)" />
+                                                    <Binding ElementName="ExpandSite" Path="ActualHeight" />
+                                                    <Binding Path="ExpandDirection" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
                                     </Border.RenderTransform>
                                     <!--  where the content stands is where it stands inside the frame, the way a content control aligns what it holds, so that the frame itself stays the width of the expander  -->
                                     <ContentPresenter Margin="{TemplateBinding Padding}"
@@ -684,155 +700,42 @@
     </Style>
 
     <!--
-        What the content of the two Windows sets rides in on. WinUI slides the whole of it out from
-        behind the header rather than fading it in, and the room it needs is taken the moment the
-        expander opens, so what moves is the content and not the layout around it. How far it has to
-        travel is the height of that content, which no storyboard can be told, since an animation
-        carries no bindings. It comes in over the last stretch of that way instead, which under a
-        clip reads the same, and fades while it does so that the edge it starts from is not a line of
-        its own.
+        What the content of the two Windows sets rides in on, the ExpandStates of the WinUI expander.
+        The room the content needs is taken the moment the expander opens, and the content slides out
+        from behind the header by the whole of its height, without fading: out over a third of a
+        second on a spline that is all deceleration, back over a sixth on one that is all
+        acceleration, and gone at 0.2 the way CollapseDown takes it away.
         
-        The times and the curves are the ones WinUI uses: a third of a second out, a sixth back, and
-        a spline that is all deceleration on the way out and all acceleration on the way back.
+        How far that is no storyboard can be told, so these animate ExpanderHelper.ContentSlide, the
+        part of its own size the content still stands behind the header, and the template turns that
+        into the distance. Which way it travels comes from the direction the expander opens, so one
+        pair serves all four.
     -->
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Down">
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand">
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
         </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="0"
-                         To="1"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="-24" />
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Opacity)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+        </DoubleAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(mah:ExpanderHelper.ContentSlide)">
+            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1" />
             <SplineDoubleKeyFrame KeySpline="0,0,0,1"
                                   KeyTime="0:0:0.333"
                                   Value="0" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Down">
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="1"
-                         To="0"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(mah:ExpanderHelper.ContentSlide)">
             <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
             <SplineDoubleKeyFrame KeySpline="1,1,0,1"
                                   KeyTime="0:0:0.167"
-                                  Value="-24" />
+                                  Value="1" />
         </DoubleAnimationUsingKeyFrames>
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
-        </ObjectAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <!--  an expander that opens upwards has its content come from below, and one that opens sideways travels along the other axis  -->
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Up">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="0"
-                         To="1"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="24" />
-            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
-                                  KeyTime="0:0:0.333"
-                                  Value="0" />
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Up">
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="1"
-                         To="0"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
-                                  KeyTime="0:0:0.167"
-                                  Value="24" />
-        </DoubleAnimationUsingKeyFrames>
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
-        </ObjectAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Right">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="0"
-                         To="1"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="-24" />
-            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
-                                  KeyTime="0:0:0.333"
-                                  Value="0" />
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Right">
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="1"
-                         To="0"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
-                                  KeyTime="0:0:0.167"
-                                  Value="-24" />
-        </DoubleAnimationUsingKeyFrames>
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
-        </ObjectAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Expand.Left">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="0"
-                         To="1"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="24" />
-            <SplineDoubleKeyFrame KeySpline="0,0,0,1"
-                                  KeyTime="0:0:0.333"
-                                  Value="0" />
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MahApps.Storyboard.Expander.Win10.Collapse.Left">
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         From="1"
-                         To="0"
-                         Duration="0:0:0.167" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
-            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-            <SplineDoubleKeyFrame KeySpline="1,1,0,1"
-                                  KeyTime="0:0:0.167"
-                                  Value="24" />
-        </DoubleAnimationUsingKeyFrames>
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.167" Value="{x:Static Visibility.Collapsed}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
@@ -898,7 +801,7 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!--  the chevron turns to point back the way the content came, over the time WinUI turns it in  -->
+                        <!--  the chevron turns to point back the way the content came, in the tenth of a second and at the even pace the WinUI 2 header turns it with  -->
                         <Trigger Property="IsChecked" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -906,11 +809,7 @@
                                         <DoubleAnimation Storyboard.TargetName="Chevron"
                                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                                          To="180"
-                                                         Duration="0:0:0.167">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -920,11 +819,7 @@
                                         <DoubleAnimation Storyboard.TargetName="Chevron"
                                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                                          To="0"
-                                                         Duration="0:0:0.167">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -1051,11 +946,7 @@
                                         <DoubleAnimation Storyboard.TargetName="Chevron"
                                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                                          To="180"
-                                                         Duration="0:0:0.167">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -1065,11 +956,7 @@
                                         <DoubleAnimation Storyboard.TargetName="Chevron"
                                                          Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                                          To="0"
-                                                         Duration="0:0:0.167">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                                         Duration="0:0:0.1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -1196,8 +1083,8 @@
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
         <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
-        <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Down}" />
-        <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Down}" />
+        <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse}" />
+        <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand}" />
         <Setter Property="mah:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down}" />
         <Setter Property="mah:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Left}" />
         <Setter Property="mah:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Right}" />
@@ -1214,20 +1101,13 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="12 0 0 0" />
         <Setter Property="mah:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
         <Style.Triggers>
-            <!--  the content leaves by the side it came out of, so which way it travels is the direction the expander opens  -->
             <Trigger Property="ExpandDirection" Value="Up">
-                <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Up}" />
-                <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Up}" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="12 0 0 0" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Right">
-                <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Right}" />
-                <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Right}" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 12" />
             </Trigger>
             <Trigger Property="ExpandDirection" Value="Left">
-                <Setter Property="mah:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Collapse.Left}" />
-                <Setter Property="mah:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Win10.Expand.Left}" />
                 <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="0 0 0 12" />
             </Trigger>
         </Style.Triggers>

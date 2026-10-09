@@ -520,6 +520,38 @@ namespace MahApps.Metro.Controls
             element.SetValue(CollapseStoryboardProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="P:ContentSlide"/> attached property.</summary>
+        public static readonly DependencyProperty ContentSlideProperty
+            = DependencyProperty.RegisterAttached("ContentSlide",
+                                                  typeof(double),
+                                                  typeof(ExpanderHelper),
+                                                  new PropertyMetadata(0d));
+
+        /// <summary>Helper for getting <see cref="ContentSlideProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="ContentSlideProperty"/> from.</param>
+        /// <remarks>Gets how much of the content area still stands behind the header, as a part of its own size.</remarks>
+        /// <returns>ContentSlide property value.</returns>
+        [Category(AppName.MahApps)]
+        public static double GetContentSlide(DependencyObject element)
+        {
+            return (double)element.GetValue(ContentSlideProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="ContentSlideProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to set <see cref="ContentSlideProperty"/> on.</param>
+        /// <param name="value">ContentSlide property value.</param>
+        /// <remarks>
+        /// Sets how much of the content area still stands behind the header, as a part of its own size: 1 is
+        /// all of it, 0 is none. The template of the expander moves its content site by that much of its height,
+        /// or of its width when it opens sideways, towards the header. A storyboard cannot be told how tall the
+        /// content is, so the storyboards of the Windows sets animate this instead of the transform itself.
+        /// </remarks>
+        [Category(AppName.MahApps)]
+        public static void SetContentSlide(DependencyObject element, double value)
+        {
+            element.SetValue(ContentSlideProperty, value);
+        }
+
         internal static FrameworkElement? GetExpandSite(Expander? expander)
         {
             if (expander is null)
