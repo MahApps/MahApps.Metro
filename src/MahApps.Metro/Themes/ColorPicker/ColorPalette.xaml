@@ -15,6 +15,13 @@
         <Setter Property="Padding" Value="0" />
     </Style>
 
+    <!--  the swatch of the Windows sets stands on whatever is under the palette, rather than on a tile of the theme background of its own  -->
+    <Style x:Key="MahApps.Styles.ListBoxItem.ColorPaletteItem.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.ColorPaletteItem}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
     <DataTemplate x:Key="MahApps.Templates.ColorPaletteItem">
         <Border x:Name="ColorPresenter"
                 Width="{DynamicResource MahApps.Sizes.ColorListBox.ItemWidth}"
@@ -130,6 +137,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource MahApps.Styles.ListBoxItem.ColorPaletteItem.Win10}" />
         <!--  no padding round the swatches: the three units each of them leaves are the whole of the air in here  -->
         <Setter Property="Padding" Value="0" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
