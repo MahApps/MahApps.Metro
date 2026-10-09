@@ -440,6 +440,8 @@
     <Color x:Key="MahApps.Colors.WinUI.TextSecondary">{{MahApps.Colors.WinUI.TextSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextTertiary">{{MahApps.Colors.WinUI.TextTertiary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.TextDisabled">{{MahApps.Colors.WinUI.TextDisabled}}</Color>
+    <!--  not one of WinUI: the watermark with the caret in the box, a step below TextFillColorDisabled  -->
+    <Color x:Key="MahApps.Colors.WinUI.TextPlaceholderFocused">{{MahApps.Colors.WinUI.TextPlaceholderFocused}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SubtleFillSecondary">{{MahApps.Colors.WinUI.SubtleFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SubtleFillTertiary">{{MahApps.Colors.WinUI.SubtleFillTertiary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.ControlAltFillSecondary">{{MahApps.Colors.WinUI.ControlAltFillSecondary}}</Color>
@@ -513,9 +515,15 @@
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextPrimary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ForegroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForeground" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextSecondary}" options:Freeze="True" />
+    <!--
+        WinUI writes its placeholder in TextFillColorSecondary whether the caret is there or not. WPF
+        draws see through text stronger than WinUI does, so that read like text that had been typed:
+        the watermark here is a step quieter, and steps back below even the text of a box that is off
+        while the caret is in the box.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForeground" Color="{StaticResource MahApps.Colors.WinUI.TextTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.TextTertiary}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused" Color="{StaticResource MahApps.Colors.WinUI.TextPlaceholderFocused}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled" Color="{StaticResource MahApps.Colors.WinUI.TextDisabled}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPointerOver" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.ButtonBackgroundPressed" Color="{StaticResource MahApps.Colors.WinUI.SubtleFillTertiary}" options:Freeze="True" />
