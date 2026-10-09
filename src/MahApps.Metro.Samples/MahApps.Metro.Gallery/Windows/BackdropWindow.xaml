@@ -24,8 +24,6 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <!--  the same colour as the line above it, with a quarter of it taken away, and taken away in the brush  -->
-        <SolidColorBrush x:Key="Quiet" Opacity="0.75" Color="{DynamicResource MahApps.Colors.ThemeForeground}" />
     </mah:MetroWindow.Resources>
 
     <DockPanel Margin="20">
@@ -61,7 +59,7 @@
 
             <TextBlock Margin="0 12 0 0"
                        FontSize="16"
-                       Foreground="{StaticResource Quiet}"
+                       Foreground="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}"
                        Text="Forty two lines of text, with that quarter in the brush" />
 
         </StackPanel>
