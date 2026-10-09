@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -62,12 +65,12 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
-        [TestCase(ExpandDirection.Down, "MahApps.Storyboard.Expander.Win10.Expand.Down", "MahApps.Storyboard.Expander.Win10.Collapse.Down")]
-        [TestCase(ExpandDirection.Up, "MahApps.Storyboard.Expander.Win10.Expand.Up", "MahApps.Storyboard.Expander.Win10.Collapse.Up")]
-        [TestCase(ExpandDirection.Right, "MahApps.Storyboard.Expander.Win10.Expand.Right", "MahApps.Storyboard.Expander.Win10.Collapse.Right")]
-        [TestCase(ExpandDirection.Left, "MahApps.Storyboard.Expander.Win10.Expand.Left", "MahApps.Storyboard.Expander.Win10.Collapse.Left")]
-        [Description("The content leaves by the side it came out of, so which way it travels follows the direction the expander opens.")]
-        public void TheContentTravelsTheWayTheExpanderOpens(ExpandDirection direction, string expandKey, string collapseKey)
+        [TestCase(ExpandDirection.Down)]
+        [TestCase(ExpandDirection.Up)]
+        [TestCase(ExpandDirection.Right)]
+        [TestCase(ExpandDirection.Left)]
+        [Description("Every direction plays the same two storyboards, since which way the content travels comes from the direction the expander opens rather than from the storyboard.")]
+        public void EveryDirectionPlaysTheSameStoryboards(ExpandDirection direction)
         {
             var expander = this.Show("MahApps.Styles.Expander.Win10");
             expander.SetCurrentValue(Expander.ExpandDirectionProperty, direction);
@@ -75,8 +78,102 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(ExpanderHelper.GetExpandStoryboard(expander), Is.SameAs(Application.Current.FindResource(expandKey)));
-                    Assert.That(ExpanderHelper.GetCollapseStoryboard(expander), Is.SameAs(Application.Current.FindResource(collapseKey)));
+                    Assert.That(ExpanderHelper.GetExpandStoryboard(expander), Is.SameAs(Application.Current.FindResource("MahApps.Storyboard.Expander.Win10.Expand")));
+                    Assert.That(ExpanderHelper.GetCollapseStoryboard(expander), Is.SameAs(Application.Current.FindResource("MahApps.Storyboard.Expander.Win10.Collapse")));
+                });
+        }
+
+        [TestCase("MahApps.Styles.Expander.Win10", ExpandDirection.Down, 0, -1)]
+        [TestCase("MahApps.Styles.Expander.Win10", ExpandDirection.Up, 0, 1)]
+        [TestCase("MahApps.Styles.Expander.Win10", ExpandDirection.Right, -1, 0)]
+        [TestCase("MahApps.Styles.Expander.Win10", ExpandDirection.Left, 1, 0)]
+        [TestCase("MahApps.Styles.Expander.WinUI", ExpandDirection.Down, 0, -1)]
+        [TestCase("MahApps.Styles.Expander.WinUI", ExpandDirection.Up, 0, 1)]
+        [Description("WinUI slides the content out from behind the header by the whole of its height, from ContentHeight or NegativeContentHeight of its TemplateSettings to 0. Here the storyboard says how much of the content is still behind the header, and the content moves by that much of its own size, towards the header.")]
+        public void TheContentStartsWhollyBehindTheHeader(string key, ExpandDirection direction, int x, int y)
+        {
+            var expander = this.Show(key);
+            expander.SetCurrentValue(Expander.ExpandDirectionProperty, direction);
+            this.Settle();
+
+            // what the opening left running is set aside, so that the value alone says where the content stands
+            var site = expander.FindChild<Border>("ExpandSite")!;
+            site.BeginAnimation(ExpanderHelper.ContentSlideProperty, null);
+            ExpanderHelper.SetContentSlide(site, 1);
+            this.Settle();
+
+            var transform = (TranslateTransform)site.RenderTransform;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(transform.X, Is.EqualTo(x * site.ActualWidth).Within(0.01), "across");
+                    Assert.That(transform.Y, Is.EqualTo(y * site.ActualHeight).Within(0.01), "down");
+                });
+
+            ExpanderHelper.SetContentSlide(site, 0);
+            this.Settle();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(transform.X, Is.Zero, "and in its place once it has arrived");
+                    Assert.That(transform.Y, Is.Zero);
+                });
+        }
+
+        [Test]
+        [Description("Out over a third of a second and back over a sixth, on the splines of the ExpandStates of WinUI: all deceleration on the way out, all acceleration on the way back. The content is gone at 0.2, as in CollapseDown.")]
+        public void TheContentKeepsTheTimesOfWinUI()
+        {
+            var expand = Slide("MahApps.Storyboard.Expander.Win10.Expand");
+            var collapse = Slide("MahApps.Storyboard.Expander.Win10.Collapse");
+            var gone = Animations<ObjectAnimationUsingKeyFrames>("MahApps.Storyboard.Expander.Win10.Collapse").Single().KeyFrames.Cast<ObjectKeyFrame>().Last();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(expand.KeyFrames[0].Value, Is.EqualTo(1), "out from wholly behind the header");
+                    Assert.That(expand.KeyFrames[1].Value, Is.Zero);
+                    Assert.That(expand.KeyFrames[1].KeyTime.TimeSpan, Is.EqualTo(TimeSpan.FromSeconds(0.333)));
+                    Assert.That(((SplineDoubleKeyFrame)expand.KeyFrames[1]).KeySpline.ToString(), Is.EqualTo(new KeySpline(0, 0, 0, 1).ToString()));
+
+                    Assert.That(collapse.KeyFrames[0].Value, Is.Zero, "back from where it stands");
+                    Assert.That(collapse.KeyFrames[1].Value, Is.EqualTo(1));
+                    Assert.That(collapse.KeyFrames[1].KeyTime.TimeSpan, Is.EqualTo(TimeSpan.FromSeconds(0.167)));
+                    Assert.That(((SplineDoubleKeyFrame)collapse.KeyFrames[1]).KeySpline.ToString(), Is.EqualTo(new KeySpline(1, 1, 0, 1).ToString()));
+
+                    Assert.That(gone.Value, Is.EqualTo(Visibility.Collapsed));
+                    Assert.That(gone.KeyTime.TimeSpan, Is.EqualTo(TimeSpan.FromSeconds(0.2)), "gone at the time CollapseDown takes it away");
+                });
+        }
+
+        [TestCase("MahApps.Storyboard.Expander.Win10.Expand")]
+        [TestCase("MahApps.Storyboard.Expander.Win10.Collapse")]
+        [Description("WinUI does not fade the content, it only moves it, so neither storyboard takes its opacity anywhere but to 1.")]
+        public void TheContentDoesNotFade(string key)
+        {
+            var opacity = Animations<DoubleAnimationUsingKeyFrames>(key).Where(a => Storyboard.GetTargetProperty(a).Path == "(UIElement.Opacity)");
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(Animations<DoubleAnimation>(key), Is.Empty, "no fade");
+                    Assert.That(opacity.SelectMany(a => a.KeyFrames.Cast<DoubleKeyFrame>()).Select(f => f.Value), Is.All.EqualTo(1));
+                });
+        }
+
+        [TestCase("MahApps.Styles.ToggleButton.ExpanderHeader.Win10.Down")]
+        [TestCase("MahApps.Styles.ToggleButton.ExpanderHeader.WinUI.Down")]
+        [Description("The chevron turns in a tenth of a second at an even pace, the way the Checked state of the WinUI 2 header turns ExpandCollapseChevronRotateTransform. WinUI 3 plays a Lottie animation there, which WPF has nothing for.")]
+        public void TheChevronTurnsInATenthOfASecond(string key)
+        {
+            var style = (Style)Application.Current.FindResource(key);
+            var template = (ControlTemplate)Setters(style).First(s => s.Property == Control.TemplateProperty).Value;
+            var trigger = template.Triggers.OfType<Trigger>().Single(t => t.Property == ToggleButton.IsCheckedProperty);
+            var turns = trigger.EnterActions.Concat(trigger.ExitActions).OfType<BeginStoryboard>().SelectMany(b => b.Storyboard.Children).OfType<DoubleAnimation>().ToList();
+
+            Assert.That(turns, Has.Count.EqualTo(2));
+            Assert.Multiple(() =>
+                {
+                    Assert.That(turns.Select(a => a.Duration.TimeSpan), Is.All.EqualTo(TimeSpan.FromSeconds(0.1)));
+                    Assert.That(turns.Select(a => a.EasingFunction), Is.All.Null, "at an even pace");
                 });
         }
 
@@ -99,7 +196,7 @@ namespace MahApps.Metro.Tests.Tests
 
         [TestCase("MahApps.Styles.Expander.Win10")]
         [TestCase("MahApps.Styles.Expander.WinUI")]
-        [Description("And it really travels: opening the expander puts the animation on that transform rather than leaving it where it was.")]
+        [Description("And it really travels: opening the expander animates how much of the content still stands behind the header.")]
         public void OpeningTheExpanderSetsTheContentTravelling(string key)
         {
             var expander = this.Show(key);
@@ -112,7 +209,7 @@ namespace MahApps.Metro.Tests.Tests
             var site = expander.FindChild<Border>("ExpandSite");
 
             Assert.That(site, Is.Not.Null);
-            Assert.That(site!.RenderTransform.HasAnimatedProperties, Is.True);
+            Assert.That(DependencyPropertyHelper.GetValueSource(site!, ExpanderHelper.ContentSlideProperty).IsAnimated, Is.True);
         }
 
         [TestCase("MahApps.Styles.Expander.Win10")]
@@ -194,6 +291,28 @@ namespace MahApps.Metro.Tests.Tests
             var expander = this.Show(key);
 
             Assert.That(ControlsHelper.GetContentCharacterCasing(expander), Is.EqualTo(CharacterCasing.Normal));
+        }
+
+        private static DoubleAnimationUsingKeyFrames Slide(string key)
+        {
+            return Animations<DoubleAnimationUsingKeyFrames>(key).Single(a => Storyboard.GetTargetProperty(a).PathParameters.Contains(ExpanderHelper.ContentSlideProperty));
+        }
+
+        private static IEnumerable<T> Animations<T>(string key)
+            where T : Timeline
+        {
+            return ((Storyboard)Application.Current.FindResource(key)).Children.OfType<T>();
+        }
+
+        private static IEnumerable<Setter> Setters(Style style)
+        {
+            for (var s = style; s is not null; s = s.BasedOn)
+            {
+                foreach (var setter in s.Setters.OfType<Setter>())
+                {
+                    yield return setter;
+                }
+            }
         }
 
         private Expander Show(string key)
