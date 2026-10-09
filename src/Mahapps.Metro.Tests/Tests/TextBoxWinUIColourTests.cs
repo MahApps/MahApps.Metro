@@ -32,7 +32,8 @@ namespace MahApps.Metro.Tests.Tests
                 {
                     Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlFillDefault")), "the background of an idle box");
                     Assert.That(ColourOf(box.Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextPrimary")), "the text of an idle box");
-                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextSecondary")), "the watermark of an idle box");
+                    // a step quieter than the TextFillColorSecondary of WinUI, since WPF draws see through text stronger than WinUI does
+                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextTertiary")), "the watermark of an idle box");
 
                     Assert.That(ColourOf(Border(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "the border of an idle box");
                     Assert.That(ColourOf(BottomEdge(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeSecondary")), "and along the bottom edge, the stronger stroke");
@@ -60,6 +61,7 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(ColourOf(BottomEdge(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.SystemAccent")), "the bottom edge of a focused box");
                     Assert.That(ColourOf(border.BorderBrush), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "while the rest of the border stays what it was");
                     Assert.That(border.BorderThickness, Is.EqualTo(new Thickness(1, 1, 1, 2)), "and the line along the bottom is the thick one");
+                    Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextPlaceholderFocused")), "and the watermark steps back further while the caret is there");
                 });
         }
 
@@ -237,6 +239,24 @@ namespace MahApps.Metro.Tests.Tests
             picture.CopyPixels(new Int32Rect(x, y, 1, 1), pixel, 4, 0);
 
             return Color.FromArgb(pixel[3], pixel[2], pixel[1], pixel[0]);
+        }
+
+        [TestCase("Light.Blue")]
+        [TestCase("Dark.Blue")]
+        [Description("The watermark is a step quieter than WinUI writes it, and quieter still with the caret in the box: below even the TextFillColorDisabled of the ramp, so it never reads like text that was typed.")]
+        public void TheWatermarkStepsBackWithTheCaret(string theme)
+        {
+            var dictionary = new ResourceDictionary { Source = new System.Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Themes/{theme}.xaml", System.UriKind.Absolute) };
+
+            var idle = (Color)dictionary["MahApps.Colors.WinUI.TextTertiary"];
+            var focused = (Color)dictionary["MahApps.Colors.WinUI.TextPlaceholderFocused"];
+            var disabled = (Color)dictionary["MahApps.Colors.WinUI.TextDisabled"];
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(focused.A, Is.LessThan(disabled.A), "with the caret, quieter than the text of a box that is off");
+                    Assert.That(new[] { focused.R, focused.G, focused.B }, Is.EqualTo(new[] { idle.R, idle.G, idle.B }), "in the colour of the text, only less of it");
+                });
         }
 
         private static Color Colour(string key)

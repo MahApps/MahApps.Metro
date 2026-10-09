@@ -434,7 +434,6 @@
                                    Padding="{TemplateBinding Padding}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Foreground="{TemplateBinding Foreground}"
                                    Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                    Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                    TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
@@ -446,6 +445,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="mah:TextBoxHelper.HasText" Value="False" />
                                 <Condition Property="IsFocused" Value="True" />
+                                <Condition Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus.DatePickerTextBox}" />
@@ -532,6 +532,12 @@
     <Style x:Key="MahApps.Styles.DatePicker.WinUI"
            BasedOn="{StaticResource MahApps.Styles.DatePicker.Win10}"
            TargetType="{x:Type DatePicker}">
+        <Style.Resources>
+            <!--  the watermark of the WinUI text box, in its placeholder colours and at full strength  -->
+            <Style x:Key="MahApps.Styles.TextBlock.Watermark"
+                   BasedOn="{StaticResource MahApps.Styles.TextBlock.Watermark.WinUI}"
+                   TargetType="{x:Type TextBlock}" />
+        </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
         <Setter Property="BorderThickness" Value="1 1 1 2" />
@@ -545,6 +551,8 @@
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
+        <!--  the quieter colour says that the caret is there, so the watermark does not fade on top of it  -->
+        <Setter Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="False" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundDisabled}" />

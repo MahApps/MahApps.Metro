@@ -297,6 +297,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="mah:TextBoxHelper.HasText" Value="False" />
                                 <Condition Property="IsFocused" Value="True" />
+                                <Condition Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />

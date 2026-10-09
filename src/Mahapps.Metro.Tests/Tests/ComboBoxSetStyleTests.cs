@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -256,6 +257,67 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        [TestCase("MahApps.Styles.ComboBox.WinUI", true, "MahApps.Brushes.TextControl.WinUI.PlaceholderForeground")]
+        [TestCase("MahApps.Styles.ComboBox.WinUI", false, "MahApps.Brushes.TextControl.WinUI.PlaceholderForeground")]
+        [TestCase("MahApps.Styles.ComboBox.Win10", true, "MahApps.Brushes.TextControl.PlaceholderForeground")]
+        [TestCase("MahApps.Styles.ComboBox.Win10", false, "MahApps.Brushes.ComboBox.Win10.Foreground")]
+        [Description("The watermark writes in the placeholder colour of its set, at full strength. WinUI takes TextFillColorSecondary whether the box can be typed into or not; UWP writes the placeholder of a box that cannot in the colour of its text, and that of one that can in the placeholder colour of the text box inside it.")]
+        public void TheWatermarkTakesThePlaceholderColourOfItsSet(string key, bool editable, string brushKey)
+        {
+            var message = Watermark(this.ShowEmpty(key, editable));
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(Colour(message.Foreground), Is.EqualTo(Colour(message.FindResource(brushKey))));
+                    Assert.That(message.Opacity, Is.EqualTo(1), "the colour says it, nothing is taken away on top");
+                });
+        }
+
+        [TestCase("MahApps.Styles.ComboBox.WinUI", "MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundFocused")]
+        [TestCase("MahApps.Styles.ComboBox.Win10", "MahApps.Brushes.TextControl.PlaceholderForegroundFocused")]
+        [Description("With the caret in it the box is a text box, and the watermark takes the colour the text box of its set gives it then. In the Windows 10 look that is the darker one the white fill needs.")]
+        public void WithTheCaretTheWatermarkIsThatOfTheTextBox(string key, string brushKey)
+        {
+            var box = this.ShowEmpty(key, true);
+            box.Focus();
+            Keyboard.Focus(box);
+            this.Settle();
+
+            // a build agent hands the keyboard to one window at a time
+            Assume.That(box.IsKeyboardFocusWithin, Is.True);
+
+            Assert.That(Colour(Watermark(box).Foreground), Is.EqualTo(Colour(box.FindResource(brushKey))));
+        }
+
+        [TestCase("MahApps.Styles.ComboBox.WinUI", true, "MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled")]
+        [TestCase("MahApps.Styles.ComboBox.WinUI", false, "MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled")]
+        [TestCase("MahApps.Styles.ComboBox.Win10", true, "MahApps.Brushes.TextControl.PlaceholderForegroundDisabled")]
+        [TestCase("MahApps.Styles.ComboBox.Win10", false, "MahApps.Brushes.ComboBox.Win10.ForegroundDisabled")]
+        [Description("A box that is switched off writes its watermark in the colour its set switches it off with.")]
+        public void ASwitchedOffBoxDimsItsWatermark(string key, bool editable, string brushKey)
+        {
+            var box = this.ShowEmpty(key, editable);
+            box.IsEnabled = false;
+            this.Settle();
+
+            Assert.That(Colour(Watermark(box).Foreground), Is.EqualTo(Colour(box.FindResource(brushKey))));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        [Description("The Metro box keeps writing its watermark in its own foreground with some of it taken away.")]
+        public void TheMetroWatermarkIsTheForegroundTakenDown(bool editable)
+        {
+            var box = this.ShowEmpty("MahApps.Styles.ComboBox", editable);
+            var message = Watermark(box);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(Colour(message.Foreground), Is.EqualTo(Colour(box.Foreground)));
+                    Assert.That(message.Opacity, Is.EqualTo(0.6).Within(0.001));
+                });
+        }
+
         private ComboBox Focused(string key)
         {
             var box = this.Show(key);
@@ -287,6 +349,39 @@ namespace MahApps.Metro.Tests.Tests
             this.Settle();
 
             return box;
+        }
+
+        private ComboBox ShowEmpty(string key, bool editable)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var box = new ComboBox
+                      {
+                          Style = (Style)Application.Current.FindResource(key),
+                          IsEditable = editable,
+                          Width = 280
+                      };
+            TextBoxHelper.SetWatermark(box, "Where to");
+            box.Items.Add("Beam me up...");
+
+            this.window!.Content = box;
+            this.Settle();
+
+            return box;
+        }
+
+        // the watermark that is on the screen, which for a box that can be typed into is the one of the text box inside it
+        private static TextBlock Watermark(ComboBox box)
+        {
+            var shown = box.FindChildren<TextBlock>(true).Where(t => t.Text == "Where to" && t.IsVisible).ToList();
+            Assert.That(shown, Has.Count.EqualTo(1), "the box should show its watermark once");
+            return shown[0];
+        }
+
+        private static Color Colour(object brush)
+        {
+            Assert.That(brush, Is.InstanceOf<SolidColorBrush>());
+            return ((SolidColorBrush)brush).Color;
         }
 
         private ComboBoxItem ShowItem(string key)

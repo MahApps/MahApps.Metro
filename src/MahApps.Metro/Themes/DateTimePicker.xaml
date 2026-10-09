@@ -742,6 +742,10 @@
         <Style.Resources>
             <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.TimePickerBase.WinUI}" TargetType="{x:Type ComboBox}" />
             <Style BasedOn="{StaticResource MahApps.Styles.Label.TimePickerBase.Win10}" TargetType="{x:Type Label}" />
+            <!--  the watermark of the WinUI text box, in its placeholder colours and at full strength  -->
+            <Style x:Key="MahApps.Styles.TextBlock.Watermark"
+                   BasedOn="{StaticResource MahApps.Styles.TextBlock.Watermark.WinUI}"
+                   TargetType="{x:Type TextBlock}" />
         </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
@@ -755,6 +759,8 @@
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BorderBrush}" />
         <Setter Property="mah:DatePickerHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.DropDownBorderBrush}" />
+        <!--  the quieter colour says that the caret is there, so the watermark does not fade on top of it  -->
+        <Setter Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="False" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextControl.WinUI.BackgroundDisabled}" />

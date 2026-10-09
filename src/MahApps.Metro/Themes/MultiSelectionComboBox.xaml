@@ -503,7 +503,6 @@
                                            Padding="{TemplateBinding Padding}"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                            Text="{TemplateBinding mah:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding mah:TextBoxHelper.WatermarkAlignment}"
@@ -703,6 +702,7 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static mahConverters:IsNullConverter.Instance}}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocusWithin}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(mah:TextBoxHelper.FadeWatermarkOnFocus)}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
@@ -945,6 +945,10 @@
                    TargetType="{x:Type TextBox}" />
             <Thickness x:Key="TextControlPlaceholderMargin">0,0,0,0</Thickness>
             <Thickness x:Key="ComboBoxPopupBorderThemePadding">0 4</Thickness>
+            <!--  the watermark of the WinUI text box, in its placeholder colours and at full strength  -->
+            <Style x:Key="MahApps.Styles.TextBlock.Watermark"
+                   BasedOn="{StaticResource MahApps.Styles.TextBlock.Watermark.WinUI}"
+                   TargetType="{x:Type TextBlock}" />
         </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
@@ -965,6 +969,8 @@
         <!--  the frame of a WinUI box says nothing about the pointer, which the fill behind it does instead  -->
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
+        <!--  the quieter colour says that the caret is there, so the watermark does not fade on top of it  -->
+        <Setter Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="False" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundPointerOver}" />
