@@ -65,6 +65,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="mah:ToolTipHelper.CloseOnScroll" Value="True" />
     </Style>
 
     <!--
@@ -126,13 +127,14 @@
         <Setter Property="MaxWidth" Value="320" />
         <Setter Property="Padding" Value="8 5 8 7" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolTip.Win10}" />
+        <Setter Property="mah:ToolTipHelper.PlaceLikeWindows" Value="True" />
     </Style>
 
     <!--
         The tool tip of the WinUI look, after ToolTip_themeresources.xaml of microsoft-ui-xaml. Its
         fill is acrylic there, which WPF cannot draw, so it takes the colour that acrylic falls back
-        to. It casts the shadow of a WinUI flyout, and the room that shadow needs is given back
-        through the offsets, so the tip still stands where Windows would put it.
+        to. It casts the shadow of a WinUI flyout, and ToolTipHelper.PlaceLikeWindows leaves the
+        room that shadow needs out of the gap, so the tip still stands where Windows would put it.
     -->
     <ControlTemplate x:Key="MahApps.Templates.ToolTip.WinUI" TargetType="ToolTip">
         <Border x:Name="Root"
@@ -185,12 +187,10 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Caption.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolTip.WinUI.Foreground}" />
         <Setter Property="HasDropShadow" Value="True" />
-        <Setter Property="HorizontalOffset" Value="-8" />
         <!--  the 320 of Microsoft for the tip itself, and the room its shadow takes either side  -->
         <Setter Property="MaxWidth" Value="336" />
         <Setter Property="Padding" Value="9 6 9 8" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolTip.WinUI}" />
-        <Setter Property="VerticalOffset" Value="-4" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 </ResourceDictionary>

@@ -174,6 +174,63 @@ namespace MahApps.Metro.Tests.Tests
             }
         }
 
+        [TestCase("MahApps.Styles.ToolTip")]
+        [TestCase("MahApps.Styles.ToolTip.Win10")]
+        [TestCase("MahApps.Styles.ToolTip.WinUI")]
+        [Description("Scrolling takes what the tip explains away from under the pointer, and Windows closes the tip then rather than leaving it where it was, so all three looks do.")]
+        public void TheToolTipClosesWhenWhatItExplainsIsScrolled(string key)
+        {
+            var (tip, scroller, _) = this.OpenInScroller(key);
+            try
+            {
+                scroller.ScrollToVerticalOffset(50);
+                this.window!.UpdateLayout();
+                ClipAssert.Pump();
+
+                Assert.That(tip.IsOpen, Is.False);
+            }
+            finally
+            {
+                tip.IsOpen = false;
+            }
+        }
+
+        [Test]
+        [Description("Scrolling something the control does not sit in leaves the tip alone.")]
+        public void ScrollingSomethingElseLeavesTheToolTipOpen()
+        {
+            var (tip, _, other) = this.OpenInScroller("MahApps.Styles.ToolTip.WinUI");
+            try
+            {
+                other.ScrollToVerticalOffset(50);
+                this.window!.UpdateLayout();
+                ClipAssert.Pump();
+
+                Assert.That(tip.IsOpen, Is.True);
+            }
+            finally
+            {
+                tip.IsOpen = false;
+            }
+        }
+
+        private (ToolTip Tip, ScrollViewer Scroller, ScrollViewer Other) OpenInScroller(string key)
+        {
+            var target = new Button { Content = "42" };
+            var tip = new ToolTip { Style = (Style)Application.Current.FindResource(key), Content = "42", PlacementTarget = target };
+            target.ToolTip = tip;
+            var scroller = new ScrollViewer { Height = 100, Content = new StackPanel { Height = 400, Children = { target } } };
+            var other = new ScrollViewer { Height = 100, Content = new Border { Height = 400 } };
+            this.window!.Content = new StackPanel { Children = { scroller, other } };
+            this.window.UpdateLayout();
+
+            tip.IsOpen = true;
+            ClipAssert.Pump();
+            Assume.That(tip.IsOpen, Is.True, "the tool tip did not stay open");
+
+            return (tip, scroller, other);
+        }
+
         private Effect? Open(string key)
         {
             var target = new Button { Content = "42" };
