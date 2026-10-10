@@ -1263,6 +1263,8 @@
         <Setter Property="Padding" Value="10 6 6 5" />
         <Setter Property="mah:ComboBoxHelper.DropDownBackground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBackground}" />
         <Setter Property="mah:ComboBoxHelper.DropDownBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush}" />
+        <!--  Enter and the space bar open the list, the way they do on the ComboBox of UWP and WinUI  -->
+        <Setter Property="mah:ComboBoxHelper.OpenDropDownOnEnterAndSpace" Value="True" />
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushDisabled}" />
         <!--  no veil over a box that is off: this set says it with the colours, the way its text box does  -->
         <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
