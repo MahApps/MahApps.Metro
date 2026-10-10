@@ -4,6 +4,7 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -26,8 +27,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheBoxWearsTheChromeOfItsComboBox(string key, string comboBoxKey)
         {
             var box = this.Show(key);
-            // the frame of the combo box takes the accent for the caret, which this box always has room for
-            var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey), IsEditable = true };
+            var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey) };
 
             Assert.Multiple(() =>
                 {
@@ -200,12 +200,13 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(inside.Style?.BasedOn, Is.SameAs(Application.Current.FindResource(editableKey)));
         }
 
-        [TestCase("MahApps.Styles.MultiSelectionComboBox")]
-        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10")]
-        [Description("A set that draws no edge of its own says the focus with the frame, the way the box always has.")]
-        public void WithoutAnEdgeTheFrameSaysTheFocus(string key)
+        [TestCase("MahApps.Styles.MultiSelectionComboBox", false)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox", true)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", true)]
+        [Description("A set that draws no edge of its own says the focus with the frame, the way the box always has. The Windows 10 one does so only where the box can be typed into, the way its combo box does.")]
+        public void WithoutAnEdgeTheFrameSaysTheFocus(string key, bool editable)
         {
-            var box = this.Focused(key);
+            var box = this.Focused(key, editable);
 
             Assert.Multiple(() =>
                 {
@@ -215,10 +216,10 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("The WinUI box says it with that edge instead, and the frame behind it stays the colour it was.")]
+        [Description("The WinUI box that can be typed into says it with that edge instead, and the frame behind it stays the colour it was.")]
         public void TheWinUIEdgeSaysTheFocus()
         {
-            var box = this.Focused("MahApps.Styles.MultiSelectionComboBox.WinUI");
+            var box = this.Focused("MahApps.Styles.MultiSelectionComboBox.WinUI", true);
 
             Assert.Multiple(() =>
                 {
@@ -234,7 +235,7 @@ namespace MahApps.Metro.Tests.Tests
             var idle = this.Show("MahApps.Styles.MultiSelectionComboBox.WinUI");
             var idleEdge = Edge(idle).BorderThickness;
 
-            var focused = this.Focused("MahApps.Styles.MultiSelectionComboBox.WinUI");
+            var focused = this.Focused("MahApps.Styles.MultiSelectionComboBox.WinUI", true);
 
             Assert.Multiple(() =>
                 {
@@ -277,9 +278,117 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
-        private MultiSelectionComboBox Focused(string key)
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10")]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI")]
+        [Description("A box of the two Windows sets that cannot be typed into keeps its frame and its edge with the focus, the way its combo box does: the accent there belongs to the caret.")]
+        public void ABoxThatCannotBeTypedIntoKeepsItsFrame(string key)
+        {
+            var idle = this.Show(key);
+            var frame = Frame(idle).BorderBrush;
+            var edge = Edge(idle).BorderBrush;
+
+            var box = this.Focused(key, false);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(Frame(box).BorderBrush, Is.SameAs(frame), "the frame");
+                    Assert.That(Edge(box).BorderBrush, Is.SameAs(edge), "the edge");
+                });
+        }
+
+        [Test]
+        [Description("Brought there with the keyboard, the Windows 10 box fills with the accent the way its combo box does.")]
+        public void TheKeyboardFillsTheWindows10BoxWithTheAccent()
+        {
+            var box = this.Show("MahApps.Styles.MultiSelectionComboBox.Win10");
+            this.FocusWithTheKeyboard(box);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(box.Background, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.Win10.BackgroundFocused")), "the fill");
+                    Assert.That(box.Foreground, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.Win10.ForegroundFocused")), "the text");
+                });
+        }
+
+        [Test]
+        [Description("Brought there with the keyboard, the WinUI box draws the ring and the bar of its combo box.")]
+        public void TheKeyboardPutsTheRingOfItsComboBoxOnTheWinUIBox()
+        {
+            var box = this.Show("MahApps.Styles.MultiSelectionComboBox.WinUI");
+            this.FocusWithTheKeyboard(box);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(FocusVisualHelper.GetFocusVisualStyle(box), Is.SameAs(box.FindResource("MahApps.Styles.FocusVisualStyle.ComboBox.WinUI")), "the ring of the combo box");
+                    Assert.That(AdornerLayer.GetAdornerLayer(box)?.GetAdorners(box), Is.Not.Null.And.Not.Empty, "and it is drawn");
+                    Assert.That(box.Background, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.WinUI.Background")), "while the fill stays");
+                });
+        }
+
+        [TestCase("MahApps.Styles.MultiSelectionComboBox", false)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox", true)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", false)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.Win10", true)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", false)]
+        [TestCase("MahApps.Styles.MultiSelectionComboBox.WinUI", true)]
+        [Description("One press of the tab key takes the focus into the box and the next one out of it again, whatever has been picked: what is picked is shown in a list of its own, and that list is no stop of its own.")]
+        public void OneTabPassesTheBox(string key, bool editable)
+        {
+            Assert.That(this.window, Is.Not.Null);
+
+            var before = new Button { Content = "Before" };
+            var after = new Button { Content = "After" };
+            var box = new MultiSelectionComboBox
+                      {
+                          Style = (Style)Application.Current.FindResource(key),
+                          ItemsSource = new[] { "Beam me up...", "Warp nine" },
+                          IsEditable = editable,
+                          Width = 280
+                      };
+            var panel = new StackPanel();
+            panel.Children.Add(before);
+            panel.Children.Add(box);
+            panel.Children.Add(after);
+            this.window!.Content = panel;
+            this.Settle();
+            box.SelectedItems!.Add("Warp nine");
+            this.Settle();
+
+            Keyboard.Focus(before);
+            this.Settle();
+            Assume.That(before.IsKeyboardFocused, Is.True);
+
+            var stops = new System.Collections.Generic.List<string>();
+            for (var i = 0; i < 4 && !after.IsKeyboardFocused; i++)
+            {
+                (Keyboard.FocusedElement as UIElement)?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                this.Settle();
+                stops.Add(Keyboard.FocusedElement?.GetType().Name ?? "nothing");
+            }
+
+            Assert.That(stops, Has.Count.EqualTo(2), "the stops on the way were " + string.Join(", ", stops));
+        }
+
+        /// <summary>
+        /// Puts the keyboard focus on the box the way a tab would, which is what the helper drawing
+        /// the ring tells apart from a click: the last input before the focus came from the keyboard.
+        /// </summary>
+        private void FocusWithTheKeyboard(MultiSelectionComboBox box)
+        {
+            // a test has no keys to press, so it tells the input manager what a press would have told it
+            typeof(InputManager).GetProperty(nameof(InputManager.MostRecentInputDevice))!.GetSetMethod(true)!.Invoke(InputManager.Current, new object[] { Keyboard.PrimaryDevice });
+            Keyboard.Focus(box);
+            this.Settle();
+
+            // a build agent hands the keyboard to one window at a time
+            Assume.That(box.IsKeyboardFocusWithin, Is.True);
+        }
+
+        private MultiSelectionComboBox Focused(string key, bool editable)
         {
             var box = this.Show(key);
+            box.IsEditable = editable;
+            this.Settle();
 
             box.Focus();
             Keyboard.Focus(box);
