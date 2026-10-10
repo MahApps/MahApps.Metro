@@ -586,9 +586,13 @@ namespace MetroDemo
 
                     if (resourceDictionary != null)
                     {
-                        foreach (var dictionaryEntry in resourceDictionary.OfType<DictionaryEntry>())
+                        // what does not change with the accent comes from the base the theme merges
+                        foreach (var dictionary in resourceDictionary.MergedDictionaries.Append(resourceDictionary))
                         {
-                            this.ThemeResources.Add(new ThemeResource(theme, libraryTheme!, resourceDictionary, dictionaryEntry));
+                            foreach (var dictionaryEntry in dictionary.OfType<DictionaryEntry>())
+                            {
+                                this.ThemeResources.Add(new ThemeResource(theme, libraryTheme!, dictionary, dictionaryEntry));
+                            }
                         }
                     }
                 }
