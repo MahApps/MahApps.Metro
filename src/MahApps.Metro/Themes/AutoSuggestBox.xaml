@@ -330,6 +330,8 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox.Win10}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
+        <!--  a box that is typed into says the focus with its frame, so it keeps none of what the combo box draws for the keyboard  -->
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.AutoSuggestBox.WinUI"
@@ -341,6 +343,8 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ComboBoxItem.AutoSuggestBox.WinUI}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.AutoSuggestBox}" />
+        <!--  a box that is typed into says the focus with its frame, so it keeps none of what the combo box draws for the keyboard  -->
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
 </ResourceDictionary>

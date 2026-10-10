@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -23,12 +24,13 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class ComboBoxSetStyleTests : WindowTestFixture<TestWindow>
     {
-        [TestCase("MahApps.Styles.ComboBox")]
-        [TestCase("MahApps.Styles.ComboBox.Win10")]
-        [Description("A set that draws no edge of its own says the focus with the frame, the way the box always has.")]
-        public void WithoutAnEdgeTheFrameSaysTheFocus(string key)
+        [TestCase("MahApps.Styles.ComboBox", false)]
+        [TestCase("MahApps.Styles.ComboBox", true)]
+        [TestCase("MahApps.Styles.ComboBox.Win10", true)]
+        [Description("A set that draws no edge of its own says the focus with the frame, the way the box always has. The Windows 10 one does so only where the box can be typed into, since there it is the text box of that set.")]
+        public void WithoutAnEdgeTheFrameSaysTheFocus(string key, bool editable)
         {
-            var box = this.Focused(key);
+            var box = this.Focused(key, editable);
 
             Assert.Multiple(() =>
                 {
@@ -38,10 +40,10 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("The WinUI box says it with that edge instead, and the frame behind it stays the colour it was.")]
+        [Description("The WinUI box that can be typed into says it with that edge instead, and the frame behind it stays the colour it was.")]
         public void TheWinUIEdgeSaysTheFocus()
         {
-            var box = this.Focused("MahApps.Styles.ComboBox.WinUI");
+            var box = this.Focused("MahApps.Styles.ComboBox.WinUI", true);
 
             Assert.Multiple(() =>
                 {
@@ -114,7 +116,10 @@ namespace MahApps.Metro.Tests.Tests
         [Description("A box of one of the two sets wears the chrome of the text box of that same set, down to the thickness of its frame: the two stand next to each other in a form and UWP draws them alike.")]
         public void TheBoxWearsTheChromeOfItsTextBox(string key, string textBoxKey)
         {
+            // the frame takes the accent for the caret, so the box to hold against the text box is one that can be typed into
             var box = this.Show(key);
+            box.IsEditable = true;
+            this.Settle();
             var reference = new TextBox { Style = (Style)Application.Current.FindResource(textBoxKey) };
 
             Assert.Multiple(() =>
@@ -318,9 +323,114 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
-        private ComboBox Focused(string key)
+        [TestCase("MahApps.Styles.ComboBox.Win10")]
+        [TestCase("MahApps.Styles.ComboBox.WinUI")]
+        [Description("A box of the two Windows sets that cannot be typed into keeps its frame and its edge with the focus: the accent there belongs to the caret, and such a box has none.")]
+        public void ABoxThatCannotBeTypedIntoKeepsItsFrame(string key)
+        {
+            var idle = this.Show(key);
+            var frame = Frame(idle).BorderBrush;
+            var edge = Edge(idle).BorderBrush;
+
+            var box = this.Focused(key, false);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(Frame(box).BorderBrush, Is.SameAs(frame), "the frame");
+                    Assert.That(Edge(box).BorderBrush, Is.SameAs(edge), "the edge");
+                });
+        }
+
+        [Test]
+        [Description("Brought there with the keyboard, the Windows 10 box fills with the accent and writes over it in the colour UWP gives the text there, ComboBoxBackgroundUnfocused and ComboBoxForegroundFocused. It draws no ring around it.")]
+        public void TheKeyboardFillsTheWindows10BoxWithTheAccent()
+        {
+            var box = this.Show("MahApps.Styles.ComboBox.Win10");
+            this.FocusWithTheKeyboard(box);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(FocusVisualHelper.GetIsFocusVisualShown(box), Is.True, "the helper should know the keyboard brought the focus");
+                    Assert.That(box.Background, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.Win10.BackgroundFocused")), "the fill");
+                    Assert.That(box.Foreground, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.Win10.ForegroundFocused")), "the text");
+                    Assert.That(Ring(box)?.FindChildren<Border>(true).Any() ?? false, Is.False, "and no ring");
+                });
+        }
+
+        [TestCase("MahApps.Styles.ComboBox.Win10", "MahApps.Brushes.ComboBox.Win10.Background")]
+        [TestCase("MahApps.Styles.ComboBox.WinUI", "MahApps.Brushes.ComboBox.WinUI.Background")]
+        [Description("A press of the pointer is a focus of its own kind, PointerFocused, and the box shows nothing for it: the fill of the Windows 10 box and the ring of the WinUI one go.")]
+        public void APressTakesTheKeyboardFocusLookAway(string key, string background)
         {
             var box = this.Show(key);
+            this.FocusWithTheKeyboard(box);
+
+            box.RaiseEvent(new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left) { RoutedEvent = UIElement.PreviewMouseDownEvent });
+            this.Settle();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(FocusVisualHelper.GetIsFocusVisualShown(box), Is.False, "the helper");
+                    Assert.That(box.Background, Is.SameAs(box.FindResource(background)), "the fill");
+                    Assert.That(Ring(box), Is.Null, "the ring");
+                });
+        }
+
+        [Test]
+        [Description("The Windows 10 box that can be typed into is the text box of its set with the keyboard in it, white with dark text, and not the accent.")]
+        public void TheKeyboardLeavesAnEditableWindows10BoxWhite()
+        {
+            var box = this.ShowEmpty("MahApps.Styles.ComboBox.Win10", true);
+            this.FocusWithTheKeyboard(box);
+
+            Assert.That(box.Background, Is.SameAs(box.FindResource("MahApps.Brushes.TextControl.BackgroundFocused")));
+        }
+
+        [Test]
+        [Description("Brought there with the keyboard, the WinUI box keeps its fill and draws the ring of its HighlightBackground, two units of FocusStrokeColorOuter four units out with corners of seven, and the short bar of the accent at its left edge, three by sixteen, one unit in.")]
+        public void TheKeyboardPutsARingAndTheBarOnTheWinUIBox()
+        {
+            var box = this.Show("MahApps.Styles.ComboBox.WinUI");
+            this.FocusWithTheKeyboard(box);
+
+            var ring = Ring(box);
+            Assert.That(ring, Is.Not.Null, "the box should carry a ring");
+
+            var frame = ring!.FindChildren<Border>(true).FirstOrDefault();
+            var pill = ring.FindChildren<Rectangle>(true).FirstOrDefault();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(box.Background, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.WinUI.Background")), "the fill stays");
+                    Assert.That(frame, Is.Not.Null, "the ring");
+                    Assert.That(frame!.Margin, Is.EqualTo(new Thickness(-4)), "four units out");
+                    Assert.That(frame.BorderThickness, Is.EqualTo(new Thickness(2)), "two units thick");
+                    Assert.That(frame.CornerRadius, Is.EqualTo(new CornerRadius(7)), "with corners of seven");
+                    Assert.That(ColourOf(frame.BorderBrush), Is.EqualTo(ColourOf((Brush)box.FindResource("MahApps.Brushes.FocusVisual.WinUI.Outer"))), "in the outer focus stroke");
+                    Assert.That(pill, Is.Not.Null, "the bar");
+                    Assert.That(pill!.Width, Is.EqualTo(3), "three wide");
+                    Assert.That(pill.Height, Is.EqualTo(16), "sixteen high");
+                    Assert.That(pill.Margin, Is.EqualTo(new Thickness(1, 0, 0, 0)), "one unit in");
+                    Assert.That(pill.HorizontalAlignment, Is.EqualTo(HorizontalAlignment.Left), "at the left edge");
+                    Assert.That(pill.Fill, Is.SameAs(box.FindResource("MahApps.Brushes.ComboBox.WinUI.ItemPillFill")), "in the accent");
+                });
+        }
+
+        [Test]
+        [Description("The WinUI box that can be typed into says the caret with the accent along its bottom edge, and draws neither the ring nor the bar.")]
+        public void AnEditableWinUIBoxDrawsNoRing()
+        {
+            var box = this.ShowEmpty("MahApps.Styles.ComboBox.WinUI", true);
+            this.FocusWithTheKeyboard(box);
+
+            Assert.That(Ring(box)?.FindChildren<Border>(true).Any(b => b.IsVisible) ?? false, Is.False);
+        }
+
+        private ComboBox Focused(string key, bool editable)
+        {
+            var box = this.Show(key);
+            box.IsEditable = editable;
+            this.Settle();
 
             box.Focus();
             Keyboard.Focus(box);
@@ -454,6 +564,30 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "this one should be a brush of a single colour");
 
             return ((SolidColorBrush)brush!).Color;
+        }
+
+        /// <summary>
+        /// Puts the keyboard focus on the box the way a tab would, which is what the helper drawing
+        /// the ring tells apart from a click: the last input before the focus came from the keyboard.
+        /// </summary>
+        private void FocusWithTheKeyboard(ComboBox box)
+        {
+            // a test has no keys to press, so it tells the input manager what a press would have told it
+            typeof(InputManager).GetProperty(nameof(InputManager.MostRecentInputDevice))!.GetSetMethod(true)!.Invoke(InputManager.Current, new object[] { Keyboard.PrimaryDevice });
+            Keyboard.Focus(box);
+            this.Settle();
+
+            // a build agent hands the keyboard to one window at a time
+            Assume.That(box.IsKeyboardFocusWithin, Is.True);
+        }
+
+        /// <summary>
+        /// What the helper draws over the box while the keyboard holds it, or nothing.
+        /// </summary>
+        private static FrameworkElement? Ring(ComboBox box)
+        {
+            var adorner = AdornerLayer.GetAdornerLayer(box)?.GetAdorners(box)?.FirstOrDefault();
+            return adorner is null ? null : VisualTreeHelper.GetChild(adorner, 0) as FrameworkElement;
         }
 
         private void Settle()

@@ -1146,6 +1146,62 @@
     </Style>
 
     <!--
+        What the two Windows boxes draw while the keyboard has brought the focus to them, which is
+        the Focused state of UWP as against PointerFocused, where they draw nothing. The Windows 10
+        box draws no ring there, UseSystemFocusVisuals being off for it: it fills itself with the
+        accent instead, which its style says off FocusVisualHelper.IsFocusVisualShown, and this
+        style only lets the helper keep count.
+    -->
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.ComboBox.Win10">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        The WinUI box keeps its fill and draws its HighlightBackground, a ring of the outer focus
+        stroke two units thick and four units out, together with the short bar of the accent a
+        picked row of its list carries, at the left edge of the box. A box that can be typed into
+        says the caret with its bottom edge and draws neither, and neither is drawn while the
+        list is down.
+    -->
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.ComboBox.WinUI">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid x:Name="Root">
+                        <Border Margin="-4"
+                                BorderBrush="{DynamicResource MahApps.Brushes.FocusVisual.WinUI.Outer}"
+                                BorderThickness="2"
+                                CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.FocusVisual.Around.Outer}"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True" />
+                        <Rectangle Width="3"
+                                   Height="16"
+                                   Margin="1 0 0 0"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Fill="{DynamicResource MahApps.Brushes.ComboBox.WinUI.ItemPillFill}"
+                                   RadiusX="1.5"
+                                   RadiusY="1.5" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--  a plain path rather than one naming the property by its owner, which a control built in code cannot resolve  -->
+                        <DataTrigger Binding="{Binding AdornedElement.IsEditable, RelativeSource={RelativeSource AncestorType={x:Type Adorner}}}" Value="True">
+                            <Setter TargetName="Root" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding AdornedElement.IsDropDownOpen, RelativeSource={RelativeSource AncestorType={x:Type Adorner}}}" Value="True">
+                            <Setter TargetName="Root" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
         The Windows 10 box: the text box of that set with a list behind a chevron. The frame, the
         fill, the padding and the delete button are the ones MahApps.Styles.TextBox.Win10 draws,
         down to the two units of border, since the two stand next to each other in a form. Switched
@@ -1212,6 +1268,7 @@
         <Setter Property="mah:ControlsHelper.DisabledVisualElementVisibility" Value="Collapsed" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushPointerOver}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.ComboBox.Win10}" />
         <Setter Property="mah:TextBoxHelper.ButtonContent" Value="&#xE10A;" />
         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
@@ -1228,6 +1285,20 @@
         <!--  the colour of the watermark says that the caret is there, so it does not fade on top of that  -->
         <Setter Property="mah:TextBoxHelper.FadeWatermarkOnFocus" Value="False" />
         <Style.Triggers>
+            <!--
+                The accent along the frame belongs to the caret, so a box that cannot be typed into
+                keeps the frame it has, the one under the pointer included, with the focus as well.
+            -->
+            <Trigger Property="IsEditable" Value="False">
+                <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrush}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEditable" Value="False" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BorderBrushPointerOver}" />
+            </MultiTrigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundPointerOver}" />
             </Trigger>
@@ -1235,6 +1306,21 @@
             <Trigger Property="IsDropDownOpen" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundPressed}" />
             </Trigger>
+            <!--
+                Brought there with the keyboard, the box fills with the accent and the text turns
+                to the colour UWP writes over it, also under the pointer, until a press of the
+                pointer takes it away again. Not while the list is down, and not where the box
+                can be typed into, since that one is a text box with the caret in it.
+            -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:FocusVisualHelper.IsFocusVisualShown" Value="True" />
+                    <Condition Property="IsEditable" Value="False" />
+                    <Condition Property="IsDropDownOpen" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.BackgroundFocused}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.Win10.ForegroundFocused}" />
+            </MultiTrigger>
             <!--
                 A box that can be typed into is a text box while the caret is in it, and the Windows
                 10 one turns white with dark text then, the way the TextBox of this set does and the
@@ -1293,8 +1379,23 @@
         <Setter Property="mah:ControlsHelper.DisabledBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushDisabled}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushBottomFocused}" />
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrush}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.ComboBox.WinUI}" />
         <Setter Property="mah:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.TextControl.WinUI}" />
         <Style.Triggers>
+            <!--  the edge, like the frame, takes the accent only for the caret  -->
+            <Trigger Property="IsEditable" Value="False">
+                <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BorderBrushBottom}" />
+            </Trigger>
+            <!--  the keyboard leaves the fill and the text of this box as they are, it draws the ring instead  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:FocusVisualHelper.IsFocusVisualShown" Value="True" />
+                    <Condition Property="IsEditable" Value="False" />
+                    <Condition Property="IsDropDownOpen" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.Foreground}" />
+            </MultiTrigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ComboBox.WinUI.BackgroundPointerOver}" />
             </Trigger>

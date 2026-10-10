@@ -30,7 +30,8 @@ namespace MahApps.Metro.Tests.Tests
         public void ThePickerWearsTheChromeOfItsComboBox(string key, string comboBoxKey)
         {
             var picker = this.Show(key);
-            var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey) };
+            // the picker is typed into, so the box to hold it against is the combo box that can be
+            var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey), IsEditable = true };
 
             Assert.Multiple(() =>
                 {

@@ -26,7 +26,8 @@ namespace MahApps.Metro.Tests.Tests
         public void TheBoxWearsTheChromeOfItsComboBox(string key, string comboBoxKey)
         {
             var box = this.Show(key);
-            var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey) };
+            // the frame of the combo box takes the accent for the caret, which this box always has room for
+            var reference = new ComboBox { Style = (Style)Application.Current.FindResource(comboBoxKey), IsEditable = true };
 
             Assert.Multiple(() =>
                 {
