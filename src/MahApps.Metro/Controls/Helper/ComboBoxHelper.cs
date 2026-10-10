@@ -196,6 +196,73 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>Identifies the OpenDropDownOnEnterAndSpace attached dependency property.</summary>
+        public static readonly DependencyProperty OpenDropDownOnEnterAndSpaceProperty
+            = DependencyProperty.RegisterAttached("OpenDropDownOnEnterAndSpace",
+                                                  typeof(bool),
+                                                  typeof(ComboBoxHelper),
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox, OnOpenDropDownOnEnterAndSpaceChanged));
+
+        /// <summary>Helper for getting <see cref="OpenDropDownOnEnterAndSpaceProperty"/> from <paramref name="obj"/>.</summary>
+        /// <param name="obj"><see cref="DependencyObject"/> to read <see cref="OpenDropDownOnEnterAndSpaceProperty"/> from.</param>
+        /// <remarks>Gets whether Enter and the space bar open the list of a closed box that cannot be typed into.</remarks>
+        /// <returns>OpenDropDownOnEnterAndSpace property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static bool GetOpenDropDownOnEnterAndSpace(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(OpenDropDownOnEnterAndSpaceProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="OpenDropDownOnEnterAndSpaceProperty"/> on <paramref name="obj"/>.</summary>
+        /// <param name="obj"><see cref="DependencyObject"/> to set <see cref="OpenDropDownOnEnterAndSpaceProperty"/> on.</param>
+        /// <param name="value">OpenDropDownOnEnterAndSpace property value.</param>
+        /// <remarks>
+        /// Sets whether Enter and the space bar open the list of a closed box that cannot be typed
+        /// into, which is what the ComboBox of UWP and WinUI does. WPF opens it with F4 and with Alt
+        /// and an arrow only. A box that can be typed into takes the space as a character and Enter
+        /// as the end of what was typed, so it is left alone, and so is a key held with Alt or Ctrl.
+        /// The Windows 10 and the WinUI styles turn this on.
+        /// </remarks>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        public static void SetOpenDropDownOnEnterAndSpace(DependencyObject obj, bool value)
+        {
+            obj.SetValue(OpenDropDownOnEnterAndSpaceProperty, BooleanBoxes.Box(value));
+        }
+
+        private static void OnOpenDropDownOnEnterAndSpaceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not ComboBox comboBox)
+            {
+                return;
+            }
+
+            comboBox.PreviewKeyDown -= ComboBox_PreviewKeyDown;
+
+            if (e.NewValue is true)
+            {
+                comboBox.PreviewKeyDown += ComboBox_PreviewKeyDown;
+            }
+        }
+
+        private static void ComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // only the box itself, not a row of its list or the text box of an editable one
+            if (sender is not ComboBox comboBox
+                || !ReferenceEquals(e.OriginalSource, comboBox)
+                || comboBox.IsEditable
+                || comboBox.IsDropDownOpen
+                || (e.Key != Key.Enter && e.Key != Key.Space)
+                || (e.KeyboardDevice.Modifiers & (ModifierKeys.Alt | ModifierKeys.Control)) != ModifierKeys.None)
+            {
+                return;
+            }
+
+            comboBox.SetCurrentValue(ComboBox.IsDropDownOpenProperty, BooleanBoxes.TrueBox);
+            e.Handled = true;
+        }
+
         private static void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (sender is MultiSelectionComboBox)

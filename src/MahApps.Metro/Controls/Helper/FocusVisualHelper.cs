@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -64,6 +65,30 @@ namespace MahApps.Metro.Controls
         public static void SetFocusVisualStyle(DependencyObject element, Style? value)
         {
             element.SetValue(FocusVisualStyleProperty, value);
+        }
+
+        private static readonly DependencyPropertyKey IsFocusVisualShownPropertyKey
+            = DependencyProperty.RegisterAttachedReadOnly("IsFocusVisualShown",
+                                                          typeof(bool),
+                                                          typeof(FocusVisualHelper),
+                                                          new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>Identifies the IsFocusVisualShown attached property.</summary>
+        public static readonly DependencyProperty IsFocusVisualShownProperty = IsFocusVisualShownPropertyKey.DependencyProperty;
+
+        /// <summary>Helper for getting <see cref="IsFocusVisualShownProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DependencyObject"/> to read <see cref="IsFocusVisualShownProperty"/> from.</param>
+        /// <remarks>
+        /// Gets whether the ring is up, which is while the keyboard brought the focus and no pointer
+        /// has been pressed on the element since. It is what Windows calls the keyboard focus state as
+        /// against the pointer one, and a style can say it with more than the ring: the Windows 10
+        /// combo box fills itself with the accent then and draws no ring at all.
+        /// </remarks>
+        /// <returns>IsFocusVisualShown property value.</returns>
+        [AttachedPropertyBrowsableForType(typeof(FrameworkElement))]
+        public static bool GetIsFocusVisualShown(DependencyObject element)
+        {
+            return (bool)element.GetValue(IsFocusVisualShownProperty);
         }
 
         /// <summary>
@@ -178,6 +203,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+            element.SetValue(IsFocusVisualShownPropertyKey, BooleanBoxes.TrueBox);
+
             var layer = AdornerLayer.GetAdornerLayer(element);
             if (layer is null)
             {
@@ -191,6 +218,8 @@ namespace MahApps.Metro.Controls
 
         private static void Hide(DependencyObject element)
         {
+            element.ClearValue(IsFocusVisualShownPropertyKey);
+
             if (element.GetValue(AdornerProperty) is not Adorner adorner)
             {
                 return;

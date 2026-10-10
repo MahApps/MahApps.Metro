@@ -1153,12 +1153,14 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.Background" ResourceKey="MahApps.Brushes.TextControl.Background" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundPointerOver" ResourceKey="MahApps.Brushes.TextControl.BackgroundPointerOver" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundFocused" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BackgroundDisabled" ResourceKey="MahApps.Brushes.TextControl.BackgroundDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrush" ResourceKey="MahApps.Brushes.TextControl.BorderBrush" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.TextControl.BorderBrushPointerOver" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrushFocused" ResourceKey="MahApps.Brushes.TextControl.BorderBrushFocused" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.BorderBrushDisabled" ResourceKey="MahApps.Brushes.TextControl.BorderBrushDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.Foreground" ResourceKey="MahApps.Brushes.TextControl.Foreground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ForegroundFocused" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.TextControl.ForegroundDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.DropDownBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ComboBox.Win10.DropDownBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransientBorder" />
