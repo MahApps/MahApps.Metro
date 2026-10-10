@@ -363,7 +363,7 @@ Task("StyleXaml")
     .Does(() =>
 {
     Func<IFileSystemInfo, bool> exclude_Dir =
-        fileSystemInfo => !fileSystemInfo.Path.Segments.Contains("obj") && !fileSystemInfo.Path.ToString().Contains("Styles/Themes");
+        fileSystemInfo => !fileSystemInfo.Path.Segments.Contains("obj") && !fileSystemInfo.Path.ToString().Contains("Styles/Themes") && !fileSystemInfo.Path.ToString().Contains("Styles/ThemeBase");
 
     var files = GetFiles(srcDir + "/**/*.xaml", new GlobberSettings { Predicate = exclude_Dir });
     Information("\nChecking " + files.Count() + " file(s) for XAML Structure");

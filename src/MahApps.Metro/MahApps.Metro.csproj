@@ -118,10 +118,30 @@
     </ItemGroup>
 
     <ItemGroup>
+        <!--
+            What every theme of one base colour shares goes into Styles\ThemeBase\Light.xaml and
+            Dark.xaml, which each theme merges. It sits in a folder of its own, outside one named
+            themes, so ControlzEx does not load it while it looks for themes.
+        -->
+        <XAMLColorSchemeGeneratorItems Include="Styles\ThemeBase\Theme.Base.Template.xaml">
+            <ParametersFile>Styles\ThemeBase\GeneratorParameters.Base.json</ParametersFile>
+            <OutputPath>Styles\ThemeBase</OutputPath>
+        </XAMLColorSchemeGeneratorItems>
         <XAMLColorSchemeGeneratorItems Include="Styles\Themes\Theme.Template.xaml">
             <ParametersFile>Styles\Themes\GeneratorParameters.json</ParametersFile>
             <OutputPath>Styles\Themes</OutputPath>
         </XAMLColorSchemeGeneratorItems>
     </ItemGroup>
+
+    <!--
+        The template and the parameters of the themes go into the assembly, since a theme made at
+        run time is generated from them. The base is merged by that theme as it is built, so its
+        inputs would only add weight.
+    -->
+    <Target Name="RemoveThemeBaseGeneratorInputs" BeforeTargets="PrepareResourceNames">
+        <ItemGroup>
+            <EmbeddedResource Remove="Styles\ThemeBase\Theme.Base.Template.xaml;Styles\ThemeBase\GeneratorParameters.Base.json" />
+        </ItemGroup>
+    </Target>
 
 </Project>

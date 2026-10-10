@@ -197,8 +197,10 @@ namespace MahApps.Metro.Tests.Tests
             var fromAFile = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml") };
             var madeAtRunTime = RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red);
 
+            // a theme carries what changes with the accent, and merges the rest from the base of its base colour
             var keys = fromAFile.Keys
                                 .OfType<string>()
+                                .Concat(fromAFile.MergedDictionaries.SelectMany(d => d.Keys.OfType<string>()))
                                 .Where(key => key.StartsWith("MahApps.Brushes.Menu", StringComparison.Ordinal))
                                 .ToList();
 
