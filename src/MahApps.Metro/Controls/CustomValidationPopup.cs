@@ -184,6 +184,7 @@ namespace MahApps.Metro.Controls
 
             if (this.transitioningContentControl != null)
             {
+                this.transitioningContentControl.TransitionStarted -= this.OnTransitionStarted;
                 this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
             }
 
@@ -191,6 +192,7 @@ namespace MahApps.Metro.Controls
             if (this.transitioningContentControl != null)
             {
                 canShow = canShow && (this.transitioningContentControl.CurrentTransition == null || !this.transitioningContentControl.IsTransitioning);
+                this.transitioningContentControl.TransitionStarted += this.OnTransitionStarted;
                 this.transitioningContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
 
@@ -402,6 +404,7 @@ namespace MahApps.Metro.Controls
 
             if (this.transitioningContentControl != null)
             {
+                this.transitioningContentControl.TransitionStarted -= this.OnTransitionStarted;
                 this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
             }
 

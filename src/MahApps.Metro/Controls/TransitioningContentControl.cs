@@ -90,6 +90,11 @@ namespace MahApps.Metro.Controls
         private bool allowIsTransitioningPropertyWrite;
         private Storyboard? currentTransition;
 
+        /// <summary>
+        /// Raised when a transition starts, while the content that is left is still there.
+        /// </summary>
+        public event RoutedEventHandler? TransitionStarted;
+
         public event RoutedEventHandler? TransitionCompleted;
 
         public const TransitionType DefaultTransitionState = TransitionType.Default;
@@ -228,6 +233,11 @@ namespace MahApps.Metro.Controls
             {
                 source.IsTransitioning = (bool)e.OldValue;
                 throw new InvalidOperationException();
+            }
+
+            if (e.NewValue is true)
+            {
+                source.TransitionStarted?.Invoke(source, new RoutedEventArgs());
             }
         }
 
