@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.InfoBarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="SeverityExample"
+                                     Description="A bar in the layout that tells the user how things stand. The severity gives it its colour and its icon, and closing it only folds it away."
+                                     Header="A message with a severity">
+                <smtx:XamlDisplay UniqueKey="InfoBar.Severity">
+                    <mah:InfoBar x:Name="SeverityInfoBar"
+                                 Title="Offline"
+                                 IsOpen="True"
+                                 Message="42 files are waiting to be synchronised."
+                                 Severity="Warning" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="The action stands after the message while there is room, and the whole goes one under the other once the message wraps." Header="With an action and a long message">
+                <smtx:XamlDisplay UniqueKey="InfoBar.Action">
+                    <mah:InfoBar Title="Update ready"
+                                 IsOpen="True"
+                                 Message="The update to version 3 has been downloaded. It will be installed the next time the app starts, unless you install it now; the app restarts once for that and keeps what you have open."
+                                 Severity="Success">
+                        <mah:InfoBar.ActionButton>
+                            <Button HorizontalAlignment="Right" Content="Restart now" />
+                        </mah:InfoBar.ActionButton>
+                    </mah:InfoBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="Icon takes the place of the glyphs of the severity, at 16 by 16. In a style, IconTemplate does the same for every bar and is handed the severity." Header="With an icon of its own">
+                <smtx:XamlDisplay UniqueKey="InfoBar.Icon">
+                    <mah:InfoBar Title="Podcast"
+                                 IsOpen="True"
+                                 Message="A new episode is out.">
+                        <mah:InfoBar.Icon>
+                            <iconPacks:PackIconMaterial Kind="Podcast" />
+                        </mah:InfoBar.Icon>
+                    </mah:InfoBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="Closing raises Closing first, and a handler that sets Cancel keeps the bar. Here it stays until the box is ticked, and the log under it shows the events in the order they come." Header="A close that can be refused">
+                <smtx:XamlDisplay UniqueKey="InfoBar.Cancel">
+                    <StackPanel>
+                        <mah:InfoBar x:Name="CancelInfoBar"
+                                     Title="Unsaved"
+                                     CloseButtonClick="OnCancelInfoBarCloseButtonClick"
+                                     Closed="OnCancelInfoBarClosed"
+                                     Closing="OnCancelInfoBarClosing"
+                                     IsOpen="True"
+                                     Message="Your changes have not been saved."
+                                     Severity="Error" />
+                        <CheckBox x:Name="AllowClose"
+                                  Margin="0 8 0 0"
+                                  Content="Allow the close" />
+                        <Button Margin="0 8 0 0"
+                                HorizontalAlignment="Left"
+                                Click="OnReopenClick"
+                                Content="Open again" />
+                        <ItemsControl Margin="0 8 0 0"
+                                      smtx:XamlDisplay.Ignore="This"
+                                      ItemsSource="{Binding EventLog, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -386,6 +386,12 @@
     <Color x:Key="MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary">{{MahApps.Colors.WinUI.LayerOnMicaBaseAltFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SystemFillCaution">{{MahApps.Colors.WinUI.SystemFillCaution}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SystemFillCritical">{{MahApps.Colors.WinUI.SystemFillCritical}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillSuccess">{{MahApps.Colors.WinUI.SystemFillSuccess}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillCriticalBackground">{{MahApps.Colors.WinUI.SystemFillCriticalBackground}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillCautionBackground">{{MahApps.Colors.WinUI.SystemFillCautionBackground}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillSuccessBackground">{{MahApps.Colors.WinUI.SystemFillSuccessBackground}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.SystemFillAttentionBackground">{{MahApps.Colors.WinUI.SystemFillAttentionBackground}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.TextInverse">{{MahApps.Colors.WinUI.TextInverse}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.FocusStrokeOuter">{{MahApps.Colors.WinUI.FocusStrokeOuter}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.FocusStrokeInner">{{MahApps.Colors.WinUI.FocusStrokeInner}}</Color>
 
@@ -499,6 +505,14 @@
     <!--  the two colours WinUI says something with rather than draws something in: the amber it holds work up in and the red it fails in  -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCaution" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCaution}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCritical" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCritical}" options:Freeze="True" />
+    <!--  and the green it succeeds in, with the four pale grounds a message in one of those colours stands on  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillSuccess" Color="{StaticResource MahApps.Colors.WinUI.SystemFillSuccess}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCriticalBackground" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCriticalBackground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillCautionBackground" Color="{StaticResource MahApps.Colors.WinUI.SystemFillCautionBackground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillSuccessBackground" Color="{StaticResource MahApps.Colors.WinUI.SystemFillSuccessBackground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillAttentionBackground" Color="{StaticResource MahApps.Colors.WinUI.SystemFillAttentionBackground}" options:Freeze="True" />
+    <!--  the text colour of the other theme, for a symbol drawn on one of those strong colours  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextInverse" Color="{StaticResource MahApps.Colors.WinUI.TextInverse}" options:Freeze="True" />
     <!--  the line around a flyout, which WinUI draws darker than the flyout rather than lighter, so that the shadow under it and this line together are what lift it off the page  -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SurfaceStrokeFlyout" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeFlyout}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" Color="{StaticResource MahApps.Colors.WinUI.AcrylicInAppFillDefault}" options:Freeze="True" />
@@ -1253,5 +1267,18 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToolTip.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToolTip.WinUI.BorderBrush" ResourceKey="MahApps.Brushes.WinUI.SurfaceStrokeFlyout" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToolTip.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <!--  InfoBar, after InfoBar_themeresources.xaml of WinUI; the three looks share these, the informational icon is in Theme.Template.xaml, since it is the accent  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.Background" ResourceKey="MahApps.Brushes.WinUI.SystemFillAttentionBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Success.Background" ResourceKey="MahApps.Brushes.WinUI.SystemFillSuccessBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Success.IconBackground" ResourceKey="MahApps.Brushes.WinUI.SystemFillSuccess" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Success.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextInverse" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Warning.Background" ResourceKey="MahApps.Brushes.WinUI.SystemFillCautionBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Warning.IconBackground" ResourceKey="MahApps.Brushes.WinUI.SystemFillCaution" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Warning.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextInverse" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Error.Background" ResourceKey="MahApps.Brushes.WinUI.SystemFillCriticalBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Error.IconBackground" ResourceKey="MahApps.Brushes.WinUI.SystemFillCritical" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Error.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextInverse" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Border" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
 
 </ResourceDictionary>

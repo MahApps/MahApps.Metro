@@ -116,6 +116,13 @@ Unless indicated otherwise on a per-file basis all source and documentation here
 - [Source](https://github.com/dotnet/sourcelink)
 - [Apache License 2.0](https://github.com/dotnet/sourcelink/blob/master/License.txt)
 
+## microsoft-ui-xaml
+
+- `InfoBar`, `InfoBarPanel`
+- Copyright (c) Microsoft Corporation. All rights reserved.
+- [Source](https://github.com/microsoft/microsoft-ui-xaml)
+- [MIT License](https://github.com/microsoft/microsoft-ui-xaml/blob/main/LICENSE)
+
 ## Newtonsoft.Json
 
 - Copyright (c) 2007 James Newton-King

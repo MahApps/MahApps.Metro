@@ -1,0 +1,273 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="clr-namespace:MahApps.Metro.Lang"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+
+    <!--
+        The InfoBar, after InfoBar.xaml and InfoBar_themeresources.xaml of microsoft-ui-xaml,
+        Copyright (c) Microsoft Corporation, MIT License. The three looks share one template and
+        differ in the setters of their styles only.
+    -->
+
+    <Style x:Key="MahApps.Styles.Button.InfoBar.Close" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Height" Value="38" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Width" Value="38" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="MahApps.Templates.InfoBar" TargetType="{x:Type mah:InfoBar}">
+        <Border x:Name="ContentRoot"
+                VerticalAlignment="Top"
+                Background="{DynamicResource MahApps.Brushes.InfoBar.Informational.Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <!--  a background of the user's own paints over the colour of the severity, as in WinUI  -->
+            <Border Padding="{TemplateBinding Padding}"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}">
+                <Grid MinHeight="48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  the icon of the severity: a ring in its colour and the symbol on top of it  -->
+                    <Grid x:Name="StandardIconArea"
+                          Grid.Column="0"
+                          Margin="0 16 14 16"
+                          VerticalAlignment="Top"
+                          Visibility="Collapsed">
+                        <TextBlock x:Name="IconBackground"
+                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                   FontSize="16"
+                                   Foreground="{DynamicResource MahApps.Brushes.InfoBar.Informational.IconBackground}"
+                                   Text="&#xF136;" />
+                        <TextBlock x:Name="StandardIcon"
+                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                   FontSize="16"
+                                   Foreground="{DynamicResource MahApps.Brushes.InfoBar.Informational.IconForeground}"
+                                   Text="&#xF13F;" />
+                    </Grid>
+                    <Viewbox x:Name="UserIconBox"
+                             Grid.Column="0"
+                             MaxWidth="16"
+                             MaxHeight="16"
+                             Margin="0 16 14 16"
+                             VerticalAlignment="Top">
+                        <ContentPresenter x:Name="UserIcon"
+                                          Content="{TemplateBinding Icon}"
+                                          ContentTemplate="{TemplateBinding IconTemplate}" />
+                    </Viewbox>
+
+                    <mah:InfoBarPanel Grid.Row="0"
+                                      Grid.Column="1"
+                                      Margin="0 0 16 0"
+                                      HorizontalOrientationPadding="0"
+                                      VerticalOrientationPadding="0 14 0 18">
+                        <TextBlock x:Name="Title"
+                                   mah:InfoBarPanel.HorizontalOrientationMargin="0 14 0 0"
+                                   mah:InfoBarPanel.VerticalOrientationMargin="0 14 0 0"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Text="{TemplateBinding Title}"
+                                   TextWrapping="WrapWithOverflow" />
+                        <TextBlock x:Name="Message"
+                                   mah:InfoBarPanel.HorizontalOrientationMargin="12 14 0 0"
+                                   mah:InfoBarPanel.VerticalOrientationMargin="0 4 0 0"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Text="{TemplateBinding Message}"
+                                   TextWrapping="WrapWithOverflow" />
+                        <ContentPresenter x:Name="ActionButtonPresenter"
+                                          VerticalAlignment="Top"
+                                          mah:InfoBarPanel.HorizontalOrientationMargin="16 8 0 0"
+                                          mah:InfoBarPanel.VerticalOrientationMargin="0 12 0 0"
+                                          Content="{TemplateBinding ActionButton}" />
+                    </mah:InfoBarPanel>
+
+                    <ContentPresenter x:Name="PART_ContentArea"
+                                      Grid.Row="1"
+                                      Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                    <Button x:Name="PART_CloseButton"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            AutomationProperties.Name="{x:Static lang:Automation.Close}"
+                            Command="{TemplateBinding CloseButtonCommand}"
+                            CommandParameter="{TemplateBinding CloseButtonCommandParameter}"
+                            Style="{TemplateBinding CloseButtonStyle}"
+                            ToolTip="{x:Static lang:Automation.Close}">
+                        <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                   FontSize="16"
+                                   Text="&#xE711;" />
+                    </Button>
+                </Grid>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Severity" Value="Success">
+                <Setter TargetName="ContentRoot" Property="Background" Value="{DynamicResource MahApps.Brushes.InfoBar.Success.Background}" />
+                <Setter TargetName="IconBackground" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Success.IconBackground}" />
+                <Setter TargetName="StandardIcon" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Success.IconForeground}" />
+                <Setter TargetName="StandardIcon" Property="Text" Value="&#xF13E;" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Warning">
+                <Setter TargetName="ContentRoot" Property="Background" Value="{DynamicResource MahApps.Brushes.InfoBar.Warning.Background}" />
+                <Setter TargetName="IconBackground" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Warning.IconBackground}" />
+                <Setter TargetName="StandardIcon" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Warning.IconForeground}" />
+                <Setter TargetName="StandardIcon" Property="Text" Value="&#xF13C;" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Error">
+                <Setter TargetName="ContentRoot" Property="Background" Value="{DynamicResource MahApps.Brushes.InfoBar.Error.Background}" />
+                <Setter TargetName="IconBackground" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Error.IconBackground}" />
+                <Setter TargetName="StandardIcon" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Error.IconForeground}" />
+                <Setter TargetName="StandardIcon" Property="Text" Value="&#xF13D;" />
+            </Trigger>
+            <!--  an icon template without an icon is handed the severity, so one template can draw all four  -->
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="UserIcon" Property="Content" Value="{Binding Severity, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Icon" Value="{x:Null}" />
+                    <Condition Property="IconTemplate" Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="StandardIconArea" Property="Visibility" Value="Visible" />
+                <Setter TargetName="UserIconBox" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+            <Trigger Property="IsIconVisible" Value="False">
+                <Setter TargetName="StandardIconArea" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="UserIconBox" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsClosable" Value="False">
+                <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <!--  a closed bar folds away, the control itself stays where it is, as in WinUI  -->
+            <Trigger Property="IsOpen" Value="False">
+                <Setter TargetName="ContentRoot" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.InfoBar" TargetType="{x:Type mah:InfoBar}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.InfoBar.Close}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="16 0 0 0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.InfoBar}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+    </Style>
+
+    <!--  the close button of an AppBarButton of the Windows 10 SDK  -->
+    <Style x:Key="MahApps.Styles.Button.InfoBar.Close.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.InfoBar.Close}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseHigh}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightListLow}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightListMedium}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.SystemControlDisabledBaseMediumLow}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  and the one of WinUI, after AppBarButton_themeresources.xaml: subtle fills, the quieter text while pressed  -->
+    <Style x:Key="MahApps.Styles.Button.InfoBar.Close.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.InfoBar.Close}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WinUI.TextPrimary}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WinUI.SubtleFillSecondary}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WinUI.SubtleFillTertiary}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WinUI.TextDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.InfoBar.Win10"
+           BasedOn="{StaticResource MahApps.Styles.InfoBar}"
+           TargetType="{x:Type mah:InfoBar}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.InfoBar.Border}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.InfoBar.Close.Win10}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseHigh}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.InfoBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.InfoBar}"
+           TargetType="{x:Type mah:InfoBar}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.InfoBar.Border}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.InfoBar.Close.WinUI}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Foreground}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+</ResourceDictionary>

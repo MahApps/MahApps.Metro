@@ -142,6 +142,51 @@ namespace MahApps.Metro.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to InfoBar dismissed.
+        /// </summary>
+        public static string InfoBarDismissed {
+            get {
+                return ResourceManager.GetString("InfoBarDismissed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error icon.
+        /// </summary>
+        public static string InfoBarIconError {
+            get {
+                return ResourceManager.GetString("InfoBarIconError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informational icon.
+        /// </summary>
+        public static string InfoBarIconInformational {
+            get {
+                return ResourceManager.GetString("InfoBarIconInformational", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success icon.
+        /// </summary>
+        public static string InfoBarIconSuccess {
+            get {
+                return ResourceManager.GetString("InfoBarIconSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning icon.
+        /// </summary>
+        public static string InfoBarIconWarning {
+            get {
+                return ResourceManager.GetString("InfoBarIconWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximize.
         /// </summary>
         public static string Maximize {
