@@ -55,6 +55,12 @@ namespace MahApps.Metro.Gallery.Core
             element.SetValue(StyleSetProperty, value);
         }
 
+        private static ResourceDictionary Win10
+            => win10 ??= new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml", UriKind.Absolute) };
+
+        private static ResourceDictionary WinUI
+            => winUI ??= new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml", UriKind.Absolute) };
+
         /// <summary>
         /// The dictionary of the given set.
         /// </summary>
@@ -62,8 +68,8 @@ namespace MahApps.Metro.Gallery.Core
         {
             return set switch
             {
-                GalleryStyleSet.Win10 => win10 ??= new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml", UriKind.Absolute) },
-                GalleryStyleSet.WinUI => winUI ??= new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml", UriKind.Absolute) },
+                GalleryStyleSet.Win10 => Win10,
+                GalleryStyleSet.WinUI => WinUI,
                 _ => DefaultStyleSet.Dictionary
             };
         }
