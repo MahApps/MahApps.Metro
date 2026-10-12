@@ -125,6 +125,13 @@
     -->
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentPrimary" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentSecondary" Opacity="0.7" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <!--
+        The informational icon of an InfoBar. WinUI paints it in a lighter step of the accent in the
+        dark theme, one Windows works out from the accent of the user; there is no such step here,
+        so it is the accent itself, and the symbol on it the ideal foreground for that accent.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconBackground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
 
     <!--  Resources for MahApps.Styles.Button.Accent.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackground" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />

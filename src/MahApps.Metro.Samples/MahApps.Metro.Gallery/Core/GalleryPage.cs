@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Controls;
 using MahApps.Metro.IconPacks;
@@ -14,7 +15,7 @@ namespace MahApps.Metro.Gallery.Core
     /// to the source all need to know it. This is the only place a page is written down, so a new
     /// one is one entry in <see cref="GalleryPages"/> and nothing else.
     /// </summary>
-    public sealed class GalleryPage
+    public sealed class GalleryPage : INotifyPropertyChanged
     {
         private const string DocumentationRoot = "https://mahapps.github.io/mahapps.com/docs/";
 
@@ -25,6 +26,7 @@ namespace MahApps.Metro.Gallery.Core
         private const string LibraryRoot = "https://github.com/MahApps/MahApps.Metro/blob/develop/src/MahApps.Metro/";
 
         private UserControl? view;
+        private GalleryStyleSet styleSet;
 
         public GalleryPage(string title,
                            string category,
@@ -78,6 +80,34 @@ namespace MahApps.Metro.Gallery.Core
         /// so the gallery leaves out the one it puts above every page.
         /// </summary>
         public bool HasOwnHeading { get; set; }
+
+        /// <summary>
+        /// Whether the heading offers to put the samples of this page into the Windows 10 or the
+        /// WinUI set as well, for a control that has a look in each of them.
+        /// </summary>
+        public bool HasStyleSets { get; set; }
+
+        /// <summary>
+        /// The set the samples of this page stand in. Every card on the page inherits it.
+        /// </summary>
+        public GalleryStyleSet StyleSet
+        {
+            get => this.styleSet;
+            set
+            {
+                if (this.styleSet == value)
+                {
+                    return;
+                }
+
+                this.styleSet = value;
+                StyleSets.SetStyleSet(this.View, value);
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.StyleSet)));
+            }
+        }
+
+        /// <inheritdoc />
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// The page itself, built when it is asked for the first time and kept afterwards, so that

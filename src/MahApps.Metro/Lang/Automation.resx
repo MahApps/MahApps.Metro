@@ -124,6 +124,21 @@
   <data name="DialogTop" xml:space="preserve">
     <value>Dialog top</value>
   </data>
+  <data name="InfoBarDismissed" xml:space="preserve">
+    <value>InfoBar dismissed</value>
+  </data>
+  <data name="InfoBarIconError" xml:space="preserve">
+    <value>Error icon</value>
+  </data>
+  <data name="InfoBarIconInformational" xml:space="preserve">
+    <value>Informational icon</value>
+  </data>
+  <data name="InfoBarIconSuccess" xml:space="preserve">
+    <value>Success icon</value>
+  </data>
+  <data name="InfoBarIconWarning" xml:space="preserve">
+    <value>Warning icon</value>
+  </data>
   <data name="Maximize" xml:space="preserve">
     <value>Maximize</value>
   </data>

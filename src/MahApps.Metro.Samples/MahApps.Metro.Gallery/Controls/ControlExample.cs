@@ -92,6 +92,11 @@ namespace MahApps.Metro.Gallery.Controls
                                           typeof(ControlExample),
                                           new PropertyMetadata(null, OnOptionsChanged));
 
+        /// <summary>Identifies the <see cref="StyleSet"/> dependency property.</summary>
+        public static readonly DependencyProperty StyleSetProperty
+            = StyleSets.StyleSetProperty.AddOwner(typeof(ControlExample),
+                                                 new FrameworkPropertyMetadata(GalleryStyleSet.Metro, FrameworkPropertyMetadataOptions.Inherits, OnStyleSetChanged));
+
         static ControlExample()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ControlExample),
@@ -190,6 +195,17 @@ namespace MahApps.Metro.Gallery.Controls
         }
 
         /// <summary>
+        /// The set of styles the sample stands in, inherited from the page, whose heading offers the
+        /// choice where the page asks for it. The markup shown under the sample is the same in every
+        /// set, since the look comes from the set an application merges and not from the markup.
+        /// </summary>
+        public GalleryStyleSet StyleSet
+        {
+            get => (GalleryStyleSet)this.GetValue(StyleSetProperty);
+            set => this.SetValue(StyleSetProperty, value);
+        }
+
+        /// <summary>
         /// Whether there is anything to fold away at all.
         /// </summary>
         public bool HasOptions
@@ -243,14 +259,28 @@ namespace MahApps.Metro.Gallery.Controls
         {
             base.OnContentChanged(oldContent, newContent);
 
-            // the card itself wears the set of the gallery and its sample the default one, which is
-            // what the markup shown under it gives an application that merges nothing else
+            // the card itself wears the set of the gallery and its sample the chosen one, the default
+            // set unless the card offers others, which is what the markup shown under it gives an
+            // application that merges that set
             if (newContent is FrameworkElement sample)
             {
-                DefaultStyleSet.Apply(sample);
+                StyleSets.Apply(sample, this.StyleSet);
             }
 
             this.RefreshXaml();
+        }
+
+        private static void OnStyleSetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not ControlExample example)
+            {
+                return;
+            }
+
+            if (example.Content is FrameworkElement sample)
+            {
+                StyleSets.Apply(sample, (GalleryStyleSet)e.NewValue);
+            }
         }
 
         private static void OnOptionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
