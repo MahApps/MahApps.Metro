@@ -14,11 +14,16 @@ namespace MahApps.Metro.Gallery.Windows
     public partial class InfoBarWindow : MetroWindow
     {
         public InfoBarWindow()
+            : this(GalleryStyleSet.Metro)
+        {
+        }
+
+        public InfoBarWindow(GalleryStyleSet styleSet)
         {
             this.InitializeComponent();
 
-            // a sample window shows what the default set gives it, whatever the gallery around it wears
-            DefaultStyleSet.Apply(this);
+            // a sample window shows what the set chosen in its card gives it, whatever the gallery around it wears
+            StyleSets.Apply(this, styleSet);
         }
 
         private void OnReopenClick(object sender, RoutedEventArgs e)

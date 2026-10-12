@@ -60,7 +60,7 @@ namespace MahApps.Metro.Gallery.Pages
 
         private void OnOpenWindow(object sender, RoutedEventArgs e)
         {
-            new InfoBarWindow { Owner = Window.GetWindow(this) }.Show();
+            new InfoBarWindow(this.WindowExample.StyleSet) { Owner = Window.GetWindow(this) }.Show();
         }
 
         private void OnReopenClick(object sender, RoutedEventArgs e)

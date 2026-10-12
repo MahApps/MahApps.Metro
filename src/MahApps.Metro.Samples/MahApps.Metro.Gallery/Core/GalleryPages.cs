@@ -119,7 +119,7 @@ namespace MahApps.Metro.Gallery.Core
                                                                                    typeof(InfoBarPage),
                                                                                    PackIconMaterialKind.InformationOutline,
                                                                                    keywords: "message status notification banner severity warning error winui",
-                                                                                   control: "Controls/InfoBar/InfoBar.cs"),
+                                                                                   control: "Controls/InfoBar/InfoBar.cs") { HasStyleSets = true },
                                                                    new GalleryPage("MetroContentControl",
                                                                                    "Controls",
                                                                                    typeof(MetroContentControlPage),

@@ -76,7 +76,8 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
-            <controls:ControlExample Description="A window lays the bars of its InfoBars over the top of its content, under the title bar. They push nothing aside, and the flyouts, the overlay and the dialogs lie over them."
+            <controls:ControlExample x:Name="WindowExample"
+                                     Description="A window lays the bars of its InfoBars over the top of its content, under the title bar. They push nothing aside, and the flyouts, the overlay and the dialogs lie over them."
                                      Header="On a window"
                                      MarkupResource="MahApps.Metro.Gallery.Windows.InfoBarWindow.xaml">
                 <Button Width="200"
