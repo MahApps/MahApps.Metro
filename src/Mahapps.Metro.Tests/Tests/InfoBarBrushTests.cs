@@ -44,6 +44,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Border", "#19000000")]
         [TestCase("Light.Blue", "MahApps.Brushes.InfoBar.Foreground", "#E4000000")]
         [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Foreground", "#FFFFFFFF")]
+        [TestCase("Light.Blue", "MahApps.Brushes.InfoBar.Window.Informational.Background", "#FFFAFAFA")]
+        [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Window.Informational.Background", "#FF1B1B1B")]
         public void TheColoursAreMicrosofts(string theme, string key, string expected)
         {
             ThemeManager.Current.ChangeTheme(this.window!, theme);

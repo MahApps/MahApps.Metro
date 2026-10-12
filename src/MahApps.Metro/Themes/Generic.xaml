@@ -57,6 +57,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ChildWindow}" TargetType="{x:Type mah:ChildWindow}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog}" TargetType="{x:Type mah:ContentDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.InfoBar}" TargetType="{x:Type mah:InfoBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.InfoBarsControl}" TargetType="{x:Type mah:InfoBarsControl}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />

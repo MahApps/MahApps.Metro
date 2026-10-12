@@ -30,6 +30,7 @@
             and this way the shown markup is the file that runs rather than a copy of it.
         -->
         <EmbeddedResource Include="Windows\SampleWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.SampleWindow.xaml" />
+        <EmbeddedResource Include="Windows\InfoBarWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.InfoBarWindow.xaml" />
         <EmbeddedResource Include="Windows\TitleBarWindow.xaml" LogicalName="MahApps.Metro.Gallery.Windows.TitleBarWindow.xaml" />
         <EmbeddedResource Include="Windows\NavigationSampleFirstPage.xaml" LogicalName="MahApps.Metro.Gallery.Windows.NavigationSampleFirstPage.xaml" />
         <!--  the pages whose samples run in code show regions of their code behind, cut out of these  -->

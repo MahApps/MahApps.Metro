@@ -766,6 +766,23 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(FlyoutsProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="InfoBars"/> dependency property.</summary>
+        public static readonly DependencyProperty InfoBarsProperty
+            = DependencyProperty.Register(nameof(InfoBars),
+                                          typeof(InfoBarsControl),
+                                          typeof(MetroWindow),
+                                          new PropertyMetadata(null, UpdateLogicalChildren));
+
+        /// <summary>
+        /// Gets or sets an <see cref="InfoBarsControl"/> whose <see cref="InfoBar"/>s lie over the top of the content, under the title bar.
+        /// They lie under the flyouts, the overlay and the dialogs.
+        /// </summary>
+        public InfoBarsControl? InfoBars
+        {
+            get => (InfoBarsControl?)this.GetValue(InfoBarsProperty);
+            set => this.SetValue(InfoBarsProperty, value);
+        }
+
         /// <summary>Identifies the <see cref="WindowTransitionsEnabled"/> dependency property.</summary>
         public static readonly DependencyProperty WindowTransitionsEnabledProperty
             = DependencyProperty.Register(nameof(WindowTransitionsEnabled),
@@ -1349,6 +1366,11 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts.DataContext = this.DataContext;
             }
+
+            if (this.InfoBars != null)
+            {
+                this.InfoBars.DataContext = this.DataContext;
+            }
         }
 
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
@@ -1526,6 +1548,11 @@ namespace MahApps.Metro.Controls
                 if (this.Flyouts != null)
                 {
                     children.Add(this.Flyouts);
+                }
+
+                if (this.InfoBars != null)
+                {
+                    children.Add(this.InfoBars);
                 }
 
                 return children.GetEnumerator();

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Gallery.Windows;
 
 namespace MahApps.Metro.Gallery.Pages
 {
@@ -55,6 +56,11 @@ namespace MahApps.Metro.Gallery.Pages
         private void OnCancelInfoBarClosed(object? sender, InfoBarClosedEventArgs e)
         {
             this.Log($"Closed, Reason {e.Reason}");
+        }
+
+        private void OnOpenWindow(object sender, RoutedEventArgs e)
+        {
+            new InfoBarWindow { Owner = Window.GetWindow(this) }.Show();
         }
 
         private void OnReopenClick(object sender, RoutedEventArgs e)

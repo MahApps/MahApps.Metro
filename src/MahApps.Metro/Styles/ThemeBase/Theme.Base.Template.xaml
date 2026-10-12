@@ -1280,5 +1280,8 @@
     <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Error.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextInverse" />
     <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Border" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <!--  the informational ground of a bar lying over the content of a window: the see through one of WinUI laid over the window background, so nothing shows through it  -->
+    <Color x:Key="MahApps.Colors.InfoBar.Window.Informational.Background">{{MahApps.Colors.InfoBar.Window.Informational.Background}}</Color>
+    <SolidColorBrush x:Key="MahApps.Brushes.InfoBar.Window.Informational.Background" Color="{StaticResource MahApps.Colors.InfoBar.Window.Informational.Background}" options:Freeze="True" />
 
 </ResourceDictionary>

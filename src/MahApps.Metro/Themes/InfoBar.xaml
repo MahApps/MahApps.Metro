@@ -145,6 +145,10 @@
             </Border>
         </Border>
         <ControlTemplate.Triggers>
+            <!--  over the content of a window the see through ground of WinUI would let the content show, so it is the opaque one there; the severities after this set their own  -->
+            <Trigger Property="mah:InfoBarsControl.IsHosted" Value="True">
+                <Setter TargetName="ContentRoot" Property="Background" Value="{DynamicResource MahApps.Brushes.InfoBar.Window.Informational.Background}" />
+            </Trigger>
             <Trigger Property="Severity" Value="Success">
                 <Setter TargetName="ContentRoot" Property="Background" Value="{DynamicResource MahApps.Brushes.InfoBar.Success.Background}" />
                 <Setter TargetName="IconBackground" Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Success.IconBackground}" />
@@ -203,6 +207,16 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.InfoBar}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Style.Triggers>
+            <!--  open bars in a host stand 8 apart, closed ones take no room  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:InfoBarsControl.IsHosted" Value="True" />
+                    <Condition Property="IsOpen" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Margin" Value="0 0 0 8" />
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--  the close button of an AppBarButton of the Windows 10 SDK  -->
@@ -268,6 +282,26 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.InfoBar.Foreground}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.InfoBarsControl" TargetType="{x:Type mah:InfoBarsControl}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="12 12 12 0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type mah:InfoBarsControl}">
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

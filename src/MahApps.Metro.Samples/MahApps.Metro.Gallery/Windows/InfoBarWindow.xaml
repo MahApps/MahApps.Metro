@@ -1,0 +1,53 @@
+﻿<mah:MetroWindow x:Class="MahApps.Metro.Gallery.Windows.InfoBarWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="Info bars on a window"
+                 Width="640"
+                 Height="420"
+                 WindowStartupLocation="CenterOwner"
+                 mc:Ignorable="d">
+
+    <!--  the bars lie over the top of the content and under the flyouts  -->
+    <mah:MetroWindow.InfoBars>
+        <mah:InfoBarsControl>
+            <mah:InfoBar x:Name="UpdateBar"
+                         Title="Update ready"
+                         IsOpen="True"
+                         Message="Version 3 will be installed the next time the app starts."
+                         Severity="Success" />
+            <mah:InfoBar x:Name="OfflineBar"
+                         Title="Offline"
+                         IsOpen="True"
+                         Message="42 files are waiting to be synchronised." />
+        </mah:InfoBarsControl>
+    </mah:MetroWindow.InfoBars>
+
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="SettingsFlyout"
+                        Width="260"
+                        Header="Settings"
+                        IsModal="True"
+                        Position="Right">
+                <TextBlock Margin="16"
+                           Text="A modal flyout lies over the bars, and they take no click while it is open."
+                           TextWrapping="Wrap" />
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
+    <StackPanel Margin="24 200 24 24">
+        <TextBlock Margin="0 0 0 16"
+                   Text="The content goes on under the bars, which push nothing aside."
+                   TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal">
+            <Button Margin="0 0 8 0"
+                    Click="OnReopenClick"
+                    Content="Open the bars again" />
+            <Button Click="OnFlyoutClick" Content="Open a flyout" />
+        </StackPanel>
+    </StackPanel>
+</mah:MetroWindow>

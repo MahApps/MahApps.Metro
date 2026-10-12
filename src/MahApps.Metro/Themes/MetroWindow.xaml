@@ -142,6 +142,26 @@
                             <mah:ContentPresenterEx x:Name="PART_ContentPresenter" />
                         </mah:MetroContentControl>
 
+                        <!--
+                            the info bars, over the top of the content and without a ZIndex, so that the cover of a
+                            modal flyout, the flyouts, the overlay and the dialogs, all declared after them, lie over them;
+                            without a title bar the window buttons stand over the content, and the spacer keeps the bars
+                            under them, so that a click on the close button of a bar never reaches the one of the window
+                        -->
+                        <StackPanel x:Name="PART_InfoBarsArea"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3"
+                                    VerticalAlignment="Top">
+                            <FrameworkElement x:Name="PART_InfoBarsTitleSpacer"
+                                              Height="{Binding ElementName=PART_WindowButtonCommands, Path=ActualHeight, Mode=OneWay}"
+                                              Visibility="Collapsed" />
+                            <ContentControl x:Name="PART_InfoBars"
+                                            Content="{Binding InfoBars, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            Focusable="False"
+                                            IsTabStop="False" />
+                        </StackPanel>
+
                         <!--  disables the main content when a modal flyout is shown  -->
                         <Rectangle Name="PART_FlyoutModal"
                                    Grid.Row="0"
@@ -245,6 +265,7 @@
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_InfoBarsTitleSpacer" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!--  handle active/inactive state  -->
@@ -418,6 +439,26 @@
                             <mah:ContentPresenterEx x:Name="PART_ContentPresenter" />
                         </mah:MetroContentControl>
 
+                        <!--
+                            the info bars, over the top of the content and without a ZIndex, so that the cover of a
+                            modal flyout, the flyouts, the overlay and the dialogs, all declared after them, lie over them;
+                            without a title bar the window buttons stand over the content, and the spacer keeps the bars
+                            under them, so that a click on the close button of a bar never reaches the one of the window
+                        -->
+                        <StackPanel x:Name="PART_InfoBarsArea"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3"
+                                    VerticalAlignment="Top">
+                            <FrameworkElement x:Name="PART_InfoBarsTitleSpacer"
+                                              Height="{Binding ElementName=PART_WindowButtonCommands, Path=ActualHeight, Mode=OneWay}"
+                                              Visibility="Collapsed" />
+                            <ContentControl x:Name="PART_InfoBars"
+                                            Content="{Binding InfoBars, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                            Focusable="False"
+                                            IsTabStop="False" />
+                        </StackPanel>
+
                         <!--  disables the main content when a modal flyout is shown  -->
                         <Rectangle Name="PART_FlyoutModal"
                                    Grid.Row="0"
@@ -538,6 +579,7 @@
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_InfoBarsTitleSpacer" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!--  handle active/inactive state  -->
