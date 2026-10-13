@@ -88,6 +88,10 @@ namespace MahApps.Metro.Theming
             values.Add("MahApps.Colors.SystemAccentDark1", palette.Dark1.ToString());
             values.Add("MahApps.Colors.SystemAccentDark2", palette.Dark2.ToString());
             values.Add("MahApps.Colors.SystemAccentDark3", palette.Dark3.ToString());
+
+            // what the WinUI set writes on its fill, which is Dark1 in a light theme and Light2 in a dark one
+            values.Add("MahApps.Colors.IdealForeground.SystemAccentDark1", RuntimeThemeGenerator.GetIdealTextColor(palette.Dark1).ToString());
+            values.Add("MahApps.Colors.IdealForeground.SystemAccentLight2", RuntimeThemeGenerator.GetIdealTextColor(palette.Light2).ToString());
         }
 
         private static bool SameRgb(Color a, Color b)

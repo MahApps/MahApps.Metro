@@ -16,8 +16,8 @@ namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
     /// The link in running text, in the Windows 10 look of generic.xaml of the Windows SDK and in the WinUI look of
-    /// Hyperlink_themeresources.xaml. WinUI takes a darker or lighter step of the accent there; until the theme has
-    /// those steps it is the accent fill.
+    /// Hyperlink_themeresources.xaml, where WinUI writes it in the accent text, a darker shade of the accent in the
+    /// light theme and a lighter one in the dark theme.
     /// </summary>
     [TestFixture]
     public class HyperlinkStyleTests : WindowTestFixture<TestWindow>
@@ -33,7 +33,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("Dark.Blue", "MahApps.Brushes.Hyperlink.Win10.ForegroundPressed", "#66FFFFFF")]
         [TestCase("Light.Blue", "MahApps.Brushes.Hyperlink.Win10.ForegroundDisabled", "#66000000")]
         [TestCase("Dark.Blue", "MahApps.Brushes.Hyperlink.Win10.ForegroundDisabled", "#66FFFFFF")]
-        [TestCase("Light.Blue", "MahApps.Brushes.Hyperlink.WinUI.Foreground", "#FF0078D7")]
+        [TestCase("Light.Blue", "MahApps.Brushes.Hyperlink.WinUI.Foreground", "#FF003F95")]
+        [TestCase("Dark.Blue", "MahApps.Brushes.Hyperlink.WinUI.Foreground", "#FF99EAFF")]
         [TestCase("Light.Blue", "MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled", "#5C000000")]
         [TestCase("Dark.Blue", "MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled", "#5DFFFFFF")]
         public void TheColoursAreMicrosofts(string theme, string key, string expected)
@@ -53,12 +54,13 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        public void TheWinUILinkTakesTheStepsOfTheAccentFill()
+        public void TheWinUILinkTakesTheAccentText()
         {
             Assert.Multiple(() =>
                 {
-                    Assert.That(this.window!.FindResource("MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver"), Is.SameAs(this.window.FindResource("MahApps.Brushes.WinUI.AccentFillSecondary")));
-                    Assert.That(this.window.FindResource("MahApps.Brushes.Hyperlink.WinUI.ForegroundPressed"), Is.SameAs(this.window.FindResource("MahApps.Brushes.WinUI.AccentFillTertiary")));
+                    Assert.That(this.window!.FindResource("MahApps.Brushes.Hyperlink.WinUI.Foreground"), Is.SameAs(this.window.FindResource("MahApps.Brushes.WinUI.AccentTextFillPrimary")));
+                    Assert.That(this.window.FindResource("MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver"), Is.SameAs(this.window.FindResource("MahApps.Brushes.WinUI.AccentTextFillSecondary")));
+                    Assert.That(this.window.FindResource("MahApps.Brushes.Hyperlink.WinUI.ForegroundPressed"), Is.SameAs(this.window.FindResource("MahApps.Brushes.WinUI.AccentTextFillTertiary")));
                 });
         }
 

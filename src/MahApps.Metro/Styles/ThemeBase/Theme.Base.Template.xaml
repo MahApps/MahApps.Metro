@@ -771,9 +771,9 @@
         outline while it is off, filled with the accent once it is on, and the knob is the theme
         foreground over the one and white over the other.
 
-        Windows 10 lights the track a shade and darkens it a shade while the pointer is over an on
-        switch and while it is held. Those are SystemAccentColorLight1 and Dark1, which the accent
-        of a MahApps theme has no counterpart for, so all three take the accent itself.
+        Windows 10 takes the accent at 0.9 while the pointer is over an on switch and
+        SystemControlHighlightBaseMedium while it is held (generic.xaml of the SDK); here all three
+        take the accent itself for now.
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />

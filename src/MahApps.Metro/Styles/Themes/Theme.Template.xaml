@@ -129,35 +129,46 @@
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
     <markup:StaticResource x:Key="MahApps.Brushes.TextControl.ButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
 
-    <!--  and with the caret in the box, that edge is the accent  -->
-    <SolidColorBrush x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillDefault" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillSecondary" Opacity="0.9" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillTertiary" Opacity="0.8" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <!--
-        WinUI writes what sits on an accent fill as black or white per theme, because its own
-        accent is a light one in the dark theme and a dark one in the light theme. The accent
-        here is the accent of the theme and stays what it is, so the tick and the dot take the
-        ideal foreground for that accent, which the theme works out either way.
+        The accent as WinUI paints with it, Common_themeresources_any.xaml of microsoft-ui-xaml: a fill
+        takes a darker shade in the light theme and a lighter one in the dark theme, text one step further
+        out still. Which shade a base colour takes comes from GeneratorParameters.json.
     -->
-    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentPrimary" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentSecondary" Opacity="0.7" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillDefault" Color="{StaticResource {{MahApps.Keys.WinUI.AccentFill}}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillSecondary" Opacity="0.9" Color="{StaticResource {{MahApps.Keys.WinUI.AccentFill}}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentFillTertiary" Opacity="0.8" Color="{StaticResource {{MahApps.Keys.WinUI.AccentFill}}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentTextFillPrimary" Color="{StaticResource {{MahApps.Keys.WinUI.AccentTextPrimary}}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentTextFillSecondary" Color="{StaticResource {{MahApps.Keys.WinUI.AccentTextSecondary}}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.AccentTextFillTertiary" Color="{StaticResource {{MahApps.Keys.WinUI.AccentTextTertiary}}}" options:Freeze="True" />
+    <!--  the light theme draws attention with the accent itself, the dark theme with Light2  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SystemFillAttention" Color="{StaticResource {{MahApps.Keys.WinUI.SystemFillAttention}}}" options:Freeze="True" />
+    <!--  and with the caret in the box, that edge is the accent fill  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.TextControl.WinUI.BorderBrushBottomFocused" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <!--
-        The informational icon of an InfoBar. WinUI paints it in a lighter step of the accent in the
-        dark theme, one Windows works out from the accent of the user; there is no such step here,
-        so it is the accent itself, and the symbol on it the ideal foreground for that accent.
+        WinUI writes what sits on an accent fill as black or white per theme, since its fill is a dark
+        shade in the light theme and a light one in the dark theme. The shades here come from any
+        accent, so the tick, the dot and the text of an accent button take the foreground that reads
+        on the very shade the fill takes, worked out like the ideal foreground of the theme.
     -->
-    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconBackground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
-    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <Color x:Key="MahApps.Colors.IdealForeground.SystemAccentDark1">{{MahApps.Colors.IdealForeground.SystemAccentDark1}}</Color>
+    <Color x:Key="MahApps.Colors.IdealForeground.SystemAccentLight2">{{MahApps.Colors.IdealForeground.SystemAccentLight2}}</Color>
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentPrimary" Color="{StaticResource {{MahApps.Keys.WinUI.TextOnAccent}}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.TextOnAccentSecondary" Opacity="0.7" Color="{StaticResource {{MahApps.Keys.WinUI.TextOnAccent}}}" options:Freeze="True" />
     <!--
-        The link. Windows 10 writes it in the accent. WinUI takes a darker step of the accent in the light
-        theme and a lighter one in the dark theme, which Windows works out from the accent of the user;
-        there are no such steps here yet, so it is the accent fill with its two steps.
+        The informational icon of an InfoBar. WinUI paints it in SystemFillColorAttention, the accent
+        in the light theme and Light2 in the dark theme, and the symbol on it takes the foreground that
+        reads on that colour.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconBackground" ResourceKey="MahApps.Brushes.WinUI.SystemFillAttention" />
+    <SolidColorBrush x:Key="MahApps.Brushes.InfoBar.Informational.IconForeground" Color="{StaticResource {{MahApps.Keys.WinUI.TextOnAttention}}}" options:Freeze="True" />
+    <!--
+        The link. Windows 10 writes it in the accent. WinUI writes it in the accent text, a darker shade
+        of the accent in the light theme and a lighter one in the dark theme.
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlHyperlinkText" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
-    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.AccentTextFillPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentTextFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.AccentTextFillTertiary" />
 
     <!--  Resources for MahApps.Styles.Button.Accent.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackground" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
