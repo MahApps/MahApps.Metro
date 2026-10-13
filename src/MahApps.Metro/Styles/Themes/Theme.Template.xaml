@@ -199,10 +199,8 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.FillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltListAccentHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.StrokeOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOn" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltListAccentHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListAccentHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOn" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOnPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.WinUI.FillOnPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />

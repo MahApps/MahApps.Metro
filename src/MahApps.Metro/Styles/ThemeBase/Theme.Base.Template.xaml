@@ -771,9 +771,9 @@
         outline while it is off, filled with the accent once it is on, and the knob is the theme
         foreground over the one and white over the other.
 
-        Windows 10 takes the accent at 0.9 while the pointer is over an on switch and
-        SystemControlHighlightBaseMedium while it is held (generic.xaml of the SDK); here all three
-        take the accent itself for now.
+        Under the pointer an on switch takes the accent a little see-through, while it is held the
+        medium base colour, as generic.xaml of the SDK has it. The accent ones live in the themes,
+        the pressed ones here, since they do not change with the accent.
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
@@ -787,12 +787,14 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOff" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPressed" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOn" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOff" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
