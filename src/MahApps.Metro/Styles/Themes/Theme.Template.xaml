@@ -132,6 +132,15 @@
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconBackground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.InfoBar.Informational.IconForeground" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <!--
+        The link. Windows 10 writes it in the accent. WinUI takes a darker step of the accent in the light
+        theme and a lighter one in the dark theme, which Windows works out from the accent of the user;
+        there are no such steps here yet, so it is the accent fill with its two steps.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlHyperlinkText" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
 
     <!--  Resources for MahApps.Styles.Button.Accent.Win10  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Button.AccentBackground" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />

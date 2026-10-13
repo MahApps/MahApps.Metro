@@ -6,6 +6,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Tests.TestHelpers;
@@ -66,6 +67,8 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(ContentDialog), "MahApps.Styles.ContentDialog.Win10")]
         [TestCase(WinUI, typeof(ContentDialog), "MahApps.Styles.ContentDialog.WinUI")]
         [TestCase(Win10, typeof(InfoBar), "MahApps.Styles.InfoBar.Win10")]
+        [TestCase(Win10, typeof(Hyperlink), "MahApps.Styles.Hyperlink.Win10")]
+        [TestCase(WinUI, typeof(Hyperlink), "MahApps.Styles.Hyperlink.WinUI")]
         [TestCase(WinUI, typeof(InfoBar), "MahApps.Styles.InfoBar.WinUI")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
         [TestCase(Win10, typeof(BaseMetroDialog), "MahApps.Styles.BaseMetroDialog.Win10")]

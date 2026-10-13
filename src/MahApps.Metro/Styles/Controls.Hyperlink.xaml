@@ -20,4 +20,36 @@
         </Style.Triggers>
     </Style>
 
+    <!--  generic.xaml of the Windows SDK: the accent, the medium base colour under the mouse, underlined  -->
+    <Style x:Key="MahApps.Styles.Hyperlink.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Hyperlink}"
+           TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.Foreground}" />
+        <Setter Property="TextDecorations" Value="Underline" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Hyperlink_themeresources.xaml of WinUI: HyperlinkUnderlineVisible is False there, so no underline  -->
+    <Style x:Key="MahApps.Styles.Hyperlink.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Hyperlink}"
+           TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.Foreground}" />
+        <Setter Property="TextDecorations" Value="{x:Null}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

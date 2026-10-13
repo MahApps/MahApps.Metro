@@ -1284,4 +1284,11 @@
     <Color x:Key="MahApps.Colors.InfoBar.Window.Informational.Background">{{MahApps.Colors.InfoBar.Window.Informational.Background}}</Color>
     <SolidColorBrush x:Key="MahApps.Brushes.InfoBar.Window.Informational.Background" Color="{StaticResource MahApps.Colors.InfoBar.Window.Informational.Background}" options:Freeze="True" />
 
+    <!--  The link of generic.xaml of the Windows SDK: HyperlinkForegroundPointerOver and Pressed, and the disabled colour of the HyperlinkButton  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHyperlinkBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.ForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <!--  WinUI writes a disabled link in AccentTextFillColorDisabled, which has the colour of TextFillColorDisabled  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+
 </ResourceDictionary>
