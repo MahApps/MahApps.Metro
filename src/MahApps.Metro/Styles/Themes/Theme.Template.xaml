@@ -91,6 +91,23 @@
         ******************************************************************
     -->
     <Color x:Key="MahApps.Colors.SystemAccent">{{MahApps.Colors.AccentBase}}</Color>
+    <!--
+        The three lighter and three darker shades Windows derives from the accent, SystemAccentColorLight1 to
+        Dark3 in WinUI. A theme that ships has them from GeneratorParameters.json, one made at run time from the
+        provider; both work them out with AccentPalette.
+    -->
+    <Color x:Key="MahApps.Colors.SystemAccentLight1">{{MahApps.Colors.SystemAccentLight1}}</Color>
+    <Color x:Key="MahApps.Colors.SystemAccentLight2">{{MahApps.Colors.SystemAccentLight2}}</Color>
+    <Color x:Key="MahApps.Colors.SystemAccentLight3">{{MahApps.Colors.SystemAccentLight3}}</Color>
+    <Color x:Key="MahApps.Colors.SystemAccentDark1">{{MahApps.Colors.SystemAccentDark1}}</Color>
+    <Color x:Key="MahApps.Colors.SystemAccentDark2">{{MahApps.Colors.SystemAccentDark2}}</Color>
+    <Color x:Key="MahApps.Colors.SystemAccentDark3">{{MahApps.Colors.SystemAccentDark3}}</Color>
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemAccentLight1" Color="{StaticResource MahApps.Colors.SystemAccentLight1}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemAccentLight2" Color="{StaticResource MahApps.Colors.SystemAccentLight2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemAccentLight3" Color="{StaticResource MahApps.Colors.SystemAccentLight3}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemAccentDark1" Color="{StaticResource MahApps.Colors.SystemAccentDark1}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemAccentDark2" Color="{StaticResource MahApps.Colors.SystemAccentDark2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemAccentDark3" Color="{StaticResource MahApps.Colors.SystemAccentDark3}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlBackgroundAccent" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemControlDisabledAccent" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
