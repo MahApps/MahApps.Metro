@@ -5,6 +5,7 @@
 
     <core:NumberConverter x:Key="NumberConverter" />
     <core:BrushToColorConverter x:Key="BrushToColorConverter" />
+    <core:NotSetConverter x:Key="NotSetConverter" />
 
     <!--
         The editors a ControlExample puts in front of the properties it watches. Which one a property
@@ -66,9 +67,10 @@
 
     <DataTemplate x:Key="MahApps.Gallery.Templates.Option.Choice">
         <mah:MetroHeader Margin="0 4" Header="{Binding Name, Mode=OneTime}">
+            <!--  the null of a nullable enum is offered as not set, which a combo box can select where it cannot select a null  -->
             <ComboBox HorizontalAlignment="Stretch"
                       ItemsSource="{Binding Values, Mode=OneTime}"
-                      SelectedItem="{Binding Value, Mode=TwoWay}" />
+                      SelectedItem="{Binding Value, Mode=TwoWay, Converter={StaticResource NotSetConverter}}" />
         </mah:MetroHeader>
     </DataTemplate>
 

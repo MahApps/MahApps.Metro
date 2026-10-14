@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
+using MahApps.Metro.Gallery.Core;
 
 namespace MahApps.Metro.Gallery.Controls
 {
@@ -72,9 +73,15 @@ namespace MahApps.Metro.Gallery.Controls
 
             this.Group = group ?? DefaultGroup(this.Name);
 
-            if (property.PropertyType.IsEnum)
+            // a nullable enum is a choice as well, with not setting it as the first of them: the
+            // UnderlinePlacement of a tab strip is one, where nothing means the side the tabs are on
+            var wrapped = Nullable.GetUnderlyingType(property.PropertyType);
+            var choice = wrapped ?? property.PropertyType;
+            if (choice.IsEnum)
             {
-                this.Values = Enum.GetValues(property.PropertyType);
+                this.Values = wrapped is null
+                                  ? Enum.GetValues(choice)
+                                  : new[] { NotSetConverter.NotSet }.Concat(Enum.GetValues(choice).Cast<object>()).ToArray();
             }
 
             BindingOperations.SetBinding(this,
