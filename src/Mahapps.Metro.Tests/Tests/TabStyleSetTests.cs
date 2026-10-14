@@ -5,6 +5,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -330,6 +331,87 @@ namespace MahApps.Metro.Tests.Tests
             this.Show(tabs);
 
             Assert.That(((TabItem)tabs.Items[0]!).FindChild<Border>("Pill")?.Margin, Is.EqualTo(new Thickness(0d, 0d, 0d, 6d)));
+        }
+
+        [Test]
+        [Description("The floor of the TabView only holds where the room is shared out. A tab that follows its content hugs it, so the cross stands right after a short header instead of a long way off.")]
+        public void ACardThatFollowsItsContentHasTheCrossRightAfterTheHeader()
+        {
+            var tabs = ARowOfTabs("MahApps.Styles.TabControl.WinUI");
+            TabControlHelper.SetTabWidthMode(tabs, TabWidthMode.SizeToContent);
+            TabControlHelper.SetCloseButtonEnabled(tabs, true);
+            ((TabItem)tabs.Items[0]!).Header = "first";
+
+            this.Show(tabs);
+
+            var item = (TabItem)tabs.Items[0]!;
+            // the text rather than the part around it, which stretches over whatever room is left
+            var header = item.FindChild<FrameworkElement>("ContentSite").FindChild<TextBlock>();
+            var cross = item.FindChild<FrameworkElement>("PART_CloseButton");
+
+            Assert.That(header, Is.Not.Null);
+            Assert.That(cross, Is.Not.Null);
+
+            var headerEnd = header!.TranslatePoint(new Point(header.DesiredSize.Width, 0d), item).X;
+            var crossStart = cross!.TranslatePoint(new Point(0d, 0d), item).X;
+
+            Assert.That(crossStart - headerEnd, Is.EqualTo(cross.Margin.Left).Within(0.5d), "something stands between the header and its cross");
+        }
+
+        [Test]
+        [Description("The padding of a SelectorBar header goes around the text and the cross together, so the cross keeps its distance from the next header instead of standing against it.")]
+        public void TheCrossOfTheSelectorBarKeepsItsDistanceFromTheNextHeader()
+        {
+            var tabs = ARowOfTabs("MahApps.Styles.TabControl.WinUI.SelectorBar");
+            TabControlHelper.SetTabWidthMode(tabs, TabWidthMode.SizeToContent);
+            TabControlHelper.SetCloseButtonEnabled(tabs, true);
+
+            this.Show(tabs);
+
+            var item = (TabItem)tabs.Items[0]!;
+            var cross = item.FindChild<FrameworkElement>("PART_CloseButton");
+
+            Assert.That(cross, Is.Not.Null);
+
+            var crossEnd = cross!.TranslatePoint(new Point(cross.ActualWidth, 0d), item).X;
+
+            Assert.That(item.ActualWidth - crossEnd, Is.EqualTo(item.Padding.Right).Within(0.5d), "the cross stands at the edge of its header");
+        }
+
+        [Test]
+        [Description("Where the room is shared out the TabView floor still holds, so a short header does not leave a tab too small to hit.")]
+        public void ACardThatSharesTheRoomKeepsTheFloor()
+        {
+            var tabs = ARowOfTabs("MahApps.Styles.TabControl.WinUI");
+            tabs.Width = 120;
+
+            this.Show(tabs);
+
+            Assert.That(((TabItem)tabs.Items[0]!).ActualWidth, Is.GreaterThanOrEqualTo(100d - 0.5d));
+        }
+
+        [TestCase(Dock.Left)]
+        [TestCase(Dock.Right)]
+        [Description("A strip down the side is as wide as its widest header without the margin, so a gap beside the headers left that one less room than it needs, and the bar at its edge was cut off.")]
+        public void TheWidestHeaderDownTheSideKeepsItsBar(Dock placement)
+        {
+            var tabs = ARowOfTabs("MahApps.Styles.TabControl.WinUI.SelectorBar");
+            tabs.Items.Add(new TabItem { Header = "Advanced", Content = "42" });
+            tabs.SetCurrentValue(TabControl.TabStripPlacementProperty, placement);
+            tabs.SetCurrentValue(Selector.SelectedIndexProperty, 2);
+
+            this.Show(tabs);
+
+            Assert.Multiple(() =>
+                {
+                    foreach (var item in tabs.Items.OfType<TabItem>())
+                    {
+                        var strip = (FrameworkElement)VisualTreeHelper.GetParent(item);
+                        var room = strip.ActualWidth - item.Margin.Left - item.Margin.Right;
+
+                        Assert.That(item.ActualWidth, Is.LessThanOrEqualTo(room + 0.5d), $"{item.Header} has less room than it needs");
+                    }
+                });
         }
 
         [TestCase("MahApps.Styles.TabControl", Visibility.Hidden)]

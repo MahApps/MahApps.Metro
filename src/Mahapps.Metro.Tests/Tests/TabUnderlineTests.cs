@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -101,6 +102,35 @@ namespace MahApps.Metro.Tests.Tests
         /// that is showing. Neither the mouse nor the keyboard can be handed to a window that is off
         /// screen, so the template is asked instead.
         /// </summary>
+        [TestCase(typeof(TabControl), typeof(TabItem))]
+        [TestCase(typeof(MetroTabControl), typeof(MetroTabItem))]
+        [Description("A strip that asks for no line has none from the first layout on, rather than the line a tab draws while it has not found its strip yet, which made the strip one line taller for a moment.")]
+        public async Task NoLineIsDrawnTheFirstTime(Type tabControlType, Type tabItemType)
+        {
+            var host = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
+
+            try
+            {
+                var tabControl = (TabControl)Activator.CreateInstance(tabControlType)!;
+                var tab = (TabItem)Activator.CreateInstance(tabItemType)!;
+                tab.Header = "42";
+                tabControl.Items.Add(tab);
+                TabControlHelper.SetUnderlined(tabControl, UnderlinedType.None);
+
+                // what the line is the first time the tab is laid out, which is what shows first
+                Visibility? first = null;
+                tab.SizeChanged += (_, _) => first ??= (tab.Template?.FindName("Underline", tab) as UIElement)?.Visibility;
+
+                host.Show(tabControl);
+
+                Assert.That(first, Is.EqualTo(Visibility.Collapsed));
+            }
+            finally
+            {
+                host.Close();
+            }
+        }
+
         private static string? WhatIsAsked(TabItem item)
         {
             foreach (var trigger in item.Template.Triggers)

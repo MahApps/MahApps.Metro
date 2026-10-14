@@ -1226,7 +1226,6 @@
            TargetType="{x:Type TabItem}">
         <Setter Property="MaxWidth" Value="{DynamicResource MahApps.Size.TabItem.WinUI.MaxWidth}" />
         <Setter Property="MinHeight" Value="32" />
-        <Setter Property="MinWidth" Value="{DynamicResource MahApps.Size.TabItem.WinUI.MinWidth}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -1367,6 +1366,16 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--
+            The TabView holds a tab to its floor only while it shares the room out. A tab that
+            follows its content hugs it, and with the floor on every tab a short header stood a long
+            way off its cross.
+        -->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(mah:TabControlHelper.TabWidthMode)}" Value="Equal">
+                <Setter Property="MinWidth" Value="{DynamicResource MahApps.Size.TabItem.WinUI.MinWidth}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--
@@ -1500,14 +1509,16 @@
                                 Background="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"
                                 CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Grid.Row="1" Grid.Column="1">
+                        <!--  the padding goes around the text and the cross together, so the cross keeps its distance from the next header  -->
+                        <Grid Grid.Row="1"
+                              Grid.Column="1"
+                              Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <mah:ContentControlEx x:Name="ContentSite"
                                                   Grid.Column="0"
-                                                  Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                   Content="{TemplateBinding Header}"
@@ -1710,6 +1721,19 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--
+            The gap belongs between headers in a row. A strip down the side is only as wide as its
+            widest header without the margin, so the gap left that one too little room, and the bar
+            at its edge was cut off.
+        -->
+        <Style.Triggers>
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="Margin" Value="0" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter Property="Margin" Value="0" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MahApps.Styles.TabControl.WinUI.SelectorBar"
