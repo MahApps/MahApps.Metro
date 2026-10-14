@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -138,17 +138,14 @@ namespace MahApps.Metro.Theming
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hash = this.Accent.GetHashCode();
-                hash = (hash * 397) ^ this.Light1.GetHashCode();
-                hash = (hash * 397) ^ this.Light2.GetHashCode();
-                hash = (hash * 397) ^ this.Light3.GetHashCode();
-                hash = (hash * 397) ^ this.Dark1.GetHashCode();
-                hash = (hash * 397) ^ this.Dark2.GetHashCode();
-                hash = (hash * 397) ^ this.Dark3.GetHashCode();
-                return hash;
-            }
+            var hash = this.Accent.GetHashCode();
+            hash = (hash * 397) ^ this.Light1.GetHashCode();
+            hash = (hash * 397) ^ this.Light2.GetHashCode();
+            hash = (hash * 397) ^ this.Light3.GetHashCode();
+            hash = (hash * 397) ^ this.Dark1.GetHashCode();
+            hash = (hash * 397) ^ this.Dark2.GetHashCode();
+            hash = (hash * 397) ^ this.Dark3.GetHashCode();
+            return hash;
         }
 
         /// <summary>Compares two palettes shade by shade.</summary>
@@ -165,10 +162,10 @@ namespace MahApps.Metro.Theming
 
         private static Color Mix(Color from, Color to, double step)
         {
-            byte Channel(byte a, byte b) => (byte)Math.Round(a + (b - a) * step, MidpointRounding.AwayFromZero);
-
-            return Color.FromRgb(Channel(from.R, to.R), Channel(from.G, to.G), Channel(from.B, to.B));
+            return Color.FromRgb(Mix(from.R, to.R, step), Mix(from.G, to.G, step), Mix(from.B, to.B, step));
         }
+
+        private static byte Mix(byte from, byte to, double step) => (byte)Math.Round(from + (to - from) * step, MidpointRounding.AwayFromZero);
 
         private static Color NoGreyerThan(Color color, double saturation)
         {
@@ -229,12 +226,15 @@ namespace MahApps.Metro.Theming
 
         private static (double H, double S, double L) ToHsl(Color color)
         {
+            // which channel is the largest is decided on the bytes, where equal means equal
+            var top = Math.Max(Math.Max(color.R, color.G), color.B);
+            var bottom = Math.Min(Math.Min(color.R, color.G), color.B);
+
             double r = color.R / 255.0, g = color.G / 255.0, b = color.B / 255.0;
-            var max = Math.Max(Math.Max(r, g), b);
-            var min = Math.Min(Math.Min(r, g), b);
+            double max = top / 255.0, min = bottom / 255.0;
             var l = (max + min) / 2;
 
-            if (max == min)
+            if (top == bottom)
             {
                 return (0, 0, l);
             }
@@ -242,11 +242,11 @@ namespace MahApps.Metro.Theming
             var d = max - min;
             var s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
             double h;
-            if (max == r)
+            if (top == color.R)
             {
                 h = (g - b) / d + (g < b ? 6 : 0);
             }
-            else if (max == g)
+            else if (top == color.G)
             {
                 h = (b - r) / d + 2;
             }
