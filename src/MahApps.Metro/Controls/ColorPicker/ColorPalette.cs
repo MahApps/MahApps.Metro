@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using MahApps.Metro.ValueBoxes;
 
@@ -95,6 +96,35 @@ namespace MahApps.Metro.Controls
         {
             get => (ColorHelper?)this.GetValue(ColorHelperProperty);
             set => this.SetValue(ColorHelperProperty, value);
+        }
+
+        /// <inheritdoc />
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new SwatchContainer();
+        }
+
+        /// <summary>
+        /// The list item a swatch stands in. The list item cuts its content to its corners with a clip
+        /// that follows its size, and each clip that changes sends the layout round once more. A palette
+        /// is a hundred swatches and more that are not virtualized, which is enough for WPF to put the
+        /// rest of the layout off; in a drop-down that showed the window before it was sized and placed.
+        /// A swatch rounds its own corners, so the clip has nothing to do here. It is set aside each time
+        /// a template is applied, since the style of the items can arrive after the container is made,
+        /// and by a local value, which outranks the binding of the template that cannot be cleared.
+        /// </summary>
+        private sealed class SwatchContainer : ListBoxItem
+        {
+            public override void OnApplyTemplate()
+            {
+                base.OnApplyTemplate();
+
+                if (this.Template?.FindName("ContentGrid", this) is UIElement content
+                    && BindingOperations.IsDataBound(content, ClipProperty))
+                {
+                    content.SetValue(ClipProperty, null);
+                }
+            }
         }
 
         internal bool FocusSelectedItem()

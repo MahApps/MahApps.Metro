@@ -42,25 +42,24 @@
                     <Binding Path="IsAlphaChannelVisible" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
                 </MultiBinding>
             </Border.ToolTip>
-            <Grid x:Name="ContentGrid">
-                <Grid.Clip>
-                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
-                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
-                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
-                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+            <!--
+                The colour stands on the checks rather than on the flyout behind it, so that a
+                transparent entry reads as transparent and a translucent one shows what it lets
+                through. It is a layer of its own because the two carry different fills, and it
+                rounds its own corners to the ones the frame leaves over rather than being clipped
+                to them: a clip follows the size of what it cuts, and each one that changes sends
+                layout round again, which with the hundred and more swatches of a palette was
+                enough for WPF to put the layout off, and a drop-down showed before it was placed.
+            -->
+            <Border Background="{Binding Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}">
+                <Border.CornerRadius>
+                    <MultiBinding Converter="{x:Static mahConverters:InnerCornerRadiusConverter.Instance}">
                         <Binding ElementName="ColorPresenter" Path="CornerRadius" />
                         <Binding ElementName="ColorPresenter" Path="BorderThickness" />
                         <Binding ElementName="ColorPresenter" Path="Padding" />
                     </MultiBinding>
-                </Grid.Clip>
-                <!--
-                    The colour stands on the checks rather than on the flyout behind it, so that a
-                    transparent entry reads as transparent and a translucent one shows what it lets
-                    through. It is a layer of its own because the two carry different fills, and the
-                    clip above cuts it to the corners the frame leaves over.
-                -->
-                <Grid Background="{Binding Converter={x:Static mahConverters:ColorToSolidColorBrushConverter.DefaultInstance}}" />
-            </Grid>
+                </Border.CornerRadius>
+            </Border>
         </Border>
     </DataTemplate>
 

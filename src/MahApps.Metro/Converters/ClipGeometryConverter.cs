@@ -39,15 +39,7 @@ namespace MahApps.Metro.Converters
             var borderThickness = values.Length > 3 && values[3] is Thickness thickness ? thickness : default;
             var padding = values.Length > 4 && values[4] is Thickness thicknessPadding ? thicknessPadding : default;
 
-            // Half of the border and the whole padding, which is how the WPF Border draws the inner edge
-            // of its own frame. Taking the whole thickness would leave a gap between the frame and the
-            // content along every rounded corner.
-            var inset = new Thickness(0.5 * borderThickness.Left + padding.Left,
-                                      0.5 * borderThickness.Top + padding.Top,
-                                      0.5 * borderThickness.Right + padding.Right,
-                                      0.5 * borderThickness.Bottom + padding.Bottom);
-
-            var geometry = GetRoundRectangle(new Rect(0, 0, width, height), inset, cornerRadius);
+            var geometry = GetRoundRectangle(new Rect(0, 0, width, height), Inset(borderThickness, padding), cornerRadius);
             geometry.Freeze();
 
             return geometry;
@@ -55,6 +47,17 @@ namespace MahApps.Metro.Converters
 
         public object?[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
             => throw new NotImplementedException();
+
+        // Half of the border and the whole padding, which is how the WPF Border draws the inner edge
+        // of its own frame. Taking the whole thickness would leave a gap between the frame and the
+        // content along every rounded corner.
+        internal static Thickness Inset(Thickness borderThickness, Thickness padding)
+        {
+            return new Thickness(0.5 * borderThickness.Left + padding.Left,
+                                 0.5 * borderThickness.Top + padding.Top,
+                                 0.5 * borderThickness.Right + padding.Right,
+                                 0.5 * borderThickness.Bottom + padding.Bottom);
+        }
 
         // Started from https://wpfspark.wordpress.com/2011/06/08/clipborder-a-wpf-border-that-clips/
         private static Geometry GetRoundRectangle(Rect baseRect, Thickness inset, CornerRadius cornerRadius)

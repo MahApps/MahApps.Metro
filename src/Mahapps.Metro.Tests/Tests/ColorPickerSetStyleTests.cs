@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -483,6 +484,114 @@ namespace MahApps.Metro.Tests.Tests
                 picker.IsDropDownOpen = false;
                 this.Settle();
             }
+        }
+
+        [TestCase("MahApps.Styles.ColorPicker")]
+        [TestCase("MahApps.Styles.ColorPicker.Win10")]
+        [TestCase("MahApps.Styles.ColorPicker.WinUI")]
+        [Description("The tabs of the drop-down are laid out the first time it opens as they are every time after, rather than in the black and the size a tab falls back to while it has not found its strip yet, which showed for a moment and then jumped.")]
+        public void TheTabsComeUpRightTheFirstTime(string key)
+        {
+            var picker = this.Show(key);
+            var tab = (TabItem)Part(picker, "PART_ColorPalettesTab");
+
+            // what the tab is measured with the first time, which is what the drop-down first shows
+            double? firstHeight = null;
+            double? firstFontSize = null;
+            Brush? firstForeground = null;
+            Thickness? firstPadding = null;
+            tab.SizeChanged += (_, _) =>
+                {
+                    if (firstHeight is null)
+                    {
+                        firstHeight = tab.ActualHeight;
+                        firstFontSize = HeaderedControlHelper.GetHeaderFontSize(tab);
+                        firstForeground = HeaderedControlHelper.GetHeaderForeground(tab);
+                        firstPadding = tab.Padding;
+                    }
+                };
+
+            picker.IsDropDownOpen = true;
+            this.Settle();
+
+            try
+            {
+                Assert.Multiple(() =>
+                    {
+                        Assert.That(firstHeight, Is.EqualTo(tab.ActualHeight).Within(0.01), "the height");
+                        Assert.That(firstFontSize, Is.EqualTo(HeaderedControlHelper.GetHeaderFontSize(tab)), "the size of the header");
+                        Assert.That(firstForeground, Is.SameAs(HeaderedControlHelper.GetHeaderForeground(tab)), "its colour");
+                        Assert.That(firstPadding, Is.EqualTo(tab.Padding), "and the room round it");
+                    });
+            }
+            finally
+            {
+                picker.IsDropDownOpen = false;
+                this.Settle();
+            }
+        }
+
+        [TestCase("MahApps.Styles.ColorPicker")]
+        [TestCase("MahApps.Styles.ColorPicker.Win10")]
+        [TestCase("MahApps.Styles.ColorPicker.WinUI")]
+        [Description("The drop-down is laid out before its window shows. WPF sizes and places the window of a popup at the end of that layout, so a layout it put off showed the window for a moment in the top left corner of the screen, where it was made.")]
+        public void TheDropDownIsLaidOutBeforeItShows(string key)
+        {
+            var picker = this.Show(key);
+            var popup = (Popup)Part(picker, "PART_Popup");
+            var content = (UIElement)popup.Child;
+
+            bool? laidOutWhenShown = null;
+            HwndSourceHook hook = (IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) =>
+                {
+                    // WM_SHOWWINDOW, the first time it shows
+                    if (msg == 0x0018 && wParam != IntPtr.Zero && laidOutWhenShown is null)
+                    {
+                        laidOutWhenShown = IsLaidOut(content);
+                    }
+
+                    return IntPtr.Zero;
+                };
+            SourceChangedEventHandler sourceChanged = (_, e) => (e.NewSource as HwndSource)?.AddHook(hook);
+            PresentationSource.AddSourceChangedHandler(content, sourceChanged);
+
+            try
+            {
+                picker.IsDropDownOpen = true;
+                this.Settle();
+
+                Assert.That(laidOutWhenShown, Is.True);
+            }
+            finally
+            {
+                PresentationSource.RemoveSourceChangedHandler(content, sourceChanged);
+                picker.IsDropDownOpen = false;
+                this.Settle();
+            }
+        }
+
+        private static bool IsLaidOut(DependencyObject element)
+        {
+            // what is collapsed is never measured, so it never counts as laid out either
+            if (element is UIElement { Visibility: Visibility.Collapsed })
+            {
+                return true;
+            }
+
+            if (element is UIElement { IsMeasureValid: false } or UIElement { IsArrangeValid: false })
+            {
+                return false;
+            }
+
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                if (!IsLaidOut(VisualTreeHelper.GetChild(element, i)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         [TestCase("MahApps.Styles.ColorPicker.Win10")]
