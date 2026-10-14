@@ -13,14 +13,14 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="LinkExample"
-                                     Description="A hyperlink is an inline rather than a control, so it lives inside a TextBlock and is styled rather than templated. Note the colour: at rest it takes the colour of the words around it and leaves the underline to say what it is, and only under the pointer does it take the accent."
+                                     Description="A hyperlink is an inline rather than a control, so it lives inside a TextBlock and is styled rather than templated. In the Metro set it takes the colour of the words around it and leaves the underline to say what it is, and only under the pointer does it take the accent. Windows 10 writes it in the accent and underlines it, WinUI writes it in the accent without the underline."
                                      Header="A link in running text">
                 <smtx:XamlDisplay UniqueKey="Hyperlink.Inline">
                     <TextBlock Width="420"
                                HorizontalAlignment="Left"
                                Style="{DynamicResource MahApps.Styles.TextBlock}"
                                TextWrapping="Wrap">
-                        Every control and style in here is built from the source, which is<Hyperlink x:Name="Link"
+                        <Run Text="Every control and style in here is built from the source, which is " /><Hyperlink x:Name="Link"
                                    NavigateUri="https://github.com/MahApps/MahApps.Metro"
                                    RequestNavigate="OnNavigate">
                             hosted on GitHub

@@ -1,0 +1,118 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+
+    <!--
+        The HyperlinkButton, after HyperlinkButton_themeresources.xaml of microsoft-ui-xaml and the style in
+        generic.xaml of the Windows SDK. WinUI underlines only the text block the presenter makes for a string,
+        never one the app puts in. The button hands this template to its own presenter for a string alone, so
+        a label or a list inside a template of the app keeps the look it has anywhere else.
+    -->
+    <DataTemplate x:Key="MahApps.Templates.HyperlinkButton.Text">
+        <AccessText x:Name="Text" Text="{Binding}" />
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsUnderlineVisible, RelativeSource={RelativeSource AncestorType={x:Type mah:HyperlinkButton}}}" Value="True">
+                <Setter TargetName="Text" Property="TextDecorations" Value="Underline" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.HyperlinkButton" TargetType="{x:Type mah:HyperlinkButton}">
+        <Border x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <ContentPresenter x:Name="PART_ContentPresenter"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              RecognizesAccessKey="True"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.HyperlinkButton" TargetType="{x:Type mah:HyperlinkButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.HyperlinkButton}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  generic.xaml of the Windows SDK: transparent, HyperlinkButtonPadding, the colours of the link, underlined text  -->
+    <Style x:Key="MahApps.Styles.HyperlinkButton.Win10"
+           BasedOn="{StaticResource MahApps.Styles.HyperlinkButton}"
+           TargetType="{x:Type mah:HyperlinkButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.Foreground}" />
+        <Setter Property="Padding" Value="0 6 0 7" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.ForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Win10.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        HyperlinkButton_themeresources.xaml of WinUI: the padding and the radius of a button, a subtle fill under the
+        mouse and while pressed, a transparent border of one, and no underline, since HyperlinkUnderlineVisible is False
+    -->
+    <Style x:Key="MahApps.Styles.HyperlinkButton.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.HyperlinkButton}"
+           TargetType="{x:Type mah:HyperlinkButton}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.Foreground}" />
+        <Setter Property="IsUnderlineVisible" Value="False" />
+        <Setter Property="Padding" Value="11 5 11 6" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WinUI.SubtleFillSecondary}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.ForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WinUI.SubtleFillTertiary}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.ForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

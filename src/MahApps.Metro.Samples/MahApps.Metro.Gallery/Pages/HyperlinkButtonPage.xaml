@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.HyperlinkButtonPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <controls:ControlExample x:Name="TextExample"
+                                     Description="NavigateUri opens in the browser unless a handler takes RequestNavigate first. A string is underlined where the set wants it."
+                                     Header="A link that opens a page">
+                <smtx:XamlDisplay UniqueKey="HyperlinkButton.Text">
+                    <mah:HyperlinkButton x:Name="TextHyperlinkButton"
+                                         Content="MahApps.Metro on GitHub"
+                                         NavigateUri="https://github.com/MahApps/MahApps.Metro" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+            <controls:ControlExample Description="Anything can be the content. Only text is underlined." Header="An image as the link">
+                <smtx:XamlDisplay UniqueKey="HyperlinkButton.Image">
+                    <mah:HyperlinkButton NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                        <iconPacks:PackIconMaterial Width="32"
+                                                    Height="32"
+                                                    Kind="Github" />
+                    </mah:HyperlinkButton>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+            <controls:ControlExample Description="Without NavigateUri the button is a button: Click and Command, nothing opens." Header="A link that runs a command">
+                <smtx:XamlDisplay UniqueKey="HyperlinkButton.Command">
+                    <StackPanel smtx:XamlDisplay.Ignore="This" Orientation="Horizontal">
+                        <mah:HyperlinkButton Click="OnAnswerClick" Content="Show the answer" />
+                        <TextBlock x:Name="Answer"
+                                   Margin="16 0 0 0"
+                                   VerticalAlignment="Center"
+                                   smtx:XamlDisplay.Ignore="ThisAndChildren" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+            <controls:ControlExample Description="A link that is off keeps its place and greys out." Header="A link that is off">
+                <smtx:XamlDisplay UniqueKey="HyperlinkButton.Disabled">
+                    <mah:HyperlinkButton Content="Not yet"
+                                         IsEnabled="False"
+                                         NavigateUri="https://github.com/MahApps/MahApps.Metro" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

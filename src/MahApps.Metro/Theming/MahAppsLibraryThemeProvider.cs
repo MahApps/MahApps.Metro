@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using ControlzEx.Theming;
 
 namespace MahApps.Metro.Theming
@@ -74,6 +75,28 @@ namespace MahApps.Metro.Theming
 
             values.Add("MahApps.Colors.Highlight", colorValues.HighlightColor.ToString());
             values.Add("MahApps.Colors.IdealForeground", colorValues.IdealForegroundColor.ToString());
+
+            // a theme that follows the accent of Windows gets the very shades Windows has for it
+            var accent = colorValues.AccentBaseColor;
+            var palette = AccentPalette.FromWindows() is { } windows && SameRgb(windows.Accent, accent)
+                              ? windows
+                              : AccentPalette.Create(accent);
+
+            values.Add("MahApps.Colors.SystemAccentLight1", palette.Light1.ToString());
+            values.Add("MahApps.Colors.SystemAccentLight2", palette.Light2.ToString());
+            values.Add("MahApps.Colors.SystemAccentLight3", palette.Light3.ToString());
+            values.Add("MahApps.Colors.SystemAccentDark1", palette.Dark1.ToString());
+            values.Add("MahApps.Colors.SystemAccentDark2", palette.Dark2.ToString());
+            values.Add("MahApps.Colors.SystemAccentDark3", palette.Dark3.ToString());
+
+            // what the WinUI set writes on its fill, which is Dark1 in a light theme and Light2 in a dark one
+            values.Add("MahApps.Colors.IdealForeground.SystemAccentDark1", RuntimeThemeGenerator.GetIdealTextColor(palette.Dark1).ToString());
+            values.Add("MahApps.Colors.IdealForeground.SystemAccentLight2", RuntimeThemeGenerator.GetIdealTextColor(palette.Light2).ToString());
+        }
+
+        private static bool SameRgb(Color a, Color b)
+        {
+            return a.R == b.R && a.G == b.G && a.B == b.B;
         }
     }
 }

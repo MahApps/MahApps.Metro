@@ -771,9 +771,9 @@
         outline while it is off, filled with the accent once it is on, and the knob is the theme
         foreground over the one and white over the other.
 
-        Windows 10 lights the track a shade and darkens it a shade while the pointer is over an on
-        switch and while it is held. Those are SystemAccentColorLight1 and Dark1, which the accent
-        of a MahApps theme has no counterpart for, so all three take the accent itself.
+        Under the pointer an on switch takes the accent a little see-through, while it is held the
+        medium base colour, as generic.xaml of the SDK has it. The accent ones live in the themes,
+        the pressed ones here, since they do not change with the accent.
     -->
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.ContainerBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
@@ -787,12 +787,14 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOffDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.FillOnDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOff" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffPressed" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOffDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOn" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.StrokeOnDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOff" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.Win10.KnobFillOffPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
@@ -1283,5 +1285,12 @@
     <!--  the informational ground of a bar lying over the content of a window: the see through one of WinUI laid over the window background, so nothing shows through it  -->
     <Color x:Key="MahApps.Colors.InfoBar.Window.Informational.Background">{{MahApps.Colors.InfoBar.Window.Informational.Background}}</Color>
     <SolidColorBrush x:Key="MahApps.Brushes.InfoBar.Window.Informational.Background" Color="{StaticResource MahApps.Colors.InfoBar.Window.Informational.Background}" options:Freeze="True" />
+
+    <!--  The link of generic.xaml of the Windows SDK: HyperlinkForegroundPointerOver and Pressed, and the disabled colour of the HyperlinkButton  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHyperlinkBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.ForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.Win10.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <!--  WinUI writes a disabled link in AccentTextFillColorDisabled, which has the colour of TextFillColorDisabled  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
 
 </ResourceDictionary>

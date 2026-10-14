@@ -11,7 +11,8 @@ namespace MahApps.Metro.Tests.Tests
 {
     /// <summary>
     /// The colours of the info bar, taken from InfoBar_themeresources.xaml of microsoft-ui-xaml. The informational
-    /// icon is the one exception: it is the accent of the theme with the foreground worked out for that accent.
+    /// icon takes SystemFillColorAttention, the accent itself in the light theme and Light2 in the dark one, with the
+    /// foreground that reads on that colour.
     /// </summary>
     [TestFixture]
     public class InfoBarBrushTests : WindowTestFixture<TestWindow>
@@ -37,8 +38,9 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("Light.Blue", "MahApps.Brushes.InfoBar.Success.IconForeground", "#FFFFFFFF")]
         [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Success.IconForeground", "#E4000000")]
         [TestCase("Light.Blue", "MahApps.Brushes.InfoBar.Informational.IconBackground", "#FF0078D7")]
-        [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Informational.IconBackground", "#FF0078D7")]
+        [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Informational.IconBackground", "#FF4DC1FF")]
         [TestCase("Light.Blue", "MahApps.Brushes.InfoBar.Informational.IconForeground", "#FFFFFFFF")]
+        [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Informational.IconForeground", "#FF000000")]
         [TestCase("Light.Yellow", "MahApps.Brushes.InfoBar.Informational.IconForeground", "#FF000000")]
         [TestCase("Light.Blue", "MahApps.Brushes.InfoBar.Border", "#0F000000")]
         [TestCase("Dark.Blue", "MahApps.Brushes.InfoBar.Border", "#19000000")]

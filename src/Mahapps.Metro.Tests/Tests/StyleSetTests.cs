@@ -6,6 +6,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Tests.TestHelpers;
@@ -66,6 +67,10 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(ContentDialog), "MahApps.Styles.ContentDialog.Win10")]
         [TestCase(WinUI, typeof(ContentDialog), "MahApps.Styles.ContentDialog.WinUI")]
         [TestCase(Win10, typeof(InfoBar), "MahApps.Styles.InfoBar.Win10")]
+        [TestCase(Win10, typeof(Hyperlink), "MahApps.Styles.Hyperlink.Win10")]
+        [TestCase(WinUI, typeof(Hyperlink), "MahApps.Styles.Hyperlink.WinUI")]
+        [TestCase(Win10, typeof(HyperlinkButton), "MahApps.Styles.HyperlinkButton.Win10")]
+        [TestCase(WinUI, typeof(HyperlinkButton), "MahApps.Styles.HyperlinkButton.WinUI")]
         [TestCase(WinUI, typeof(InfoBar), "MahApps.Styles.InfoBar.WinUI")]
         [TestCase(Win10, typeof(AnalogClock), "MahApps.Styles.AnalogClock.Win10")]
         [TestCase(Win10, typeof(BaseMetroDialog), "MahApps.Styles.BaseMetroDialog.Win10")]
@@ -169,6 +174,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.SplitButton.WinUI", typeof(SplitButton))]
         [TestCase("MahApps.Styles.DropDownButton.WinUI", typeof(DropDownButton))]
         [TestCase("MahApps.Styles.InfoBar.WinUI", typeof(InfoBar))]
+        [TestCase("MahApps.Styles.HyperlinkButton.WinUI", typeof(HyperlinkButton))]
         [Description("WinUI rounds a control by ControlCornerRadius and nothing else, so no style of that set carries a radius of its own and a box and the picker standing beside it are rounded alike. The rows of a list box are not among them: that set draws them square.")]
         public void EveryWinUIControlIsRoundedByTheSameNumber(string key, Type type)
         {

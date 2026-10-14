@@ -58,7 +58,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.Multiple(() =>
                 {
                     Assert.That(ColourOf(box.Background), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlFillInputActive")), "the background of a focused box");
-                    Assert.That(ColourOf(BottomEdge(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.SystemAccent")), "the bottom edge of a focused box");
+                    Assert.That(ColourOf(BottomEdge(box).BorderBrush), Is.EqualTo(Colour("MahApps.Colors.SystemAccentDark1")), "the bottom edge of a focused box, the accent fill of the light theme");
                     Assert.That(ColourOf(border.BorderBrush), Is.EqualTo(Colour("MahApps.Colors.WinUI.ControlStrokeDefault")), "while the rest of the border stays what it was");
                     Assert.That(border.BorderThickness, Is.EqualTo(new Thickness(1, 1, 1, 2)), "and the line along the bottom is the thick one");
                     Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(Colour("MahApps.Colors.WinUI.TextPlaceholderFocused")), "and the watermark steps back further while the caret is there");

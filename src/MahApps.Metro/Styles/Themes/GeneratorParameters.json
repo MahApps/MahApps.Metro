@@ -14,7 +14,14 @@
         "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.6",
         "MahApps.Brushes.SystemControlHighlightListAccentMediumLow.Opacity": "0.75",
         "MahApps.Brushes.SystemControlHighlightListAccentVeryHigh.Opacity": "0.9",
-        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.8"
+        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.8",
+        "MahApps.Keys.WinUI.AccentFill": "MahApps.Colors.SystemAccentLight2",
+        "MahApps.Keys.WinUI.AccentTextPrimary": "MahApps.Colors.SystemAccentLight3",
+        "MahApps.Keys.WinUI.AccentTextSecondary": "MahApps.Colors.SystemAccentLight3",
+        "MahApps.Keys.WinUI.AccentTextTertiary": "MahApps.Colors.SystemAccentLight2",
+        "MahApps.Keys.WinUI.TextOnAccent": "MahApps.Colors.IdealForeground.SystemAccentLight2",
+        "MahApps.Keys.WinUI.SystemFillAttention": "MahApps.Colors.SystemAccentLight2",
+        "MahApps.Keys.WinUI.TextOnAttention": "MahApps.Colors.IdealForeground.SystemAccentLight2"
       }
     },
     {
@@ -27,7 +34,14 @@
         "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.4",
         "MahApps.Brushes.SystemControlHighlightListAccentMediumLow.Opacity": "0.75",
         "MahApps.Brushes.SystemControlHighlightListAccentVeryHigh.Opacity": "0.9",
-        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.6"
+        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.6",
+        "MahApps.Keys.WinUI.AccentFill": "MahApps.Colors.SystemAccentDark1",
+        "MahApps.Keys.WinUI.AccentTextPrimary": "MahApps.Colors.SystemAccentDark2",
+        "MahApps.Keys.WinUI.AccentTextSecondary": "MahApps.Colors.SystemAccentDark3",
+        "MahApps.Keys.WinUI.AccentTextTertiary": "MahApps.Colors.SystemAccentDark1",
+        "MahApps.Keys.WinUI.TextOnAccent": "MahApps.Colors.IdealForeground.SystemAccentDark1",
+        "MahApps.Keys.WinUI.SystemFillAttention": "MahApps.Colors.SystemAccent",
+        "MahApps.Keys.WinUI.TextOnAttention": "MahApps.Colors.IdealForeground"
       }
     }
   ],
@@ -40,7 +54,15 @@
         "MahApps.Colors.Accent2": "#99F0A30A",
         "MahApps.Colors.Accent3": "#66F0A30A",
         "MahApps.Colors.Accent4": "#33F0A30A",
-        "MahApps.Colors.Highlight": "#FFB17807"
+        "MahApps.Colors.Highlight": "#FFB17807",
+        "MahApps.Colors.SystemAccentLight1": "#FFF5B015",
+        "MahApps.Colors.SystemAccentLight2": "#FFF7C838",
+        "MahApps.Colors.SystemAccentLight3": "#FFFCE055",
+        "MahApps.Colors.SystemAccentDark1": "#FFD58B09",
+        "MahApps.Colors.SystemAccentDark2": "#FF955205",
+        "MahApps.Colors.SystemAccentDark3": "#FF5B1E02",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -51,7 +73,15 @@
         "MahApps.Colors.Accent2": "#990078D7",
         "MahApps.Colors.Accent3": "#660078D7",
         "MahApps.Colors.Accent4": "#330078D7",
-        "MahApps.Colors.Highlight": "#FF00589F"
+        "MahApps.Colors.Highlight": "#FF00589F",
+        "MahApps.Colors.SystemAccentLight1": "#FF0092FB",
+        "MahApps.Colors.SystemAccentLight2": "#FF4DC1FF",
+        "MahApps.Colors.SystemAccentLight3": "#FF99EAFF",
+        "MahApps.Colors.SystemAccentDark1": "#FF0067C3",
+        "MahApps.Colors.SystemAccentDark2": "#FF003F95",
+        "MahApps.Colors.SystemAccentDark3": "#FF001A6B",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -62,7 +92,15 @@
         "MahApps.Colors.Accent2": "#99825A2C",
         "MahApps.Colors.Accent3": "#66825A2C",
         "MahApps.Colors.Accent4": "#33825A2C",
-        "MahApps.Colors.Highlight": "#FF604220"
+        "MahApps.Colors.Highlight": "#FF604220",
+        "MahApps.Colors.SystemAccentLight1": "#FFA17437",
+        "MahApps.Colors.SystemAccentLight2": "#FFCCAB69",
+        "MahApps.Colors.SystemAccentLight3": "#FFE8D8A5",
+        "MahApps.Colors.SystemAccentDark1": "#FF744D25",
+        "MahApps.Colors.SystemAccentDark2": "#FF552D16",
+        "MahApps.Colors.SystemAccentDark3": "#FF381108",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -73,7 +111,15 @@
         "MahApps.Colors.Accent2": "#990050EF",
         "MahApps.Colors.Accent3": "#660050EF",
         "MahApps.Colors.Accent4": "#330050EF",
-        "MahApps.Colors.Highlight": "#FF003BB0"
+        "MahApps.Colors.Highlight": "#FF003BB0",
+        "MahApps.Colors.SystemAccentLight1": "#FF1763FF",
+        "MahApps.Colors.SystemAccentLight2": "#FF6E99FF",
+        "MahApps.Colors.SystemAccentLight3": "#FFBFCCFF",
+        "MahApps.Colors.SystemAccentDark1": "#FF0044DE",
+        "MahApps.Colors.SystemAccentDark2": "#FF0028B6",
+        "MahApps.Colors.SystemAccentDark3": "#FF000F91",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -84,7 +130,15 @@
         "MahApps.Colors.Accent2": "#99A20025",
         "MahApps.Colors.Accent3": "#66A20025",
         "MahApps.Colors.Accent4": "#33A20025",
-        "MahApps.Colors.Highlight": "#FF77001B"
+        "MahApps.Colors.Highlight": "#FF77001B",
+        "MahApps.Colors.SystemAccentLight1": "#FFD0002D",
+        "MahApps.Colors.SystemAccentLight2": "#FFFF3757",
+        "MahApps.Colors.SystemAccentLight3": "#FFFF989B",
+        "MahApps.Colors.SystemAccentDark1": "#FF94001F",
+        "MahApps.Colors.SystemAccentDark2": "#FF740013",
+        "MahApps.Colors.SystemAccentDark3": "#FF560007",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FFFFFFFF"
       }
     },
     {
@@ -95,7 +149,15 @@
         "MahApps.Colors.Accent2": "#991BA1E2",
         "MahApps.Colors.Accent3": "#661BA1E2",
         "MahApps.Colors.Accent4": "#331BA1E2",
-        "MahApps.Colors.Highlight": "#FF1377A7"
+        "MahApps.Colors.Highlight": "#FF1377A7",
+        "MahApps.Colors.SystemAccentLight1": "#FF31B0E6",
+        "MahApps.Colors.SystemAccentLight2": "#FF60D0F0",
+        "MahApps.Colors.SystemAccentLight3": "#FF8CEEFA",
+        "MahApps.Colors.SystemAccentDark1": "#FF178BC9",
+        "MahApps.Colors.SystemAccentDark2": "#FF0E5890",
+        "MahApps.Colors.SystemAccentDark3": "#FF05295C",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -106,7 +168,15 @@
         "MahApps.Colors.Accent2": "#99008A00",
         "MahApps.Colors.Accent3": "#66008A00",
         "MahApps.Colors.Accent4": "#33008A00",
-        "MahApps.Colors.Highlight": "#FF006600"
+        "MahApps.Colors.Highlight": "#FF006600",
+        "MahApps.Colors.SystemAccentLight1": "#FF05B300",
+        "MahApps.Colors.SystemAccentLight2": "#FF27FF0E",
+        "MahApps.Colors.SystemAccentLight3": "#FF81FF62",
+        "MahApps.Colors.SystemAccentDark1": "#FF007A00",
+        "MahApps.Colors.SystemAccentDark2": "#FF005300",
+        "MahApps.Colors.SystemAccentDark3": "#FF003000",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -117,7 +187,15 @@
         "MahApps.Colors.Accent2": "#9960A917",
         "MahApps.Colors.Accent3": "#6660A917",
         "MahApps.Colors.Accent4": "#3360A917",
-        "MahApps.Colors.Highlight": "#FF477D11"
+        "MahApps.Colors.Highlight": "#FF477D11",
+        "MahApps.Colors.SystemAccentLight1": "#FF71C31B",
+        "MahApps.Colors.SystemAccentLight2": "#FF96E53C",
+        "MahApps.Colors.SystemAccentLight3": "#FFB7EF70",
+        "MahApps.Colors.SystemAccentDark1": "#FF529314",
+        "MahApps.Colors.SystemAccentDark2": "#FF30610C",
+        "MahApps.Colors.SystemAccentDark3": "#FF123304",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -128,7 +206,15 @@
         "MahApps.Colors.Accent2": "#996A00FF",
         "MahApps.Colors.Accent3": "#666A00FF",
         "MahApps.Colors.Accent4": "#336A00FF",
-        "MahApps.Colors.Highlight": "#FF4E00BC"
+        "MahApps.Colors.Highlight": "#FF4E00BC",
+        "MahApps.Colors.SystemAccentLight1": "#FF811FFF",
+        "MahApps.Colors.SystemAccentLight2": "#FFB463FF",
+        "MahApps.Colors.SystemAccentLight3": "#FFE3A2FF",
+        "MahApps.Colors.SystemAccentDark1": "#FF5A00EF",
+        "MahApps.Colors.SystemAccentDark2": "#FF3500C8",
+        "MahApps.Colors.SystemAccentDark3": "#FF1400A5",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FFFFFFFF"
       }
     },
     {
@@ -139,7 +225,15 @@
         "MahApps.Colors.Accent2": "#99A4C400",
         "MahApps.Colors.Accent3": "#66A4C400",
         "MahApps.Colors.Accent4": "#33A4C400",
-        "MahApps.Colors.Highlight": "#FF799100"
+        "MahApps.Colors.Highlight": "#FF799100",
+        "MahApps.Colors.SystemAccentLight1": "#FFBADC00",
+        "MahApps.Colors.SystemAccentLight2": "#FFE0FF13",
+        "MahApps.Colors.SystemAccentLight3": "#FFEBFF45",
+        "MahApps.Colors.SystemAccentDark1": "#FF8CA900",
+        "MahApps.Colors.SystemAccentDark2": "#FF546A00",
+        "MahApps.Colors.SystemAccentDark3": "#FF223100",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -150,7 +244,15 @@
         "MahApps.Colors.Accent2": "#99D80073",
         "MahApps.Colors.Accent3": "#66D80073",
         "MahApps.Colors.Accent4": "#33D80073",
-        "MahApps.Colors.Highlight": "#FF9F0055"
+        "MahApps.Colors.Highlight": "#FF9F0055",
+        "MahApps.Colors.SystemAccentLight1": "#FFFC008C",
+        "MahApps.Colors.SystemAccentLight2": "#FFFF4BBD",
+        "MahApps.Colors.SystemAccentLight3": "#FFFF95E9",
+        "MahApps.Colors.SystemAccentDark1": "#FFC30063",
+        "MahApps.Colors.SystemAccentDark2": "#FF93003D",
+        "MahApps.Colors.SystemAccentDark3": "#FF67001A",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FFFFFFFF"
       }
     },
     {
@@ -161,7 +263,15 @@
         "MahApps.Colors.Accent2": "#9976608A",
         "MahApps.Colors.Accent3": "#6676608A",
         "MahApps.Colors.Accent4": "#3376608A",
-        "MahApps.Colors.Highlight": "#FF574766"
+        "MahApps.Colors.Highlight": "#FF574766",
+        "MahApps.Colors.SystemAccentLight1": "#FF8B749F",
+        "MahApps.Colors.SystemAccentLight2": "#FFBAAAC4",
+        "MahApps.Colors.SystemAccentLight3": "#FFE6D9E9",
+        "MahApps.Colors.SystemAccentDark1": "#FF67527A",
+        "MahApps.Colors.SystemAccentDark2": "#FF453056",
+        "MahApps.Colors.SystemAccentDark3": "#FF251235",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -172,7 +282,15 @@
         "MahApps.Colors.Accent2": "#996D8764",
         "MahApps.Colors.Accent3": "#666D8764",
         "MahApps.Colors.Accent4": "#336D8764",
-        "MahApps.Colors.Highlight": "#FF50634A"
+        "MahApps.Colors.Highlight": "#FF50634A",
+        "MahApps.Colors.SystemAccentLight1": "#FF819A77",
+        "MahApps.Colors.SystemAccentLight2": "#FFABC2A1",
+        "MahApps.Colors.SystemAccentLight3": "#FFD4E9C9",
+        "MahApps.Colors.SystemAccentDark1": "#FF5D7455",
+        "MahApps.Colors.SystemAccentDark2": "#FF374932",
+        "MahApps.Colors.SystemAccentDark3": "#FF142213",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -183,7 +301,15 @@
         "MahApps.Colors.Accent2": "#99FA6800",
         "MahApps.Colors.Accent3": "#66FA6800",
         "MahApps.Colors.Accent4": "#33FA6800",
-        "MahApps.Colors.Highlight": "#FFB94C00"
+        "MahApps.Colors.Highlight": "#FFB94C00",
+        "MahApps.Colors.SystemAccentLight1": "#FFFF780E",
+        "MahApps.Colors.SystemAccentLight2": "#FFFF9C37",
+        "MahApps.Colors.SystemAccentLight3": "#FFFFBE5E",
+        "MahApps.Colors.SystemAccentDark1": "#FFE05800",
+        "MahApps.Colors.SystemAccentDark2": "#FFA23400",
+        "MahApps.Colors.SystemAccentDark3": "#FF6B1300",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -194,7 +320,15 @@
         "MahApps.Colors.Accent2": "#99F472D0",
         "MahApps.Colors.Accent3": "#66F472D0",
         "MahApps.Colors.Accent4": "#33F472D0",
-        "MahApps.Colors.Highlight": "#FFB45499"
+        "MahApps.Colors.Highlight": "#FFB45499",
+        "MahApps.Colors.SystemAccentLight1": "#FFF681D7",
+        "MahApps.Colors.SystemAccentLight2": "#FFF9A1E7",
+        "MahApps.Colors.SystemAccentLight3": "#FFFDBFF6",
+        "MahApps.Colors.SystemAccentDark1": "#FFF148C2",
+        "MahApps.Colors.SystemAccentDark2": "#FFC20F8F",
+        "MahApps.Colors.SystemAccentDark3": "#FF6A084D",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -205,7 +339,15 @@
         "MahApps.Colors.Accent2": "#996459DF",
         "MahApps.Colors.Accent3": "#666459DF",
         "MahApps.Colors.Accent4": "#336459DF",
-        "MahApps.Colors.Highlight": "#FF4A41A5"
+        "MahApps.Colors.Highlight": "#FF4A41A5",
+        "MahApps.Colors.SystemAccentLight1": "#FF7C6FE4",
+        "MahApps.Colors.SystemAccentLight2": "#FFB1A0EF",
+        "MahApps.Colors.SystemAccentLight3": "#FFE2CEF9",
+        "MahApps.Colors.SystemAccentDark1": "#FF493EDA",
+        "MahApps.Colors.SystemAccentDark2": "#FF2721AD",
+        "MahApps.Colors.SystemAccentDark3": "#FF131079",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -216,7 +358,15 @@
         "MahApps.Colors.Accent2": "#99E51400",
         "MahApps.Colors.Accent3": "#66E51400",
         "MahApps.Colors.Accent4": "#33E51400",
-        "MahApps.Colors.Highlight": "#FFA90E00"
+        "MahApps.Colors.Highlight": "#FFA90E00",
+        "MahApps.Colors.SystemAccentLight1": "#FFFE1E00",
+        "MahApps.Colors.SystemAccentLight2": "#FFFF6037",
+        "MahApps.Colors.SystemAccentLight3": "#FFFF9C6B",
+        "MahApps.Colors.SystemAccentDark1": "#FFCF1100",
+        "MahApps.Colors.SystemAccentDark2": "#FF9D0A00",
+        "MahApps.Colors.SystemAccentDark3": "#FF700400",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FFFFFFFF"
       }
     },
     {
@@ -227,7 +377,15 @@
         "MahApps.Colors.Accent2": "#99A0522D",
         "MahApps.Colors.Accent3": "#66A0522D",
         "MahApps.Colors.Accent4": "#33A0522D",
-        "MahApps.Colors.Highlight": "#FF763C21"
+        "MahApps.Colors.Highlight": "#FF763C21",
+        "MahApps.Colors.SystemAccentLight1": "#FFBD6535",
+        "MahApps.Colors.SystemAccentLight2": "#FFD69B6C",
+        "MahApps.Colors.SystemAccentLight3": "#FFEDCCA1",
+        "MahApps.Colors.SystemAccentDark1": "#FF904626",
+        "MahApps.Colors.SystemAccentDark2": "#FF6B2917",
+        "MahApps.Colors.SystemAccentDark3": "#FF490F08",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -238,7 +396,15 @@
         "MahApps.Colors.Accent2": "#99647687",
         "MahApps.Colors.Accent3": "#66647687",
         "MahApps.Colors.Accent4": "#33647687",
-        "MahApps.Colors.Highlight": "#FF4A5763"
+        "MahApps.Colors.Highlight": "#FF4A5763",
+        "MahApps.Colors.SystemAccentLight1": "#FF788B9B",
+        "MahApps.Colors.SystemAccentLight2": "#FFA8BAC2",
+        "MahApps.Colors.SystemAccentLight3": "#FFD4E6E9",
+        "MahApps.Colors.SystemAccentDark1": "#FF556576",
+        "MahApps.Colors.SystemAccentDark2": "#FF323D4F",
+        "MahApps.Colors.SystemAccentDark3": "#FF13182C",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -249,7 +415,15 @@
         "MahApps.Colors.Accent2": "#9987794E",
         "MahApps.Colors.Accent3": "#6687794E",
         "MahApps.Colors.Accent4": "#3387794E",
-        "MahApps.Colors.Highlight": "#FF635939"
+        "MahApps.Colors.Highlight": "#FF635939",
+        "MahApps.Colors.SystemAccentLight1": "#FFA0915C",
+        "MahApps.Colors.SystemAccentLight2": "#FFC2BB8D",
+        "MahApps.Colors.SystemAccentLight3": "#FFE9E5B6",
+        "MahApps.Colors.SystemAccentDark1": "#FF766742",
+        "MahApps.Colors.SystemAccentDark2": "#FF4F3D27",
+        "MahApps.Colors.SystemAccentDark3": "#FF2B160E",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -260,7 +434,15 @@
         "MahApps.Colors.Accent2": "#9900ABA9",
         "MahApps.Colors.Accent3": "#6600ABA9",
         "MahApps.Colors.Accent4": "#3300ABA9",
-        "MahApps.Colors.Highlight": "#FF007E7D"
+        "MahApps.Colors.Highlight": "#FF007E7D",
+        "MahApps.Colors.SystemAccentLight1": "#FF00CFCC",
+        "MahApps.Colors.SystemAccentLight2": "#FF1FFFFD",
+        "MahApps.Colors.SystemAccentLight3": "#FF69FFFF",
+        "MahApps.Colors.SystemAccentDark1": "#FF009593",
+        "MahApps.Colors.SystemAccentDark2": "#FF00625E",
+        "MahApps.Colors.SystemAccentDark3": "#FF00332F",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000"
       }
     },
     {
@@ -271,7 +453,15 @@
         "MahApps.Colors.Accent2": "#99AA00FF",
         "MahApps.Colors.Accent3": "#66AA00FF",
         "MahApps.Colors.Accent4": "#33AA00FF",
-        "MahApps.Colors.Highlight": "#FF7D00BC"
+        "MahApps.Colors.Highlight": "#FF7D00BC",
+        "MahApps.Colors.SystemAccentLight1": "#FFB71DFF",
+        "MahApps.Colors.SystemAccentLight2": "#FFD45EFF",
+        "MahApps.Colors.SystemAccentLight3": "#FFEF9BFF",
+        "MahApps.Colors.SystemAccentDark1": "#FF9100EB",
+        "MahApps.Colors.SystemAccentDark2": "#FF5600BD",
+        "MahApps.Colors.SystemAccentDark3": "#FF200093",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FFFFFFFF",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FFFFFFFF"
       }
     },
     {
@@ -283,6 +473,14 @@
         "MahApps.Colors.Accent3": "#66FEDE06",
         "MahApps.Colors.Accent4": "#33FEDE06",
         "MahApps.Colors.Highlight": "#FFBBA404",
+        "MahApps.Colors.SystemAccentLight1": "#FFFEE30F",
+        "MahApps.Colors.SystemAccentLight2": "#FFFEEE22",
+        "MahApps.Colors.SystemAccentLight3": "#FFFFF834",
+        "MahApps.Colors.SystemAccentDark1": "#FFE3C001",
+        "MahApps.Colors.SystemAccentDark2": "#FF987001",
+        "MahApps.Colors.SystemAccentDark3": "#FF552900",
+        "MahApps.Colors.IdealForeground.SystemAccentDark1": "#FF000000",
+        "MahApps.Colors.IdealForeground.SystemAccentLight2": "#FF000000",
         "MahApps.Colors.IdealForeground": "Black"
       }
     }

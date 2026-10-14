@@ -53,6 +53,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.WinUI}" TargetType="{x:Type mah:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog.WinUI}" TargetType="{x:Type mah:ContentDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.InfoBar.WinUI}" TargetType="{x:Type mah:InfoBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HyperlinkButton.WinUI}" TargetType="{x:Type mah:HyperlinkButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow.WinUI}" TargetType="{x:Type mah:MetroWindow}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToolTip.WinUI}" TargetType="ToolTip" />
     <!--  the old dialogs; Dialogs.xaml holds the same six for a single call  -->
@@ -65,6 +66,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.WinUI}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox.WinUI}" TargetType="RichTextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Hyperlink.WinUI}" TargetType="{x:Type Hyperlink}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.WinUI}" TargetType="ScrollBar" />
     <!--  the line the hamburger menu shows while it waits for the pointer, so that it is the same line this set's bar shows at rest  -->
     <Style x:Key="MahApps.Styles.Thumb.ScrollBar.PanningIndicator"
