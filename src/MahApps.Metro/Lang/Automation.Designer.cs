@@ -70,6 +70,15 @@ namespace MahApps.Metro.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rating, {0} of {1}.
+        /// </summary>
+        public static string BasicRatingString {
+            get {
+                return ResourceManager.GetString("BasicRatingString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {
@@ -84,6 +93,15 @@ namespace MahApps.Metro.Lang {
         public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Community Rating, {0} of {1}.
+        /// </summary>
+        public static string CommunityRatingString {
+            get {
+                return ResourceManager.GetString("CommunityRatingString", resourceCulture);
             }
         }
         
@@ -228,6 +246,24 @@ namespace MahApps.Metro.Lang {
         public static string OptionItems {
             get {
                 return ResourceManager.GetString("OptionItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating Slider.
+        /// </summary>
+        public static string RatingLocalizedControlType {
+            get {
+                return ResourceManager.GetString("RatingLocalizedControlType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating Unset.
+        /// </summary>
+        public static string RatingUnset {
+            get {
+                return ResourceManager.GetString("RatingUnset", resourceCulture);
             }
         }
         

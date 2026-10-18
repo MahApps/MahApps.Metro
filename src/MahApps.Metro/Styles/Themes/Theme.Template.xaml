@@ -290,4 +290,12 @@
     <markup:StaticResource x:Key="MahApps.Brushes.TabItem.WinUI.SelectorBar.PillFill" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.HamburgerMenu.WinUI.SelectionIndicator" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
 
+    <!--  The set stars of a RatingControl, after RatingControl_themeresources.xaml of microsoft-ui-xaml, WinUI 2 v2.4.2 for Windows 10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Selected" ResourceKey="MahApps.Brushes.Accent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.PointerOverSelected" ResourceKey="MahApps.Brushes.Accent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.Selected" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.PointerOverSelected" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.Selected" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.PointerOverSelected" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+
 </ResourceDictionary>
