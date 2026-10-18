@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.RatingControlPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DrawingImage x:Key="Gallery.Images.Gem">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Brush="#FF0F7B6C" Geometry="M12,2 L21,9 L12,22 L3,9 Z" />
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="Gallery.Images.GemOutline">
+            <DrawingImage.Drawing>
+                <GeometryDrawing Geometry="M12,2 L21,9 L12,22 L3,9 Z">
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="#FF7F8C8D" Thickness="1.5" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="BasicExample"
+                                     Description="Stars in a row that the user clicks to give a value. Clicking the star of the value again clears it while IsClearEnabled is on, and a read-only control only shows what it was given."
+                                     Header="A rating with a caption">
+                <smtx:XamlDisplay UniqueKey="RatingControl.Basic">
+                    <mah:RatingControl x:Name="BasicRating"
+                                       Caption="42 ratings"
+                                       Value="3" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="Without a value the control shows PlaceholderValue, an average say, in the text colour instead of the accent until the user rates it. With clearing off, a rating can be changed but not taken back." Header="An average as the placeholder">
+                <smtx:XamlDisplay UniqueKey="RatingControl.Placeholder">
+                    <mah:RatingControl Caption="3.5 on average, from 128 reviews"
+                                       IsClearEnabled="False"
+                                       PlaceholderValue="3.5" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="With IsHalfStepEnabled the left half of a star gives a half star and the arrow keys count in halves. Value is a double, so code or a binding can set any fraction. The slider and the rating here are bound both ways." Header="Half stars">
+                <smtx:XamlDisplay UniqueKey="RatingControl.Half">
+                    <StackPanel>
+                        <mah:RatingControl Caption="{Binding Value, RelativeSource={RelativeSource Self}, StringFormat={}{0:0.#} of 5}"
+                                           IsClearEnabled="False"
+                                           IsHalfStepEnabled="True"
+                                           Value="{Binding Value, ElementName=HalfStepSlider}" />
+                        <Slider x:Name="HalfStepSlider"
+                                Width="200"
+                                Margin="0 8 0 0"
+                                HorizontalAlignment="Left"
+                                IsSnapToTickEnabled="True"
+                                Maximum="5"
+                                Minimum="0.5"
+                                TickFrequency="0.5"
+                                Value="3.5" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="ItemInfo takes the glyphs of the items from a font, here the hearts of the symbol font the control already carries. The glyphs for the pointer over, the placeholder and the disabled state can be given as well." Header="Hearts in place of stars">
+                <smtx:XamlDisplay UniqueKey="RatingControl.Glyphs">
+                    <mah:RatingControl Caption="Loved by 17 readers"
+                                       MaxRating="7"
+                                       Value="5">
+                        <mah:RatingControl.ItemInfo>
+                            <mah:RatingItemFontInfo Glyph="&#xEB52;" UnsetGlyph="&#xEB51;" />
+                        </mah:RatingControl.ItemInfo>
+                    </mah:RatingControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="Images take the place of the glyphs. The two here are drawings kept as resources of the page, so nothing is loaded from outside." Header="Gems drawn as images">
+                <smtx:XamlDisplay UniqueKey="RatingControl.Images">
+                    <mah:RatingControl Caption="Rated by 9 collectors"
+                                       MaxRating="4"
+                                       Value="2">
+                        <mah:RatingControl.ItemInfo>
+                            <mah:RatingItemImageInfo Image="{StaticResource Gallery.Images.Gem}" UnsetImage="{StaticResource Gallery.Images.GemOutline}" />
+                        </mah:RatingControl.ItemInfo>
+                    </mah:RatingControl>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
