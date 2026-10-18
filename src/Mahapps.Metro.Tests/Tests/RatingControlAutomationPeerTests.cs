@@ -94,6 +94,19 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
+        public void TheChangesAreHalvesWithHalfSteps()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true });
+            var provider = (IRangeValueProvider)PeerOf(rating).GetPattern(PatternInterface.RangeValue)!;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(provider.SmallChange, Is.EqualTo(0.5));
+                    Assert.That(provider.LargeChange, Is.EqualTo(0.5));
+                });
+        }
+
+        [Test]
         public void SettingThroughThePeerSetsTheValue()
         {
             var rating = this.Show(new RatingControl());

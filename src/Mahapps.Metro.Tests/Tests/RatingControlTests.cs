@@ -651,5 +651,216 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.That(ClipWidths(rating), Is.All.EqualTo(0.0));
         }
+
+        // the 3rd star spans 48 to 64, so 52 is in its left half and 60 in its right one
+        private const double ThirdStarLeftHalf = 52;
+        private const double ThirdStarRightHalf = 60;
+
+        [Test]
+        public void AClickOnTheLeftHalfGivesAHalfStar()
+        {
+            var left = this.Show(new RatingControl { IsHalfStepEnabled = true });
+            Click(left, ThirdStarLeftHalf);
+            Assert.That(left.Value, Is.EqualTo(2.5));
+
+            var right = this.Show(new RatingControl { IsHalfStepEnabled = true });
+            Click(right, ThirdStarRightHalf);
+            Assert.That(right.Value, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void AClickInTheGapGivesTheFullStarBefore()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true });
+
+            // the gap between the 3rd and the 4th star spans 64 to 72
+            Click(rating, 68);
+
+            Assert.That(rating.Value, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void AClickWithoutHalfStepsStaysWhole()
+        {
+            var rating = this.Show(new RatingControl());
+
+            Click(rating, ThirdStarLeftHalf);
+
+            Assert.That(rating.Value, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void HoverShowsTheHalfPreview()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = -1 });
+
+            Move(rating, ThirdStarLeftHalf);
+
+            Assert.That(ClipWidths(rating), Is.EqualTo(new[] { 32.0, 32.0, 16.0, 0.0, 0.0 }));
+        }
+
+        [Test]
+        public void AClickOnTheCurrentHalfClears()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = 2.5 });
+
+            Click(rating, ThirdStarLeftHalf);
+
+            Assert.That(rating.Value, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void ReleasingLeftOfTheStarsClearsWithHalfSteps()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = 3 });
+
+            Press(rating, 32);
+            Release(rating, -10);
+
+            Assert.That(rating.Value, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void TheKeysCountInHalves()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = 2 });
+
+            PressKey(rating, Key.Right);
+            Assert.That(rating.Value, Is.EqualTo(2.5));
+
+            PressKey(rating, Key.Left);
+            Assert.That(rating.Value, Is.EqualTo(2));
+
+            PressKey(rating, Key.Up);
+            Assert.That(rating.Value, Is.EqualTo(2.5));
+
+            PressKey(rating, Key.Down);
+            Assert.That(rating.Value, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void AFractionSnapsToAHalfFirst()
+        {
+            var left = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = 2.3 });
+            PressKey(left, Key.Left);
+            Assert.That(left.Value, Is.EqualTo(2));
+
+            var right = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = 2.3 });
+            PressKey(right, Key.Right);
+            Assert.That(right.Value, Is.EqualTo(2.5));
+        }
+
+        [Test]
+        public void TheHalfKeysAreMirroredRightToLeft()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, FlowDirection = FlowDirection.RightToLeft, Value = 2 });
+
+            PressKey(rating, Key.Right);
+            Assert.That(rating.Value, Is.EqualTo(1.5));
+
+            PressKey(rating, Key.Left);
+            Assert.That(rating.Value, Is.EqualTo(2));
+
+            PressKey(rating, Key.Up);
+            Assert.That(rating.Value, Is.EqualTo(2.5));
+        }
+
+        [Test]
+        public void RightFromUnsetTakesTheInitialSetValueWithHalfSteps()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, InitialSetValue = 3, Value = -1 });
+            PressKey(rating, Key.Right);
+            Assert.That(rating.Value, Is.EqualTo(3));
+        }
+
+        [TestCase(true, 0.2, 0.5)]
+        [TestCase(true, 0, 0.5)]
+        [TestCase(true, 3.3, 3.3)]
+        [TestCase(false, 0.2, 1)]
+        public void ValueCoercesToAHalfAtTheLeast(bool isHalfStepEnabled, double set, double expected)
+            => Assert.That(new RatingControl { IsHalfStepEnabled = isHalfStepEnabled, Value = set }.Value, Is.EqualTo(expected));
+
+        [Test]
+        public void ChangingIsHalfStepEnabledCoercesTheValueAgain()
+        {
+            var rating = new RatingControl { IsHalfStepEnabled = true, Value = 0.5 };
+
+            rating.IsHalfStepEnabled = false;
+            Assert.That(rating.Value, Is.EqualTo(1));
+
+            rating.IsHalfStepEnabled = true;
+            Assert.That(rating.Value, Is.EqualTo(0.5));
+        }
+
+        [Test]
+        public void ClearDisabledStopsAtAHalf()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, IsClearEnabled = false, Value = 0.5 });
+
+            PressKey(rating, Key.Left);
+
+            Assert.That(rating.Value, Is.EqualTo(0.5));
+        }
+
+        [Test]
+        public void ARightToLeftClickOnTheHalfNearerTheStartGivesAHalfStar()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, FlowDirection = FlowDirection.RightToLeft, Margin = new Thickness(100, 0, 0, 0) });
+
+            // right to left the row starts at the right edge, so the half nearer the start is the right half on screen
+            this.ClickInWindow(rating, this.BoundsInWindow(rating).Right - ThirdStarLeftHalf);
+
+            Assert.That(rating.Value, Is.EqualTo(2.5));
+        }
+
+        private RatingControl ShowWin10WithHalfSteps()
+        {
+            var rating = this.ShowWithStyle("MahApps.Styles.RatingControl.Win10");
+            rating.IsHalfStepEnabled = true;
+            return rating;
+        }
+
+        // the Win10 look grows the stars near the pointer about their centres, which moves the drawn left edge of the
+        // 1st star, at 7 by 4.8 and at 31 by 1.4, so measured from that edge both would land in the next half
+        [TestCase(7, 0.5, new[] { 16.0, 0.0, 0.0, 0.0, 0.0 })]
+        [TestCase(28, 1.5, new[] { 32.0, 16.0, 0.0, 0.0, 0.0 })]
+        [TestCase(31, 1.5, new[] { 32.0, 16.0, 0.0, 0.0, 0.0 })]
+        [TestCase(36, 2, new[] { 32.0, 32.0, 0.0, 0.0, 0.0 })]
+        public void AGrownFirstStarDoesNotShiftTheHalves(double x, double expected, double[] widths)
+        {
+            var rating = this.ShowWin10WithHalfSteps();
+
+            Move(rating, x);
+            var preview = ClipWidths(rating);
+            Click(rating, x);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(preview, Is.EqualTo(widths));
+                    Assert.That(rating.Value, Is.EqualTo(expected));
+                });
+        }
+
+        [Test]
+        public void ReleasingAtTheLeftEdgeClearsWithHalfSteps()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = 3 });
+
+            Press(rating, 32);
+            Release(rating, 0);
+
+            Assert.That(rating.Value, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void NoHalfPreviewBeforeTheFirstMove()
+        {
+            var rating = this.Show(new RatingControl { IsHalfStepEnabled = true, Value = -1 });
+
+            RaiseMouse(rating, ThirdStarLeftHalf, Mouse.MouseEnterEvent);
+            rating.PlaceholderValue = 2;
+
+            Assert.That(ClipWidths(rating), Is.All.EqualTo(0.0));
+        }
     }
 }

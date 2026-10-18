@@ -77,9 +77,9 @@ namespace MahApps.Metro.Automation.Peers
 
         bool IRangeValueProvider.IsReadOnly => this.RatingControl.IsReadOnly;
 
-        double IRangeValueProvider.SmallChange => 1.0;
+        double IRangeValueProvider.SmallChange => this.RatingControl.IsHalfStepEnabled ? 0.5 : 1.0;
 
-        double IRangeValueProvider.LargeChange => 1.0;
+        double IRangeValueProvider.LargeChange => this.RatingControl.IsHalfStepEnabled ? 0.5 : 1.0;
 
         double IRangeValueProvider.Maximum => this.RatingControl.MaxRating;
 

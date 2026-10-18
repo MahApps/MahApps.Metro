@@ -53,7 +53,8 @@ namespace MahApps.Metro.Controls
         private bool isImageInfo;
         private bool isPointerOver;
         private bool isPointerDown;
-        private double mousePercentage;
+        // left of the row until the first move, so nothing is previewed before it
+        private double pointerX = -1.0;
         private DependencyProperty? stateBrushProperty;
 
         // the tests replace this, since the position of a raised mouse event can't be set
@@ -82,7 +83,8 @@ namespace MahApps.Metro.Controls
                                           new FrameworkPropertyMetadata(NoValueSetSentinel, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged, CoerceValue));
 
         /// <summary>
-        /// Gets or sets the rating. A negative value means no rating is set, anything else is held between 1 and <see cref="MaxRating"/>.
+        /// Gets or sets the rating. A negative value means no rating is set, anything else is held between 1 (0.5 with
+        /// <see cref="IsHalfStepEnabled"/>) and <see cref="MaxRating"/>.
         /// </summary>
         public double Value
         {
@@ -93,7 +95,8 @@ namespace MahApps.Metro.Controls
         private static object CoerceValue(DependencyObject d, object? baseValue)
         {
             var value = (double)baseValue!;
-            var maxRating = ((RatingControl)d).MaxRating;
+            var ratingControl = (RatingControl)d;
+            var maxRating = ratingControl.MaxRating;
 
             if (value < 0.0)
             {
@@ -101,10 +104,11 @@ namespace MahApps.Metro.Controls
                 return NoValueSetSentinel;
             }
 
-            if (value <= 1.0)
+            var minimumValue = ratingControl.MinimumValue;
+            if (value <= minimumValue)
             {
                 // the minimum valid, non-sentinel value
-                return 1.0;
+                return minimumValue;
             }
 
             return value > maxRating ? (double)maxRating : value;
@@ -214,6 +218,33 @@ namespace MahApps.Metro.Controls
             get => (bool)this.GetValue(IsClearEnabledProperty);
             set => this.SetValue(IsClearEnabledProperty, BooleanBoxes.Box(value));
         }
+
+        /// <summary>Identifies the <see cref="IsHalfStepEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsHalfStepEnabledProperty
+            = DependencyProperty.Register(nameof(IsHalfStepEnabled),
+                                          typeof(bool),
+                                          typeof(RatingControl),
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnIsHalfStepEnabledChanged));
+
+        /// <summary>
+        /// Gets or sets whether the pointer and the keys set the rating in half steps. The left half of an item gives a half,
+        /// the keys count in halves, and the lowest rating is 0.5 instead of 1.
+        /// </summary>
+        /// <remarks>
+        /// This is an extension of MahApps, the RatingControl of WinUI does not have it.
+        /// </remarks>
+        public bool IsHalfStepEnabled
+        {
+            get => (bool)this.GetValue(IsHalfStepEnabledProperty);
+            set => this.SetValue(IsHalfStepEnabledProperty, BooleanBoxes.Box(value));
+        }
+
+        private static void OnIsHalfStepEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            d.CoerceValue(ValueProperty);
+        }
+
+        private double MinimumValue => this.IsHalfStepEnabled ? 0.5 : 1.0;
 
         /// <summary>Identifies the <see cref="IsReadOnly"/> dependency property.</summary>
         public static readonly DependencyProperty IsReadOnlyProperty
@@ -569,7 +600,7 @@ namespace MahApps.Metro.Controls
 
             if (this.isPointerOver)
             {
-                value = Math.Ceiling(this.mousePercentage * this.MaxRating);
+                value = this.CalculateRatingAt(this.pointerX);
                 if (ratingValue == NoValueSetSentinel)
                 {
                     if (placeholderValue == NoValueSetSentinel)
@@ -734,15 +765,31 @@ namespace MahApps.Metro.Controls
             var firstItemOffset = 0.0;
             if (stackPanel.Children.Count > 0 && stackPanel.Children[0] is FrameworkElement firstItem && stackPanel.IsAncestorOf(firstItem))
             {
-                firstItemOffset = firstItem.TransformToAncestor(stackPanel).TransformBounds(new Rect(firstItem.RenderSize)).Left;
+                var bounds = firstItem.TransformToAncestor(stackPanel).TransformBounds(new Rect(firstItem.RenderSize));
+
+                // the Win10 look grows the item under the pointer about its centre, which moves its drawn left edge,
+                // so the halves are measured from the edge of the unscaled item, whose centre stays where it is
+                firstItemOffset = this.IsHalfStepEnabled
+                    ? ((bounds.Left + bounds.Right) / 2.0) - (this.fontSizeForRendering * ItemScale / 2.0)
+                    : bounds.Left;
             }
 
             return this.pointerPosition(e, stackPanel).X - firstItemOffset;
         }
 
-        private double GetMousePercentage(MouseEventArgs e, StackPanel stackPanel)
+        private double CalculateRatingAt(double x)
         {
-            return this.GetPointerX(e, stackPanel) / this.CalculateActualRatingWidth();
+            // at or left of the left edge of the first item nothing is under the pointer
+            if (!this.IsHalfStepEnabled || x <= 0.0)
+            {
+                return Math.Ceiling(x / this.CalculateActualRatingWidth() * this.MaxRating);
+            }
+
+            // per item: its left half gives a half, its right half and the gap after it the full item
+            var itemSize = this.fontSizeForRendering * ItemScale;
+            var index = Math.Floor(x / (itemSize + this.itemSpacing));
+            var offset = x - (index * (itemSize + this.itemSpacing));
+            return offset < itemSize / 2.0 ? index + 0.5 : index + 1.0;
         }
 
         private void ScaleRatingItems(double? pointerX, double pointerScale)
@@ -797,7 +844,7 @@ namespace MahApps.Metro.Controls
                 var x = this.GetPointerX(e, this.backgroundStackPanel);
                 this.ScaleRatingItems(x, e.StylusDevice is not null ? TouchOverScale : MouseOverScale);
 
-                this.mousePercentage = x / this.CalculateActualRatingWidth();
+                this.pointerX = x;
                 this.UpdateRatingItemsAppearance();
                 e.Handled = true;
             }
@@ -863,8 +910,7 @@ namespace MahApps.Metro.Controls
         {
             if (!this.IsReadOnly && this.backgroundStackPanel is not null)
             {
-                var mousePercentage = this.GetMousePercentage(e, this.backgroundStackPanel);
-                this.SetRatingTo(Math.Ceiling(mousePercentage * this.MaxRating), true);
+                this.SetRatingTo(this.CalculateRatingAt(this.GetPointerX(e, this.backgroundStackPanel)), true);
             }
 
             if (this.isPointerDown)
@@ -889,7 +935,20 @@ namespace MahApps.Metro.Controls
 
             double ratingValue;
             var current = this.Value;
-            if (current != NoValueSetSentinel)
+            if (current != NoValueSetSentinel && this.IsHalfStepEnabled)
+            {
+                // a fraction set from code that is no half snaps to the half below or above first
+                var halves = current * 2.0;
+                if (Math.Truncate(halves) != halves)
+                {
+                    ratingValue = change < 0.0 ? Math.Floor(halves) / 2.0 : Math.Ceiling(halves) / 2.0;
+                }
+                else
+                {
+                    ratingValue = current + change;
+                }
+            }
+            else if (current != NoValueSetSentinel)
             {
                 // a fraction set from code is dropped before the change is applied
                 if (Math.Truncate(current) != current)
@@ -925,7 +984,7 @@ namespace MahApps.Metro.Controls
 
             if (!this.IsClearEnabled && ratingValue <= 0.0)
             {
-                this.SetCurrentValue(ValueProperty, 1.0);
+                this.SetCurrentValue(ValueProperty, this.MinimumValue);
             }
             else if (ratingValue == oldRatingValue && this.IsClearEnabled && (ratingValue != maxRating || originatedFromMouse))
             {
@@ -951,6 +1010,7 @@ namespace MahApps.Metro.Controls
             {
                 var key = e.Key;
                 var flowDirectionReverser = this.FlowDirection == FlowDirection.RightToLeft ? -1.0 : 1.0;
+                var step = this.IsHalfStepEnabled ? 0.5 : 1.0;
 
                 // up and down are right and left, and not mirrored
                 if (key == Key.Up)
@@ -968,10 +1028,10 @@ namespace MahApps.Metro.Controls
                 switch (key)
                 {
                     case Key.Left:
-                        this.ChangeRatingBy(-1.0 * flowDirectionReverser, false);
+                        this.ChangeRatingBy(-step * flowDirectionReverser, false);
                         break;
                     case Key.Right:
-                        this.ChangeRatingBy(1.0 * flowDirectionReverser, false);
+                        this.ChangeRatingBy(step * flowDirectionReverser, false);
                         break;
                     case Key.Home:
                         this.SetRatingTo(0.0, false);
