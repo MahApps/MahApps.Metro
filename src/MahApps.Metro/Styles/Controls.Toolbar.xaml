@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters">
 
     <!--  Style for toolbar buttons  -->
     <Style x:Key="MahApps.Styles.Button.ToolBar" TargetType="{x:Type ButtonBase}">
@@ -318,6 +319,578 @@
     <!--  Style the toolbar tray  -->
     <Style x:Key="MahApps.Styles.ToolBarTray" TargetType="{x:Type ToolBarTray}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
+    </Style>
+
+    <!--
+        The ToolBar of the Windows 10 and the WinUI set, read off the CommandBar: the bar, the
+        AppBarButton, the AppBarToggleButton and the AppBarSeparator of UWP for Windows 10 and of
+        microsoft-ui-xaml (WinUI 3) for Windows 11. WPF has no CommandBar, and the ToolBar already
+        does what it does, with a row of commands and the ones that do not fit in a drop-down behind
+        the three dots, so these are styles for it rather than a control of their own.
+        
+        What goes into the bar keeps the content it is given, an icon, a word or both, so there is no
+        label below the icon the way AppBarButton draws one. A bar looks its items' styles up by the
+        keys on ToolBar, and the bar's own style carries them in its resources, so the buttons in a
+        Windows 10 bar are Windows 10 buttons whatever set the rest of the window is in.
+    -->
+
+    <!--
+        A button of the Windows 10 bar is the AppBarButton without its label. The pointer and the
+        press are a veil over the fill rather than the fill itself, because a checked button keeps
+        the accent under the pointer and only gets lighter there, the way UWP lays its highlight
+        overlay over the checked background.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.Button.ToolBar.Win10" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid>
+                <Border x:Name="Overlay"
+                        Background="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonBackground}"
+                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}" />
+                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Overlay" Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonBackgroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Overlay" Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonBackgroundPressed}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  in the drop-down a button is a line of the list, with its content at the start of the line  -->
+    <Style x:Key="MahApps.Styles.Button.ToolBar.Win10" TargetType="{x:Type ButtonBase}">
+        <Style.Resources>
+            <!--  an image has no foreground to dim, so it fades instead, as in the default bar  -->
+            <Style TargetType="Image">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonForeground}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="MinWidth" Value="40" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Padding" Value="12 0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.ToolBar.Win10}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10.Inside}" />
+        <Style.Triggers>
+            <Trigger Property="ToolBar.IsOverflowItem" Value="True">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="MinHeight" Value="32" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ButtonForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  checked, the button takes the accent; the text on it stays the colour it has under the pointer, as UWP has it  -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBar.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.Win10}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ToggleButtonBackgroundChecked}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ToggleButtonForegroundChecked}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ToggleButtonBackgroundCheckedDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.ToggleButtonForegroundCheckedDisabled}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The line between two groups of commands: upright in the bar, across in a bar that stands
+        upright in a tray. WPF never moves a line into the drop-down, so it needs no look there.
+    -->
+    <Style x:Key="MahApps.Styles.Separator.ToolBar.Win10" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.Separator}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Rectangle x:Name="SeparatorRectangle"
+                               Width="1"
+                               Height="20"
+                               Margin="16 0 15 0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Fill="{TemplateBinding Background}"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Orientation}" Value="{x:Static Orientation.Vertical}">
+                            <Setter TargetName="SeparatorRectangle" Property="Height" Value="1" />
+                            <Setter TargetName="SeparatorRectangle" Property="Margin" Value="0 16 0 15" />
+                            <Setter TargetName="SeparatorRectangle" Property="Width" Value="20" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.ToolBar.Win10" TargetType="{x:Type Thumb}">
+        <Setter Property="Cursor" Value="SizeAll" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.Gripper}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                   FontSize="16"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Text="&#xE784;" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="12" />
+    </Style>
+
+    <!--  the three dots: a button of the bar like the others, 48 wide as in UWP  -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.Win10}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Content" Value="&#xE10C;" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="48" />
+    </Style>
+
+    <!--
+        The bar. The drop-down opens below the three dots and ends where they end, as the overflow of
+        the CommandBar does, and the dots are only there while something has gone into it; WPF keeps
+        the room for them either way, the CommandBar of UWP hands it back to the commands.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.ToolBar.Win10" TargetType="{x:Type ToolBar}">
+        <Border x:Name="Border"
+                Padding="{TemplateBinding Padding}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <DockPanel>
+                <Grid DockPanel.Dock="Right">
+                    <ToggleButton x:Name="OverflowButton"
+                                  ClickMode="Press"
+                                  IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  IsEnabled="{TemplateBinding HasOverflowItems}"
+                                  Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow.Win10}" />
+                    <Popup x:Name="OverflowPopup"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           HorizontalOffset="{Binding ElementName=OverflowButton, Path=ActualWidth}"
+                           IsOpen="{Binding Path=IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                           Placement="Left"
+                           PlacementTarget="{Binding ElementName=OverflowButton}"
+                           PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                           StaysOpen="False"
+                           VerticalOffset="{Binding ElementName=OverflowButton, Path=ActualHeight}">
+                        <Border x:Name="DropDownBorder"
+                                MaxWidth="480"
+                                Padding="0 4"
+                                Background="{DynamicResource MahApps.Brushes.ToolBar.Win10.OverflowBackground}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.ToolBar.Win10.OverflowBorderBrush}"
+                                BorderThickness="1"
+                                TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                TextElement.FontSize="{TemplateBinding FontSize}">
+                            <mah:ToolBarOverflowListPanel x:Name="PART_ToolBarOverflowPanel"
+                                                          MinWidth="160"
+                                                          FocusVisualStyle="{x:Null}"
+                                                          Focusable="True"
+                                                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                          KeyboardNavigation.TabNavigation="Cycle" />
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <Thumb x:Name="ToolBarThumb" Style="{StaticResource MahApps.Styles.Thumb.ToolBar.Win10}" />
+
+                <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="True" />
+            </DockPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="HasOverflowItems" Value="False">
+                <Setter TargetName="OverflowButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsOverflowOpen" Value="True">
+                <Setter TargetName="ToolBarThumb" Property="IsEnabled" Value="False" />
+            </Trigger>
+            <Trigger Property="ToolBarTray.IsLocked" Value="True">
+                <Setter TargetName="ToolBarThumb" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ToolBar.Win10" TargetType="{x:Type ToolBar}">
+        <Style.Resources>
+            <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.Win10}"
+                   TargetType="{x:Type Button}" />
+            <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ToolBar.Win10}"
+                   TargetType="{x:Type ToggleButton}" />
+            <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ToolBar.Win10}"
+                   TargetType="{x:Type CheckBox}" />
+            <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ToolBar.Win10}"
+                   TargetType="{x:Type RadioButton}" />
+            <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.Separator.ToolBar.Win10}"
+                   TargetType="{x:Type Separator}" />
+            <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.TextBox.Win10}"
+                   TargetType="{x:Type TextBox}" />
+            <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ComboBox.Win10}"
+                   TargetType="{x:Type ComboBox}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.Foreground}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolBar.Win10}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToolBarTray.Win10" TargetType="{x:Type ToolBarTray}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.Win10.Background}" />
+    </Style>
+
+    <!--
+        A button of the WinUI bar: the AppBarButton of Windows 11 without its label, a rounded fill
+        that stands two units in from its neighbours and six from the edges of a bar 48 high. In the
+        drop-down it fills the line and leaves the inset to the drop-down.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.Button.ToolBar.WinUI" TargetType="{x:Type ButtonBase}">
+        <Grid>
+            <Border x:Name="Border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+            <!--  the stronger bottom edge a checked button has in WinUI, as on the accent button of the same set  -->
+            <Border BorderBrush="{TemplateBinding mah:ControlsHelper.BottomBorderBrush}"
+                    BorderThickness="0 0 0 1"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    IsHitTestVisible="False"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.Button.ToolBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.Win10}"
+           TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonBackground}" />
+        <Setter Property="BorderThickness" Value="1 1 1 0" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonForeground}" />
+        <Setter Property="Margin" Value="2 6" />
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="Padding" Value="11 0" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.ToolBar.WinUI}" />
+        <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
+        <Style.Triggers>
+            <Trigger Property="ToolBar.IsOverflowItem" Value="True">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="MinHeight" Value="32" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonBackgroundPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonForegroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonBackgroundPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonForegroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonBackground}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ButtonForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  checked, the WinUI button is the accent button of that set, frame and bottom edge included; held down it lies flat  -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.WinUI}"
+           TargetType="{x:Type ToggleButton}">
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundChecked}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonBorderBrushChecked}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundChecked}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonBottomBorderBrushChecked}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundCheckedPointerOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedPointerOver}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundCheckedPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedPressed}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsEnabled" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundCheckedDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedDisabled}" />
+                <Setter Property="mah:ControlsHelper.BottomBorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Separator.ToolBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Separator.ToolBar.Win10}"
+           TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.Separator}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Rectangle x:Name="SeparatorRectangle"
+                               Width="1"
+                               Margin="2 8"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Stretch"
+                               Fill="{TemplateBinding Background}"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ToolBar}}, Path=Orientation}" Value="{x:Static Orientation.Vertical}">
+                            <Setter TargetName="SeparatorRectangle" Property="Height" Value="1" />
+                            <Setter TargetName="SeparatorRectangle" Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter TargetName="SeparatorRectangle" Property="Margin" Value="8 2" />
+                            <Setter TargetName="SeparatorRectangle" Property="VerticalAlignment" Value="Center" />
+                            <Setter TargetName="SeparatorRectangle" Property="Width" Value="NaN" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.ToolBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Thumb.ToolBar.Win10}"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.Gripper}" />
+    </Style>
+
+    <!--  WinUI draws its dots with the More glyph at 20 rather than the one of Windows 10, in a button set in from the end of the bar  -->
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.WinUI}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Content" Value="&#xE712;" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Margin" Value="2 6 6 6" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="40" />
+    </Style>
+
+    <!--
+        The WinUI bar is the Windows 10 one with a drop-down of that set: rounded, with the shadow its
+        menus cast, and set off by the room that shadow takes so that it still ends where the dots end.
+        While it is open the bar takes the colour of the drop-down and a frame of its own, as the
+        CommandBar does, so that the bar and its drop-down read as one surface. The frame lies over
+        the bar rather than around it, so nothing in the bar moves when it comes.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.ToolBar.WinUI" TargetType="{x:Type ToolBar}">
+        <Grid>
+            <Border x:Name="Border"
+                    Padding="{TemplateBinding Padding}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Right">
+                        <ToggleButton x:Name="OverflowButton"
+                                      ClickMode="Press"
+                                      IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      IsEnabled="{TemplateBinding HasOverflowItems}"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow.WinUI}" />
+                        <Popup x:Name="OverflowPopup"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               HorizontalOffset="{Binding ElementName=OverflowButton, Path=ActualWidth, Converter={mahConverters:MathAddConverter}, ConverterParameter=14}"
+                               IsOpen="{Binding Path=IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="Left"
+                               PlacementTarget="{Binding ElementName=OverflowButton}"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                               StaysOpen="False"
+                               VerticalOffset="{Binding ElementName=OverflowButton, Path=ActualHeight, Converter={mahConverters:MathAddConverter}, ConverterParameter=6}">
+                            <Border x:Name="DropDownBorder"
+                                    MaxWidth="480"
+                                    Padding="4"
+                                    Background="{DynamicResource MahApps.Brushes.ToolBar.WinUI.OverflowBackground}"
+                                    BorderBrush="{DynamicResource MahApps.Brushes.ToolBar.WinUI.OverflowBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}"
+                                    TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                    TextElement.FontSize="{TemplateBinding FontSize}">
+                                <!--  160 wide with the inset and the frame, as the overflow of the CommandBar  -->
+                                <mah:ToolBarOverflowListPanel x:Name="PART_ToolBarOverflowPanel"
+                                                              MinWidth="150"
+                                                              FocusVisualStyle="{x:Null}"
+                                                              Focusable="True"
+                                                              KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                              KeyboardNavigation.TabNavigation="Cycle" />
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <Thumb x:Name="ToolBarThumb" Style="{StaticResource MahApps.Styles.Thumb.ToolBar.WinUI}" />
+
+                    <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="True" />
+                </DockPanel>
+            </Border>
+            <Border x:Name="OpenBorder"
+                    BorderBrush="{DynamicResource MahApps.Brushes.ToolBar.WinUI.BorderBrushOpen}"
+                    BorderThickness="1"
+                    CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                    IsHitTestVisible="False"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    Visibility="Collapsed" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsOverflowOpen" Value="True">
+                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.BackgroundOpen}" />
+                <Setter TargetName="OpenBorder" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger SourceName="OverflowPopup" Property="HasDropShadow" Value="True">
+                <Setter TargetName="DropDownBorder" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu.WinUI}" />
+                <Setter TargetName="DropDownBorder" Property="Margin" Value="{DynamicResource MahApps.Thickness.Menu.WinUI.ShadowMargin}" />
+            </Trigger>
+            <Trigger Property="HasOverflowItems" Value="False">
+                <Setter TargetName="OverflowButton" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsOverflowOpen" Value="True">
+                <Setter TargetName="ToolBarThumb" Property="IsEnabled" Value="False" />
+            </Trigger>
+            <Trigger Property="ToolBarTray.IsLocked" Value="True">
+                <Setter TargetName="ToolBarThumb" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.ToolBar.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ToolBar.Win10}"
+           TargetType="{x:Type ToolBar}">
+        <Style.Resources>
+            <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.Button.ToolBar.WinUI}"
+                   TargetType="{x:Type Button}" />
+            <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ToolBar.WinUI}"
+                   TargetType="{x:Type ToggleButton}" />
+            <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ToolBar.WinUI}"
+                   TargetType="{x:Type CheckBox}" />
+            <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ToggleButton.ToolBar.WinUI}"
+                   TargetType="{x:Type RadioButton}" />
+            <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.Separator.ToolBar.WinUI}"
+                   TargetType="{x:Type Separator}" />
+            <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}"
+                   TargetType="{x:Type TextBox}" />
+            <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
+                   BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}"
+                   TargetType="{x:Type ComboBox}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.Background}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.Foreground}" />
+        <Setter Property="Padding" Value="4 0 0 0" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToolBar.WinUI}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Overlay}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToolBarTray.WinUI" TargetType="{x:Type ToolBarTray}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ToolBar.WinUI.Background}" />
     </Style>
 
 </ResourceDictionary>

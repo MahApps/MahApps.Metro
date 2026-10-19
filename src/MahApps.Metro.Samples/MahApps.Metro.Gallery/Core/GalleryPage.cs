@@ -88,7 +88,8 @@ namespace MahApps.Metro.Gallery.Core
         public bool HasStyleSets { get; set; }
 
         /// <summary>
-        /// The set the samples of this page stand in. Every card on the page inherits it.
+        /// The set the samples of this page stand in. Every card on the page inherits it. Given before
+        /// the page is built, it is the set the page opens in.
         /// </summary>
         public GalleryStyleSet StyleSet
         {
@@ -101,7 +102,11 @@ namespace MahApps.Metro.Gallery.Core
                 }
 
                 this.styleSet = value;
-                StyleSets.SetStyleSet(this.View, value);
+                if (this.view is not null)
+                {
+                    StyleSets.SetStyleSet(this.view, value);
+                }
+
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.StyleSet)));
             }
         }
@@ -109,11 +114,18 @@ namespace MahApps.Metro.Gallery.Core
         /// <inheritdoc />
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private UserControl CreateView()
+        {
+            var page = (UserControl)Activator.CreateInstance(this.PageType)!;
+            StyleSets.SetStyleSet(page, this.styleSet);
+            return page;
+        }
+
         /// <summary>
         /// The page itself, built when it is asked for the first time and kept afterwards, so that
         /// walking the navigation does not build all of them.
         /// </summary>
-        public UserControl View => this.view ??= (UserControl)Activator.CreateInstance(this.PageType)!;
+        public UserControl View => this.view ??= this.CreateView();
 
         /// <summary>
         /// Where the documentation of this page sits. The pages over there are named after the

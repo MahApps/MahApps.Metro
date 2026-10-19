@@ -298,4 +298,16 @@
     <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.Selected" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
     <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.PointerOverSelected" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
 
+    <!--  A checked button of a ToolBar, after the AppBarToggleButton of UWP for Windows 10 and of microsoft-ui-xaml (WinUI 3)  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ToggleButtonBackgroundChecked" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ToggleButtonBackgroundCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundChecked" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundCheckedPointerOver" ResourceKey="MahApps.Brushes.WinUI.AccentFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.AccentFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBackgroundCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.AccentFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundChecked" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
+
 </ResourceDictionary>

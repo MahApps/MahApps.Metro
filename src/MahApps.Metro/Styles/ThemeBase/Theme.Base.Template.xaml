@@ -376,6 +376,7 @@
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillDefault">{{MahApps.Colors.WinUI.CardBackgroundFillDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardBackgroundFillSecondary">{{MahApps.Colors.WinUI.CardBackgroundFillSecondary}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefault">{{MahApps.Colors.WinUI.CardStrokeDefault}}</Color>
+    <Color x:Key="MahApps.Colors.WinUI.CardStrokeDefaultSolid">{{MahApps.Colors.WinUI.CardStrokeDefaultSolid}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.LayerFillAlt">{{MahApps.Colors.WinUI.LayerFillAlt}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SurfaceStrokeDefault">{{MahApps.Colors.WinUI.SurfaceStrokeDefault}}</Color>
     <Color x:Key="MahApps.Colors.WinUI.SmokeFillDefault">{{MahApps.Colors.WinUI.SmokeFillDefault}}</Color>
@@ -499,6 +500,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillDefault" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardBackgroundFillSecondary" Color="{StaticResource MahApps.Colors.WinUI.CardBackgroundFillSecondary}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.CardStrokeDefault}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WinUI.CardStrokeDefaultSolid" Color="{StaticResource MahApps.Colors.WinUI.CardStrokeDefaultSolid}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.LayerFillAlt" Color="{StaticResource MahApps.Colors.WinUI.LayerFillAlt}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SurfaceStrokeDefault" Color="{StaticResource MahApps.Colors.WinUI.SurfaceStrokeDefault}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WinUI.SmokeFillDefault" Color="{StaticResource MahApps.Colors.WinUI.SmokeFillDefault}" options:Freeze="True" />
@@ -1318,5 +1320,47 @@
     <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.PointerOverUnselected" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillTertiary" />
     <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.DisabledSelected" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
     <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.Caption" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+
+    <!--
+        ToolBar, read off the CommandBar and its AppBarButton, AppBarToggleButton and AppBarSeparator: the generic.xaml of UWP
+        for the Windows 10 look, the *_themeresources.xaml of microsoft-ui-xaml (WinUI 3) for the WinUI look. The overflow
+        is the drop-down the menus of the same set already draw. A checked button that takes the accent is in
+        Theme.Template.xaml.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.OverflowBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.OverflowBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransientBorder" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.Separator" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumLow" />
+    <!--  the CommandBar has no gripper, so the one a ToolBar in a tray carries takes the colour of the secondary text  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.Gripper" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ButtonForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ToggleButtonForegroundChecked" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.Win10.ToggleButtonForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.Foreground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <!--  opened, the bar takes the colour of its drop-down and a frame, so that the two read as one surface  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.BackgroundOpen" ResourceKey="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.BorderBrushOpen" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefaultSolid" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.OverflowBackground" ResourceKey="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.OverflowBorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransientBorder" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.Separator" ResourceKey="MahApps.Brushes.WinUI.DividerStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.Gripper" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ButtonForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <!--  WinUI frames a checked button in AccentControlElevationBorderBrush, the frame and the stronger bottom edge of its accent button  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBorderBrushChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBorderBrush" />
+    <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBottomBorderBrushChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBottomBorderBrush" />
 
 </ResourceDictionary>
