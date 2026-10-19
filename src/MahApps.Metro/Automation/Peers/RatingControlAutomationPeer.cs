@@ -52,8 +52,8 @@ namespace MahApps.Metro.Automation.Peers
         /// </summary>
         internal void RaiseValuePropertyChangedEvent(double oldValue, double newValue)
         {
-            var oldRange = oldValue == -1 ? 0.0 : oldValue;
-            var newRange = newValue == -1 ? 0.0 : newValue;
+            var oldRange = DoubleUtil.AreClose(oldValue, -1.0) ? 0.0 : oldValue;
+            var newRange = DoubleUtil.AreClose(newValue, -1.0) ? 0.0 : newValue;
 
             this.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, this.GetValueString(oldValue), this.GetValueString(newValue));
             this.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty, oldRange, newRange);
@@ -90,7 +90,7 @@ namespace MahApps.Metro.Automation.Peers
             get
             {
                 var value = this.RatingControl.Value;
-                return value == -1 ? 0.0 : value;
+                return DoubleUtil.AreClose(value, -1.0) ? 0.0 : value;
             }
         }
 
@@ -111,10 +111,10 @@ namespace MahApps.Metro.Automation.Peers
 
         private string GetValueString(double ratingValue)
         {
-            if (ratingValue == -1)
+            if (DoubleUtil.AreClose(ratingValue, -1.0))
             {
                 var placeholderValue = this.RatingControl.PlaceholderValue;
-                return placeholderValue == -1
+                return DoubleUtil.AreClose(placeholderValue, -1.0)
                     ? AutomationStrings.RatingUnset
                     : this.GenerateValueString(AutomationStrings.CommunityRatingString, placeholderValue);
             }

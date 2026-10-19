@@ -58,7 +58,7 @@ namespace MahApps.Metro.Controls
         private DependencyProperty? stateBrushProperty;
 
         // the tests replace this, since the position of a raised mouse event can't be set
-        private Func<MouseEventArgs, IInputElement, Point> pointerPosition = (e, relativeTo) => e.GetPosition(relativeTo);
+        private readonly Func<MouseEventArgs, IInputElement, Point> pointerPosition = (e, relativeTo) => e.GetPosition(relativeTo);
 
         private enum RatingControlStates
         {
@@ -130,7 +130,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(MaxRating),
                                           typeof(int),
                                           typeof(RatingControl),
-                                          new FrameworkPropertyMetadata(5, OnMaxRatingChanged, CoerceMaxRating));
+                                          new FrameworkPropertyMetadata(5, OnMaxRatingChanged, (_, baseValue) => Math.Max(1, (int)baseValue!)));
 
         /// <summary>
         /// Gets or sets the number of items, at least 1.
@@ -139,11 +139,6 @@ namespace MahApps.Metro.Controls
         {
             get => (int)this.GetValue(MaxRatingProperty);
             set => this.SetValue(MaxRatingProperty, value);
-        }
-
-        private static object CoerceMaxRating(DependencyObject d, object? baseValue)
-        {
-            return Math.Max(1, (int)baseValue!);
         }
 
         private static void OnMaxRatingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -601,9 +596,9 @@ namespace MahApps.Metro.Controls
             if (this.isPointerOver)
             {
                 value = this.CalculateRatingAt(this.pointerX);
-                if (ratingValue == NoValueSetSentinel)
+                if (DoubleUtil.AreClose(ratingValue, NoValueSetSentinel))
                 {
-                    if (placeholderValue == NoValueSetSentinel)
+                    if (DoubleUtil.AreClose(placeholderValue, NoValueSetSentinel))
                     {
                         this.GoToState("PointerOverPlaceholder", PointerOverPlaceholderBrushProperty, RatingControlStates.PointerOverPlaceholder);
                     }
@@ -928,18 +923,18 @@ namespace MahApps.Metro.Controls
 
         private void ChangeRatingBy(double change, bool originatedFromMouse)
         {
-            if (change == 0.0)
+            if (DoubleUtil.AreClose(change, 0.0))
             {
                 return;
             }
 
             double ratingValue;
             var current = this.Value;
-            if (current != NoValueSetSentinel && this.IsHalfStepEnabled)
+            if (!DoubleUtil.AreClose(current, NoValueSetSentinel) && this.IsHalfStepEnabled)
             {
                 // a fraction set from code that is no half snaps to the half below or above first
                 var halves = current * 2.0;
-                if (Math.Truncate(halves) != halves)
+                if (!DoubleUtil.AreClose(Math.Truncate(halves), halves))
                 {
                     ratingValue = change < 0.0 ? Math.Floor(halves) / 2.0 : Math.Ceiling(halves) / 2.0;
                 }
@@ -948,12 +943,12 @@ namespace MahApps.Metro.Controls
                     ratingValue = current + change;
                 }
             }
-            else if (current != NoValueSetSentinel)
+            else if (!DoubleUtil.AreClose(current, NoValueSetSentinel))
             {
                 // a fraction set from code is dropped before the change is applied
-                if (Math.Truncate(current) != current)
+                if (!DoubleUtil.AreClose(Math.Truncate(current), current))
                 {
-                    ratingValue = change == -1 ? Math.Truncate(current) : Math.Truncate(current) + change;
+                    ratingValue = DoubleUtil.AreClose(change, -1.0) ? Math.Truncate(current) : Math.Truncate(current) + change;
                 }
                 else
                 {
@@ -977,7 +972,7 @@ namespace MahApps.Metro.Controls
             ratingValue = Math.Max(ratingValue, 0.0);
 
             // nothing happens when there is no rating and the input asks for none
-            if (oldRatingValue <= NoValueSetSentinel && ratingValue == 0.0)
+            if (oldRatingValue <= NoValueSetSentinel && DoubleUtil.AreClose(ratingValue, 0.0))
             {
                 return;
             }
@@ -986,7 +981,7 @@ namespace MahApps.Metro.Controls
             {
                 this.SetCurrentValue(ValueProperty, this.MinimumValue);
             }
-            else if (ratingValue == oldRatingValue && this.IsClearEnabled && (ratingValue != maxRating || originatedFromMouse))
+            else if (DoubleUtil.AreClose(ratingValue, oldRatingValue) && this.IsClearEnabled && (!DoubleUtil.AreClose(ratingValue, maxRating) || originatedFromMouse))
             {
                 // raising the rating by key at the maximum keeps it, but a click on the star of the current rating clears it
                 this.SetCurrentValue(ValueProperty, NoValueSetSentinel);
