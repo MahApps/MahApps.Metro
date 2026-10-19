@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
 
@@ -58,6 +59,14 @@ namespace MahApps.Metro.Tests.Tests
             typeof(ToolTip)
         };
 
+        /// <summary>
+        /// What draws its items in the symbol font and writes only a caption, at the Caption step, in a font of its own.
+        /// </summary>
+        private static readonly Type[] Glyphs =
+        {
+            typeof(RatingControl)
+        };
+
         private const string Win10Family = "Segoe UI";
         private const string WinUIFamily = "Segoe UI Variable Text, Segoe UI";
         private const string WinUICaptionFamily = "Segoe UI Variable Small, Segoe UI";
@@ -90,6 +99,13 @@ namespace MahApps.Metro.Tests.Tests
 
                         var caption = Captions.Any(c => c.IsAssignableFrom(type));
                         var control = this.Show(dictionary, type, null);
+
+                        if (Glyphs.Any(g => g.IsAssignableFrom(type)))
+                        {
+                            Assert.That(control.FontSize, Is.EqualTo(12), $"the size of {type.Name}");
+                            Assert.That(IsSymbolFont(control.FontFamily.Source), Is.True, $"the family of {type.Name} is {control.FontFamily.Source}");
+                            continue;
+                        }
 
                         Assert.That(control.FontSize, Is.EqualTo(follows ? HostSize : caption ? 12 : 14), $"the size of {type.Name}");
                         Assert.That(control.FontFamily.Source, Is.EqualTo(follows ? HostFamily : caption ? CaptionFamily(set, family) : family), $"the family of {type.Name}");

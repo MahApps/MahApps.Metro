@@ -118,7 +118,7 @@ Unless indicated otherwise on a per-file basis all source and documentation here
 
 ## microsoft-ui-xaml
 
-- `InfoBar`, `InfoBarPanel`
+- `InfoBar`, `InfoBarPanel`, `RatingControl`
 - Copyright (c) Microsoft Corporation. All rights reserved.
 - [Source](https://github.com/microsoft/microsoft-ui-xaml)
 - [MIT License](https://github.com/microsoft/microsoft-ui-xaml/blob/main/LICENSE)

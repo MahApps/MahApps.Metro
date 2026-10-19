@@ -1,0 +1,147 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--
+        The RatingControl, after RatingControl.xaml and RatingControl_themeresources.xaml of microsoft-ui-xaml,
+        Copyright (c) Microsoft Corporation, MIT License. The control stamps the items into the two panels,
+        the background ones show the unset glyph, the foreground ones are clipped to the value.
+    -->
+
+    <!--  the items are drawn at this size and scaled down by half, with this room between two of them  -->
+    <sys:Double x:Key="MahApps.Sizes.RatingControl.FontSizeForRendering">32</sys:Double>
+    <sys:Double x:Key="MahApps.Sizes.RatingControl.ItemSpacing">8</sys:Double>
+
+    <ControlTemplate x:Key="MahApps.Templates.RatingControl" TargetType="{x:Type mah:RatingControl}">
+        <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}">
+            <StackPanel x:Name="PART_CaptionStackPanel" Orientation="Horizontal">
+                <StackPanel x:Name="PART_RatingBackgroundStackPanel"
+                            Background="Transparent"
+                            Orientation="Horizontal"
+                            TextElement.Foreground="{TemplateBinding mah:RatingControl.UnselectedBrush}" />
+                <!--  12 from the last item, which ends where its glyph ends  -->
+                <TextBlock x:Name="PART_Caption"
+                           Margin="12 0 0 0"
+                           VerticalAlignment="Center"
+                           FontFamily="{TemplateBinding mah:RatingControl.CaptionFontFamily}"
+                           FontSize="{TemplateBinding FontSize}"
+                           Foreground="{TemplateBinding mah:RatingControl.CaptionBrush}"
+                           IsHitTestVisible="False"
+                           Text="{TemplateBinding Caption}" />
+            </StackPanel>
+            <StackPanel x:Name="PART_RatingForegroundStackPanel"
+                        HorizontalAlignment="Left"
+                        IsHitTestVisible="False"
+                        Orientation="Horizontal" />
+            <VisualStateManager.VisualStateGroups>
+                <!--
+                    A visual state of WPF can't carry the brush, so the states only have their names and the
+                    control puts the brush of the state on the foreground items itself.
+                -->
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Disabled" />
+                    <VisualState x:Name="Placeholder" />
+                    <VisualState x:Name="PointerOverPlaceholder" />
+                    <VisualState x:Name="PointerOverUnselected" />
+                    <VisualState x:Name="Set" />
+                    <VisualState x:Name="PointerOverSet" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <!--  without a brush of their own the items and the caption keep the Foreground of the control  -->
+            <Trigger Property="mah:RatingControl.UnselectedBrush" Value="{x:Null}">
+                <Setter TargetName="PART_RatingBackgroundStackPanel" Property="TextElement.Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+            <Trigger Property="mah:RatingControl.CaptionBrush" Value="{x:Null}">
+                <Setter TargetName="PART_Caption" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+            <Trigger Property="Caption" Value="">
+                <Setter TargetName="PART_Caption" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="Caption" Value="{x:Null}">
+                <Setter TargetName="PART_Caption" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.RatingControl" TargetType="{x:Type mah:RatingControl}">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <!--  the style seals the info, so all controls share one frozen instance  -->
+        <Setter Property="ItemInfo">
+            <Setter.Value>
+                <mah:RatingItemFontInfo Glyph="&#xE735;" UnsetGlyph="&#xE734;" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.RatingControl}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="mah:RatingControl.CaptionBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Caption}" />
+        <!--  the control itself carries the symbol font of the items, so the caption gets a font of its own  -->
+        <Setter Property="mah:RatingControl.CaptionFontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="mah:RatingControl.DisabledSelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.DisabledSelected}" />
+        <Setter Property="mah:RatingControl.PlaceholderBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Placeholder}" />
+        <Setter Property="mah:RatingControl.PointerOverPlaceholderBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.PointerOverPlaceholder}" />
+        <Setter Property="mah:RatingControl.PointerOverSelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.PointerOverSelected}" />
+        <Setter Property="mah:RatingControl.PointerOverUnselectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.PointerOverUnselected}" />
+        <Setter Property="mah:RatingControl.SelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Selected}" />
+        <Setter Property="mah:RatingControl.UnselectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Unselected}" />
+    </Style>
+
+    <!--
+        The look of WinUI 2 v2.4.2, what Windows 10 showed: an empty star is the filled one in the unselected colour, and
+        the stars under the pointer grow. The caption is written in CaptionTextBlockStyle, 12 high.
+    -->
+    <Style x:Key="MahApps.Styles.RatingControl.Win10"
+           BasedOn="{StaticResource MahApps.Styles.RatingControl}"
+           TargetType="{x:Type mah:RatingControl}">
+        <Style.Resources>
+            <sys:Boolean x:Key="MahApps.Flags.RatingControl.ScaleOnPointerOver">True</sys:Boolean>
+        </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Caption.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.Caption}" />
+        <Setter Property="ItemInfo">
+            <Setter.Value>
+                <mah:RatingItemFontInfo Glyph="&#xE735;" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.Win10}" />
+        <Setter Property="mah:RatingControl.CaptionBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.Caption}" />
+        <Setter Property="mah:RatingControl.CaptionFontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="mah:RatingControl.DisabledSelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.DisabledSelected}" />
+        <Setter Property="mah:RatingControl.PlaceholderBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.Placeholder}" />
+        <Setter Property="mah:RatingControl.PointerOverPlaceholderBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.PointerOverPlaceholder}" />
+        <Setter Property="mah:RatingControl.PointerOverSelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.PointerOverSelected}" />
+        <Setter Property="mah:RatingControl.PointerOverUnselectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.PointerOverUnselected}" />
+        <Setter Property="mah:RatingControl.SelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.Selected}" />
+        <Setter Property="mah:RatingControl.UnselectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.Win10.Unselected}" />
+    </Style>
+
+    <!--  The look of WinUI 3, with the caption 12 high  -->
+    <Style x:Key="MahApps.Styles.RatingControl.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.RatingControl}"
+           TargetType="{x:Type mah:RatingControl}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Caption.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.Caption}" />
+        <!--  nothing here is rounded, the radius is there for the corner rule all WinUI styles share (EveryWinUIControlIsRoundedByTheSameNumber)  -->
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI}" />
+        <Setter Property="mah:RatingControl.CaptionBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.Caption}" />
+        <Setter Property="mah:RatingControl.CaptionFontFamily" Value="{DynamicResource MahApps.Fonts.Family.Caption.WinUI}" />
+        <Setter Property="mah:RatingControl.DisabledSelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.DisabledSelected}" />
+        <Setter Property="mah:RatingControl.PlaceholderBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.Placeholder}" />
+        <Setter Property="mah:RatingControl.PointerOverPlaceholderBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.PointerOverPlaceholder}" />
+        <Setter Property="mah:RatingControl.PointerOverSelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.PointerOverSelected}" />
+        <Setter Property="mah:RatingControl.PointerOverUnselectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.PointerOverUnselected}" />
+        <Setter Property="mah:RatingControl.SelectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.Selected}" />
+        <Setter Property="mah:RatingControl.UnselectedBrush" Value="{DynamicResource MahApps.Brushes.RatingControl.WinUI.Unselected}" />
+    </Style>
+
+</ResourceDictionary>

@@ -1293,4 +1293,30 @@
     <!--  WinUI writes a disabled link in AccentTextFillColorDisabled, which has the colour of TextFillColorDisabled  -->
     <markup:StaticResource x:Key="MahApps.Brushes.Hyperlink.WinUI.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
 
+    <!--
+        RatingControl, after RatingControl_themeresources.xaml of microsoft-ui-xaml: WinUI 3 for the WinUI look, WinUI 2 v2.4.2
+        for the Windows 10 look. The Metro look takes gray steps of the other Metro styles: the empty stars are the unfilled
+        track of the Metro slider, Gray3, the same in light and dark. The set stars of all three are the accent, so those
+        are in Theme.Template.xaml.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Unselected" ResourceKey="MahApps.Brushes.Gray3" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Placeholder" ResourceKey="MahApps.Brushes.Text" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.PointerOverPlaceholder" ResourceKey="MahApps.Brushes.Gray2" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.PointerOverUnselected" ResourceKey="MahApps.Brushes.Gray2" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.DisabledSelected" ResourceKey="MahApps.Brushes.Gray6" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Caption" ResourceKey="MahApps.Brushes.Gray2" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.Unselected" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.Placeholder" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.PointerOverPlaceholder" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.PointerOverUnselected" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <!--  WinUI 2 names SystemBaseMediumLowColor here, the colour this brush has  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.DisabledSelected" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.Win10.Caption" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.Unselected" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.Placeholder" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.PointerOverPlaceholder" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.PointerOverUnselected" ResourceKey="MahApps.Brushes.WinUI.ControlAltFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.DisabledSelected" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RatingControl.WinUI.Caption" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+
 </ResourceDictionary>

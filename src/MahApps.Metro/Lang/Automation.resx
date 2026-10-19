@@ -100,11 +100,17 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="BasicRatingString" xml:space="preserve">
+    <value>Rating, {0} of {1}</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="CommunityRatingString" xml:space="preserve">
+    <value>Community Rating, {0} of {1}</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Content</value>
@@ -153,6 +159,12 @@
   </data>
   <data name="OptionItems" xml:space="preserve">
     <value>Option items</value>
+  </data>
+  <data name="RatingLocalizedControlType" xml:space="preserve">
+    <value>Rating Slider</value>
+  </data>
+  <data name="RatingUnset" xml:space="preserve">
+    <value>Rating Unset</value>
   </data>
   <data name="ScrollDown" xml:space="preserve">
     <value>Scroll down</value>
