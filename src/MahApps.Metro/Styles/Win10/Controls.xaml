@@ -56,6 +56,9 @@
     <Style BasedOn="{StaticResource MahApps.Styles.HyperlinkButton.Win10}" TargetType="{x:Type mah:HyperlinkButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow.Win10}" TargetType="{x:Type mah:MetroWindow}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToolTip.Win10}" TargetType="ToolTip" />
+    <!--  the buttons, the lines and the boxes in a bar take their look from the bar's own style, so the bar and the tray are all this set names  -->
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolBar.Win10}" TargetType="ToolBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolBarTray.Win10}" TargetType="ToolBarTray" />
     <!--  the old dialogs; Dialogs.xaml holds the same six for a single call  -->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Win10}" TargetType="{x:Type dialogs:CustomDialog}" />
