@@ -116,9 +116,9 @@ namespace MahApps.Metro.Gallery.Core
 
         private UserControl CreateView()
         {
-            var view = (UserControl)Activator.CreateInstance(this.PageType)!;
-            StyleSets.SetStyleSet(view, this.styleSet);
-            return view;
+            var page = (UserControl)Activator.CreateInstance(this.PageType)!;
+            StyleSets.SetStyleSet(page, this.styleSet);
+            return page;
         }
 
         /// <summary>
