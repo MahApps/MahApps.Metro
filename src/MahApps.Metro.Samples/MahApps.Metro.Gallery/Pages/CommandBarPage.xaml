@@ -1,0 +1,249 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.CommandBarPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="BasicExample"
+                                     Description="WPF has no CommandBar, and the ToolBar does the same job: a row of commands with the rest behind the dots. In the Windows 10 and the WinUI set the bar wears the look of the CommandBar of that set, with buttons as high as the bar and the accent on a checked one. An icon and a label are content like any other, so a label next to the icon is a StackPanel."
+                                     Header="Icons with labels">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Basic">
+                    <ToolBar x:Name="BasicBar"
+                             HorizontalAlignment="Left"
+                             ToolBarTray.IsLocked="True">
+                        <Button ToolTip="Add">
+                            <mah:FontIcon Glyph="&#xE710;" />
+                        </Button>
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <mah:FontIcon Glyph="&#xE70F;" />
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           Text="Edit" />
+                            </StackPanel>
+                        </Button>
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <mah:FontIcon Glyph="&#xE72D;" />
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           Text="Share" />
+                            </StackPanel>
+                        </Button>
+                        <Separator />
+                        <Button ToolTip="Delete">
+                            <mah:FontIcon Glyph="&#xE74D;" />
+                        </Button>
+                    </ToolBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TitleExample"
+                                     Description="The CommandBar has room for content of its own on the left. With a ToolBar that is a layout around the bar: a title on one side, the bar on the other. The bar is transparent in the WinUI set, so it sits on whatever is behind it."
+                                     Header="A title and its commands">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Title">
+                    <DockPanel x:Name="TitleRow" Width="560">
+                        <ToolBar DockPanel.Dock="Right" ToolBarTray.IsLocked="True">
+                            <Button ToolTip="Reply">
+                                <mah:FontIcon Glyph="&#xE8CA;" />
+                            </Button>
+                            <Button ToolTip="Forward">
+                                <mah:FontIcon Glyph="&#xE72A;" />
+                            </Button>
+                            <ToggleButton ToolTip="Flag">
+                                <mah:FontIcon Glyph="&#xE7C1;" />
+                            </ToggleButton>
+                            <Separator />
+                            <Button ToolTip="Delete">
+                                <mah:FontIcon Glyph="&#xE74D;" />
+                            </Button>
+                        </ToolBar>
+                        <TextBlock Margin="12 0"
+                                   VerticalAlignment="Center"
+                                   FontSize="20"
+                                   Text="Inbox, 42 unread" />
+                    </DockPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="FormatExample"
+                                     Description="A ToggleButton stays down, which is what Bold and Italic want. A RadioButton in a bar is handed the same look, so a group of them is a row of buttons of which one is down, the alignment here. A ComboBox in the bar is the combo box of the set."
+                                     Header="Formatting">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Format">
+                    <ToolBar x:Name="FormatBar"
+                             HorizontalAlignment="Left"
+                             ToolBarTray.IsLocked="True">
+                        <ComboBox Width="72"
+                                  VerticalAlignment="Center"
+                                  SelectedIndex="2">
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="14" />
+                            <ComboBoxItem Content="18" />
+                            <ComboBoxItem Content="24" />
+                        </ComboBox>
+                        <Separator />
+                        <ToggleButton x:Name="Bold"
+                                      IsChecked="True"
+                                      ToolTip="Bold">
+                            <mah:FontIcon Glyph="&#xE8DD;" />
+                        </ToggleButton>
+                        <ToggleButton ToolTip="Italic">
+                            <mah:FontIcon Glyph="&#xE8DB;" />
+                        </ToggleButton>
+                        <ToggleButton ToolTip="Underline">
+                            <mah:FontIcon Glyph="&#xE8DC;" />
+                        </ToggleButton>
+                        <Separator />
+                        <RadioButton GroupName="Alignment"
+                                     IsChecked="True"
+                                     ToolTip="Align left">
+                            <mah:FontIcon Glyph="&#xE8E4;" />
+                        </RadioButton>
+                        <RadioButton GroupName="Alignment" ToolTip="Center">
+                            <mah:FontIcon Glyph="&#xE8E3;" />
+                        </RadioButton>
+                        <RadioButton GroupName="Alignment" ToolTip="Align right">
+                            <mah:FontIcon Glyph="&#xE8E2;" />
+                        </RadioButton>
+                    </ToolBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="OverflowExample"
+                                     Description="The CommandBar has primary and secondary commands. With a ToolBar the secondary ones are the items with OverflowMode set to Always: they go behind the dots straight away, and the rest follow when the bar gets too narrow. The dots are only there while something has gone behind them, and the drop-down is a list with lines of the same width."
+                                     Header="Commands behind the dots">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Overflow">
+                    <ToolBar x:Name="OverflowBar"
+                             Width="400"
+                             HorizontalAlignment="Left"
+                             ToolBarTray.IsLocked="True">
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <mah:FontIcon Glyph="&#xE710;" />
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           Text="New" />
+                            </StackPanel>
+                        </Button>
+                        <Button ToolTip="Refresh">
+                            <mah:FontIcon Glyph="&#xE72C;" />
+                        </Button>
+                        <Button ToolTip="Sort">
+                            <mah:FontIcon Glyph="&#xE8CB;" />
+                        </Button>
+                        <Button ToolTip="Filter">
+                            <mah:FontIcon Glyph="&#xE71C;" />
+                        </Button>
+                        <Button ToolTip="Pin">
+                            <mah:FontIcon Glyph="&#xE718;" />
+                        </Button>
+                        <Button Content="Export as CSV" ToolBar.OverflowMode="Always" />
+                        <Button Content="Print" ToolBar.OverflowMode="Always" />
+                        <Button Content="Settings" ToolBar.OverflowMode="Always" />
+                    </ToolBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="CommandsExample"
+                                     Description="The buttons take the commands of WPF like any other button, and a command that cannot run right now switches its button off. Select some of the text and Cut and Copy come on; Paste is there while the clipboard holds text."
+                                     Header="Commands that switch themselves">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Commands">
+                    <StackPanel Width="400" HorizontalAlignment="Left">
+                        <ToolBar HorizontalAlignment="Left" ToolBarTray.IsLocked="True">
+                            <Button Command="ApplicationCommands.Cut"
+                                    CommandTarget="{Binding ElementName=Note}"
+                                    ToolTip="Cut">
+                                <mah:FontIcon Glyph="&#xE8C6;" />
+                            </Button>
+                            <Button Command="ApplicationCommands.Copy"
+                                    CommandTarget="{Binding ElementName=Note}"
+                                    ToolTip="Copy">
+                                <mah:FontIcon Glyph="&#xE8C8;" />
+                            </Button>
+                            <Button Command="ApplicationCommands.Paste"
+                                    CommandTarget="{Binding ElementName=Note}"
+                                    ToolTip="Paste">
+                                <mah:FontIcon Glyph="&#xE77F;" />
+                            </Button>
+                            <Separator />
+                            <Button Command="ApplicationCommands.Undo"
+                                    CommandTarget="{Binding ElementName=Note}"
+                                    ToolTip="Undo">
+                                <mah:FontIcon Glyph="&#xE7A7;" />
+                            </Button>
+                        </ToolBar>
+                        <TextBox x:Name="Note"
+                                 Margin="0 8 0 0"
+                                 Text="The answer is 42, but what was the question?" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="SearchExample"
+                                     Description="A TextBox in the bar is the text box of the set, which makes a search field next to the commands that act on what it finds."
+                                     Header="A search field in the bar">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Search">
+                    <ToolBar HorizontalAlignment="Left" ToolBarTray.IsLocked="True">
+                        <TextBox x:Name="Search"
+                                 Width="200"
+                                 VerticalAlignment="Center"
+                                 mah:TextBoxHelper.ClearTextButton="True"
+                                 mah:TextBoxHelper.Watermark="Search the mail" />
+                        <Button ToolTip="Search">
+                            <mah:FontIcon Glyph="&#xE721;" />
+                        </Button>
+                        <Separator />
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <mah:FontIcon Glyph="&#xE715;" />
+                                <TextBlock Margin="8 0 0 0"
+                                           VerticalAlignment="Center"
+                                           Text="New mail" />
+                            </StackPanel>
+                        </Button>
+                    </ToolBar>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample x:Name="TrayExample"
+                                     Description="Several bars go into a ToolBarTray, which the CommandBar does not know. Unlocked, every bar has a grip the user drags it along a row or into another one with, and a tray that stands upright turns its bars and their lines with it."
+                                     Header="Bars in a tray">
+                <smtx:XamlDisplay UniqueKey="CommandBar.Tray">
+                    <ToolBarTray x:Name="Tray" HorizontalAlignment="Left">
+                        <ToolBar Band="0" BandIndex="0">
+                            <Button ToolTip="Open">
+                                <mah:FontIcon Glyph="&#xE8E5;" />
+                            </Button>
+                            <Button ToolTip="Save">
+                                <mah:FontIcon Glyph="&#xE74E;" />
+                            </Button>
+                            <Separator />
+                            <Button ToolTip="Print">
+                                <mah:FontIcon Glyph="&#xE749;" />
+                            </Button>
+                        </ToolBar>
+                        <ToolBar Band="0" BandIndex="1">
+                            <Button ToolTip="Zoom in">
+                                <mah:FontIcon Glyph="&#xE8A3;" />
+                            </Button>
+                            <Button ToolTip="Zoom out">
+                                <mah:FontIcon Glyph="&#xE71F;" />
+                            </Button>
+                        </ToolBar>
+                    </ToolBarTray>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -13,7 +13,7 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="TrayExample"
-                                     Description="A toolbar belongs in a tray, and the colour behind it is the tray's: the template of the bar hardcodes a transparent background rather than binding it, so setting Background on the bar itself does nothing. The dotted grip on the left is what the user drags a bar along a row with, and locking the tray collapses it."
+                                     Description="A toolbar belongs in a tray, and the colour behind it is the tray's: the template of the bar hardcodes a transparent background rather than binding it, so setting Background on the bar itself does nothing. That is the Metro bar; the Windows 10 and the WinUI one take the background they are given. The grip on the left is what the user drags a bar along a row with, and locking the tray collapses it."
                                      Header="A bar in a tray">
                 <smtx:XamlDisplay UniqueKey="ToolBar.Tray">
                     <ToolBarTray x:Name="Tray"
@@ -48,7 +48,7 @@
             </controls:ControlExample>
 
             <controls:ControlExample x:Name="OverflowExample"
-                                     Description="What does not fit moves behind the chevron at the right-hand end, and the button for it stays disabled until there is something to show. An item can be sent there whatever the width says, which is where the rarely used ones belong."
+                                     Description="What does not fit moves behind the chevron at the right-hand end, and in the Metro set the button for it stays disabled until there is something to show. The Windows 10 and the WinUI set leave the button out until then and list the commands one under the other, as the CommandBar does. An item can be sent there whatever the width says, which is where the rarely used ones belong."
                                      Header="More than the bar holds">
                 <smtx:XamlDisplay UniqueKey="ToolBar.Overflow">
                     <ToolBarTray x:Name="Narrow"
