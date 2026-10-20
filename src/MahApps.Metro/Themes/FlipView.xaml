@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:mahConverters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -483,6 +484,614 @@
         <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <!--  The Windows 10 look, after FlipView_themeresources_v1.xaml and PipsPager_themeresources.xaml of microsoft-ui-xaml winui2/main  -->
+    <Style x:Key="MahApps.Styles.Button.FlipView.Navigation.Win10" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackground}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousArrowForeground}" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="IsTabStop" Value="True" />
+        <!--  the buttons only show while the pointer is over the flip view, see the DataTrigger below  -->
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousArrowForegroundPointerOver}" />
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousArrowForegroundPressed}" />
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackgroundPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="20" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, FallbackValue=False, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="True">
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <!--  up and down are 36 wide and 20 high, back and forward the other way round  -->
+            <DataTrigger Binding="{Binding Orientation, FallbackValue={x:Static Orientation.Horizontal}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static Orientation.Vertical}">
+                <Setter Property="Height" Value="20" />
+                <Setter Property="Width" Value="36" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  A dot of the PipsPager in a cell of 12 by 20, or of 20 by 12 when the index stands left or right. A style standing on this one changes the long side in its own resources.  -->
+    <Style x:Key="MahApps.Styles.ListBoxItem.FlipView.Index.Win10" TargetType="ListBoxItem">
+        <Style.Resources>
+            <system:Double x:Key="FlipViewIndexCellLongSide">20</system:Double>
+            <system:Double x:Key="FlipViewIndexCellShortSide">12</system:Double>
+        </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Height" Value="{DynamicResource FlipViewIndexCellLongSide}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="Root"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="Transparent"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:FontIcon x:Name="Dot"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      FontSize="4"
+                                      Foreground="{DynamicResource MahApps.Brushes.FlipView.Index.Foreground}"
+                                      Glyph="&#xEA3B;" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Dot" Property="FontSize" Value="6" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter TargetName="Dot" Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Index.ForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Dot" Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Index.ForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="{DynamicResource FlipViewIndexCellShortSide}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IndexPlacement, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static mah:NavigationIndexPlacement.Left}">
+                <Setter Property="Height" Value="{DynamicResource FlipViewIndexCellShortSide}" />
+                <Setter Property="Width" Value="{DynamicResource FlipViewIndexCellLongSide}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IndexPlacement, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static mah:NavigationIndexPlacement.Right}">
+                <Setter Property="Height" Value="{DynamicResource FlipViewIndexCellShortSide}" />
+                <Setter Property="Width" Value="{DynamicResource FlipViewIndexCellLongSide}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IndexPlacement, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static mah:NavigationIndexPlacement.LeftOverItem}">
+                <Setter Property="Height" Value="{DynamicResource FlipViewIndexCellShortSide}" />
+                <Setter Property="Width" Value="{DynamicResource FlipViewIndexCellLongSide}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IndexPlacement, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static mah:NavigationIndexPlacement.RightOverItem}">
+                <Setter Property="Height" Value="{DynamicResource FlipViewIndexCellShortSide}" />
+                <Setter Property="Width" Value="{DynamicResource FlipViewIndexCellLongSide}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.FlipView.Win10"
+           BasedOn="{StaticResource MahApps.Styles.FlipView}"
+           TargetType="{x:Type mah:FlipView}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.Background}" />
+        <Setter Property="BannerBackground" Value="{DynamicResource MahApps.Brushes.SystemControlBackgroundBaseMediumLow}" />
+        <Setter Property="BannerForeground" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseHigh}" />
+        <Setter Property="BannerOpacity" Value="1" />
+        <Setter Property="ButtonBackContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="12"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xE76B;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonDownContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="12"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xE70D;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonForwardContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="12"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xE76C;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonUpContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="12"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xE70E;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="IndexItemContainerStyle" Value="{DynamicResource MahApps.Styles.ListBoxItem.FlipView.Index.Win10}" />
+        <Setter Property="MouseHoverBorderEnabled" Value="False" />
+        <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation.Win10}" />
+    </Style>
+
+    <!--  The template of the WinUI look: the one of the Metro look, cut to the corners of the control. The index is a part of its own in it.  -->
+    <ControlTemplate x:Key="MahApps.Templates.FlipView.WinUI" TargetType="{x:Type mah:FlipView}">
+        <Border x:Name="Border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid x:Name="ContentGrid">
+                <Grid.Clip>
+                    <!--  a clip lives in the coordinates of the element it sits on, so it takes the size of this grid and the corners the border leaves over  -->
+                    <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                        <Binding ElementName="ContentGrid" Path="ActualWidth" />
+                        <Binding ElementName="ContentGrid" Path="ActualHeight" />
+                        <Binding ElementName="Border" Path="CornerRadius" />
+                        <Binding ElementName="Border" Path="BorderThickness" />
+                        <Binding ElementName="Border" Path="Padding" />
+                    </MultiBinding>
+                </Grid.Clip>
+                <Border x:Name="PART_HoverBorder"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="{TemplateBinding MouseHoverBorderThickness}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid Margin="{TemplateBinding Padding}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ListBox x:Name="PART_Index"
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="3"
+                                 HorizontalAlignment="Center"
+                                 Panel.ZIndex="6"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 ItemContainerStyle="{TemplateBinding IndexItemContainerStyle}"
+                                 ItemsSource="{Binding Items, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                 SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                 Visibility="{Binding ShowIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ListBox.Template>
+                                <ControlTemplate TargetType="{x:Type ListBox}">
+                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </ControlTemplate>
+                            </ListBox.Template>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid HorizontalAlignment="Center"
+                                                 IsItemsHost="True"
+                                                 Rows="1" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+
+                        <Button x:Name="PART_BackButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Panel.ZIndex="6"
+                                Content="{TemplateBinding ButtonBackContent}"
+                                ContentStringFormat="{TemplateBinding ButtonBackContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ButtonBackContentTemplate}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
+                                Visibility="Hidden" />
+                        <Button x:Name="PART_ForwardButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Panel.ZIndex="6"
+                                Content="{TemplateBinding ButtonForwardContent}"
+                                ContentStringFormat="{TemplateBinding ButtonForwardContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ButtonForwardContentTemplate}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
+                                Visibility="Hidden" />
+
+                        <Button x:Name="PART_UpButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="6"
+                                Content="{TemplateBinding ButtonUpContent}"
+                                ContentStringFormat="{TemplateBinding ButtonUpContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ButtonUpContentTemplate}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
+                                Visibility="Hidden" />
+                        <Button x:Name="PART_DownButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Panel.ZIndex="6"
+                                Content="{TemplateBinding ButtonDownContent}"
+                                ContentStringFormat="{TemplateBinding ButtonDownContentStringFormat}"
+                                ContentTemplate="{TemplateBinding ButtonDownContentTemplate}"
+                                Style="{TemplateBinding NavigationButtonStyle}"
+                                Visibility="Hidden" />
+
+                        <Grid x:Name="PART_BannerGrid"
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              Height="0"
+                              VerticalAlignment="Bottom"
+                              Panel.ZIndex="5"
+                              Background="{TemplateBinding BannerBackground}"
+                              Opacity="{TemplateBinding BannerOpacity}">
+                            <Label x:Name="PART_BannerLabel"
+                                   ContentStringFormat="{TemplateBinding BannerTextStringFormat}"
+                                   ContentTemplate="{TemplateBinding BannerTextTemplate}"
+                                   ContentTemplateSelector="{TemplateBinding BannerTextTemplateSelector}"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{TemplateBinding BannerForeground}"
+                                   IsTabStop="False" />
+                        </Grid>
+
+                        <mah:TransitioningContentControl x:Name="PART_Presenter"
+                                                         Grid.Row="1"
+                                                         Grid.Column="1"
+                                                         Panel.ZIndex="1"
+                                                         Content="{TemplateBinding SelectedItem}"
+                                                         ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                         ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                         ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                         IsTabStop="False" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Top}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Center" />
+            </Trigger>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Bottom}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Center" />
+            </Trigger>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Left}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Center" />
+                <Setter TargetName="PART_Index" Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <UniformGrid VerticalAlignment="Center"
+                                         Columns="1"
+                                         IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+            </Trigger>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Right}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="2" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Center" />
+                <Setter TargetName="PART_Index" Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <UniformGrid VerticalAlignment="Center"
+                                         Columns="1"
+                                         IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+            </Trigger>
+
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.TopOverItem}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Top" />
+            </Trigger>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.BottomOverItem}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Bottom" />
+            </Trigger>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.LeftOverItem}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Left" />
+                <Setter TargetName="PART_Index" Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <UniformGrid VerticalAlignment="Center"
+                                         Columns="1"
+                                         IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+            </Trigger>
+            <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.RightOverItem}">
+                <Setter TargetName="PART_Index" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Right" />
+                <Setter TargetName="PART_Index" Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <UniformGrid VerticalAlignment="Center"
+                                         Columns="1"
+                                         IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+            </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="MouseHoverBorderEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_HoverBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseHoverBorderBrush, Mode=OneWay}" />
+            </MultiTrigger>
+
+            <Trigger Property="MouseHoverBorderEnabled" Value="False">
+                <Setter TargetName="PART_HoverBorder" Property="BorderThickness" Value="0" />
+            </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsNavigationEnabled" Value="True" />
+                    <Condition Property="Orientation" Value="Vertical" />
+                    <Condition Property="NavigationButtonsPosition" Value="Outside" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="0" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsNavigationEnabled" Value="True" />
+                    <Condition Property="Orientation" Value="Horizontal" />
+                    <Condition Property="NavigationButtonsPosition" Value="Outside" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="2" />
+                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="ShowBannerStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Height"
+                                 To="30.0" />
+            </Storyboard>
+            <Storyboard x:Key="HideBannerStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Height"
+                                 To="0.0" />
+            </Storyboard>
+            <Storyboard x:Key="HideControlStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="0.0" />
+            </Storyboard>
+            <Storyboard x:Key="ShowControlStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1.0" />
+            </Storyboard>
+        </ControlTemplate.Resources>
+    </ControlTemplate>
+
+    <!--  The WinUI look, after FlipView_themeresources.xaml of microsoft-ui-xaml main  -->
+    <Style x:Key="MahApps.Styles.Button.FlipView.Navigation.WinUI" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForeground}" />
+        <Setter Property="Height" Value="38" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Margin" Value="1" />
+        <!--  the buttons only show while the pointer is over the flip view, see the DataTrigger below  -->
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          RenderTransformOrigin="0.5,0.5"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </ContentPresenter.RenderTransform>
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForegroundPointerOver}" />
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForegroundPressed}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.875" ScaleY="0.875" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackgroundPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="16" />
+        <!--  the radius of the flip view the button sits in  -->
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding (mah:ControlsHelper.CornerRadius), FallbackValue=0, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, FallbackValue=False, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="True">
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <!--  up and down are 38 wide and 16 high, back and forward the other way round  -->
+            <DataTrigger Binding="{Binding Orientation, FallbackValue={x:Static Orientation.Horizontal}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="{x:Static Orientation.Vertical}">
+                <Setter Property="Height" Value="16" />
+                <Setter Property="Width" Value="38" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  The dot of the Windows 10 look in a cell of 12 by 24, or 24 by 12 beside the content  -->
+    <Style x:Key="MahApps.Styles.ListBoxItem.FlipView.Index.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.FlipView.Index.Win10}"
+           TargetType="ListBoxItem">
+        <Style.Resources>
+            <system:Double x:Key="FlipViewIndexCellLongSide">24</system:Double>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.FlipView.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.FlipView}"
+           TargetType="{x:Type mah:FlipView}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.Background}" />
+        <Setter Property="BannerBackground" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackground}" />
+        <Setter Property="BannerForeground" Value="{DynamicResource MahApps.Brushes.WinUI.TextPrimary}" />
+        <Setter Property="BannerOpacity" Value="1" />
+        <Setter Property="ButtonBackContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="8"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xEDD9;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonDownContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="8"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xEDDC;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonForwardContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="8"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xEDDA;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ButtonUpContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <mah:FontIcon FontSize="8"
+                                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                  Glyph="&#xEDDB;" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="IndexItemContainerStyle" Value="{DynamicResource MahApps.Styles.ListBoxItem.FlipView.Index.WinUI}" />
+        <Setter Property="MouseHoverBorderEnabled" Value="False" />
+        <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation.WinUI}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView.WinUI}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
 </ResourceDictionary>
