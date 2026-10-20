@@ -114,6 +114,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// Gets or sets a style for the navigation index items.
+        /// Has no effect in the WinUI look, which shows a <see cref="PipsPager"/> instead.
         /// </summary>
         public Style? IndexItemContainerStyle
         {

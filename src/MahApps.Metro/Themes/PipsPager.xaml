@@ -445,4 +445,14 @@
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
     </Style>
 
+    <!--
+        The pager in the WinUI look of the FlipView. The template of the FlipView takes this key, so that a style under the same key in the resources
+        of a FlipView, or in the resources of the application or of any ancestor of it, changes its pager. It lives here and not among the resources
+        of the FlipView style, since BasedOn is a static reference and in the combined Themes\Styles.xaml the dictionary of the pager comes after the
+        one of the FlipView, so a reference from there would point forward.
+    -->
+    <Style x:Key="MahApps.Styles.PipsPager.FlipView"
+           BasedOn="{StaticResource MahApps.Styles.PipsPager.WinUI}"
+           TargetType="{x:Type mah:PipsPager}" />
+
 </ResourceDictionary>

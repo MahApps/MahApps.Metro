@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
                                           typeof(PipsPager),
                                           new FrameworkPropertyMetadata(0,
                                                                         FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                                                                        (d, e) => ((PipsPager)d).OnSelectedPageIndexChanged()));
+                                                                        (d, e) => ((PipsPager)d).OnSelectedPageIndexChanged((int)e.NewValue)));
 
         /// <summary>
         /// Gets or sets the index of the selected page, counted from zero. A value outside the pages is
@@ -134,7 +134,7 @@ namespace MahApps.Metro.Controls
                                                           typeof(PipsPager),
                                                           new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.Inherits));
 
-        /// <summary>Identifies the PipOrientation attached property.</summary>
+        /// <summary>Identifies the <see cref="GetPipOrientation(DependencyObject)"/> attached property.</summary>
         public static readonly DependencyProperty PipOrientationProperty = PipOrientationPropertyKey.DependencyProperty;
 
         /// <summary>
@@ -495,8 +495,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void OnSelectedPageIndexChanged()
+        private void OnSelectedPageIndexChanged(int newValue)
         {
+            // A value that was pulled back meanwhile is not the one to tell about, only the final valid one raises the event.
+            if (newValue != this.SelectedPageIndex)
+            {
+                return;
+            }
+
             // Ensure that SelectedPageIndex ends up within the pages. Without any pages there is no upper bound.
             // The value is set again rather than coerced, so that only the valid one raises the event.
             var numberOfPages = this.NumberOfPages;

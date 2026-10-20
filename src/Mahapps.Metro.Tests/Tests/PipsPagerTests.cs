@@ -317,6 +317,23 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
+        [Description("An index past the last page ends on the last page, and only that page raises the event.")]
+        public void AnIndexPastTheLastPageRaisesTheEventOnce()
+        {
+            var pager = this.Show(new PipsPager { NumberOfPages = 4 });
+            var indexes = new List<int>();
+            pager.SelectedIndexChanged += (_, _) => indexes.Add(pager.SelectedPageIndex);
+
+            pager.SetCurrentValue(PipsPager.SelectedPageIndexProperty, 9);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(pager.SelectedPageIndex, Is.EqualTo(3));
+                    Assert.That(indexes, Is.EqualTo(new[] { 3 }));
+                });
+        }
+
+        [Test]
         [Description("The pip of the selected page wears the selected style, every other one the normal style.")]
         public void TheSelectedPipWearsTheSelectedStyle()
         {

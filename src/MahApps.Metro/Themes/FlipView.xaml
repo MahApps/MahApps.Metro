@@ -500,7 +500,10 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <!--  The Windows 10 look, after FlipView_themeresources_v1.xaml and PipsPager_themeresources.xaml of microsoft-ui-xaml winui2/main  -->
+    <!--
+        The Windows 10 look, after FlipView_themeresources_v1.xaml and PipsPager_themeresources.xaml of microsoft-ui-xaml winui2/main
+        Copyright (c) Microsoft Corporation, MIT License.
+    -->
     <Style x:Key="MahApps.Styles.Button.FlipView.Navigation.Win10" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackground}" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -509,7 +512,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Win10.NextPreviousArrowForeground}" />
         <Setter Property="Height" Value="36" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
         <!--  the buttons only show while the pointer is over the flip view, see the DataTrigger below  -->
         <Setter Property="Opacity" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -590,6 +593,7 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Cursor" Value="Hand" />
+                            <Setter TargetName="Dot" Property="FontSize" Value="6" />
                             <Setter TargetName="Dot" Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.Index.ForegroundPointerOver}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -671,7 +675,7 @@
         <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation.Win10}" />
     </Style>
 
-    <!--  The template of the WinUI look: the one of the Metro look, cut to the corners of the control. The index is a part of its own in it.  -->
+    <!--  The template of the WinUI look: the one of the Metro look, cut to the corners of the control. The index is a PipsPager in it.  -->
     <ControlTemplate x:Key="MahApps.Templates.FlipView.WinUI" TargetType="{x:Type mah:FlipView}">
         <Border x:Name="Border"
                 Background="{TemplateBinding Background}"
@@ -707,31 +711,16 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ListBox x:Name="PART_Index"
-                                 Grid.Row="0"
-                                 Grid.Column="0"
-                                 Grid.ColumnSpan="3"
-                                 HorizontalAlignment="Center"
-                                 Panel.ZIndex="6"
-                                 Background="Transparent"
-                                 BorderThickness="0"
-                                 ItemContainerStyle="{TemplateBinding IndexItemContainerStyle}"
-                                 ItemsSource="{Binding Items, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                 SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                 Visibility="{Binding ShowIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <ListBox.Template>
-                                <ControlTemplate TargetType="{x:Type ListBox}">
-                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </ControlTemplate>
-                            </ListBox.Template>
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid HorizontalAlignment="Center"
-                                                 IsItemsHost="True"
-                                                 Rows="1" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                        </ListBox>
+                        <mah:PipsPager x:Name="PART_PipsPager"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="3"
+                                       HorizontalAlignment="Center"
+                                       Panel.ZIndex="6"
+                                       NumberOfPages="{Binding Items.Count, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                       SelectedPageIndex="{Binding SelectedIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                       Style="{DynamicResource MahApps.Styles.PipsPager.FlipView}"
+                                       Visibility="{Binding ShowIndex, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <Button x:Name="PART_BackButton"
                                 Grid.Row="1"
@@ -812,105 +801,73 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Top}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Center" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="Center" />
             </Trigger>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Bottom}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="2" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Center" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="Center" />
             </Trigger>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Left}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Center" />
-                <Setter TargetName="PART_Index" Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <UniformGrid VerticalAlignment="Center"
-                                         Columns="1"
-                                         IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="Center" />
+                <Setter TargetName="PART_PipsPager" Property="Orientation" Value="Vertical" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
             </Trigger>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.Right}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="2" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Center" />
-                <Setter TargetName="PART_Index" Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <UniformGrid VerticalAlignment="Center"
-                                         Columns="1"
-                                         IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="2" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="Center" />
+                <Setter TargetName="PART_PipsPager" Property="Orientation" Value="Vertical" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
             </Trigger>
 
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.TopOverItem}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Top" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="Top" />
             </Trigger>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.BottomOverItem}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="Bottom" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexHorizontalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="Bottom" />
             </Trigger>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.LeftOverItem}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Left" />
-                <Setter TargetName="PART_Index" Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <UniformGrid VerticalAlignment="Center"
-                                         Columns="1"
-                                         IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="Left" />
+                <Setter TargetName="PART_PipsPager" Property="Orientation" Value="Vertical" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
             </Trigger>
             <Trigger Property="IndexPlacement" Value="{x:Static mah:NavigationIndexPlacement.RightOverItem}">
-                <Setter TargetName="PART_Index" Property="Grid.Column" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.ColumnSpan" Value="1" />
-                <Setter TargetName="PART_Index" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_Index" Property="Grid.RowSpan" Value="3" />
-                <Setter TargetName="PART_Index" Property="HorizontalAlignment" Value="Right" />
-                <Setter TargetName="PART_Index" Property="ItemsPanel">
-                    <Setter.Value>
-                        <ItemsPanelTemplate>
-                            <UniformGrid VerticalAlignment="Center"
-                                         Columns="1"
-                                         IsItemsHost="True" />
-                        </ItemsPanelTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="PART_Index" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.ColumnSpan" Value="1" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.Row" Value="0" />
+                <Setter TargetName="PART_PipsPager" Property="Grid.RowSpan" Value="3" />
+                <Setter TargetName="PART_PipsPager" Property="HorizontalAlignment" Value="Right" />
+                <Setter TargetName="PART_PipsPager" Property="Orientation" Value="Vertical" />
+                <Setter TargetName="PART_PipsPager" Property="VerticalAlignment" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndexVerticalAlignment}" />
             </Trigger>
 
             <MultiTrigger>
@@ -977,7 +934,10 @@
         </ControlTemplate.Resources>
     </ControlTemplate>
 
-    <!--  The WinUI look, after FlipView_themeresources.xaml of microsoft-ui-xaml main  -->
+    <!--
+        The WinUI look, after FlipView_themeresources.xaml of microsoft-ui-xaml main
+        Copyright (c) Microsoft Corporation, MIT License.
+    -->
     <Style x:Key="MahApps.Styles.Button.FlipView.Navigation.WinUI" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBorderBrush}" />
@@ -986,7 +946,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForeground}" />
         <Setter Property="Height" Value="38" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="1" />
         <!--  the buttons only show while the pointer is over the flip view, see the DataTrigger below  -->
         <Setter Property="Opacity" Value="0" />
@@ -1034,7 +994,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Width" Value="16" />
         <!--  the radius of the flip view the button sits in  -->
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding (mah:ControlsHelper.CornerRadius), FallbackValue=0, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{Binding Path=(mah:ControlsHelper.CornerRadius), FallbackValue=0, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsMouseOver, FallbackValue=False, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:FlipView}}}" Value="True">
                 <Setter Property="Opacity" Value="1" />
@@ -1045,15 +1005,6 @@
                 <Setter Property="Width" Value="38" />
             </DataTrigger>
         </Style.Triggers>
-    </Style>
-
-    <!--  The dot of the Windows 10 look in a cell of 12 by 24, or 24 by 12 beside the content  -->
-    <Style x:Key="MahApps.Styles.ListBoxItem.FlipView.Index.WinUI"
-           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.FlipView.Index.Win10}"
-           TargetType="ListBoxItem">
-        <Style.Resources>
-            <system:Double x:Key="FlipViewIndexCellLongSide">24</system:Double>
-        </Style.Resources>
     </Style>
 
     <Style x:Key="MahApps.Styles.FlipView.WinUI"
@@ -1101,7 +1052,6 @@
         </Setter>
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
-        <Setter Property="IndexItemContainerStyle" Value="{DynamicResource MahApps.Styles.ListBoxItem.FlipView.Index.WinUI}" />
         <Setter Property="MouseHoverBorderEnabled" Value="False" />
         <Setter Property="NavigationButtonStyle" Value="{DynamicResource MahApps.Styles.Button.FlipView.Navigation.WinUI}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView.WinUI}" />

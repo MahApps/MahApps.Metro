@@ -197,6 +197,39 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
+        [Description("The dot of the index grows to size 6 under the pointer, as the pip of the PipsPager does. IsMouseOver cannot be set, so the template is read for the trigger.")]
+        public void TheWin10IndexDotGrowsUnderThePointer()
+        {
+            var flipView = this.Show(Win10Key, showIndex: true);
+            this.window!.UpdateLayout();
+            var index = flipView.FindChild<ListBox>("PART_Index")!;
+            var item = (ListBoxItem)index.ItemContainerGenerator.ContainerFromIndex(1);
+            var trigger = item.Template.Triggers
+                              .OfType<Trigger>()
+                              .FirstOrDefault(t => t.Property == UIElement.IsMouseOverProperty);
+
+            Assert.That(trigger, Is.Not.Null, "a trigger on IsMouseOver");
+            Assert.That(trigger!.Setters.OfType<Setter>().Any(s => s.TargetName == "Dot" && s.Property.Name == "FontSize" && Equals(s.Value, 6d)), Is.True, "which sets the size to 6");
+        }
+
+        [TestCase(Win10Key)]
+        [TestCase(WinUIKey)]
+        [Description("The original sets IsTabStop to false on all four buttons, and they are invisible until the pointer comes, so Tab must not land on them. The arrow keys are handled by the flip view.")]
+        public void TheNavigationButtonsAreNoTabStops(string styleKey)
+        {
+            var flipView = this.Show(styleKey);
+            ClipAssert.Pump();
+
+            Assert.Multiple(() =>
+                {
+                    foreach (var name in new[] { "PART_BackButton", "PART_ForwardButton", "PART_UpButton", "PART_DownButton" })
+                    {
+                        Assert.That(flipView.FindChild<Button>(name)!.IsTabStop, Is.False, name);
+                    }
+                });
+        }
+
+        [Test]
         [Description("The index is a row of dots in the strong control fill, a selected one of size 6 and the others 4, each in a cell of 12 by 20.")]
         public void TheWin10IndexIsADotWithoutAccent()
         {
@@ -303,30 +336,212 @@ namespace MahApps.Metro.Tests.Tests
         }
 
         [Test]
-        [Description("The WinUI cell of a dot is 12 by 24, and 24 by 12 beside the content, where the Windows 10 one is 12 by 20 and 20 by 12.")]
-        public void TheWinUIIndexCellIsALittleLongerThanTheWin10One()
+        [Description("The index of the WinUI look is a PipsPager in place of the list of dots, in the style of the WinUI set even when the flip view only got its own style.")]
+        public void TheWinUIFlipViewShowsAPipsPagerAsIndex()
         {
-            var horizontal = this.Show(WinUIKey, showIndex: true);
-            var cell = (ListBoxItem)horizontal.FindChild<ListBox>("PART_Index")!.ItemContainerGenerator.ContainerFromIndex(0);
-            var cellSize = (cell.Width, cell.Height);
-
-            var vertical = this.Show(WinUIKey, showIndex: true);
-            vertical.IndexPlacement = NavigationIndexPlacement.Left;
+            var flipView = this.Show(WinUIKey, showIndex: true);
+            flipView.Items.Add(new FlipViewItem { Content = "four" });
             this.window!.UpdateLayout();
-            var verticalCell = (ListBoxItem)vertical.FindChild<ListBox>("PART_Index")!.ItemContainerGenerator.ContainerFromIndex(0);
-            var verticalSize = (verticalCell.Width, verticalCell.Height);
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager");
 
-            var win10 = this.Show(Win10Key, showIndex: true);
-            win10.IndexPlacement = NavigationIndexPlacement.Left;
-            this.window.UpdateLayout();
-            var win10Cell = (ListBoxItem)win10.FindChild<ListBox>("PART_Index")!.ItemContainerGenerator.ContainerFromIndex(0);
+            Assert.That(pager, Is.Not.Null, "a pager as the index");
+            Assert.Multiple(() =>
+                {
+                    Assert.That(flipView.FindChild<ListBox>("PART_Index"), Is.Null, "no list of dots");
+                    Assert.That(pager!.NumberOfPages, Is.EqualTo(4));
+                    Assert.That(pager.Style, Is.Not.Null);
+                    Assert.That(pager.Style.BasedOn, Is.SameAs(this.window.FindResource("MahApps.Styles.PipsPager.WinUI")));
+                    Assert.That(pager.NormalPipStyle, Is.SameAs(this.window.FindResource("MahApps.Styles.Button.PipsPager.Pip.WinUI")));
+                });
+        }
+
+        [Test]
+        [Description("The pager and the flip view follow each other, and a value the pager pulls back into its pages ends the same on both without a loop.")]
+        public void ThePagerAndTheFlipViewFollowEachOther()
+        {
+            var flipView = this.Show(WinUIKey, showIndex: true);
+            flipView.Items.Add(new FlipViewItem { Content = "four" });
+            this.window!.UpdateLayout();
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager")!;
+
+            flipView.SelectedIndex = 2;
+            Assert.That(pager.SelectedPageIndex, Is.EqualTo(2), "flip view to pager");
+
+            pager.SetCurrentValue(PipsPager.SelectedPageIndexProperty, 1);
+            Assert.That(flipView.SelectedIndex, Is.EqualTo(1), "pager to flip view");
+
+            flipView.GoForward();
+            Assert.That(pager.SelectedPageIndex, Is.EqualTo(2), "go forward");
+        }
+
+        [Test]
+        [Description("An index past the last page that code sets on the pager inside the template is refused by the selector of the flip view, since the binding hands it over before the pager can pull it back. Both stay on the old page, which is consistent, and nothing is raised.")]
+        public void AnIndexPastTheLastPageThroughThePagerIsRefused()
+        {
+            var flipView = this.Show(WinUIKey, showIndex: true);
+            flipView.Items.Add(new FlipViewItem { Content = "four" });
+            this.window!.UpdateLayout();
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager")!;
+            flipView.SelectedIndex = 2;
+
+            var changes = 0;
+            flipView.SelectionChanged += (_, _) => changes++;
+            Assert.DoesNotThrow(() =>
+                {
+                    pager.SetCurrentValue(PipsPager.SelectedPageIndexProperty, 9);
+                    ClipAssert.Pump();
+                });
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(cell.Style, Is.SameAs(this.window.FindResource("MahApps.Styles.ListBoxItem.FlipView.Index.WinUI")));
-                    Assert.That(cellSize, Is.EqualTo((12d, 24d)), "top");
-                    Assert.That(verticalSize, Is.EqualTo((24d, 12d)), "left");
-                    Assert.That((win10Cell.Width, win10Cell.Height), Is.EqualTo((20d, 12d)), "Windows 10 left");
+                    Assert.That(pager.SelectedPageIndex, Is.EqualTo(2), "pager");
+                    Assert.That(flipView.SelectedIndex, Is.EqualTo(2), "flip view");
+                    Assert.That(changes, Is.EqualTo(0), "selection changes");
+                });
+        }
+
+        [Test]
+        [Description("An index of -1 on a flip view with items ends on the first one, as the pager of WinUI pulls a negative index to 0. This is deliberate.")]
+        public void ANegativeIndexEndsOnTheFirstItemInTheWinUILook()
+        {
+            var flipView = this.Show(WinUIKey, showIndex: true);
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager")!;
+            flipView.SelectedIndex = 2;
+
+            flipView.SelectedIndex = -1;
+            ClipAssert.Pump();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(pager.SelectedPageIndex, Is.EqualTo(0), "pager");
+                    Assert.That(flipView.SelectedIndex, Is.EqualTo(0), "flip view");
+                });
+        }
+
+        [Test]
+        [Description("The pager counts the items, with one item there is one pip, and with none there are no pips, no exception and no selection that comes back on the flip view.")]
+        public void ThePagerFollowsTheItems()
+        {
+            var flipView = this.Show(WinUIKey, showIndex: true);
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager")!;
+            flipView.SelectedIndex = 2;
+
+            flipView.Items.Add(new FlipViewItem { Content = "four" });
+            flipView.Items.Add(new FlipViewItem { Content = "five" });
+            Assert.That(pager.NumberOfPages, Is.EqualTo(5), "two more");
+
+            Assert.DoesNotThrow(() =>
+                {
+                    flipView.Items.Clear();
+                    this.window!.UpdateLayout();
+                });
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(pager.NumberOfPages, Is.EqualTo(0), "none");
+                    Assert.That(flipView.SelectedIndex, Is.EqualTo(-1), "no selection");
+                    Assert.That(flipView.SelectedItem, Is.Null);
+                    Assert.That(pager.TemplateSettings.PipsPagerItems, Is.Empty, "no pips");
+                    Assert.That(flipView.FindChild<Button>("PART_ForwardButton")!.Visibility, Is.EqualTo(Visibility.Hidden));
+                    Assert.That(flipView.FindChild<Button>("PART_BackButton")!.Visibility, Is.EqualTo(Visibility.Hidden));
+                });
+
+            flipView.Items.Add(new FlipViewItem { Content = "only" });
+            this.window!.UpdateLayout();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(pager.NumberOfPages, Is.EqualTo(1));
+                    Assert.That(pager.TemplateSettings.PipsPagerItems, Has.Count.EqualTo(1), "one pip");
+                    Assert.That(flipView.SelectedIndex, Is.EqualTo(0));
+                    Assert.That(pager.SelectedPageIndex, Is.EqualTo(0));
+                });
+        }
+
+        [TestCase(NavigationIndexPlacement.Top, 0, 3, 0, 1, Orientation.Horizontal, HorizontalAlignment.Right, VerticalAlignment.Center)]
+        [TestCase(NavigationIndexPlacement.Bottom, 0, 3, 2, 1, Orientation.Horizontal, HorizontalAlignment.Right, VerticalAlignment.Center)]
+        [TestCase(NavigationIndexPlacement.Left, 0, 1, 0, 3, Orientation.Vertical, HorizontalAlignment.Center, VerticalAlignment.Bottom)]
+        [TestCase(NavigationIndexPlacement.Right, 2, 1, 0, 3, Orientation.Vertical, HorizontalAlignment.Center, VerticalAlignment.Bottom)]
+        [TestCase(NavigationIndexPlacement.TopOverItem, 0, 3, 1, 1, Orientation.Horizontal, HorizontalAlignment.Right, VerticalAlignment.Top)]
+        [TestCase(NavigationIndexPlacement.BottomOverItem, 0, 3, 1, 1, Orientation.Horizontal, HorizontalAlignment.Right, VerticalAlignment.Bottom)]
+        [TestCase(NavigationIndexPlacement.LeftOverItem, 1, 1, 0, 3, Orientation.Vertical, HorizontalAlignment.Left, VerticalAlignment.Bottom)]
+        [TestCase(NavigationIndexPlacement.RightOverItem, 1, 1, 0, 3, Orientation.Vertical, HorizontalAlignment.Right, VerticalAlignment.Bottom)]
+        [Description("The pager sits in the grid where the list of dots sits in the Metro look, runs along the side it is put on, and takes the alignment of the flip view where the Metro look does.")]
+        public void IndexPlacementLaysOutThePager(NavigationIndexPlacement placement,
+                                                  int column,
+                                                  int columnSpan,
+                                                  int row,
+                                                  int rowSpan,
+                                                  Orientation orientation,
+                                                  HorizontalAlignment horizontalAlignment,
+                                                  VerticalAlignment verticalAlignment)
+        {
+            var flipView = this.Show(WinUIKey, showIndex: true);
+            flipView.IndexPlacement = placement;
+            flipView.IndexHorizontalAlignment = HorizontalAlignment.Right;
+            flipView.IndexVerticalAlignment = VerticalAlignment.Bottom;
+            this.window!.UpdateLayout();
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager")!;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That((Grid.GetColumn(pager), Grid.GetColumnSpan(pager), Grid.GetRow(pager), Grid.GetRowSpan(pager)), Is.EqualTo((column, columnSpan, row, rowSpan)));
+                    Assert.That(pager.Orientation, Is.EqualTo(orientation));
+                    Assert.That(pager.HorizontalAlignment, Is.EqualTo(horizontalAlignment), "horizontal alignment");
+                    Assert.That(pager.VerticalAlignment, Is.EqualTo(verticalAlignment), "vertical alignment");
+                });
+        }
+
+        [Test]
+        [Description("A style under the key of the pager in the resources of the flip view changes the pager.")]
+        public void AStyleInTheResourcesChangesThePager()
+        {
+            var flipView = new FlipView
+            {
+                Style = (Style)this.window!.FindResource(WinUIKey),
+                Width = 400,
+                Height = 200,
+                ShowIndex = true,
+            };
+            flipView.Resources.Add("MahApps.Styles.PipsPager.FlipView",
+                                   new Style(typeof(PipsPager), (Style)this.window.FindResource("MahApps.Styles.PipsPager.WinUI"))
+                                   {
+                                       Setters = { new Setter(PipsPager.MaxVisiblePipsProperty, 3) }
+                                   });
+            for (var i = 0; i < 6; i++)
+            {
+                flipView.Items.Add(new FlipViewItem { Content = i });
+            }
+
+            this.window.Content = flipView;
+            this.window.UpdateLayout();
+
+            Assert.That(flipView.FindChild<PipsPager>("PART_PipsPager")!.MaxVisiblePips, Is.EqualTo(3));
+        }
+
+        [Test]
+        [Description("ShowIndex false collapses the pager.")]
+        public void ShowIndexFalseHidesThePager()
+        {
+            var flipView = this.Show(WinUIKey);
+            var pager = flipView.FindChild<PipsPager>("PART_PipsPager")!;
+            Assert.That(pager.Visibility, Is.EqualTo(Visibility.Collapsed));
+
+            flipView.ShowIndex = true;
+            Assert.That(pager.Visibility, Is.EqualTo(Visibility.Visible));
+        }
+
+        [Test]
+        [Description("The arrows round with the radius of the flip view, which the button reads off its flip view with a path in parentheses.")]
+        public void TheWinUIArrowsAreRounded()
+        {
+            var flipView = this.Show(WinUIKey);
+            var expected = this.window!.FindResource("MahApps.CornerRadius.WinUI.Control");
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(ControlsHelper.GetCornerRadius(flipView.FindChild<Button>("PART_ForwardButton")!), Is.EqualTo(expected));
+                    Assert.That(ControlsHelper.GetCornerRadius(flipView.FindChild<Button>("PART_BackButton")!), Is.EqualTo(expected));
                 });
         }
 
