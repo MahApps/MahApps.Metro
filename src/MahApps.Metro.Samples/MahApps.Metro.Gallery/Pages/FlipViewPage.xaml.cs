@@ -24,6 +24,11 @@ namespace MahApps.Metro.Gallery.Pages
                                    FlipView.MouseHoverBorderEnabledProperty,
                                    FlipView.SelectedIndexProperty);
             this.FlipExample.Watch("Layout", this.Flip, WidthProperty, HeightProperty);
+
+            this.ManyExample.Watch(this.ManyFlip,
+                                   FlipView.ShowIndexProperty,
+                                   FlipView.IndexPlacementProperty,
+                                   FlipView.SelectedIndexProperty);
         }
     }
 }
