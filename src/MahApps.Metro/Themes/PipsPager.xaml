@@ -1,0 +1,448 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--
+        The PipsPager, after PipsPager.xaml of microsoft-ui-xaml, Copyright (c) Microsoft Corporation, MIT License.
+        The Metro look is the one of the index of the FlipView: a ring per page, the selected one filled with the accent,
+        and the arrows of its navigation buttons.
+    -->
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Pip" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseMedium}" />
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Ellipse Margin="-3"
+                                         SnapsToDevicePixels="True"
+                                         Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                         StrokeDashArray="2 2"
+                                         StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Ellipse x:Name="Bd"
+                             Width="{DynamicResource FlipViewIndexItemSize}"
+                             Height="{DynamicResource FlipViewIndexItemSize}"
+                             Fill="{TemplateBinding Background}"
+                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                             Stroke="{TemplateBinding BorderBrush}"
+                             StrokeThickness="1" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter TargetName="Bd" Property="Fill" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightListAccentHigh}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Pip.Selected"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Pip}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightListAccentMedium}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <!--  as big as the cell of a pip, its ring and the room around it  -->
+        <Setter Property="Height" Value="35" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Opacity="0.4"
+                                          RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--  the pager hides and shows the button through its Opacity, so the dimming of the FlipView arrow is on the content  -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.8" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="35" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Previous"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation}"
+           TargetType="{x:Type Button}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="16"
+                          Height="18"
+                          Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z "
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                          Stretch="Fill" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Orientation, RelativeSource={RelativeSource AncestorType={x:Type mah:PipsPager}}}" Value="{x:Static Orientation.Vertical}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Path Width="18"
+                                  Height="16"
+                                  Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z "
+                                  Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                  Stretch="Fill" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Next"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation}"
+           TargetType="{x:Type Button}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="16"
+                          Height="18"
+                          Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z "
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                          Stretch="Fill" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Orientation, RelativeSource={RelativeSource AncestorType={x:Type mah:PipsPager}}}" Value="{x:Static Orientation.Vertical}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Path Width="18"
+                                  Height="16"
+                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
+                                  Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                  Stretch="Fill" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="MahApps.Templates.PipsPager" TargetType="{x:Type mah:PipsPager}">
+        <StackPanel x:Name="RootPanel"
+                    Background="{TemplateBinding Background}"
+                    Orientation="{TemplateBinding Orientation}">
+            <Button x:Name="PART_PreviousPageButton"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{TemplateBinding PreviousButtonStyle}" />
+            <ScrollViewer x:Name="PART_ScrollViewer"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Focusable="False"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden">
+                <ItemsControl x:Name="PART_Pips"
+                              Focusable="False"
+                              IsTabStop="False"
+                              ItemsSource="{Binding TemplateSettings.PipsPagerItems, RelativeSource={RelativeSource TemplatedParent}}"
+                              KeyboardNavigation.TabNavigation="Once">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="{Binding Orientation, RelativeSource={RelativeSource AncestorType={x:Type mah:PipsPager}}}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button x:Name="PART_NextPageButton"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Style="{TemplateBinding NextButtonStyle}" />
+        </StackPanel>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.PipsPager" TargetType="{x:Type mah:PipsPager}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="NextButtonStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Navigation.Next}" />
+        <Setter Property="NormalPipStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Pip}" />
+        <Setter Property="PreviousButtonStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Navigation.Previous}" />
+        <Setter Property="SelectedPipStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Pip.Selected}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.PipsPager}" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+
+    <!--
+        The Windows 10 and the WinUI look, after PipsPager_themeresources.xaml of microsoft-ui-xaml winui2/main and main, and PipsPager.xaml of main.
+        A pip is the dot of EA3B in a cell, 12 by 20 in Windows 10 and 12 by 24 in WinUI, the other way round when the pips run top to bottom.
+        A style standing on the one of Windows 10 changes the long side of the cell in its own resources.
+    -->
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Pip.Win10" TargetType="{x:Type Button}">
+        <Style.Resources>
+            <system:Double x:Key="PipsPagerCellLongSide">20</system:Double>
+            <system:Double x:Key="PipsPagerCellShortSide">12</system:Double>
+        </Style.Resources>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle Margin="1"
+                                           SnapsToDevicePixels="True"
+                                           Stroke="{DynamicResource MahApps.Brushes.WinUI.TextPrimary}"
+                                           StrokeDashArray="2 2"
+                                           StrokeThickness="1" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
+        <Setter Property="FontSize" Value="4" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.SelectionIndicatorForeground}" />
+        <Setter Property="Height" Value="{DynamicResource PipsPagerCellLongSide}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="RootGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <mah:FontIcon x:Name="Dot"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      FontFamily="{TemplateBinding FontFamily}"
+                                      FontSize="{TemplateBinding FontSize}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Glyph="&#xEA3B;" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter TargetName="Dot" Property="FontSize" Value="6" />
+                            <Setter TargetName="Dot" Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.SelectionIndicatorForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Dot" Property="FontSize" Value="4" />
+                            <Setter TargetName="Dot" Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.SelectionIndicatorForegroundPressed}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Dot" Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.SelectionIndicatorForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="{DynamicResource PipsPagerCellShortSide}" />
+        <Style.Triggers>
+            <!--  the cell lies down with the pips; the pager hands its orientation down, which the pip it measures on its own sees at once too  -->
+            <Trigger Property="mah:PipsPager.PipOrientation" Value="Vertical">
+                <Setter Property="Height" Value="{DynamicResource PipsPagerCellShortSide}" />
+                <Setter Property="Width" Value="{DynamicResource PipsPagerCellLongSide}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Pip.Selected.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Pip.Win10}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FontSize" Value="6" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.SelectionIndicatorForegroundSelected}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Win10" TargetType="{x:Type Button}">
+        <Style.Resources>
+            <system:Double x:Key="PipsPagerNavigationButtonSize">20</system:Double>
+        </Style.Resources>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.SymbolTheme}" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.NavigationButtonForeground}" />
+        <Setter Property="Height" Value="{DynamicResource PipsPagerNavigationButtonSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="RootGrid"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Border x:Name="Scaled" RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Border.RenderTransform>
+                            <mah:FontIcon x:Name="Content"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Glyph="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Content" Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.NavigationButtonForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Content" Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.NavigationButtonForegroundPressed}" />
+                            <Setter TargetName="Scaled" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.875" ScaleY="0.875" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Content" Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.NavigationButtonForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="{DynamicResource PipsPagerNavigationButtonSize}" />
+        <Style.Triggers>
+            <!--  the glyphs point up and down, so the pager turns them to the side when its pips run left to right  -->
+            <Trigger Property="mah:PipsPager.PipOrientation" Value="Horizontal">
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="-90" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Previous.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation.Win10}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEDDB;" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Next.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation.Win10}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEDDC;" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.PipsPager.Win10"
+           BasedOn="{StaticResource MahApps.Styles.PipsPager}"
+           TargetType="{x:Type mah:PipsPager}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.Win10}" />
+        <Setter Property="NextButtonStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Navigation.Next.Win10}" />
+        <Setter Property="NormalPipStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Pip.Win10}" />
+        <Setter Property="PreviousButtonStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Navigation.Previous.Win10}" />
+        <Setter Property="SelectedPipStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Pip.Selected.Win10}" />
+    </Style>
+
+    <!--  The WinUI look: the cells and the arrows grow to 24, and each button rounds its corners by the radius of the controls of WinUI. A button reads its own radius rather than the pager's, since the pip the pager measures has no pager above it.  -->
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Pip.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Pip.Win10}"
+           TargetType="{x:Type Button}">
+        <Style.Resources>
+            <system:Double x:Key="PipsPagerCellLongSide">24</system:Double>
+        </Style.Resources>
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Pip.Selected.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Pip.WinUI}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FontSize" Value="6" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.PipsPager.SelectionIndicatorForegroundSelected}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation.Win10}"
+           TargetType="{x:Type Button}">
+        <Style.Resources>
+            <system:Double x:Key="PipsPagerNavigationButtonSize">24</system:Double>
+        </Style.Resources>
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Previous.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation.WinUI}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEDDB;" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.PipsPager.Navigation.Next.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Button.PipsPager.Navigation.WinUI}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEDDC;" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.PipsPager.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.PipsPager.Win10}"
+           TargetType="{x:Type mah:PipsPager}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="NextButtonStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Navigation.Next.WinUI}" />
+        <Setter Property="NormalPipStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Pip.WinUI}" />
+        <Setter Property="PreviousButtonStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Navigation.Previous.WinUI}" />
+        <Setter Property="SelectedPipStyle" Value="{DynamicResource MahApps.Styles.Button.PipsPager.Pip.Selected.WinUI}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+    </Style>
+
+</ResourceDictionary>

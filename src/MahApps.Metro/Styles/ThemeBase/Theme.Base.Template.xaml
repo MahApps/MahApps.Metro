@@ -1387,4 +1387,19 @@
     <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBorderBrush" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
 
+    <!--
+        PipsPager, after PipsPager_themeresources.xaml of microsoft-ui-xaml winui2/main and main. The two versions name the same
+        fills, so the Windows 10 look and the WinUI look share one row of brushes. The backgrounds and the frames are transparent
+        in both and need no brush.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForeground" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundSelected" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForeground" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
+
 </ResourceDictionary>

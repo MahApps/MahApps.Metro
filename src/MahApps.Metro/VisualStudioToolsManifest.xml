@@ -21,6 +21,7 @@
             <Item Type="MahApps.Metro.Controls.MultiSelectionComboBox" />
             <Item Type="MahApps.Metro.Controls.MultiFrameImage" />
             <Item Type="MahApps.Metro.Controls.NumericUpDown" />
+            <Item Type="MahApps.Metro.Controls.PipsPager" />
             <Item Type="MahApps.Metro.Controls.Pivot" />
             <Item Type="MahApps.Metro.Controls.Planerator" />
             <Item Type="MahApps.Metro.Controls.ProgressRing" />

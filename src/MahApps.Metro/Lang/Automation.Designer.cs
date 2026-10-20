@@ -250,6 +250,42 @@ namespace MahApps.Metro.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pager.
+        /// </summary>
+        public static string PipsPagerNameText {
+            get {
+                return ResourceManager.GetString("PipsPagerNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Page.
+        /// </summary>
+        public static string PipsPagerNextPageButtonText {
+            get {
+                return ResourceManager.GetString("PipsPagerNextPageButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string PipsPagerPageText {
+            get {
+                return ResourceManager.GetString("PipsPagerPageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Page.
+        /// </summary>
+        public static string PipsPagerPreviousPageButtonText {
+            get {
+                return ResourceManager.GetString("PipsPagerPreviousPageButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rating Slider.
         /// </summary>
         public static string RatingLocalizedControlType {
