@@ -740,7 +740,6 @@ namespace MahApps.Metro.Controls
 
             var generator = itemsControl.ItemContainerGenerator;
             var selectedPageIndex = this.SelectedPageIndex;
-            var numberOfPages = this.NumberOfPages;
             for (var i = 0; i < itemsControl.Items.Count; i++)
             {
                 if (GetPip(generator.ContainerFromIndex(i)) is { } pip)
@@ -751,7 +750,7 @@ namespace MahApps.Metro.Controls
 #if NETCOREAPP
                     // SetPositionInSet and SetSizeOfSet only exist from .NET Framework 4.7.2 on, so net462 skips them.
                     AutomationProperties.SetPositionInSet(pip, i + 1);
-                    AutomationProperties.SetSizeOfSet(pip, numberOfPages);
+                    AutomationProperties.SetSizeOfSet(pip, this.NumberOfPages);
 #endif
 
                     if (pip is ButtonBase button)
