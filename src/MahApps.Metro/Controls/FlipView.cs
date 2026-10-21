@@ -114,6 +114,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// Gets or sets a style for the navigation index items.
+        /// Has no effect in the WinUI look, which shows a <see cref="PipsPager"/> instead.
         /// </summary>
         public Style? IndexItemContainerStyle
         {
@@ -869,6 +870,21 @@ namespace MahApps.Metro.Controls
             this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus(Visibility.Hidden));
         }
 
+        /// <inheritdoc />
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (e.Property == TemplateProperty)
+            {
+                // The banner grows from the height its template gives it. While the old template is taken
+                // apart that height is no number any more, and a banner animation still holding it would
+                // throw, so the animations go first. OnTemplateChanged comes too late for that.
+                this.bannerGrid?.BeginAnimation(HeightProperty, null);
+                this.bannerLabel?.BeginAnimation(OpacityProperty, null);
+            }
+
+            base.OnPropertyChanged(e);
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -939,6 +955,12 @@ namespace MahApps.Metro.Controls
             if (this.bannerLabel != null)
             {
                 this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
+            }
+
+            // a new template on a flip view that is already up, a change of look for instance, starts with its banner down
+            if (this.loaded)
+            {
+                this.ShowBanner();
             }
 
             this.ExecuteWhenLoaded(() =>

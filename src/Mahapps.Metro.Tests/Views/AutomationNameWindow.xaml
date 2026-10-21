@@ -32,6 +32,7 @@
         <mah:FlipView x:Name="TheFlipView"
                       Width="200"
                       Height="80" />
+        <mah:PipsPager x:Name="ThePipsPager" NumberOfPages="4" />
         <mah:RevealImage x:Name="TheRevealImage"
                          Width="200"
                          Height="70"

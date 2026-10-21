@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.PipsPagerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:MahApps.Metro.Gallery.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <ScrollViewer Padding="24 8 24 24" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+
+            <controls:ControlExample x:Name="BasicExample"
+                                     Description="A row of dots for a set of pages, one of them selected. Only MaxVisiblePips of them show at a time and the row slides along with the selection, and the arrows step to the previous and the next page."
+                                     Header="Ten pages">
+                <smtx:XamlDisplay UniqueKey="PipsPager.Basic">
+                    <mah:PipsPager x:Name="BasicPager"
+                                   HorizontalAlignment="Left"
+                                   NextButtonVisibility="Visible"
+                                   NumberOfPages="10"
+                                   PreviousButtonVisibility="Visible" />
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+            <controls:ControlExample Description="Put under a FlipView that shows no index of its own, the pager takes its place. SelectedPageIndex and SelectedIndex are bound both ways, so a click on a pip turns the page and a flip moves the pip." Header="The index of a FlipView">
+                <smtx:XamlDisplay UniqueKey="PipsPager.WithFlipView">
+                    <StackPanel HorizontalAlignment="Left">
+                        <mah:FlipView x:Name="PagerFlip"
+                                      Width="420"
+                                      Height="220"
+                                      ShowIndex="False">
+                            <Grid Background="{DynamicResource MahApps.Brushes.Accent3}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="28"
+                                           Text="42" />
+                            </Grid>
+                            <Grid Background="{DynamicResource MahApps.Brushes.Accent2}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="28"
+                                           Text="The middle one" />
+                            </Grid>
+                            <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="28"
+                                           Text="And the last" />
+                            </Grid>
+                        </mah:FlipView>
+                        <mah:PipsPager Margin="0 8 0 0"
+                                       HorizontalAlignment="Center"
+                                       NumberOfPages="{Binding Items.Count, ElementName=PagerFlip}"
+                                       SelectedPageIndex="{Binding SelectedIndex, ElementName=PagerFlip, Mode=TwoWay}" />
+                    </StackPanel>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

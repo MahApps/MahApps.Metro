@@ -60,6 +60,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.InfoBarsControl}" TargetType="{x:Type mah:InfoBarsControl}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HyperlinkButton}" TargetType="{x:Type mah:HyperlinkButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RatingControl}" TargetType="{x:Type mah:RatingControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PipsPager}" TargetType="{x:Type mah:PipsPager}" />
     <!--#region Dialogs-->
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MessageDialog}" TargetType="{x:Type dialogs:MessageDialog}" />

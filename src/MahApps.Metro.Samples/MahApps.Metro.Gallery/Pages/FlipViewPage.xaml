@@ -44,6 +44,91 @@
                 </smtx:XamlDisplay>
             </controls:ControlExample>
 
+            <controls:ControlExample x:Name="ManyExample"
+                                     Description="In the WinUI look the index is a PipsPager that shows five pips at a time and slides along with SelectedIndex when there are more pages than fit in a row."
+                                     Header="Many pages">
+                <smtx:XamlDisplay UniqueKey="FlipView.ManyPages">
+                    <mah:FlipView x:Name="ManyFlip"
+                                  Width="420"
+                                  Height="220"
+                                  HorizontalAlignment="Left"
+                                  ShowIndex="True">
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="January" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent2}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="February" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent3}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="March" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="April" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="May" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent2}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="June" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent3}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="July" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="August" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="September" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent2}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="October" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent3}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="November" />
+                        </Grid>
+                        <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Text="December" />
+                        </Grid>
+                    </mah:FlipView>
+                </smtx:XamlDisplay>
+            </controls:ControlExample>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

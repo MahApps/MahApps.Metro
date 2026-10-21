@@ -1363,4 +1363,43 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBorderBrushChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBorderBrush" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonBottomBorderBrushChecked" ResourceKey="MahApps.Brushes.Button.WinUI.AccentBottomBorderBrush" />
 
+    <!--
+        FlipView, after FlipView_themeresources_v1.xaml of microsoft-ui-xaml winui2/main and FlipView_themeresources.xaml of main.
+        The Windows 10 look takes the SystemControl* brushes the original names. The dots of the index come from the PipsPager
+        of both versions, which uses the same three fills of WinUI for both looks.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.Background" ResourceKey="MahApps.Brushes.SystemControlPageBackgroundListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.NextPreviousButtonBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.NextPreviousArrowForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundAltMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.NextPreviousArrowForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltAltMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Win10.NextPreviousArrowForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltAltMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Index.Foreground" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Index.ForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.Index.ForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.Background" ResourceKey="MahApps.Brushes.WinUI.SolidBackgroundFillBase" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackground" ResourceKey="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.AcrylicInAppFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForeground" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousArrowForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.FlipView.WinUI.NextPreviousButtonBorderBrush" ResourceKey="MahApps.Brushes.WinUI.ControlStrokeDefault" />
+
+    <!--
+        PipsPager, after PipsPager_themeresources.xaml of microsoft-ui-xaml winui2/main and main. The two versions name the same
+        fills, so the Windows 10 look and the WinUI look share one row of brushes. The backgrounds and the frames are transparent
+        in both and need no brush.
+    -->
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForeground" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundSelected" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.SelectionIndicatorForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForeground" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
+
 </ResourceDictionary>

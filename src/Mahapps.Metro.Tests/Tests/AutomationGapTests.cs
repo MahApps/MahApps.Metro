@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
@@ -38,6 +39,47 @@ namespace MahApps.Metro.Tests.Tests
         {
             this.window?.Close();
             this.window = null;
+        }
+
+        [Test]
+        [Description("A pips pager is a menu that offers the selected pip as its selection.")]
+        public void ThePeerOffersTheSelection()
+        {
+            var previousUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+            System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+            try
+            {
+                var pager = this.window!.ThePipsPager;
+                pager.SetCurrentValue(PipsPager.SelectedPageIndexProperty, 2);
+                pager.UpdateLayout();
+                var peer = UIElementAutomationPeer.CreatePeerForElement(pager);
+                var selection = (ISelectionProvider)peer.GetPattern(PatternInterface.Selection)!;
+                // a provider is only handed out for a peer that knows its window, which a client's first request gives it
+                typeof(AutomationPeer).GetProperty("Hwnd", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(peer, new System.Windows.Interop.WindowInteropHelper(this.window!).Handle);
+                var selected = selection.GetSelection();
+                var pip = pager.FindChild<ItemsControl>("PART_Pips")!.ItemContainerGenerator.ContainerFromIndex(2).FindChildren<Button>(true).First();
+                var pipPeer = UIElementAutomationPeer.CreatePeerForElement(pip);
+
+                Assert.Multiple(() =>
+                    {
+                        Assert.That(peer.GetClassName(), Is.EqualTo("PipsPager"));
+                        Assert.That(peer.GetAutomationControlType(), Is.EqualTo(AutomationControlType.Menu));
+                        Assert.That(peer.GetName(), Is.EqualTo("Pager"));
+                        Assert.That(selection.CanSelectMultiple, Is.False);
+                        Assert.That(selection.IsSelectionRequired, Is.True);
+                        Assert.That(selected, Has.Length.EqualTo(1));
+                        Assert.That(selected[0], Is.Not.Null);
+                        Assert.That(selected[0].GetType().GetProperty("Peer", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)?.GetValue(selected[0]), Is.SameAs(pipPeer));
+                    });
+
+                AutomationProperties.SetName(pager, "Pages of the story");
+                Assert.That(peer.GetName(), Is.EqualTo("Pages of the story"));
+                pager.ClearValue(AutomationProperties.NameProperty);
+            }
+            finally
+            {
+                System.Globalization.CultureInfo.CurrentUICulture = previousUICulture;
+            }
         }
 
         [Test]

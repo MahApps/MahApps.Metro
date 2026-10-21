@@ -160,6 +160,18 @@
   <data name="OptionItems" xml:space="preserve">
     <value>Optionseinträge</value>
   </data>
+  <data name="PipsPagerNameText" xml:space="preserve">
+    <value>Seitenanzeige</value>
+  </data>
+  <data name="PipsPagerNextPageButtonText" xml:space="preserve">
+    <value>Nächste Seite</value>
+  </data>
+  <data name="PipsPagerPageText" xml:space="preserve">
+    <value>Seite</value>
+  </data>
+  <data name="PipsPagerPreviousPageButtonText" xml:space="preserve">
+    <value>Vorherige Seite</value>
+  </data>
   <data name="RatingLocalizedControlType" xml:space="preserve">
     <value>Bewertungsschieberegler</value>
   </data>

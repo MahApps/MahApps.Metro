@@ -53,6 +53,8 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ContentDialog.Win10}" TargetType="{x:Type mah:ContentDialog}" />
     <Style BasedOn="{StaticResource MahApps.Styles.InfoBar.Win10}" TargetType="{x:Type mah:InfoBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RatingControl.Win10}" TargetType="{x:Type mah:RatingControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.FlipView.Win10}" TargetType="{x:Type mah:FlipView}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PipsPager.Win10}" TargetType="{x:Type mah:PipsPager}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HyperlinkButton.Win10}" TargetType="{x:Type mah:HyperlinkButton}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow.Win10}" TargetType="{x:Type mah:MetroWindow}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToolTip.Win10}" TargetType="ToolTip" />
