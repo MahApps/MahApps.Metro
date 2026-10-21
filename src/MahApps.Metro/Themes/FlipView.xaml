@@ -56,14 +56,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
-                    <Ellipse x:Name="Bd"
-                             Width="{DynamicResource FlipViewIndexItemSize}"
-                             Height="{DynamicResource FlipViewIndexItemSize}"
-                             Margin="{TemplateBinding Padding}"
-                             Fill="{DynamicResource MahApps.Brushes.SystemControlTransparent}"
-                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                             Stroke="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseMedium}"
-                             StrokeThickness="1" />
+                    <!--
+                        The empty border asks for the room a dot always took, padding included. The dot itself sits in the
+                        middle with room to spare on every side, so when more pages than fit share the row it stays whole
+                        and reaches into the margin instead of being cut.
+                    -->
+                    <Grid>
+                        <Border Width="{DynamicResource FlipViewIndexItemSize}"
+                                Height="{DynamicResource FlipViewIndexItemSize}"
+                                Margin="{TemplateBinding Padding}" />
+                        <Ellipse x:Name="Bd"
+                                 Width="{DynamicResource FlipViewIndexItemSize}"
+                                 Height="{DynamicResource FlipViewIndexItemSize}"
+                                 Margin="-100"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Fill="{DynamicResource MahApps.Brushes.SystemControlTransparent}"
+                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                 Stroke="{DynamicResource MahApps.Brushes.SystemControlForegroundBaseMedium}"
+                                 StrokeThickness="1" />
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Bd" Property="Fill" Value="{DynamicResource MahApps.Brushes.SystemControlHighlightListAccentMedium}" />
@@ -76,6 +88,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!--  set here so the theme style of the list box item doesn't look the alignment up in a list box that may not be there yet  -->
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <ControlTemplate x:Key="MahApps.Templates.FlipView" TargetType="{x:Type mah:FlipView}">

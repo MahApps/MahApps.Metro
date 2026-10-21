@@ -45,6 +45,79 @@ namespace MahApps.Metro.Tests.Tests
             return flipView;
         }
 
+        [TestCase(3)]
+        [TestCase(12)]
+        [Description("A dot of the Metro index stays whole when more pages than fit share the row, and takes the room it always took when they do fit.")]
+        public void TheMetroIndexDotIsNeverCut(int pages)
+        {
+            var flipView = new FlipView
+            {
+                Style = (Style)this.window!.FindResource("MahApps.Styles.FlipView"),
+                Width = 412,
+                Height = 212,
+                ShowIndex = true,
+            };
+            for (var i = 0; i < pages; i++)
+            {
+                flipView.Items.Add(new FlipViewItem { Content = i });
+            }
+
+            this.window.Content = flipView;
+            this.window.UpdateLayout();
+
+            var index = flipView.FindChild<ListBox>("PART_Index")!;
+            var item = (ListBoxItem)index.ItemContainerGenerator.ContainerFromIndex(1);
+            var dot = item.FindChild<System.Windows.Shapes.Ellipse>("Bd")!;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That((dot.ActualWidth, dot.ActualHeight), Is.EqualTo((15d, 15d)));
+                    Assert.That(System.Windows.Controls.Primitives.LayoutInformation.GetLayoutClip(dot), Is.Null, "nothing of the dot is cut away");
+                    if (pages == 3)
+                    {
+                        Assert.That(item.DesiredSize.Width, Is.EqualTo(15d + 8d + 20d), "the dot, the padding of the theme and the margin, as before");
+                    }
+                });
+        }
+
+        [TestCase("MahApps.Styles.FlipView", Win10Key)]
+        [TestCase(Win10Key, "MahApps.Styles.FlipView")]
+        [TestCase("MahApps.Styles.FlipView", WinUIKey)]
+        [Description("The dots of the index are list box items with a style of their own, which says where their content sits, so the theme style of the list box item has no alignment left to look up in a list box that is not there, as while the look changes.")]
+        public void TheIndexBindsNothingItCannotFind(string fromKey, string toKey)
+        {
+            var warnings = BindingWarnings.During(() =>
+                {
+                    var flipView = this.Show(fromKey, showIndex: true);
+                    flipView.Style = (Style)this.window!.FindResource(toKey);
+                    this.window.UpdateLayout();
+                    flipView.Style = (Style)this.window.FindResource(fromKey);
+                    this.window.UpdateLayout();
+                    ClipAssert.Pump();
+                });
+
+            Assert.That(warnings.Where(m => m.Contains(nameof(ListBoxItem))), Is.Empty);
+        }
+
+        [TestCase("MahApps.Styles.FlipView", Win10Key)]
+        [TestCase(Win10Key, WinUIKey)]
+        [TestCase(WinUIKey, "MahApps.Styles.FlipView")]
+        [Description("A flip view whose banner has come up can change its look. The banner grows by an animation from the height its template gives it, and once the old template is gone that height is no number any more.")]
+        public void TheLookCanChangeOnceTheBannerIsUp(string fromKey, string toKey)
+        {
+            var flipView = this.Show(fromKey);
+            ClipAssert.Pump(300);
+
+            Assert.That(() =>
+                            {
+                                flipView.Style = (Style)this.window!.FindResource(toKey);
+                                this.window.UpdateLayout();
+                                ClipAssert.Pump(600);
+                            },
+                        Throws.Nothing);
+            Assert.That(flipView.FindChild<Grid>("PART_BannerGrid")!.ActualHeight, Is.EqualTo(30d), "the banner of the new look is up as well");
+        }
+
         [Test]
         [Description("The next and previous buttons of the original are 20 by 36 for a horizontal flip view and 36 by 20 for a vertical one.")]
         public void TheWin10ButtonsHaveTheSizeOfTheOriginal()
