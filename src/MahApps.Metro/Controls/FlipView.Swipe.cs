@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsSwipeEnabled),
                                           typeof(bool),
                                           typeof(FlipView),
-                                          new PropertyMetadata(BooleanBoxes.TrueBox, (d, e) => ((FlipView)d).CancelSwipe()));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, (d, _) => ((FlipView)d).CancelSwipe()));
 
         /// <summary>
         /// Gets or sets whether the item can be dragged aside to flip to the next or the previous one.
@@ -329,6 +329,12 @@ namespace MahApps.Metro.Controls
                 return false;
             }
 
+            this.DragSwipe(position, timestamp);
+            return true;
+        }
+
+        private void DragSwipe(Point position, int timestamp)
+        {
             var travelled = this.Orientation == Orientation.Horizontal ? position.X - this.swipeStart.X : position.Y - this.swipeStart.Y;
             var offset = this.swipeOrigin + travelled;
             var extent = this.SwipeExtent;
@@ -346,8 +352,6 @@ namespace MahApps.Metro.Controls
             {
                 this.swipeSamples.RemoveAt(0);
             }
-
-            return true;
         }
 
         /// <returns><see langword="true"/> if the item was being dragged, so letting go belongs to the swipe.</returns>
@@ -365,7 +369,7 @@ namespace MahApps.Metro.Controls
                 return false;
             }
 
-            this.MoveSwipe(position, timestamp);
+            this.DragSwipe(position, timestamp);
 
             var velocity = this.SwipeVelocity(timestamp);
             var offset = this.swipeOffset;
@@ -375,7 +379,9 @@ namespace MahApps.Metro.Controls
             // the state goes first, since giving the capture back comes round as a lost capture
             this.swipeTouch = null;
 
-            if (offset != 0 && this.CanFlip(forward) && (Math.Abs(offset) >= this.SwipeExtent / 2 || flicked))
+            // an item that never moved reaches no half and has no flick in its direction, so it stays
+            var extent = this.SwipeExtent;
+            if (extent > 0 && this.CanFlip(forward) && (Math.Abs(offset) >= extent / 2 || flicked))
             {
                 this.swipeState = SwipeState.Leaving;
                 this.LeaveSwipe(forward, Math.Abs(velocity));

@@ -289,12 +289,11 @@ namespace MahApps.Metro.Tests.Tests
         /// <summary>A touch the test moves itself, at points given in the coordinates of the flip view.</summary>
         private sealed class Finger : TouchDevice
         {
-            private static int nextId = 4711;
             private readonly FlipView flipView;
             private Point position;
 
             public Finger(FlipView flipView)
-                : base(nextId++)
+                : base(4711)
             {
                 this.flipView = flipView;
             }
@@ -328,7 +327,8 @@ namespace MahApps.Metro.Tests.Tests
 
             public override TouchPointCollection GetIntermediateTouchPoints(IInputElement? relativeTo)
             {
-                return new TouchPointCollection();
+                // the finger jumps from point to point, so the one it is at now is all there is between
+                return new TouchPointCollection { this.GetTouchPoint(relativeTo) };
             }
         }
     }
