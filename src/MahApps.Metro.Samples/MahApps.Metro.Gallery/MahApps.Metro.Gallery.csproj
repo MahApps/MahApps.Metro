@@ -36,6 +36,8 @@
         <!--  the pages whose samples run in code show regions of their code behind, cut out of these  -->
         <EmbeddedResource Include="Pages\DialogsPage.xaml.cs" LogicalName="MahApps.Metro.Gallery.Pages.DialogsPage.xaml.cs" />
         <EmbeddedResource Include="Pages\ContentDialogPage.xaml.cs" LogicalName="MahApps.Metro.Gallery.Pages.ContentDialogPage.xaml.cs" />
+        <!--  the names and tags of the glyphs, as the WinUI 3 Gallery has them (MIT, see NOTICE.md)  -->
+        <EmbeddedResource Include="Data\IconsData.json" LogicalName="MahApps.Metro.Gallery.Data.IconsData.json" />
     </ItemGroup>
 
     <ItemGroup>
@@ -45,6 +47,7 @@
             <IncludeAssets>build</IncludeAssets>
         </PackageReference>
         <PackageReference Include="ShowMeTheXAML.AvalonEdit" />
+        <PackageReference Include="VirtualizingWrapPanel" />
     </ItemGroup>
 
     <ItemGroup>
