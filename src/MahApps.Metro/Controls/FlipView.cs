@@ -33,7 +33,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_Index, Type = typeof(ListBox))]
     [StyleTypedProperty(Property = nameof(NavigationButtonStyle), StyleTargetType = typeof(Button))]
     [StyleTypedProperty(Property = nameof(IndexItemContainerStyle), StyleTargetType = typeof(ListBoxItem))]
-    public class FlipView : Selector
+    public partial class FlipView : Selector
     {
         /// <inheritdoc />
         protected override AutomationPeer OnCreateAutomationPeer()
@@ -212,7 +212,12 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(Orientation),
                                           typeof(Orientation),
                                           typeof(FlipView),
-                                          new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+                                          new PropertyMetadata(Orientation.Horizontal, (d, e) =>
+                                              {
+                                                  var flipView = (FlipView)d;
+                                                  flipView.ResetSwipe();
+                                                  flipView.DetectControlButtonsStatus();
+                                              }));
 
         /// <summary>
         /// Gets or sets the orientation of the navigation.
@@ -797,12 +802,17 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void GoBack()
         {
+            this.GoBack(this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition);
+        }
+
+        private void GoBack(TransitionType transition)
+        {
             this.allowSelectedIndexChangedCallback = false;
             try
             {
                 if (this.presenter is not null)
                 {
-                    this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+                    this.presenter.Transition = transition;
                 }
 
                 if (this.SelectedIndex > 0)
@@ -828,14 +838,19 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void GoForward()
         {
+            this.GoForward(this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition);
+        }
+
+        private void GoForward(TransitionType transition)
+        {
             this.allowSelectedIndexChangedCallback = false;
             try
             {
                 if (this.presenter is not null)
                 {
-                    this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+                    this.presenter.Transition = transition;
                 }
-                
+
                 if (this.SelectedIndex < this.Items.Count - 1)
                 {
                     this.SelectedIndex++;
@@ -895,7 +910,9 @@ namespace MahApps.Metro.Controls
             this.showControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
             this.hideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
+            this.ResetSwipe();
             this.presenter = this.GetTemplateChild(PART_Presenter) as TransitioningContentControl;
+            this.AttachSwipeTransform();
 
             if (this.indexListBox != null)
             {
