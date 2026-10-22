@@ -14,7 +14,7 @@
         <StackPanel>
 
             <controls:ControlExample x:Name="FlipExample"
-                                     Description="One item at a time with a banner over it, and the arrows appear as soon as the mouse is over the control."
+                                     Description="One item at a time with a banner over it, and the arrows appear as soon as the mouse is over the control. Dragging the item aside with the mouse or a finger flips as well."
                                      Header="A page at a time">
                 <smtx:XamlDisplay UniqueKey="FlipView.Pages">
                     <mah:FlipView x:Name="Flip"
