@@ -142,6 +142,20 @@ Unless indicated otherwise on a per-file basis all source and documentation here
 - [Source](https://github.com/microsoftarchive/SilverlightToolkit)
 - [Microsoft Public License (MS-PL)](https://github.com/microsoftarchive/SilverlightToolkit/blob/master/LICENSE)
 
+## VirtualizingWrapPanel
+
+- Copyright (c) 2019 S. Bäumlisberger
+- [NuGet](https://www.nuget.org/packages/VirtualizingWrapPanel)
+- [Source](https://github.com/sbaeumlisberger/VirtualizingWrapPanel)
+- [MIT License](https://github.com/sbaeumlisberger/VirtualizingWrapPanel/blob/master/LICENSE)
+
+## WinUI-Gallery
+
+- `IconsData.json` (the names and tags of the glyphs on the Icons page of the gallery)
+- Copyright (c) Microsoft Corporation. All rights reserved.
+- [Source](https://github.com/microsoft/WinUI-Gallery)
+- [MIT License](https://github.com/microsoft/WinUI-Gallery/blob/main/LICENSE)
+
 ## WpfAnalyzers
 
 - Copyright (c) 2016 .NET Analyzers

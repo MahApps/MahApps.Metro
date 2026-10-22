@@ -1,0 +1,196 @@
+﻿<UserControl x:Class="MahApps.Metro.Gallery.Pages.IconsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:core="clr-namespace:MahApps.Metro.Gallery.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+             d:DesignHeight="600"
+             d:DesignWidth="900"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <!--  a tab is one font, with the search, the glyphs and the details of the one picked  -->
+        <DataTemplate x:Key="IconFontTemplate" DataType="{x:Type core:IconFont}">
+            <Grid Margin="0 16 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="334" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <mah:AutoSuggestBox Width="400"
+                                    HorizontalAlignment="Left"
+                                    mah:TextBoxHelper.ClearTextButton="True"
+                                    mah:TextBoxHelper.Watermark="Search icons by name, code, or tags"
+                                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Grid.Row="1"
+                           Margin="0 8 0 8"
+                           Foreground="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}"
+                           Style="{DynamicResource MahApps.Styles.TextBlock.Caption.WinUI}"
+                           Text="{Binding Summary}" />
+
+                <!--
+                    Well over a thousand glyphs, so only the tiles in view are built. The list takes
+                    the icon font, which the glyphs inherit, while the names keep the font of the caption.
+                -->
+                <ListBox Grid.Row="2"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         FontFamily="{Binding FontFamily}"
+                         ItemsSource="{Binding Icons}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         SelectedItem="{Binding SelectedIcon}"
+                         VirtualizingPanel.CacheLengthUnit="Page"
+                         VirtualizingPanel.IsVirtualizing="True"
+                         VirtualizingPanel.ScrollUnit="Pixel"
+                         VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <vwp:VirtualizingWrapPanel ItemSize="96,96" SpacingMode="Uniform" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="2" />
+                            <Setter Property="Padding" Value="4" />
+                            <Setter Property="ToolTip" Value="{Binding Name}" />
+                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type core:IconData}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="28"
+                                           Text="{Binding Glyph, Mode=OneTime}" />
+                                <TextBlock Grid.Row="1"
+                                           HorizontalAlignment="Center"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.Caption.WinUI}"
+                                           Text="{Binding Name, Mode=OneTime}"
+                                           TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Border Grid.Row="0"
+                        Grid.RowSpan="3"
+                        Grid.Column="2"
+                        Background="{DynamicResource MahApps.Brushes.WinUI.CardBackgroundFillDefault}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.WinUI.CardStrokeDefault}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                    <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <mah:FontIcon Margin="0 8 0 16"
+                                          HorizontalAlignment="Left"
+                                          FontFamily="{Binding FontFamily}"
+                                          FontSize="48"
+                                          Glyph="{Binding SelectedIcon.Glyph}" />
+
+                            <ItemsControl Focusable="False" ItemsSource="{Binding Snippets}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type core:IconFont+Snippet}">
+                                        <StackPanel Margin="0 0 0 12">
+                                            <TextBlock Margin="0 0 0 4"
+                                                       Foreground="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}"
+                                                       Style="{DynamicResource MahApps.Styles.TextBlock.Caption.WinUI}"
+                                                       Text="{Binding Header}" />
+                                            <Border Background="{DynamicResource MahApps.Brushes.WinUI.SolidBackgroundFillTertiary}"
+                                                    BorderBrush="{DynamicResource MahApps.Brushes.WinUI.CardStrokeDefault}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                <DockPanel>
+                                                    <Button VerticalAlignment="Top"
+                                                            Command="{x:Static core:GalleryCommands.CopyText}"
+                                                            CommandParameter="{Binding Text}"
+                                                            DockPanel.Dock="Right"
+                                                            Style="{StaticResource MahApps.Gallery.Styles.Button.CardLink}"
+                                                            ToolTip="Copy">
+                                                        <iconPacks:PackIconMaterial Width="14"
+                                                                                    Height="14"
+                                                                                    Kind="ContentCopy" />
+                                                    </Button>
+                                                    <TextBlock Margin="8 6 0 6"
+                                                               VerticalAlignment="Center"
+                                                               FontFamily="Consolas"
+                                                               Text="{Binding Text}"
+                                                               TextWrapping="Wrap" />
+                                                </DockPanel>
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Margin="0 0 0 4"
+                                       Foreground="{DynamicResource MahApps.Brushes.WinUI.TextSecondary}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Caption.WinUI}"
+                                       Text="Tags" />
+                            <!--  a tag goes into the search, which finds the glyphs that share it  -->
+                            <ItemsControl Focusable="False" ItemsSource="{Binding SelectedIcon.Tags}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="0 0 4 4"
+                                                Padding="10 2"
+                                                mah:ControlsHelper.CornerRadius="12"
+                                                Command="{Binding DataContext.SearchTag, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                                CommandParameter="{Binding}"
+                                                Content="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Margin="24 8 24 24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="0 0 0 8"
+                   Style="{DynamicResource MahApps.Styles.TextBlock.Body.WinUI}"
+                   TextWrapping="Wrap">
+            <Run Text="The glyphs of the Segoe icon fonts. Segoe Fluent Icons comes with Windows 11, Segoe MDL2 Assets with Windows 10 and, for a system without it, with MahApps.Metro, which is the font mah:FontIcon takes unless told otherwise. The names and tags are those of the" />
+            <Hyperlink Command="{x:Static core:GalleryCommands.OpenLink}" CommandParameter="https://github.com/microsoft/WinUI-Gallery">WinUI 3 Gallery</Hyperlink><Run Text=", under the MIT License." />
+            <LineBreak />
+            <LineBreak />
+            <Run Text="Many more icons, from sets such as Material Design and Font Awesome, come with" />
+            <Hyperlink Command="{x:Static core:GalleryCommands.OpenLink}" CommandParameter="https://github.com/MahApps/MahApps.Metro.IconPacks">MahApps.Metro.IconPacks</Hyperlink><Run Text=", a package of its own." />
+        </TextBlock>
+
+        <!--  the fonts sit on the page itself, as the groups of the Color page do  -->
+        <mah:MetroTabControl x:Name="Tabs"
+                             Grid.Row="1"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             ContentTemplate="{StaticResource IconFontTemplate}"
+                             DisplayMemberPath="Name"
+                             Style="{DynamicResource MahApps.Styles.MetroTabControl.WinUI.SelectorBar}" />
+    </Grid>
+</UserControl>

@@ -34,6 +34,7 @@
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" Condition="'$(IsBuildingForLegacyDotNet)' == 'true'" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.0.11" Condition="'$(IsBuildingForLegacyDotNet)' == 'false'" />
     <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
+    <PackageVersion Include="VirtualizingWrapPanel" Version="2.5.4" />
     <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
   </ItemGroup>
   <ItemGroup Label="Test">
