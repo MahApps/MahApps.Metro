@@ -310,4 +310,14 @@
     <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedPressed" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToolBar.WinUI.ToggleButtonForegroundCheckedDisabled" ResourceKey="MahApps.Brushes.WinUI.TextOnAccentDisabled" />
 
+    <!--
+        The selected row of a DataGrid. The Windows 10 look is after DataGrid.xaml of the Windows Community Toolkit, the accent at an
+        opacity of 0.6 and of 0.8 when the pointer is over the row, the same in a light and a dark theme. The WinUI look is after the
+        TableView of microsoft-ui-xaml, which paints the pill of a selected row in SystemAccentColorDark1 in the light theme and in
+        SystemAccentColorLight2 in the dark one, the shade the accent fill of WinUI takes.
+    -->
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Win10.RowBackgroundSelected" Opacity="0.6" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Win10.RowBackgroundSelectedPointerOver" Opacity="0.8" Color="{StaticResource MahApps.Colors.SystemAccent}" options:Freeze="True" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.SelectionIndicator" ResourceKey="MahApps.Brushes.WinUI.AccentFillDefault" />
+
 </ResourceDictionary>

@@ -954,4 +954,17 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        The sizes of the DataGrid in the Windows 10 and the WinUI look. The Windows 10 ones are those of DataGrid.xaml of the Windows
+        Community Toolkit: a row and a header of 32, the text of a column in 12 and 15 with 12 on either side of it. The WinUI ones are
+        those of the TableView of microsoft-ui-xaml (TableView.xaml, as of 2026-10-23): a row and a header of 40 and 8,4,8,4 around the
+        text, which is in the 14 of MahApps.Font.Size.Control.WinUI like the rest of that set.
+    -->
+    <system:Double x:Key="MahApps.Sizes.DataGrid.RowHeight.Win10">32</system:Double>
+    <system:Double x:Key="MahApps.Sizes.DataGrid.RowHeight.WinUI">40</system:Double>
+    <Thickness x:Key="MahApps.Thickness.DataGrid.CellPadding.Win10">12,0,12,0</Thickness>
+    <Thickness x:Key="MahApps.Thickness.DataGrid.CellPadding.WinUI">8,4,8,4</Thickness>
+    <system:Double x:Key="MahApps.Font.Size.DataGrid.ColumnHeader.Win10">12</system:Double>
+    <system:Double x:Key="MahApps.Font.Size.DataGrid.Cell.Win10">15</system:Double>
+
 </ResourceDictionary>

@@ -123,6 +123,10 @@
         "MahApps.Colors.InfoBar.Window.Informational.Background": "#FF1B1B1B",
         "MahApps.Colors.WinUI.FocusStrokeOuter": "#FFFFFFFF",
         "MahApps.Colors.WinUI.FocusStrokeInner": "#B2000000",
+        "MahApps.Colors.DataGrid.WinUI.HeaderBackground": "#26FFFFFF",
+        "MahApps.Colors.DataGrid.WinUI.GroupHeaderBackground": "#4C3A3A3A",
+        "MahApps.Colors.DataGrid.Win10.Invalid": "#FFFFFF00",
+        "MahApps.Opacity.DataGrid.WinUI.GroupHeaderCount": "0.77",
         "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36",
         "MahApps.Brushes.Window.Background.Backdrop.Acrylic": "#60000000",
         "MahApps.Brushes.Window.Background.Backdrop.Auto": "#BB000000"
@@ -249,6 +253,10 @@
         "MahApps.Colors.InfoBar.Window.Informational.Background": "#FFFAFAFA",
         "MahApps.Colors.WinUI.FocusStrokeOuter": "#E4000000",
         "MahApps.Colors.WinUI.FocusStrokeInner": "#FFFFFFFF",
+        "MahApps.Colors.DataGrid.WinUI.HeaderBackground": "#26000000",
+        "MahApps.Colors.DataGrid.WinUI.GroupHeaderBackground": "#14000000",
+        "MahApps.Colors.DataGrid.Win10.Invalid": "#FFC50500",
+        "MahApps.Opacity.DataGrid.WinUI.GroupHeaderCount": "0.7",
         "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14",
         "MahApps.Brushes.Window.Background.Backdrop.Acrylic": "#60FFFFFF",
         "MahApps.Brushes.Window.Background.Backdrop.Auto": "#BBFFFFFF"

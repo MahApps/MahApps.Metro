@@ -1402,4 +1402,63 @@
     <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundPressed" ResourceKey="MahApps.Brushes.WinUI.TextSecondary" />
     <markup:StaticResource x:Key="MahApps.Brushes.PipsPager.NavigationButtonForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.ControlStrongFillDisabled" />
 
+    <!--
+        DataGrid, read off the TableView of microsoft-ui-xaml main (TabularSurfaces_themeresources.xaml, SortIndicator_themeresources.xaml
+        and ResizeGripper_themeresources.xaml, as of 2026-10-23) for the WinUI look. A tint that has a token of WinUI already takes
+        it; the header row and the group header carry a value of their own in TableView, so those are colours here. The selected row
+        and the pill of it take the accent and are in Theme.Template.xaml.
+    -->
+    <Color x:Key="MahApps.Colors.DataGrid.WinUI.HeaderBackground">{{MahApps.Colors.DataGrid.WinUI.HeaderBackground}}</Color>
+    <Color x:Key="MahApps.Colors.DataGrid.WinUI.GroupHeaderBackground">{{MahApps.Colors.DataGrid.WinUI.GroupHeaderBackground}}</Color>
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.WinUI.HeaderBackground" Color="{StaticResource MahApps.Colors.DataGrid.WinUI.HeaderBackground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.WinUI.GroupHeaderBackground" Color="{StaticResource MahApps.Colors.DataGrid.WinUI.GroupHeaderBackground}" options:Freeze="True" />
+    <!--  the count behind the key of a group header is the primary text at this opacity, TextFillColorSecondary laid over TextFillColorPrimary  -->
+    <system:Double x:Key="MahApps.Opacity.DataGrid.WinUI.GroupHeaderCount">{{MahApps.Opacity.DataGrid.WinUI.GroupHeaderCount}}</system:Double>
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowBackground" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelected" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelectedPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.RowForegroundDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.SelectionIndicatorDisabled" ResourceKey="MahApps.Brushes.WinUI.TextDisabled" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.HeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.WinUI.SubtleFillSecondary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.HeaderBackgroundPressed" ResourceKey="MahApps.Brushes.WinUI.SubtleFillTertiary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.HeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.HeaderSeparator" ResourceKey="MahApps.Brushes.WinUI.DividerStrokeDefault" />
+    <!--  the line of the resize gripper is ControlStrongStrokeColorDefault in ResizeGripper_themeresources.xaml  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.ResizeGripperSeparator" ResourceKey="MahApps.Brushes.WinUI.ControlStrongStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.SortIndicator" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.GridLine" ResourceKey="MahApps.Brushes.WinUI.DividerStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.OuterBorder" ResourceKey="MahApps.Brushes.WinUI.CardStrokeDefault" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.WinUI.GroupHeaderForeground" ResourceKey="MahApps.Brushes.WinUI.TextPrimary" />
+
+    <!--
+        DataGrid, read off the DataGrid.xaml of the Windows Community Toolkit (Microsoft.Toolkit.Uwp.UI.Controls.DataGrid) for the
+        Windows 10 look, whose brushes are the SystemControl* ones the other Windows 10 styles take. The selected row takes the
+        accent and is in Theme.Template.xaml. The toolkit draws the lines in SystemBaseMediumLow at an opacity of 0.4, and the
+        mark of an invalid row in #C50500 in the light theme and #FFFF00 in the dark one. The header and the row header take
+        ThemeBackground where the toolkit takes SystemControlBackgroundAltHigh, the page colour in UWP, since here the grid stands on
+        the theme background and the header would otherwise turn black in a dark theme.
+    -->
+    <Color x:Key="MahApps.Colors.DataGrid.Win10.Invalid">{{MahApps.Colors.DataGrid.Win10.Invalid}}</Color>
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Win10.Invalid" Color="{StaticResource MahApps.Colors.DataGrid.Win10.Invalid}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Win10.GridLine" Opacity="0.4" Color="{StaticResource MahApps.Colors.SystemBaseMediumLow}" options:Freeze="True" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.HeaderBackground" ResourceKey="MahApps.Brushes.ThemeBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.HeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.HeaderBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.HeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.RowBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.RowForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.RowForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.RowHeaderBackground" ResourceKey="MahApps.Brushes.ThemeBackground" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.RowHeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.GroupHeaderBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.GroupHeaderBackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundListLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.GroupHeaderBackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundListMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.GroupHeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.DetailsBackground" ResourceKey="MahApps.Brushes.SystemControlBackgroundChromeMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.FocusVisualPrimary" ResourceKey="MahApps.Brushes.SystemControlFocusVisualPrimary" />
+    <markup:StaticResource x:Key="MahApps.Brushes.DataGrid.Win10.FocusVisualSecondary" ResourceKey="MahApps.Brushes.SystemControlFocusVisualSecondary" />
+
 </ResourceDictionary>
