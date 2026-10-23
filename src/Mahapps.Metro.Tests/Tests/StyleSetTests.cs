@@ -78,6 +78,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(WinUI, typeof(ToolBar), "MahApps.Styles.ToolBar.WinUI")]
         [TestCase(Win10, typeof(ToolBarTray), "MahApps.Styles.ToolBarTray.Win10")]
         [TestCase(WinUI, typeof(ToolBarTray), "MahApps.Styles.ToolBarTray.WinUI")]
+        [TestCase(Win10, typeof(DataGrid), "MahApps.Styles.DataGrid.Win10")]
         [TestCase(Win10, typeof(FlipView), "MahApps.Styles.FlipView.Win10")]
         [TestCase(WinUI, typeof(FlipView), "MahApps.Styles.FlipView.WinUI")]
         [TestCase(Win10, typeof(PipsPager), "MahApps.Styles.PipsPager.Win10")]
