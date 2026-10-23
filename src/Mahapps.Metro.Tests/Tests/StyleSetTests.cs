@@ -79,6 +79,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase(Win10, typeof(ToolBarTray), "MahApps.Styles.ToolBarTray.Win10")]
         [TestCase(WinUI, typeof(ToolBarTray), "MahApps.Styles.ToolBarTray.WinUI")]
         [TestCase(Win10, typeof(DataGrid), "MahApps.Styles.DataGrid.Win10")]
+        [TestCase(WinUI, typeof(DataGrid), "MahApps.Styles.DataGrid.WinUI")]
         [TestCase(Win10, typeof(FlipView), "MahApps.Styles.FlipView.Win10")]
         [TestCase(WinUI, typeof(FlipView), "MahApps.Styles.FlipView.WinUI")]
         [TestCase(Win10, typeof(PipsPager), "MahApps.Styles.PipsPager.Win10")]
@@ -191,6 +192,7 @@ namespace MahApps.Metro.Tests.Tests
         [TestCase("MahApps.Styles.Button.ToolBar.WinUI", typeof(Button))]
         [TestCase("MahApps.Styles.ToggleButton.ToolBar.WinUI", typeof(ToggleButton))]
         [TestCase("MahApps.Styles.HyperlinkButton.WinUI", typeof(HyperlinkButton))]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", typeof(DataGrid))]
         [Description("WinUI rounds a control by ControlCornerRadius and nothing else, so no style of that set carries a radius of its own and a box and the picker standing beside it are rounded alike. The rows of a list box are not among them: that set draws them square.")]
         public void EveryWinUIControlIsRoundedByTheSameNumber(string key, Type type)
         {

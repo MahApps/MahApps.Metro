@@ -1154,16 +1154,17 @@
     <!--
         The column header of the Windows 10 grid, after the DataGridColumnHeader of DataGrid.xaml in
         the toolkit: the name in 12 and in the medium base colour, written the way it was given rather
-        than in capitals, 12 in from the left, and a line on the right. The line under each header is
-        the ColumnHeadersAndRowsSeparator of the toolkit, and the header WPF puts after the last
-        column takes this style too, so the line runs the whole width. The sort glyph is the MDL2 one
+        than in capitals, 12 in from the left, and a line on the right. The line under the headers is
+        the ColumnHeadersAndRowsSeparator of the toolkit. It is see-through, so only the header WPF
+        puts after the last column draws it: that one lies behind all the others across the whole
+        width, and the fill of every other header stops short of it. The sort glyph is the MDL2 one
         in a column of at least 32 behind the name, and the header fills with the list colours under
         the pointer and while pressed, sorted or not.
     -->
     <Style x:Key="MahApps.Styles.DataGridColumnHeader.Win10" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Win10.HeaderBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Win10.GridLine}" />
-        <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.DataGrid.ColumnHeader.Win10}" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Win10.HeaderForeground}" />
@@ -1181,8 +1182,10 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
+                        <!--  the fill stops short of the line under the headers, which the header behind them draws  -->
                         <Border x:Name="BackgroundBorder"
                                 Grid.ColumnSpan="2"
+                                Margin="0 0 0 1"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}" />
@@ -1242,6 +1245,9 @@
                         <Trigger Property="DisplayIndex" Value="0">
                             <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <Trigger Property="DisplayIndex" Value="-1">
+                            <Setter TargetName="BackgroundBorder" Property="Margin" Value="0" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -1249,6 +1255,10 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Style.Triggers>
+            <!--  the header after the last column, which has no column and so no place among the others  -->
+            <Trigger Property="DisplayIndex" Value="-1">
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+            </Trigger>
             <!--  the toolkit has no disabled header, so it takes the colour a disabled row writes in  -->
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Win10.RowForegroundDisabled}" />
@@ -1587,6 +1597,696 @@
         <Setter Property="mah:DataGridHelper.CellPadding" Value="{DynamicResource MahApps.Thickness.DataGrid.CellPadding.Win10}" />
         <!--  the 12,0,0,0 the toolkit gives a column header, the sort glyph taking the room on the right  -->
         <Setter Property="mah:DataGridHelper.ColumnHeaderPadding" Value="12 0 0 0" />
+    </Style>
+
+    <!--  WinUI  -->
+
+    <!--
+        What a cell of the WinUI grid is edited in, after the TableView of microsoft-ui-xaml
+        (TableView.xaml on main, as of 2026-10-23), whose text column edits in the text box of that
+        set. These are the WinUI boxes of this library standing flush in the cell the way the
+        Windows 10 ones do, each taking back the padding of the cell with a margin the other way.
+        A cell that only shows its value writes it in the text blocks of the Windows 10 grid, since
+        those carry nothing of either set and the cell padding puts the text where TableView has it.
+    -->
+    <Style x:Key="MahApps.Styles.Hyperlink.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.Hyperlink.DataGrid.Win10}"
+           TargetType="{x:Type TextBlock}">
+        <Style.Resources>
+            <Style BasedOn="{StaticResource MahApps.Styles.Hyperlink.WinUI}" TargetType="{x:Type Hyperlink}" />
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TextBox.DataGrid.Editing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.WinUI}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="{Binding Path=Padding, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Converter={x:Static mahConverters:ThicknessNegateConverter.Instance}}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+    </Style>
+
+    <!--
+        The check box of a column in the WinUI grid. It stands where the cell padding puts it,
+        whether the cell shows its value or is being edited, and leaves out the room the WinUI box
+        keeps around itself for a label, since a cell has none.
+    -->
+    <Style x:Key="MahApps.Styles.CheckBox.DataGridCell.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.CheckBox.WinUI}"
+           TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="True">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsEditing, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="False">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  the combo box of a cell that only shows its value draws nothing but the value, so it is the Windows 10 one written in the type of this set  -->
+    <Style x:Key="MahApps.Styles.ComboBox.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.DataGrid.Win10}"
+           TargetType="{x:Type ComboBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ComboBox.DataGrid.Editing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.WinUI}"
+           TargetType="{x:Type ComboBox}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="IsSynchronizedWithCurrentItem" Value="False" />
+        <Setter Property="Margin" Value="{Binding Path=Padding, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Converter={x:Static mahConverters:ThicknessNegateConverter.Instance}}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.NumericUpDownBase.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDown.WinUI}"
+           TargetType="{x:Type mah:NumericUpDownBase}">
+        <Setter Property="HideUpDownButtons" Value="True" />
+        <Setter Property="InterceptArrowKeys" Value="True" />
+        <Setter Property="InterceptMouseWheel" Value="True" />
+        <Setter Property="Margin" Value="{Binding Path=Padding, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridCell}}, Converter={x:Static mahConverters:ThicknessNegateConverter.Instance}}" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Speedup" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.NumericUpDown.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDownBase.DataGrid.WinUI}"
+           TargetType="{x:Type mah:NumericUpDown}" />
+    <Style x:Key="MahApps.Styles.NumericUpDown.DataGrid.Editing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDown.DataGrid.WinUI}"
+           TargetType="{x:Type mah:NumericUpDown}" />
+
+    <Style x:Key="MahApps.Styles.DecimalUpDown.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDownBase.DataGrid.WinUI}"
+           TargetType="{x:Type mah:DecimalUpDown}" />
+    <Style x:Key="MahApps.Styles.DecimalUpDown.DataGrid.Editing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.DecimalUpDown.DataGrid.WinUI}"
+           TargetType="{x:Type mah:DecimalUpDown}">
+        <Setter Property="HideUpDownButtons" Value="False" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.IntegerUpDown.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDownBase.DataGrid.WinUI}"
+           TargetType="{x:Type mah:IntegerUpDown}" />
+    <Style x:Key="MahApps.Styles.IntegerUpDown.DataGrid.Editing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.IntegerUpDown.DataGrid.WinUI}"
+           TargetType="{x:Type mah:IntegerUpDown}">
+        <Setter Property="HideUpDownButtons" Value="False" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.LongUpDown.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDownBase.DataGrid.WinUI}"
+           TargetType="{x:Type mah:LongUpDown}" />
+    <Style x:Key="MahApps.Styles.LongUpDown.DataGrid.Editing.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.LongUpDown.DataGrid.WinUI}"
+           TargetType="{x:Type mah:LongUpDown}">
+        <Setter Property="HideUpDownButtons" Value="False" />
+    </Style>
+
+    <!--
+        The corner over the row headers, which TableView does not have, since it has no row headers.
+        It stands in the header row, so it takes the fill of that row, the line under it and a line
+        on its right in the separator colour, and answers the pointer the way a column header does,
+        with the tint laid over the fill rather than put in its place.
+    -->
+    <Style x:Key="MahApps.Styles.Button.DataGridSelectAll.WinUI" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderSeparator}" />
+        <Setter Property="BorderThickness" Value="0 0 1 1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                        <Border x:Name="StateBorder" Background="Transparent" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="StateBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="StateBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackgroundPressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        The handle for pulling a column wider, after ResizeGripper.xaml of microsoft-ui-xaml: 8 wide
+        and see-through, with its line in ResizeGripperSeparatorBrush only while it is being pulled.
+        The line is the border of the handle, so the handle on the left of a header draws it on its
+        left edge and the one on the right on its right edge, where the two headers meet.
+    -->
+    <Style x:Key="MahApps.Styles.Thumb.ColumnHeaderGripper.WinUI" TargetType="{x:Type Thumb}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0 0 1 0" />
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Width" Value="8" />
+        <Style.Triggers>
+            <Trigger Property="IsDragging" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.ResizeGripperSeparator}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The column header of the WinUI grid, after TableViewColumnHeader in TableView.xaml and
+        SortIndicator.xaml of microsoft-ui-xaml: the name in SemiBold 14 with 8,4,8,4 around it, and
+        the chevron of the sort indicator at 12 in a box of 16 at the right edge, which a column that
+        cannot sort leaves out. The tint under the pointer and while pressed only shows where a click
+        sorts.
+        
+        The fill of the header row and the line under it are both see-through, so they are drawn once,
+        by the header WPF puts after the last column. That one lies behind all the others across the
+        whole width, the way the header row of TableView lies behind its header cells, and a header
+        of a column draws neither, or the two would add up wherever it stands. The line between two
+        headers is drawn on the left of each but the first, so the last one draws none against the
+        frame; TableView keeps the line after the last column while there is room behind it, which
+        WPF gives a style no way to tell.
+    -->
+    <Style x:Key="MahApps.Styles.DataGridColumnHeader.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.DataGridColumnHeader.Win10}"
+           TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderSeparator}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderForeground}" />
+        <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.DataGrid.RowHeight.WinUI}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+                        <!--  the fill, the tint and the line between two headers stop short of the line under the row, which the header behind them draws  -->
+                        <Border x:Name="BackgroundBorder"
+                                Margin="0 0 0 1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        <Border x:Name="StateBorder"
+                                Margin="0 0 0 1"
+                                Background="Transparent" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <mah:ContentControlEx x:Name="HeaderContent"
+                                                  Grid.Column="0"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Grid x:Name="SortIndicator"
+                                  Grid.Column="1"
+                                  Width="16"
+                                  Height="16"
+                                  VerticalAlignment="Center"
+                                  IsHitTestVisible="False">
+                                <TextBlock x:Name="SortGlyph"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                           FontSize="12"
+                                           FontWeight="Normal"
+                                           Foreground="{DynamicResource MahApps.Brushes.DataGrid.WinUI.SortIndicator}"
+                                           Visibility="Collapsed" />
+                            </Grid>
+                        </Grid>
+
+                        <Rectangle x:Name="HeaderSeparator"
+                                   Width="1"
+                                   Margin="0 0 0 1"
+                                   HorizontalAlignment="Left"
+                                   Fill="{TemplateBinding BorderBrush}"
+                                   IsHitTestVisible="False" />
+
+                        <Thumb x:Name="PART_LeftHeaderGripper"
+                               HorizontalAlignment="Left"
+                               BorderThickness="1 0 0 0"
+                               Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper.WinUI}" />
+
+                        <Thumb x:Name="PART_RightHeaderGripper"
+                               HorizontalAlignment="Right"
+                               Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper.WinUI}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="CanUserSort" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="StateBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackgroundPointerOver}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True" />
+                                <Condition Property="CanUserSort" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="StateBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackgroundPressed}" />
+                        </MultiTrigger>
+                        <!--  a name trims before the sort indicator; the selector leaves anything else to the content presenter  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ContentTemplate" Value="{x:Null}" />
+                                <Condition Property="ContentTemplateSelector" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="HeaderContent" Property="ContentTemplateSelector">
+                                <Setter.Value>
+                                    <mah:TrimmedTextTemplateSelector>
+                                        <mah:TrimmedTextTemplateSelector.AccessTextTemplate>
+                                            <DataTemplate>
+                                                <AccessText Text="{Binding}" TextTrimming="CharacterEllipsis" />
+                                            </DataTemplate>
+                                        </mah:TrimmedTextTemplateSelector.AccessTextTemplate>
+                                        <mah:TrimmedTextTemplateSelector.TextTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis" />
+                                            </DataTemplate>
+                                        </mah:TrimmedTextTemplateSelector.TextTemplate>
+                                    </mah:TrimmedTextTemplateSelector>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <Trigger Property="CanUserSort" Value="False">
+                            <Setter TargetName="SortIndicator" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortGlyph" Property="Text" Value="&#xE96D;" />
+                            <Setter TargetName="SortGlyph" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortGlyph" Property="Text" Value="&#xE96E;" />
+                            <Setter TargetName="SortGlyph" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="DisplayIndex" Value="0">
+                            <Setter TargetName="HeaderSeparator" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!--  a hidden first column hands the place of the first to the next header, which only the grid can tell, so the WinUI grid marks the column that is first on screen  -->
+                        <DataTrigger Binding="{Binding Path=Column.(mah:DataGridHelper.IsFirstVisibleColumn), RelativeSource={RelativeSource Self}}" Value="True">
+                            <Setter TargetName="HeaderSeparator" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_LeftHeaderGripper" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <Trigger Property="DisplayIndex" Value="-1">
+                            <Setter TargetName="BackgroundBorder" Property="Margin" Value="0" />
+                            <Setter TargetName="HeaderSeparator" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!--  the header after the last column, which has no column and so no place among the others  -->
+            <Trigger Property="DisplayIndex" Value="-1">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackground}" />
+            </Trigger>
+            <!--  the Disabled state of TableViewColumnHeader writes in the colour of a disabled row  -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The row header of the WinUI grid, which TableView does not have. It takes the fill of the
+        header row and the separator colour for the line on its right, and stays as it is while its
+        row is hovered or selected: the fill is see-through, so the tint of the row shows through it,
+        and the pill of a selected row stands in it. It is at least 16 wide, so the pill has room.
+    -->
+    <Style x:Key="MahApps.Styles.DataGridRowHeader.WinUI" TargetType="{x:Type DataGridRowHeader}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderSeparator}" />
+        <Setter Property="BorderThickness" Value="0 0 1 0" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.HeaderForeground}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinWidth" Value="16" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
+                    <Grid>
+                        <Border Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <Control Grid.Column="1"
+                                         Focusable="False"
+                                         SnapsToDevicePixels="False"
+                                         Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                         Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+                            </Grid>
+                        </Border>
+                        <Thumb x:Name="PART_TopHeaderGripper"
+                               VerticalAlignment="Top"
+                               Background="Transparent"
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper}" />
+                        <Thumb x:Name="PART_BottomHeaderGripper"
+                               VerticalAlignment="Bottom"
+                               Background="Transparent"
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!--
+        A cell of the WinUI grid. It stands on the Windows 10 cell, which already keeps the colour of
+        the row for its text and paints the selection only where cells are what gets selected, and
+        puts the tints of TableView and the focus ring of this set drawn inside its edge in place of
+        the Windows 10 ones.
+    -->
+    <Style x:Key="MahApps.Styles.DataGridCell.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.DataGridCell.Win10}"
+           TargetType="{x:Type DataGridCell}">
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="mah:FocusVisualHelper.FocusVisualStyle" Value="{DynamicResource MahApps.Styles.FocusVisualStyle.WinUI.Inside}" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelected}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelected}" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundPointerOver}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundPointerOver}" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelectedPointerOver}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelectedPointerOver}" />
+            </MultiTrigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The mark a row with an error shows in its header: the one of the Windows 10 grid, in the
+        critical fill of this set with the mark in the inverse text colour, as an InfoBar of WinUI
+        draws its error sign.
+    -->
+    <ControlTemplate x:Key="MahApps.Templates.DataGridRow.ValidationError.WinUI">
+        <Grid Margin="2 0 2 0"
+              VerticalAlignment="Center"
+              DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors).CurrentItem}"
+              ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.ErrorContent}">
+            <Path Width="20"
+                  Height="20"
+                  Data="m 31.630585,39.233818 24.6309,-24.6308 c 0.6183,-0.6184 1.6208,-0.6184 2.2392,0 l 24.6308,24.6308 c 0.6184,0.6184 0.6184,1.6209 0,2.2392 l -24.6308,24.6309 c -0.6183,0.6183 -1.6209,0.6183 -2.2392,0 l -24.6309,-24.6309 c -0.6183,-0.6183 -0.6183,-1.6208 0,-2.2392 z"
+                  Fill="{DynamicResource MahApps.Brushes.WinUI.SystemFillCritical}"
+                  Stretch="Uniform" />
+            <Path Width="10"
+                  Height="10"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="m 53.781741,31.196677 c -2.237724,0 -4.0625,1.824776 -4.0625,4.0625 0,2.237724 1.824776,4.0625 4.0625,4.0625 2.237724,0 4.0625,-1.824776 4.0625,-4.0625 0,-2.237724 -1.824776,-4.0625 -4.0625,-4.0625 z m -4.09375,-21.375 0.03125,0.53125 1.21875,19.46875 5.6875,0 1.25,-20 -8.1875,0 z"
+                  Fill="{DynamicResource MahApps.Brushes.WinUI.TextInverse}"
+                  Stretch="Uniform" />
+        </Grid>
+    </ControlTemplate>
+
+    <!--
+        A row of the WinUI grid, after TableViewRow in TableView.xaml: see-through at rest, the subtle
+        tints of TableView under the pointer, once selected and while the pointer is on a selected row,
+        the same with the grid out of focus, since TableView has no state for that, and the text in the
+        primary text colour throughout. A row of WPF knows no pressed state, so the pressed tint of
+        TableView is left out.
+        
+        A selected row shows the pill of TableView, 3 by 16, at its left edge, fading in over 83
+        milliseconds and in the disabled colour while the row is disabled. It spans the row header
+        too and does not scroll sideways, so with row headers shown it stands in the header and
+        otherwise at the left of the first cell. Where cells are what gets selected the row itself is
+        never selected, and knowing whether any of its cells is would take code, so the pill stays
+        away there and the selected cells show their tint alone. The details below the row have no
+        fill of their own.
+        Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on the DataGrid style!
+    -->
+    <Style x:Key="MahApps.Styles.DataGridRow.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.DataGridRow.Win10}"
+           TargetType="{x:Type DataGridRow}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">
+                    <Border x:Name="RowBackgroundBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <SelectiveScrollingGrid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <DataGridCellsPresenter Grid.Column="1"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                            <DataGridDetailsPresenter Grid.Row="1"
+                                                      Grid.Column="1"
+                                                      SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=AreRowDetailsFrozen, FallbackValue={x:Static SelectiveScrollingOrientation.Both}, TargetNullValue={x:Static SelectiveScrollingOrientation.Both}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}}"
+                                                      Visibility="{TemplateBinding DetailsVisibility}" />
+
+                            <DataGridRowHeader Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Grid.Column="0"
+                                               SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, FallbackValue={x:Static Visibility.Visible}, TargetNullValue={x:Static Visibility.Visible}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}" />
+
+                            <Rectangle x:Name="SelectionIndicator"
+                                       Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Width="3"
+                                       Height="16"
+                                       Margin="2 0 0 0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Fill="{DynamicResource MahApps.Brushes.DataGrid.WinUI.SelectionIndicator}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0"
+                                       RadiusX="1.5"
+                                       RadiusY="1.5"
+                                       SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" />
+                        </SelectiveScrollingGrid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard x:Name="ShowSelectionIndicator">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="SelectionIndicator"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.083" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="ShowSelectionIndicator" />
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="SelectionIndicator" Property="Fill" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.SelectionIndicatorDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ValidationErrorTemplate" Value="{StaticResource MahApps.Templates.DataGridRow.ValidationError.WinUI}" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundPointerOver}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelected}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="mah:DataGridHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackgroundSelectedPointerOver}" />
+            </MultiTrigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        The WinUI grid, after TableView in TableView.xaml of microsoft-ui-xaml (main, as of
+        2026-10-23). It hands its headers, rows and cells the WinUI parts and its columns the WinUI
+        boxes, so a keyed use outside the set looks the same as one inside it. A frame of 1 in
+        TabularSurfaceOuterBorderBrush, rounded by ControlCornerRadius, with what is inside clipped to
+        the same corners; rows of 40, and the grid lines, where GridLinesVisibility asks for them, in
+        TabularSurfaceGridLineBrush.
+        
+        The template is the Metro one, whose frame is rounded by ControlsHelper.CornerRadius already.
+        What would stand out over its corners, the fill of the header row and of a selected row, is
+        cut off by a clip on the grid itself, taken from its own size and that radius, so the
+        template needs no copy for it. What the grid does is left as the Metro grid has it.
+    -->
+    <Style x:Key="MahApps.Styles.DataGrid.WinUI"
+           BasedOn="{StaticResource MahApps.Styles.DataGrid}"
+           TargetType="{x:Type DataGrid}">
+        <Style.Resources>
+            <!--  the Metro template looks the corner over the row headers up under this key, so the grid hands its own over under it  -->
+            <Style x:Key="{ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
+                   BasedOn="{StaticResource MahApps.Styles.Button.DataGridSelectAll.WinUI}"
+                   TargetType="{x:Type Button}" />
+        </Style.Resources>
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.OuterBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CellStyle" Value="{StaticResource MahApps.Styles.DataGridCell.WinUI}" />
+        <Setter Property="Clip">
+            <Setter.Value>
+                <MultiBinding Converter="{x:Static mahConverters:ClipGeometryConverter.Instance}">
+                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                    <Binding Path="(mah:ControlsHelper.CornerRadius)" RelativeSource="{RelativeSource Self}" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridColumnHeader.WinUI}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control.WinUI}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Control.WinUI}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.RowForeground}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.GridLine}" />
+        <Setter Property="MinRowHeight" Value="{DynamicResource MahApps.Sizes.DataGrid.RowHeight.WinUI}" />
+        <Setter Property="RowHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridRowHeader.WinUI}" />
+        <Setter Property="RowStyle" Value="{StaticResource MahApps.Styles.DataGridRow.WinUI}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.WinUI.GridLine}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{DynamicResource MahApps.CornerRadius.WinUI.Control}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedCheckBoxColumnEditingStyle" Value="{StaticResource MahApps.Styles.CheckBox.DataGridCell.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedCheckBoxColumnStyle" Value="{StaticResource MahApps.Styles.CheckBox.DataGridCell.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedComboBoxColumnEditingStyle" Value="{StaticResource MahApps.Styles.ComboBox.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedComboBoxColumnStyle" Value="{StaticResource MahApps.Styles.ComboBox.DataGrid.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedDecimalUpDownColumnEditingStyle" Value="{StaticResource MahApps.Styles.DecimalUpDown.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedDecimalUpDownColumnStyle" Value="{StaticResource MahApps.Styles.TextBlock.NumericUpDown.DataGrid.Win10}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedHyperlinkColumnEditingStyle" Value="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedHyperlinkColumnStyle" Value="{StaticResource MahApps.Styles.Hyperlink.DataGrid.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedIntegerUpDownColumnEditingStyle" Value="{StaticResource MahApps.Styles.IntegerUpDown.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedIntegerUpDownColumnStyle" Value="{StaticResource MahApps.Styles.TextBlock.NumericUpDown.DataGrid.Win10}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedLongUpDownColumnEditingStyle" Value="{StaticResource MahApps.Styles.LongUpDown.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedLongUpDownColumnStyle" Value="{StaticResource MahApps.Styles.TextBlock.NumericUpDown.DataGrid.Win10}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedNumericUpDownColumnEditingStyle" Value="{StaticResource MahApps.Styles.NumericUpDown.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedNumericUpDownColumnStyle" Value="{StaticResource MahApps.Styles.TextBlock.NumericUpDown.DataGrid.Win10}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedTextColumnEditingStyle" Value="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing.WinUI}" />
+        <Setter Property="mah:DataGridHelper.AutoGeneratedTextColumnStyle" Value="{StaticResource MahApps.Styles.TextBlock.DataGrid.Win10}" />
+        <Setter Property="mah:DataGridHelper.CellPadding" Value="{DynamicResource MahApps.Thickness.DataGrid.CellPadding.WinUI}" />
+        <!--  TableViewHeaderCellPadding; the sort indicator takes its 16 beside it on the right  -->
+        <Setter Property="mah:DataGridHelper.ColumnHeaderPadding" Value="8 4 8 4" />
+        <!--  the header draws its line on the left, and the first one on screen none  -->
+        <Setter Property="mah:DataGridHelper.TracksFirstVisibleColumn" Value="True" />
     </Style>
 
 </ResourceDictionary>
