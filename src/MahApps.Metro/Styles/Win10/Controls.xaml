@@ -12,7 +12,7 @@
         style by default already, so they are not repeated here.
         The DataGrid is named alone, without its headers, rows and cells: its own style hands those
         their Windows 10 looks and its columns the Windows 10 boxes, among them
-        MahApps.Styles.CheckBox.DataGrid.Win10, so a grid whose style stands on the Metro one keeps
+        MahApps.Styles.CheckBox.DataGridCell.Win10, so a grid whose style stands on the Metro one keeps
         Metro rows.
     -->
     <ResourceDictionary.MergedDictionaries>

@@ -22,6 +22,7 @@ namespace MahApps.Metro.Converters
         /// </summary>
         public static readonly ThicknessNegateConverter Instance = new();
 
+        /// <inheritdoc />
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return value is Thickness thickness
@@ -29,6 +30,7 @@ namespace MahApps.Metro.Converters
                 : default(Thickness);
         }
 
+        /// <inheritdoc />
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return Binding.DoNothing;

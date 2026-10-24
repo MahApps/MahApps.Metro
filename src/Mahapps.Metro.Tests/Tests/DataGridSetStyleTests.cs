@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using ControlzEx.Theming;
@@ -52,7 +53,7 @@ namespace MahApps.Metro.Tests.Tests
             public bool Done { get; set; } = true;
         }
 
-        private DataGrid GridFor(string styleKey, DataGridSelectionUnit selectionUnit = DataGridSelectionUnit.FullRow, IEnumerable? items = null)
+        private DataGrid GridFor(string styleKey, DataGridSelectionUnit selectionUnit = DataGridSelectionUnit.FullRow, IEnumerable? items = null, Action<DataGrid>? prepare = null)
         {
             var grid = new DataGrid
                        {
@@ -63,6 +64,9 @@ namespace MahApps.Metro.Tests.Tests
                            SelectionUnit = selectionUnit,
                            ItemsSource = items ?? new List<Row> { new(), new() }
                        };
+
+            // whatever has to be there before the grid is loaded, which is when it is handed a GroupStyle
+            prepare?.Invoke(grid);
 
             this.window.Content = grid;
             this.window.UpdateLayout();
@@ -644,6 +648,120 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(StandsOn(column.EditingElementStyle, (Style)this.window!.FindResource(boxKey)), Is.True, $"the editing style should stand on {boxKey}");
         }
 
+        public class Order
+        {
+            public string Name { get; set; } = "Earl Grey";
+
+            public DayOfWeek Day { get; set; } = DayOfWeek.Friday;
+
+            public Uri Link { get; set; } = new("https://mahapps.com");
+
+            public double Measurement { get; set; } = 2.5;
+
+            public decimal Price { get; set; } = 19.99m;
+
+            public int Count { get; set; } = 3;
+
+            public long Size { get; set; } = 9007199254740993L;
+        }
+
+        // the numbers get the columns of this library instead of the text column WPF would make for them, the way DataGridUpDownColumnTests has them
+        private static void UpDownColumnsForNumbers(object? sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var binding = new Binding(e.PropertyName);
+            DataGridColumn? column = e.PropertyType == typeof(double) ? new DataGridNumericUpDownColumn { Binding = binding }
+                : e.PropertyType == typeof(decimal) ? new DataGridDecimalUpDownColumn { Binding = binding }
+                : e.PropertyType == typeof(int) ? new DataGridIntegerUpDownColumn { Binding = binding }
+                : e.PropertyType == typeof(long) ? new DataGridLongUpDownColumn { Binding = binding }
+                : null;
+
+            if (column is not null)
+            {
+                column.Header = e.Column.Header;
+                e.Column = column;
+            }
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Name), typeof(TextBox), "MahApps.Styles.TextBox.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Day), typeof(ComboBox), "MahApps.Styles.ComboBox.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Link), typeof(TextBox), "MahApps.Styles.TextBox.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Measurement), typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Price), typeof(DecimalUpDown), "MahApps.Styles.DecimalUpDown.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Count), typeof(IntegerUpDown), "MahApps.Styles.IntegerUpDown.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Size), typeof(LongUpDown), "MahApps.Styles.LongUpDown.DataGrid.Editing.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Name), typeof(TextBox), "MahApps.Styles.TextBox.DataGrid.Editing.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Day), typeof(ComboBox), "MahApps.Styles.ComboBox.DataGrid.Editing.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Link), typeof(TextBox), "MahApps.Styles.TextBox.DataGrid.Editing.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Measurement), typeof(NumericUpDown), "MahApps.Styles.NumericUpDown.DataGrid.Editing.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Price), typeof(DecimalUpDown), "MahApps.Styles.DecimalUpDown.DataGrid.Editing.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Count), typeof(IntegerUpDown), "MahApps.Styles.IntegerUpDown.DataGrid.Editing.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Size), typeof(LongUpDown), "MahApps.Styles.LongUpDown.DataGrid.Editing.WinUI")]
+        [Description("A cell being edited holds the control of its column in the editing style of the set, for every kind of column the grid hands a style to.")]
+        public void ACellIsEditedInTheControlOfTheSet(string gridKey, string property, Type controlType, string styleKey)
+        {
+            var grid = this.GridFor(gridKey, items: new List<Order> { new(), new() }, prepare: g => g.AutoGeneratingColumn += UpDownColumnsForNumbers);
+            var item = grid.Items[0];
+            var column = grid.Columns.Single(c => Equals(c.Header, property));
+
+            grid.CurrentCell = new DataGridCellInfo(item, column);
+            grid.BeginEdit();
+            this.window!.UpdateLayout();
+
+            try
+            {
+                var editor = column.GetCellContent(item);
+
+                Assert.That(editor, Is.TypeOf(controlType), "the cell should be edited in the control of its column");
+                Assert.That(StandsOn(editor!.Style, (Style)this.window.FindResource(styleKey)), Is.True, $"which should stand on {styleKey}");
+            }
+            finally
+            {
+                grid.CancelEdit(DataGridEditingUnit.Row);
+            }
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Name), "MahApps.Styles.TextBlock.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", nameof(Order.Measurement), "MahApps.Styles.TextBlock.NumericUpDown.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Name), "MahApps.Styles.TextBlock.DataGrid.WinUI")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", nameof(Order.Measurement), "MahApps.Styles.TextBlock.NumericUpDown.DataGrid.WinUI")]
+        [Description("A cell that only shows its value writes it in the text block of its own set.")]
+        public void AShowingCellWritesInTheTextBlockOfItsSet(string gridKey, string property, string styleKey)
+        {
+            var grid = this.GridFor(gridKey, items: new List<Order> { new(), new() }, prepare: g => g.AutoGeneratingColumn += UpDownColumnsForNumbers);
+            var column = (DataGridBoundColumn)grid.Columns.Single(c => Equals(c.Header, property));
+
+            Assert.That(column.ElementStyle, Is.SameAs(this.window!.FindResource(styleKey)));
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("GH-3966 under the sets: the clear button in the box of a cell empties the box, and the object only gets the empty text when the grid commits.")]
+        public void ClearingACellLeavesTheObjectAloneUntilTheGridCommits(string gridKey)
+        {
+            var grid = this.GridFor(gridKey, items: new System.Collections.ObjectModel.ObservableCollection<Views.DataGridClearButtonRow> { new() });
+            var row = (Views.DataGridClearButtonRow)grid.Items[0];
+            var column = grid.Columns[0];
+
+            grid.CurrentCell = new DataGridCellInfo(row, column);
+            grid.BeginEdit();
+            this.window!.UpdateLayout();
+
+            var editor = column.GetCellContent(row) as TextBox;
+            Assert.That(editor, Is.Not.Null, "the cell should be edited in a text box");
+            Assert.That(editor!.Text, Is.EqualTo("123"));
+            Assert.That(editor.FindChild<Button>("PART_ClearText"), Is.Not.Null, "the box of the set should have a clear button");
+
+            ((System.Windows.Input.RoutedCommand)MahAppsCommands.ClearControlCommand).Execute(null, editor);
+            this.window.UpdateLayout();
+
+            Assert.That(editor.Text, Is.Empty, "the box is what the button clears");
+            Assert.That(row.Value, Is.EqualTo("123"), "and the object keeps what it had until the grid says so");
+
+            grid.CommitEdit(DataGridEditingUnit.Row, true);
+
+            Assert.That(row.Value, Is.Empty, "the commit is what hands the empty value over");
+        }
+
         [TestCase("MahApps.Styles.DataGrid.Win10", "GridLine")]
         [TestCase("MahApps.Styles.DataGrid.WinUI", "HeaderSeparator")]
         [Description("The line under the header row is see-through, so it is drawn once: by the header WPF puts behind the others across the whole width, with no header of a column covering it or drawing it a second time.")]
@@ -719,6 +837,240 @@ namespace MahApps.Metro.Tests.Tests
                 {
                     Assert.That(before, Is.EqualTo(offset).Within(0.5), "showing its value");
                     Assert.That(after, Is.EqualTo(before).Within(0.5), "and being edited");
+                });
+        }
+
+        // two groups by First, the second one of two rows
+        private static ListCollectionView Grouped()
+        {
+            var view = new ListCollectionView(new List<Row> { new() { First = "one" }, new() { First = "two" }, new() { First = "two" } });
+            view.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Row.First)));
+            return view;
+        }
+
+        private static GroupItem FirstGroupOf(DataGrid grid)
+        {
+            // the set hands its GroupStyle over once the grid is loaded, and only then are there groups
+            ClipAssert.PumpUntil(() => grid.FindChildren<GroupItem>(true).Any());
+
+            var group = grid.FindChildren<GroupItem>(true).FirstOrDefault();
+            Assert.That(group, Is.Not.Null, "the grid should have built a group");
+            return group!;
+        }
+
+        [TestCase("MahApps.Styles.DataGrid", "MahApps.Styles.GroupItem.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", "MahApps.Styles.GroupItem.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", "MahApps.Styles.GroupItem.DataGrid.WinUI")]
+        [Description("A grouped grid with no GroupStyle of its own is handed the group header of its set.")]
+        public void AGroupedGridTakesTheGroupHeaderOfItsSet(string gridKey, string groupKey)
+        {
+            var grid = this.GridFor(gridKey, items: Grouped());
+            var group = FirstGroupOf(grid);
+            var expected = (Style)this.window!.FindResource(groupKey);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle, Has.Count.EqualTo(1), "the grid should have been handed one GroupStyle");
+                    Assert.That(grid.GroupStyle.FirstOrDefault()?.ContainerStyle, Is.SameAs(expected), "carrying the header of the set");
+                    Assert.That(group.Style, Is.SameAs(expected), "and the group should wear it");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid", "MahApps.Styles.GroupItem.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", "MahApps.Styles.GroupItem.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", "MahApps.Styles.GroupItem.DataGrid.WinUI")]
+        [Description("An application that defines the key of the group header anew gets its own header handed over instead.")]
+        public void AGroupHeaderCanBeReplacedByItsKey(string gridKey, string groupKey)
+        {
+            var own = new Style(typeof(GroupItem), (Style)this.window!.FindResource(groupKey));
+
+            var grid = this.GridFor(gridKey, items: Grouped(), prepare: g => g.Resources[groupKey] = own);
+            var group = FirstGroupOf(grid);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle.FirstOrDefault()?.ContainerStyle, Is.SameAs(own), "the grid should have been handed the header of the application");
+                    Assert.That(group.Style, Is.SameAs(own), "and the group should wear it");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("A grouped grid with no HeaderTemplate shows the name of each group in its header.")]
+        public void AGroupHeaderShowsTheNameOfTheGroup(string gridKey)
+        {
+            var grid = this.GridFor(gridKey, items: Grouped());
+            var group = FirstGroupOf(grid);
+            var name = ((CollectionViewGroup)group.Content).Name;
+
+            ClipAssert.PumpUntil(() => group.FindChildren<TextBlock>(true).Any(t => Equals(t.Text, name)));
+
+            Assert.That(group.FindChildren<TextBlock>(true).Select(t => t.Text), Has.Member(name), "the header should name the group");
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("A GroupStyle the application wrote stays the only one, even when it names the Metro header inside a set.")]
+        public void AGroupStyleTheApplicationBroughtStays(string gridKey)
+        {
+            var own = new GroupStyle { ContainerStyle = (Style)this.window!.FindResource("MahApps.Styles.GroupItem.DataGrid") };
+
+            var grid = this.GridFor(gridKey, items: Grouped(), prepare: g => g.GroupStyle.Add(own));
+            ClipAssert.PumpUntil(() => grid.IsLoaded);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle, Has.Count.EqualTo(1), "nothing should have been added");
+                    Assert.That(grid.GroupStyle.FirstOrDefault(), Is.SameAs(own), "and the one there is the application's");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("A grid that shows no groups is handed no GroupStyle, so it keeps the rows it built before it was loaded.")]
+        public void AnUngroupedGridKeepsItsRowsAcrossLoaded(string gridKey)
+        {
+            var grid = new DataGrid
+                       {
+                           Style = (Style)this.window!.FindResource(gridKey),
+                           Width = 400,
+                           Height = 200,
+                           AutoGenerateColumns = true,
+                           ItemsSource = new List<Row> { new(), new() }
+                       };
+
+            this.window.Content = grid;
+            this.window.UpdateLayout();
+
+            var before = FirstRowOf(grid);
+
+            ClipAssert.PumpUntil(() => grid.IsLoaded);
+            this.window.UpdateLayout();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.IsLoaded, Is.True, "the grid should have been loaded");
+                    Assert.That(grid.GroupStyle, Has.Count.EqualTo(0), "it should have been handed no GroupStyle");
+                    Assert.That(FirstRowOf(grid), Is.SameAs(before), "and should still show the row it built first");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10", "MahApps.Styles.GroupItem.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI", "MahApps.Styles.GroupItem.DataGrid.WinUI")]
+        [Description("A grid that starts grouping after it is loaded is handed the group header of its set then.")]
+        public void AGridGroupedAfterLoadTakesTheGroupHeaderOfItsSet(string gridKey, string groupKey)
+        {
+            var view = new ListCollectionView(new List<Row> { new() { First = "one" }, new() { First = "two" } });
+            var grid = this.GridFor(gridKey, items: view);
+            ClipAssert.PumpUntil(() => grid.IsLoaded);
+
+            Assert.That(grid.GroupStyle, Has.Count.EqualTo(0), "an ungrouped grid should have no GroupStyle");
+
+            view.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Row.First)));
+            var group = FirstGroupOf(grid);
+            var expected = (Style)this.window!.FindResource(groupKey);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle.FirstOrDefault()?.ContainerStyle, Is.SameAs(expected), "the grid should carry the header of the set");
+                    Assert.That(group.Style, Is.SameAs(expected), "and the group should wear it");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("A grouped grid loaded a second time, the way a tab switch does it, keeps the GroupStyle it was handed and the groups it built, rather than building them all anew.")]
+        public void AGroupedGridKeepsItsGroupsWhenItIsLoadedAgain(string gridKey)
+        {
+            var grid = this.GridFor(gridKey, items: Grouped());
+            var group = FirstGroupOf(grid);
+            var handedOver = grid.GroupStyle.Single();
+
+            this.window!.Content = null;
+            ClipAssert.PumpUntil(() => !grid.IsLoaded);
+            this.window.Content = grid;
+            this.window.UpdateLayout();
+            ClipAssert.PumpUntil(() => grid.IsLoaded);
+            ClipAssert.Pump();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle, Has.Count.EqualTo(1), "the grid should still carry one GroupStyle");
+                    Assert.That(grid.GroupStyle.FirstOrDefault(), Is.SameAs(handedOver), "the one it was handed first");
+                    Assert.That(FirstGroupOf(grid), Is.SameAs(group), "and should still show the group it built first");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("A GroupStyle the application adds after the grid was handed one wins once the grid is loaded again, and the handed-over one is gone.")]
+        public void AGroupStyleAddedAfterTheHandOverWinsOnTheNextLoad(string gridKey)
+        {
+            var grid = this.GridFor(gridKey, items: Grouped());
+            FirstGroupOf(grid);
+            var handedOver = grid.GroupStyle.Single();
+
+            var own = new GroupStyle { ContainerStyle = (Style)this.window!.FindResource("MahApps.Styles.GroupItem.DataGrid") };
+            grid.GroupStyle.Add(own);
+
+            this.window.Content = null;
+            ClipAssert.PumpUntil(() => !grid.IsLoaded);
+            this.window.Content = grid;
+            this.window.UpdateLayout();
+            ClipAssert.PumpUntil(() => grid.IsLoaded);
+            ClipAssert.Pump();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle, Does.Not.Contain(handedOver), "the handed-over GroupStyle should have been taken back");
+                    Assert.That(grid.GroupStyle, Has.Count.EqualTo(1), "leaving one GroupStyle");
+                    Assert.That(grid.GroupStyle.FirstOrDefault(), Is.SameAs(own), "and that one the application's");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("A grid that stops grouping after it is loaded gives the GroupStyle it was handed back.")]
+        public void AGridUngroupedAfterLoadGivesTheGroupStyleBack(string gridKey)
+        {
+            var view = Grouped();
+            var grid = this.GridFor(gridKey, items: view);
+            FirstGroupOf(grid);
+
+            Assert.That(grid.GroupStyle, Has.Count.EqualTo(1), "a grouped grid should have been handed a GroupStyle");
+
+            view.GroupDescriptions.Clear();
+            ClipAssert.PumpUntil(() => grid.GroupStyle.Count == 0);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(grid.GroupStyle, Has.Count.EqualTo(0), "the GroupStyle should have been taken back");
+                    Assert.That(RowsOf(grid), Has.Length.EqualTo(3), "and the rows should stand without groups");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("Closing a group with its header takes its rows away and leaves the header standing.")]
+        public void ClosingAGroupHidesItsRows(string gridKey)
+        {
+            var grid = this.GridFor(gridKey, items: Grouped());
+            var group = FirstGroupOf(grid);
+            var header = group.FindChild<ToggleButton>("PART_Header");
+            var rows = group.FindChild<ItemsPresenter>("ItemsPresenter");
+
+            Assert.That(header, Is.Not.Null, "the group should have a header to click");
+            Assert.That(rows, Is.Not.Null, "and its rows below it");
+            Assert.That(rows!.Visibility, Is.EqualTo(Visibility.Visible), "an open group shows its rows");
+
+            header!.IsChecked = false;
+            ClipAssert.Pump();
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(rows.Visibility, Is.EqualTo(Visibility.Collapsed), "a closed group hides them");
+                    Assert.That(header.IsVisible, Is.True, "and keeps its header");
                 });
         }
 
