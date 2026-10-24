@@ -559,22 +559,13 @@
                                         Visibility="Collapsed">
                                     <!--  how far the content stands behind the header, which the storyboards of the Windows sets give as a part of its own size  -->
                                     <Border.RenderTransform>
-                                        <TranslateTransform>
-                                            <TranslateTransform.X>
-                                                <MultiBinding Converter="{x:Static mahConverters:ExpanderContentSlideConverter.Instance}" ConverterParameter="{x:Static Orientation.Horizontal}">
-                                                    <Binding ElementName="ExpandSite" Path="(mah:ExpanderHelper.ContentSlide)" />
-                                                    <Binding ElementName="ExpandSite" Path="ActualWidth" />
-                                                    <Binding Path="ExpandDirection" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                </MultiBinding>
-                                            </TranslateTransform.X>
-                                            <TranslateTransform.Y>
-                                                <MultiBinding Converter="{x:Static mahConverters:ExpanderContentSlideConverter.Instance}" ConverterParameter="{x:Static Orientation.Vertical}">
-                                                    <Binding ElementName="ExpandSite" Path="(mah:ExpanderHelper.ContentSlide)" />
-                                                    <Binding ElementName="ExpandSite" Path="ActualHeight" />
-                                                    <Binding Path="ExpandDirection" RelativeSource="{RelativeSource TemplatedParent}" />
-                                                </MultiBinding>
-                                            </TranslateTransform.Y>
-                                        </TranslateTransform>
+                                        <!--  bound on the border rather than on X and Y of a transform in here, which as a Freezable has no element to look the names up from when it is first bound  -->
+                                        <MultiBinding Converter="{x:Static mahConverters:ExpanderContentSlideConverter.Instance}">
+                                            <Binding ElementName="ExpandSite" Path="(mah:ExpanderHelper.ContentSlide)" />
+                                            <Binding ElementName="ExpandSite" Path="ActualWidth" />
+                                            <Binding ElementName="ExpandSite" Path="ActualHeight" />
+                                            <Binding Path="ExpandDirection" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
                                     </Border.RenderTransform>
                                     <!--  where the content stands is where it stands inside the frame, the way a content control aligns what it holds, so that the frame itself stays the width of the expander  -->
                                     <ContentPresenter Margin="{TemplateBinding Padding}"

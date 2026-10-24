@@ -6,42 +6,39 @@ using System;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Converters
 {
     /// <summary>
     /// Turns the <see cref="Controls.ExpanderHelper.ContentSlideProperty"/> of the content site of an expander into
-    /// the distance that site is moved along one axis: that part of its own size, towards the header.
+    /// the transform that moves the site that part of its own size, towards the header.
     /// </summary>
     public class ExpanderContentSlideConverter : IMultiValueConverter
     {
         public static readonly ExpanderContentSlideConverter Instance = new();
 
         /// <summary>
-        /// Takes the slide, the size of the site along the axis given as the <see cref="Orientation"/> parameter, and the
-        /// <see cref="ExpandDirection"/> of the expander. An expander that opens along the other axis does not move along this one.
+        /// Takes the slide, the width and the height of the site, and the <see cref="ExpandDirection"/> of the expander,
+        /// and gives a <see cref="TranslateTransform"/>. The site only moves along the axis the expander opens along.
         /// </summary>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length < 3
+            if (values.Length < 4
                 || values[0] is not double slide
-                || values[1] is not double size
-                || values[2] is not ExpandDirection direction
-                || parameter is not Orientation axis)
+                || values[1] is not double width
+                || values[2] is not double height
+                || values[3] is not ExpandDirection direction)
             {
-                return 0d;
-            }
-
-            var horizontal = direction is ExpandDirection.Left or ExpandDirection.Right;
-            if (horizontal != (axis == Orientation.Horizontal))
-            {
-                return 0d;
+                return new TranslateTransform();
             }
 
             // the header stands above content that opens downwards and left of content that opens to the right
             var towardsHeader = direction is ExpandDirection.Down or ExpandDirection.Right ? -1 : 1;
 
-            return towardsHeader * slide * size;
+            return direction is ExpandDirection.Left or ExpandDirection.Right
+                ? new TranslateTransform(towardsHeader * slide * width, 0)
+                : new TranslateTransform(0, towardsHeader * slide * height);
         }
 
         public object?[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
