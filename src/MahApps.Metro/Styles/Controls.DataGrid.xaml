@@ -281,7 +281,8 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="{Binding Path=(mah:DataGridHelper.ColumnHeaderPadding), FallbackValue=0, TargetNullValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <!--  the padding is inherited from the grid; a search for the grid fails on the headers a new template drops  -->
+        <Setter Property="Padding" Value="{Binding Path=(mah:DataGridHelper.ColumnHeaderPadding), Mode=OneWay, RelativeSource={RelativeSource Self}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -752,7 +753,8 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <Button Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                        <!--  with frozen columns the offset rounds to a fraction below zero while the grid scrolls sideways  -->
+                                        <Button Width="{Binding CellsPanelHorizontalOffset, Converter={x:Static mahConverters:NonNegativeDoubleConverter.Instance}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                                 Command="{x:Static DataGrid.SelectAllCommand}"
                                                 Focusable="False"
                                                 Style="{DynamicResource {ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}"
@@ -1207,7 +1209,8 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="{DynamicResource MahApps.Sizes.DataGrid.RowHeight.Win10}" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="{Binding Path=(mah:DataGridHelper.ColumnHeaderPadding), FallbackValue=0, TargetNullValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <!--  the padding is inherited from the grid; a search for the grid fails on the headers a new template drops  -->
+        <Setter Property="Padding" Value="{Binding Path=(mah:DataGridHelper.ColumnHeaderPadding), Mode=OneWay, RelativeSource={RelativeSource Self}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>

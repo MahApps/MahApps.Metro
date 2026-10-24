@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using ControlzEx.Theming;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Converters;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
 
@@ -913,6 +915,61 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(CornerOf(grid)!.Style, Is.SameAs(swapped), "and so should the one over the bar");
                     Assert.That(CornerOf(grid)?.IsVisible, Is.True, "the header over the bar should still show");
                     Assert.That(GripperLinesOf(grid), Has.None.EqualTo(barStart).Within(0.5), "and no line stand where the bar begins");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("The button that selects all stays as wide as the row headers or nothing while a grid with a frozen column scrolls sideways.")]
+        public void TheSelectAllButtonKeepsAWidthWhileTheGridScrollsSideways(string gridKey)
+        {
+            var grid = this.GridFor(gridKey);
+
+            // the fraction below zero only comes while the thumb is dragged, between two rounds of layout
+            var button = grid.FindChildren<Button>(true).FirstOrDefault(b => b.Command == DataGrid.SelectAllCommand);
+            Assert.That(button, Is.Not.Null, "the grid should have a button that selects all");
+
+            var converter = BindingOperations.GetBinding(button!, FrameworkElement.WidthProperty)?.Converter;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(converter, Is.InstanceOf<NonNegativeDoubleConverter>(), "the width of the button should go through the converter");
+                    Assert.That(converter?.Convert(-0.39665271966485705, typeof(double), null, CultureInfo.InvariantCulture), Is.EqualTo(0d), "an offset below zero should give no width");
+                    Assert.That(converter?.Convert(25d, typeof(double), null, CultureInfo.InvariantCulture), Is.EqualTo(25d), "and any other offset its own");
+                });
+        }
+
+        private static ResourceDictionary SetOf(string name)
+        {
+            return new ResourceDictionary { Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/{name}Controls.xaml", UriKind.Absolute) };
+        }
+
+        [TestCase("", "Win10/", 12d)]
+        [TestCase("Win10/", "WinUI/", 8d)]
+        [TestCase("WinUI/", "", 10d)]
+        [Description("A grid moved into another set, the way the gallery does it, builds its headers anew, and the ones it drops look for no grid.")]
+        public void TheHeadersChangeSetsWithoutABindingWarning(string from, string to, double padding)
+        {
+            var grid = new DataGrid { Width = 400, Height = 200, AutoGenerateColumns = true, ItemsSource = new List<Row> { new(), new() } };
+            var host = new Border { Child = grid };
+            host.Resources.MergedDictionaries.Add(SetOf(from));
+            this.window!.Content = host;
+            this.window.UpdateLayout();
+            ClipAssert.Pump(100);
+
+            var warnings = BindingWarnings.During(() =>
+                {
+                    host.Resources.MergedDictionaries.Clear();
+                    host.Resources.MergedDictionaries.Add(SetOf(to));
+                    this.window.UpdateLayout();
+                    ClipAssert.Pump(100);
+                });
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(warnings, Has.None.Contains("DataGridColumnHeader"), "no header should miss the grid it takes its padding from");
+                    Assert.That(HeadersOf(grid).Select(h => h.Padding.Left), Is.All.EqualTo(padding), "the headers should take the padding of the new set");
                 });
         }
 
