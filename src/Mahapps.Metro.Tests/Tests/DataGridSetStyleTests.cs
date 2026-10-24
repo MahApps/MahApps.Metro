@@ -115,6 +115,23 @@ namespace MahApps.Metro.Tests.Tests
             return grid.FindChildren<DataGridColumnHeader>(true).Where(h => h.Column is not null).OrderBy(h => h.Column.DisplayIndex).ToArray();
         }
 
+        // the header WPF puts after the last column, the one inside the presenter of the headers
+        private static DataGridColumnHeader? FillerOf(DataGrid grid)
+        {
+            return grid.FindChildren<DataGridColumnHeader>(true).FirstOrDefault(h => h.Column is null && h.TemplatedParent is DataGridColumnHeadersPresenter);
+        }
+
+        // the header over the vertical scroll bar, which belongs to the template of the grid rather than to the presenter
+        private static DataGridColumnHeader? CornerOf(DataGrid grid)
+        {
+            return grid.FindChildren<DataGridColumnHeader>(true).FirstOrDefault(h => h.Column is null && h.TemplatedParent is ScrollViewer);
+        }
+
+        private static List<Row> ManyRows()
+        {
+            return Enumerable.Range(0, 30).Select(i => new Row { First = $"{i}" }).ToList();
+        }
+
         private static void PutTheMouseOn(DataGridCell cell)
         {
             cell.GetVisualAncestor<DataGridRow>()?.SetValue(MouseOverKey, true);
@@ -769,7 +786,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var grid = this.GridFor(gridKey);
 
-            var filler = grid.FindChildren<DataGridColumnHeader>(true).FirstOrDefault(h => h.Column is null);
+            var filler = FillerOf(grid);
             var rule = this.window!.FindResource(BrushOf(gridKey, brush));
 
             Assert.That(filler, Is.Not.Null, "the grid should have a header after its last column");
@@ -790,13 +807,154 @@ namespace MahApps.Metro.Tests.Tests
                 });
         }
 
+        [TestCase("MahApps.Styles.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Azure")]
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("While the vertical scroll bar shows, the header row goes on over it to the right edge, in the look of the header after the last column.")]
+        public void TheHeaderRowGoesOnOverTheVerticalScrollBar(string gridKey)
+        {
+            var grid = this.GridFor(gridKey, items: ManyRows());
+
+            var bar = grid.FindChild<ScrollBar>("PART_VerticalScrollBar");
+            var filler = FillerOf(grid);
+            var corner = CornerOf(grid);
+
+            Assert.That(bar, Is.Not.Null, "the grid should have a vertical scroll bar");
+            Assert.That(bar!.IsVisible, Is.True, "showing for thirty rows");
+            Assert.That(filler, Is.Not.Null, "the grid should have a header after its last column");
+            Assert.That(corner, Is.Not.Null, "the grid should have a header over the scroll bar");
+
+            var fillerBorder = filler!.FindChild<Border>("BackgroundBorder");
+            var cornerBorder = corner!.FindChild<Border>("BackgroundBorder");
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(corner.IsVisible, Is.True, "it shows while the bar does");
+                    Assert.That(corner.IsHitTestVisible, Is.False, "and does not answer the mouse");
+                    Assert.That(corner.Focusable, Is.False, "or take the focus");
+                    Assert.That(corner.Style, Is.SameAs(grid.ColumnHeaderStyle), "it wears the header style of the grid");
+                    Assert.That(corner.ActualWidth, Is.EqualTo(bar.ActualWidth).Within(0.5), "as wide as the bar");
+                    Assert.That(corner.ActualHeight, Is.EqualTo(filler.ActualHeight).Within(0.5), "and as tall as the header row");
+                    Assert.That(corner.TranslatePoint(default, grid).Y, Is.EqualTo(filler.TranslatePoint(default, grid).Y).Within(0.5), "standing in line with it");
+                    Assert.That(corner.TranslatePoint(new Point(corner.ActualWidth, 0), grid).X, Is.EqualTo(grid.ActualWidth - grid.BorderThickness.Right).Within(0.5), "up to the right edge");
+                    Assert.That(cornerBorder, Is.Not.Null, "it draws through a BackgroundBorder");
+                    Assert.That(cornerBorder!.Background, Is.SameAs(fillerBorder!.Background), "filled like the header after the last column");
+                    Assert.That(cornerBorder.BorderBrush, Is.SameAs(fillerBorder.BorderBrush), "with the same rule");
+                    Assert.That(cornerBorder.BorderThickness, Is.EqualTo(fillerBorder.BorderThickness), "as thick");
+                    Assert.That(cornerBorder.Margin, Is.EqualTo(fillerBorder.Margin), "and as far in");
+                });
+        }
+
+        // the right edges of the gripper lines on show in the header row, in the coordinates of the grid
+        private static double[] GripperLinesOf(DataGrid grid)
+        {
+            return grid.FindChildren<DataGridColumnHeader>(true)
+                       .Where(h => h.IsVisible && h.ActualWidth > 0)
+                       .Select(h => h.FindChild<Thumb>("PART_RightHeaderGripper"))
+                       .Where(t => t is not null && t.IsVisible && t.ActualWidth > 0)
+                       .Select(t => t!.TranslatePoint(new Point(t.ActualWidth, 0), grid).X)
+                       .ToArray();
+        }
+
+        [TestCase("MahApps.Styles.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Azure")]
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [Description("Over the scroll bar the header row ends the way it ends at the frame without one: no line where the bar begins, and the line of the header after the last column at the frame.")]
+        public void TheHeaderRowEndsOverTheBarAsItEndsWithoutOne(string gridKey)
+        {
+            var without = this.GridFor(gridKey);
+            var frame = without.ActualWidth - without.BorderThickness.Right;
+
+            Assert.That(GripperLinesOf(without), Has.Some.EqualTo(frame).Within(0.5), "a grid without a bar ends its header row with a line at the frame");
+
+            var grid = this.GridFor(gridKey, items: ManyRows());
+            var bar = grid.FindChild<ScrollBar>("PART_VerticalScrollBar");
+            Assert.That(bar?.IsVisible, Is.True, "thirty rows need the bar");
+
+            var barStart = bar!.TranslatePoint(default, grid).X;
+            var lines = GripperLinesOf(grid);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(lines, Has.None.EqualTo(barStart).Within(0.5), "no line where the bar begins");
+                    Assert.That(lines, Has.Some.EqualTo(grid.ActualWidth - grid.BorderThickness.Right).Within(0.5), "and the line at the frame, as without a bar");
+                });
+
+            grid.ItemsSource = new List<Row> { new(), new() };
+            this.window!.UpdateLayout();
+            ClipAssert.Pump();
+
+            Assert.That(GripperLinesOf(grid), Has.Some.EqualTo(grid.ActualWidth - grid.BorderThickness.Right).Within(0.5), "once the bar goes the header after the last column draws its line at the frame again");
+        }
+
+        [TestCase("MahApps.Styles.DataGrid", "MahApps.Styles.DataGridColumnHeader.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Azure", "MahApps.Styles.DataGridColumnHeader.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.Win10", "MahApps.Styles.DataGridColumnHeader")]
+        [Description("A header style with a template of its own handed over while the bar shows still leaves no line where the bar begins.")]
+        public void AHeaderStyleSwappedOverTheBarLeavesNoLineWhereTheBarBegins(string gridKey, string headerKey)
+        {
+            var grid = this.GridFor(gridKey, items: ManyRows());
+
+            // the row keeps its height, so nothing but the template of the headers changes
+            var height = FillerOf(grid)!.ActualHeight;
+            var swapped = new Style(typeof(DataGridColumnHeader), (Style)this.window!.FindResource(headerKey));
+            swapped.Setters.Add(new Setter(FrameworkElement.HeightProperty, height));
+            grid.ColumnHeaderStyle = swapped;
+            this.window!.UpdateLayout();
+            ClipAssert.Pump(100);
+
+            var bar = grid.FindChild<ScrollBar>("PART_VerticalScrollBar");
+            var barStart = bar!.TranslatePoint(default, grid).X;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(FillerOf(grid)!.Style, Is.SameAs(swapped), "the header after the last column should wear the new style");
+                    Assert.That(CornerOf(grid)!.Style, Is.SameAs(swapped), "and so should the one over the bar");
+                    Assert.That(CornerOf(grid)?.IsVisible, Is.True, "the header over the bar should still show");
+                    Assert.That(GripperLinesOf(grid), Has.None.EqualTo(barStart).Within(0.5), "and no line stand where the bar begins");
+                });
+        }
+
+        [TestCase("MahApps.Styles.DataGrid")]
+        [TestCase("MahApps.Styles.DataGrid.Azure")]
+        [TestCase("MahApps.Styles.DataGrid.Win10")]
+        [TestCase("MahApps.Styles.DataGrid.WinUI")]
+        [Description("The header over the scroll bar goes away with the bar, and with the column headers.")]
+        public void TheHeaderOverTheScrollBarGoesWithTheBarAndTheHeaders(string gridKey)
+        {
+            var few = this.GridFor(gridKey);
+            var withoutBar = CornerOf(few);
+
+            Assert.That(withoutBar, Is.Not.Null, "the grid should have a header over the scroll bar");
+            Assert.That(withoutBar!.Visibility, Is.EqualTo(Visibility.Collapsed), "which is collapsed while two rows need no bar");
+
+            var many = this.GridFor(gridKey, items: ManyRows());
+            many.HeadersVisibility = DataGridHeadersVisibility.None;
+            this.window!.UpdateLayout();
+            ClipAssert.Pump();
+
+            var withoutHeaders = CornerOf(many);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(many.FindChild<ScrollBar>("PART_VerticalScrollBar")?.IsVisible, Is.True, "thirty rows still need the bar");
+                    Assert.That(withoutHeaders!.Visibility, Is.EqualTo(Visibility.Collapsed), "but a grid without column headers has no header over it either");
+                });
+
+            many.HeadersVisibility = DataGridHeadersVisibility.Row;
+            this.window.UpdateLayout();
+
+            Assert.That(withoutHeaders.Visibility, Is.EqualTo(Visibility.Collapsed), "nor does one with row headers only");
+        }
+
         [Test]
         [Description("The fill of the WinUI header row is see-through as well, so the header behind the others lays it once across the whole row and the header of a column lays none.")]
         public void TheWinUIHeaderRowIsFilledOnce()
         {
             var grid = this.GridFor("MahApps.Styles.DataGrid.WinUI");
 
-            var filler = grid.FindChildren<DataGridColumnHeader>(true).FirstOrDefault(h => h.Column is null);
+            var filler = FillerOf(grid);
             var fill = this.window!.FindResource("MahApps.Brushes.DataGrid.WinUI.HeaderBackground");
 
             Assert.That(filler, Is.Not.Null, "the grid should have a header after its last column");

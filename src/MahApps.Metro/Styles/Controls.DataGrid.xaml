@@ -778,6 +778,19 @@
                                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
                                                    Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
 
+                                        <!--  the header row goes on over the vertical scroll bar to the edge, in a header with no column that wears the header style of the grid, so it looks like the one WPF puts after the last column in every set  -->
+                                        <DataGridColumnHeader x:Name="ColumnHeaderCorner"
+                                                              Grid.Row="0"
+                                                              Grid.Column="2"
+                                                              Width="{Binding ActualWidth, ElementName=PART_VerticalScrollBar}"
+                                                              MinHeight="0"
+                                                              mah:DataGridHelper.EndsHeaderRow="True"
+                                                              Focusable="False"
+                                                              IsHitTestVisible="False"
+                                                              IsTabStop="False"
+                                                              Style="{Binding ColumnHeaderStyle, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                              Visibility="{Binding Visibility, ElementName=PART_ColumnHeadersPresenter}" />
+
                                         <Grid Grid.Row="2" Grid.Column="1">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
@@ -792,6 +805,11 @@
                                                        Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                                         </Grid>
                                     </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
+                                            <Setter TargetName="ColumnHeaderCorner" Property="Visibility" Value="Collapsed" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </ScrollViewer.Template>
 

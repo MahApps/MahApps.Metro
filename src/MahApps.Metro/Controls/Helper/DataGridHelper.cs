@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -1112,6 +1114,137 @@ namespace MahApps.Metro.Controls
                     column.ClearValue(IsFirstVisibleColumnPropertyKey);
                 }
             }
+        }
+
+        /// <summary>
+        /// Set by the template of the grid on the header that stands over the vertical scroll bar.
+        /// While that one shows, the header row ends at the frame through it, so the header WPF puts
+        /// after the last column keeps the line on its right to itself, or it would stand where the
+        /// bar begins. That header belongs to the presenter of the headers, and its line to the
+        /// template of whatever header style the grid has, so only its part name reaches it. A copy of
+        /// the DataGrid template has neither the header over the bar nor this, and keeps the row as
+        /// WPF draws it.
+        /// </summary>
+        internal static readonly DependencyProperty EndsHeaderRowProperty
+            = DependencyProperty.RegisterAttached(
+                "EndsHeaderRow",
+                typeof(bool),
+                typeof(DataGridHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnEndsHeaderRowChanged));
+
+        internal static bool GetEndsHeaderRow(DependencyObject element)
+        {
+            return (bool)element.GetValue(EndsHeaderRowProperty);
+        }
+
+        internal static void SetEndsHeaderRow(DependencyObject element, bool value)
+        {
+            element.SetValue(EndsHeaderRowProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>The line of the filler header that was put away, so that it is that one which is given back.</summary>
+        private static readonly DependencyProperty HiddenFillerGripperProperty
+            = DependencyProperty.RegisterAttached("HiddenFillerGripper", typeof(Thumb), typeof(DataGridHelper));
+
+        /// <summary>
+        /// Bound to the Style of the header over the bar, which follows the header style of the grid,
+        /// so that a style handed over later is heard as well. The filler takes the same style and a
+        /// template with a gripper of its own along with it.
+        /// </summary>
+        private static readonly DependencyProperty WatchedHeaderStyleProperty
+            = DependencyProperty.RegisterAttached(
+                "WatchedHeaderStyle",
+                typeof(Style),
+                typeof(DataGridHelper),
+                new PropertyMetadata(null, OnWatchedHeaderStyleChanged));
+
+        private static void OnEndsHeaderRowChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is not FrameworkElement corner)
+            {
+                return;
+            }
+
+            corner.Loaded -= OnHeaderRowEndChanged;
+            corner.IsVisibleChanged -= OnHeaderRowEndVisibleChanged;
+            corner.SizeChanged -= OnHeaderRowEndChanged;
+            BindingOperations.ClearBinding(corner, WatchedHeaderStyleProperty);
+
+            if (e.NewValue is true)
+            {
+                corner.Loaded += OnHeaderRowEndChanged;
+                corner.IsVisibleChanged += OnHeaderRowEndVisibleChanged;
+                corner.SizeChanged += OnHeaderRowEndChanged;
+                BindingOperations.SetBinding(corner, WatchedHeaderStyleProperty, new Binding { Path = new PropertyPath(FrameworkElement.StyleProperty), Source = corner, Mode = BindingMode.OneWay });
+                PlaceHeaderRowEnd(corner);
+            }
+            else
+            {
+                GiveFillerGripperBack(corner);
+            }
+        }
+
+        private static void OnWatchedHeaderStyleChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is FrameworkElement corner && GetEndsHeaderRow(corner))
+            {
+                // once both headers wear the new template
+                corner.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => PlaceHeaderRowEnd(corner)));
+            }
+        }
+
+        private static void OnHeaderRowEndChanged(object sender, RoutedEventArgs e)
+        {
+            PlaceHeaderRowEnd((FrameworkElement)sender);
+        }
+
+        private static void OnHeaderRowEndVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            PlaceHeaderRowEnd((FrameworkElement)sender);
+        }
+
+        private static void PlaceHeaderRowEnd(FrameworkElement corner)
+        {
+            var gripper = FillerGripperOf(corner);
+
+            // a filler restyled since has a gripper of its own again, and the old one is let go
+            if (!ReferenceEquals(gripper, corner.GetValue(HiddenFillerGripperProperty)))
+            {
+                GiveFillerGripperBack(corner);
+            }
+
+            if (gripper is not null && corner.IsVisible)
+            {
+                gripper.SetValue(UIElement.VisibilityProperty, Visibility.Hidden);
+                corner.SetValue(HiddenFillerGripperProperty, gripper);
+            }
+            else
+            {
+                GiveFillerGripperBack(corner);
+            }
+        }
+
+        private static void GiveFillerGripperBack(FrameworkElement corner)
+        {
+            if (corner.GetValue(HiddenFillerGripperProperty) is Thumb gripper)
+            {
+                gripper.ClearValue(UIElement.VisibilityProperty);
+                corner.ClearValue(HiddenFillerGripperProperty);
+            }
+        }
+
+        private static Thumb? FillerGripperOf(FrameworkElement corner)
+        {
+            if (corner.TemplatedParent is not ScrollViewer scrollViewer
+                || scrollViewer.Template?.FindName("PART_ColumnHeadersPresenter", scrollViewer) is not DataGridColumnHeadersPresenter presenter
+                || presenter.Template?.FindName("PART_FillerColumnHeader", presenter) is not DataGridColumnHeader filler)
+            {
+                return null;
+            }
+
+            filler.ApplyTemplate();
+
+            return filler.Template?.FindName("PART_RightHeaderGripper", filler) as Thumb;
         }
 
         private static readonly DependencyPropertyKey IsFirstVisibleColumnPropertyKey
