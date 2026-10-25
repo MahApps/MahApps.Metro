@@ -2,12 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
@@ -880,6 +885,386 @@ namespace MahApps.Metro.Controls
                     e.Handled = true;
                 }
             }
+        }
+
+        /// <summary>Identifies the <see cref="TracksFirstVisibleColumnProperty"/> attached property.</summary>
+        /// <remarks>
+        /// Whether the grid marks the column that is first on screen with
+        /// <see cref="IsFirstVisibleColumnProperty"/>. A style knows the place of a header only by its
+        /// DisplayIndex, and that is still 0 for a first column that is hidden, so a header drawing a
+        /// line before it needs this to leave the line out where nothing stands before it.
+        /// </remarks>
+        public static readonly DependencyProperty TracksFirstVisibleColumnProperty
+            = DependencyProperty.RegisterAttached(
+                "TracksFirstVisibleColumn",
+                typeof(bool),
+                typeof(DataGridHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnTracksFirstVisibleColumnChanged));
+
+        /// <summary>Helper for getting <see cref="TracksFirstVisibleColumnProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DataGrid"/> to read <see cref="TracksFirstVisibleColumnProperty"/> from.</param>
+        /// <returns>Whether the grid marks its first visible column.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGrid))]
+        public static bool GetTracksFirstVisibleColumn(DependencyObject element)
+        {
+            return (bool)element.GetValue(TracksFirstVisibleColumnProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="TracksFirstVisibleColumnProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DataGrid"/> to set <see cref="TracksFirstVisibleColumnProperty"/> on.</param>
+        /// <param name="value">Whether the grid marks its first visible column.</param>
+        [Category(AppName.MahApps)]
+        public static void SetTracksFirstVisibleColumn(DependencyObject element, bool value)
+        {
+            element.SetValue(TracksFirstVisibleColumnProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>
+        /// What the grid listens to its columns with, kept so the very same handler can be taken off
+        /// again. The columns belong to the grid, so the handler lives no longer than the grid does.
+        /// </summary>
+        private static readonly DependencyProperty ColumnsListenerProperty
+            = DependencyProperty.RegisterAttached("ColumnsListener", typeof(NotifyCollectionChangedEventHandler), typeof(DataGridHelper));
+
+        /// <summary>The columns the grid watches, so that it can let go of them again whichever way they went.</summary>
+        private static readonly DependencyProperty WatchedColumnsProperty
+            = DependencyProperty.RegisterAttached("WatchedColumns", typeof(HashSet<DataGridColumn>), typeof(DataGridHelper));
+
+        /// <summary>The grid a watched column belongs to, since the column keeps its own owner to itself.</summary>
+        private static readonly DependencyProperty WatchingGridProperty
+            = DependencyProperty.RegisterAttached("WatchingGrid", typeof(DataGrid), typeof(DataGridHelper));
+
+        /// <summary>
+        /// Bound to the Visibility of the column it is set on, so that hiding or showing a column is
+        /// heard without a descriptor holding on to the column from outside.
+        /// </summary>
+        private static readonly DependencyProperty WatchedVisibilityProperty
+            = DependencyProperty.RegisterAttached(
+                "WatchedVisibility",
+                typeof(Visibility),
+                typeof(DataGridHelper),
+                new PropertyMetadata(Visibility.Visible, OnWatchedVisibilityChanged));
+
+        private static void OnTracksFirstVisibleColumnChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is not DataGrid dataGrid)
+            {
+                return;
+            }
+
+            StopTracking(dataGrid);
+
+            if (e.NewValue is true)
+            {
+                NotifyCollectionChangedEventHandler listener = (_, args) => OnColumnsChanged(dataGrid, args);
+
+                dataGrid.SetValue(ColumnsListenerProperty, listener);
+                dataGrid.Columns.CollectionChanged += listener;
+                dataGrid.ColumnDisplayIndexChanged += OnColumnDisplayIndexChanged;
+
+                // WPF hands out the display indexes on the first measure without telling anybody, so
+                // the mark is set again once the grid is up
+                dataGrid.Loaded += OnTrackingGridLoaded;
+
+                WatchAll(dataGrid);
+                MarkFirstVisibleColumn(dataGrid);
+            }
+        }
+
+        private static void StopTracking(DataGrid dataGrid)
+        {
+            if (dataGrid.GetValue(ColumnsListenerProperty) is NotifyCollectionChangedEventHandler listener)
+            {
+                dataGrid.Columns.CollectionChanged -= listener;
+                dataGrid.ClearValue(ColumnsListenerProperty);
+            }
+
+            dataGrid.ColumnDisplayIndexChanged -= OnColumnDisplayIndexChanged;
+            dataGrid.Loaded -= OnTrackingGridLoaded;
+
+            if (dataGrid.GetValue(WatchedColumnsProperty) is HashSet<DataGridColumn> watched)
+            {
+                foreach (var column in watched)
+                {
+                    Unwatch(column);
+                }
+
+                dataGrid.ClearValue(WatchedColumnsProperty);
+            }
+        }
+
+        private static void OnTrackingGridLoaded(object sender, RoutedEventArgs e)
+        {
+            MarkFirstVisibleColumn((DataGrid)sender);
+        }
+
+        private static void OnColumnsChanged(DataGrid dataGrid, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                // A reset, which is what Clear raises, says nothing about what went away, so the grid
+                // lets go of whatever it watches that is no longer one of its columns.
+                if (dataGrid.GetValue(WatchedColumnsProperty) is HashSet<DataGridColumn> watched)
+                {
+                    var columns = new HashSet<DataGridColumn>(dataGrid.Columns);
+
+                    foreach (var column in watched.Where(c => !columns.Contains(c)).ToList())
+                    {
+                        Unwatch(column);
+                        watched.Remove(column);
+                    }
+                }
+
+                WatchAll(dataGrid);
+            }
+            else
+            {
+                if (e.OldItems is not null && dataGrid.GetValue(WatchedColumnsProperty) is HashSet<DataGridColumn> watched)
+                {
+                    foreach (DataGridColumn column in e.OldItems)
+                    {
+                        // a move takes a column out and puts it back, and it stays one of the grid's
+                        if (!dataGrid.Columns.Contains(column) && watched.Remove(column))
+                        {
+                            Unwatch(column);
+                        }
+                    }
+                }
+
+                if (e.NewItems is not null)
+                {
+                    foreach (DataGridColumn column in e.NewItems)
+                    {
+                        Watch(dataGrid, column);
+                    }
+                }
+            }
+
+            MarkFirstVisibleColumn(dataGrid);
+        }
+
+        private static void WatchAll(DataGrid dataGrid)
+        {
+            foreach (var column in dataGrid.Columns)
+            {
+                Watch(dataGrid, column);
+            }
+        }
+
+        private static void Watch(DataGrid dataGrid, DataGridColumn column)
+        {
+            if (dataGrid.GetValue(WatchedColumnsProperty) is not HashSet<DataGridColumn> watched)
+            {
+                watched = new HashSet<DataGridColumn>();
+                dataGrid.SetValue(WatchedColumnsProperty, watched);
+            }
+
+            if (!watched.Add(column))
+            {
+                return;
+            }
+
+            column.SetValue(WatchingGridProperty, dataGrid);
+            BindingOperations.SetBinding(column, WatchedVisibilityProperty, new Binding { Path = new PropertyPath(DataGridColumn.VisibilityProperty), Source = column, Mode = BindingMode.OneWay });
+        }
+
+        private static void Unwatch(DataGridColumn column)
+        {
+            // the grid goes first, or the binding falling back would have the grid mark the columns again
+            column.ClearValue(WatchingGridProperty);
+            BindingOperations.ClearBinding(column, WatchedVisibilityProperty);
+            column.ClearValue(IsFirstVisibleColumnPropertyKey);
+        }
+
+        private static void OnWatchedVisibilityChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject.GetValue(WatchingGridProperty) is DataGrid dataGrid)
+            {
+                MarkFirstVisibleColumn(dataGrid);
+            }
+        }
+
+        private static void OnColumnDisplayIndexChanged(object? sender, DataGridColumnEventArgs e)
+        {
+            if (sender is DataGrid dataGrid)
+            {
+                MarkFirstVisibleColumn(dataGrid);
+            }
+        }
+
+        private static void MarkFirstVisibleColumn(DataGrid dataGrid)
+        {
+            // a column without a display index yet stands where it is among the columns, which is how WPF reads -1
+            var first = dataGrid.Columns
+                                .Select((column, index) => (Column: column, Place: column.DisplayIndex >= 0 ? column.DisplayIndex : index))
+                                .Where(c => c.Column.Visibility == Visibility.Visible)
+                                .OrderBy(c => c.Place)
+                                .Select(c => c.Column)
+                                .FirstOrDefault();
+
+            foreach (var column in dataGrid.Columns)
+            {
+                if (ReferenceEquals(column, first))
+                {
+                    column.SetValue(IsFirstVisibleColumnPropertyKey, BooleanBoxes.TrueBox);
+                }
+                else
+                {
+                    column.ClearValue(IsFirstVisibleColumnPropertyKey);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set by the template of the grid on the header that stands over the vertical scroll bar.
+        /// While that one shows, the header row ends at the frame through it, so the header WPF puts
+        /// after the last column keeps the line on its right to itself, or it would stand where the
+        /// bar begins. That header belongs to the presenter of the headers, and its line to the
+        /// template of whatever header style the grid has, so only its part name reaches it. A copy of
+        /// the DataGrid template has neither the header over the bar nor this, and keeps the row as
+        /// WPF draws it.
+        /// </summary>
+        internal static readonly DependencyProperty EndsHeaderRowProperty
+            = DependencyProperty.RegisterAttached(
+                "EndsHeaderRow",
+                typeof(bool),
+                typeof(DataGridHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox, OnEndsHeaderRowChanged));
+
+        internal static bool GetEndsHeaderRow(DependencyObject element)
+        {
+            return (bool)element.GetValue(EndsHeaderRowProperty);
+        }
+
+        internal static void SetEndsHeaderRow(DependencyObject element, bool value)
+        {
+            element.SetValue(EndsHeaderRowProperty, BooleanBoxes.Box(value));
+        }
+
+        /// <summary>The line of the filler header that was put away, so that it is that one which is given back.</summary>
+        private static readonly DependencyProperty HiddenFillerGripperProperty
+            = DependencyProperty.RegisterAttached("HiddenFillerGripper", typeof(Thumb), typeof(DataGridHelper));
+
+        /// <summary>
+        /// Bound to the Style of the header over the bar, which follows the header style of the grid,
+        /// so that a style handed over later is heard as well. The filler takes the same style and a
+        /// template with a gripper of its own along with it.
+        /// </summary>
+        private static readonly DependencyProperty WatchedHeaderStyleProperty
+            = DependencyProperty.RegisterAttached(
+                "WatchedHeaderStyle",
+                typeof(Style),
+                typeof(DataGridHelper),
+                new PropertyMetadata(null, OnWatchedHeaderStyleChanged));
+
+        private static void OnEndsHeaderRowChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is not FrameworkElement corner)
+            {
+                return;
+            }
+
+            corner.Loaded -= OnHeaderRowEndChanged;
+            corner.IsVisibleChanged -= OnHeaderRowEndVisibleChanged;
+            corner.SizeChanged -= OnHeaderRowEndChanged;
+            BindingOperations.ClearBinding(corner, WatchedHeaderStyleProperty);
+
+            if (e.NewValue is true)
+            {
+                corner.Loaded += OnHeaderRowEndChanged;
+                corner.IsVisibleChanged += OnHeaderRowEndVisibleChanged;
+                corner.SizeChanged += OnHeaderRowEndChanged;
+                BindingOperations.SetBinding(corner, WatchedHeaderStyleProperty, new Binding { Path = new PropertyPath(FrameworkElement.StyleProperty), Source = corner, Mode = BindingMode.OneWay });
+                PlaceHeaderRowEnd(corner);
+            }
+            else
+            {
+                GiveFillerGripperBack(corner);
+            }
+        }
+
+        private static void OnWatchedHeaderStyleChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is FrameworkElement corner && GetEndsHeaderRow(corner))
+            {
+                // once both headers wear the new template
+                corner.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => PlaceHeaderRowEnd(corner)));
+            }
+        }
+
+        private static void OnHeaderRowEndChanged(object sender, RoutedEventArgs e)
+        {
+            PlaceHeaderRowEnd((FrameworkElement)sender);
+        }
+
+        private static void OnHeaderRowEndVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            PlaceHeaderRowEnd((FrameworkElement)sender);
+        }
+
+        private static void PlaceHeaderRowEnd(FrameworkElement corner)
+        {
+            var gripper = FillerGripperOf(corner);
+
+            // a filler restyled since has a gripper of its own again, and the old one is let go
+            if (!ReferenceEquals(gripper, corner.GetValue(HiddenFillerGripperProperty)))
+            {
+                GiveFillerGripperBack(corner);
+            }
+
+            if (gripper is not null && corner.IsVisible)
+            {
+                gripper.SetValue(UIElement.VisibilityProperty, Visibility.Hidden);
+                corner.SetValue(HiddenFillerGripperProperty, gripper);
+            }
+            else
+            {
+                GiveFillerGripperBack(corner);
+            }
+        }
+
+        private static void GiveFillerGripperBack(FrameworkElement corner)
+        {
+            if (corner.GetValue(HiddenFillerGripperProperty) is Thumb gripper)
+            {
+                gripper.ClearValue(UIElement.VisibilityProperty);
+                corner.ClearValue(HiddenFillerGripperProperty);
+            }
+        }
+
+        private static Thumb? FillerGripperOf(FrameworkElement corner)
+        {
+            if (corner.TemplatedParent is not ScrollViewer scrollViewer
+                || scrollViewer.Template?.FindName("PART_ColumnHeadersPresenter", scrollViewer) is not DataGridColumnHeadersPresenter presenter
+                || presenter.Template?.FindName("PART_FillerColumnHeader", presenter) is not DataGridColumnHeader filler)
+            {
+                return null;
+            }
+
+            filler.ApplyTemplate();
+
+            return filler.Template?.FindName("PART_RightHeaderGripper", filler) as Thumb;
+        }
+
+        private static readonly DependencyPropertyKey IsFirstVisibleColumnPropertyKey
+            = DependencyProperty.RegisterAttachedReadOnly(
+                "IsFirstVisibleColumn",
+                typeof(bool),
+                typeof(DataGridHelper),
+                new PropertyMetadata(BooleanBoxes.FalseBox));
+
+        /// <summary>Identifies the <see cref="IsFirstVisibleColumnProperty"/> attached property.</summary>
+        public static readonly DependencyProperty IsFirstVisibleColumnProperty = IsFirstVisibleColumnPropertyKey.DependencyProperty;
+
+        /// <summary>Helper for getting <see cref="IsFirstVisibleColumnProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="DataGridColumn"/> to read <see cref="IsFirstVisibleColumnProperty"/> from.</param>
+        /// <returns>Whether the column is the first one on screen.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGridColumn))]
+        public static bool GetIsFirstVisibleColumn(DependencyObject element)
+        {
+            return (bool)element.GetValue(IsFirstVisibleColumnProperty);
         }
 
         public static readonly DependencyProperty SelectionUnitProperty

@@ -113,6 +113,9 @@ namespace MahApps.Metro.Tests.Tests
             ExpanderHelper.SetContentSlide(site, 0);
             this.Settle();
 
+            // every slide brings a transform of its own
+            transform = (TranslateTransform)site.RenderTransform;
+
             Assert.Multiple(() =>
                 {
                     Assert.That(transform.X, Is.Zero, "and in its place once it has arrived");
@@ -175,6 +178,17 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(turns.Select(a => a.Duration.TimeSpan), Is.All.EqualTo(TimeSpan.FromSeconds(0.1)));
                     Assert.That(turns.Select(a => a.EasingFunction), Is.All.Null, "at an even pace");
                 });
+        }
+
+        [TestCase("MahApps.Styles.Expander")]
+        [TestCase("MahApps.Styles.Expander.Win10")]
+        [TestCase("MahApps.Styles.Expander.WinUI")]
+        [Description("The slide is bound without a binding error, which a binding on the transform itself gave the first time it was bound.")]
+        public void TheSlideIsBoundWithoutABindingError(string key)
+        {
+            var warnings = BindingWarnings.During(() => this.Show(key));
+
+            Assert.That(warnings, Has.None.Contains("TranslateTransform"));
         }
 
         [TestCase("MahApps.Styles.Expander")]

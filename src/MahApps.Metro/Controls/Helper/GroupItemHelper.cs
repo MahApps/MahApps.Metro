@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -316,6 +317,27 @@ namespace MahApps.Metro.Controls
             binding.Bindings.Add(new Binding { Path = new PropertyPath(CanSelectAllItemsProperty), Source = itemsControl, Mode = BindingMode.OneWay });
 
             BindingOperations.SetBinding(itemsControl, WantsCheckBoxProperty, binding);
+
+            // A view grouped or ungrouped after the list is up says so with a reset of its items.
+            // IsGrouping can't tell, since the list counts as grouping only once it has a GroupStyle.
+            // The list holds its items, so the handler lives exactly as long as the list does.
+            NotifyCollectionChangedEventHandler listener = (_, _) =>
+                {
+                    var isGrouped = itemsControl.Items.Groups is not null;
+                    var hasHandedOver = itemsControl.GetValue(HandedOverProperty) is not null;
+
+                    // only a change of the one against the other, since every GroupStyle handed over or taken back has the list build its containers anew
+                    if (itemsControl.IsLoaded && isGrouped != hasHandedOver)
+                    {
+                        HandOver(itemsControl);
+                    }
+                };
+
+            // ItemCollection has the event only through the interface
+            if (itemsControl.Items is INotifyCollectionChanged items)
+            {
+                items.CollectionChanged += listener;
+            }
         }
 
         private static void OnWantsCheckBoxChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -351,12 +373,30 @@ namespace MahApps.Metro.Controls
 
         private static void HandOver(ItemsControl itemsControl)
         {
-            TakeBack(itemsControl);
-
             var wantsCheckBox = (bool)itemsControl.GetValue(WantsCheckBoxProperty);
             var containerStyle = wantsCheckBox
                 ? GetGroupContainerStyleWithCheckBox(itemsControl) ?? GetGroupContainerStyle(itemsControl)
                 : GetGroupContainerStyle(itemsControl);
+
+            // A list loaded again, after a tab switch for instance, still holds what it was handed.
+            // Handing it over a second time would have it build all of its containers anew for nothing.
+            // Only while it is the one GroupStyle there, though: one the application added since wins.
+            if (itemsControl.Items.Groups is not null
+                && itemsControl.GetValue(HandedOverProperty) is GroupStyle handedOver
+                && itemsControl.GroupStyle.Count == 1
+                && itemsControl.GroupStyle.Contains(handedOver)
+                && ReferenceEquals(handedOver.ContainerStyle, containerStyle))
+            {
+                return;
+            }
+
+            TakeBack(itemsControl);
+
+            // a list showing no groups is handed nothing, since a GroupStyle arriving after it is up has it build all of its containers anew
+            if (itemsControl.Items.Groups is null)
+            {
+                return;
+            }
 
             if (containerStyle is null || itemsControl.GroupStyle.Count > 0)
             {

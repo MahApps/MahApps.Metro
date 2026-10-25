@@ -10,8 +10,10 @@
         
         The slider, the range slider, the toggle switch and the window buttons wear their Win10
         style by default already, so they are not repeated here.
-        MahApps.Styles.CheckBox.DataGrid.Win10 has no implicit style either, because a DataGrid
-        column takes one through ElementStyle and EditingElementStyle rather than by type.
+        The DataGrid is named alone, without its headers, rows and cells: its own style hands those
+        their Windows 10 looks and its columns the Windows 10 boxes, among them
+        MahApps.Styles.CheckBox.DataGridCell.Win10, so a grid whose style stands on the Metro one keeps
+        Metro rows.
     -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -29,6 +31,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ListView.Win10}" TargetType="ListView" />
     <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem.Win10}" TargetType="ListViewItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader.Win10}" TargetType="GridViewColumnHeader" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DataGrid.Win10}" TargetType="DataGrid" />
     <Style BasedOn="{StaticResource MahApps.Styles.Menu.Win10}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Win10}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Win10}" TargetType="ContextMenu" />

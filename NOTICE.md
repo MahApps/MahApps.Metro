@@ -118,7 +118,7 @@ Unless indicated otherwise on a per-file basis all source and documentation here
 
 ## microsoft-ui-xaml
 
-- `InfoBar`, `InfoBarPanel`, `RatingControl`, `FlipView` (styles), `PipsPager`
+- `InfoBar`, `InfoBarPanel`, `RatingControl`, `FlipView` (styles), `PipsPager`, `DataGrid` (the WinUI style, after the `TableView`)
 - Copyright (c) Microsoft Corporation. All rights reserved.
 - [Source](https://github.com/microsoft/microsoft-ui-xaml)
 - [MIT License](https://github.com/microsoft/microsoft-ui-xaml/blob/main/LICENSE)
@@ -148,6 +148,13 @@ Unless indicated otherwise on a per-file basis all source and documentation here
 - [NuGet](https://www.nuget.org/packages/VirtualizingWrapPanel)
 - [Source](https://github.com/sbaeumlisberger/VirtualizingWrapPanel)
 - [MIT License](https://github.com/sbaeumlisberger/VirtualizingWrapPanel/blob/master/LICENSE)
+
+## Windows Community Toolkit
+
+- `DataGrid` (the Windows 10 style, after `Microsoft.Toolkit.Uwp.UI.Controls.DataGrid`)
+- Copyright © .NET Foundation and Contributors
+- [Source](https://github.com/CommunityToolkit/WindowsCommunityToolkit)
+- [MIT License](https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/license.md)
 
 ## WinUI-Gallery
 
