@@ -74,6 +74,30 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(chevron!.Glyph, Is.EqualTo("\uE70D"), "and that glyph should be the chevron");
         }
 
+        [TestCase("MahApps.Styles.ComboBox.Win10")]
+        [TestCase("MahApps.Styles.ComboBox.WinUI")]
+        [Description("The chevron turns over while the list is open and back once it closes, the way the Fluent theme of WPF does it.")]
+        public void TheChevronTurnsOverWhileTheListIsOpen(string key)
+        {
+            var box = this.Show(key);
+            var chevron = box.FindChild<FontIcon>("Arrow");
+            Assert.That(chevron, Is.Not.Null, "the drop-down button should carry a glyph");
+
+            box.IsDropDownOpen = true;
+            LetTheChevronTurn();
+            var open = Angle(chevron!);
+
+            box.IsDropDownOpen = false;
+            LetTheChevronTurn();
+            var closed = Angle(chevron!);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(open, Is.EqualTo(180d), "the chevron should point up while the list is open");
+                    Assert.That(closed, Is.EqualTo(0d), "and down again once it is closed");
+                });
+        }
+
         [Test]
         [Description("The Metro box keeps the triangle it has always had.")]
         public void TheMetroBoxKeepsItsTriangle()
@@ -588,6 +612,17 @@ namespace MahApps.Metro.Tests.Tests
         {
             var adorner = AdornerLayer.GetAdornerLayer(box)?.GetAdorners(box)?.FirstOrDefault();
             return adorner is null ? null : VisualTreeHelper.GetChild(adorner, 0) as FrameworkElement;
+        }
+
+        private static double Angle(UIElement element)
+        {
+            return element.RenderTransform is RotateTransform rotation ? rotation.Angle : double.NaN;
+        }
+
+        private static void LetTheChevronTurn()
+        {
+            // the turn takes a sixth of a second, so wait a little longer than that
+            ClipAssert.Pump(400);
         }
 
         private void Settle()

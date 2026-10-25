@@ -943,10 +943,38 @@
                                           Foreground="{TemplateBinding Foreground}"
                                           Glyph="&#xE70D;"
                                           IsHitTestVisible="False"
-                                          UseLayoutRounding="False" />
+                                          RenderTransformOrigin="0.5 0.5"
+                                          UseLayoutRounding="False">
+                                <mah:FontIcon.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </mah:FontIcon.RenderTransform>
+                            </mah:FontIcon>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!--  the chevron turns over while the list is open, as it does in the Fluent theme of WPF  -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Arrow"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         To="180"
+                                                         Duration="0:0:0.167" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Arrow"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                         To="0"
+                                                         Duration="0:0:0.167" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
                         <Trigger Property="mah:TextBoxHelper.ClearTextButton" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Command" Value="{x:Static mah:MahAppsCommands.ClearControlCommand}" />
                         </Trigger>
