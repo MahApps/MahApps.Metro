@@ -19,23 +19,8 @@ namespace MahApps.Metro.Tests.Tests
     /// as an element is arranged a hair smaller than it asked for.
     /// </summary>
     [TestFixture]
-    public class BadgedClipTests
+    public class BadgedClipTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("Arranged smaller than it asked for, anything else would be given a layout clip. A badged control must not take one, or the badge it is there to show is the first thing to go.")]
         public void ABadgedControlSqueezedIntoTooLittleRoomKeepsNoClip()
@@ -47,12 +32,12 @@ namespace MahApps.Metro.Tests.Tests
             canvas.Children.Add(badged);
 
             this.window!.Content = canvas;
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(badged.DesiredSize.Width, Is.GreaterThan(20), "the control should want more room than it is about to get");
 
             badged.Arrange(new Rect(0, 0, 20, 10));
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(VisualTreeHelper.GetClip(badged), Is.Null, "a clip here would cut the badge off");
         }
@@ -76,7 +61,7 @@ namespace MahApps.Metro.Tests.Tests
             tabs.Items.Add(item);
 
             this.window!.Content = tabs;
-            this.Settle();
+            this.window.Settle();
 
             var badge = item.FindChild<FrameworkElement>("PART_BadgeContainer");
             Assert.That(badge, Is.Not.Null, "the header should carry a badge");
@@ -103,7 +88,7 @@ namespace MahApps.Metro.Tests.Tests
             tabs.Items.Add(item);
 
             this.window!.Content = tabs;
-            this.Settle();
+            this.window.Settle();
 
             var host = item.FindChild<ContentControlEx>("ContentSite");
             Assert.That(host, Is.Not.Null, "the tab template should carry its header host");
@@ -114,12 +99,6 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(host!.UseLayoutRounding,
                         Is.EqualTo(around!.UseLayoutRounding),
                         "the host rounds one way and what holds it rounds another, which is a clip waiting to happen");
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

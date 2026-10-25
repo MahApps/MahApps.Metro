@@ -29,7 +29,7 @@ namespace MahApps.Metro.Tests.Tests
             var box = this.Show(key);
 
             box.SetCurrentValue(Control.FontSizeProperty, 23d);
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -51,7 +51,7 @@ namespace MahApps.Metro.Tests.Tests
             box.IsReadOnly = true;
             box.Document.Blocks.Clear();
             box.Document.Blocks.Add(new Paragraph(link));
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(link.IsEnabled, Is.True);
 
@@ -69,7 +69,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             TextBoxHelper.SetClearTextButton(box, true);
-            this.Settle();
+            this.window.Settle();
 
             var button = box.FindChild<Button>("PART_ClearText");
             Assert.That(button, Is.Not.Null, "the template should carry the clear button");
@@ -78,7 +78,7 @@ namespace MahApps.Metro.Tests.Tests
 
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
@@ -100,15 +100,9 @@ namespace MahApps.Metro.Tests.Tests
             box.Document.Blocks.Add(new Paragraph(new Run("Beam me up...")));
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

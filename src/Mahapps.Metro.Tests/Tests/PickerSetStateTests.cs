@@ -42,7 +42,7 @@ namespace MahApps.Metro.Tests.Tests
 
             picker.Focus();
             Keyboard.Focus(picker);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(picker.IsKeyboardFocusWithin, Is.True);
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Tests.Tests
             var picker = this.Show(key);
 
             picker.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -93,7 +93,7 @@ namespace MahApps.Metro.Tests.Tests
             var picker = this.Show(key);
 
             picker.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             var veil = picker.FindChild<Border>("DisabledVisualElement");
             Assert.That(veil, Is.Not.Null, "the template should carry the veil");
@@ -107,18 +107,12 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Button ClearButton(Control picker)
         {
-            var button = picker.FindChild<Button>("PART_ClearText");
-            Assert.That(button, Is.Not.Null, "the template should carry the clear button");
-
-            return button!;
+            return picker.NamedChild<Button>("PART_ClearText");
         }
 
         private static Border Frame(Control picker)
         {
-            var frame = picker.FindChild<Border>("Base");
-            Assert.That(frame, Is.Not.Null, "the template should carry the frame");
-
-            return frame!;
+            return picker.NamedChild<Border>("Base");
         }
 
         private Control Show(string key, bool clearButton = false)
@@ -140,15 +134,9 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             this.window!.Content = picker;
-            this.Settle();
+            this.window.Settle();
 
             return picker;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

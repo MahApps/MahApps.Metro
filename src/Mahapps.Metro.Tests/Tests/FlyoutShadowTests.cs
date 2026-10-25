@@ -54,7 +54,7 @@ namespace MahApps.Metro.Tests.Tests
             var shadow = new DropShadowEffect { BlurRadius = 20, ShadowDepth = 6 };
 
             flyout.ShadowEffect = shadow;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(Pane(flyout).Effect, Is.SameAs(shadow), "the pane should carry what was handed over");
         }
@@ -66,7 +66,7 @@ namespace MahApps.Metro.Tests.Tests
             var flyout = this.Show();
 
             flyout.ShadowEffect = new DropShadowEffect { BlurRadius = 20, ShadowDepth = 6 };
-            this.Settle();
+            this.window.Settle();
 
             var content = flyout.FindChild<FrameworkElement>("PART_Content");
             Assert.That(content, Is.Not.Null, "the template should carry its content part");
@@ -111,17 +111,11 @@ namespace MahApps.Metro.Tests.Tests
             flyouts.Items.Add(flyout);
 
             this.window!.Flyouts = flyouts;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flyout.IsLoaded, Is.True, "the flyout should be up before a test looks at it");
 
             return flyout;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

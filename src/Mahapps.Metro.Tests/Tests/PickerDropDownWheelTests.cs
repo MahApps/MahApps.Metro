@@ -19,23 +19,8 @@ namespace MahApps.Metro.Tests.Tests
     /// the drop-down wanted used to travel on to whatever the picker itself stood in and scroll it.
     /// </summary>
     [TestFixture]
-    public class PickerDropDownWheelTests
+    public class PickerDropDownWheelTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("The wheel over an open drop-down leaves the page it stands on where it is.")]
         public void AWheelOverTheDropDownDoesNotScrollThePageBehindIt()

@@ -92,7 +92,7 @@ namespace MahApps.Metro.Tests.Tests
                 this.window.Dispatcher.Invoke(() => { }, DispatcherPriority.ContextIdle);
                 tip.UpdateLayout();
 
-                var text = Descendants<TextBlock>(tip).Single(t => t.Text == LongText);
+                var text = tip.FindChildren<TextBlock>(true).Single(t => t.Text == LongText);
                 var box = tip.FindChild<Border>("Root")!;
 
                 Assert.Multiple(() =>
@@ -257,24 +257,6 @@ namespace MahApps.Metro.Tests.Tests
             finally
             {
                 tip.IsOpen = false;
-            }
-        }
-
-        private static IEnumerable<T> Descendants<T>(DependencyObject root)
-            where T : DependencyObject
-        {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
-            {
-                var child = VisualTreeHelper.GetChild(root, i);
-                if (child is T match)
-                {
-                    yield return match;
-                }
-
-                foreach (var descendant in Descendants<T>(child))
-                {
-                    yield return descendant;
-                }
             }
         }
     }

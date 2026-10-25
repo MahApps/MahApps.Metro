@@ -23,23 +23,8 @@ namespace MahApps.Metro.Tests.Tests
     /// element rather than the border around it.
     /// </summary>
     [TestFixture]
-    public class TemplateClipTests
+    public class TemplateClipTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         /// <summary>
         /// The name of the element each template puts its clip on, and how to build a control that has it.
         /// </summary>

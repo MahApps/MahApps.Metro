@@ -61,10 +61,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Border GetBorder(ListBoxItem item)
         {
-            var border = item.FindChild<Border>("Border");
-            Assert.That(border, Is.Not.Null, "the template should carry the border");
-
-            return border!;
+            return item.NamedChild<Border>("Border");
         }
 
         [Test]

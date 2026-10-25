@@ -69,13 +69,17 @@ namespace MahApps.Metro.Tests.Tests
             var item = (ListBoxItem)index.ItemContainerGenerator.ContainerFromIndex(1);
             var dot = item.FindChild<System.Windows.Shapes.Ellipse>("Bd")!;
 
+            // the layout rounds to whole device pixels, which are no whole units on a scaled display
+            var pixel = 1 / VisualTreeHelper.GetDpi(dot).PixelsPerDip;
+
             Assert.Multiple(() =>
                 {
-                    Assert.That((dot.ActualWidth, dot.ActualHeight), Is.EqualTo((15d, 15d)));
+                    Assert.That(dot.ActualWidth, Is.EqualTo(15d).Within(pixel), "the dot is as wide");
+                    Assert.That(dot.ActualHeight, Is.EqualTo(15d).Within(pixel), "as it is high");
                     Assert.That(System.Windows.Controls.Primitives.LayoutInformation.GetLayoutClip(dot), Is.Null, "nothing of the dot is cut away");
                     if (pages == 3)
                     {
-                        Assert.That(item.DesiredSize.Width, Is.EqualTo(15d + 8d + 20d), "the dot, the padding of the theme and the margin, as before");
+                        Assert.That(item.DesiredSize.Width, Is.EqualTo(15d + 8d + 20d).Within(pixel), "the dot, the padding of the theme and the margin, as before");
                     }
                 });
         }
@@ -115,7 +119,10 @@ namespace MahApps.Metro.Tests.Tests
                                 ClipAssert.Pump(600);
                             },
                         Throws.Nothing);
-            Assert.That(flipView.FindChild<Grid>("PART_BannerGrid")!.ActualHeight, Is.EqualTo(30d), "the banner of the new look is up as well");
+            // the layout rounds to whole device pixels, which are no whole units on a scaled display
+            var pixel = 1 / VisualTreeHelper.GetDpi(flipView).PixelsPerDip;
+
+            Assert.That(flipView.FindChild<Grid>("PART_BannerGrid")!.ActualHeight, Is.EqualTo(30d).Within(pixel), "the banner of the new look is up as well");
         }
 
         [Test]

@@ -18,7 +18,7 @@ namespace MahApps.Metro.Tests.Tests
     /// border around it.
     /// </summary>
     [TestFixture]
-    public class ButtonClipTests
+    public class ButtonClipTests : WindowTestFixture<TestWindow>
     {
         private static readonly object[] ClippedStyles =
             {
@@ -35,21 +35,6 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { "MahApps.Styles.ToggleButton", true },
                 new object[] { "MahApps.Styles.ToggleButton.Flat", true }
             };
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         private ContentControl ShowButton(string styleKey, bool isToggleButton)
         {

@@ -18,26 +18,11 @@ namespace MahApps.Metro.Tests.Tests
     /// subclass. SelectedDateTimeFormat says it outright, and the parse side has to take it back.
     /// </summary>
     [TestFixture]
-    public class TimePickerFormatTests
+    public class TimePickerFormatTests : WindowTestFixture<TestWindow>
     {
         private const string DayFirst = "dd.MM.yyyy HH:mm";
 
         private static readonly DateTime Afternoon = new DateTime(2026, 3, 17, 14, 35, 0);
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [Test]
         [Description("A format is what the field reads, whatever the culture would have made of the value.")]

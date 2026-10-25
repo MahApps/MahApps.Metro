@@ -10,6 +10,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Tests.Views;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -31,13 +32,6 @@ namespace MahApps.Metro.Tests.Tests
             this.window = null;
         }
 
-        private static Color ColorOf(Brush? brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "the test sets a solid colour, so this should be one");
-
-            return ((SolidColorBrush)brush!).Color;
-        }
-
         [Test]
         public void ForegroundShouldPaintTheIndicator()
         {
@@ -48,7 +42,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var indicator = progressBar.FindChild<Border>("PART_Indicator");
             Assert.That(indicator, Is.Not.Null, "the template should carry the indicator");
-            Assert.That(ColorOf(indicator!.Background), Is.EqualTo(Colors.Red), "the indicator should be painted with Foreground");
+            Assert.That(ColourOf(indicator!.Background), Is.EqualTo(Colors.Red), "the indicator should be painted with Foreground");
         }
 
         [Test]
@@ -61,7 +55,7 @@ namespace MahApps.Metro.Tests.Tests
 
             var fill = progressBar.FindChild<Rectangle>("IndeterminateSolidFill");
             Assert.That(fill, Is.Not.Null, "the template should carry the indeterminate fill");
-            Assert.That(ColorOf(fill!.Fill), Is.EqualTo(Colors.Blue), "the stripes should run over Foreground as well");
+            Assert.That(ColourOf(fill!.Fill), Is.EqualTo(Colors.Blue), "the stripes should run over Foreground as well");
         }
 
         [Test]

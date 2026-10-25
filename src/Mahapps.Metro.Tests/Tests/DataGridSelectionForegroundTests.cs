@@ -13,6 +13,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.FakeInput;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -31,18 +32,6 @@ namespace MahApps.Metro.Tests.Tests
     {
         private static readonly Color Selected = Colors.Lime;
         private static readonly Color UnderTheMouse = Colors.Red;
-
-        // IsMouseOver reads the mouse, and a test has no mouse to put anywhere. Both of these are
-        // read only to the outside and carry a key their own class keeps, which is the one handle
-        // there is on the state the triggers are written against.
-        private static readonly DependencyPropertyKey MouseOverKey = KeyOf(typeof(UIElement), "IsMouseOverPropertyKey");
-        private static readonly DependencyPropertyKey SelectionActiveKey = KeyOf(typeof(Selector), "IsSelectionActivePropertyKey");
-
-        private static DependencyPropertyKey KeyOf(System.Type owner, string field)
-        {
-            return (DependencyPropertyKey)owner.GetField(field, BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
-        }
-
         private TestWindow window = null!;
 
         [OneTimeSetUp]
@@ -104,13 +93,6 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(cells, Has.Length.EqualTo(3), "and three cells in it");
 
             return cells;
-        }
-
-        private static void PutTheMouseOn(DataGridCell cell)
-        {
-            cell.GetVisualAncestor<DataGridRow>()?.SetValue(MouseOverKey, true);
-            cell.SetValue(MouseOverKey, true);
-            ClipAssert.Pump();
         }
 
         private static Color ColourOf(DataGridCell cell)

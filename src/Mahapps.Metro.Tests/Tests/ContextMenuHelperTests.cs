@@ -22,7 +22,7 @@ namespace MahApps.Metro.Tests.Tests
     /// language it started in, which is what GH-4155 reports.
     /// </summary>
     [TestFixture]
-    public class ContextMenuHelperTests
+    public class ContextMenuHelperTests : WindowTestFixture<TestWindow>
     {
         private static readonly object[] TheEditingItems =
             {
@@ -31,21 +31,7 @@ namespace MahApps.Metro.Tests.Tests
                 new object[] { ApplicationCommands.Paste, "TextBox_ContextMenu_Paste" }
             };
 
-        private TestWindow? window;
         private CultureInfo? cultureBefore;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [SetUp]
         public void KeepTheCulture()
@@ -59,11 +45,6 @@ namespace MahApps.Metro.Tests.Tests
             if (this.cultureBefore is not null)
             {
                 Thread.CurrentThread.CurrentUICulture = this.cultureBefore;
-            }
-
-            if (this.window is not null)
-            {
-                this.window.Content = null;
             }
         }
 

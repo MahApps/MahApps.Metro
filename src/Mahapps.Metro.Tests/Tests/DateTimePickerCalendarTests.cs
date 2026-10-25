@@ -20,25 +20,10 @@ namespace MahApps.Metro.Tests.Tests
     /// calendar asks, which is why this is a trigger on the picker and a test of its own.
     /// </summary>
     [TestFixture]
-    public class DateTimePickerCalendarTests
+    public class DateTimePickerCalendarTests : WindowTestFixture<TestWindow>
     {
         private const string Win10Set = "pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml";
         private const string WinUISet = "pack://application:,,,/MahApps.Metro;component/Styles/WinUI/Controls.xaml";
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [TestCase(Win10Set, "MahApps.Styles.DateTimePicker.Win10")]
         [TestCase(WinUISet, "MahApps.Styles.DateTimePicker.WinUI")]

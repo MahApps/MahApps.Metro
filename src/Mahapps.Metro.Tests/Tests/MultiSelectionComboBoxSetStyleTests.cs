@@ -9,6 +9,7 @@ using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.FakeInput;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -75,7 +76,7 @@ namespace MahApps.Metro.Tests.Tests
             page.Children.Add(reference);
 
             this.window!.Content = page;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(box.ActualHeight, Is.EqualTo(reference.ActualHeight).Within(0.01));
         }
@@ -105,7 +106,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
 
-            var popupBorder = (Border)Part(box, "PopupBorder");
+            var popupBorder = box.PartOf<Border>("PopupBorder");
 
             Assert.Multiple(() =>
                 {
@@ -195,7 +196,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
 
-            var inside = (TextBox)Part(box, "PART_EditableTextBox");
+            var inside = box.PartOf<TextBox>("PART_EditableTextBox");
 
             Assert.That(inside.Style?.BasedOn, Is.SameAs(Application.Current.FindResource(editableKey)));
         }
@@ -251,7 +252,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -267,9 +268,9 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show("MahApps.Styles.MultiSelectionComboBox");
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
-            var veil = (Border)Part(box, "DisabledVisualElement");
+            var veil = box.PartOf<Border>("DisabledVisualElement");
 
             Assert.Multiple(() =>
                 {
@@ -301,7 +302,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheKeyboardFillsTheWindows10BoxWithTheAccent()
         {
             var box = this.Show("MahApps.Styles.MultiSelectionComboBox.Win10");
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             Assert.Multiple(() =>
                 {
@@ -315,7 +316,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheKeyboardPutsTheRingOfItsComboBoxOnTheWinUIBox()
         {
             var box = this.Show("MahApps.Styles.MultiSelectionComboBox.WinUI");
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             Assert.Multiple(() =>
                 {
@@ -350,49 +351,34 @@ namespace MahApps.Metro.Tests.Tests
             panel.Children.Add(box);
             panel.Children.Add(after);
             this.window!.Content = panel;
-            this.Settle();
+            this.window.Settle();
             box.SelectedItems!.Add("Warp nine");
-            this.Settle();
+            this.window.Settle();
 
             Keyboard.Focus(before);
-            this.Settle();
+            this.window.Settle();
             Assume.That(before.IsKeyboardFocused, Is.True);
 
             var stops = new System.Collections.Generic.List<string>();
             for (var i = 0; i < 4 && !after.IsKeyboardFocused; i++)
             {
                 (Keyboard.FocusedElement as UIElement)?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                this.Settle();
+                this.window.Settle();
                 stops.Add(Keyboard.FocusedElement?.GetType().Name ?? "nothing");
             }
 
             Assert.That(stops, Has.Count.EqualTo(2), "the stops on the way were " + string.Join(", ", stops));
         }
 
-        /// <summary>
-        /// Puts the keyboard focus on the box the way a tab would, which is what the helper drawing
-        /// the ring tells apart from a click: the last input before the focus came from the keyboard.
-        /// </summary>
-        private void FocusWithTheKeyboard(MultiSelectionComboBox box)
-        {
-            // a test has no keys to press, so it tells the input manager what a press would have told it
-            typeof(InputManager).GetProperty(nameof(InputManager.MostRecentInputDevice))!.GetSetMethod(true)!.Invoke(InputManager.Current, new object[] { Keyboard.PrimaryDevice });
-            Keyboard.Focus(box);
-            this.Settle();
-
-            // a build agent hands the keyboard to one window at a time
-            Assume.That(box.IsKeyboardFocusWithin, Is.True);
-        }
-
         private MultiSelectionComboBox Focused(string key, bool editable)
         {
             var box = this.Show(key);
             box.IsEditable = editable;
-            this.Settle();
+            this.window.Settle();
 
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
@@ -413,37 +399,19 @@ namespace MahApps.Metro.Tests.Tests
                       };
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
         }
 
         private static Border Frame(MultiSelectionComboBox box)
         {
-            return (Border)Part(box, "Border");
+            return box.PartOf<Border>("Border");
         }
 
         private static Border Edge(MultiSelectionComboBox box)
         {
-            return (Border)Part(box, "BottomEdge");
-        }
-
-        /// <summary>
-        /// A named part of the control's own template. The boxes and lists inside it carry parts of
-        /// the same names, and a walk down the tree reaches those first.
-        /// </summary>
-        private static FrameworkElement Part(MultiSelectionComboBox box, string name)
-        {
-            var part = box.Template?.FindName(name, box) as FrameworkElement;
-            Assert.That(part, Is.Not.Null, $"the template should carry {name}");
-
-            return part!;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
+            return box.PartOf<Border>("BottomEdge");
         }
     }
 }

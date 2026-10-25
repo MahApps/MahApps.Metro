@@ -127,7 +127,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var dropDownButton = this.Show(key);
             dropDownButton.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(dropDownButton.Opacity, Is.EqualTo(1));
         }
@@ -138,7 +138,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var dropDownButton = this.Show("MahApps.Styles.DropDownButton");
             dropDownButton.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(dropDownButton.Opacity, Is.LessThan(1));
         }
@@ -172,15 +172,9 @@ namespace MahApps.Metro.Tests.Tests
             dropDownButton.ItemsSource = new[] { "As a picture", "As a table", "As it is" };
 
             this.window!.Content = dropDownButton;
-            this.Settle();
+            this.window.Settle();
 
             return dropDownButton;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

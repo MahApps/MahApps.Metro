@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -72,7 +73,7 @@ namespace MahApps.Metro.Tests.Tests
             var box = this.Show();
 
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -97,7 +98,7 @@ namespace MahApps.Metro.Tests.Tests
             Assume.That(box.IsFocused, Is.True);
 
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(box.IsFocused, Is.True, "this test is about the state where both hold at once");
 
@@ -125,7 +126,7 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             this.window!.Content = page;
-            this.Settle();
+            this.window.Settle();
 
             // the strokes are translucent, so how much of one a pixel carries is its alpha, and a
             // pixel landing between two device pixels carries a little less of it
@@ -161,7 +162,7 @@ namespace MahApps.Metro.Tests.Tests
             picker.Style = (Style)Application.Current.FindResource(key);
 
             this.window!.Content = picker;
-            this.Settle();
+            this.window.Settle();
 
             var edge = BottomEdge(picker);
 
@@ -264,35 +265,19 @@ namespace MahApps.Metro.Tests.Tests
             return (Color)Application.Current.FindResource(key);
         }
 
-        private static Color ColourOf(Brush? brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "this one should be a brush of a single colour");
-
-            return ((SolidColorBrush)brush!).Color;
-        }
-
         private static Border BottomEdge(Control box)
         {
-            var edge = box.FindChild<Border>("BottomEdge");
-            Assert.That(edge, Is.Not.Null, "the template should carry the bottom edge");
-
-            return edge!;
+            return box.NamedChild<Border>("BottomEdge");
         }
 
         private static Border Border(Control box)
         {
-            var border = box.FindChild<Border>("BorderElement");
-            Assert.That(border, Is.Not.Null, "the template should carry the border");
-
-            return border!;
+            return box.NamedChild<Border>("BorderElement");
         }
 
         private static TextBlock Watermark(TextBox box)
         {
-            var watermark = box.FindChild<TextBlock>("PART_Message");
-            Assert.That(watermark, Is.Not.Null, "the template should carry the watermark");
-
-            return watermark!;
+            return box.NamedChild<TextBlock>("PART_Message");
         }
 
         private TextBox Show()
@@ -308,15 +293,9 @@ namespace MahApps.Metro.Tests.Tests
             TextBoxHelper.SetWatermark(box, "Name");
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

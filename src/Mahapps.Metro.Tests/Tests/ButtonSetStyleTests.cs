@@ -104,7 +104,7 @@ namespace MahApps.Metro.Tests.Tests
             row.Children.Add(box);
 
             this.window!.Content = row;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(button.ActualHeight, Is.EqualTo(box.ActualHeight), $"the button is {button.ActualHeight} and the box {box.ActualHeight}");
         }
@@ -115,7 +115,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var button = this.Show("MahApps.Styles.Button.WinUI");
             button.Content = new Border { Width = 16, Height = 16, Background = Brushes.SteelBlue };
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(button.ActualHeight, Is.EqualTo(32), $"the button is {button.ActualHeight}");
         }
@@ -137,33 +137,19 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             this.window!.Content = button;
-            this.Settle();
+            this.window.Settle();
 
             return button;
         }
 
         private static Border Frame(Button button)
         {
-            return (Border)Part(button, "Border");
+            return button.PartOf<Border>("Border");
         }
 
         private static Border Edge(Button button)
         {
-            return (Border)Part(button, "BottomEdge");
-        }
-
-        private static FrameworkElement Part(Button button, string name)
-        {
-            var part = button.Template?.FindName(name, button) as FrameworkElement;
-            Assert.That(part, Is.Not.Null, $"the template should carry {name}");
-
-            return part!;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
+            return button.PartOf<Border>("BottomEdge");
         }
     }
 }

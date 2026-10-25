@@ -11,6 +11,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -150,7 +151,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private TextBlock WatermarkOf(Control host)
         {
-            var shown = Descendants<TextBlock>(host).Where(t => t.Text == Watermark && t.IsVisible).ToList();
+            var shown = host.FindChildren<TextBlock>(true).Where(t => t.Text == Watermark && t.IsVisible).ToList();
 
             Assert.That(shown, Has.Count.EqualTo(1), "the control should show its watermark once");
             return shown[0];
@@ -159,30 +160,6 @@ namespace MahApps.Metro.Tests.Tests
         private static Color Brush(string key)
         {
             return ColourOf(Application.Current.FindResource(key));
-        }
-
-        private static Color ColourOf(object? brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>());
-            return ((SolidColorBrush)brush!).Color;
-        }
-
-        private static IEnumerable<T> Descendants<T>(DependencyObject root)
-            where T : DependencyObject
-        {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
-            {
-                var child = VisualTreeHelper.GetChild(root, i);
-                if (child is T match)
-                {
-                    yield return match;
-                }
-
-                foreach (var descendant in Descendants<T>(child))
-                {
-                    yield return descendant;
-                }
-            }
         }
     }
 }

@@ -19,23 +19,8 @@ namespace MahApps.Metro.Tests.Tests
     /// and that nothing is taken away from a header nobody handed one of them to.
     /// </summary>
     [TestFixture]
-    public class HeaderStateColoursTests
+    public class HeaderStateColoursTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("A brush of its own for the glyph wins over the foreground the header hands it.")]
         public void TheGlyphTakesTheColourItWasGiven()
@@ -49,7 +34,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(arrow!.Stroke, Is.SameAs(HeaderOf(expander).Foreground), "at rest the glyph follows the header");
 
             ExpanderHelper.SetToggleButtonForeground(HeaderOf(expander), Brushes.HotPink);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(arrow.Stroke, Is.SameAs(Brushes.HotPink));
             Assert.That(circle!.Stroke, Is.SameAs(Brushes.HotPink));
@@ -63,7 +48,7 @@ namespace MahApps.Metro.Tests.Tests
             var arrow = expander.FindChild<Path>("Arrow");
 
             ExpanderHelper.SetToggleButtonForeground(expander, Brushes.HotPink);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(arrow!.Stroke, Is.SameAs(Brushes.HotPink), "the expander should hand it to the toggle button the way it hands over ShowToggleButton");
         }
@@ -79,10 +64,10 @@ namespace MahApps.Metro.Tests.Tests
             ExpanderHelper.SetToggleButtonForeground(toggle, Brushes.HotPink);
             ExpanderHelper.SetToggleButtonForegroundMouseOver(toggle, Brushes.Lime);
             ExpanderHelper.SetToggleButtonForegroundPressed(toggle, Brushes.Orange);
-            this.Settle();
+            this.window.Settle();
 
             expander.IsExpanded = true;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(arrow!.Stroke, Is.SameAs(Brushes.HotPink), "neither the mouse nor a press is what opened it");
         }
@@ -96,12 +81,12 @@ namespace MahApps.Metro.Tests.Tests
             var arrow = expander.FindChild<Path>("Arrow");
 
             HeaderedControlHelper.SetHeaderBackground(expander, Brushes.SlateGray);
-            this.Settle();
+            this.window.Settle();
 
             var foreground = HeaderOf(expander).Foreground;
 
             expander.IsExpanded = true;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(headerSite!.Background, Is.SameAs(Brushes.SlateGray), "the header should keep its background");
             Assert.That(HeaderOf(expander).Foreground, Is.SameAs(foreground), "and its foreground");
@@ -111,10 +96,7 @@ namespace MahApps.Metro.Tests.Tests
         /// <summary>The toggle button an expander puts its header in.</summary>
         private static ToggleButton HeaderOf(Expander expander)
         {
-            var toggle = expander.FindChild<ToggleButton>("ToggleSite");
-            Assert.That(toggle, Is.Not.Null, "the expander should put its header in a toggle button");
-
-            return toggle!;
+            return expander.NamedChild<ToggleButton>("ToggleSite");
         }
 
         private Expander Show(Expander expander)
@@ -122,17 +104,11 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(this.window, Is.Not.Null);
 
             this.window!.Content = expander;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(expander.IsLoaded, Is.True, "the expander should be up before a test looks at it");
 
             return expander;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

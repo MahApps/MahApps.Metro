@@ -11,6 +11,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -103,7 +104,7 @@ namespace MahApps.Metro.Tests.Tests
             var inside = box.FindChild<TextBox>("PART_TextBox");
             Assert.That(inside, Is.Not.Null, "the template should carry the text box");
 
-            Assert.That(((Border)PartOf(inside!, "BorderElement")).BorderThickness, Is.EqualTo(default(Thickness)), "no frame");
+            Assert.That(inside!.PartOf<Border>("BorderElement").BorderThickness, Is.EqualTo(default(Thickness)), "no frame");
         }
 
         [Test]
@@ -115,7 +116,7 @@ namespace MahApps.Metro.Tests.Tests
             var inside = box.FindChild<TextBox>("PART_TextBox");
             Assert.That(inside, Is.Not.Null, "the template should carry the text box");
 
-            var edge = (Border)PartOf(inside!, "BottomEdge");
+            var edge = inside!.PartOf<Border>("BottomEdge");
 
             Assert.Multiple(() =>
                 {
@@ -195,7 +196,7 @@ namespace MahApps.Metro.Tests.Tests
             var box = this.Show(key);
             box.Minimum = 0;
             box.Value = 0;
-            this.Settle();
+            this.window.Settle();
 
             var down = Button(box, "PART_NumericDown");
             Assume.That(down.IsEnabled, Is.False, "the button should be off at the minimum, otherwise this test proves nothing");
@@ -207,7 +208,7 @@ namespace MahApps.Metro.Tests.Tests
                 {
                     Assert.That(down.IsVisible, Is.True, "the button is still there");
                     Assert.That(NothingIsInvisible(down), Is.True, "and nothing over it has been taken out of sight");
-                    Assert.That(TextElement.GetForeground(PartOf(down, "PART_ContentPresenter")), Is.SameAs(box.FindResource(brushKey)), "the glyph goes grey instead");
+                    Assert.That(TextElement.GetForeground(down.PartOf<FrameworkElement>("PART_ContentPresenter")), Is.SameAs(box.FindResource(brushKey)), "the glyph goes grey instead");
                 });
         }
 
@@ -218,7 +219,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -235,7 +236,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show("MahApps.Styles.NumericUpDown");
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             var veil = box.FindChild<Border>("DisabledVisualElement");
 
@@ -256,7 +257,7 @@ namespace MahApps.Metro.Tests.Tests
 
             inside!.Focus();
             Keyboard.Focus(inside);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
@@ -276,7 +277,7 @@ namespace MahApps.Metro.Tests.Tests
                       };
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
         }
@@ -299,24 +300,12 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Border FocusFrame(Control box)
         {
-            return (Border)PartOf(box, "FocusBorder");
+            return box.PartOf<Border>("FocusBorder");
         }
 
         private static Border Edge(Control box)
         {
-            return (Border)PartOf(box, "BottomEdge");
-        }
-
-        /// <summary>
-        /// A named part of the control's own template. The text box inside it carries parts of the
-        /// same names, and a walk down the tree reaches those first.
-        /// </summary>
-        private static FrameworkElement PartOf(Control box, string name)
-        {
-            var part = box.Template?.FindName(name, box) as FrameworkElement;
-            Assert.That(part, Is.Not.Null, $"the template should carry {name}");
-
-            return part!;
+            return box.PartOf<Border>("BottomEdge");
         }
 
         /// <summary>
@@ -342,19 +331,6 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             return true;
-        }
-
-        private static Color ColourOf(Brush? brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "this one should be a brush of a single colour");
-
-            return ((SolidColorBrush)brush!).Color;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

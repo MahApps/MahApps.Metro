@@ -127,7 +127,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -143,7 +143,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show("MahApps.Styles.AutoSuggestBox");
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             var veil = box.FindChild<Border>("DisabledVisualElement");
 
@@ -164,7 +164,7 @@ namespace MahApps.Metro.Tests.Tests
 
             inside!.Focus();
             Keyboard.Focus(inside);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
@@ -184,37 +184,19 @@ namespace MahApps.Metro.Tests.Tests
                       };
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
         }
 
         private static Border Frame(Control box)
         {
-            return (Border)PartOf(box, "Border");
+            return box.PartOf<Border>("Border");
         }
 
         private static Border Edge(Control box)
         {
-            return (Border)PartOf(box, "BottomEdge");
-        }
-
-        /// <summary>
-        /// A named part of the control's own template. The text box inside it carries parts of the
-        /// same names, and a walk down the tree reaches those first.
-        /// </summary>
-        private static FrameworkElement PartOf(Control box, string name)
-        {
-            var part = box.Template?.FindName(name, box) as FrameworkElement;
-            Assert.That(part, Is.Not.Null, $"the template should carry {name}");
-
-            return part!;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
+            return box.PartOf<Border>("BottomEdge");
         }
     }
 }

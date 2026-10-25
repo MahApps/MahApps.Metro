@@ -20,24 +20,9 @@ namespace MahApps.Metro.Tests.Tests
     /// on the wall already says.
     /// </summary>
     [TestFixture]
-    public class PickerNowButtonTests
+    public class PickerNowButtonTests : WindowTestFixture<TestWindow>
     {
         private static readonly DateTime LongAgo = new DateTime(2003, 6, 2, 8, 15, 30);
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [Test]
         [Description("The button is there to be seen without anybody asking for it.")]

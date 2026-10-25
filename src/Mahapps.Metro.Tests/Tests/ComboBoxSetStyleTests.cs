@@ -13,6 +13,8 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
+using static MahApps.Metro.Tests.TestHelpers.FakeInput;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -74,6 +76,30 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(chevron!.Glyph, Is.EqualTo("\uE70D"), "and that glyph should be the chevron");
         }
 
+        [TestCase("MahApps.Styles.ComboBox.Win10")]
+        [TestCase("MahApps.Styles.ComboBox.WinUI")]
+        [Description("The chevron turns over while the list is open and back once it closes, the way the Fluent theme of WPF does it.")]
+        public void TheChevronTurnsOverWhileTheListIsOpen(string key)
+        {
+            var box = this.Show(key);
+            var chevron = box.FindChild<FontIcon>("Arrow");
+            Assert.That(chevron, Is.Not.Null, "the drop-down button should carry a glyph");
+
+            box.IsDropDownOpen = true;
+            LetTheChevronTurn();
+            var open = Angle(chevron!);
+
+            box.IsDropDownOpen = false;
+            LetTheChevronTurn();
+            var closed = Angle(chevron!);
+
+            Assert.Multiple(() =>
+                {
+                    Assert.That(open, Is.EqualTo(180d), "the chevron should point up while the list is open");
+                    Assert.That(closed, Is.EqualTo(0d), "and down again once it is closed");
+                });
+        }
+
         [Test]
         [Description("The Metro box keeps the triangle it has always had.")]
         public void TheMetroBoxKeepsItsTriangle()
@@ -95,7 +121,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEditable = true;
-            this.Settle();
+            this.window.Settle();
 
             var toggle = box.FindChild<ToggleButton>("PART_DropDownToggle");
             Assert.That(toggle, Is.Not.Null, "the template should carry the drop-down toggle");
@@ -119,7 +145,7 @@ namespace MahApps.Metro.Tests.Tests
             // the frame takes the accent for the caret, so the box to hold against the text box is one that can be typed into
             var box = this.Show(key);
             box.IsEditable = true;
-            this.Settle();
+            this.window.Settle();
             var reference = new TextBox { Style = (Style)Application.Current.FindResource(textBoxKey) };
 
             Assert.Multiple(() =>
@@ -142,7 +168,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEditable = true;
-            this.Settle();
+            this.window.Settle();
 
             var editable = box.FindChild<TextBox>("PART_EditableTextBox");
             Assert.That(editable, Is.Not.Null, "the template should carry the text box");
@@ -200,7 +226,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -217,7 +243,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show("MahApps.Styles.ComboBox");
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             var veil = box.FindChild<Border>("DisabledVisualElement");
 
@@ -240,7 +266,7 @@ namespace MahApps.Metro.Tests.Tests
             Assume.That(pill!.Visibility, Is.EqualTo(Visibility.Collapsed), "a row nobody picked should not carry it");
 
             item.IsSelected = true;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -273,7 +299,7 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(Colour(message.Foreground), Is.EqualTo(Colour(message.FindResource(brushKey))));
+                    Assert.That(ColourOf(message.Foreground), Is.EqualTo(ColourOf(message.FindResource(brushKey))));
                     Assert.That(message.Opacity, Is.EqualTo(1), "the colour says it, nothing is taken away on top");
                 });
         }
@@ -286,12 +312,12 @@ namespace MahApps.Metro.Tests.Tests
             var box = this.ShowEmpty(key, true);
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
 
-            Assert.That(Colour(Watermark(box).Foreground), Is.EqualTo(Colour(box.FindResource(brushKey))));
+            Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(ColourOf(box.FindResource(brushKey))));
         }
 
         [TestCase("MahApps.Styles.ComboBox.WinUI", true, "MahApps.Brushes.TextControl.WinUI.PlaceholderForegroundDisabled")]
@@ -303,9 +329,9 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.ShowEmpty(key, editable);
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
-            Assert.That(Colour(Watermark(box).Foreground), Is.EqualTo(Colour(box.FindResource(brushKey))));
+            Assert.That(ColourOf(Watermark(box).Foreground), Is.EqualTo(ColourOf(box.FindResource(brushKey))));
         }
 
         [TestCase(true)]
@@ -318,7 +344,7 @@ namespace MahApps.Metro.Tests.Tests
 
             Assert.Multiple(() =>
                 {
-                    Assert.That(Colour(message.Foreground), Is.EqualTo(Colour(box.Foreground)));
+                    Assert.That(ColourOf(message.Foreground), Is.EqualTo(ColourOf(box.Foreground)));
                     Assert.That(message.Opacity, Is.EqualTo(0.6).Within(0.001));
                 });
         }
@@ -346,7 +372,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheKeyboardFillsTheWindows10BoxWithTheAccent()
         {
             var box = this.Show("MahApps.Styles.ComboBox.Win10");
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             Assert.Multiple(() =>
                 {
@@ -363,10 +389,10 @@ namespace MahApps.Metro.Tests.Tests
         public void APressTakesTheKeyboardFocusLookAway(string key, string background)
         {
             var box = this.Show(key);
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             box.RaiseEvent(new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left) { RoutedEvent = UIElement.PreviewMouseDownEvent });
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -381,7 +407,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheKeyboardLeavesAnEditableWindows10BoxWhite()
         {
             var box = this.ShowEmpty("MahApps.Styles.ComboBox.Win10", true);
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             Assert.That(box.Background, Is.SameAs(box.FindResource("MahApps.Brushes.TextControl.BackgroundFocused")));
         }
@@ -391,7 +417,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheKeyboardPutsARingAndTheBarOnTheWinUIBox()
         {
             var box = this.Show("MahApps.Styles.ComboBox.WinUI");
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             var ring = Ring(box);
             Assert.That(ring, Is.Not.Null, "the box should carry a ring");
@@ -421,7 +447,7 @@ namespace MahApps.Metro.Tests.Tests
         public void AnEditableWinUIBoxDrawsNoRing()
         {
             var box = this.ShowEmpty("MahApps.Styles.ComboBox.WinUI", true);
-            this.FocusWithTheKeyboard(box);
+            FocusWithTheKeyboard(box);
 
             Assert.That(Ring(box)?.FindChildren<Border>(true).Any(b => b.IsVisible) ?? false, Is.False);
         }
@@ -430,11 +456,11 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEditable = editable;
-            this.Settle();
+            this.window.Settle();
 
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
@@ -456,7 +482,7 @@ namespace MahApps.Metro.Tests.Tests
             box.SelectedIndex = 0;
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
         }
@@ -475,7 +501,7 @@ namespace MahApps.Metro.Tests.Tests
             box.Items.Add("Beam me up...");
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
         }
@@ -486,12 +512,6 @@ namespace MahApps.Metro.Tests.Tests
             var shown = box.FindChildren<TextBlock>(true).Where(t => t.Text == "Where to" && t.IsVisible).ToList();
             Assert.That(shown, Has.Count.EqualTo(1), "the box should show its watermark once");
             return shown[0];
-        }
-
-        private static Color Colour(object brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>());
-            return ((SolidColorBrush)brush).Color;
         }
 
         private ComboBoxItem ShowItem(string key)
@@ -506,7 +526,7 @@ namespace MahApps.Metro.Tests.Tests
                        };
 
             this.window!.Content = item;
-            this.Settle();
+            this.window.Settle();
 
             return item;
         }
@@ -545,40 +565,12 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Border Frame(Control box)
         {
-            var frame = box.FindChild<Border>("Border");
-            Assert.That(frame, Is.Not.Null, "the template should carry the frame");
-
-            return frame!;
+            return box.NamedChild<Border>("Border");
         }
 
         private static Border Edge(Control box)
         {
-            var edge = box.FindChild<Border>("BottomEdge");
-            Assert.That(edge, Is.Not.Null, "the template should carry the bottom edge");
-
-            return edge!;
-        }
-
-        private static Color ColourOf(Brush? brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "this one should be a brush of a single colour");
-
-            return ((SolidColorBrush)brush!).Color;
-        }
-
-        /// <summary>
-        /// Puts the keyboard focus on the box the way a tab would, which is what the helper drawing
-        /// the ring tells apart from a click: the last input before the focus came from the keyboard.
-        /// </summary>
-        private void FocusWithTheKeyboard(ComboBox box)
-        {
-            // a test has no keys to press, so it tells the input manager what a press would have told it
-            typeof(InputManager).GetProperty(nameof(InputManager.MostRecentInputDevice))!.GetSetMethod(true)!.Invoke(InputManager.Current, new object[] { Keyboard.PrimaryDevice });
-            Keyboard.Focus(box);
-            this.Settle();
-
-            // a build agent hands the keyboard to one window at a time
-            Assume.That(box.IsKeyboardFocusWithin, Is.True);
+            return box.NamedChild<Border>("BottomEdge");
         }
 
         /// <summary>
@@ -590,10 +582,15 @@ namespace MahApps.Metro.Tests.Tests
             return adorner is null ? null : VisualTreeHelper.GetChild(adorner, 0) as FrameworkElement;
         }
 
-        private void Settle()
+        private static double Angle(UIElement element)
         {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
+            return element.RenderTransform is RotateTransform rotation ? rotation.Angle : double.NaN;
+        }
+
+        private static void LetTheChevronTurn()
+        {
+            // the turn takes a sixth of a second, so wait a little longer than that
+            ClipAssert.Pump(400);
         }
     }
 }

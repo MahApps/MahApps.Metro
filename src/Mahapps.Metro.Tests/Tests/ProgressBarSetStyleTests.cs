@@ -102,7 +102,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var bar = this.Show(key, 320);
             ProgressBarHelper.SetShowPaused(bar, true);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(bar.Foreground, Is.SameAs(Application.Current.FindResource(brush)));
         }
@@ -116,7 +116,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var bar = this.Show(key, 320);
             ProgressBarHelper.SetShowError(bar, true);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(bar.Foreground, Is.SameAs(Application.Current.FindResource(brush)));
         }
@@ -129,7 +129,7 @@ namespace MahApps.Metro.Tests.Tests
             var bar = this.Show(key, 320);
             ProgressBarHelper.SetShowPaused(bar, true);
             ProgressBarHelper.SetShowError(bar, true);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(bar.Foreground, Is.SameAs(Application.Current.FindResource(brush)));
         }
@@ -140,7 +140,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var bar = this.Show(WinUI, 320, isIndeterminate: true);
             ProgressBarHelper.SetShowPaused(bar, true);
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -200,7 +200,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var bar = this.Show(key, 320, isIndeterminate: true);
             ProgressBarHelper.SetShowPaused(bar, true);
-            this.Settle();
+            this.window.Settle();
 
             var runway = bar.FindChild<FrameworkElement>("Runway")!;
             var standing = bar.FindChild<Rectangle>("StoppedBar")!;
@@ -246,15 +246,9 @@ namespace MahApps.Metro.Tests.Tests
             bar.VerticalAlignment = VerticalAlignment.Top;
 
             this.window!.Content = bar;
-            this.Settle();
+            this.window.Settle();
 
             return bar;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

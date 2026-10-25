@@ -22,7 +22,7 @@ namespace MahApps.Metro.Tests.Tests
     /// harder to make out than it was at rest.
     /// </summary>
     [TestFixture]
-    public class ExpanderHeaderContrastTests
+    public class ExpanderHeaderContrastTests : WindowTestFixture<TestWindow>
     {
         /// <summary>What the accessibility guidelines put under a shape somebody has to make out.</summary>
         private const double LeastContrast = 3.0;
@@ -39,21 +39,6 @@ namespace MahApps.Metro.Tests.Tests
                 "ExpanderToggleButtonArrowThemeStrokeThicknessMouseOver",
                 "ExpanderToggleButtonArrowThemeStrokeThicknessPressed")
         };
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         /// <summary>
         /// A test that tries a value of its own leaves it behind in the window all the tests here share,

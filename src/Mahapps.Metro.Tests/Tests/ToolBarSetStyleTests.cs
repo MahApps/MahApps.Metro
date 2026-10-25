@@ -12,6 +12,7 @@ using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.StyleLookups;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -231,19 +232,6 @@ namespace MahApps.Metro.Tests.Tests
             {
                 ThemeManager.Current.ChangeTheme(this.window!, "Light.Blue");
             }
-        }
-
-        private static bool StandsOn(Style? style, Style expected)
-        {
-            for (var current = style; current is not null; current = current.BasedOn)
-            {
-                if (ReferenceEquals(current, expected))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

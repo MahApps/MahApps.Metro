@@ -21,27 +21,12 @@ namespace MahApps.Metro.Tests.Tests
     /// reaches them.
     /// </summary>
     [TestFixture]
-    public class TimePickerCustomisationTests
+    public class TimePickerCustomisationTests : WindowTestFixture<TestWindow>
     {
         private const string DefaultSet = "pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml";
         private const string Win10Set = "pack://application:,,,/MahApps.Metro;component/Styles/Win10/Controls.xaml";
 
         private static readonly DateTime TenPastTen = new DateTime(2016, 8, 31, 10, 10, 42);
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [Test]
         [Description("The clock in the drop-down is a control, and it stands at the time the picker stands at.")]

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.StyleLookups;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -189,11 +190,6 @@ namespace MahApps.Metro.Tests.Tests
         private static bool IsSymbolFont(string source)
         {
             return source.IndexOf("MDL2", StringComparison.Ordinal) >= 0 || source.IndexOf("Fluent Icons", StringComparison.Ordinal) >= 0;
-        }
-
-        private static ResourceDictionary Load(string set)
-        {
-            return new ResourceDictionary { Source = new Uri(set, UriKind.Absolute) };
         }
 
         private static IEnumerable<string> Keys(ResourceDictionary dictionary)

@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -116,13 +117,6 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             return null;
-        }
-
-        private static Color ColourOf(object brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "this one should be a brush of a single colour");
-
-            return ((SolidColorBrush)brush).Color;
         }
 
         private Control Show(Control control, string key)
