@@ -20,33 +20,18 @@ namespace MahApps.Metro.Tests.Tests
     /// thumb that was last touched is the one the keyboard talks to.
     /// </summary>
     [TestFixture]
-    public class RangeSliderKeyboardTests
+    public class RangeSliderKeyboardTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("A thumb has to be able to hold the keyboard focus in the first place, which a WPF thumb does not do by itself.")]
         public void AThumbCanTakeTheFocus()
         {
             var slider = this.Show();
 
-            var lower = PartOf(slider, "PART_LeftThumb");
+            var lower = slider.PartOf<Thumb>("PART_LeftThumb");
 
             Assert.That(lower.Focusable, Is.True, "the lower thumb should be able to take the focus");
-            Assert.That(PartOf(slider, "PART_RightThumb").Focusable, Is.True, "and so should the upper one");
+            Assert.That(slider.PartOf<Thumb>("PART_RightThumb").Focusable, Is.True, "and so should the upper one");
             Assert.That(lower.Focus(), Is.True, "and focusing it should work");
         }
 
@@ -56,9 +41,9 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            var upper = PartOf(slider, "PART_RightThumb");
+            var upper = slider.PartOf<Thumb>("PART_RightThumb");
             upper.RaiseEvent(new DragStartedEventArgs(0, 0) { RoutedEvent = Thumb.DragStartedEvent, Source = upper });
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(upper.IsFocused, Is.True, Where(slider, "the thumb that was grabbed should hold the focus"));
         }
@@ -70,9 +55,9 @@ namespace MahApps.Metro.Tests.Tests
             var slider = this.Show();
 
             Assert.That(slider.IsTabStop, Is.False, "the control itself is not a stop");
-            Assert.That(PartOf(slider, "PART_LeftThumb").IsTabStop, Is.True, "the lower thumb is");
-            Assert.That(PartOf(slider, "PART_RightThumb").IsTabStop, Is.True, "and so is the upper one");
-            Assert.That(PartOf(slider, "PART_MiddleThumb").IsTabStop, Is.False, "the band is not, there is no key that moves it");
+            Assert.That(slider.PartOf<Thumb>("PART_LeftThumb").IsTabStop, Is.True, "the lower thumb is");
+            Assert.That(slider.PartOf<Thumb>("PART_RightThumb").IsTabStop, Is.True, "and so is the upper one");
+            Assert.That(slider.PartOf<Thumb>("PART_MiddleThumb").IsTabStop, Is.False, "the band is not, there is no key that moves it");
         }
 
         [Test]
@@ -86,9 +71,9 @@ namespace MahApps.Metro.Tests.Tests
                                   RoutedEvent = UIElement.PreviewMouseLeftButtonDownEvent,
                                   Source = slider
                               });
-            this.Settle();
+            this.window.Settle();
 
-            Assert.That(PartOf(slider, "PART_LeftThumb").IsFocused || PartOf(slider, "PART_RightThumb").IsFocused,
+            Assert.That(slider.PartOf<Thumb>("PART_LeftThumb").IsFocused || slider.PartOf<Thumb>("PART_RightThumb").IsFocused,
                         Is.True,
                         Where(slider, "the click should have handed the focus to one of the thumbs"));
         }
@@ -102,9 +87,9 @@ namespace MahApps.Metro.Tests.Tests
             // without the keyboard as well, which is the state a window that is not in front is in
             Keyboard.ClearFocus();
             slider.Focus();
-            this.Settle();
+            this.window.Settle();
 
-            Assert.That(PartOf(slider, "PART_LeftThumb").IsFocused, Is.True, Where(slider, "the lower thumb should have taken over"));
+            Assert.That(slider.PartOf<Thumb>("PART_LeftThumb").IsFocused, Is.True, Where(slider, "the lower thumb should have taken over"));
         }
 
         [Test]
@@ -113,7 +98,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
 
-            var lower = PartOf(slider, "PART_LeftThumb");
+            var lower = slider.PartOf<Thumb>("PART_LeftThumb");
             slider.RaiseEvent(new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
                               {
                                   RoutedEvent = UIElement.PreviewMouseLeftButtonDownEvent,
@@ -121,12 +106,12 @@ namespace MahApps.Metro.Tests.Tests
                               });
             lower.RaiseEvent(new DragStartedEventArgs(0, 0) { RoutedEvent = Thumb.DragStartedEvent, Source = lower });
             lower.RaiseEvent(new DragCompletedEventArgs(0, 0, false) { RoutedEvent = Thumb.DragCompletedEvent, Source = lower });
-            this.Settle();
+            this.window.Settle();
 
             var before = slider.LowerValue;
 
             Press(slider, Key.Right);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue - before, Is.EqualTo(slider.SmallChange).Within(0.01), $"one press moved it from {before:0.00} to {slider.LowerValue:0.00}");
         }
@@ -141,7 +126,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, key);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(expected).Within(0.01));
             Assert.That(slider.UpperValue, Is.EqualTo(70d), "the value nobody is on should not move");
@@ -157,7 +142,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_RightThumb");
 
             Press(slider, key);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.UpperValue, Is.EqualTo(expected).Within(0.01));
             Assert.That(slider.LowerValue, Is.EqualTo(50d), "the value nobody is on should not move");
@@ -173,7 +158,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, key);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(expected).Within(0.01));
         }
@@ -187,7 +172,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.Home);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(0d));
         }
@@ -201,7 +186,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.End);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(70d), "End takes it up to the upper value and no further");
         }
@@ -215,11 +200,11 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.Home);
-            this.Settle();
+            this.window.Settle();
             Assume.That(slider.LowerValue, Is.EqualTo(0d));
 
             Press(slider, Key.End);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(70d));
         }
@@ -230,14 +215,14 @@ namespace MahApps.Metro.Tests.Tests
         {
             var slider = this.Show();
             slider.LowerValue = 69;
-            this.Settle();
+            this.window.Settle();
 
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, Key.Right);
             Press(slider, Key.Right);
             Press(slider, Key.Right);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(70d), "the lower value stops where the upper one is");
             Assert.That(slider.UpperValue, Is.EqualTo(70d), "and the upper one stays put");
@@ -250,7 +235,7 @@ namespace MahApps.Metro.Tests.Tests
             var slider = this.Show();
             slider.MinRange = 5;
             slider.LowerValue = 60;
-            this.Settle();
+            this.window.Settle();
 
             this.FocusOn(slider, "PART_LeftThumb");
 
@@ -259,7 +244,7 @@ namespace MahApps.Metro.Tests.Tests
                 Press(slider, Key.Right);
             }
 
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(65d), "the lower value stops MinRange short of the upper one");
         }
@@ -274,7 +259,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             Press(slider, key);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(expected).Within(0.01));
         }
@@ -288,7 +273,7 @@ namespace MahApps.Metro.Tests.Tests
             this.FocusOn(slider, "PART_LeftThumb");
 
             var arguments = Press(slider, Key.A);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(arguments.Handled, Is.False, "the slider should not swallow a key it does nothing with");
             Assert.That(slider.LowerValue, Is.EqualTo(50d));
@@ -303,13 +288,13 @@ namespace MahApps.Metro.Tests.Tests
 
             // what losing the window to another one leaves behind: the focus stays, the keyboard goes
             Keyboard.ClearFocus();
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(lower.IsKeyboardFocused, Is.False, "the keyboard should be gone for this test to prove anything");
             Assume.That(lower.IsFocused, Is.True, "and the focus should still be on the thumb");
 
             Press(slider, Key.Right);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(51d).Within(0.01), Where(slider, "the key should still have moved the value"));
         }
@@ -320,10 +305,10 @@ namespace MahApps.Metro.Tests.Tests
         /// </summary>
         private Thumb FocusOn(RangeSlider slider, string part)
         {
-            var thumb = PartOf(slider, part);
+            var thumb = slider.PartOf<Thumb>(part);
 
             thumb.Focus();
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(thumb.IsFocused, Is.True, Where(slider, $"{part} should hold the focus before a key is pressed"));
 
@@ -333,8 +318,8 @@ namespace MahApps.Metro.Tests.Tests
         /// <summary>Everything about the focus that would explain a key press going nowhere.</summary>
         private string Where(RangeSlider slider, string what)
         {
-            var lower = PartOf(slider, "PART_LeftThumb");
-            var upper = PartOf(slider, "PART_RightThumb");
+            var lower = slider.PartOf<Thumb>("PART_LeftThumb");
+            var upper = slider.PartOf<Thumb>("PART_RightThumb");
 
             return $"{what}. The window is {(this.window!.IsActive ? "active" : "not active")}, "
                    + $"the lower thumb has focus {lower.IsFocused} and keyboard {lower.IsKeyboardFocused}, "
@@ -355,15 +340,6 @@ namespace MahApps.Metro.Tests.Tests
             target.RaiseEvent(arguments);
 
             return arguments;
-        }
-
-        private static Thumb PartOf(RangeSlider slider, string part)
-        {
-            var thumb = slider.Template?.FindName(part, slider) as Thumb;
-
-            Assert.That(thumb, Is.Not.Null, $"the template should carry {part}");
-
-            return thumb!;
         }
 
         private RangeSlider Show(Orientation orientation = Orientation.Horizontal)
@@ -391,17 +367,11 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             this.window!.Content = slider;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.IsLoaded, Is.True, "the slider should be up before a test looks at it");
 
             return slider;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

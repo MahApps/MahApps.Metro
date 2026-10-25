@@ -19,24 +19,9 @@ namespace MahApps.Metro.Tests.Tests
     /// somebody clearing the date from somebody mistyping it.
     /// </summary>
     [TestFixture]
-    public class TimePickerValidationErrorTests
+    public class TimePickerValidationErrorTests : WindowTestFixture<TestWindow>
     {
         private static readonly DateTime Afternoon = new DateTime(2026, 3, 17, 14, 35, 0);
-
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [Test]
         [Description("A day February does not have is not a date, and the picker now says so instead of only emptying itself.")]

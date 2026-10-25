@@ -21,23 +21,8 @@ namespace MahApps.Metro.Tests.Tests
     /// goes through the same swipe once it has been told where the pointer went.
     /// </summary>
     [TestFixture]
-    public class FlipViewSwipeTests
+    public class FlipViewSwipeTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("Dragged past half its width and let go slowly, the item gives way to the next one, which comes in and settles where the old one was.")]
         public async Task DraggingPastHalfFlipsToTheNextItem()

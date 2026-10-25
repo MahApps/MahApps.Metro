@@ -18,7 +18,7 @@ namespace MahApps.Metro.Tests.Tests
     /// template all over again only to fade it away. A plain ContentControl builds the one arriving.
     /// </summary>
     [TestFixture]
-    public class TransitioningContentControlViewTests
+    public class TransitioningContentControlViewTests : WindowTestFixture<TestWindow>
     {
         /// <summary>A view that says so every time one of it is built.</summary>
         public sealed class CountedView : ContentControl
@@ -60,21 +60,6 @@ namespace MahApps.Metro.Tests.Tests
         {
         }
 
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [SetUp]
         public void SetUp()
         {
@@ -88,13 +73,13 @@ namespace MahApps.Metro.Tests.Tests
             var control = this.Show(out var first, out var second);
 
             control.SetCurrentValue(ContentControl.ContentProperty, first);
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(CountedView.Built, Is.EqualTo(new[] { nameof(CountedView) }), "the first view should have been built to start with");
             CountedView.Forget();
 
             control.SetCurrentValue(ContentControl.ContentProperty, second);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(CountedView.Built, Is.EqualTo(new[] { nameof(OtherCountedView) }));
         }
@@ -106,11 +91,11 @@ namespace MahApps.Metro.Tests.Tests
             var control = this.Show(out var first, out _);
 
             control.SetCurrentValue(ContentControl.ContentProperty, first);
-            this.Settle();
+            this.window.Settle();
             CountedView.Forget();
 
             control.SetCurrentValue(ContentControl.ContentProperty, new First());
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(CountedView.Built, Is.EqualTo(new[] { nameof(CountedView) }));
         }
@@ -122,12 +107,12 @@ namespace MahApps.Metro.Tests.Tests
             var control = this.Show(out var first, out var second);
 
             control.SetCurrentValue(ContentControl.ContentProperty, first);
-            this.Settle();
+            this.window.Settle();
             control.SetCurrentValue(ContentControl.ContentProperty, second);
-            this.Settle();
+            this.window.Settle();
 
             control.AbortTransition();
-            this.Settle();
+            this.window.Settle();
 
             var holding = new List<ContentPresenter>();
             foreach (var presenter in Presenters(control))
@@ -165,7 +150,7 @@ namespace MahApps.Metro.Tests.Tests
             control.Resources.Add(new DataTemplateKey(typeof(Second)), TemplateFor(typeof(OtherCountedView)));
 
             this.window!.Content = control;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(control.IsLoaded, Is.True, "the control should be up before a test looks at it");
 
@@ -175,12 +160,6 @@ namespace MahApps.Metro.Tests.Tests
         private static DataTemplate TemplateFor(System.Type view)
         {
             return new DataTemplate { VisualTree = new FrameworkElementFactory(view) };
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

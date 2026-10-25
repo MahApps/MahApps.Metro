@@ -54,10 +54,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static ListBox OptionsOf(HamburgerMenu menu)
         {
-            var options = menu.FindChild<ListBox>("OptionsListView");
-            Assert.That(options, Is.Not.Null, "the template should carry the options list");
-
-            return options!;
+            return menu.NamedChild<ListBox>("OptionsListView");
         }
 
         [Test]

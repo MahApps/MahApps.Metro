@@ -21,25 +21,11 @@ namespace MahApps.Metro.Tests.Tests
     /// go by the culture of the thread instead.
     /// </summary>
     [TestFixture]
-    public class TimePickerCultureTests
+    public class TimePickerCultureTests : WindowTestFixture<TestWindow>
     {
         private static readonly DateTime Afternoon = new DateTime(2026, 3, 17, 14, 35, 0);
 
-        private TestWindow? window;
         private CultureInfo? wasCulture;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [SetUp]
         public void SetUp()

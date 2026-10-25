@@ -37,7 +37,7 @@ namespace MahApps.Metro.Tests.Tests
 
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocused, Is.True);
@@ -54,7 +54,7 @@ namespace MahApps.Metro.Tests.Tests
 
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(box.IsKeyboardFocused, Is.True);
 
@@ -110,7 +110,7 @@ namespace MahApps.Metro.Tests.Tests
 
             box.Focus();
             Keyboard.Focus(box);
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(box.IsKeyboardFocused, Is.True);
 
@@ -119,10 +119,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Button Eye(PasswordBox box)
         {
-            var eye = box.FindChild<Button>("PART_RevealButton");
-            Assert.That(eye, Is.Not.Null, "the template should carry the eye");
-
-            return eye!;
+            return box.NamedChild<Button>("PART_RevealButton");
         }
 
         private PasswordBox Show(string key, string password)
@@ -139,15 +136,9 @@ namespace MahApps.Metro.Tests.Tests
             TextBoxHelper.SetClearTextButton(box, true);
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

@@ -108,7 +108,7 @@ namespace MahApps.Metro.Tests.Tests
 
             ring.ArcStartAngle = start;
             ring.ArcEndAngle = end;
-            this.Settle();
+            this.window.Settle();
 
             var arc = ring.FindChild<Ellipse>("PART_TurningArc");
             var track = ring.FindChild<Ellipse>("PART_TurningTrack");
@@ -181,7 +181,7 @@ namespace MahApps.Metro.Tests.Tests
 
             ring.Minimum = 20;
             ring.Maximum = 80;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(ring.ArcRemainder, Is.EqualTo(0d));
         }
@@ -318,15 +318,9 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             this.window!.Content = ring;
-            this.Settle();
+            this.window.Settle();
 
             return ring;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

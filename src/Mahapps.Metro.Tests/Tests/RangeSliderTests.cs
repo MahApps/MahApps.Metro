@@ -46,10 +46,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Thumb GetMiddleThumb(RangeSlider slider)
         {
-            var thumb = slider.FindChild<Thumb>("PART_MiddleThumb");
-            Assert.That(thumb, Is.Not.Null, "the template should carry a middle thumb");
-
-            return thumb!;
+            return slider.NamedChild<Thumb>("PART_MiddleThumb");
         }
 
         [Test]

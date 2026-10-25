@@ -18,23 +18,8 @@ namespace MahApps.Metro.Tests.Tests
     /// that element rather than the border around it.
     /// </summary>
     [TestFixture]
-    public class ItemsControlClipTests
+    public class ItemsControlClipTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         private T Show<T>(T element)
             where T : FrameworkElement
         {

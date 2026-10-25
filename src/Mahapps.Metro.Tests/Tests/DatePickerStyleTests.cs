@@ -10,6 +10,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.Colours;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -80,7 +81,7 @@ namespace MahApps.Metro.Tests.Tests
 
             picker.Focus();
             Keyboard.Focus(picker);
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(picker.IsKeyboardFocusWithin, Is.True);
 
@@ -93,7 +94,7 @@ namespace MahApps.Metro.Tests.Tests
 
             picker.Focus();
             Keyboard.Focus(picker);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(picker.IsKeyboardFocusWithin, Is.True);
@@ -113,38 +114,19 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = picker;
-            this.Settle();
+            this.window.Settle();
 
             return picker;
         }
 
         private static Border Frame(Control picker)
         {
-            var frame = picker.FindChild<Border>("Base");
-            Assert.That(frame, Is.Not.Null, "the template should carry the frame");
-
-            return frame!;
+            return picker.NamedChild<Border>("Base");
         }
 
         private static Border Edge(Control picker)
         {
-            var edge = picker.FindChild<Border>("BottomEdge");
-            Assert.That(edge, Is.Not.Null, "the template should carry the bottom edge");
-
-            return edge!;
-        }
-
-        private static Color ColourOf(Brush? brush)
-        {
-            Assert.That(brush, Is.InstanceOf<SolidColorBrush>(), "this one should be a brush of a single colour");
-
-            return ((SolidColorBrush)brush!).Color;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
+            return picker.NamedChild<Border>("BottomEdge");
         }
     }
 }

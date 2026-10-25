@@ -19,23 +19,8 @@ namespace MahApps.Metro.Tests.Tests
     /// template hands it the name of the combo box, and so should ours.
     /// </summary>
     [TestFixture]
-    public class ComboBoxAutomationTests
+    public class ComboBoxAutomationTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("An editable combo box gives its name to the box that is typed into.")]
         public void TheEditableBoxOfAComboBoxCarriesTheNameOfTheComboBox()

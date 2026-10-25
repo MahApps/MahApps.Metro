@@ -11,6 +11,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.StyleLookups;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -260,11 +261,6 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(box.Style?.BasedOn, Is.SameAs(dictionary[expected]), "the box in the corner");
                     Assert.That(elsewhere.Style?.BasedOn, Is.SameAs(Application.Current.FindResource("MahApps.Styles.TextBox")), "the box outside it keeps what the application gave it");
                 });
-        }
-
-        private static ResourceDictionary Load(string set)
-        {
-            return new ResourceDictionary { Source = new Uri(set, UriKind.Absolute) };
         }
     }
 }

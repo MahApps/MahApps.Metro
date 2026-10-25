@@ -51,7 +51,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var toggle = this.Show(key, null);
             toggle.SetCurrentValue(ToggleButton.IsThreeStateProperty, true);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(toggle.Background, Is.SameAs(Application.Current.FindResource(fill)));
         }
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Tests.Tests
                              VerticalAlignment = VerticalAlignment.Top
                          };
             this.window!.Content = button;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(toggleHeight, Is.EqualTo(button.ActualHeight).Within(0.5));
         }
@@ -130,15 +130,9 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = toggle;
-            this.Settle();
+            this.window.Settle();
 
             return toggle;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

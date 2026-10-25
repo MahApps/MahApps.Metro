@@ -9,6 +9,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.TextControls;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -39,7 +40,7 @@ namespace MahApps.Metro.Tests.Tests
             var box = this.Show(key);
 
             box.SetCurrentValue(Control.ForegroundProperty, Brushes.Red);
-            this.Settle();
+            this.window.Settle();
 
             var button = Button(box);
 
@@ -86,10 +87,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Button Button(Control box)
         {
-            var button = box.FindChild<Button>("PART_ClearText");
-            Assert.That(button, Is.Not.Null, "the template should carry the clear button");
-
-            return button!;
+            return box.NamedChild<Button>("PART_ClearText");
         }
 
         /// <summary>
@@ -113,27 +111,9 @@ namespace MahApps.Metro.Tests.Tests
             TextBoxHelper.SetClearTextButton(box, true);
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
-        }
-
-        /// <summary>
-        /// A rich text box takes its text as a document rather than as a string.
-        /// </summary>
-        private static RichTextBox Document(string text)
-        {
-            var box = new RichTextBox();
-            box.Document.Blocks.Clear();
-            box.Document.Blocks.Add(new Paragraph(new Run(text)));
-
-            return box;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

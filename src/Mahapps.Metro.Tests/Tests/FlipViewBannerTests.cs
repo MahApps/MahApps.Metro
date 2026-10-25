@@ -16,10 +16,8 @@ namespace MahApps.Metro.Tests.Tests
     /// item asked for, as soon as the items came from an ItemsSource rather than being written out.
     /// </summary>
     [TestFixture]
-    public class FlipViewBannerTests
+    public class FlipViewBannerTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
         public sealed class Slide
         {
             public Slide(string caption)
@@ -30,19 +28,6 @@ namespace MahApps.Metro.Tests.Tests
             public string Caption { get; }
         }
 
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         [Test]
         [Description("Items written out one by one carry their own banner, and the one that is showing says what the banner reads.")]
         public void ItemsWrittenOutCarryTheirOwnBanner()
@@ -51,15 +36,15 @@ namespace MahApps.Metro.Tests.Tests
 
             flipView.Items.Add(new FlipViewItem { BannerText = "first", Content = "one" });
             flipView.Items.Add(new FlipViewItem { BannerText = "second", Content = "two" });
-            this.Settle();
+            this.window.Settle();
 
             flipView.SelectedIndex = 0;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo("first"), "the first item should have named the banner");
 
             flipView.SelectedIndex = 1;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo("second"), "and flipping on should hand it over to the second");
         }
@@ -72,15 +57,15 @@ namespace MahApps.Metro.Tests.Tests
 
             flipView.ItemTemplate = TemplateNaming("{Binding Caption}");
             flipView.ItemsSource = new[] { new Slide("first"), new Slide("second") };
-            this.Settle();
+            this.window.Settle();
 
             flipView.SelectedIndex = 0;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo("first"), "the first item should have named the banner");
 
             flipView.SelectedIndex = 1;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo("second"), "and flipping on should hand it over to the second");
         }
@@ -93,10 +78,10 @@ namespace MahApps.Metro.Tests.Tests
 
             flipView.ItemTemplate = TemplateNaming(string.Empty);
             flipView.ItemsSource = new[] { new Slide("first") };
-            this.Settle();
+            this.window.Settle();
 
             flipView.SelectedIndex = 0;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo(string.Empty));
         }
@@ -120,15 +105,15 @@ namespace MahApps.Metro.Tests.Tests
 
             flipView.BannerText = "the whole thing";
             flipView.ItemsSource = new[] { new Slide("first"), new Slide("second") };
-            this.Settle();
+            this.window.Settle();
 
             flipView.SelectedIndex = 0;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo("the whole thing"), "nobody named a banner for the item");
 
             flipView.SelectedIndex = 1;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.BannerText, Is.EqualTo("the whole thing"), "and flipping on changes nothing about that");
         }
@@ -140,17 +125,11 @@ namespace MahApps.Metro.Tests.Tests
             var flipView = new FlipView { Width = 400, Height = 300 };
 
             this.window!.Content = flipView;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(flipView.IsLoaded, Is.True, "the control should be up before a test looks at it");
 
             return flipView;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

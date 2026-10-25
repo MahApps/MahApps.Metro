@@ -80,7 +80,7 @@ namespace MahApps.Metro.Tests.Tests
             page.Children.Add(reference);
 
             this.window!.Content = page;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(picker.ActualHeight, Is.EqualTo(reference.ActualHeight).Within(0.01));
         }
@@ -110,7 +110,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var picker = this.Show(key);
 
-            var popupBorder = (Border)Part(picker, "PopupBorder");
+            var popupBorder = picker.PartOf<Border>("PopupBorder");
 
             Assert.Multiple(() =>
                 {
@@ -170,7 +170,7 @@ namespace MahApps.Metro.Tests.Tests
                           };
 
             this.window!.Content = palette;
-            this.Settle();
+            this.window.Settle();
 
             var inside = palette.Template?.FindName("ContentSite", palette) as FrameworkElement;
 
@@ -198,7 +198,7 @@ namespace MahApps.Metro.Tests.Tests
                           };
 
             this.window!.Content = palette;
-            this.Settle();
+            this.window.Settle();
 
             var checks = Application.Current.FindResource("MahApps.Brushes.Tile.Small");
             var frames = palette.FindChildren<Border>(true).ToList();
@@ -260,7 +260,7 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = canvas;
-            this.Settle();
+            this.window.Settle();
 
             var boxes = canvas.FindChildren<NumericUpDown>(true).ToList();
             Assert.That(boxes, Has.Count.GreaterThanOrEqualTo(7), "the canvas should carry a box per channel");
@@ -314,7 +314,7 @@ namespace MahApps.Metro.Tests.Tests
                           };
 
             this.window!.Content = dropper;
-            this.Settle();
+            this.window.Settle();
 
             var glyph = dropper.FindChild<Viewbox>(null);
             Assert.That(glyph, Is.Not.Null, "the dropper should draw a pipette");
@@ -348,7 +348,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var picker = this.Show(key);
 
-            var toggle = (ToggleButton)Part(picker, "PART_DropDownToggle");
+            var toggle = picker.PartOf<ToggleButton>("PART_DropDownToggle");
 
             Assert.That(toggle.Style?.BasedOn, Is.SameAs(Application.Current.FindResource("MahApps.Styles.ToggleButton.ComboBoxDropDown.Win10")));
         }
@@ -403,7 +403,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var picker = this.Show(key);
             picker.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -419,9 +419,9 @@ namespace MahApps.Metro.Tests.Tests
         {
             var picker = this.Show("MahApps.Styles.ColorPicker");
             picker.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
-            var veil = (Border)Part(picker, "DisabledVisualElement");
+            var veil = picker.PartOf<Border>("DisabledVisualElement");
 
             Assert.Multiple(() =>
                 {
@@ -436,7 +436,7 @@ namespace MahApps.Metro.Tests.Tests
 
             picker.Focus();
             Keyboard.Focus(picker);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(picker.IsKeyboardFocusWithin, Is.True);
@@ -467,14 +467,14 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = corner;
-            this.Settle();
+            this.window.Settle();
 
             picker.IsDropDownOpen = true;
-            this.Settle();
+            this.window.Settle();
 
             try
             {
-                var tab = (TabItem)Part(picker, "PART_ColorPalettesTab");
+                var tab = picker.PartOf<TabItem>("PART_ColorPalettesTab");
 
                 // the corner merges a copy of its own, so the style is the one found from there
                 Assert.That(tab.Style, Is.SameAs(picker.FindResource(tabKey)));
@@ -482,7 +482,7 @@ namespace MahApps.Metro.Tests.Tests
             finally
             {
                 picker.IsDropDownOpen = false;
-                this.Settle();
+                this.window.Settle();
             }
         }
 
@@ -493,7 +493,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheTabsComeUpRightTheFirstTime(string key)
         {
             var picker = this.Show(key);
-            var tab = (TabItem)Part(picker, "PART_ColorPalettesTab");
+            var tab = picker.PartOf<TabItem>("PART_ColorPalettesTab");
 
             // what the tab is measured with the first time, which is what the drop-down first shows
             double? firstHeight = null;
@@ -512,7 +512,7 @@ namespace MahApps.Metro.Tests.Tests
                 };
 
             picker.IsDropDownOpen = true;
-            this.Settle();
+            this.window.Settle();
 
             try
             {
@@ -527,7 +527,7 @@ namespace MahApps.Metro.Tests.Tests
             finally
             {
                 picker.IsDropDownOpen = false;
-                this.Settle();
+                this.window.Settle();
             }
         }
 
@@ -538,7 +538,7 @@ namespace MahApps.Metro.Tests.Tests
         public void TheDropDownIsLaidOutBeforeItShows(string key)
         {
             var picker = this.Show(key);
-            var popup = (Popup)Part(picker, "PART_Popup");
+            var popup = picker.PartOf<Popup>("PART_Popup");
             var content = (UIElement)popup.Child;
 
             bool? laidOutWhenShown = null;
@@ -558,7 +558,7 @@ namespace MahApps.Metro.Tests.Tests
             try
             {
                 picker.IsDropDownOpen = true;
-                this.Settle();
+                this.window.Settle();
 
                 Assert.That(laidOutWhenShown, Is.True);
             }
@@ -566,7 +566,7 @@ namespace MahApps.Metro.Tests.Tests
             {
                 PresentationSource.RemoveSourceChangedHandler(content, sourceChanged);
                 picker.IsDropDownOpen = false;
-                this.Settle();
+                this.window.Settle();
             }
         }
 
@@ -612,7 +612,7 @@ namespace MahApps.Metro.Tests.Tests
             var picker = this.Show(key);
             var palette = new ColorPalette { Style = picker.AvailableColorPaletteStyle, ItemsSource = new[] { Colors.SteelBlue, Colors.Gold } };
             this.window!.Content = palette;
-            this.Settle();
+            this.window.Settle();
 
             var swatch = (ListBoxItem)palette.ItemContainerGenerator.ContainerFromIndex(0);
 
@@ -653,7 +653,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static TabControl Strip(ColorPicker picker)
         {
-            return (TabControl)Part(picker, "PART_PopupTabControl");
+            return picker.PartOf<TabControl>("PART_PopupTabControl");
         }
 
         private static IEnumerable<Style> BasedOnChain(Style style)
@@ -677,33 +677,19 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = picker;
-            this.Settle();
+            this.window.Settle();
 
             return picker;
         }
 
         private static Border Frame(ColorPicker picker)
         {
-            return (Border)Part(picker, "Border");
+            return picker.PartOf<Border>("Border");
         }
 
         private static Border Edge(ColorPicker picker)
         {
-            return (Border)Part(picker, "BottomEdge");
-        }
-
-        private static FrameworkElement Part(ColorPicker picker, string name)
-        {
-            var part = picker.Template?.FindName(name, picker) as FrameworkElement;
-            Assert.That(part, Is.Not.Null, $"the template should carry {name}");
-
-            return part!;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
+            return picker.PartOf<Border>("BottomEdge");
         }
     }
 }

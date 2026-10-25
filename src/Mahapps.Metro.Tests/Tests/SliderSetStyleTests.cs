@@ -96,7 +96,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(thumb, Is.Not.Null);
 
             thumb!.SetCurrentValue(Control.PaddingProperty, (Thickness)Application.Current.FindResource(key));
-            this.Settle();
+            this.window.Settle();
 
             var inner = thumb.FindChild<Ellipse>("ThumbDot");
 
@@ -187,7 +187,7 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = slider;
-            this.Settle();
+            this.window.Settle();
 
             return slider;
         }
@@ -209,15 +209,9 @@ namespace MahApps.Metro.Tests.Tests
                          };
 
             this.window!.Content = slider;
-            this.Settle();
+            this.window.Settle();
 
             return slider;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

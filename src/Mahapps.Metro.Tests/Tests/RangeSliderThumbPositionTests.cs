@@ -20,7 +20,7 @@ namespace MahApps.Metro.Tests.Tests
     /// worth one value and it does not matter which of the two thumbs is dragged onto it.
     /// </summary>
     [TestFixture]
-    public class RangeSliderThumbPositionTests
+    public class RangeSliderThumbPositionTests : WindowTestFixture<TestWindow>
     {
         private const double SliderWidth = 400;
         private const double Lowest = 0;
@@ -30,22 +30,8 @@ namespace MahApps.Metro.Tests.Tests
         // value and the place it stands on come
         private const double APixelOrTwo = 2d * (Highest - Lowest) / SliderWidth;
 
-        private TestWindow? window;
         private double reportedLower;
         private double reportedUpper;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
 
         [TestCase(0)]
         [TestCase(50)]
@@ -59,7 +45,7 @@ namespace MahApps.Metro.Tests.Tests
 
             slider.LowerValue = value;
             slider.UpperValue = Highest;
-            this.Settle();
+            this.window.Settle();
 
             var thumb = PartOf(slider, "PART_LeftThumb");
             var middle = MiddleOf(thumb, slider);
@@ -82,7 +68,7 @@ namespace MahApps.Metro.Tests.Tests
 
             slider.LowerValue = Lowest;
             slider.UpperValue = value;
-            this.Settle();
+            this.window.Settle();
 
             var thumb = PartOf(slider, "PART_RightThumb");
             var middle = MiddleOf(thumb, slider);
@@ -103,12 +89,12 @@ namespace MahApps.Metro.Tests.Tests
             slider.IsSnapToTickEnabled = false;
             slider.LowerValue = 130;
             slider.UpperValue = 130;
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(slider.LowerValue, Is.EqualTo(slider.UpperValue), "the two thumbs should be in the same place");
 
             Drag(PartOf(slider, "PART_RightThumb"), by);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(lower).Within(1));
             Assert.That(slider.UpperValue, Is.EqualTo(upper).Within(1));
@@ -124,12 +110,12 @@ namespace MahApps.Metro.Tests.Tests
             slider.IsSnapToTickEnabled = false;
             slider.LowerValue = 130;
             slider.UpperValue = 130;
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(slider.LowerValue, Is.EqualTo(slider.UpperValue), "the two thumbs should be in the same place");
 
             DragUpright(PartOf(slider, "PART_RightThumb"), by);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(lower).Within(1));
             Assert.That(slider.UpperValue, Is.EqualTo(upper).Within(1));
@@ -145,10 +131,10 @@ namespace MahApps.Metro.Tests.Tests
             slider.IsSnapToTickEnabled = false;
             slider.LowerValue = 50;
             slider.UpperValue = 130;
-            this.Settle();
+            this.window.Settle();
 
             DragUpright(PartOf(slider, "PART_RightThumb"), by);
-            this.Settle();
+            this.window.Settle();
 
             var expected = 130 - (by * (Highest - Lowest) / SliderWidth);
 
@@ -166,7 +152,7 @@ namespace MahApps.Metro.Tests.Tests
 
             slider.LowerValue = value;
             slider.UpperValue = value;
-            this.Settle();
+            this.window.Settle();
 
             var left = MiddleOf(PartOf(slider, "PART_LeftThumb"), slider);
             var right = MiddleOf(PartOf(slider, "PART_RightThumb"), slider);
@@ -187,7 +173,7 @@ namespace MahApps.Metro.Tests.Tests
             slider.MinRange = 50;
             slider.LowerValue = lower;
             slider.UpperValue = upper;
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(slider.LowerValue, Is.EqualTo(lower).Within(0.01), "the values should be the ones this test asked for");
             Assume.That(slider.UpperValue, Is.EqualTo(upper).Within(0.01));
@@ -213,12 +199,12 @@ namespace MahApps.Metro.Tests.Tests
             slider.IsSnapToTickEnabled = false;
             slider.LowerValue = 100;
             slider.UpperValue = 150;
-            this.Settle();
+            this.window.Settle();
 
             // a mouse reports a drag in steps, and it takes one of them to push the thumb onto the
             // lower one and another to ask for more than it can give
             DragBy(PartOf(slider, "PART_RightThumb"), orientation, by / 2, by);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.UpperValue, Is.EqualTo(100).Within(0.01), "the upper value comes to rest on the lower one");
             Assert.That(slider.LowerValue, Is.EqualTo(100).Within(0.01), "and the lower one stays where it was put");
@@ -234,10 +220,10 @@ namespace MahApps.Metro.Tests.Tests
             slider.IsSnapToTickEnabled = false;
             slider.LowerValue = 100;
             slider.UpperValue = 150;
-            this.Settle();
+            this.window.Settle();
 
             DragBy(PartOf(slider, "PART_LeftThumb"), orientation, by / 2, by);
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.LowerValue, Is.EqualTo(150).Within(0.01), "the lower value comes to rest on the upper one");
             Assert.That(slider.UpperValue, Is.EqualTo(150).Within(0.01), "and the upper one stays where it was put");
@@ -276,7 +262,7 @@ namespace MahApps.Metro.Tests.Tests
 
             slider.LowerValue = Lowest;
             slider.UpperValue = Highest;
-            this.Settle();
+            this.window.Settle();
 
             var thumb = PartOf(slider, "PART_RightThumb");
 
@@ -285,7 +271,7 @@ namespace MahApps.Metro.Tests.Tests
             for (var step = 1; step <= 20; step++)
             {
                 thumb.RaiseEvent(new DragDeltaEventArgs(-15, 0) { RoutedEvent = Thumb.DragDeltaEvent, Source = thumb });
-                this.Settle();
+                this.window.Settle();
 
                 var worth = WhatThePlaceIsWorth(MiddleOf(thumb, slider));
 
@@ -306,12 +292,12 @@ namespace MahApps.Metro.Tests.Tests
         {
             slider.LowerValue = Lowest;
             slider.UpperValue = Highest;
-            this.Settle();
+            this.window.Settle();
 
             var thumb = PartOf(slider, part);
 
             Drag(thumb, place - MiddleOf(thumb, slider));
-            this.Settle();
+            this.window.Settle();
 
             Assume.That(MiddleOf(thumb, slider), Is.EqualTo(place).Within(1), "the mouse should have taken the thumb where it was going");
         }
@@ -378,10 +364,9 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Thumb PartOf(RangeSlider slider, string part)
         {
-            var thumb = slider.Template?.FindName(part, slider) as Thumb;
+            var thumb = slider.PartOf<Thumb>(part);
 
-            Assert.That(thumb, Is.Not.Null, $"the template should carry {part}");
-            Assert.That(thumb!.ActualWidth, Is.GreaterThan(0), "the thumb should be laid out, otherwise this test proves nothing");
+            Assert.That(thumb.ActualWidth, Is.GreaterThan(0), "the thumb should be laid out, otherwise this test proves nothing");
             Assert.That(thumb.ActualHeight, Is.GreaterThan(0), "and the same the other way round");
 
             return thumb;
@@ -418,17 +403,11 @@ namespace MahApps.Metro.Tests.Tests
             }
 
             this.window!.Content = slider;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(slider.IsLoaded, Is.True, "the slider should be up before a test looks at it");
 
             return slider;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

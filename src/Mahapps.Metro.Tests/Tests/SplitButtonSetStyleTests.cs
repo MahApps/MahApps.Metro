@@ -80,7 +80,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var splitButton = this.Show("MahApps.Styles.SplitButton.WinUI");
             splitButton.Orientation = Orientation.Vertical;
-            this.Settle();
+            this.window.Settle();
 
             var expander = splitButton.FindChild<Button>("PART_Expander");
 
@@ -222,7 +222,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var splitButton = this.Show(key);
             splitButton.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(splitButton.Opacity, Is.EqualTo(1));
         }
@@ -233,7 +233,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var splitButton = this.Show("MahApps.Styles.SplitButton");
             splitButton.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.That(splitButton.Opacity, Is.EqualTo(0.55));
         }
@@ -262,7 +262,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var splitButton = this.Show(key);
             splitButton.Focus();
-            this.Settle();
+            this.window.Settle();
 
             var clicks = 0;
             splitButton.Click += (_, _) => clicks++;
@@ -281,7 +281,7 @@ namespace MahApps.Metro.Tests.Tests
             Assert.That(splitButton.IsDropDownOpen, Is.True, "which F4 does, the way it does on a combo box");
 
             splitButton.IsDropDownOpen = false;
-            this.Settle();
+            this.window.Settle();
         }
 
         private void Press(SplitButton splitButton, Key key)
@@ -290,7 +290,7 @@ namespace MahApps.Metro.Tests.Tests
 
             splitButton.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = Keyboard.KeyDownEvent });
             splitButton.RaiseEvent(new KeyEventArgs(Keyboard.PrimaryDevice, source, 0, key) { RoutedEvent = Keyboard.KeyUpEvent });
-            this.Settle();
+            this.window.Settle();
         }
 
         private static object? PointerOver(Style style, DependencyProperty property)
@@ -328,15 +328,9 @@ namespace MahApps.Metro.Tests.Tests
             splitButton.ItemsSource = new[] { "Warp 1", "Warp 6", "Warp 9.975" };
 
             this.window!.Content = splitButton;
-            this.Settle();
+            this.window.Settle();
 
             return splitButton;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

@@ -19,23 +19,8 @@ namespace MahApps.Metro.Tests.Tests
     /// than the border around it.
     /// </summary>
     [TestFixture]
-    public class ComboBoxClipTests
+    public class ComboBoxClipTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         private ComboBox ShowComboBox()
         {
             Assert.That(this.window, Is.Not.Null);

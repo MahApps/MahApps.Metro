@@ -119,7 +119,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show(key);
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             Assert.Multiple(() =>
                 {
@@ -134,7 +134,7 @@ namespace MahApps.Metro.Tests.Tests
         {
             var box = this.Show("MahApps.Styles.HotKeyBox");
             box.IsEnabled = false;
-            this.Settle();
+            this.window.Settle();
 
             var veil = box.FindChild<Border>("DisabledVisualElement");
 
@@ -154,7 +154,7 @@ namespace MahApps.Metro.Tests.Tests
             var inside = Inside(box);
             inside.Focus();
             Keyboard.Focus(inside);
-            this.Settle();
+            this.window.Settle();
 
             // a build agent hands the keyboard to one window at a time
             Assume.That(box.IsKeyboardFocusWithin, Is.True);
@@ -175,7 +175,7 @@ namespace MahApps.Metro.Tests.Tests
                       };
 
             this.window!.Content = box;
-            this.Settle();
+            this.window.Settle();
 
             return box;
         }
@@ -216,12 +216,6 @@ namespace MahApps.Metro.Tests.Tests
             var inside = Inside(box);
 
             return inside.Template?.FindName(name, inside) as FrameworkElement;
-        }
-
-        private void Settle()
-        {
-            this.window!.UpdateLayout();
-            ClipAssert.Pump();
         }
     }
 }

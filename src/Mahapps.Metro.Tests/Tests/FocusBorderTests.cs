@@ -18,23 +18,8 @@ namespace MahApps.Metro.Tests.Tests
     /// focused.
     /// </summary>
     [TestFixture]
-    public class FocusBorderTests
+    public class FocusBorderTests : WindowTestFixture<TestWindow>
     {
-        private TestWindow? window;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetUp()
-        {
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<TestWindow>().ConfigureAwait(false);
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            this.window?.Close();
-            this.window = null;
-        }
-
         private Control Show(Control control)
         {
             Assert.That(this.window, Is.Not.Null);
@@ -53,10 +38,7 @@ namespace MahApps.Metro.Tests.Tests
 
         private static Border GetBorder(Control control)
         {
-            var border = control.FindChild<Border>("Border");
-            Assert.That(border, Is.Not.Null, "the template should carry the border");
-
-            return border!;
+            return control.NamedChild<Border>("Border");
         }
 
         [Test]

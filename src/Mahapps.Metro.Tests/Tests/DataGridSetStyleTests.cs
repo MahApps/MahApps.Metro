@@ -19,6 +19,8 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Converters;
 using MahApps.Metro.Tests.TestHelpers;
 using NUnit.Framework;
+using static MahApps.Metro.Tests.TestHelpers.FakeInput;
+using static MahApps.Metro.Tests.TestHelpers.StyleLookups;
 
 namespace MahApps.Metro.Tests.Tests
 {
@@ -30,17 +32,6 @@ namespace MahApps.Metro.Tests.Tests
     [TestFixture]
     public class DataGridSetStyleTests : WindowTestFixture<TestWindow>
     {
-        // IsMouseOver reads the mouse, and a test has no mouse to put anywhere. Both of these are
-        // read only to the outside and carry a key their own class keeps, which is the one handle
-        // there is on the state the triggers are written against.
-        private static readonly DependencyPropertyKey MouseOverKey = KeyOf(typeof(UIElement), "IsMouseOverPropertyKey");
-        private static readonly DependencyPropertyKey SelectionActiveKey = KeyOf(typeof(Selector), "IsSelectionActivePropertyKey");
-
-        private static DependencyPropertyKey KeyOf(Type owner, string field)
-        {
-            return (DependencyPropertyKey)owner.GetField(field, BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
-        }
-
         public class Row
         {
             public string First { get; set; } = "one";
@@ -132,13 +123,6 @@ namespace MahApps.Metro.Tests.Tests
         private static List<Row> ManyRows()
         {
             return Enumerable.Range(0, 30).Select(i => new Row { First = $"{i}" }).ToList();
-        }
-
-        private static void PutTheMouseOn(DataGridCell cell)
-        {
-            cell.GetVisualAncestor<DataGridRow>()?.SetValue(MouseOverKey, true);
-            cell.SetValue(MouseOverKey, true);
-            ClipAssert.Pump();
         }
 
         [TestCase("MahApps.Styles.DataGrid.Win10", typeof(DataGridColumnHeader), "MahApps.Styles.DataGridColumnHeader.Win10")]
@@ -1287,19 +1271,6 @@ namespace MahApps.Metro.Tests.Tests
                     Assert.That(rows.Visibility, Is.EqualTo(Visibility.Collapsed), "a closed group hides them");
                     Assert.That(header.IsVisible, Is.True, "and keeps its header");
                 });
-        }
-
-        private static bool StandsOn(Style? style, Style expected)
-        {
-            for (var current = style; current is not null; current = current.BasedOn)
-            {
-                if (ReferenceEquals(current, expected))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }
