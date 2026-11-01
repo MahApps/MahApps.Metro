@@ -158,7 +158,7 @@ namespace MahApps.Metro.Controls
         }
 
 
-        /// <summary>Identifies the InterceptMouseWheelSelection attached dependcy property.</summary>
+        /// <summary>Identifies the InterceptMouseWheelSelection attached dependency property.</summary>
         public static readonly DependencyProperty InterceptMouseWheelSelectionProperty = DependencyProperty.RegisterAttached("InterceptMouseWheelSelection", typeof(bool), typeof(ComboBoxHelper), new PropertyMetadata(BooleanBoxes.TrueBox, OnInterceptMouseWheelSelectionPropertyChangedCallback));
 
 

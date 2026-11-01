@@ -79,7 +79,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the flow direction of the switch and content.
         /// </summary>
         /// <remarks>
-        /// LeftToRight means content left and button right and RightToLeft vise versa.
+        /// LeftToRight means content left and button right and RightToLeft vice versa.
         /// </remarks>
         [Bindable(true)]
         [Category(AppName.MahApps)]

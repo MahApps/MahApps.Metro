@@ -3,8 +3,8 @@
 <div align="center">
   <br />
   <a href="https://github.com/MahApps/MahApps.Metro">
-    <!-- <img alt="MahApps.Metro" width="200" heigth="200" src="./docs/logo_ukraine.png"> -->
-    <img alt="MahApps.Metro" width="200" heigth="200" src="./mahapps.metro.logo.png">
+    <!-- <img alt="MahApps.Metro" width="200" height="200" src="./docs/logo_ukraine.png"> -->
+    <img alt="MahApps.Metro" width="200" height="200" src="./mahapps.metro.logo.png">
   </a>
   <h1>MahApps.Metro</h1>
   <p>
