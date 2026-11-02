@@ -301,7 +301,7 @@ namespace MahApps.Metro.Controls
                     GenerateGeometry(ctx, boundRect, outerBorderInfo);
                 }
 
-                // Freeze the geometry for better perfomance
+                // Freeze the geometry for better performance
                 borderGeometry.Freeze();
                 this._borderGeometryCache = borderGeometry;
             }
@@ -321,7 +321,7 @@ namespace MahApps.Metro.Controls
                     GenerateGeometry(ctx, innerRect, innerBorderInfo);
                 }
 
-                // Freeze the geometry for better perfomance
+                // Freeze the geometry for better performance
                 backgroundGeometry.Freeze();
                 this._backgroundGeometryCache = backgroundGeometry;
             }
@@ -343,7 +343,7 @@ namespace MahApps.Metro.Controls
                     GenerateGeometry(ctx, new Rect(0, 0, childRect.Width, childRect.Height), childBorderInfo);
                 }
 
-                // Freeze the geometry for better perfomance
+                // Freeze the geometry for better performance
                 clipGeometry.Freeze();
                 // Apply the clip to the Child
                 child.Clip = clipGeometry;

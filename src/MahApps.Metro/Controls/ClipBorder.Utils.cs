@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
         /// <returns>
-        /// bool - the result of the AreClose comparision.
+        /// bool - the result of the AreClose comparison.
         /// </returns>
         public static bool IsCloseTo(this double value1, double value2)
         {
@@ -51,7 +51,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
         /// <returns>
-        /// bool - the result of the LessThan comparision.
+        /// bool - the result of the LessThan comparison.
         /// </returns>
         public static bool IsLessThan(double value1, double value2)
         {
@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
         /// <returns>
-        /// bool - the result of the GreaterThan comparision.
+        /// bool - the result of the GreaterThan comparison.
         /// </returns>
         public static bool IsGreaterThan(this double value1, double value2)
         {
@@ -77,7 +77,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="value"> The double to compare to 1. </param>
         /// <returns>
-        /// bool - the result of the AreClose comparision.
+        /// bool - the result of the AreClose comparison.
         /// </returns>
         public static bool IsOne(this double value)
         {
@@ -90,7 +90,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="value"> The double to compare to 0. </param>
         /// <returns>
-        /// bool - the result of the AreClose comparision.
+        /// bool - the result of the AreClose comparison.
         /// </returns>
         public static bool IsZero(this double value)
         {

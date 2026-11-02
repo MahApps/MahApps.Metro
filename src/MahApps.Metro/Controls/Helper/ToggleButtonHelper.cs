@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls
     {
         /// <summary>
         /// This property can be used to handle the style for CheckBox and RadioButton
-        /// LeftToRight means content left and button right and RightToLeft vise versa
+        /// LeftToRight means content left and button right and RightToLeft vice versa
         /// </summary>
         public static readonly DependencyProperty ContentDirectionProperty =
             DependencyProperty.RegisterAttached(
@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// This property can be used to handle the style for CheckBox and RadioButton
-        /// LeftToRight means content left and button right and RightToLeft vise versa
+        /// LeftToRight means content left and button right and RightToLeft vice versa
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
