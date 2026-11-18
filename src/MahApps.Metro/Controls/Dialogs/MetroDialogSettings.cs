@@ -135,10 +135,10 @@ namespace MahApps.Metro.Controls.Dialogs
         public double DialogButtonFontSize { get; set; } = double.NaN;
 
         /// <summary>
-        /// Gets or sets the message dialog result when the user cancelled the dialog with 'ESC' key
+        /// Gets or sets the message dialog result when the user cancels the dialog with the 'ESC' key or when the <see cref="CancellationToken"/> is cancelled.
         /// </summary>
         /// <remarks>
-        /// If the value is <see langword="null"/> the default behavior is determined by the <see cref="MessageDialogStyle"/>.
+        /// If the value is <see langword="null"/> the result is <see cref="MessageDialogResult.Canceled"/>.
         /// </remarks>
         public MessageDialogResult? DialogResultOnCancel { get; set; } = null;
 
